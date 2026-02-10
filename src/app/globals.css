@@ -1,26 +1,206 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* ========================================
+   C&S PLUMBING — DESIGN SYSTEM
+   Dark & Bold, Apple-Inspired
+   ======================================== */
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Colors */
+  --color-background: #0A0A0F;
+  --color-surface: #12121A;
+  --color-surface-light: #1A1A2E;
+  --color-primary: #0099FF;
+  --color-primary-dark: #0077CC;
+  --color-primary-glow: rgba(0, 153, 255, 0.2);
+  --color-white: #FFFFFF;
+  --color-gray-100: #F3F4F6;
+  --color-gray-300: #D1D5DB;
+  --color-gray-500: #6B7280;
+  --color-gray-700: #374151;
+  --color-emergency: #FF3B30;
+  --color-success: #34D399;
+
+  /* Typography */
+  --font-sans: var(--font-inter);
+
+  /* Spacing */
+  --section-padding: 7.5rem;
+  --section-padding-mobile: 5rem;
+
+  /* Animation */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ========================================
+   BASE STYLES
+   ======================================== */
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background: var(--color-background);
+    color: var(--color-gray-300);
+    font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+    font-size: 1.125rem;
+    line-height: 1.7;
+    overflow-x: hidden;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ========================================
+   CUSTOM SCROLLBAR & SELECTION
+   ======================================== */
+
+@layer base {
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--color-background);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-surface-light);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-gray-500);
+  }
+
+  ::selection {
+    background: var(--color-primary);
+    color: var(--color-white);
+  }
+}
+
+/* ========================================
+   TYPOGRAPHY
+   ======================================== */
+
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--color-white);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
+/* ========================================
+   UTILITY CLASSES
+   ======================================== */
+
+@utility text-gradient {
+  background: linear-gradient(135deg, var(--color-primary) 0%, #00D4FF 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@utility glow {
+  box-shadow: 0 0 20px var(--color-primary-glow),
+              0 0 40px var(--color-primary-glow);
+}
+
+@utility glow-text {
+  text-shadow: 0 0 20px var(--color-primary-glow),
+               0 0 40px var(--color-primary-glow);
+}
+
+@utility glass {
+  background: rgba(18, 18, 26, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* ========================================
+   ANIMATED GRADIENT BACKGROUND
+   ======================================== */
+
+@keyframes gradient-shift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@utility animated-gradient {
+  background: linear-gradient(
+    -45deg,
+    var(--color-background),
+    #0A1628,
+    #0A0A1E,
+    var(--color-background)
+  );
+  background-size: 400% 400%;
+  animation: gradient-shift 15s ease infinite;
+}
+
+/* ========================================
+   HERO PARTICLES (CSS-only water effect)
+   ======================================== */
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+}
+
+@layer components {
+  .particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: var(--color-primary);
+    border-radius: 50%;
+    opacity: 0;
+    animation: float linear infinite;
+  }
+}
+
+/* ========================================
+   PULSE ANIMATION (for emergency page)
+   ======================================== */
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(255, 59, 48, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 20px rgba(255, 59, 48, 0);
+  }
+}
+
+@utility pulse-emergency {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* ========================================
+   REDUCED MOTION
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
