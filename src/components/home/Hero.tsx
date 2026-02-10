@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useEffect } from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { ChevronDown, Phone, Calendar } from "lucide-react";
 import Button from "@/components/ui/Button";
@@ -57,7 +58,16 @@ export default function Hero() {
     >
       {/* Background */}
       <div className="hero-bg absolute inset-0">
-        <div className="absolute inset-0 animated-gradient" />
+        <Image
+          src="/images/hero/drone-construction.jpg"
+          alt="C&S Plumbing new construction site aerial view"
+          fill
+          className="object-cover"
+          priority
+          quality={85}
+        />
+        <div className="absolute inset-0 bg-background/75" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-background/30" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,153,255,0.08)_0%,transparent_70%)]" />
         <Particles />
       </div>

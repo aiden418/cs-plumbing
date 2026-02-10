@@ -194,20 +194,20 @@ export const TEAM_MEMBERS: TeamMember[] = [
   {
     name: "Samuel Pellechio Jr.",
     role: "Owner & President",
-    image: "/images/team/samuel.jpg",
+    image: "/images/team/samuel.jpeg",
     bio: "Leading C&S Plumbing with the same dedication and family values his father instilled since 1997.",
   },
   {
-    name: "Team Member",
+    name: "Aiden Pellechio",
     role: "Operations Manager",
-    image: "/images/team/member-2.jpg",
-    bio: "Keeping the family legacy running smoothly with expert operations management.",
+    image: "/images/team/aiden.jpg",
+    bio: "Keeping the family legacy running smoothly with expert operations management and a construction management background from FGCU.",
   },
   {
-    name: "Team Member",
-    role: "Lead Technician",
-    image: "/images/team/member-3.jpg",
-    bio: "Bringing decades of hands-on experience to every service call.",
+    name: "Dylan Redecker",
+    role: "Lead Plumber",
+    image: "/images/team/dylan.jpeg",
+    bio: "Bringing hands-on expertise and dedication to every job site across Southwest Florida.",
   },
 ];
 
