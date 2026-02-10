@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Container from "@/components/ui/Container";
 import ScrollReveal from "@/components/animations/ScrollReveal";
 
@@ -11,14 +12,14 @@ export default function FamilyStory() {
           {/* Image */}
           <ScrollReveal direction="left">
             <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-surface border border-white/5">
-              <div className="absolute inset-0 flex items-center justify-center text-gray-500">
-                <div className="text-center">
-                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                    <span className="text-xl sm:text-2xl font-bold text-primary">C&S</span>
-                  </div>
-                  <p className="text-sm">Family Photo</p>
-                </div>
-              </div>
+              <Image
+                src="/images/team/family.jpeg"
+                alt="The Pellechio family — the people behind C&S Plumbing"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent" />
               {/* Decorative glow */}
               <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-primary/10 rounded-full blur-3xl" />
             </div>
