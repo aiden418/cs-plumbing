@@ -261,15 +261,15 @@ export const TIMELINE_EVENTS: TimelineEvent[] = [
   },
   {
     year: "2003",
-    title: "Growing Strong",
+    title: "1,000 Homes Milestone",
     description:
-      "Expanded into new construction plumbing, partnering with local builders during Southwest Florida's growth boom.",
+      "Completed plumbing for our 1,000th new construction home, solidifying our reputation as a premier builder partner in Southwest Florida's growth boom.",
   },
   {
     year: "2010",
-    title: "1,000 Homes Milestone",
+    title: "8,000 Homes & Growing",
     description:
-      "Completed plumbing for our 1,000th new construction home, solidifying our reputation as a premier builder partner.",
+      "Surpassed 8,000 new construction homes plumbed across Southwest Florida, becoming one of the region's most trusted plumbing contractors.",
   },
   {
     year: "2017",
