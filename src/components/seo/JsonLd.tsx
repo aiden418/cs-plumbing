@@ -100,7 +100,16 @@ export default function JsonLd() {
         },
       ],
     },
-    sameAs: [],
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "5.0",
+      reviewCount: "75",
+      bestRating: "5",
+      worstRating: "1",
+    },
+    sameAs: [
+      "https://www.google.com/maps/place/C%26S+Plumbing+of+Lee",
+    ],
   };
 
   return (

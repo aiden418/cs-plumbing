@@ -1,4 +1,4 @@
-import type { Service, TeamMember, Testimonial, TimelineEvent, NavLink, Stat } from "./types";
+import type { Service, TeamMember, Testimonial, TimelineEvent, NavLink, Stat, ServiceLanding } from "./types";
 
 // ============================================
 // BUSINESS INFO
@@ -42,6 +42,12 @@ export const NAV_LINKS: NavLink[] = [
       { label: "Residential", href: "/services/residential" },
       { label: "Commercial", href: "/services/commercial" },
       { label: "New Construction", href: "/services/new-construction" },
+      { label: "Repiping", href: "/services/repiping" },
+      { label: "Water Heaters", href: "/services/water-heaters" },
+      { label: "Drain Cleaning", href: "/services/drain-cleaning" },
+      { label: "Leak Repair", href: "/services/leak-repair" },
+      { label: "Water Softeners", href: "/services/water-softeners" },
+      { label: "Plumbing Remodels", href: "/services/plumbing-remodel" },
     ],
   },
   { label: "Gallery", href: "/gallery" },
@@ -357,6 +363,529 @@ export const ESTIMATOR_SERVICES = [
     baseMin: 1500,
     baseMax: 4000,
     factors: ["Basic softener", "Premium softener", "Reverse osmosis add-on", "Whole-home filtration"],
+  },
+];
+
+// ============================================
+// SERVICE LANDING PAGES
+// ============================================
+
+export const SERVICE_LANDINGS: ServiceLanding[] = [
+  {
+    slug: "repiping",
+    title: "Whole-Home Repiping",
+    heroText: "Whole-Home Repiping in Cape Coral, Fort Myers & SWFL",
+    description:
+      "Aging pipes cause low water pressure, discolored water, and costly leaks. C&S Plumbing replaces your entire plumbing system with modern copper or PEX piping — backed by 8,500+ homes completed and a full warranty.",
+    metaTitle: "Whole-Home Repiping | Cape Coral & Fort Myers Repipe Specialists",
+    metaDescription:
+      "Expert whole-home repiping in Cape Coral, Fort Myers & Southwest Florida. Copper & PEX options, minimal wall damage, full warranty. 8,500+ homes completed. Call 833-PLUMB-IT.",
+    keywords: [
+      "repiping Cape Coral",
+      "repipe Fort Myers",
+      "whole home repiping SWFL",
+      "PEX repiping Cape Coral",
+      "copper repiping Fort Myers",
+      "repiping cost Cape Coral",
+      "pipe replacement Lee County",
+      "plumber repiping near me",
+    ],
+    features: [
+      {
+        title: "Copper & PEX Options",
+        description:
+          "We offer both copper and PEX repiping to match your home's needs and budget. PEX is flexible, corrosion-resistant, and often more affordable. Copper provides proven durability for decades.",
+      },
+      {
+        title: "Minimal Wall Damage",
+        description:
+          "Our experienced crews plan pipe routes carefully to minimize drywall cuts. We patch and restore any openings so your home looks like we were never there.",
+      },
+      {
+        title: "Full Permit & Inspection",
+        description:
+          "Every repipe job includes permit pulling, code-compliant installation, and final inspection by Lee County — no shortcuts, ever.",
+      },
+      {
+        title: "Same-Week Scheduling",
+        description:
+          "Most whole-home repipes are completed in 1-2 days. We work efficiently to minimize disruption to your daily routine.",
+      },
+      {
+        title: "Lifetime Warranty on PEX",
+        description:
+          "PEX piping comes with a manufacturer's lifetime warranty. Combined with our workmanship guarantee, your investment is fully protected.",
+      },
+    ],
+    faqs: [
+      {
+        question: "How much does it cost to repipe a house in Cape Coral?",
+        answer:
+          "Whole-home repiping in Cape Coral typically costs between $4,000 and $15,000 depending on the size of your home, number of bathrooms, and pipe material (copper vs PEX). C&S Plumbing provides free estimates with upfront pricing — no hidden fees.",
+      },
+      {
+        question: "How long does a whole-home repipe take?",
+        answer:
+          "Most homes can be fully repiped in 1-2 days. Larger homes or homes with complex layouts may take up to 3 days. We work to minimize disruption and keep you informed throughout the process.",
+      },
+      {
+        question: "Should I choose copper or PEX for repiping?",
+        answer:
+          "PEX is more affordable, flexible, and resistant to corrosion — making it the most popular choice in Southwest Florida. Copper is more traditional and extremely durable. We'll help you choose the best option for your home and budget.",
+      },
+      {
+        question: "How do I know if my home needs repiping?",
+        answer:
+          "Common signs include rusty or discolored water, low water pressure, frequent leaks, pinhole leaks in pipes, and homes built before 1990 with original polybutylene or galvanized pipes. If you notice any of these, call for a free inspection.",
+      },
+      {
+        question: "Do you pull permits for repiping in Lee County?",
+        answer:
+          "Yes, every C&S Plumbing repipe job includes full permitting and final inspection by Lee County. This ensures your repiping is code-compliant and protects your home's value. Our license number is CFC1430355.",
+      },
+    ],
+    priceRange: "$4,000 – $15,000",
+    highlights: [
+      "8,500+ homes repiped & plumbed",
+      "1-2 day completion for most homes",
+      "Copper & PEX options available",
+      "Full permit & inspection included",
+      "Minimal wall damage guaranteed",
+      "Licensed & insured (CFC1430355)",
+      "Free estimates with upfront pricing",
+      "Lifetime warranty on PEX piping",
+      "Serving all of Southwest Florida",
+    ],
+  },
+  {
+    slug: "water-heaters",
+    title: "Water Heaters",
+    heroText: "Water Heater Installation & Repair in Cape Coral & Fort Myers",
+    description:
+      "No hot water? Whether you need a quick repair or a full replacement, C&S Plumbing installs and services all types of water heaters — traditional tank, tankless, and hybrid systems.",
+    metaTitle: "Water Heater Installation & Repair | Cape Coral & Fort Myers",
+    metaDescription:
+      "Water heater installation, repair & replacement in Cape Coral, Fort Myers & SWFL. Tankless, traditional & hybrid options. Same-day service. Call 833-PLUMB-IT.",
+    keywords: [
+      "water heater Cape Coral",
+      "water heater installation Fort Myers",
+      "tankless water heater Cape Coral",
+      "water heater repair SWFL",
+      "hot water heater replacement",
+      "water heater cost Fort Myers",
+      "Rinnai tankless Cape Coral",
+      "water heater plumber near me",
+    ],
+    features: [
+      {
+        title: "Tankless Water Heaters",
+        description:
+          "Endless hot water on demand with up to 40% energy savings. We install and service all major brands including Rinnai, Navien, and Noritz.",
+      },
+      {
+        title: "Traditional Tank Systems",
+        description:
+          "Reliable and affordable hot water storage tanks in 40, 50, and 80 gallon sizes. We handle installation, repair, and replacement for all brands.",
+      },
+      {
+        title: "Hybrid Heat Pump",
+        description:
+          "The most energy-efficient option available — hybrid water heaters use heat pump technology to cut energy costs by up to 60% compared to traditional tanks.",
+      },
+      {
+        title: "Same-Day Repair & Replacement",
+        description:
+          "No hot water is an emergency. We offer same-day water heater repair and often same-day replacement with units stocked on our trucks.",
+      },
+      {
+        title: "Energy Efficiency Upgrades",
+        description:
+          "Upgrading from an old tank to a modern tankless or hybrid system can save hundreds per year on energy bills while providing better performance.",
+      },
+    ],
+    faqs: [
+      {
+        question: "How much does a water heater cost in Cape Coral?",
+        answer:
+          "Water heater costs in Cape Coral range from $800 for a basic repair to $3,500+ for a tankless installation. Traditional tank replacements typically run $1,200-$2,000 installed. C&S Plumbing provides free estimates.",
+      },
+      {
+        question: "Should I get a tankless or traditional water heater?",
+        answer:
+          "Tankless heaters cost more upfront but save money long-term with lower energy bills and a 20+ year lifespan. Traditional tanks are more affordable initially and work well for most homes. We'll help you decide based on your household size and usage.",
+      },
+      {
+        question: "How long do water heaters last in Florida?",
+        answer:
+          "Traditional tank water heaters last 8-12 years in Florida's hard water conditions. Tankless units can last 20+ years with proper maintenance. Regular flushing and anode rod replacement extend the life of any water heater.",
+      },
+      {
+        question: "Can you install a water heater the same day?",
+        answer:
+          "Yes, in most cases we can install a new water heater the same day you call. We stock the most popular models on our trucks for quick replacement when your water heater fails.",
+      },
+      {
+        question: "Do tankless water heaters work well in Florida?",
+        answer:
+          "Absolutely. Florida's warm incoming water temperature means tankless heaters perform excellently here, reaching target temperatures faster and more efficiently than in colder climates.",
+      },
+    ],
+    priceRange: "$800 – $3,500+",
+    highlights: [
+      "Same-day service available",
+      "All brands installed & serviced",
+      "Tankless, tank & hybrid options",
+      "Energy efficiency upgrades",
+      "Upfront pricing, no surprises",
+      "Licensed & insured (CFC1430355)",
+      "Free estimates",
+      "Warranty on all installations",
+      "Serving Cape Coral, Fort Myers & SWFL",
+    ],
+  },
+  {
+    slug: "drain-cleaning",
+    title: "Drain Cleaning",
+    heroText: "Professional Drain Cleaning in Cape Coral & Fort Myers",
+    description:
+      "Slow drains, recurring clogs, and sewage backups need professional attention. C&S Plumbing uses hydro-jetting and camera inspection technology to clear any blockage and keep your drains flowing.",
+    metaTitle: "Drain Cleaning Services | Cape Coral & Fort Myers Plumber",
+    metaDescription:
+      "Professional drain cleaning in Cape Coral, Fort Myers & SWFL. Hydro-jetting, camera inspection, root removal. Fast service, fair pricing. Call 833-PLUMB-IT.",
+    keywords: [
+      "drain cleaning Cape Coral",
+      "drain cleaning Fort Myers",
+      "clogged drain plumber SWFL",
+      "hydro jetting Cape Coral",
+      "sewer camera inspection",
+      "root removal drain",
+      "slow drain repair",
+      "drain cleaning near me",
+    ],
+    features: [
+      {
+        title: "Hydro-Jetting",
+        description:
+          "High-pressure water jetting blasts through grease, scale, roots, and debris — restoring your pipes to near-new condition without harsh chemicals.",
+      },
+      {
+        title: "Camera Inspection",
+        description:
+          "We use sewer camera technology to see exactly what's causing your drain problems — no guessing. You'll see the footage and know exactly what needs fixing.",
+      },
+      {
+        title: "Root Intrusion Removal",
+        description:
+          "Tree roots are a common cause of drain backups in Southwest Florida. We cut through roots and can recommend solutions to prevent them from returning.",
+      },
+      {
+        title: "Kitchen & Bathroom Drains",
+        description:
+          "From kitchen sink grease clogs to bathroom hair blockages, we handle all residential drain cleaning with the right tools for each situation.",
+      },
+      {
+        title: "Main Sewer Line Cleaning",
+        description:
+          "Main line backups affect your entire home. We clear main sewer lines quickly and can identify underlying issues that could cause future problems.",
+      },
+    ],
+    faqs: [
+      {
+        question: "How much does drain cleaning cost in Cape Coral?",
+        answer:
+          "Drain cleaning in Cape Coral typically costs between $150 and $500 depending on the type of drain, severity of the clog, and method required. Simple clogs start around $150, while main sewer line cleaning with hydro-jetting can be $300-$500.",
+      },
+      {
+        question: "What causes recurring drain clogs?",
+        answer:
+          "Recurring clogs are usually caused by tree root intrusion, grease buildup, pipe scale, or damaged/bellied pipes. A camera inspection can identify the root cause so we can fix the problem permanently, not just temporarily clear it.",
+      },
+      {
+        question: "Is hydro-jetting safe for older pipes?",
+        answer:
+          "Hydro-jetting is safe for most pipe types when performed by a licensed professional. We always perform a camera inspection first to assess pipe condition. For very old or fragile pipes, we'll recommend the safest cleaning method.",
+      },
+      {
+        question: "How often should I have my drains cleaned?",
+        answer:
+          "For preventive maintenance, we recommend professional drain cleaning every 1-2 years. Homes with large trees near sewer lines or older pipes may benefit from annual cleaning. Commercial kitchens should have grease lines cleaned quarterly.",
+      },
+      {
+        question: "Do you offer emergency drain cleaning?",
+        answer:
+          "Yes, we offer 24/7 emergency drain cleaning for sewage backups and critical drain failures. Call 833-PLUMB-IT any time and we'll dispatch a technician as quickly as possible.",
+      },
+    ],
+    priceRange: "$150 – $500",
+    highlights: [
+      "Same-day service available",
+      "Hydro-jetting technology",
+      "Camera inspection included",
+      "Root intrusion specialists",
+      "All drain types serviced",
+      "Licensed & insured (CFC1430355)",
+      "Upfront pricing",
+      "Preventive maintenance plans",
+      "24/7 emergency service",
+    ],
+  },
+  {
+    slug: "leak-repair",
+    title: "Leak Detection & Repair",
+    heroText: "Leak Detection & Emergency Repair in Cape Coral & Fort Myers",
+    description:
+      "Water leaks waste money and cause serious damage. C&S Plumbing finds and fixes leaks fast — from dripping faucets to hidden slab leaks — protecting your home and your wallet.",
+    metaTitle: "Leak Detection & Repair | Cape Coral & Fort Myers Emergency Plumber",
+    metaDescription:
+      "Expert leak detection & repair in Cape Coral, Fort Myers & SWFL. Slab leaks, pipe leaks, faucet repair. 24/7 emergency service. Call 833-PLUMB-IT.",
+    keywords: [
+      "leak repair Cape Coral",
+      "leak detection Fort Myers",
+      "slab leak repair SWFL",
+      "pipe leak plumber",
+      "emergency leak repair",
+      "water leak plumber near me",
+      "faucet leak repair Cape Coral",
+      "hidden leak detection",
+    ],
+    features: [
+      {
+        title: "Electronic Leak Detection",
+        description:
+          "Advanced electronic equipment pinpoints hidden leaks behind walls, under slabs, and underground — without unnecessary demolition.",
+      },
+      {
+        title: "Slab Leak Repair",
+        description:
+          "Slab leaks are common in Southwest Florida homes. We locate and repair slab leaks with minimal disruption, or reroute pipes when repair isn't practical.",
+      },
+      {
+        title: "Pipe Leak Repair",
+        description:
+          "From pinhole leaks in copper pipes to burst PVC lines, we fix all types of pipe leaks with permanent solutions — not temporary patches.",
+      },
+      {
+        title: "Faucet & Fixture Leaks",
+        description:
+          "A dripping faucet wastes thousands of gallons per year. We repair or replace leaking faucets, toilets, valves, and fixtures quickly and affordably.",
+      },
+      {
+        title: "24/7 Emergency Response",
+        description:
+          "Water leaks can cause catastrophic damage in hours. Our emergency team responds around the clock to stop leaks and prevent further damage to your home.",
+      },
+    ],
+    faqs: [
+      {
+        question: "How much does leak repair cost in Cape Coral?",
+        answer:
+          "Leak repair costs in Cape Coral range from $150 for a simple faucet leak to $800+ for slab leaks or pipe leaks behind walls. The cost depends on leak location and accessibility. We provide free estimates with transparent pricing.",
+      },
+      {
+        question: "How do I know if I have a slab leak?",
+        answer:
+          "Signs of a slab leak include unexplained increases in your water bill, warm spots on the floor, the sound of running water when nothing is on, damp or warped flooring, and mold or mildew smell. If you suspect a slab leak, call for an inspection right away.",
+      },
+      {
+        question: "Can you detect leaks without tearing up walls?",
+        answer:
+          "Yes. We use electronic leak detection equipment that can locate leaks behind walls, under slabs, and underground without destructive exploration. This saves time, money, and damage to your home.",
+      },
+      {
+        question: "How quickly can you respond to a water leak emergency?",
+        answer:
+          "We offer 24/7 emergency service and typically arrive within 1-2 hours for active water leaks in the Cape Coral, Fort Myers, and North Fort Myers area. Call 833-PLUMB-IT immediately if you have an active leak.",
+      },
+      {
+        question: "Should I repair or reroute a slab leak?",
+        answer:
+          "It depends on the pipe condition and location. If it's a single leak in otherwise good pipes, repair is usually best. If you have multiple slab leaks or old corroded pipes, rerouting through the attic or walls is often more cost-effective long-term.",
+      },
+    ],
+    priceRange: "$150 – $800+",
+    highlights: [
+      "24/7 emergency response",
+      "Electronic leak detection",
+      "Slab leak specialists",
+      "Non-destructive methods",
+      "Fast, same-day service",
+      "Licensed & insured (CFC1430355)",
+      "Free estimates",
+      "All pipe types repaired",
+      "Serving Cape Coral, Fort Myers & SWFL",
+    ],
+  },
+  {
+    slug: "water-softeners",
+    title: "Water Softeners & Filtration",
+    heroText: "Water Softener & Filtration Systems in Cape Coral & Fort Myers",
+    description:
+      "Southwest Florida's hard water damages pipes, appliances, and fixtures. C&S Plumbing installs whole-home water softeners and filtration systems to protect your home and improve your water quality.",
+    metaTitle: "Water Softener Installation | Cape Coral & Fort Myers",
+    metaDescription:
+      "Water softener & filtration installation in Cape Coral, Fort Myers & SWFL. Protect pipes, improve water quality. Free water testing. Call 833-PLUMB-IT.",
+    keywords: [
+      "water softener Cape Coral",
+      "water softener Fort Myers",
+      "water filtration SWFL",
+      "water softener installation",
+      "hard water solution Cape Coral",
+      "reverse osmosis Fort Myers",
+      "whole home water filter",
+      "water softener near me",
+    ],
+    features: [
+      {
+        title: "Whole-Home Water Softeners",
+        description:
+          "Remove calcium, magnesium, and minerals that cause scale buildup, pipe damage, and appliance wear. Enjoy softer water throughout your entire home.",
+      },
+      {
+        title: "Reverse Osmosis Systems",
+        description:
+          "Pure, great-tasting drinking water from every tap. Our RO systems remove up to 99% of contaminants for clean, healthy water.",
+      },
+      {
+        title: "Salt-Free Conditioning",
+        description:
+          "Prefer a salt-free option? We install conditioning systems that prevent scale buildup without adding sodium to your water supply.",
+      },
+      {
+        title: "Free Water Testing",
+        description:
+          "Not sure what you need? We test your water for hardness, chlorine, pH, and contaminants — then recommend the right solution for your home.",
+      },
+      {
+        title: "Maintenance & Repair",
+        description:
+          "Keep your system running efficiently with our maintenance plans. We service all brands and can repair or upgrade your existing water treatment equipment.",
+      },
+    ],
+    faqs: [
+      {
+        question: "Do I need a water softener in Cape Coral?",
+        answer:
+          "Almost certainly yes. Cape Coral and most of Southwest Florida have very hard water (15-25 grains per gallon). Hard water causes scale buildup in pipes and appliances, reduces soap effectiveness, and leaves spots on dishes and fixtures.",
+      },
+      {
+        question: "How much does a water softener cost in Fort Myers?",
+        answer:
+          "Water softener installation in Fort Myers typically costs between $1,500 and $4,000 depending on the system type and capacity. Basic softeners start around $1,500, while premium whole-home systems with reverse osmosis run $3,000-$4,000.",
+      },
+      {
+        question: "How long do water softeners last?",
+        answer:
+          "A quality water softener lasts 10-15 years with proper maintenance. Regular salt refills and occasional resin replacement keep your system running efficiently. We offer maintenance plans to extend the life of your system.",
+      },
+      {
+        question: "Is a salt-free water softener worth it?",
+        answer:
+          "Salt-free conditioners prevent new scale buildup but don't remove existing minerals from your water. They're a good option for people on low-sodium diets or who prefer not to add salt. For the hardest water, traditional salt-based systems are more effective.",
+      },
+      {
+        question: "Can you install a water softener in a condo?",
+        answer:
+          "Yes, we install compact water softeners and under-sink filtration systems for condos and smaller spaces. We'll recommend the right size and type based on your unit's plumbing and your water quality needs.",
+      },
+    ],
+    priceRange: "$1,500 – $4,000",
+    highlights: [
+      "Free water testing",
+      "All major brands installed",
+      "Salt-based & salt-free options",
+      "Reverse osmosis systems",
+      "Protects pipes & appliances",
+      "Licensed & insured (CFC1430355)",
+      "Maintenance plans available",
+      "Upfront pricing",
+      "Serving Cape Coral, Fort Myers & SWFL",
+    ],
+  },
+  {
+    slug: "plumbing-remodel",
+    title: "Plumbing Remodels",
+    heroText: "Kitchen & Bathroom Plumbing Remodels in Cape Coral & Fort Myers",
+    description:
+      "Remodeling your kitchen or bathroom? C&S Plumbing handles everything from pipe relocation to premium fixture installation — ensuring your remodel is done right the first time.",
+    metaTitle: "Kitchen & Bathroom Plumbing Remodels | Cape Coral & Fort Myers",
+    metaDescription:
+      "Expert plumbing remodel services in Cape Coral, Fort Myers & SWFL. Kitchen & bathroom renovations, fixture upgrades, pipe relocation. Call 833-PLUMB-IT.",
+    keywords: [
+      "plumbing remodel Cape Coral",
+      "bathroom remodel plumber Fort Myers",
+      "kitchen plumbing remodel SWFL",
+      "fixture installation Cape Coral",
+      "bathroom renovation plumber",
+      "kitchen sink installation",
+      "plumbing renovation near me",
+      "remodel plumber Lee County",
+    ],
+    features: [
+      {
+        title: "Kitchen Remodels",
+        description:
+          "Relocate water lines, install new sinks, connect dishwashers and ice makers, and upgrade to modern fixtures. We coordinate with your contractor for seamless results.",
+      },
+      {
+        title: "Bathroom Renovations",
+        description:
+          "From walk-in showers to freestanding tubs, we handle all bathroom plumbing — including drain relocation, valve installation, and fixture hookups.",
+      },
+      {
+        title: "Fixture Upgrades",
+        description:
+          "Upgrade to modern, water-efficient fixtures that look great and save water. We install all brands and styles of faucets, toilets, showerheads, and more.",
+      },
+      {
+        title: "Pipe Relocation",
+        description:
+          "Changing your layout? We reroute water supply lines and drain pipes to accommodate your new design, ensuring proper flow and code compliance.",
+      },
+      {
+        title: "Code Compliance",
+        description:
+          "Every remodel requires updated plumbing that meets current building codes. We handle permits, inspections, and ensure everything is up to code.",
+      },
+    ],
+    faqs: [
+      {
+        question: "How much does a bathroom plumbing remodel cost?",
+        answer:
+          "Bathroom plumbing remodel costs in Cape Coral range from $2,000 for basic fixture swaps to $8,000+ for full layout changes with pipe relocation. The cost depends on scope — a simple fixture upgrade is much less than moving plumbing for a new layout.",
+      },
+      {
+        question: "Do I need a plumber for a kitchen remodel?",
+        answer:
+          "Yes. Any work involving water supply lines, drain pipes, gas lines, or fixture installation requires a licensed plumber. Even seemingly simple tasks like moving a sink require proper plumbing to prevent leaks and code violations.",
+      },
+      {
+        question: "How long does plumbing take during a remodel?",
+        answer:
+          "Rough-in plumbing (moving pipes, adding connections) typically takes 1-2 days. Finish plumbing (installing fixtures, connecting appliances) takes another 1-2 days. We coordinate with your general contractor to stay on schedule.",
+      },
+      {
+        question: "Can you work with my general contractor?",
+        answer:
+          "Absolutely. We regularly partner with general contractors throughout Lee County. We coordinate scheduling, handle our own permits, and communicate directly with your GC to keep your project on track.",
+      },
+      {
+        question: "Do you install luxury fixtures?",
+        answer:
+          "Yes, we install all brands from budget-friendly to high-end luxury. Whether it's a Kohler, Moen, Delta, or premium brands like Brizo or Grohe, we have experience with professional installation of any fixture.",
+      },
+    ],
+    priceRange: "$2,000 – $8,000+",
+    highlights: [
+      "Kitchen & bathroom specialists",
+      "All fixture brands installed",
+      "Pipe relocation services",
+      "Code-compliant renovations",
+      "Permit handling included",
+      "Licensed & insured (CFC1430355)",
+      "Coordinates with contractors",
+      "Free estimates",
+      "Serving Cape Coral, Fort Myers & SWFL",
+    ],
   },
 ];
 

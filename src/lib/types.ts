@@ -67,3 +67,22 @@ export interface Stat {
   suffix: string;
   label: string;
 }
+
+export interface FAQ {
+  question: string;
+  answer: string;
+}
+
+export interface ServiceLanding {
+  slug: string;
+  title: string;
+  heroText: string;
+  description: string;
+  metaTitle: string;
+  metaDescription: string;
+  keywords: string[];
+  features: { title: string; description: string }[];
+  faqs: FAQ[];
+  priceRange?: string;
+  highlights: string[];
+}
