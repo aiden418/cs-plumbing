@@ -1,4 +1,4 @@
-import type { Service, TeamMember, Testimonial, TimelineEvent, NavLink, Stat, ServiceLanding } from "./types";
+import type { Service, TeamMember, Testimonial, TimelineEvent, NavLink, Stat, ServiceLanding, AreaLanding } from "./types";
 
 // ============================================
 // BUSINESS INFO
@@ -48,6 +48,17 @@ export const NAV_LINKS: NavLink[] = [
       { label: "Leak Repair", href: "/services/leak-repair" },
       { label: "Water Softeners", href: "/services/water-softeners" },
       { label: "Plumbing Remodels", href: "/services/plumbing-remodel" },
+    ],
+  },
+  {
+    label: "Service Areas",
+    href: "/areas/cape-coral",
+    children: [
+      { label: "Cape Coral", href: "/areas/cape-coral" },
+      { label: "Fort Myers", href: "/areas/fort-myers" },
+      { label: "North Fort Myers", href: "/areas/north-fort-myers" },
+      { label: "Naples", href: "/areas/naples" },
+      { label: "Bonita Springs", href: "/areas/bonita-springs" },
     ],
   },
   { label: "Gallery", href: "/gallery" },
@@ -886,6 +897,185 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       "Free estimates",
       "Serving Cape Coral, Fort Myers & SWFL",
     ],
+  },
+];
+
+// ============================================
+// AREA LANDING PAGES
+// ============================================
+
+export const AREA_LANDINGS: AreaLanding[] = [
+  {
+    slug: "cape-coral",
+    city: "Cape Coral",
+    state: "FL",
+    metaTitle: "Plumber in Cape Coral, FL | C&S Plumbing of Lee County",
+    metaDescription:
+      "Trusted plumber in Cape Coral, FL. Emergency plumbing, repiping, drain cleaning, water heaters & more. Family-owned since 1997. 8,500+ homes. Call 833-PLUMB-IT.",
+    keywords: [
+      "plumber Cape Coral",
+      "plumber Cape Coral FL",
+      "Cape Coral plumbing",
+      "emergency plumber Cape Coral",
+      "repiping Cape Coral",
+      "drain cleaning Cape Coral",
+      "water heater Cape Coral",
+      "plumber near me Cape Coral",
+      "best plumber Cape Coral",
+    ],
+    heroText: "Your Trusted Plumber in Cape Coral, FL",
+    description:
+      "C&S Plumbing has been serving Cape Coral homeowners and businesses since 1997. From emergency repairs to whole-home repiping, we deliver fast, reliable plumbing backed by 8,500+ completed homes.",
+    neighborhoods: [
+      "SW Cape Coral",
+      "NW Cape Coral",
+      "SE Cape Coral",
+      "NE Cape Coral",
+      "Pelican",
+      "Burnt Store",
+      "Cape Harbour",
+      "Tarpon Point",
+      "Yacht Club",
+      "Cape Coral Parkway",
+    ],
+    localContext:
+      "Cape Coral's unique canal system and waterfront properties require plumbers who understand the area's specific challenges. From salt-air corrosion on outdoor plumbing to the hard water that's common throughout the Cape, C&S Plumbing has the local expertise to keep your home's plumbing running smoothly. We've repiped thousands of Cape Coral homes built in the 1970s-1990s that still have original polybutylene or galvanized pipes.",
+  },
+  {
+    slug: "fort-myers",
+    city: "Fort Myers",
+    state: "FL",
+    metaTitle: "Plumber in Fort Myers, FL | C&S Plumbing of Lee County",
+    metaDescription:
+      "Expert plumber in Fort Myers, FL. Residential & commercial plumbing, emergency service, repiping, water heaters. 27+ years serving SWFL. Call 833-PLUMB-IT.",
+    keywords: [
+      "plumber Fort Myers",
+      "plumber Fort Myers FL",
+      "Fort Myers plumbing",
+      "emergency plumber Fort Myers",
+      "repiping Fort Myers",
+      "drain cleaning Fort Myers",
+      "water heater Fort Myers",
+      "plumber near me Fort Myers",
+      "best plumber Fort Myers",
+    ],
+    heroText: "Expert Plumbing Services in Fort Myers, FL",
+    description:
+      "From downtown Fort Myers to the surrounding communities, C&S Plumbing provides full-service residential and commercial plumbing. 24/7 emergency service, competitive pricing, and the experience of 8,500+ completed projects.",
+    neighborhoods: [
+      "Downtown Fort Myers",
+      "McGregor",
+      "Gateway",
+      "Daniels Corridor",
+      "Colonial Blvd",
+      "Page Field",
+      "Whiskey Creek",
+      "Three Oaks",
+      "Iona",
+      "San Carlos",
+    ],
+    localContext:
+      "Fort Myers is the commercial hub of Lee County, and C&S Plumbing serves both its residential neighborhoods and thriving business community. Whether you're a homeowner in McGregor needing a water heater replacement or a restaurant on Cleveland Avenue needing grease trap service, we have the team and equipment to handle it. Our proximity to Fort Myers means fast response times for emergencies.",
+  },
+  {
+    slug: "north-fort-myers",
+    city: "North Fort Myers",
+    state: "FL",
+    metaTitle: "Plumber in North Fort Myers, FL | C&S Plumbing — Our Hometown",
+    metaDescription:
+      "North Fort Myers' hometown plumber since 1997. C&S Plumbing is headquartered right here on Pondella Rd. Emergency service, repiping, drains & more. Call 833-PLUMB-IT.",
+    keywords: [
+      "plumber North Fort Myers",
+      "plumber North Fort Myers FL",
+      "North Fort Myers plumbing",
+      "emergency plumber North Fort Myers",
+      "repiping North Fort Myers",
+      "drain cleaning North Fort Myers",
+      "water heater North Fort Myers",
+      "plumber near me North Fort Myers",
+    ],
+    heroText: "North Fort Myers' Hometown Plumber Since 1997",
+    description:
+      "C&S Plumbing is headquartered right here in North Fort Myers at 951 Pondella Rd. As your neighbors, we take extra pride in serving our hometown community with fast, reliable plumbing services.",
+    neighborhoods: [
+      "North Fort Myers",
+      "Bayshore",
+      "Pine Island Rd",
+      "Pondella",
+      "Del Prado",
+      "Hancock Bridge",
+      "Tropicana",
+      "Lochmoor",
+    ],
+    localContext:
+      "North Fort Myers is our home. C&S Plumbing's office is located at 951 Pondella Rd, and many of our team members live right here in the community. That means the fastest response times in the area — often under 30 minutes for emergencies. We've plumbed hundreds of homes in North Fort Myers and understand the specific needs of properties in this area, from older homes near the river to newer construction east of I-75.",
+  },
+  {
+    slug: "naples",
+    city: "Naples",
+    state: "FL",
+    metaTitle: "Plumber in Naples, FL | C&S Plumbing of Lee County",
+    metaDescription:
+      "Professional plumber in Naples, FL. Luxury home plumbing, repiping, water heaters, emergency service. Family-owned, 8,500+ homes completed. Call 833-PLUMB-IT.",
+    keywords: [
+      "plumber Naples",
+      "plumber Naples FL",
+      "Naples plumbing",
+      "emergency plumber Naples",
+      "repiping Naples",
+      "drain cleaning Naples",
+      "water heater Naples",
+      "plumber near me Naples",
+      "luxury home plumber Naples",
+    ],
+    heroText: "Professional Plumbing Services in Naples, FL",
+    description:
+      "C&S Plumbing extends our 27+ years of expertise to Naples and Collier County. From luxury home plumbing to emergency repairs, we deliver the same quality and reliability that's made us Southwest Florida's most trusted plumber.",
+    neighborhoods: [
+      "Old Naples",
+      "Park Shore",
+      "Pelican Bay",
+      "Vanderbilt Beach",
+      "North Naples",
+      "East Naples",
+      "Golden Gate",
+      "Lely Resort",
+    ],
+    localContext:
+      "Naples homeowners expect the highest quality — and C&S Plumbing delivers. We have extensive experience with Naples' luxury homes, including custom plumbing installations, high-end fixture work, and whole-home repiping for older properties in neighborhoods like Old Naples and Park Shore. Our licensed team handles everything from routine maintenance to complex renovations with the attention to detail Naples residents deserve.",
+  },
+  {
+    slug: "bonita-springs",
+    city: "Bonita Springs",
+    state: "FL",
+    metaTitle: "Plumber in Bonita Springs, FL | C&S Plumbing of Lee County",
+    metaDescription:
+      "Reliable plumber in Bonita Springs, FL. Repiping, water heaters, drain cleaning, emergency service. 27+ years in SWFL. Call 833-PLUMB-IT.",
+    keywords: [
+      "plumber Bonita Springs",
+      "plumber Bonita Springs FL",
+      "Bonita Springs plumbing",
+      "emergency plumber Bonita Springs",
+      "repiping Bonita Springs",
+      "drain cleaning Bonita Springs",
+      "water heater Bonita Springs",
+      "plumber near me Bonita Springs",
+    ],
+    heroText: "Reliable Plumbing Services in Bonita Springs, FL",
+    description:
+      "C&S Plumbing serves Bonita Springs with the same commitment to quality that's earned us 8,500+ completed projects across Southwest Florida. Fast response, fair pricing, and workmanship you can trust.",
+    neighborhoods: [
+      "Bonita Bay",
+      "Pelican Landing",
+      "Spanish Wells",
+      "Worthington",
+      "Coconut Point",
+      "Brooks",
+      "Highland Woods",
+      "Bonita Fairways",
+    ],
+    localContext:
+      "Bonita Springs sits at the crossroads of Lee and Collier County, and C&S Plumbing is ideally located to serve this growing community quickly. Many Bonita Springs homes, especially in established communities like Bonita Bay and Pelican Landing, are reaching the age where repiping and water heater replacement become necessary. We understand the HOA requirements and community standards that come with working in these neighborhoods.",
   },
 ];
 

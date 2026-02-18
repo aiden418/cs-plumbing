@@ -73,6 +73,19 @@ export interface FAQ {
   answer: string;
 }
 
+export interface AreaLanding {
+  slug: string;
+  city: string;
+  state: string;
+  metaTitle: string;
+  metaDescription: string;
+  keywords: string[];
+  heroText: string;
+  description: string;
+  neighborhoods?: string[];
+  localContext: string;
+}
+
 export interface ServiceLanding {
   slug: string;
   title: string;
