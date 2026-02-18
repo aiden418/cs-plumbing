@@ -79,6 +79,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://www.csplumbinglee.com",
   },
+  verification: {
+    google: "Tkfv2F8qi0w2tmYdz3YBu9WI6QaR9NeDnMmIukJjjiI",
+  },
 };
 
 export default function RootLayout({
