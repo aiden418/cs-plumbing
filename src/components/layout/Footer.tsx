@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Phone, Mail, MapPin, Clock, ChevronRight } from "lucide-react";
-import { BUSINESS, SERVICES, SERVICE_AREAS } from "@/lib/constants";
+import { BUSINESS, SERVICES, SERVICE_AREAS, AREA_LANDINGS } from "@/lib/constants";
 
 const quickLinks = [
   { label: "Home", href: "/" },
@@ -121,9 +121,27 @@ export default function Footer() {
             <h3 className="text-white font-semibold text-base sm:text-lg mb-3 sm:mb-4">
               Service Areas
             </h3>
-            <p className="text-xs sm:text-sm text-gray-400">
-              {SERVICE_AREAS.slice(0, 8).join(" · ")} & more
-            </p>
+            <div className="flex flex-wrap gap-x-1.5 gap-y-1 text-xs sm:text-sm text-gray-400">
+              {SERVICE_AREAS.slice(0, 8).map((area, i) => {
+                const areaLanding = AREA_LANDINGS.find((a) => a.city === area);
+                return (
+                  <span key={area}>
+                    {areaLanding ? (
+                      <Link
+                        href={`/areas/${areaLanding.slug}`}
+                        className="hover:text-primary transition-colors"
+                      >
+                        {area}
+                      </Link>
+                    ) : (
+                      area
+                    )}
+                    {i < 7 && " · "}
+                  </span>
+                );
+              })}
+              <span>& more</span>
+            </div>
           </div>
         </div>
       </div>

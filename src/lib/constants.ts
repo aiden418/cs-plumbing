@@ -88,7 +88,7 @@ export const SERVICES: Service[] = [
     description:
       "Plumbing emergencies don't wait, and neither do we. Our team is available 24/7 to handle burst pipes, major leaks, sewage backups, and more.",
     icon: "Siren",
-    href: "/services/residential",
+    href: "/services/leak-repair",
     features: [
       "24/7 rapid response",
       "Burst pipe repair",
@@ -103,7 +103,7 @@ export const SERVICES: Service[] = [
     description:
       "Professional drain cleaning services to eliminate clogs, restore flow, and prevent future blockages using state-of-the-art equipment.",
     icon: "Waves",
-    href: "/services/residential",
+    href: "/services/drain-cleaning",
     features: [
       "Hydro-jetting",
       "Camera inspection",
@@ -118,7 +118,7 @@ export const SERVICES: Service[] = [
     description:
       "Installation, repair, and replacement of traditional, tankless, and hybrid water heaters to keep your hot water flowing efficiently.",
     icon: "Flame",
-    href: "/services/residential",
+    href: "/services/water-heaters",
     features: [
       "Tankless installation",
       "Traditional tank repair",
@@ -133,7 +133,7 @@ export const SERVICES: Service[] = [
     description:
       "Complete repiping solutions for aging or corroded pipe systems. We upgrade your plumbing infrastructure with modern, durable materials.",
     icon: "Wrench",
-    href: "/services/residential",
+    href: "/services/repiping",
     features: [
       "Copper & PEX options",
       "Minimal wall damage",
@@ -178,7 +178,7 @@ export const SERVICES: Service[] = [
     description:
       "Whole-home water softening and filtration systems to improve your water quality, protect your pipes, and enhance your daily comfort.",
     icon: "Droplets",
-    href: "/services/residential",
+    href: "/services/water-softeners",
     features: [
       "Water softeners",
       "Filtration systems",
@@ -193,7 +193,7 @@ export const SERVICES: Service[] = [
     description:
       "Expert plumbing for kitchen and bathroom remodels. From relocating pipes to installing premium fixtures, we ensure seamless results.",
     icon: "PaintBucket",
-    href: "/services/residential",
+    href: "/services/plumbing-remodel",
     features: [
       "Kitchen remodels",
       "Bathroom renovations",
