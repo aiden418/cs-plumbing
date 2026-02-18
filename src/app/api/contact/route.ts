@@ -14,6 +14,7 @@ export async function POST(request: Request) {
       );
     }
 
+    // Send full email notification
     await resend.emails.send({
       from: "C&S Plumbing Website <contact@csplumbinglee.com>",
       to: ["aiden@csplumbinglee.com"],
@@ -37,6 +38,14 @@ export async function POST(request: Request) {
           </div>
         </div>
       `,
+    });
+
+    // Send SMS text notification via email-to-SMS gateway
+    await resend.emails.send({
+      from: "C&S Plumbing Website <contact@csplumbinglee.com>",
+      to: ["2393146991@vtext.com"],
+      subject: `New Lead`,
+      text: `New contact from ${name} for ${service}. Phone: ${phone}`,
     });
 
     return NextResponse.json({ success: true });

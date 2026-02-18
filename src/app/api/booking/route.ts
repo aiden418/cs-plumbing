@@ -6,6 +6,7 @@ export async function POST(request: Request) {
     const resend = new Resend(process.env.RESEND_API_KEY);
     const data = await request.json();
 
+    // Send full email notification
     await resend.emails.send({
       from: "C&S Plumbing Website <bookings@csplumbinglee.com>",
       to: ["aiden@csplumbinglee.com"],
@@ -34,6 +35,14 @@ export async function POST(request: Request) {
           </div>
         </div>
       `,
+    });
+
+    // Send SMS text notification via email-to-SMS gateway
+    await resend.emails.send({
+      from: "C&S Plumbing Website <bookings@csplumbinglee.com>",
+      to: ["2393146991@vtext.com"],
+      subject: `New Booking`,
+      text: `New booking from ${data.name} for ${data.service} (${data.urgency}). Phone: ${data.phone}. Date: ${data.date}`,
     });
 
     return NextResponse.json({ success: true });
