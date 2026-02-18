@@ -1,4 +1,4 @@
-import type { Service, TeamMember, Testimonial, TimelineEvent, NavLink, Stat, ServiceLanding, AreaLanding } from "./types";
+import type { Service, TeamMember, Testimonial, TimelineEvent, NavLink, Stat, ServiceLanding, AreaLanding, BlogPost } from "./types";
 
 // ============================================
 // BUSINESS INFO
@@ -62,6 +62,7 @@ export const NAV_LINKS: NavLink[] = [
     ],
   },
   { label: "Gallery", href: "/gallery" },
+  { label: "Blog", href: "/blog" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -1076,6 +1077,217 @@ export const AREA_LANDINGS: AreaLanding[] = [
     ],
     localContext:
       "Bonita Springs sits at the crossroads of Lee and Collier County, and C&S Plumbing is ideally located to serve this growing community quickly. Many Bonita Springs homes, especially in established communities like Bonita Bay and Pelican Landing, are reaching the age where repiping and water heater replacement become necessary. We understand the HOA requirements and community standards that come with working in these neighborhoods.",
+  },
+];
+
+// ============================================
+// BLOG POSTS
+// ============================================
+
+export const BLOG_POSTS: BlogPost[] = [
+  {
+    slug: "signs-you-need-a-repipe",
+    title: "5 Signs You Need a Whole-Home Repipe",
+    metaTitle: "5 Signs You Need a Whole-Home Repipe | C&S Plumbing",
+    metaDescription:
+      "How do you know if your home needs repiping? Learn the 5 warning signs from Southwest Florida's repiping experts. C&S Plumbing has repiped 8,500+ homes.",
+    keywords: ["signs you need repiping", "when to repipe house", "repiping Cape Coral", "old pipes replacement", "polybutylene pipe replacement"],
+    excerpt:
+      "Aging pipes don't always announce themselves with a dramatic burst. Often, the signs are subtle — until they're not. Here are 5 warning signs that your home may need a whole-home repipe.",
+    category: "Repiping",
+    publishDate: "2025-01-15",
+    readTime: "5 min read",
+    content: `<h2>1. Discolored or Rusty Water</h2>
+<p>If your water runs brown, yellow, or has a reddish tint — especially when you first turn on the tap — it's a sign that your pipes are corroding from the inside. This is particularly common in homes with original galvanized steel pipes, which were standard in Southwest Florida homes built before the 1980s.</p>
+<p>While occasional discoloration after water main work is normal, consistent rusty water means your pipes are deteriorating and need attention.</p>
+
+<h2>2. Low Water Pressure Throughout the House</h2>
+<p>A sudden drop in water pressure at one fixture usually points to a localized problem. But when water pressure is low at every faucet, shower, and spigot in your home, it often means mineral deposits and corrosion have narrowed the inside diameter of your pipes significantly.</p>
+<p>This is especially common in Cape Coral and Fort Myers homes with hard water — the mineral buildup accelerates pipe deterioration over time.</p>
+
+<h2>3. Frequent Leaks and Pinhole Leaks</h2>
+<p>One leak can be a fluke. Two is a coincidence. Three or more leaks in a short period means your entire pipe system is failing. Pinhole leaks in copper pipes are especially common in Southwest Florida due to our water chemistry.</p>
+<p>If you're calling a plumber for leak repairs multiple times a year, a whole-home repipe will actually save you money compared to endless spot repairs.</p>
+
+<h2>4. Your Home Has Polybutylene Pipes</h2>
+<p>Polybutylene (poly-B) pipes were widely used in Florida construction from the 1970s through the mid-1990s. These gray plastic pipes are known to deteriorate and fail, especially when exposed to chlorinated water. If your home was built during this era and still has the original plumbing, repiping should be a priority — not a question of "if" but "when."</p>
+<p>Many insurance companies are now requiring homes with polybutylene pipes to repipe before they'll issue or renew a homeowner's policy.</p>
+
+<h2>5. Your Home Is Over 25 Years Old with Original Plumbing</h2>
+<p>Even well-maintained plumbing systems have a lifespan. Copper pipes typically last 50-70 years, but galvanized steel and polybutylene have much shorter lifespans. If your home was built before 2000 and hasn't been repiped, it's worth having a professional inspection.</p>
+<p>At C&S Plumbing, we offer free repipe consultations where we inspect your current pipes and provide an honest assessment of their condition. We've completed repiping on over 8,500 homes across Southwest Florida — we know exactly what to look for.</p>
+
+<h2>What to Do Next</h2>
+<p>If you're experiencing any of these signs, don't wait for a catastrophic pipe failure. <a href="/services/repiping">Contact C&S Plumbing for a free repipe evaluation</a>. We offer both copper and PEX repiping options, complete most homes in 1-2 days, and handle all permits and inspections.</p>
+<p>Call <a href="tel:8337562648">833-PLUMB-IT</a> or <a href="/booking">book online</a> to schedule your free consultation.</p>`,
+  },
+  {
+    slug: "tankless-vs-traditional-water-heaters",
+    title: "Tankless vs Traditional Water Heaters: Which Is Right for Your Home?",
+    metaTitle: "Tankless vs Traditional Water Heaters | C&S Plumbing Guide",
+    metaDescription:
+      "Tankless or traditional water heater? Compare costs, efficiency, lifespan & performance for Southwest Florida homes. Expert advice from C&S Plumbing.",
+    keywords: ["tankless vs traditional water heater", "tankless water heater Florida", "water heater comparison", "best water heater Cape Coral", "water heater cost Fort Myers"],
+    excerpt:
+      "Choosing between a tankless and traditional water heater is one of the most common questions we get. Here's an honest comparison to help you make the right choice for your Southwest Florida home.",
+    category: "Water Heaters",
+    publishDate: "2025-02-01",
+    readTime: "6 min read",
+    content: `<h2>Traditional Tank Water Heaters</h2>
+<p>Traditional water heaters store 40-80 gallons of hot water in an insulated tank, keeping it heated and ready for use. They've been the standard in American homes for decades and remain the most affordable option upfront.</p>
+
+<h3>Pros</h3>
+<ul>
+<li><strong>Lower upfront cost:</strong> $1,200-$2,000 installed in Southwest Florida</li>
+<li><strong>Simple installation:</strong> Straightforward replacement of existing units</li>
+<li><strong>Reliable technology:</strong> Proven and well-understood by all plumbers</li>
+<li><strong>Works during power outages:</strong> Gas models continue heating without electricity</li>
+</ul>
+
+<h3>Cons</h3>
+<ul>
+<li><strong>Higher energy bills:</strong> Constantly heats water even when you're not using it</li>
+<li><strong>Limited hot water:</strong> Once the tank is empty, you wait 30-60 minutes to reheat</li>
+<li><strong>Shorter lifespan:</strong> 8-12 years in Florida's hard water conditions</li>
+<li><strong>Larger footprint:</strong> Takes up significant space in your garage or utility closet</li>
+</ul>
+
+<h2>Tankless Water Heaters</h2>
+<p>Tankless (on-demand) water heaters heat water only when you need it, using high-powered burners to bring water to temperature as it flows through the unit.</p>
+
+<h3>Pros</h3>
+<ul>
+<li><strong>Endless hot water:</strong> Never run out — water is heated on demand</li>
+<li><strong>Lower energy bills:</strong> 24-34% more efficient for typical households</li>
+<li><strong>Longer lifespan:</strong> 20+ years with proper maintenance</li>
+<li><strong>Compact size:</strong> Mounts on a wall, freeing up floor space</li>
+<li><strong>Better in Florida:</strong> Warm incoming water means peak performance</li>
+</ul>
+
+<h3>Cons</h3>
+<ul>
+<li><strong>Higher upfront cost:</strong> $2,500-$3,500+ installed</li>
+<li><strong>May need gas line upgrades:</strong> Some homes need larger gas lines</li>
+<li><strong>Flow rate limits:</strong> Very high simultaneous usage can overwhelm smaller units</li>
+</ul>
+
+<h2>Our Recommendation for Southwest Florida</h2>
+<p>For most Cape Coral and Fort Myers homes, we recommend tankless water heaters. Florida's warm incoming water temperature (around 75°F) means tankless units perform exceptionally well here — better than in colder climates. The energy savings add up quickly, and the 20+ year lifespan means you'll replace a tank heater twice before a tankless unit needs replacement.</p>
+<p>That said, traditional tanks are still a great choice for budget-conscious homeowners or homes with lower hot water demand.</p>
+
+<h2>Not Sure? We'll Help You Decide</h2>
+<p>Every home is different. <a href="/services/water-heaters">C&S Plumbing's water heater specialists</a> will evaluate your home's hot water needs, current setup, and budget to recommend the best option. We install all major brands including Rinnai, Navien, Rheem, and A.O. Smith.</p>
+<p>Call <a href="tel:8337562648">833-PLUMB-IT</a> or <a href="/booking">book a consultation</a> today.</p>`,
+  },
+  {
+    slug: "plumbing-emergency-what-to-do",
+    title: "What to Do in a Plumbing Emergency (Before the Plumber Arrives)",
+    metaTitle: "What to Do in a Plumbing Emergency | C&S Plumbing Guide",
+    metaDescription:
+      "Plumbing emergency? Learn what to do immediately to minimize damage before your plumber arrives. 24/7 emergency tips from C&S Plumbing in SWFL.",
+    keywords: ["plumbing emergency what to do", "burst pipe what to do", "plumbing emergency tips", "emergency plumber Cape Coral", "water leak emergency"],
+    excerpt:
+      "A plumbing emergency can cause thousands of dollars in damage within hours. Knowing what to do in the first few minutes can save your home — and your wallet. Here's your action plan.",
+    category: "Emergency",
+    publishDate: "2025-02-10",
+    readTime: "4 min read",
+    content: `<h2>Step 1: Shut Off the Water</h2>
+<p>This is the single most important thing you can do. Every second water flows from a burst pipe or major leak, it's causing more damage.</p>
+<ul>
+<li><strong>Know your main shutoff location:</strong> In most Southwest Florida homes, the main water shutoff is near the front of the house, often near the water meter by the street or on an exterior wall</li>
+<li><strong>Turn it clockwise</strong> (righty-tighty) to shut off water to the entire house</li>
+<li><strong>For localized issues:</strong> Use individual shutoff valves under sinks, behind toilets, or near water heaters to isolate the problem without cutting water to the whole house</li>
+</ul>
+
+<h2>Step 2: Turn Off Your Water Heater</h2>
+<p>If you've shut off the main water supply, turn off your water heater to prevent damage. Running a water heater without water flow can cause overheating.</p>
+<ul>
+<li><strong>Gas water heaters:</strong> Turn the thermostat to "Pilot" or "Off"</li>
+<li><strong>Electric water heaters:</strong> Switch off the breaker at your electrical panel</li>
+</ul>
+
+<h2>Step 3: Open Faucets to Drain Remaining Water</h2>
+<p>After shutting off the main water, open a few faucets (both hot and cold) to drain any remaining water from the pipes. This reduces pressure and minimizes additional leaking.</p>
+
+<h2>Step 4: Contain the Water</h2>
+<p>Use towels, buckets, and mops to contain standing water. The faster you remove water from floors, the less chance of structural damage, mold growth, and ruined belongings.</p>
+<ul>
+<li>Move furniture, electronics, and valuables away from the water</li>
+<li>Place buckets under active drips</li>
+<li>Use towels or old blankets to create barriers directing water toward drains</li>
+</ul>
+
+<h2>Step 5: Document Everything</h2>
+<p>Before you start major cleanup, take photos and video of the damage. Your homeowner's insurance will need documentation to process a claim. Photograph the source of the leak, any water damage to floors, walls, and belongings.</p>
+
+<h2>Step 6: Call C&S Plumbing</h2>
+<p>Once you've contained the immediate emergency, call <a href="tel:8337562648">833-PLUMB-IT</a> for 24/7 emergency plumbing service. We serve Cape Coral, Fort Myers, North Fort Myers, and all of Southwest Florida with rapid emergency response.</p>
+<p>Our emergency team will:</p>
+<ul>
+<li>Arrive as quickly as possible (typically within 1-2 hours in our service area)</li>
+<li>Identify and fix the source of the problem</li>
+<li>Help you understand next steps for any water damage restoration</li>
+<li>Provide upfront pricing before any work begins</li>
+</ul>
+
+<h2>Prevent Future Emergencies</h2>
+<p>The best plumbing emergency is one that never happens. Regular maintenance, <a href="/services/repiping">timely repiping of aging systems</a>, and annual plumbing inspections can prevent most emergencies before they start.</p>
+<p><a href="/booking">Schedule a plumbing inspection</a> to identify potential problems before they become emergencies.</p>`,
+  },
+  {
+    slug: "how-to-choose-a-plumber-cape-coral",
+    title: "How to Choose a Plumber in Cape Coral & Fort Myers",
+    metaTitle: "How to Choose a Plumber in Cape Coral & Fort Myers | C&S Plumbing",
+    metaDescription:
+      "Choosing a plumber in Cape Coral or Fort Myers? Learn what to look for: licensing, reviews, pricing, and experience. Tips from C&S Plumbing.",
+    keywords: ["how to choose a plumber", "best plumber Cape Coral", "plumber reviews Fort Myers", "licensed plumber Cape Coral", "plumber tips SWFL"],
+    excerpt:
+      "Not all plumbers are created equal. Whether you need an emergency repair or a major project, here's what to look for when choosing a plumber in Cape Coral and Fort Myers.",
+    category: "Tips",
+    publishDate: "2025-03-01",
+    readTime: "5 min read",
+    content: `<h2>1. Verify Their License</h2>
+<p>Florida law requires plumbers to be licensed. A legitimate plumber will have a Certified Plumbing Contractor (CPC) or Registered Plumbing Contractor (RPC) license. You can verify any plumber's license at the <a href="https://www.myfloridalicense.com" target="_blank" rel="noopener noreferrer">Florida DBPR website</a>.</p>
+<p>At C&S Plumbing, our license number is CFC1430355 — we're happy to have you verify it.</p>
+
+<h2>2. Check Google Reviews</h2>
+<p>Online reviews are the most reliable way to gauge a plumber's quality. Look for:</p>
+<ul>
+<li><strong>Volume:</strong> A company with 50+ reviews has a proven track record</li>
+<li><strong>Consistency:</strong> Look for consistently high ratings, not just a few 5-star reviews</li>
+<li><strong>Recency:</strong> Recent reviews tell you about current service quality</li>
+<li><strong>Responses:</strong> Companies that respond to reviews care about customer satisfaction</li>
+</ul>
+
+<h2>3. Ask About Pricing Upfront</h2>
+<p>A reputable plumber provides clear pricing before starting work. Be wary of plumbers who:</p>
+<ul>
+<li>Won't give estimates over the phone for common services</li>
+<li>Charge a "diagnostic fee" that doesn't apply to the repair</li>
+<li>Present significantly higher prices once they've started the job</li>
+<li>Pressure you into immediate decisions on expensive repairs</li>
+</ul>
+<p>At C&S Plumbing, we provide upfront pricing on every job. You know the cost before we start — no surprises.</p>
+
+<h2>4. Look for Experience and Specialization</h2>
+<p>Plumbing covers a wide range of services. For major projects like repiping or new construction, experience matters enormously. Ask:</p>
+<ul>
+<li>How long have you been in business?</li>
+<li>How many jobs like mine have you completed?</li>
+<li>Do you pull permits and schedule inspections?</li>
+<li>What warranty do you offer on your work?</li>
+</ul>
+
+<h2>5. Confirm Insurance Coverage</h2>
+<p>Any plumber working in your home should carry general liability insurance and workers' compensation. This protects you if something goes wrong during the job. Don't hesitate to ask for proof of insurance.</p>
+
+<h2>6. Consider Local and Family-Owned</h2>
+<p>Local plumbing companies have a reputation to maintain in the community. They're more likely to stand behind their work because their business depends on word-of-mouth referrals from neighbors, not anonymous online leads.</p>
+<p>C&S Plumbing has been family-owned and operated in Southwest Florida since 1997. We live here, we work here, and our reputation is everything to us.</p>
+
+<h2>Ready to Experience the C&S Difference?</h2>
+<p>We've built our reputation on honest work, fair pricing, and treating every home like our own. With 8,500+ completed projects and a 5.0-star Google rating, we let our track record speak for itself.</p>
+<p>Call <a href="tel:8337562648">833-PLUMB-IT</a> or <a href="/booking">book online</a> to experience the difference a trusted, local plumber makes.</p>`,
   },
 ];
 

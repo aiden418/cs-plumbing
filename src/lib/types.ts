@@ -99,3 +99,16 @@ export interface ServiceLanding {
   priceRange?: string;
   highlights: string[];
 }
+
+export interface BlogPost {
+  slug: string;
+  title: string;
+  metaTitle: string;
+  metaDescription: string;
+  keywords: string[];
+  excerpt: string;
+  content: string;
+  publishDate: string;
+  category: string;
+  readTime: string;
+}
