@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import GalleryPage from "./GalleryPage";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/gallery" },
   title: "Our Work",
   description:
     "Browse C&S Plumbing's portfolio of residential, commercial & new construction plumbing projects across Cape Coral, Fort Myers & Southwest Florida. 8,500+ homes completed.",

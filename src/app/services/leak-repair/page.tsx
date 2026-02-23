@@ -12,6 +12,7 @@ export const metadata: Metadata = {
   title: landing.metaTitle,
   description: landing.metaDescription,
   keywords: landing.keywords,
+    alternates: { canonical: "/services/leak-repair" },
   openGraph: {
     title: landing.metaTitle,
     description: landing.metaDescription,

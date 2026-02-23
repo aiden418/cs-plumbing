@@ -76,9 +76,7 @@ export const metadata: Metadata = {
       "Family-owned since 1997. 8,500+ homes built. 24/7 emergency service across SWFL.",
     images: ["/images/logos/logo.png"],
   },
-  alternates: {
-    canonical: "https://www.csplumbinglee.com",
-  },
+  alternates: {},
   verification: {
     google: "Tkfv2F8qi0w2tmYdz3YBu9WI6QaR9NeDnMmIukJjjiI",
   },

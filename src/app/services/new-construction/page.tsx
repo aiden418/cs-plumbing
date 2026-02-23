@@ -13,6 +13,7 @@ import { Check, Calendar, Phone, HardHat, Shield, Clock, Award } from "lucide-re
 import { BUSINESS } from "@/lib/constants";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/services/new-construction" },
   title: "New Construction Plumbing",
   description:
     "8,500+ new construction homes plumbed across SWFL. C&S Plumbing is the trusted partner for builders who demand reliability, code-compliance, and precision.",

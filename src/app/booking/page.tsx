@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import BookingPage from "./BookingPage";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/booking" },
   title: "Book a Service",
   description:
     "Schedule your plumbing appointment online with C&S Plumbing of Lee County. Emergency, residential, commercial & new construction plumbing across Cape Coral, Fort Myers & SWFL.",

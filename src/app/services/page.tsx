@@ -8,6 +8,7 @@ import CTASection from "@/components/home/CTASection";
 import { SERVICES } from "@/lib/constants";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/services" },
   title: "Services",
   description:
     "Comprehensive plumbing services across Southwest Florida — emergency repairs, drain cleaning, water heaters, repiping, new construction, commercial, and more.",

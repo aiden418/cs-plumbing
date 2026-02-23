@@ -12,6 +12,7 @@ export const metadata: Metadata = {
   title: landing.metaTitle,
   description: landing.metaDescription,
   keywords: landing.keywords,
+    alternates: { canonical: "/services/water-heaters" },
   openGraph: {
     title: landing.metaTitle,
     description: landing.metaDescription,

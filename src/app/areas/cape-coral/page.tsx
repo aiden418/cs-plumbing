@@ -11,6 +11,7 @@ export const metadata: Metadata = {
   title: landing.metaTitle,
   description: landing.metaDescription,
   keywords: landing.keywords,
+    alternates: { canonical: "/areas/cape-coral" },
   openGraph: {
     title: landing.metaTitle,
     description: landing.metaDescription,

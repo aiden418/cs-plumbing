@@ -3,6 +3,7 @@ import PageTransition from "@/components/layout/PageTransition";
 import BlogIndexPage from "./BlogIndexPage";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/blog" },
   title: "Plumbing Tips & Blog",
   description:
     "Expert plumbing tips, guides & advice from C&S Plumbing of Lee County. Learn about repiping, water heaters, emergency plumbing, and more for Southwest Florida homes.",

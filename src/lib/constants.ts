@@ -910,7 +910,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     slug: "cape-coral",
     city: "Cape Coral",
     state: "FL",
-    metaTitle: "Plumber in Cape Coral, FL | C&S Plumbing of Lee County",
+    metaTitle: "Plumber in Cape Coral, FL",
     metaDescription:
       "Trusted plumber in Cape Coral, FL. Emergency plumbing, repiping, drain cleaning, water heaters & more. Family-owned since 1997. 8,500+ homes. Call 833-PLUMB-IT.",
     keywords: [
@@ -946,7 +946,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     slug: "fort-myers",
     city: "Fort Myers",
     state: "FL",
-    metaTitle: "Plumber in Fort Myers, FL | C&S Plumbing of Lee County",
+    metaTitle: "Plumber in Fort Myers, FL",
     metaDescription:
       "Expert plumber in Fort Myers, FL. Residential & commercial plumbing, emergency service, repiping, water heaters. 27+ years serving SWFL. Call 833-PLUMB-IT.",
     keywords: [
@@ -982,7 +982,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     slug: "north-fort-myers",
     city: "North Fort Myers",
     state: "FL",
-    metaTitle: "Plumber in North Fort Myers, FL | C&S Plumbing — Our Hometown",
+    metaTitle: "Plumber in North Fort Myers, FL — Our Hometown",
     metaDescription:
       "North Fort Myers' hometown plumber since 1997. C&S Plumbing is headquartered right here on Pondella Rd. Emergency service, repiping, drains & more. Call 833-PLUMB-IT.",
     keywords: [
@@ -1015,7 +1015,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     slug: "naples",
     city: "Naples",
     state: "FL",
-    metaTitle: "Plumber in Naples, FL | C&S Plumbing of Lee County",
+    metaTitle: "Plumber in Naples, FL",
     metaDescription:
       "Professional plumber in Naples, FL. Luxury home plumbing, repiping, water heaters, emergency service. Family-owned, 8,500+ homes completed. Call 833-PLUMB-IT.",
     keywords: [
@@ -1049,7 +1049,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     slug: "bonita-springs",
     city: "Bonita Springs",
     state: "FL",
-    metaTitle: "Plumber in Bonita Springs, FL | C&S Plumbing of Lee County",
+    metaTitle: "Plumber in Bonita Springs, FL",
     metaDescription:
       "Reliable plumber in Bonita Springs, FL. Repiping, water heaters, drain cleaning, emergency service. 27+ years in SWFL. Call 833-PLUMB-IT.",
     keywords: [
@@ -1088,7 +1088,7 @@ export const BLOG_POSTS: BlogPost[] = [
   {
     slug: "signs-you-need-a-repipe",
     title: "5 Signs You Need a Whole-Home Repipe",
-    metaTitle: "5 Signs You Need a Whole-Home Repipe | C&S Plumbing",
+    metaTitle: "5 Signs You Need a Whole-Home Repipe",
     metaDescription:
       "How do you know if your home needs repiping? Learn the 5 warning signs from Southwest Florida's repiping experts. C&S Plumbing has repiped 8,500+ homes.",
     keywords: ["signs you need repiping", "when to repipe house", "repiping Cape Coral", "old pipes replacement", "polybutylene pipe replacement"],
@@ -1124,7 +1124,7 @@ export const BLOG_POSTS: BlogPost[] = [
   {
     slug: "tankless-vs-traditional-water-heaters",
     title: "Tankless vs Traditional Water Heaters: Which Is Right for Your Home?",
-    metaTitle: "Tankless vs Traditional Water Heaters | C&S Plumbing Guide",
+    metaTitle: "Tankless vs Traditional Water Heaters — Which Is Right for You?",
     metaDescription:
       "Tankless or traditional water heater? Compare costs, efficiency, lifespan & performance for Southwest Florida homes. Expert advice from C&S Plumbing.",
     keywords: ["tankless vs traditional water heater", "tankless water heater Florida", "water heater comparison", "best water heater Cape Coral", "water heater cost Fort Myers"],
@@ -1182,7 +1182,7 @@ export const BLOG_POSTS: BlogPost[] = [
   {
     slug: "plumbing-emergency-what-to-do",
     title: "What to Do in a Plumbing Emergency (Before the Plumber Arrives)",
-    metaTitle: "What to Do in a Plumbing Emergency | C&S Plumbing Guide",
+    metaTitle: "What to Do in a Plumbing Emergency Before the Plumber Arrives",
     metaDescription:
       "Plumbing emergency? Learn what to do immediately to minimize damage before your plumber arrives. 24/7 emergency tips from C&S Plumbing in SWFL.",
     keywords: ["plumbing emergency what to do", "burst pipe what to do", "plumbing emergency tips", "emergency plumber Cape Coral", "water leak emergency"],
@@ -1237,7 +1237,7 @@ export const BLOG_POSTS: BlogPost[] = [
   {
     slug: "how-to-choose-a-plumber-cape-coral",
     title: "How to Choose a Plumber in Cape Coral & Fort Myers",
-    metaTitle: "How to Choose a Plumber in Cape Coral & Fort Myers | C&S Plumbing",
+    metaTitle: "How to Choose a Plumber in Cape Coral & Fort Myers",
     metaDescription:
       "Choosing a plumber in Cape Coral or Fort Myers? Learn what to look for: licensing, reviews, pricing, and experience. Tips from C&S Plumbing.",
     keywords: ["how to choose a plumber", "best plumber Cape Coral", "plumber reviews Fort Myers", "licensed plumber Cape Coral", "plumber tips SWFL"],

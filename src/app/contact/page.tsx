@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import ContactPage from "./ContactPage";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/contact" },
   title: "Contact Us",
   description:
     "Contact C&S Plumbing of Lee County for a free estimate. Serving Cape Coral, Fort Myers, North Fort Myers, Naples & all of Southwest Florida. Call 833-PLUMB-IT or fill out our online form.",

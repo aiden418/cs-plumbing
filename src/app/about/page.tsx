@@ -6,6 +6,7 @@ import TeamGrid from "@/components/about/TeamGrid";
 import CTASection from "@/components/home/CTASection";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/about" },
   title: "About Us",
   description:
     "Family-owned since 1997. Learn about the Pellechio family and the team behind C&S Plumbing of Lee County — Southwest Florida's most trusted plumber.",

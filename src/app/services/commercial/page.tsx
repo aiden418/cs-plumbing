@@ -4,6 +4,7 @@ import ServiceDetail from "@/components/services/ServiceDetail";
 import CTASection from "@/components/home/CTASection";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/services/commercial" },
   title: "Commercial Plumbing Services",
   description:
     "Commercial plumbing for businesses across Lee County — preventive maintenance, emergency repairs, grease traps, backflow prevention, and tenant improvements.",

@@ -5,6 +5,7 @@ import CTASection from "@/components/home/CTASection";
 import { SERVICES } from "@/lib/constants";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/services/residential" },
   title: "Residential Plumbing Services",
   description:
     "Expert residential plumbing — emergency repairs, drain cleaning, water heaters, repiping, water quality, fixture installation. Serving Cape Coral, Fort Myers & SWFL.",

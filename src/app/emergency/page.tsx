@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import EmergencyPage from "./EmergencyPage";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/emergency" },
   title: "24/7 Emergency Plumber",
   description:
     "24/7 emergency plumbing service in Cape Coral, Fort Myers, North Fort Myers & Southwest Florida. Burst pipes, sewage backups, gas leaks, flooding — call C&S Plumbing now at 833-PLUMB-IT.",
