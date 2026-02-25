@@ -378,7 +378,7 @@ export default function BookingPage() {
 
             {/* Navigation */}
             {step < 4 && (
-              <div className="flex items-center justify-between mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-white/5">
+              <div className="flex items-center justify-between mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-gray-200">
                 <button
                   onClick={prev}
                   disabled={step === 0}

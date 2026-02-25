@@ -17,10 +17,10 @@ export default function ProjectsIndexPage() {
             <span className="inline-block text-primary text-xs sm:text-sm font-semibold tracking-widest uppercase mb-3 sm:mb-4">
               Our Work
             </span>
-            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-black text-white leading-tight mb-4 sm:mb-6">
+            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-black text-gray-900 leading-tight mb-4 sm:mb-6">
               Completed <span className="text-gradient">Projects</span>
             </h1>
-            <p className="text-base sm:text-lg text-gray-400 leading-relaxed">
+            <p className="text-base sm:text-lg text-gray-500 leading-relaxed">
               Explore our completed plumbing projects across Southwest Florida —
               from new construction to full remodels. Each project showcases the
               quality and craftsmanship that defines C&amp;S Plumbing.

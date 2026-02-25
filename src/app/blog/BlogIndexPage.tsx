@@ -17,10 +17,10 @@ export default function BlogIndexPage() {
             <span className="inline-block text-primary text-xs sm:text-sm font-semibold tracking-widest uppercase mb-3 sm:mb-4">
               Blog & Tips
             </span>
-            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-black text-white leading-tight mb-4 sm:mb-6">
+            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-black text-gray-900 leading-tight mb-4 sm:mb-6">
               Plumbing Tips from the Pros
             </h1>
-            <p className="text-base sm:text-lg text-gray-400 leading-relaxed">
+            <p className="text-base sm:text-lg text-gray-500 leading-relaxed">
               Expert advice, how-to guides, and insider tips to help you take
               care of your home&apos;s plumbing — from Southwest Florida&apos;s
               most trusted plumbing team.

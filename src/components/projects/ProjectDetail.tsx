@@ -54,7 +54,7 @@ export default function ProjectDetail({ project }: { project: CompletedProject }
             <span className="inline-block text-primary text-xs sm:text-sm font-semibold tracking-widest uppercase mb-3 sm:mb-4">
               {project.category}
             </span>
-            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-black text-white leading-tight mb-4 sm:mb-6">
+            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-black text-gray-900 leading-tight mb-4 sm:mb-6">
               {project.name}
             </h1>
             <p className="text-base sm:text-lg text-gray-500 leading-relaxed mb-6 sm:mb-8">
@@ -181,7 +181,7 @@ export default function ProjectDetail({ project }: { project: CompletedProject }
               className="max-w-4xl w-full mx-4 sm:mx-8"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="relative aspect-[4/3] sm:aspect-[16/10] rounded-xl sm:rounded-2xl overflow-hidden bg-surface border border-white/10">
+              <div className="relative aspect-[4/3] sm:aspect-[16/10] rounded-xl sm:rounded-2xl overflow-hidden bg-black/80 border border-white/10">
                 <Image
                   src={allImages[lightboxIndex].src}
                   alt={allImages[lightboxIndex].alt}

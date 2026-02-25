@@ -44,7 +44,7 @@ export default function ChatWidget() {
               </div>
               <button
                 onClick={() => setIsOpen(false)}
-                className="text-white/70 hover:text-gray-900 transition-colors p-1"
+                className="text-white/70 hover:text-white transition-colors p-1"
                 aria-label="Close chat"
               >
                 <X className="w-4 h-4 sm:w-5 sm:h-5" />
