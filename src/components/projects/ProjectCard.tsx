@@ -11,10 +11,10 @@ export default function ProjectCard({ project }: { project: CompletedProject }) 
     <motion.a
       href={`/projects/${project.slug}`}
       variants={staggerItem}
-      className="bg-surface rounded-2xl border border-white/5 overflow-hidden hover:border-primary/20 transition-all duration-500 block group"
+      className="bg-white rounded-2xl border border-gray-200 overflow-hidden hover:border-primary/20 transition-all duration-500 block group"
     >
       {/* Cover Image */}
-      <div className="relative aspect-[16/9] bg-surface">
+      <div className="relative aspect-[16/9] bg-white">
         {project.coverImage ? (
           <Image
             src={project.coverImage}
@@ -28,9 +28,9 @@ export default function ProjectCard({ project }: { project: CompletedProject }) 
             <span className="text-gray-600 text-sm">Cover photo coming soon</span>
           </div>
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
         <div className="absolute bottom-3 left-4">
-          <span className="text-xs font-semibold text-primary uppercase tracking-wider bg-background/60 backdrop-blur-sm px-2.5 py-1 rounded-full">
+          <span className="text-xs font-semibold text-primary uppercase tracking-wider bg-white/80 backdrop-blur-sm px-2.5 py-1 rounded-full">
             {project.category}
           </span>
         </div>
@@ -38,7 +38,7 @@ export default function ProjectCard({ project }: { project: CompletedProject }) 
 
       {/* Content */}
       <div className="p-5 sm:p-6">
-        <h2 className="text-lg sm:text-xl font-bold text-white mb-2 group-hover:text-primary transition-colors">
+        <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-2 group-hover:text-primary transition-colors">
           {project.name}
         </h2>
 
@@ -63,7 +63,7 @@ export default function ProjectCard({ project }: { project: CompletedProject }) 
           </span>
         </div>
 
-        <p className="text-gray-400 text-xs sm:text-sm leading-relaxed mb-4 line-clamp-2">
+        <p className="text-gray-500 text-xs sm:text-sm leading-relaxed mb-4 line-clamp-2">
           {project.description}
         </p>
 

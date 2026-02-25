@@ -22,22 +22,22 @@ export default function ServiceLandingTemplate({
   return (
     <>
       {/* Hero */}
-      <section className="pt-24 sm:pt-28 lg:pt-32 pb-12 sm:pb-16 bg-surface">
+      <section className="pt-24 sm:pt-28 lg:pt-32 pb-12 sm:pb-16 bg-[#F5F5F7]">
         <Container>
           <div className="max-w-3xl">
             <span className="inline-block text-primary text-xs sm:text-sm font-semibold tracking-widest uppercase mb-3 sm:mb-4">
               {landing.title}
             </span>
-            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-black text-white leading-tight mb-4 sm:mb-6">
+            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-black text-gray-900 leading-tight mb-4 sm:mb-6">
               {landing.heroText}
             </h1>
-            <p className="text-base sm:text-lg text-gray-400 leading-relaxed mb-6 sm:mb-8">
+            <p className="text-base sm:text-lg text-gray-500 leading-relaxed mb-6 sm:mb-8">
               {landing.description}
             </p>
             {landing.priceRange && (
               <p className="text-sm text-gray-500 mb-6">
                 Typical price range:{" "}
-                <span className="text-white font-semibold">
+                <span className="text-gray-900 font-semibold">
                   {landing.priceRange}
                 </span>
               </p>
@@ -67,7 +67,7 @@ export default function ServiceLandingTemplate({
       <section className="py-16 sm:py-24 lg:py-32">
         <Container>
           <ScrollReveal>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-8 sm:mb-12">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-8 sm:mb-12">
               What We Offer
             </h2>
           </ScrollReveal>
@@ -77,12 +77,12 @@ export default function ServiceLandingTemplate({
               <motion.div
                 key={feature.title}
                 variants={staggerItem}
-                className="bg-surface rounded-2xl border border-white/5 p-5 sm:p-6 lg:p-8 hover:border-primary/20 transition-all duration-500"
+                className="bg-[#F5F5F7] rounded-2xl border border-gray-200 p-5 sm:p-6 lg:p-8 hover:border-primary/30 transition-all duration-500"
               >
-                <h3 className="text-lg sm:text-xl font-bold text-white mb-2 sm:mb-3">
+                <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">
                   {feature.title}
                 </h3>
-                <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">
+                <p className="text-gray-500 text-xs sm:text-sm leading-relaxed">
                   {feature.description}
                 </p>
               </motion.div>
@@ -92,11 +92,11 @@ export default function ServiceLandingTemplate({
       </section>
 
       {/* Highlights */}
-      <section className="py-16 sm:py-24 lg:py-32 bg-surface">
+      <section className="py-16 sm:py-24 lg:py-32 bg-[#F5F5F7]">
         <Container>
           <ScrollReveal>
             <div className="max-w-3xl mx-auto text-center">
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-8 sm:mb-12">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-8 sm:mb-12">
                 Why Choose C&S for {landing.title}
               </h2>
             </div>
@@ -111,7 +111,7 @@ export default function ServiceLandingTemplate({
                 <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0 mt-0.5">
                   <Check className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-primary" />
                 </div>
-                <span className="text-gray-300 text-sm">{highlight}</span>
+                <span className="text-gray-600 text-sm">{highlight}</span>
               </motion.div>
             ))}
           </StaggerChildren>
@@ -123,14 +123,14 @@ export default function ServiceLandingTemplate({
         <Container>
           <ScrollReveal>
             <div className="max-w-3xl mx-auto">
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-8 sm:mb-12 text-center">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-8 sm:mb-12 text-center">
                 Frequently Asked Questions
               </h2>
               <div className="space-y-3">
                 {landing.faqs.map((faq, index) => (
                   <div
                     key={index}
-                    className="bg-surface rounded-xl border border-white/5 overflow-hidden"
+                    className="bg-[#F5F5F7] rounded-xl border border-gray-200 overflow-hidden"
                   >
                     <button
                       onClick={() =>
@@ -138,7 +138,7 @@ export default function ServiceLandingTemplate({
                       }
                       className="w-full flex items-center justify-between p-4 sm:p-5 text-left"
                     >
-                      <span className="text-sm sm:text-base font-medium text-white pr-4">
+                      <span className="text-sm sm:text-base font-medium text-gray-900 pr-4">
                         {faq.question}
                       </span>
                       <ChevronDown
@@ -155,7 +155,7 @@ export default function ServiceLandingTemplate({
                           exit={{ height: 0, opacity: 0 }}
                           transition={{ duration: 0.3 }}
                         >
-                          <p className="px-4 sm:px-5 pb-4 sm:pb-5 text-gray-400 text-xs sm:text-sm leading-relaxed">
+                          <p className="px-4 sm:px-5 pb-4 sm:pb-5 text-gray-500 text-xs sm:text-sm leading-relaxed">
                             {faq.answer}
                           </p>
                         </motion.div>

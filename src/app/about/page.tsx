@@ -21,12 +21,12 @@ export default function AboutPage() {
           <span className="inline-block text-primary text-xs sm:text-sm font-semibold tracking-widest uppercase mb-3 sm:mb-4">
             About Us
           </span>
-          <h1 className="text-3xl sm:text-4xl lg:text-6xl font-black text-white leading-tight">
+          <h1 className="text-3xl sm:text-4xl lg:text-6xl font-black text-gray-900 leading-tight">
             Built by Family.
             <br />
             <span className="text-gradient">Trusted by Thousands.</span>
           </h1>
-          <p className="mt-4 sm:mt-6 text-base sm:text-lg text-gray-400 max-w-2xl mx-auto">
+          <p className="mt-4 sm:mt-6 text-base sm:text-lg text-gray-500 max-w-2xl mx-auto">
             Since 1997, C&S Plumbing has been the backbone of Southwest
             Florida&apos;s plumbing infrastructure — from residential homes to
             commercial projects.

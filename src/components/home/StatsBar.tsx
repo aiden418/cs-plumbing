@@ -7,7 +7,7 @@ import { STATS } from "@/lib/constants";
 
 export default function StatsBar() {
   return (
-    <section className="relative py-12 sm:py-16 lg:py-20 border-y border-white/5 bg-surface">
+    <section className="relative py-12 sm:py-16 lg:py-20 border-y border-gray-200 bg-[#F5F5F7]">
       <Container>
         <ScrollReveal>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-4">
@@ -16,7 +16,7 @@ export default function StatsBar() {
                 key={stat.label}
                 className="text-center"
               >
-                <div className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-1 sm:mb-2">
+                <div className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 mb-1 sm:mb-2">
                   <CountUp
                     end={stat.value}
                     suffix={stat.suffix}

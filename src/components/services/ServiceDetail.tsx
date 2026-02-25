@@ -29,16 +29,16 @@ export default function ServiceDetail({
   return (
     <>
       {/* Hero */}
-      <section className="pt-24 sm:pt-28 lg:pt-32 pb-12 sm:pb-16 bg-surface">
+      <section className="pt-24 sm:pt-28 lg:pt-32 pb-12 sm:pb-16 bg-[#F5F5F7]">
         <Container>
           <div className="max-w-3xl">
             <span className="inline-block text-primary text-xs sm:text-sm font-semibold tracking-widest uppercase mb-3 sm:mb-4">
               {title}
             </span>
-            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-black text-white leading-tight mb-4 sm:mb-6">
+            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-black text-gray-900 leading-tight mb-4 sm:mb-6">
               {heroText}
             </h1>
-            <p className="text-base sm:text-lg text-gray-400 leading-relaxed mb-6 sm:mb-8">
+            <p className="text-base sm:text-lg text-gray-500 leading-relaxed mb-6 sm:mb-8">
               {description}
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
@@ -66,7 +66,7 @@ export default function ServiceDetail({
       <section className="py-16 sm:py-24 lg:py-32">
         <Container>
           <ScrollReveal>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-8 sm:mb-12">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-8 sm:mb-12">
               What We Offer
             </h2>
           </ScrollReveal>
@@ -76,12 +76,12 @@ export default function ServiceDetail({
               <motion.div
                 key={service.id}
                 variants={staggerItem}
-                className="bg-surface rounded-2xl border border-white/5 p-5 sm:p-6 lg:p-8 hover:border-primary/20 transition-all duration-500"
+                className="bg-[#F5F5F7] rounded-2xl border border-gray-200 p-5 sm:p-6 lg:p-8 hover:border-primary/30 transition-all duration-500"
               >
-                <h3 className="text-lg sm:text-xl font-bold text-white mb-2 sm:mb-3">
+                <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">
                   {service.title}
                 </h3>
-                <p className="text-gray-400 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4">
+                <p className="text-gray-500 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4">
                   {service.description}
                 </p>
                 {service.features && (
@@ -89,7 +89,7 @@ export default function ServiceDetail({
                     {service.features.map((feature) => (
                       <li
                         key={feature}
-                        className="flex items-center gap-2 text-xs sm:text-sm text-gray-300"
+                        className="flex items-center gap-2 text-xs sm:text-sm text-gray-600"
                       >
                         <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-primary flex-shrink-0" />
                         {feature}
@@ -105,11 +105,11 @@ export default function ServiceDetail({
 
       {/* Highlights */}
       {highlights && (
-        <section className="py-16 sm:py-24 lg:py-32 bg-surface">
+        <section className="py-16 sm:py-24 lg:py-32 bg-[#F5F5F7]">
           <Container>
             <ScrollReveal>
               <div className="max-w-3xl mx-auto text-center">
-                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-8 sm:mb-12">
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-8 sm:mb-12">
                   Why Choose C&S for {title}
                 </h2>
               </div>
@@ -124,7 +124,7 @@ export default function ServiceDetail({
                   <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0 mt-0.5">
                     <Check className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-primary" />
                   </div>
-                  <span className="text-gray-300 text-sm">{highlight}</span>
+                  <span className="text-gray-600 text-sm">{highlight}</span>
                 </motion.div>
               ))}
             </StaggerChildren>

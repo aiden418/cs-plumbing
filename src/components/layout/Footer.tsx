@@ -17,7 +17,7 @@ const quickLinks = [
 
 export default function Footer() {
   return (
-    <footer className="bg-surface border-t border-white/5">
+    <footer className="bg-[#F5F5F7] border-t border-gray-200">
       {/* Main Footer */}
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 lg:gap-12">
@@ -32,25 +32,25 @@ export default function Footer() {
                 className="h-16 w-auto object-contain"
               />
             </div>
-            <p className="text-gray-400 text-sm leading-relaxed mb-4 sm:mb-6">
+            <p className="text-gray-500 text-sm leading-relaxed mb-4 sm:mb-6">
               {BUSINESS.description}
             </p>
             <div className="flex flex-col gap-3 text-sm">
               <a
                 href={`tel:${BUSINESS.phoneRaw}`}
-                className="flex items-center gap-2 text-gray-300 hover:text-primary transition-colors"
+                className="flex items-center gap-2 text-gray-600 hover:text-primary transition-colors"
               >
                 <Phone className="w-4 h-4 text-primary flex-shrink-0" />
                 {BUSINESS.phone}
               </a>
               <a
                 href={`mailto:${BUSINESS.email}`}
-                className="flex items-center gap-2 text-gray-300 hover:text-primary transition-colors"
+                className="flex items-center gap-2 text-gray-600 hover:text-primary transition-colors"
               >
                 <Mail className="w-4 h-4 text-primary flex-shrink-0" />
                 {BUSINESS.email}
               </a>
-              <div className="flex items-start gap-2 text-gray-300">
+              <div className="flex items-start gap-2 text-gray-600">
                 <MapPin className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
                 <span>
                   {BUSINESS.address}
@@ -63,7 +63,7 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-white font-semibold text-base sm:text-lg mb-4 sm:mb-6">
+            <h3 className="text-gray-900 font-semibold text-base sm:text-lg mb-4 sm:mb-6">
               Quick Links
             </h3>
             <ul className="space-y-2.5 sm:space-y-3">
@@ -71,7 +71,7 @@ export default function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="flex items-center gap-1 text-sm text-gray-400 hover:text-primary transition-colors group"
+                    className="flex items-center gap-1 text-sm text-gray-500 hover:text-primary transition-colors group"
                   >
                     <ChevronRight className="w-3 h-3 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all duration-200" />
                     {link.label}
@@ -83,7 +83,7 @@ export default function Footer() {
 
           {/* Services — hidden on tiny mobile */}
           <div className="hidden sm:block">
-            <h3 className="text-white font-semibold text-base sm:text-lg mb-4 sm:mb-6">
+            <h3 className="text-gray-900 font-semibold text-base sm:text-lg mb-4 sm:mb-6">
               Our Services
             </h3>
             <ul className="space-y-2.5 sm:space-y-3">
@@ -91,7 +91,7 @@ export default function Footer() {
                 <li key={service.id}>
                   <Link
                     href={service.href}
-                    className="flex items-center gap-1 text-sm text-gray-400 hover:text-primary transition-colors group"
+                    className="flex items-center gap-1 text-sm text-gray-500 hover:text-primary transition-colors group"
                   >
                     <ChevronRight className="w-3 h-3 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all duration-200" />
                     {service.title}
@@ -103,10 +103,10 @@ export default function Footer() {
 
           {/* Hours & Service Areas */}
           <div>
-            <h3 className="text-white font-semibold text-base sm:text-lg mb-4 sm:mb-6">
+            <h3 className="text-gray-900 font-semibold text-base sm:text-lg mb-4 sm:mb-6">
               Business Hours
             </h3>
-            <div className="flex flex-col gap-2 text-sm text-gray-400 mb-6 sm:mb-8">
+            <div className="flex flex-col gap-2 text-sm text-gray-500 mb-6 sm:mb-8">
               <div className="flex items-center gap-2">
                 <Clock className="w-4 h-4 text-primary flex-shrink-0" />
                 <span>{BUSINESS.hours.weekday}</span>
@@ -118,10 +118,10 @@ export default function Footer() {
               </div>
             </div>
 
-            <h3 className="text-white font-semibold text-base sm:text-lg mb-3 sm:mb-4">
+            <h3 className="text-gray-900 font-semibold text-base sm:text-lg mb-3 sm:mb-4">
               Service Areas
             </h3>
-            <div className="flex flex-wrap gap-x-1.5 gap-y-1 text-xs sm:text-sm text-gray-400">
+            <div className="flex flex-wrap gap-x-1.5 gap-y-1 text-xs sm:text-sm text-gray-500">
               {SERVICE_AREAS.slice(0, 8).map((area, i) => {
                 const areaLanding = AREA_LANDINGS.find((a) => a.city === area);
                 return (
@@ -147,17 +147,17 @@ export default function Footer() {
       </div>
 
       {/* Bottom Bar */}
-      <div className="border-t border-white/5">
+      <div className="border-t border-gray-200">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-4 sm:py-6 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
           <p className="text-xs sm:text-sm text-gray-500 text-center sm:text-left">
             &copy; {new Date().getFullYear()} {BUSINESS.fullName}. All rights
             reserved. License #{BUSINESS.license}
           </p>
           <div className="flex items-center gap-4 sm:gap-6 text-xs sm:text-sm text-gray-500">
-            <Link href="/contact" className="hover:text-gray-300 transition-colors">
+            <Link href="/contact" className="hover:text-gray-700 transition-colors">
               Privacy Policy
             </Link>
-            <Link href="/contact" className="hover:text-gray-300 transition-colors">
+            <Link href="/contact" className="hover:text-gray-700 transition-colors">
               Terms of Service
             </Link>
           </div>

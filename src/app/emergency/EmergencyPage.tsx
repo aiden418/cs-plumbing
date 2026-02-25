@@ -30,7 +30,7 @@ export default function EmergencyPage() {
     <PageTransition>
       {/* Hero */}
       <section className="relative pt-24 sm:pt-28 lg:pt-32 pb-16 sm:pb-20 lg:pb-24 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-emergency/5 to-background" />
+        <div className="absolute inset-0 bg-gradient-to-b from-emergency/5 to-white" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,59,48,0.08)_0%,transparent_60%)]" />
 
         <Container className="relative z-10">
@@ -53,10 +53,10 @@ export default function EmergencyPage() {
               <span className="inline-block text-emergency text-xs sm:text-sm font-semibold tracking-widest uppercase mb-3 sm:mb-4">
                 Plumbing Emergency?
               </span>
-              <h1 className="text-3xl sm:text-5xl lg:text-7xl font-black text-white leading-tight mb-4 sm:mb-6">
+              <h1 className="text-3xl sm:text-5xl lg:text-7xl font-black text-gray-900 leading-tight mb-4 sm:mb-6">
                 We&apos;re Here <span className="text-emergency">24/7</span>
               </h1>
-              <p className="text-base sm:text-lg text-gray-400 mb-6 sm:mb-8 px-2">
+              <p className="text-base sm:text-lg text-gray-500 mb-6 sm:mb-8 px-2">
                 Don&apos;t wait. Every minute counts in a plumbing emergency.
                 Call us now and we&apos;ll be on our way.
               </p>
@@ -87,10 +87,10 @@ export default function EmergencyPage() {
       </section>
 
       {/* Emergency Types */}
-      <section className="py-16 sm:py-24 lg:py-32 bg-surface">
+      <section className="py-16 sm:py-24 lg:py-32 bg-[#F5F5F7]">
         <Container>
           <ScrollReveal>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white text-center mb-8 sm:mb-12">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 text-center mb-8 sm:mb-12">
               Common Plumbing Emergencies
             </h2>
           </ScrollReveal>
@@ -98,14 +98,14 @@ export default function EmergencyPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {emergencyTypes.map((type, i) => (
               <ScrollReveal key={type.title} delay={i * 0.08}>
-                <div className="p-5 sm:p-6 rounded-2xl border border-white/5 hover:border-emergency/20 transition-all duration-500">
+                <div className="p-5 sm:p-6 rounded-2xl border border-gray-200 hover:border-emergency/20 transition-all duration-500">
                   <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-emergency/10 flex items-center justify-center text-emergency mb-3 sm:mb-4">
                     {type.icon}
                   </div>
-                  <h3 className="text-base sm:text-lg font-bold text-white mb-1.5 sm:mb-2">
+                  <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-1.5 sm:mb-2">
                     {type.title}
                   </h3>
-                  <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">
+                  <p className="text-gray-500 text-xs sm:text-sm leading-relaxed">
                     {type.description}
                   </p>
                 </div>
@@ -120,10 +120,10 @@ export default function EmergencyPage() {
         <Container size="narrow">
           <ScrollReveal>
             <div className="text-center mb-8 sm:mb-12">
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-3 sm:mb-4">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
                 While You Wait
               </h2>
-              <p className="text-sm sm:text-base text-gray-400">
+              <p className="text-sm sm:text-base text-gray-500">
                 Quick steps you can take to minimize damage before we arrive.
               </p>
             </div>
@@ -132,11 +132,11 @@ export default function EmergencyPage() {
           <div className="space-y-3 sm:space-y-4">
             {tips.map((tip, i) => (
               <ScrollReveal key={tip} delay={i * 0.05}>
-                <div className="flex items-start gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl bg-surface border border-white/5">
+                <div className="flex items-start gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl bg-[#F5F5F7] border border-gray-200">
                   <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 text-primary text-xs sm:text-sm font-bold">
                     {i + 1}
                   </div>
-                  <p className="text-gray-300 text-xs sm:text-sm">{tip}</p>
+                  <p className="text-gray-700 text-xs sm:text-sm">{tip}</p>
                 </div>
               </ScrollReveal>
             ))}
@@ -145,7 +145,7 @@ export default function EmergencyPage() {
           {/* Bottom CTA */}
           <ScrollReveal>
             <div className="mt-10 sm:mt-16 text-center">
-              <p className="text-sm sm:text-base text-gray-400 mb-4 sm:mb-6">
+              <p className="text-sm sm:text-base text-gray-500 mb-4 sm:mb-6">
                 Remember: call us first, then take these steps.
               </p>
               <a

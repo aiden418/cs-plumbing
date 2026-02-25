@@ -8,7 +8,7 @@ interface BadgeProps {
 
 const variants = {
   primary: "bg-primary/10 text-primary border-primary/20",
-  surface: "bg-surface-light text-gray-300 border-white/10",
+  surface: "bg-gray-100 text-gray-600 border-gray-200",
   emergency: "bg-emergency/10 text-emergency border-emergency/20",
 };
 

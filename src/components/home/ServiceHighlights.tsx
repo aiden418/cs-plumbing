@@ -43,7 +43,7 @@ export default function ServiceHighlights() {
           {highlighted.map((service) => (
             <motion.div key={service.id} variants={staggerItem}>
               <Link href={service.href} className="group block h-full">
-                <div className="relative h-full bg-surface rounded-2xl border border-white/5 p-5 sm:p-6 lg:p-8 transition-all duration-500 hover:border-primary/20 hover:shadow-[0_0_40px_rgba(0,153,255,0.08)] overflow-hidden">
+                <div className="relative h-full bg-white rounded-2xl border border-gray-200 p-5 sm:p-6 lg:p-8 transition-all duration-500 hover:border-primary/30 hover:shadow-[0_2px_20px_rgba(0,0,0,0.08)] overflow-hidden">
                   {/* Glow effect on hover */}
                   <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
@@ -51,10 +51,10 @@ export default function ServiceHighlights() {
                     <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-4 sm:mb-5 group-hover:bg-primary/20 transition-colors duration-300">
                       {iconMap[service.icon]}
                     </div>
-                    <h3 className="text-lg sm:text-xl font-bold text-white mb-2 sm:mb-3">
+                    <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">
                       {service.title}
                     </h3>
-                    <p className="text-gray-400 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4">
+                    <p className="text-gray-500 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4">
                       {service.description}
                     </p>
                     <div className="flex items-center gap-1 text-primary text-sm font-medium opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-[-8px] group-hover:translate-x-0">

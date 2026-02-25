@@ -2,24 +2,24 @@
 
 /* ========================================
    C&S PLUMBING — DESIGN SYSTEM
-   Dark & Bold, Apple-Inspired
+   Light & Clean, Apple-Inspired
    ======================================== */
 
 @theme inline {
   /* Colors */
-  --color-background: #0A0A0F;
-  --color-surface: #12121A;
-  --color-surface-light: #1A1A2E;
-  --color-primary: #0099FF;
-  --color-primary-dark: #0077CC;
-  --color-primary-glow: rgba(0, 153, 255, 0.2);
+  --color-background: #FFFFFF;
+  --color-surface: #F5F5F7;
+  --color-surface-light: #E8E8ED;
+  --color-primary: #0077CC;
+  --color-primary-dark: #005FA3;
+  --color-primary-glow: rgba(0, 119, 204, 0.12);
   --color-white: #FFFFFF;
   --color-gray-100: #F3F4F6;
-  --color-gray-300: #D1D5DB;
-  --color-gray-500: #6B7280;
-  --color-gray-700: #374151;
+  --color-gray-300: #D2D2D7;
+  --color-gray-500: #86868B;
+  --color-gray-700: #1D1D1F;
   --color-emergency: #FF3B30;
-  --color-success: #34D399;
+  --color-success: #34C759;
 
   /* Typography */
   --font-sans: var(--font-inter);
@@ -45,7 +45,7 @@
 
   body {
     background: var(--color-background);
-    color: var(--color-gray-300);
+    color: #424245;
     font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
     font-size: 1.125rem;
     line-height: 1.7;
@@ -63,16 +63,16 @@
   }
 
   ::-webkit-scrollbar-track {
-    background: var(--color-background);
+    background: #F5F5F7;
   }
 
   ::-webkit-scrollbar-thumb {
-    background: var(--color-surface-light);
+    background: #C7C7CC;
     border-radius: 4px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: var(--color-gray-500);
+    background: #A1A1A6;
   }
 
   ::selection {
@@ -87,7 +87,7 @@
 
 @layer base {
   h1, h2, h3, h4, h5, h6 {
-    color: var(--color-white);
+    color: #1D1D1F;
     font-weight: 700;
     letter-spacing: -0.02em;
     line-height: 1.1;
@@ -104,27 +104,27 @@
    ======================================== */
 
 @utility text-gradient {
-  background: linear-gradient(135deg, var(--color-primary) 0%, #00D4FF 100%);
+  background: linear-gradient(135deg, #0077CC 0%, #00A8E8 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 @utility glow {
-  box-shadow: 0 0 20px var(--color-primary-glow),
-              0 0 40px var(--color-primary-glow);
+  box-shadow: 0 4px 24px rgba(0, 119, 204, 0.12),
+              0 1px 4px rgba(0, 0, 0, 0.06);
 }
 
 @utility glow-text {
-  text-shadow: 0 0 20px var(--color-primary-glow),
-               0 0 40px var(--color-primary-glow);
+  text-shadow: none;
 }
 
 @utility glass {
-  background: rgba(18, 18, 26, 0.8);
+  background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
 }
 
 /* ========================================
@@ -143,10 +143,10 @@
 @utility animated-gradient {
   background: linear-gradient(
     -45deg,
-    var(--color-background),
-    #0A1628,
-    #0A0A1E,
-    var(--color-background)
+    #FFFFFF,
+    #F0F4FF,
+    #F5F5F7,
+    #FFFFFF
   );
   background-size: 400% 400%;
   animation: gradient-shift 15s ease infinite;

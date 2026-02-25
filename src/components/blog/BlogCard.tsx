@@ -10,7 +10,7 @@ export default function BlogCard({ post }: { post: BlogPost }) {
     <motion.a
       href={`/blog/${post.slug}`}
       variants={staggerItem}
-      className="bg-surface rounded-2xl border border-white/5 p-5 sm:p-6 lg:p-8 hover:border-primary/20 transition-all duration-500 block group"
+      className="bg-white rounded-2xl border border-gray-200 p-5 sm:p-6 lg:p-8 hover:border-primary/30 transition-all duration-500 block group"
     >
       <div className="flex items-center gap-3 mb-3">
         <span className="text-xs font-semibold text-primary uppercase tracking-wider">
@@ -21,10 +21,10 @@ export default function BlogCard({ post }: { post: BlogPost }) {
           {post.readTime}
         </span>
       </div>
-      <h2 className="text-lg sm:text-xl font-bold text-white mb-2 sm:mb-3 group-hover:text-primary transition-colors">
+      <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3 group-hover:text-primary transition-colors">
         {post.title}
       </h2>
-      <p className="text-gray-400 text-xs sm:text-sm leading-relaxed mb-4">
+      <p className="text-gray-500 text-xs sm:text-sm leading-relaxed mb-4">
         {post.excerpt}
       </p>
       <span className="inline-flex items-center gap-1.5 text-primary text-sm font-medium group-hover:gap-2.5 transition-all">

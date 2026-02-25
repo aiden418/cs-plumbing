@@ -30,11 +30,11 @@ export default function SectionHeading({
             {overline}
           </span>
         )}
-        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight">
+        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
           {title}
         </h2>
         {subtitle && (
-          <p className="mt-4 text-gray-400 text-lg max-w-2xl leading-relaxed mx-auto">
+          <p className="mt-4 text-gray-500 text-lg max-w-2xl leading-relaxed mx-auto">
             {subtitle}
           </p>
         )}

@@ -44,7 +44,7 @@ export default function ServiceCard({ service, index }: ServiceCardProps) {
       }}
     >
       <Link href={service.href} className="group block h-full">
-        <div className="h-full bg-surface rounded-2xl border border-white/5 p-5 sm:p-6 lg:p-8 transition-all duration-500 hover:border-primary/20 hover:shadow-[0_0_40px_rgba(0,153,255,0.08)] relative overflow-hidden">
+        <div className="h-full bg-white rounded-2xl border border-gray-200 p-5 sm:p-6 lg:p-8 transition-all duration-500 hover:border-primary/30 hover:shadow-[0_2px_20px_rgba(0,0,0,0.08)] relative overflow-hidden">
           <div className="absolute top-0 right-0 w-40 h-40 bg-primary/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
           <div className="relative z-10">
@@ -52,10 +52,10 @@ export default function ServiceCard({ service, index }: ServiceCardProps) {
               {iconMap[service.icon]}
             </div>
 
-            <h3 className="text-lg sm:text-xl font-bold text-white mb-2 sm:mb-3">
+            <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">
               {service.title}
             </h3>
-            <p className="text-gray-400 text-xs sm:text-sm leading-relaxed mb-4 sm:mb-5">
+            <p className="text-gray-500 text-xs sm:text-sm leading-relaxed mb-4 sm:mb-5">
               {service.description}
             </p>
 

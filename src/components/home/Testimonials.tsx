@@ -49,7 +49,7 @@ export default function Testimonials() {
                     key={i}
                     className="flex-[0_0_100%] sm:flex-[0_0_calc(50%-8px)] lg:flex-[0_0_calc(33.333%-16px)] min-w-0"
                   >
-                    <div className="h-full bg-surface rounded-2xl border border-white/5 p-5 sm:p-6 lg:p-8 flex flex-col">
+                    <div className="h-full bg-white rounded-2xl border border-gray-200 p-5 sm:p-6 lg:p-8 flex flex-col">
                       <Quote className="w-6 h-6 sm:w-8 sm:h-8 text-primary/30 mb-3 sm:mb-4" />
 
                       <div className="flex gap-1 mb-3 sm:mb-4">
@@ -63,12 +63,12 @@ export default function Testimonials() {
                         )}
                       </div>
 
-                      <p className="text-gray-300 text-sm leading-relaxed flex-1 mb-4 sm:mb-6">
+                      <p className="text-gray-600 text-sm leading-relaxed flex-1 mb-4 sm:mb-6">
                         &ldquo;{testimonial.text}&rdquo;
                       </p>
 
-                      <div className="border-t border-white/5 pt-3 sm:pt-4">
-                        <div className="font-semibold text-white text-sm">
+                      <div className="border-t border-gray-200 pt-3 sm:pt-4">
+                        <div className="font-semibold text-gray-900 text-sm">
                           {testimonial.name}
                         </div>
                         <div className="text-gray-500 text-xs">
@@ -85,7 +85,7 @@ export default function Testimonials() {
             <div className="flex items-center justify-center gap-4 mt-6 sm:mt-8">
               <button
                 onClick={scrollPrev}
-                className="w-11 h-11 sm:w-10 sm:h-10 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-primary/30 transition-all duration-200"
+                className="w-11 h-11 sm:w-10 sm:h-10 rounded-full border border-gray-300 flex items-center justify-center text-gray-400 hover:text-gray-900 hover:border-primary/30 transition-all duration-200"
                 aria-label="Previous testimonial"
               >
                 <ChevronLeft className="w-5 h-5" />
@@ -96,7 +96,7 @@ export default function Testimonials() {
                     key={i}
                     onClick={() => emblaApi?.scrollTo(i)}
                     className={`h-2.5 sm:h-2 rounded-full transition-all duration-300 ${
-                      i === selectedIndex ? "bg-primary w-7 sm:w-6" : "bg-white/20 w-2.5 sm:w-2"
+                      i === selectedIndex ? "bg-primary w-7 sm:w-6" : "bg-gray-300 w-2.5 sm:w-2"
                     }`}
                     aria-label={`Go to testimonial ${i + 1}`}
                   />
@@ -104,7 +104,7 @@ export default function Testimonials() {
               </div>
               <button
                 onClick={scrollNext}
-                className="w-11 h-11 sm:w-10 sm:h-10 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-primary/30 transition-all duration-200"
+                className="w-11 h-11 sm:w-10 sm:h-10 rounded-full border border-gray-300 flex items-center justify-center text-gray-400 hover:text-gray-900 hover:border-primary/30 transition-all duration-200"
                 aria-label="Next testimonial"
               >
                 <ChevronRight className="w-5 h-5" />

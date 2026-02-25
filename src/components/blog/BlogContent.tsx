@@ -10,7 +10,7 @@ export default function BlogContent({ post }: { post: BlogPost }) {
   return (
     <>
       {/* Hero */}
-      <section className="pt-24 sm:pt-28 lg:pt-32 pb-8 sm:pb-12 bg-surface">
+      <section className="pt-24 sm:pt-28 lg:pt-32 pb-8 sm:pb-12 bg-[#F5F5F7]">
         <Container>
           <div className="max-w-3xl">
             <a
@@ -36,7 +36,7 @@ export default function BlogContent({ post }: { post: BlogPost }) {
                 })}
               </span>
             </div>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white leading-tight">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 leading-tight">
               {post.title}
             </h1>
           </div>
@@ -49,14 +49,14 @@ export default function BlogContent({ post }: { post: BlogPost }) {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
             {/* Article */}
             <article
-              className="lg:col-span-2 prose prose-invert prose-sm sm:prose-base max-w-none
-                prose-headings:text-white prose-headings:font-bold
+              className="lg:col-span-2 prose prose-sm sm:prose-base max-w-none
+                prose-headings:text-gray-900 prose-headings:font-bold
                 prose-h2:text-xl sm:prose-h2:text-2xl prose-h2:mt-8 prose-h2:mb-4
                 prose-h3:text-lg prose-h3:mt-6 prose-h3:mb-3
-                prose-p:text-gray-400 prose-p:leading-relaxed
+                prose-p:text-gray-600 prose-p:leading-relaxed
                 prose-a:text-primary prose-a:no-underline hover:prose-a:underline
-                prose-li:text-gray-400
-                prose-strong:text-white
+                prose-li:text-gray-600
+                prose-strong:text-gray-900
                 prose-ul:space-y-1"
               dangerouslySetInnerHTML={{ __html: post.content }}
             />
@@ -64,11 +64,11 @@ export default function BlogContent({ post }: { post: BlogPost }) {
             {/* Sidebar */}
             <aside className="lg:col-span-1">
               <div className="sticky top-24 space-y-6">
-                <div className="bg-surface rounded-2xl border border-white/5 p-5 sm:p-6">
-                  <h3 className="text-lg font-bold text-white mb-3">
+                <div className="bg-[#F5F5F7] rounded-2xl border border-gray-200 p-5 sm:p-6">
+                  <h3 className="text-lg font-bold text-gray-900 mb-3">
                     Need Help?
                   </h3>
-                  <p className="text-gray-400 text-sm mb-4">
+                  <p className="text-gray-500 text-sm mb-4">
                     Our team is ready to help with any plumbing question or
                     project. Call us or book online.
                   </p>

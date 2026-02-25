@@ -123,16 +123,16 @@ export default function BookingPage() {
 
   return (
     <PageTransition>
-      <section className="pt-24 sm:pt-28 lg:pt-32 pb-12 sm:pb-16 bg-surface">
+      <section className="pt-24 sm:pt-28 lg:pt-32 pb-12 sm:pb-16 bg-[#F5F5F7]">
         <Container size="narrow">
           <div className="text-center mb-8 sm:mb-12">
             <span className="inline-block text-primary text-xs sm:text-sm font-semibold tracking-widest uppercase mb-3 sm:mb-4">
               Book a Service
             </span>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white leading-tight">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 leading-tight">
               Schedule Your <span className="text-gradient">Appointment</span>
             </h1>
-            <p className="mt-3 sm:mt-4 text-sm sm:text-base text-gray-400">
+            <p className="mt-3 sm:mt-4 text-sm sm:text-base text-gray-500">
               Book online in under 2 minutes. We&apos;ll confirm your
               appointment within the hour.
             </p>
@@ -147,7 +147,7 @@ export default function BookingPage() {
                     "w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-xs sm:text-sm font-bold transition-all duration-300",
                     i <= step
                       ? "bg-primary text-white"
-                      : "bg-surface-light text-gray-500 border border-white/10"
+                      : "bg-[#F5F5F7]-light text-gray-500 border border-gray-200"
                   )}
                 >
                   {i < step ? (
@@ -160,7 +160,7 @@ export default function BookingPage() {
                   <div
                     className={cn(
                       "w-5 sm:w-8 md:w-12 h-0.5 mx-0.5 sm:mx-1 transition-colors duration-300",
-                      i < step ? "bg-primary" : "bg-white/10"
+                      i < step ? "bg-primary" : "bg-gray-200"
                     )}
                   />
                 )}
@@ -172,7 +172,7 @@ export default function BookingPage() {
 
       <section className="pb-16 sm:pb-24 lg:pb-32 -mt-4">
         <Container size="narrow">
-          <div className="bg-surface rounded-2xl border border-white/5 p-4 sm:p-6 lg:p-8 min-h-[350px] sm:min-h-[400px]">
+          <div className="bg-white rounded-2xl border border-gray-200 p-4 sm:p-6 lg:p-8 min-h-[350px] sm:min-h-[400px]">
             <AnimatePresence mode="wait">
               {/* Step 0: Select Service */}
               {step === 0 && (
@@ -183,7 +183,7 @@ export default function BookingPage() {
                   exit={{ opacity: 0, x: -30 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <h2 className="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6">
+                  <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6">
                     What do you need help with?
                   </h2>
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
@@ -195,7 +195,7 @@ export default function BookingPage() {
                           "p-3 sm:p-4 rounded-xl border text-center transition-all duration-300",
                           form.service === cat.id
                             ? "border-primary bg-primary/10 text-primary"
-                            : "border-white/10 text-gray-400 hover:border-white/20 hover:text-white"
+                            : "border-gray-200 text-gray-500 hover:border-gray-300 hover:text-gray-900"
                         )}
                       >
                         <div className="flex justify-center mb-1.5 sm:mb-2">
@@ -217,7 +217,7 @@ export default function BookingPage() {
                   exit={{ opacity: 0, x: -30 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <h2 className="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6">
+                  <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6">
                     Tell us more about the issue
                   </h2>
                   <textarea
@@ -225,10 +225,10 @@ export default function BookingPage() {
                     onChange={(e) => update("description", e.target.value)}
                     placeholder="Describe the plumbing issue or project..."
                     rows={4}
-                    className="w-full bg-background border border-white/10 rounded-xl px-3 sm:px-4 py-2.5 sm:py-3 text-white text-sm outline-none focus:border-primary transition-colors resize-none"
+                    className="w-full bg-white border border-gray-200 rounded-xl px-3 sm:px-4 py-2.5 sm:py-3 text-gray-900 text-sm outline-none focus:border-primary transition-colors resize-none"
                   />
                   <div className="mt-4 sm:mt-6">
-                    <p className="text-xs sm:text-sm text-gray-400 mb-2 sm:mb-3">How urgent is this?</p>
+                    <p className="text-xs sm:text-sm text-gray-500 mb-2 sm:mb-3">How urgent is this?</p>
                     <div className="flex flex-wrap gap-2 sm:gap-3">
                       {["normal", "soon", "emergency"].map((u) => (
                         <button
@@ -240,7 +240,7 @@ export default function BookingPage() {
                               ? u === "emergency"
                                 ? "bg-emergency/20 text-emergency border border-emergency/30"
                                 : "bg-primary/20 text-primary border border-primary/30"
-                              : "bg-surface-light text-gray-400 border border-white/10"
+                              : "bg-[#F5F5F7]-light text-gray-500 border border-gray-200"
                           )}
                         >
                           {u === "soon" ? "Within a week" : u}
@@ -260,11 +260,11 @@ export default function BookingPage() {
                   exit={{ opacity: 0, x: -30 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <h2 className="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6">
+                  <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6">
                     Pick a date & time
                   </h2>
                   <div className="mb-4 sm:mb-6">
-                    <p className="text-xs sm:text-sm text-gray-400 mb-2 sm:mb-3">Preferred Date</p>
+                    <p className="text-xs sm:text-sm text-gray-500 mb-2 sm:mb-3">Preferred Date</p>
                     <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-2 max-h-[180px] sm:max-h-[200px] overflow-y-auto">
                       {dates.map((d) => (
                         <button
@@ -274,7 +274,7 @@ export default function BookingPage() {
                             "px-3 py-2 rounded-lg text-xs font-medium transition-all duration-300",
                             form.date === d.value
                               ? "bg-primary text-white"
-                              : "bg-surface-light text-gray-400 border border-white/10 hover:border-white/20"
+                              : "bg-[#F5F5F7]-light text-gray-500 border border-gray-200 hover:border-gray-300"
                           )}
                         >
                           {d.label}
@@ -283,7 +283,7 @@ export default function BookingPage() {
                     </div>
                   </div>
                   <div>
-                    <p className="text-xs sm:text-sm text-gray-400 mb-2 sm:mb-3">Preferred Time</p>
+                    <p className="text-xs sm:text-sm text-gray-500 mb-2 sm:mb-3">Preferred Time</p>
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2">
                       {timeSlots.map((t) => (
                         <button
@@ -293,7 +293,7 @@ export default function BookingPage() {
                             "px-3 py-2 rounded-lg text-xs font-medium transition-all duration-300",
                             form.time === t
                               ? "bg-primary text-white"
-                              : "bg-surface-light text-gray-400 border border-white/10 hover:border-white/20"
+                              : "bg-[#F5F5F7]-light text-gray-500 border border-gray-200 hover:border-gray-300"
                           )}
                         >
                           {t}
@@ -314,14 +314,14 @@ export default function BookingPage() {
                   transition={{ duration: 0.3 }}
                   className="space-y-4"
                 >
-                  <h2 className="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6">
+                  <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6">
                     Your Information
                   </h2>
                   <input
                     value={form.name}
                     onChange={(e) => update("name", e.target.value)}
                     placeholder="Full Name"
-                    className="w-full bg-background border border-white/10 rounded-xl px-3 sm:px-4 py-2.5 sm:py-3 text-white text-sm outline-none focus:border-primary transition-colors"
+                    className="w-full bg-white border border-gray-200 rounded-xl px-3 sm:px-4 py-2.5 sm:py-3 text-gray-900 text-sm outline-none focus:border-primary transition-colors"
                   />
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     <input
@@ -329,21 +329,21 @@ export default function BookingPage() {
                       onChange={(e) => update("email", e.target.value)}
                       placeholder="Email"
                       type="email"
-                      className="w-full bg-background border border-white/10 rounded-xl px-3 sm:px-4 py-2.5 sm:py-3 text-white text-sm outline-none focus:border-primary transition-colors"
+                      className="w-full bg-white border border-gray-200 rounded-xl px-3 sm:px-4 py-2.5 sm:py-3 text-gray-900 text-sm outline-none focus:border-primary transition-colors"
                     />
                     <input
                       value={form.phone}
                       onChange={(e) => update("phone", e.target.value)}
                       placeholder="Phone"
                       type="tel"
-                      className="w-full bg-background border border-white/10 rounded-xl px-3 sm:px-4 py-2.5 sm:py-3 text-white text-sm outline-none focus:border-primary transition-colors"
+                      className="w-full bg-white border border-gray-200 rounded-xl px-3 sm:px-4 py-2.5 sm:py-3 text-gray-900 text-sm outline-none focus:border-primary transition-colors"
                     />
                   </div>
                   <input
                     value={form.address}
                     onChange={(e) => update("address", e.target.value)}
                     placeholder="Service Address"
-                    className="w-full bg-background border border-white/10 rounded-xl px-3 sm:px-4 py-2.5 sm:py-3 text-white text-sm outline-none focus:border-primary transition-colors"
+                    className="w-full bg-white border border-gray-200 rounded-xl px-3 sm:px-4 py-2.5 sm:py-3 text-gray-900 text-sm outline-none focus:border-primary transition-colors"
                   />
                 </motion.div>
               )}
@@ -358,10 +358,10 @@ export default function BookingPage() {
                   className="text-center py-8"
                 >
                   <CheckCircle className="w-14 h-14 sm:w-20 sm:h-20 text-success mx-auto mb-4 sm:mb-6" />
-                  <h2 className="text-xl sm:text-2xl font-bold text-white mb-2 sm:mb-3">
+                  <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2 sm:mb-3">
                     Booking Submitted!
                   </h2>
-                  <p className="text-sm sm:text-base text-gray-400 mb-6 sm:mb-8 max-w-md mx-auto">
+                  <p className="text-sm sm:text-base text-gray-500 mb-6 sm:mb-8 max-w-md mx-auto">
                     We&apos;ll confirm your appointment within the hour. For
                     urgent needs, call us directly.
                   </p>
@@ -385,8 +385,8 @@ export default function BookingPage() {
                   className={cn(
                     "flex items-center gap-1 text-sm font-medium transition-colors",
                     step === 0
-                      ? "text-gray-700 cursor-not-allowed"
-                      : "text-gray-400 hover:text-white"
+                      ? "text-gray-300 cursor-not-allowed"
+                      : "text-gray-500 hover:text-gray-900"
                   )}
                 >
                   <ChevronLeft className="w-4 h-4" /> Back
@@ -398,7 +398,7 @@ export default function BookingPage() {
                     "flex items-center gap-1 px-6 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300",
                     canProceed()
                       ? "bg-primary text-white hover:bg-primary-dark"
-                      : "bg-surface-light text-gray-600 cursor-not-allowed"
+                      : "bg-[#F5F5F7]-light text-gray-600 cursor-not-allowed"
                   )}
                 >
                   {step === 3 ? "Submit Booking" : "Continue"}{" "}

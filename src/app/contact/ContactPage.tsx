@@ -36,9 +36,9 @@ function FloatingInput({
         {...props}
         placeholder=" "
         className={cn(
-          "peer w-full bg-surface border rounded-xl px-3 sm:px-4 pt-5 sm:pt-6 pb-1.5 sm:pb-2 text-white text-sm outline-none transition-all duration-300",
+          "peer w-full bg-[#F5F5F7] border rounded-xl px-3 sm:px-4 pt-5 sm:pt-6 pb-1.5 sm:pb-2 text-gray-900 text-sm outline-none transition-all duration-300",
           "focus:border-primary focus:ring-1 focus:ring-primary/20",
-          error ? "border-emergency" : "border-white/10"
+          error ? "border-emergency" : "border-gray-300"
         )}
       />
       <label className="absolute left-3 sm:left-4 top-1.5 sm:top-2 text-[10px] sm:text-xs text-gray-500 transition-all duration-200 peer-placeholder-shown:top-3.5 sm:peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm peer-focus:top-1.5 sm:peer-focus:top-2 peer-focus:text-[10px] sm:peer-focus:text-xs peer-focus:text-primary">
@@ -80,16 +80,16 @@ export default function ContactPage() {
   return (
     <PageTransition>
       {/* Hero */}
-      <section className="pt-24 sm:pt-28 lg:pt-32 pb-12 sm:pb-16 bg-surface">
+      <section className="pt-24 sm:pt-28 lg:pt-32 pb-12 sm:pb-16 bg-[#F5F5F7]">
         <Container>
           <div className="text-center max-w-3xl mx-auto">
             <span className="inline-block text-primary text-xs sm:text-sm font-semibold tracking-widest uppercase mb-3 sm:mb-4">
               Contact Us
             </span>
-            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-black text-white leading-tight">
+            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-black text-gray-900 leading-tight">
               Let&apos;s Talk <span className="text-gradient">Plumbing</span>
             </h1>
-            <p className="mt-4 sm:mt-6 text-base sm:text-lg text-gray-400">
+            <p className="mt-4 sm:mt-6 text-base sm:text-lg text-gray-500">
               Have a question, need a quote, or facing an emergency? We&apos;re
               here to help.
             </p>
@@ -103,7 +103,7 @@ export default function ContactPage() {
             {/* Contact Info */}
             <div className="lg:col-span-2">
               <ScrollReveal direction="left">
-                <h2 className="text-xl sm:text-2xl font-bold text-white mb-6 sm:mb-8">
+                <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6 sm:mb-8">
                   Get in Touch
                 </h2>
 
@@ -116,8 +116,8 @@ export default function ContactPage() {
                       <Phone className="w-4 h-4 sm:w-5 sm:h-5" />
                     </div>
                     <div>
-                      <p className="text-white font-semibold text-sm sm:text-base">Phone</p>
-                      <p className="text-gray-400 text-xs sm:text-sm">
+                      <p className="text-gray-900 font-semibold text-sm sm:text-base">Phone</p>
+                      <p className="text-gray-500 text-xs sm:text-sm">
                         {BUSINESS.phone}
                       </p>
                       <p className="text-primary text-[10px] sm:text-xs mt-1">
@@ -134,8 +134,8 @@ export default function ContactPage() {
                       <Mail className="w-4 h-4 sm:w-5 sm:h-5" />
                     </div>
                     <div>
-                      <p className="text-white font-semibold text-sm sm:text-base">Email</p>
-                      <p className="text-gray-400 text-xs sm:text-sm">{BUSINESS.email}</p>
+                      <p className="text-gray-900 font-semibold text-sm sm:text-base">Email</p>
+                      <p className="text-gray-500 text-xs sm:text-sm">{BUSINESS.email}</p>
                     </div>
                   </a>
 
@@ -144,8 +144,8 @@ export default function ContactPage() {
                       <MapPin className="w-4 h-4 sm:w-5 sm:h-5" />
                     </div>
                     <div>
-                      <p className="text-white font-semibold text-sm sm:text-base">Office</p>
-                      <p className="text-gray-400 text-xs sm:text-sm">
+                      <p className="text-gray-900 font-semibold text-sm sm:text-base">Office</p>
+                      <p className="text-gray-500 text-xs sm:text-sm">
                         {BUSINESS.address}
                         <br />
                         {BUSINESS.city}, {BUSINESS.state} {BUSINESS.zip}
@@ -158,8 +158,8 @@ export default function ContactPage() {
                       <Clock className="w-4 h-4 sm:w-5 sm:h-5" />
                     </div>
                     <div>
-                      <p className="text-white font-semibold text-sm sm:text-base">Hours</p>
-                      <p className="text-gray-400 text-xs sm:text-sm">
+                      <p className="text-gray-900 font-semibold text-sm sm:text-base">Hours</p>
+                      <p className="text-gray-500 text-xs sm:text-sm">
                         {BUSINESS.hours.weekday}
                         <br />
                         {BUSINESS.hours.saturday}
@@ -178,12 +178,12 @@ export default function ContactPage() {
             <div className="lg:col-span-3">
               <ScrollReveal direction="right">
                 {submitted ? (
-                  <div className="bg-surface rounded-2xl border border-white/5 p-8 sm:p-12 text-center">
+                  <div className="bg-[#F5F5F7] rounded-2xl border border-gray-200 p-8 sm:p-12 text-center">
                     <CheckCircle className="w-12 h-12 sm:w-16 sm:h-16 text-success mx-auto mb-3 sm:mb-4" />
-                    <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">
+                    <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">
                       Message Sent!
                     </h3>
-                    <p className="text-sm sm:text-base text-gray-400">
+                    <p className="text-sm sm:text-base text-gray-500">
                       We&apos;ll get back to you within 24 hours. For urgent
                       needs, call us at {BUSINESS.phone}.
                     </p>
@@ -191,7 +191,7 @@ export default function ContactPage() {
                 ) : (
                   <form
                     onSubmit={handleSubmit(onSubmit)}
-                    className="bg-surface rounded-2xl border border-white/5 p-5 sm:p-6 lg:p-8 space-y-4 sm:space-y-5"
+                    className="bg-[#F5F5F7] rounded-2xl border border-gray-200 p-5 sm:p-6 lg:p-8 space-y-4 sm:space-y-5"
                   >
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
                       <FloatingInput
@@ -218,11 +218,11 @@ export default function ContactPage() {
                         <select
                           {...register("service")}
                           className={cn(
-                            "w-full bg-surface border rounded-xl px-3 sm:px-4 py-3.5 sm:py-4 text-sm outline-none transition-all duration-300 appearance-none",
+                            "w-full bg-[#F5F5F7] border rounded-xl px-3 sm:px-4 py-3.5 sm:py-4 text-sm outline-none transition-all duration-300 appearance-none",
                             "focus:border-primary focus:ring-1 focus:ring-primary/20",
                             errors.service
-                              ? "border-emergency text-white"
-                              : "border-white/10 text-gray-400"
+                              ? "border-emergency text-gray-900"
+                              : "border-gray-300 text-gray-500"
                           )}
                           defaultValue=""
                         >
@@ -254,11 +254,11 @@ export default function ContactPage() {
                         placeholder=" "
                         rows={4}
                         className={cn(
-                          "peer w-full bg-surface border rounded-xl px-3 sm:px-4 pt-5 sm:pt-6 pb-1.5 sm:pb-2 text-white text-sm outline-none transition-all duration-300 resize-none",
+                          "peer w-full bg-[#F5F5F7] border rounded-xl px-3 sm:px-4 pt-5 sm:pt-6 pb-1.5 sm:pb-2 text-gray-900 text-sm outline-none transition-all duration-300 resize-none",
                           "focus:border-primary focus:ring-1 focus:ring-primary/20",
                           errors.message
                             ? "border-emergency"
-                            : "border-white/10"
+                            : "border-gray-300"
                         )}
                       />
                       <label className="absolute left-3 sm:left-4 top-1.5 sm:top-2 text-[10px] sm:text-xs text-gray-500 transition-all duration-200 peer-placeholder-shown:top-3.5 sm:peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm peer-focus:top-1.5 sm:peer-focus:top-2 peer-focus:text-[10px] sm:peer-focus:text-xs peer-focus:text-primary">

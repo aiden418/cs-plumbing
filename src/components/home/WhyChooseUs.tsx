@@ -49,7 +49,7 @@ const reasons = [
 
 export default function WhyChooseUs() {
   return (
-    <section className="py-16 sm:py-24 lg:py-32 bg-surface">
+    <section className="py-16 sm:py-24 lg:py-32 bg-[#F5F5F7]">
       <Container>
         <SectionHeading
           overline="Why C&S"
@@ -62,15 +62,15 @@ export default function WhyChooseUs() {
             <motion.div
               key={reason.title}
               variants={staggerItem}
-              className="group p-5 sm:p-6 lg:p-8 rounded-2xl border border-white/5 hover:border-primary/10 transition-all duration-500"
+              className="group p-5 sm:p-6 lg:p-8 rounded-2xl bg-white border border-gray-200 hover:border-primary/20 hover:shadow-[0_2px_20px_rgba(0,0,0,0.06)] transition-all duration-500"
             >
               <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-4 sm:mb-5 group-hover:scale-110 transition-transform duration-300">
                 {reason.icon}
               </div>
-              <h3 className="text-base sm:text-lg font-bold text-white mb-2">
+              <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-2">
                 {reason.title}
               </h3>
-              <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">
+              <p className="text-gray-500 text-xs sm:text-sm leading-relaxed">
                 {reason.description}
               </p>
             </motion.div>

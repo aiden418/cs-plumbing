@@ -57,13 +57,13 @@ export default function ProjectDetail({ project }: { project: CompletedProject }
             <h1 className="text-3xl sm:text-4xl lg:text-6xl font-black text-white leading-tight mb-4 sm:mb-6">
               {project.name}
             </h1>
-            <p className="text-base sm:text-lg text-gray-400 leading-relaxed mb-6 sm:mb-8">
+            <p className="text-base sm:text-lg text-gray-500 leading-relaxed mb-6 sm:mb-8">
               {project.description}
             </p>
 
             {/* Stats */}
             <div className="flex flex-wrap gap-6 sm:gap-8">
-              <div className="flex items-center gap-2 text-sm text-gray-300">
+              <div className="flex items-center gap-2 text-sm text-gray-700">
                 <Users className="w-4 h-4 text-primary" />
                 <span className="text-gray-500">Client:</span>{" "}
                 {project.clientUrl ? (
@@ -74,16 +74,16 @@ export default function ProjectDetail({ project }: { project: CompletedProject }
                   project.client
                 )}
               </div>
-              <div className="flex items-center gap-2 text-sm text-gray-300">
+              <div className="flex items-center gap-2 text-sm text-gray-700">
                 <Clock className="w-4 h-4 text-primary" />
                 <span className="text-gray-500">Timeline:</span> {project.timeline}
               </div>
-              <div className="flex items-center gap-2 text-sm text-gray-300">
+              <div className="flex items-center gap-2 text-sm text-gray-700">
                 <DollarSign className="w-4 h-4 text-primary" />
                 <span className="text-gray-500">Cost:</span> {project.cost}
               </div>
               {project.location && (
-                <div className="flex items-center gap-2 text-sm text-gray-300">
+                <div className="flex items-center gap-2 text-sm text-gray-700">
                   <MapPin className="w-4 h-4 text-primary" />
                   <span className="text-gray-500">Location:</span> {project.location}
                 </div>
@@ -103,11 +103,11 @@ export default function ProjectDetail({ project }: { project: CompletedProject }
             <Container>
               <ScrollReveal>
                 <div className="mb-6 sm:mb-8">
-                  <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+                  <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
                     {phase.name}
                   </h2>
                   {phase.description && (
-                    <p className="text-gray-400 text-sm sm:text-base max-w-2xl">
+                    <p className="text-gray-500 text-sm sm:text-base max-w-2xl">
                       {phase.description}
                     </p>
                   )}
@@ -126,7 +126,7 @@ export default function ProjectDetail({ project }: { project: CompletedProject }
                       onClick={() => setLightboxIndex(phaseStartIndex + i)}
                       className="group cursor-pointer"
                     >
-                      <div className="relative aspect-[4/3] rounded-xl sm:rounded-2xl overflow-hidden bg-surface border border-white/5 group-hover:border-primary/20 transition-all duration-500">
+                      <div className="relative aspect-[4/3] rounded-xl sm:rounded-2xl overflow-hidden bg-surface border border-gray-200 group-hover:border-primary/20 transition-all duration-500">
                         <Image
                           src={image.src}
                           alt={image.alt}
@@ -139,7 +139,7 @@ export default function ProjectDetail({ project }: { project: CompletedProject }
                   ))}
                 </div>
               ) : (
-                <div className="bg-surface rounded-2xl border border-white/5 p-12 text-center">
+                <div className="bg-surface rounded-2xl border border-gray-200 p-12 text-center">
                   <p className="text-gray-500 text-sm">Photos coming soon</p>
                 </div>
               )}
@@ -155,12 +155,12 @@ export default function ProjectDetail({ project }: { project: CompletedProject }
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-background/95 backdrop-blur-xl flex items-center justify-center"
+            className="fixed inset-0 z-50 bg-black/90 backdrop-blur-xl flex items-center justify-center"
             onClick={closeLightbox}
           >
             <button
               onClick={closeLightbox}
-              className="absolute top-4 right-4 sm:top-6 sm:right-6 p-2 text-gray-400 hover:text-white transition-colors z-10"
+              className="absolute top-4 right-4 sm:top-6 sm:right-6 p-2 text-gray-500 hover:text-white transition-colors z-10"
               aria-label="Close lightbox"
             >
               <X className="w-6 h-6 sm:w-8 sm:h-8" />
@@ -171,7 +171,7 @@ export default function ProjectDetail({ project }: { project: CompletedProject }
                 e.stopPropagation();
                 lightboxPrev();
               }}
-              className="absolute left-2 sm:left-6 p-2 text-gray-400 hover:text-white transition-colors z-10"
+              className="absolute left-2 sm:left-6 p-2 text-gray-500 hover:text-white transition-colors z-10"
               aria-label="Previous image"
             >
               <ChevronLeft className="w-6 h-6 sm:w-8 sm:h-8" />
@@ -200,7 +200,7 @@ export default function ProjectDetail({ project }: { project: CompletedProject }
                 e.stopPropagation();
                 lightboxNext();
               }}
-              className="absolute right-2 sm:right-6 p-2 text-gray-400 hover:text-white transition-colors z-10"
+              className="absolute right-2 sm:right-6 p-2 text-gray-500 hover:text-white transition-colors z-10"
               aria-label="Next image"
             >
               <ChevronRight className="w-6 h-6 sm:w-8 sm:h-8" />

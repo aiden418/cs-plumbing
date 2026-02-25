@@ -35,7 +35,7 @@ export default function Navbar() {
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
           isScrolled
-            ? "bg-background/80 backdrop-blur-xl border-b border-white/5"
+            ? "bg-white/80 backdrop-blur-xl border-b border-gray-200"
             : "bg-transparent"
         )}
       >
@@ -70,7 +70,7 @@ export default function Navbar() {
                       "px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 flex items-center gap-1",
                       pathname === link.href
                         ? "text-primary"
-                        : "text-gray-300 hover:text-white"
+                        : "text-gray-600 hover:text-gray-900"
                     )}
                   >
                     {link.label}
@@ -96,8 +96,8 @@ export default function Navbar() {
                             className={cn(
                               "block px-4 py-2.5 text-sm transition-colors duration-200",
                               pathname === child.href
-                                ? "text-primary bg-white/5"
-                                : "text-gray-300 hover:text-white hover:bg-white/5"
+                                ? "text-primary bg-primary/5"
+                                : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
                             )}
                           >
                             {child.label}
@@ -114,14 +114,14 @@ export default function Navbar() {
             <div className="hidden lg:flex items-center gap-3">
               <a
                 href={`tel:${BUSINESS.phoneRaw}`}
-                className="flex items-center gap-2 text-sm text-gray-300 hover:text-white transition-colors"
+                className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 transition-colors"
               >
                 <Phone className="w-4 h-4" />
                 {BUSINESS.phone}
               </a>
               <Link
                 href="/booking"
-                className="px-5 py-2.5 bg-primary hover:bg-primary-dark text-white text-sm font-semibold rounded-lg transition-all duration-300 hover:shadow-[0_0_20px_rgba(0,153,255,0.3)]"
+                className="px-5 py-2.5 bg-primary hover:bg-primary-dark text-white text-sm font-semibold rounded-lg transition-all duration-300 hover:shadow-md"
               >
                 Book Now
               </Link>
@@ -130,7 +130,7 @@ export default function Navbar() {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMobileOpen(!isMobileOpen)}
-              className="lg:hidden p-2 text-white"
+              className="lg:hidden p-2 text-gray-900"
               aria-label="Toggle menu"
             >
               {isMobileOpen ? (
@@ -151,7 +151,7 @@ export default function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 bg-background/95 backdrop-blur-xl lg:hidden"
+            className="fixed inset-0 z-40 bg-white/98 backdrop-blur-xl lg:hidden"
           >
             <motion.div
               initial={{ x: "100%" }}
@@ -174,7 +174,7 @@ export default function Navbar() {
                         "block py-3 text-2xl font-bold transition-colors",
                         pathname === link.href
                           ? "text-primary"
-                          : "text-white"
+                          : "text-gray-900"
                       )}
                     >
                       {link.label}
@@ -185,7 +185,7 @@ export default function Navbar() {
                           <Link
                             key={child.href}
                             href={child.href}
-                            className="py-2 text-lg text-gray-400 hover:text-white transition-colors"
+                            className="py-2 text-lg text-gray-500 hover:text-gray-900 transition-colors"
                           >
                             {child.label}
                           </Link>
@@ -199,7 +199,7 @@ export default function Navbar() {
               <div className="mt-auto pb-12 flex flex-col gap-4">
                 <a
                   href={`tel:${BUSINESS.phoneRaw}`}
-                  className="flex items-center justify-center gap-2 py-4 text-xl font-bold text-white"
+                  className="flex items-center justify-center gap-2 py-4 text-xl font-bold text-gray-900"
                 >
                   <Phone className="w-5 h-5" />
                   {BUSINESS.phone}

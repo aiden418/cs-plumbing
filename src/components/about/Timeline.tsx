@@ -7,7 +7,7 @@ import { TIMELINE_EVENTS } from "@/lib/constants";
 
 export default function Timeline() {
   return (
-    <section className="py-16 sm:py-24 lg:py-32 bg-surface">
+    <section className="py-16 sm:py-24 lg:py-32 bg-[#F5F5F7]">
       <Container size="narrow">
         <SectionHeading
           overline="Our Journey"
@@ -17,7 +17,7 @@ export default function Timeline() {
 
         <div className="relative">
           {/* Vertical line */}
-          <div className="absolute left-5 sm:left-8 lg:left-1/2 top-0 bottom-0 w-px bg-white/10 lg:-translate-x-px" />
+          <div className="absolute left-5 sm:left-8 lg:left-1/2 top-0 bottom-0 w-px bg-gray-300 lg:-translate-x-px" />
 
           <div className="space-y-8 sm:space-y-12">
             {TIMELINE_EVENTS.map((event, i) => (
@@ -40,16 +40,16 @@ export default function Timeline() {
                     <span className="text-primary font-bold text-base sm:text-lg">
                       {event.year}
                     </span>
-                    <h3 className="text-lg sm:text-xl font-bold text-white mt-1 mb-1.5 sm:mb-2">
+                    <h3 className="text-lg sm:text-xl font-bold text-gray-900 mt-1 mb-1.5 sm:mb-2">
                       {event.title}
                     </h3>
-                    <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">
+                    <p className="text-gray-500 text-xs sm:text-sm leading-relaxed">
                       {event.description}
                     </p>
                   </div>
 
                   {/* Dot */}
-                  <div className="absolute left-5 sm:left-8 lg:left-1/2 -translate-x-1/2 w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-primary border-[3px] sm:border-4 border-background z-10" />
+                  <div className="absolute left-5 sm:left-8 lg:left-1/2 -translate-x-1/2 w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-primary border-[3px] sm:border-4 border-[#F5F5F7] z-10" />
 
                   {/* Spacer for alternating layout */}
                   <div className="hidden lg:block flex-1" />

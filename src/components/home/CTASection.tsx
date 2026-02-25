@@ -10,16 +10,16 @@ export default function CTASection() {
   return (
     <section className="py-16 sm:py-24 lg:py-32 relative overflow-hidden">
       {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-primary/5 to-background" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,153,255,0.1)_0%,transparent_60%)]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-white via-primary/5 to-white" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,119,204,0.06)_0%,transparent_60%)]" />
 
       <Container className="relative z-10">
         <ScrollReveal>
           <div className="text-center max-w-3xl mx-auto">
-            <h2 className="text-2xl sm:text-3xl lg:text-5xl font-black text-white mb-4 sm:mb-6">
+            <h2 className="text-2xl sm:text-3xl lg:text-5xl font-black text-gray-900 mb-4 sm:mb-6">
               Ready to Get Started?
             </h2>
-            <p className="text-base sm:text-lg text-gray-400 mb-8 sm:mb-10 leading-relaxed">
+            <p className="text-base sm:text-lg text-gray-500 mb-8 sm:mb-10 leading-relaxed">
               Whether it&apos;s an emergency or a planned project, our team is
               ready to deliver the quality and reliability that&apos;s made us
               Southwest Florida&apos;s most trusted plumbing company.

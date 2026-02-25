@@ -25,7 +25,7 @@ export default function ChatWidget() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.9 }}
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute bottom-14 sm:bottom-16 right-0 w-[calc(100vw-2rem)] sm:w-80 md:w-96 max-w-[360px] bg-surface rounded-2xl border border-white/10 shadow-2xl overflow-hidden mb-2"
+            className="absolute bottom-14 sm:bottom-16 right-0 w-[calc(100vw-2rem)] sm:w-80 md:w-96 max-w-[360px] bg-surface rounded-2xl border border-gray-200 shadow-2xl overflow-hidden mb-2"
           >
             {/* Header */}
             <div className="bg-primary p-3 sm:p-4 flex items-center justify-between">
@@ -44,7 +44,7 @@ export default function ChatWidget() {
               </div>
               <button
                 onClick={() => setIsOpen(false)}
-                className="text-white/70 hover:text-white transition-colors p-1"
+                className="text-white/70 hover:text-gray-900 transition-colors p-1"
                 aria-label="Close chat"
               >
                 <X className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -60,8 +60,8 @@ export default function ChatWidget() {
                     C&S
                   </span>
                 </div>
-                <div className="bg-surface-light rounded-2xl rounded-tl-md p-2.5 sm:p-3 max-w-[80%]">
-                  <p className="text-xs sm:text-sm text-gray-300">
+                <div className="bg-gray-100 rounded-2xl rounded-tl-md p-2.5 sm:p-3 max-w-[80%]">
+                  <p className="text-xs sm:text-sm text-gray-600">
                     Hi there! Thanks for reaching out to C&S Plumbing. How
                     can we help you today?
                   </p>
@@ -74,8 +74,8 @@ export default function ChatWidget() {
                     C&S
                   </span>
                 </div>
-                <div className="bg-surface-light rounded-2xl rounded-tl-md p-2.5 sm:p-3 max-w-[80%]">
-                  <p className="text-xs sm:text-sm text-gray-300">
+                <div className="bg-gray-100 rounded-2xl rounded-tl-md p-2.5 sm:p-3 max-w-[80%]">
+                  <p className="text-xs sm:text-sm text-gray-600">
                     For the fastest response, give us a call or book online:
                   </p>
                 </div>
@@ -92,14 +92,14 @@ export default function ChatWidget() {
                 </a>
                 <a
                   href="/booking"
-                  className="flex items-center gap-2 w-full p-2.5 sm:p-3 rounded-xl border border-white/10 text-gray-300 text-xs sm:text-sm font-medium hover:border-primary/30 hover:text-white transition-all"
+                  className="flex items-center gap-2 w-full p-2.5 sm:p-3 rounded-xl border border-gray-200 text-gray-600 text-xs sm:text-sm font-medium hover:border-primary/30 hover:text-gray-900 transition-all"
                 >
                   <Send className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                   Book Online
                 </a>
                 <a
                   href="/contact"
-                  className="flex items-center gap-2 w-full p-2.5 sm:p-3 rounded-xl border border-white/10 text-gray-300 text-xs sm:text-sm font-medium hover:border-primary/30 hover:text-white transition-all"
+                  className="flex items-center gap-2 w-full p-2.5 sm:p-3 rounded-xl border border-gray-200 text-gray-600 text-xs sm:text-sm font-medium hover:border-primary/30 hover:text-gray-900 transition-all"
                 >
                   <MessageCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                   Send a Message
@@ -118,7 +118,7 @@ export default function ChatWidget() {
         onClick={() => setIsOpen(!isOpen)}
         className={`w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 ${
           isOpen
-            ? "bg-surface-light text-gray-400 rotate-0"
+            ? "bg-gray-100 text-gray-500 rotate-0"
             : "bg-primary text-white hover:bg-primary-dark hover:shadow-[0_0_20px_rgba(0,153,255,0.3)]"
         }`}
         aria-label="Toggle chat"
@@ -136,7 +136,7 @@ export default function ChatWidget() {
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ delay: 4, duration: 0.3 }}
-          className="absolute -top-1 -right-1 w-3.5 h-3.5 sm:w-4 sm:h-4 bg-emergency rounded-full border-2 border-background"
+          className="absolute -top-1 -right-1 w-3.5 h-3.5 sm:w-4 sm:h-4 bg-emergency rounded-full border-2 border-white"
         />
       )}
     </div>

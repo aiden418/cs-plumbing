@@ -23,10 +23,10 @@ export default function Card({
   return (
     <div
       className={cn(
-        "bg-surface rounded-2xl border border-white/5",
+        "bg-white rounded-2xl border border-gray-200",
         paddings[padding],
         hover &&
-          "transition-all duration-500 hover:border-primary/20 hover:shadow-[0_0_30px_rgba(0,153,255,0.08)]",
+          "transition-all duration-500 hover:border-primary/30 hover:shadow-[0_2px_20px_rgba(0,0,0,0.08)]",
         className
       )}
     >

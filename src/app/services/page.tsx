@@ -24,12 +24,12 @@ export default function ServicesPage() {
             <span className="inline-block text-primary text-xs sm:text-sm font-semibold tracking-widest uppercase mb-3 sm:mb-4">
               Our Services
             </span>
-            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-black text-white leading-tight">
+            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-black text-gray-900 leading-tight">
               Every Plumbing Solution
               <br />
               <span className="text-gradient">Under One Roof</span>
             </h1>
-            <p className="mt-4 sm:mt-6 text-base sm:text-lg text-gray-400">
+            <p className="mt-4 sm:mt-6 text-base sm:text-lg text-gray-500">
               From a dripping faucet to a 500-unit development, C&S Plumbing has
               the expertise, equipment, and team to handle it all.
             </p>

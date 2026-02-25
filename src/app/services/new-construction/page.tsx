@@ -63,11 +63,11 @@ export default function NewConstructionPage() {
             <span className="inline-block text-primary text-xs sm:text-sm font-semibold tracking-widest uppercase mb-3 sm:mb-4">
               New Construction
             </span>
-            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-black text-white leading-tight mb-4 sm:mb-6">
+            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-black text-gray-900 leading-tight mb-4 sm:mb-6">
               The Builder&apos;s Choice for{" "}
               <span className="text-gradient">New Construction</span> Plumbing
             </h1>
-            <p className="text-base sm:text-lg text-gray-400 leading-relaxed mb-6 sm:mb-8">
+            <p className="text-base sm:text-lg text-gray-500 leading-relaxed mb-6 sm:mb-8">
               With over 8,500 new homes completed across Southwest Florida, C&S
               Plumbing is the go-to partner for builders who demand reliability,
               code-compliance, and timeline precision.
@@ -94,14 +94,14 @@ export default function NewConstructionPage() {
       </section>
 
       {/* Stats */}
-      <section className="py-10 sm:py-16 border-y border-white/5">
+      <section className="py-10 sm:py-16 border-y border-gray-200">
         <Container>
           <ScrollReveal>
             <div className="grid grid-cols-2 sm:flex sm:flex-wrap sm:justify-center gap-6 sm:gap-8 lg:gap-12">
               {advantages.map((adv) => (
                 <div
                   key={adv.text}
-                  className="flex items-center gap-2 sm:gap-3 text-gray-300"
+                  className="flex items-center gap-2 sm:gap-3 text-gray-600"
                 >
                   <div className="text-primary">{adv.icon}</div>
                   <span className="text-xs sm:text-sm font-medium">{adv.text}</span>
@@ -117,10 +117,10 @@ export default function NewConstructionPage() {
         <Container>
           <ScrollReveal>
             <div className="text-center">
-              <div className="text-5xl sm:text-7xl lg:text-9xl font-black text-white">
+              <div className="text-5xl sm:text-7xl lg:text-9xl font-black text-gray-900">
                 <CountUp end={8500} suffix="+" duration={2.5} />
               </div>
-              <p className="text-base sm:text-xl text-gray-400 mt-3 sm:mt-4">
+              <p className="text-base sm:text-xl text-gray-500 mt-3 sm:mt-4">
                 New Construction Homes Plumbed Across SWFL
               </p>
             </div>
@@ -136,7 +136,7 @@ export default function NewConstructionPage() {
               <span className="inline-block text-primary text-xs sm:text-sm font-semibold tracking-widest uppercase mb-3 sm:mb-4">
                 Our Process
               </span>
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900">
                 From Blueprint to Move-In
               </h2>
             </div>
@@ -149,10 +149,10 @@ export default function NewConstructionPage() {
                   <span className="text-5xl sm:text-6xl font-black text-primary/10">
                     {step.step}
                   </span>
-                  <h3 className="text-lg sm:text-xl font-bold text-white mt-1.5 sm:mt-2 mb-2 sm:mb-3">
+                  <h3 className="text-lg sm:text-xl font-bold text-gray-900 mt-1.5 sm:mt-2 mb-2 sm:mb-3">
                     {step.title}
                   </h3>
-                  <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">
+                  <p className="text-gray-500 text-xs sm:text-sm leading-relaxed">
                     {step.description}
                   </p>
                 </div>

@@ -8,27 +8,6 @@ import Button from "@/components/ui/Button";
 import { BUSINESS } from "@/lib/constants";
 import { registerGSAP, gsap } from "@/lib/gsap";
 
-function Particles() {
-  return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {Array.from({ length: 30 }).map((_, i) => (
-        <div
-          key={i}
-          className="particle"
-          style={{
-            left: `${Math.random() * 100}%`,
-            animationDuration: `${8 + Math.random() * 12}s`,
-            animationDelay: `${Math.random() * 10}s`,
-            width: `${2 + Math.random() * 4}px`,
-            height: `${2 + Math.random() * 4}px`,
-            opacity: 0,
-          }}
-        />
-      ))}
-    </div>
-  );
-}
-
 export default function Hero() {
   const heroRef = useRef<HTMLDivElement>(null);
 
@@ -66,21 +45,9 @@ export default function Hero() {
           priority
           quality={85}
         />
-        <div className="absolute inset-0 bg-background/75" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-background/30" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,153,255,0.08)_0%,transparent_70%)]" />
-        <Particles />
+        <div className="absolute inset-0 bg-white/70" />
+        <div className="absolute inset-0 bg-gradient-to-t from-white via-white/60 to-white/40" />
       </div>
-
-      {/* Grid overlay */}
-      <div
-        className="absolute inset-0 opacity-[0.03]"
-        style={{
-          backgroundImage:
-            "linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)",
-          backgroundSize: "60px 60px",
-        }}
-      />
 
       {/* Content */}
       <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
@@ -98,7 +65,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-          className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-[5.5rem] font-black text-white leading-[1.05] tracking-tight"
+          className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-[5.5rem] font-black text-gray-900 leading-[1.05] tracking-tight"
         >
           Southwest Florida&apos;s
           <br />
@@ -111,11 +78,11 @@ export default function Hero() {
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-6 sm:mt-8 lg:mt-10 text-base sm:text-lg lg:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed"
+          className="mt-6 sm:mt-8 lg:mt-10 text-base sm:text-lg lg:text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed"
         >
           From emergency repairs to new construction, we&apos;ve built our
           reputation one home at a time.{" "}
-          <span className="text-white font-medium">8,500+ homes</span> and
+          <span className="text-primary font-semibold">8,500+ homes</span> and
           counting.
         </motion.p>
 
@@ -146,7 +113,7 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 1.2 }}
-          className="mt-12 sm:mt-16 lg:mt-20 flex flex-wrap items-center justify-center gap-6 sm:gap-8 lg:gap-10 text-xs sm:text-sm lg:text-base text-gray-500"
+          className="mt-12 sm:mt-16 lg:mt-20 flex flex-wrap items-center justify-center gap-6 sm:gap-8 lg:gap-10 text-xs sm:text-sm lg:text-base text-gray-400"
         >
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 rounded-full bg-success" />
@@ -174,7 +141,7 @@ export default function Hero() {
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
         >
-          <ChevronDown className="w-5 h-5 sm:w-6 sm:h-6 text-gray-500" />
+          <ChevronDown className="w-5 h-5 sm:w-6 sm:h-6 text-gray-400" />
         </motion.div>
       </motion.div>
     </section>

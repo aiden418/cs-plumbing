@@ -113,16 +113,16 @@ export default function GalleryPage() {
   return (
     <PageTransition>
       {/* Hero */}
-      <section className="pt-24 sm:pt-28 lg:pt-32 pb-12 sm:pb-16 bg-surface">
+      <section className="pt-24 sm:pt-28 lg:pt-32 pb-12 sm:pb-16 bg-[#F5F5F7]">
         <Container>
           <div className="text-center max-w-3xl mx-auto">
             <span className="inline-block text-primary text-xs sm:text-sm font-semibold tracking-widest uppercase mb-3 sm:mb-4">
               Our Work
             </span>
-            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-black text-white leading-tight">
+            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-black text-gray-900 leading-tight">
               Project <span className="text-gradient">Gallery</span>
             </h1>
-            <p className="mt-4 sm:mt-6 text-base sm:text-lg text-gray-400">
+            <p className="mt-4 sm:mt-6 text-base sm:text-lg text-gray-500">
               Browse our portfolio of residential, commercial, and new
               construction plumbing projects across Southwest Florida.
             </p>
@@ -143,7 +143,7 @@ export default function GalleryPage() {
                   className={`px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 ${
                     activeFilter === cat.id
                       ? "bg-primary text-white"
-                      : "bg-surface border border-white/10 text-gray-400 hover:text-white hover:border-white/20"
+                      : "bg-gray-100 border border-gray-200 text-gray-500 hover:text-gray-900 hover:border-gray-300"
                   }`}
                 >
                   {cat.label}
@@ -170,7 +170,7 @@ export default function GalleryPage() {
                     onClick={() => openLightbox(i)}
                     className="group cursor-pointer"
                   >
-                    <div className="relative aspect-[4/3] rounded-xl sm:rounded-2xl overflow-hidden bg-surface border border-white/5 group-hover:border-primary/20 transition-all duration-500">
+                    <div className="relative aspect-[4/3] rounded-xl sm:rounded-2xl overflow-hidden bg-gray-100 border border-gray-200 group-hover:border-primary/30 transition-all duration-500">
                       <Image
                         src={item.src}
                         alt={item.alt}
@@ -180,7 +180,7 @@ export default function GalleryPage() {
                       />
 
                       {/* Hover overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-500 flex items-end p-4 sm:p-6">
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-500 flex items-end p-4 sm:p-6">
                         <div>
                           <p className="text-white font-semibold text-xs sm:text-sm">
                             {item.title}
@@ -206,12 +206,12 @@ export default function GalleryPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-background/95 backdrop-blur-xl flex items-center justify-center"
+            className="fixed inset-0 z-50 bg-black/90 backdrop-blur-xl flex items-center justify-center"
             onClick={closeLightbox}
           >
             <button
               onClick={closeLightbox}
-              className="absolute top-4 right-4 sm:top-6 sm:right-6 p-2 text-gray-400 hover:text-white transition-colors z-10"
+              className="absolute top-4 right-4 sm:top-6 sm:right-6 p-2 text-gray-500 hover:text-white transition-colors z-10"
               aria-label="Close lightbox"
             >
               <X className="w-6 h-6 sm:w-8 sm:h-8" />
@@ -222,7 +222,7 @@ export default function GalleryPage() {
                 e.stopPropagation();
                 lightboxPrev();
               }}
-              className="absolute left-2 sm:left-6 p-2 text-gray-400 hover:text-white transition-colors z-10"
+              className="absolute left-2 sm:left-6 p-2 text-gray-500 hover:text-white transition-colors z-10"
               aria-label="Previous image"
             >
               <ChevronLeft className="w-6 h-6 sm:w-8 sm:h-8" />
@@ -232,7 +232,7 @@ export default function GalleryPage() {
               className="max-w-4xl w-full mx-4 sm:mx-8"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="relative aspect-[4/3] sm:aspect-[16/10] rounded-xl sm:rounded-2xl overflow-hidden bg-surface border border-white/10">
+              <div className="relative aspect-[4/3] sm:aspect-[16/10] rounded-xl sm:rounded-2xl overflow-hidden bg-black/80 border border-white/10">
                 <Image
                   src={filtered[lightboxIndex].src}
                   alt={filtered[lightboxIndex].alt}
@@ -251,7 +251,7 @@ export default function GalleryPage() {
                 e.stopPropagation();
                 lightboxNext();
               }}
-              className="absolute right-2 sm:right-6 p-2 text-gray-400 hover:text-white transition-colors z-10"
+              className="absolute right-2 sm:right-6 p-2 text-gray-500 hover:text-white transition-colors z-10"
               aria-label="Next image"
             >
               <ChevronRight className="w-6 h-6 sm:w-8 sm:h-8" />

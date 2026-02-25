@@ -26,7 +26,7 @@ export default function TeamGrid() {
               variants={staggerItem}
               className="group text-center"
             >
-              <div className="relative w-36 h-36 sm:w-40 sm:h-40 md:w-48 md:h-48 mx-auto mb-4 sm:mb-6 rounded-2xl overflow-hidden bg-surface border border-white/5 group-hover:border-primary/20 transition-all duration-500">
+              <div className="relative w-36 h-36 sm:w-40 sm:h-40 md:w-48 md:h-48 mx-auto mb-4 sm:mb-6 rounded-2xl overflow-hidden bg-gray-100 border border-gray-200 group-hover:border-primary/30 transition-all duration-500">
                 {member.image ? (
                   <Image
                     src={member.image}
@@ -44,14 +44,14 @@ export default function TeamGrid() {
                     </div>
                   </div>
                 )}
-                <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute inset-0 bg-gradient-to-t from-white/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </div>
-              <h3 className="text-base sm:text-lg font-bold text-white">{member.name}</h3>
+              <h3 className="text-base sm:text-lg font-bold text-gray-900">{member.name}</h3>
               <p className="text-primary text-sm font-medium mt-1">
                 {member.role}
               </p>
               {member.bio && (
-                <p className="text-gray-400 text-xs sm:text-sm mt-2 sm:mt-3 leading-relaxed px-2 sm:px-0">
+                <p className="text-gray-500 text-xs sm:text-sm mt-2 sm:mt-3 leading-relaxed px-2 sm:px-0">
                   {member.bio}
                 </p>
               )}

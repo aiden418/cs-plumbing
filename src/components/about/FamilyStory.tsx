@@ -11,7 +11,7 @@ export default function FamilyStory() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           {/* Image */}
           <ScrollReveal direction="left">
-            <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-surface border border-white/5">
+            <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-gray-100 border border-gray-200">
               <Image
                 src="/images/team/family.jpeg"
                 alt="The Pellechio family — the people behind C&S Plumbing"
@@ -19,7 +19,7 @@ export default function FamilyStory() {
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-white/30 to-transparent" />
               {/* Decorative glow */}
               <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-primary/10 rounded-full blur-3xl" />
             </div>
@@ -30,12 +30,12 @@ export default function FamilyStory() {
             <span className="inline-block text-primary text-sm font-semibold tracking-widest uppercase mb-4">
               Our Story
             </span>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 sm:mb-6 leading-tight">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6 leading-tight">
               Three Generations
               <br />
               <span className="text-gradient">One Mission</span>
             </h2>
-            <div className="space-y-3 sm:space-y-4 text-gray-400 text-sm sm:text-base leading-relaxed">
+            <div className="space-y-3 sm:space-y-4 text-gray-500 text-sm sm:text-base leading-relaxed">
               <p>
                 In 1997, two brothers made a bold decision. With the support of
                 their father and a single work truck, they founded C&S Plumbing
@@ -56,15 +56,15 @@ export default function FamilyStory() {
             </div>
             <div className="mt-6 sm:mt-8 grid grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
               <div>
-                <div className="text-2xl sm:text-3xl font-black text-white">8,500+</div>
+                <div className="text-2xl sm:text-3xl font-black text-gray-900">8,500+</div>
                 <div className="text-xs sm:text-sm text-gray-500">Homes Built</div>
               </div>
-              <div className="border-l border-white/10 pl-4 sm:pl-6">
-                <div className="text-2xl sm:text-3xl font-black text-white">27+</div>
+              <div className="border-l border-gray-200 pl-4 sm:pl-6">
+                <div className="text-2xl sm:text-3xl font-black text-gray-900">27+</div>
                 <div className="text-xs sm:text-sm text-gray-500">Years of Service</div>
               </div>
-              <div className="border-l border-white/10 pl-4 sm:pl-6">
-                <div className="text-2xl sm:text-3xl font-black text-white">Top 4%</div>
+              <div className="border-l border-gray-200 pl-4 sm:pl-6">
+                <div className="text-2xl sm:text-3xl font-black text-gray-900">Top 4%</div>
                 <div className="text-xs sm:text-sm text-gray-500">FL Contractors</div>
               </div>
             </div>
