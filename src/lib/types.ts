@@ -112,3 +112,31 @@ export interface BlogPost {
   category: string;
   readTime: string;
 }
+
+export interface ProjectImage {
+  src: string;
+  alt: string;
+}
+
+export interface ProjectPhase {
+  name: string;
+  slug: string;
+  description?: string;
+  images: ProjectImage[];
+}
+
+export interface CompletedProject {
+  slug: string;
+  name: string;
+  client: string;
+  clientUrl?: string;
+  category: string;
+  timeline: string;
+  cost: string;
+  description: string;
+  location?: string;
+  coverImage: string;
+  phases: ProjectPhase[];
+  metaTitle: string;
+  metaDescription: string;
+}

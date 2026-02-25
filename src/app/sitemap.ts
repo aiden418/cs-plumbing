@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { BLOG_POSTS } from "@/lib/constants";
+import { BLOG_POSTS, COMPLETED_PROJECTS } from "@/lib/constants";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://www.csplumbinglee.com";
@@ -140,6 +140,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.8,
     },
+    // Projects
+    {
+      url: `${baseUrl}/projects`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.7,
+    },
+    ...COMPLETED_PROJECTS.map((project) => ({
+      url: `${baseUrl}/projects/${project.slug}`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    })),
     // Blog
     {
       url: `${baseUrl}/blog`,

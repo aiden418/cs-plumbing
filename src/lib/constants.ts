@@ -1,4 +1,4 @@
-import type { Service, TeamMember, Testimonial, TimelineEvent, NavLink, Stat, ServiceLanding, AreaLanding, BlogPost } from "./types";
+import type { Service, TeamMember, Testimonial, TimelineEvent, NavLink, Stat, ServiceLanding, AreaLanding, BlogPost, CompletedProject } from "./types";
 
 // ============================================
 // BUSINESS INFO
@@ -62,6 +62,7 @@ export const NAV_LINKS: NavLink[] = [
     ],
   },
   { label: "Gallery", href: "/gallery" },
+  { label: "Projects", href: "/projects" },
   { label: "Blog", href: "/blog" },
   { label: "Contact", href: "/contact" },
 ];
@@ -235,34 +236,94 @@ export const TEAM_MEMBERS: TeamMember[] = [
 
 export const TESTIMONIALS: Testimonial[] = [
   {
-    name: "Jennifer M.",
+    name: "Dennis Shy",
+    location: "Google Review",
+    rating: 5,
+    text: "Reasonable price. Great Company 100% Responsive and quick to show up and get the work done. I will use this company any time I have a plumbing need and would definitely recommend them to anyone.",
+  },
+  {
+    name: "Richard Pace",
+    location: "Google Review",
+    rating: 5,
+    text: "Great service! Friendly people! They answered all my questions and made suggestions that were helpful. They only know how to do things one way, and that's the right way!",
+  },
+  {
+    name: "Lisa D",
+    location: "Google Review",
+    rating: 5,
+    text: "Crew was timely and honest about what needed to be fixed. Thanks!",
+  },
+  {
+    name: "Linda",
+    location: "Google Review",
+    rating: 5,
+    text: "Could not be happier with Sam and his team. They did a fabulous job, efficient, prompt and cleaned up beautifully. I highly recommend them. And this is a family business which we all should support.",
+  },
+  {
+    name: "Bob Romanoff",
+    location: "Google Review",
+    rating: 5,
+    text: "I am a handyman who got in over my head changing the main shutoff and adding a new line in the 55 year old system. Sam came and quickly fixed the complex problems. He charged a fair amount also.",
+  },
+  {
+    name: "Jana Hamrick",
+    location: "Google Review",
+    rating: 5,
+    text: "Highly recommend. They're our go-to plumbers for the past 5 years. They show up on time and get the job done.",
+  },
+  {
+    name: "Dennis Nelson",
+    location: "Google Review",
+    rating: 5,
+    text: "Great service on replumbing.",
+  },
+  {
+    name: "Fran Prego",
+    location: "Google Review",
+    rating: 5,
+    text: "Work completed quickly and Aidan and Sam were great. Prices were very reasonable in installation of water and irrigation lines hooking up to the city.",
+  },
+  {
+    name: "Yvonne Sunderland",
     location: "Cape Coral, FL",
     rating: 5,
-    text: "C&S Plumbing arrived same day for our emergency. Professional, fast, and fair pricing. They've been our go-to plumber ever since.",
+    text: "C&S Plumbing converted a Laundry Room in our new home into a Beautiful New Bathroom. They were excellent from start to completion, which took a fraction of the time we expected. Sam had everyone on point and organized at all times. All the guys were very professional, courteous and friendly. We would recommend them to anyone needing a job done no matter how small or big.",
   },
   {
-    name: "Robert K.",
-    location: "Fort Myers, FL",
+    name: "Brian Hamill",
+    location: "Google Review",
     rating: 5,
-    text: "We've used C&S for three remodels now. Their attention to detail and clean work is unmatched. Highly recommend for any plumbing project.",
+    text: "C&S is the best! Incredibly responsive every time. They have fantastic employees and Sam (the owner) is great to work with. He truly cares. Do yourself a favor and use them.",
   },
   {
-    name: "Maria S.",
-    location: "Naples, FL",
+    name: "Brent Biagi",
+    location: "Google Review",
     rating: 5,
-    text: "Prompt, professional, and reasonably priced. They replaced our entire water heater system in one day. Outstanding service!",
+    text: "I've used this company for many plumbing issues. Sam the owner is very responsive to your needs and Tom and the other workers know their job. Thanks again!",
   },
   {
-    name: "David & Linda T.",
-    location: "Sanibel, FL",
+    name: "Andrew Nerenberg",
+    location: "Google Review",
     rating: 5,
-    text: "After Hurricane Ian, C&S was there for us when other companies wouldn't come to the island. True community heroes.",
+    text: "Fast and reliable, Aiden in the office is the best. He is efficient and courteous. Dillon the young man that did the actual work was knowledgeable and also efficient. Will definitely be using C&S again.",
   },
   {
-    name: "Thompson Homes",
-    location: "Lee County, FL",
+    name: "Nancy Doyle",
+    location: "Google Review",
     rating: 5,
-    text: "As a builder, reliability is everything. C&S has done the plumbing on over 200 of our homes without a single callback. Exceptional quality.",
+    text: "Thank you C&S for your quick response in fixing my plumbing issue today. Your technicians were informative and resolved my issue quickly. They left after cleaning up after themselves and making sure I was satisfied.",
+  },
+  {
+    name: "Sarah Jones",
+    location: "Google Review",
+    rating: 5,
+    text: "The whole team is super professional, informative, reliable and definitely know how to get the job done. I recommend them for all your plumbing needs! This is a family business, they are super personable. Awesome job Sam, Evan, Dylan, Tommy!",
+  },
+  {
+    name: "Thomas Linn",
+    location: "North Cape Coral, FL",
+    rating: 5,
+    text: "I have used C&S a few times since moving into my new home. They show up when they say, they are knowledgeable and professional, operate efficiently, and offer solutions instead of excuses. I highly recommend this company for your plumbing needs!",
   },
 ];
 
@@ -1302,3 +1363,111 @@ export const GALLERY_CATEGORIES = [
   { id: "new-construction", label: "New Construction" },
   { id: "remodel", label: "Remodel" },
 ] as const;
+
+// ============================================
+// COMPLETED PROJECTS
+// ============================================
+
+export const COMPLETED_PROJECTS: CompletedProject[] = [
+  {
+    slug: "ifha-community-center",
+    name: "IFHA Community Center New Construction",
+    client: "Heatherwood Construction",
+    clientUrl: "https://heatherwoodconstruction.com",
+    category: "New Construction",
+    timeline: "7 months",
+    cost: "$55K",
+    description:
+      "Full plumbing installation for the IFHA Community Center new construction project in Lee County. C&S Plumbing handled all phases from underground rough-in through final trim out, working alongside Heatherwood Construction to deliver a complete commercial plumbing system on schedule and within budget.",
+    location: "Lee County, FL",
+    coverImage: "/images/projects/ifha-community-center/underground/IMG_0723.jpeg",
+    phases: [
+      {
+        name: "Underground",
+        slug: "underground",
+        description:
+          "Below-slab drainage, water lines, and waste piping installed before the concrete pour.",
+        images: [
+          { src: "/images/projects/ifha-community-center/underground/IMG_0723.jpeg", alt: "IFHA underground plumbing 1" },
+          { src: "/images/projects/ifha-community-center/underground/IMG_0724.jpeg", alt: "IFHA underground plumbing 2" },
+          { src: "/images/projects/ifha-community-center/underground/IMG_0725.jpeg", alt: "IFHA underground plumbing 3" },
+          { src: "/images/projects/ifha-community-center/underground/IMG_0726.jpeg", alt: "IFHA underground plumbing 4" },
+          { src: "/images/projects/ifha-community-center/underground/IMG_0727.jpeg", alt: "IFHA underground plumbing 5" },
+          { src: "/images/projects/ifha-community-center/underground/IMG_0728.jpeg", alt: "IFHA underground plumbing 6" },
+          { src: "/images/projects/ifha-community-center/underground/IMG_0729.jpeg", alt: "IFHA underground plumbing 7" },
+          { src: "/images/projects/ifha-community-center/underground/IMG_0730.jpeg", alt: "IFHA underground plumbing 8" },
+          { src: "/images/projects/ifha-community-center/underground/IMG_0737.jpeg", alt: "IFHA underground plumbing 9" },
+        ],
+      },
+      {
+        name: "2nd Rough",
+        slug: "2nd-rough",
+        description:
+          "In-wall supply and drain lines roughed in after framing, before drywall.",
+        images: [
+          { src: "/images/projects/ifha-community-center/2nd-rough/IMG_0945.jpeg", alt: "IFHA 2nd rough plumbing 1" },
+          { src: "/images/projects/ifha-community-center/2nd-rough/photo-8.jpg", alt: "IFHA 2nd rough plumbing 2" },
+          { src: "/images/projects/ifha-community-center/2nd-rough/photo-9.jpg", alt: "IFHA 2nd rough plumbing 3" },
+          { src: "/images/projects/ifha-community-center/2nd-rough/photo-10.jpg", alt: "IFHA 2nd rough plumbing 4" },
+          { src: "/images/projects/ifha-community-center/2nd-rough/photo-11.jpg", alt: "IFHA 2nd rough plumbing 5" },
+          { src: "/images/projects/ifha-community-center/2nd-rough/photo-12.jpg", alt: "IFHA 2nd rough plumbing 6" },
+          { src: "/images/projects/ifha-community-center/2nd-rough/photo-13.jpg", alt: "IFHA 2nd rough plumbing 7" },
+          { src: "/images/projects/ifha-community-center/2nd-rough/photo-14.jpg", alt: "IFHA 2nd rough plumbing 8" },
+          { src: "/images/projects/ifha-community-center/2nd-rough/photo-15.jpg", alt: "IFHA 2nd rough plumbing 9" },
+          { src: "/images/projects/ifha-community-center/2nd-rough/photo-16.jpg", alt: "IFHA 2nd rough plumbing 10" },
+          { src: "/images/projects/ifha-community-center/2nd-rough/photo-17.jpg", alt: "IFHA 2nd rough plumbing 11" },
+          { src: "/images/projects/ifha-community-center/2nd-rough/photo-18.jpg", alt: "IFHA 2nd rough plumbing 12" },
+          { src: "/images/projects/ifha-community-center/2nd-rough/photo-19.jpg", alt: "IFHA 2nd rough plumbing 13" },
+          { src: "/images/projects/ifha-community-center/2nd-rough/photo-20.jpg", alt: "IFHA 2nd rough plumbing 14" },
+          { src: "/images/projects/ifha-community-center/2nd-rough/photo-21.jpg", alt: "IFHA 2nd rough plumbing 15" },
+          { src: "/images/projects/ifha-community-center/2nd-rough/photo-22.jpg", alt: "IFHA 2nd rough plumbing 16" },
+          { src: "/images/projects/ifha-community-center/2nd-rough/photo-23.jpg", alt: "IFHA 2nd rough plumbing 17" },
+          { src: "/images/projects/ifha-community-center/2nd-rough/photo-24.jpg", alt: "IFHA 2nd rough plumbing 18" },
+          { src: "/images/projects/ifha-community-center/2nd-rough/photo-25.jpg", alt: "IFHA 2nd rough plumbing 19" },
+          { src: "/images/projects/ifha-community-center/2nd-rough/photo-26.jpg", alt: "IFHA 2nd rough plumbing 20" },
+          { src: "/images/projects/ifha-community-center/2nd-rough/photo-27.jpg", alt: "IFHA 2nd rough plumbing 21" },
+          { src: "/images/projects/ifha-community-center/2nd-rough/photo-28.jpg", alt: "IFHA 2nd rough plumbing 22" },
+          { src: "/images/projects/ifha-community-center/2nd-rough/photo-29.jpg", alt: "IFHA 2nd rough plumbing 23" },
+          { src: "/images/projects/ifha-community-center/2nd-rough/photo-30.jpg", alt: "IFHA 2nd rough plumbing 24" },
+          { src: "/images/projects/ifha-community-center/2nd-rough/photo-31.jpg", alt: "IFHA 2nd rough plumbing 25" },
+          { src: "/images/projects/ifha-community-center/2nd-rough/photo-32.jpg", alt: "IFHA 2nd rough plumbing 26" },
+          { src: "/images/projects/ifha-community-center/2nd-rough/photo-33.jpg", alt: "IFHA 2nd rough plumbing 27" },
+          { src: "/images/projects/ifha-community-center/2nd-rough/photo-34.jpg", alt: "IFHA 2nd rough plumbing 28" },
+        ],
+      },
+      {
+        name: "Trim Out",
+        slug: "trim-out",
+        description:
+          "Final fixture installation including sinks, faucets, toilets, and water heater connections.",
+        images: [
+          { src: "/images/projects/ifha-community-center/trim-out/photo-0.jpg", alt: "IFHA trim out plumbing 1" },
+          { src: "/images/projects/ifha-community-center/trim-out/photo-1.jpg", alt: "IFHA trim out plumbing 2" },
+          { src: "/images/projects/ifha-community-center/trim-out/photo-2.jpg", alt: "IFHA trim out plumbing 3" },
+          { src: "/images/projects/ifha-community-center/trim-out/photo-3.jpg", alt: "IFHA trim out plumbing 4" },
+          { src: "/images/projects/ifha-community-center/trim-out/photo-4.jpg", alt: "IFHA trim out plumbing 5" },
+          { src: "/images/projects/ifha-community-center/trim-out/photo-5.jpg", alt: "IFHA trim out plumbing 6" },
+          { src: "/images/projects/ifha-community-center/trim-out/photo-6.jpg", alt: "IFHA trim out plumbing 7" },
+          { src: "/images/projects/ifha-community-center/trim-out/photo-7.jpg", alt: "IFHA trim out plumbing 8" },
+          { src: "/images/projects/ifha-community-center/trim-out/photo-35.jpg", alt: "IFHA trim out plumbing 9" },
+          { src: "/images/projects/ifha-community-center/trim-out/photo-36.jpg", alt: "IFHA trim out plumbing 10" },
+          { src: "/images/projects/ifha-community-center/trim-out/photo-37.jpg", alt: "IFHA trim out plumbing 11" },
+          { src: "/images/projects/ifha-community-center/trim-out/photo-38.jpg", alt: "IFHA trim out plumbing 12" },
+          { src: "/images/projects/ifha-community-center/trim-out/photo-39.jpg", alt: "IFHA trim out plumbing 13" },
+          { src: "/images/projects/ifha-community-center/trim-out/photo-40.jpg", alt: "IFHA trim out plumbing 14" },
+          { src: "/images/projects/ifha-community-center/trim-out/photo-41.jpg", alt: "IFHA trim out plumbing 15" },
+          { src: "/images/projects/ifha-community-center/trim-out/photo-42.jpg", alt: "IFHA trim out plumbing 16" },
+          { src: "/images/projects/ifha-community-center/trim-out/photo-43.jpg", alt: "IFHA trim out plumbing 17" },
+          { src: "/images/projects/ifha-community-center/trim-out/photo-44.jpg", alt: "IFHA trim out plumbing 18" },
+          { src: "/images/projects/ifha-community-center/trim-out/photo-45.jpg", alt: "IFHA trim out plumbing 19" },
+          { src: "/images/projects/ifha-community-center/trim-out/photo-46.jpg", alt: "IFHA trim out plumbing 20" },
+          { src: "/images/projects/ifha-community-center/trim-out/photo-47.jpg", alt: "IFHA trim out plumbing 21" },
+          { src: "/images/projects/ifha-community-center/trim-out/photo-48.jpg", alt: "IFHA trim out plumbing 22" },
+        ],
+      },
+    ],
+    metaTitle: "IFHA Community Center Plumbing Project",
+    metaDescription:
+      "See our complete plumbing installation for the IFHA Community Center new construction — underground, rough-in, and trim out phases by C&S Plumbing of Lee County.",
+  },
+];
