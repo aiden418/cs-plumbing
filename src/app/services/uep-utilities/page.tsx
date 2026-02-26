@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import PageTransition from "@/components/layout/PageTransition";
-import ServiceLandingTemplate from "@/components/services/ServiceLandingTemplate";
+import UEPServicePage from "./UEPServicePage";
 import FaqJsonLd from "@/components/seo/FaqJsonLd";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import CTASection from "@/components/home/CTASection";
@@ -31,7 +31,7 @@ export default function Page() {
           { name: landing.title, href: `/services/${landing.slug}` },
         ]}
       />
-      <ServiceLandingTemplate landing={landing} />
+      <UEPServicePage landing={landing} />
       <CTASection />
     </PageTransition>
   );
