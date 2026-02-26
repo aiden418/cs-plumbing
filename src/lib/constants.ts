@@ -48,6 +48,7 @@ export const NAV_LINKS: NavLink[] = [
       { label: "Leak Repair", href: "/services/leak-repair" },
       { label: "Water Softeners", href: "/services/water-softeners" },
       { label: "Plumbing Remodels", href: "/services/plumbing-remodel" },
+      { label: "UEP Utilities", href: "/services/uep-utilities" },
     ],
   },
   {
@@ -201,6 +202,21 @@ export const SERVICES: Service[] = [
       "Fixture upgrades",
       "Pipe relocation",
       "Code updates",
+    ],
+  },
+  {
+    id: "uep-utilities",
+    title: "UEP Utilities Hookup",
+    description:
+      "Full-service Cape Coral UEP utilities connection — water service, irrigation, sewer laterals, and septic abandonment. We handle every permit and inspection from start to finish.",
+    icon: "Shovel",
+    href: "/services/uep-utilities",
+    features: [
+      "Water service line",
+      "Irrigation line",
+      "Sewer lateral",
+      "Septic abandonment",
+      "All permits included",
     ],
   },
 ];
@@ -958,6 +974,97 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       "Coordinates with contractors",
       "Free estimates",
       "Serving Cape Coral, Fort Myers & SWFL",
+    ],
+  },
+  {
+    slug: "uep-utilities",
+    title: "UEP Utilities Hookup",
+    heroText:
+      "Cape Coral UEP Utilities Hookup — Start to Finish",
+    description:
+      "Cape Coral's Utilities Extension Program (UEP) requires homeowners to connect to city water and sewer. C&S Plumbing handles the entire process — from pulling permits to final inspection. We install water service lines, irrigation lines, sewer laterals, and perform septic pump-out and abandonment so you can get connected fast.",
+    metaTitle:
+      "UEP Utilities Hookup Cape Coral | Water, Sewer & Septic Abandonment",
+    metaDescription:
+      "Full-service UEP utilities hookup in Cape Coral. Water service $13-15/ft, irrigation $9-10/ft, sewer $25-33/ft, septic abandonment $2,500. All permits included. Call 833-PLUMB-IT.",
+    keywords: [
+      "UEP Cape Coral",
+      "UEP utilities hookup",
+      "Cape Coral utilities connection",
+      "UEP plumber Cape Coral",
+      "water service line Cape Coral",
+      "sewer lateral Cape Coral",
+      "septic abandonment Cape Coral",
+      "irrigation line Cape Coral",
+      "UEP permit Cape Coral",
+      "utilities hookup plumber near me",
+    ],
+    features: [
+      {
+        title: "Water Service Line — $13–15/ft",
+        description:
+          "We install your water service line from the city meter to your home. You list C&S as your plumber with Cape Coral Utilities, and we handle the rest — from trenching to connection and pressure testing.",
+      },
+      {
+        title: "Irrigation Line — $9–10/ft",
+        description:
+          "Separate irrigation meter connection to keep your lawn and landscaping on its own water line. We run the line from the irrigation meter to your system with proper backflow prevention.",
+      },
+      {
+        title: "Sewer Lateral — $25–33/ft",
+        description:
+          "We connect your home to the city sewer main with a new sewer lateral. Pricing varies based on distance and depth. Every install includes proper grade, cleanouts, and full inspection.",
+      },
+      {
+        title: "Septic Abandonment & Pump-Out — $2,500",
+        description:
+          "Once you're connected to city sewer, your old septic tank needs to be pumped out and properly abandoned. We coordinate the pump truck, collapse or fill the tank, and handle the required permit and inspection.",
+      },
+      {
+        title: "Extras & Upgrades",
+        description:
+          "While we're on-site, we can install new shutoff valves, pressure regulators, hose bibs, and other upgrades. It's the perfect time to address anything else since we already have the ground open.",
+      },
+    ],
+    faqs: [
+      {
+        question: "What is the UEP program in Cape Coral?",
+        answer:
+          "The Utilities Extension Program (UEP) is Cape Coral's initiative to bring city water and sewer to neighborhoods that currently use wells and septic systems. When city lines reach your area, homeowners are required to connect within a set timeframe. C&S Plumbing handles the full connection process.",
+      },
+      {
+        question: "How much does a UEP utilities hookup cost?",
+        answer:
+          "Costs depend on what services you need and the distance from the city connection to your home. Water service lines run $13–15 per foot, irrigation lines $9–10 per foot, sewer laterals $25–33 per foot, and septic abandonment is a flat $2,500. We provide a free estimate based on your specific property.",
+      },
+      {
+        question: "What is the process for getting connected?",
+        answer:
+          "Once you sign with us, we send an initial deposit invoice that covers permitting and mobilization. We apply for all required permits. For water service, you'll need to list C&S as your plumber with Cape Coral Utilities. Once permits are issued and the water meter is installed, we get to work. The install and hookup process, including septic abandonment, typically takes 1–3 days with city inspections.",
+      },
+      {
+        question: "How long does a UEP hookup take?",
+        answer:
+          "The actual installation work takes 1–3 days depending on the scope. The permitting process can take a few weeks before we break ground. Once permits are issued and the meter is set, we mobilize quickly and get you connected with minimal disruption.",
+      },
+      {
+        question: "Do you handle all the permits and inspections?",
+        answer:
+          "Yes — we handle everything from start to finish. That includes pulling all required permits, coordinating with Cape Coral Utilities, scheduling inspections, and closing out permits after the work passes. You don't have to deal with any of the paperwork.",
+      },
+    ],
+    priceRange:
+      "Water: $13–15/ft · Irrigation: $9–10/ft · Sewer: $25–33/ft · Septic: $2,500",
+    highlights: [
+      "Full start-to-finish service",
+      "All permits & inspections handled",
+      "1–3 day installation",
+      "Cape Coral UEP specialists",
+      "Septic pump-out & abandonment included",
+      "Licensed & insured (CFC1430355)",
+      "Free estimates with upfront pricing",
+      "New shutoff valves & extras available",
+      "Serving all Cape Coral UEP phases",
     ],
   },
 ];

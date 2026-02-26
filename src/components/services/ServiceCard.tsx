@@ -11,6 +11,7 @@ import {
   HardHat,
   Droplets,
   PaintBucket,
+  Shovel,
   ArrowRight,
 } from "lucide-react";
 import type { Service } from "@/lib/types";
@@ -24,6 +25,7 @@ const iconMap: Record<string, React.ReactNode> = {
   HardHat: <HardHat className="w-6 h-6 sm:w-7 sm:h-7" />,
   Droplets: <Droplets className="w-6 h-6 sm:w-7 sm:h-7" />,
   PaintBucket: <PaintBucket className="w-6 h-6 sm:w-7 sm:h-7" />,
+  Shovel: <Shovel className="w-6 h-6 sm:w-7 sm:h-7" />,
 };
 
 interface ServiceCardProps {
