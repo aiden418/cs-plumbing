@@ -11,12 +11,13 @@ import {
   ChevronLeft,
   Phone,
   Siren,
-  Waves,
-  Flame,
   Building2,
   HardHat,
-  Droplets,
-  PaintBucket,
+  Home,
+  Shovel,
+  CalendarCheck,
+  FileText,
+  DollarSign,
 } from "lucide-react";
 import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
@@ -25,14 +26,20 @@ import { BUSINESS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
 const serviceCategories = [
-  { id: "emergency", label: "Emergency Repair", icon: <Siren className="w-6 h-6" />, color: "text-emergency" },
-  { id: "drain", label: "Drain Cleaning", icon: <Waves className="w-6 h-6" />, color: "text-primary" },
-  { id: "water-heater", label: "Water Heater", icon: <Flame className="w-6 h-6" />, color: "text-primary" },
-  { id: "repiping", label: "Repiping", icon: <Wrench className="w-6 h-6" />, color: "text-primary" },
-  { id: "commercial", label: "Commercial", icon: <Building2 className="w-6 h-6" />, color: "text-primary" },
-  { id: "new-construction", label: "New Construction", icon: <HardHat className="w-6 h-6" />, color: "text-primary" },
-  { id: "water-quality", label: "Water Quality", icon: <Droplets className="w-6 h-6" />, color: "text-primary" },
-  { id: "remodel", label: "Remodeling", icon: <PaintBucket className="w-6 h-6" />, color: "text-primary" },
+  { id: "residential", label: "Residential", icon: <Home className="w-6 h-6" /> },
+  { id: "commercial", label: "Commercial", icon: <Building2 className="w-6 h-6" /> },
+  { id: "emergency", label: "Emergency", icon: <Siren className="w-6 h-6" /> },
+  { id: "new-construction", label: "New Construction / Remodel", icon: <HardHat className="w-6 h-6" /> },
+  { id: "uep-utilities", label: "UEP Utilities", icon: <Shovel className="w-6 h-6" /> },
+];
+
+const budgetRanges = [
+  "Under $500",
+  "$500 – $1,000",
+  "$1,000 – $5,000",
+  "$5,000 – $10,000",
+  "$10,000+",
+  "Not sure",
 ];
 
 const timeSlots = [
@@ -40,18 +47,25 @@ const timeSlots = [
   "12:00 PM", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM",
 ];
 
-const steps = [
+const bookingSteps = [
   { label: "Service", icon: <Wrench className="w-4 h-4" /> },
-  { label: "Details", icon: <Wrench className="w-4 h-4" /> },
+  { label: "Details", icon: <FileText className="w-4 h-4" /> },
   { label: "Schedule", icon: <Calendar className="w-4 h-4" /> },
   { label: "Info", icon: <User className="w-4 h-4" /> },
-  { label: "Confirm", icon: <CheckCircle className="w-4 h-4" /> },
+];
+
+const estimateSteps = [
+  { label: "Service", icon: <Wrench className="w-4 h-4" /> },
+  { label: "Details", icon: <FileText className="w-4 h-4" /> },
+  { label: "Info", icon: <User className="w-4 h-4" /> },
 ];
 
 interface FormData {
+  requestType: "booking" | "estimate";
   service: string;
   description: string;
   urgency: string;
+  budgetRange: string;
   date: string;
   time: string;
   name: string;
@@ -61,12 +75,16 @@ interface FormData {
 }
 
 export default function BookingPage() {
+  const [requestType, setRequestType] = useState<"booking" | "estimate">("booking");
   const [step, setStep] = useState(0);
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [form, setForm] = useState<FormData>({
+    requestType: "booking",
     service: "",
     description: "",
     urgency: "normal",
+    budgetRange: "",
     date: "",
     time: "",
     name: "",
@@ -75,20 +93,41 @@ export default function BookingPage() {
     address: "",
   });
 
+  const isEstimate = requestType === "estimate";
+  const steps = isEstimate ? estimateSteps : bookingSteps;
+  const totalSteps = steps.length;
+
   const update = (field: keyof FormData, value: string) =>
     setForm((prev) => ({ ...prev, [field]: value }));
 
+  const switchRequestType = (type: "booking" | "estimate") => {
+    setRequestType(type);
+    setStep(0);
+    setSubmitted(false);
+    setForm((prev) => ({ ...prev, requestType: type }));
+  };
+
   const canProceed = () => {
-    switch (step) {
-      case 0: return form.service !== "";
-      case 1: return form.description.length >= 5;
-      case 2: return form.date !== "" && form.time !== "";
-      case 3: return form.name !== "" && form.email !== "" && form.phone !== "";
-      default: return true;
+    if (isEstimate) {
+      switch (step) {
+        case 0: return form.service !== "";
+        case 1: return form.description.length >= 5;
+        case 2: return form.name !== "" && form.email !== "" && form.phone !== "";
+        default: return true;
+      }
+    } else {
+      switch (step) {
+        case 0: return form.service !== "";
+        case 1: return form.description.length >= 5;
+        case 2: return form.date !== "" && form.time !== "";
+        case 3: return form.name !== "" && form.email !== "" && form.phone !== "";
+        default: return true;
+      }
     }
   };
 
   const handleSubmit = async () => {
+    setSubmitting(true);
     try {
       await fetch("/api/booking", {
         method: "POST",
@@ -98,15 +137,17 @@ export default function BookingPage() {
       setSubmitted(true);
     } catch {
       alert("Something went wrong. Please call us directly.");
+    } finally {
+      setSubmitting(false);
     }
   };
 
   const next = () => {
-    if (step === 3) {
+    if (step === totalSteps - 1) {
       handleSubmit();
-      setStep(4);
+      setStep(totalSteps);
     } else {
-      setStep((s) => Math.min(s + 1, 4));
+      setStep((s) => Math.min(s + 1, totalSteps));
     }
   };
   const prev = () => setStep((s) => Math.max(s - 1, 0));
@@ -121,52 +162,98 @@ export default function BookingPage() {
     };
   });
 
+  // Determine which "real" step to render
+  // For booking: step 0=service, 1=details, 2=schedule, 3=info, 4=confirm
+  // For estimate: step 0=service, 1=details, 2=info, 3=confirm
+  const isConfirmStep = step === totalSteps;
+  const isInfoStep = step === totalSteps - 1;
+  const isScheduleStep = !isEstimate && step === 2;
+  const isDetailsStep = step === 1;
+  const isServiceStep = step === 0;
+
   return (
     <PageTransition>
       <section className="pt-24 sm:pt-28 lg:pt-32 pb-12 sm:pb-16 bg-[#F5F5F7]">
         <Container size="narrow">
           <div className="text-center mb-8 sm:mb-12">
             <span className="inline-block text-primary text-xs sm:text-sm font-semibold tracking-widest uppercase mb-3 sm:mb-4">
-              Book a Service
+              {isEstimate ? "Request an Estimate" : "Book a Service"}
             </span>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 leading-tight">
-              Schedule Your <span className="text-gradient">Appointment</span>
+              {isEstimate ? (
+                <>Get a Free <span className="text-gradient">Estimate</span></>
+              ) : (
+                <>Schedule Your <span className="text-gradient">Appointment</span></>
+              )}
             </h1>
             <p className="mt-3 sm:mt-4 text-sm sm:text-base text-gray-500">
-              Book online in under 2 minutes. We&apos;ll confirm your
-              appointment within the hour.
+              {isEstimate
+                ? "Tell us about your project and we\u2019ll get back to you with a quote."
+                : "Book online in under 2 minutes. We\u2019ll confirm your appointment within the hour."}
             </p>
           </div>
 
+          {/* Request Type Toggle */}
+          <div className="flex justify-center mb-8 sm:mb-10">
+            <div className="inline-flex bg-white rounded-xl border border-gray-200 p-1">
+              <button
+                onClick={() => switchRequestType("booking")}
+                className={cn(
+                  "flex items-center gap-2 px-4 sm:px-6 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300",
+                  requestType === "booking"
+                    ? "bg-primary text-white shadow-sm"
+                    : "text-gray-500 hover:text-gray-900"
+                )}
+              >
+                <CalendarCheck className="w-4 h-4" />
+                Book a Service
+              </button>
+              <button
+                onClick={() => switchRequestType("estimate")}
+                className={cn(
+                  "flex items-center gap-2 px-4 sm:px-6 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300",
+                  requestType === "estimate"
+                    ? "bg-primary text-white shadow-sm"
+                    : "text-gray-500 hover:text-gray-900"
+                )}
+              >
+                <DollarSign className="w-4 h-4" />
+                Request an Estimate
+              </button>
+            </div>
+          </div>
+
           {/* Progress Bar */}
-          <div className="flex items-center justify-between mb-8 sm:mb-12 max-w-xs sm:max-w-md mx-auto">
-            {steps.map((s, i) => (
-              <div key={s.label} className="flex items-center">
-                <div
-                  className={cn(
-                    "w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-xs sm:text-sm font-bold transition-all duration-300",
-                    i <= step
-                      ? "bg-primary text-white"
-                      : "bg-[#F5F5F7]-light text-gray-500 border border-gray-200"
-                  )}
-                >
-                  {i < step ? (
-                    <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5" />
-                  ) : (
-                    <span>{i + 1}</span>
-                  )}
-                </div>
-                {i < steps.length - 1 && (
+          {!isConfirmStep && (
+            <div className="flex items-center justify-between mb-8 sm:mb-12 max-w-xs sm:max-w-md mx-auto">
+              {steps.map((s, i) => (
+                <div key={s.label} className="flex items-center">
                   <div
                     className={cn(
-                      "w-5 sm:w-8 md:w-12 h-0.5 mx-0.5 sm:mx-1 transition-colors duration-300",
-                      i < step ? "bg-primary" : "bg-gray-200"
+                      "w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-xs sm:text-sm font-bold transition-all duration-300",
+                      i <= step
+                        ? "bg-primary text-white"
+                        : "bg-white text-gray-500 border border-gray-200"
                     )}
-                  />
-                )}
-              </div>
-            ))}
-          </div>
+                  >
+                    {i < step ? (
+                      <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5" />
+                    ) : (
+                      <span>{i + 1}</span>
+                    )}
+                  </div>
+                  {i < steps.length - 1 && (
+                    <div
+                      className={cn(
+                        "w-5 sm:w-8 md:w-12 h-0.5 mx-0.5 sm:mx-1 transition-colors duration-300",
+                        i < step ? "bg-primary" : "bg-gray-200"
+                      )}
+                    />
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
         </Container>
       </section>
 
@@ -174,10 +261,10 @@ export default function BookingPage() {
         <Container size="narrow">
           <div className="bg-white rounded-2xl border border-gray-200 p-4 sm:p-6 lg:p-8 min-h-[350px] sm:min-h-[400px]">
             <AnimatePresence mode="wait">
-              {/* Step 0: Select Service */}
-              {step === 0 && (
+              {/* Step: Select Service */}
+              {isServiceStep && (
                 <motion.div
-                  key="step0"
+                  key="service"
                   initial={{ opacity: 0, x: 30 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -30 }}
@@ -186,7 +273,7 @@ export default function BookingPage() {
                   <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6">
                     What do you need help with?
                   </h2>
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3">
                     {serviceCategories.map((cat) => (
                       <button
                         key={cat.id}
@@ -194,7 +281,9 @@ export default function BookingPage() {
                         className={cn(
                           "p-3 sm:p-4 rounded-xl border text-center transition-all duration-300",
                           form.service === cat.id
-                            ? "border-primary bg-primary/10 text-primary"
+                            ? cat.id === "emergency"
+                              ? "border-emergency bg-emergency/10 text-emergency"
+                              : "border-primary bg-primary/10 text-primary"
                             : "border-gray-200 text-gray-500 hover:border-gray-300 hover:text-gray-900"
                         )}
                       >
@@ -208,53 +297,78 @@ export default function BookingPage() {
                 </motion.div>
               )}
 
-              {/* Step 1: Details */}
-              {step === 1 && (
+              {/* Step: Details */}
+              {isDetailsStep && (
                 <motion.div
-                  key="step1"
+                  key="details"
                   initial={{ opacity: 0, x: 30 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -30 }}
                   transition={{ duration: 0.3 }}
                 >
                   <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6">
-                    Tell us more about the issue
+                    Tell us more about {isEstimate ? "your project" : "the issue"}
                   </h2>
                   <textarea
                     value={form.description}
                     onChange={(e) => update("description", e.target.value)}
-                    placeholder="Describe the plumbing issue or project..."
+                    placeholder={isEstimate ? "Describe your project or what you need a quote for..." : "Describe the plumbing issue or project..."}
                     rows={4}
                     className="w-full bg-white border border-gray-200 rounded-xl px-3 sm:px-4 py-2.5 sm:py-3 text-gray-900 text-sm outline-none focus:border-primary transition-colors resize-none"
                   />
-                  <div className="mt-4 sm:mt-6">
-                    <p className="text-xs sm:text-sm text-gray-500 mb-2 sm:mb-3">How urgent is this?</p>
-                    <div className="flex flex-wrap gap-2 sm:gap-3">
-                      {["normal", "soon", "emergency"].map((u) => (
-                        <button
-                          key={u}
-                          onClick={() => update("urgency", u)}
-                          className={cn(
-                            "px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 capitalize",
-                            form.urgency === u
-                              ? u === "emergency"
-                                ? "bg-emergency/20 text-emergency border border-emergency/30"
-                                : "bg-primary/20 text-primary border border-primary/30"
-                              : "bg-[#F5F5F7]-light text-gray-500 border border-gray-200"
-                          )}
-                        >
-                          {u === "soon" ? "Within a week" : u}
-                        </button>
-                      ))}
+
+                  {isEstimate ? (
+                    /* Budget Range for Estimate */
+                    <div className="mt-4 sm:mt-6">
+                      <p className="text-xs sm:text-sm text-gray-500 mb-2 sm:mb-3">What&apos;s your budget range?</p>
+                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                        {budgetRanges.map((range) => (
+                          <button
+                            key={range}
+                            onClick={() => update("budgetRange", range)}
+                            className={cn(
+                              "px-3 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all duration-300",
+                              form.budgetRange === range
+                                ? "bg-primary/20 text-primary border border-primary/30"
+                                : "bg-[#F5F5F7] text-gray-500 border border-gray-200 hover:border-gray-300"
+                            )}
+                          >
+                            {range}
+                          </button>
+                        ))}
+                      </div>
                     </div>
-                  </div>
+                  ) : (
+                    /* Urgency for Booking */
+                    <div className="mt-4 sm:mt-6">
+                      <p className="text-xs sm:text-sm text-gray-500 mb-2 sm:mb-3">How urgent is this?</p>
+                      <div className="flex flex-wrap gap-2 sm:gap-3">
+                        {["normal", "soon", "emergency"].map((u) => (
+                          <button
+                            key={u}
+                            onClick={() => update("urgency", u)}
+                            className={cn(
+                              "px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 capitalize",
+                              form.urgency === u
+                                ? u === "emergency"
+                                  ? "bg-emergency/20 text-emergency border border-emergency/30"
+                                  : "bg-primary/20 text-primary border border-primary/30"
+                                : "bg-[#F5F5F7] text-gray-500 border border-gray-200"
+                            )}
+                          >
+                            {u === "soon" ? "Within a week" : u}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </motion.div>
               )}
 
-              {/* Step 2: Schedule */}
-              {step === 2 && (
+              {/* Step: Schedule (Booking only) */}
+              {isScheduleStep && (
                 <motion.div
-                  key="step2"
+                  key="schedule"
                   initial={{ opacity: 0, x: 30 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -30 }}
@@ -274,7 +388,7 @@ export default function BookingPage() {
                             "px-3 py-2 rounded-lg text-xs font-medium transition-all duration-300",
                             form.date === d.value
                               ? "bg-primary text-white"
-                              : "bg-[#F5F5F7]-light text-gray-500 border border-gray-200 hover:border-gray-300"
+                              : "bg-[#F5F5F7] text-gray-500 border border-gray-200 hover:border-gray-300"
                           )}
                         >
                           {d.label}
@@ -293,7 +407,7 @@ export default function BookingPage() {
                             "px-3 py-2 rounded-lg text-xs font-medium transition-all duration-300",
                             form.time === t
                               ? "bg-primary text-white"
-                              : "bg-[#F5F5F7]-light text-gray-500 border border-gray-200 hover:border-gray-300"
+                              : "bg-[#F5F5F7] text-gray-500 border border-gray-200 hover:border-gray-300"
                           )}
                         >
                           {t}
@@ -304,10 +418,10 @@ export default function BookingPage() {
                 </motion.div>
               )}
 
-              {/* Step 3: Contact Info */}
-              {step === 3 && (
+              {/* Step: Contact Info */}
+              {isInfoStep && !isConfirmStep && (
                 <motion.div
-                  key="step3"
+                  key="info"
                   initial={{ opacity: 0, x: 30 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -30 }}
@@ -348,10 +462,10 @@ export default function BookingPage() {
                 </motion.div>
               )}
 
-              {/* Step 4: Confirmation */}
-              {step === 4 && (
+              {/* Confirmation */}
+              {isConfirmStep && (
                 <motion.div
-                  key="step4"
+                  key="confirm"
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.4 }}
@@ -359,11 +473,12 @@ export default function BookingPage() {
                 >
                   <CheckCircle className="w-14 h-14 sm:w-20 sm:h-20 text-success mx-auto mb-4 sm:mb-6" />
                   <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2 sm:mb-3">
-                    Booking Submitted!
+                    {isEstimate ? "Estimate Request Submitted!" : "Booking Submitted!"}
                   </h2>
                   <p className="text-sm sm:text-base text-gray-500 mb-6 sm:mb-8 max-w-md mx-auto">
-                    We&apos;ll confirm your appointment within the hour. For
-                    urgent needs, call us directly.
+                    {isEstimate
+                      ? "We\u2019ll review your project details and get back to you with a quote within 24 hours. For urgent needs, call us directly."
+                      : "We\u2019ll confirm your appointment within the hour. For urgent needs, call us directly."}
                   </p>
                   <Button
                     href={`tel:${BUSINESS.phoneRaw}`}
@@ -377,7 +492,7 @@ export default function BookingPage() {
             </AnimatePresence>
 
             {/* Navigation */}
-            {step < 4 && (
+            {!isConfirmStep && (
               <div className="flex items-center justify-between mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-gray-200">
                 <button
                   onClick={prev}
@@ -393,16 +508,21 @@ export default function BookingPage() {
                 </button>
                 <button
                   onClick={next}
-                  disabled={!canProceed()}
+                  disabled={!canProceed() || submitting}
                   className={cn(
                     "flex items-center gap-1 px-6 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300",
-                    canProceed()
+                    canProceed() && !submitting
                       ? "bg-primary text-white hover:bg-primary-dark"
-                      : "bg-[#F5F5F7]-light text-gray-600 cursor-not-allowed"
+                      : "bg-[#F5F5F7] text-gray-400 cursor-not-allowed"
                   )}
                 >
-                  {step === 3 ? "Submit Booking" : "Continue"}{" "}
-                  <ChevronRight className="w-4 h-4" />
+                  {submitting
+                    ? "Submitting..."
+                    : step === totalSteps - 1
+                      ? isEstimate ? "Submit Estimate Request" : "Submit Booking"
+                      : "Continue"
+                  }{" "}
+                  {!submitting && <ChevronRight className="w-4 h-4" />}
                 </button>
               </div>
             )}
