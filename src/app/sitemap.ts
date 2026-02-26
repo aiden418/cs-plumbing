@@ -109,6 +109,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.9,
     },
+    {
+      url: `${baseUrl}/services/uep-utilities`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
     // City/area landing pages
     {
       url: `${baseUrl}/areas/cape-coral`,

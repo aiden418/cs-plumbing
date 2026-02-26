@@ -98,6 +98,16 @@ export default function JsonLd() {
             { "@type": "Offer", itemOffered: { "@type": "Service", name: "Trim & Finish Plumbing" } },
           ],
         },
+        {
+          "@type": "OfferCatalog",
+          name: "UEP Utilities Hookup",
+          itemListElement: [
+            { "@type": "Offer", itemOffered: { "@type": "Service", name: "Water Service Line Installation" } },
+            { "@type": "Offer", itemOffered: { "@type": "Service", name: "Irrigation Line Installation" } },
+            { "@type": "Offer", itemOffered: { "@type": "Service", name: "Sewer Lateral Installation" } },
+            { "@type": "Offer", itemOffered: { "@type": "Service", name: "Septic Tank Abandonment & Pump-Out" } },
+          ],
+        },
       ],
     },
     aggregateRating: {
