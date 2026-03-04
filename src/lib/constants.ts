@@ -1603,7 +1603,7 @@ export const PARTNERS: Partner[] = [
       "Family-owned AC and plumbing contractor serving Southwest Florida since 2013. Residential and commercial cooling, ductwork, and 24/7 emergency service. 4.9 stars with 500+ reviews.",
     phone: "239-465-2053",
     website: "https://www.calldeepblue.com",
-    image: null,
+    image: "/images/partners/deep-blue-air.jpg",
   },
   {
     id: "fabritech-screens",
@@ -1620,7 +1620,7 @@ export const PARTNERS: Partner[] = [
     name: "Superior Plumbing Solutions",
     category: "Plumbing & Water Treatment",
     description:
-      "Our go-to for water treatment and softener installations. Award-winning plumbing and water treatment authority serving Cape Coral and SWFL. 5.0 stars with 559+ reviews.",
+      "Our go-to for well and water filtration work. Award-winning plumbing and water treatment authority serving Cape Coral and SWFL. 5.0 stars with 559+ reviews.",
     phone: "239-292-0651",
     website: "https://superiorplumbingflorida.com",
     image: "/images/partners/superior-plumbing.jpeg",

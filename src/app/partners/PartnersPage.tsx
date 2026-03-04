@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 import { Phone, ExternalLink, Building2 } from "lucide-react";
 import Container from "@/components/ui/Container";
 import ScrollReveal from "@/components/animations/ScrollReveal";
@@ -39,9 +40,28 @@ export default function PartnersPage() {
         </Container>
       </section>
 
-      {/* Filter + Grid */}
+      {/* SEO Content + Filter + Grid */}
       <section className="py-12 sm:py-16 lg:py-20">
         <Container>
+          {/* SEO-rich intro paragraph */}
+          <ScrollReveal>
+            <div className="max-w-3xl mx-auto text-center mb-10 sm:mb-14">
+              <p className="text-sm sm:text-base text-gray-500 leading-relaxed">
+                As a{" "}
+                <Link href="/about" className="text-primary hover:underline">
+                  family-owned plumbing company
+                </Link>{" "}
+                serving Cape Coral and Southwest Florida since 1997, we know the value of working with
+                contractors who share our commitment to quality and customer service. Whether you need a{" "}
+                <Link href="/services/residential" className="text-primary hover:underline">
+                  residential plumbing
+                </Link>{" "}
+                partner, HVAC service, roofing, or concrete work, these are the companies we personally
+                recommend to our customers.
+              </p>
+            </div>
+          </ScrollReveal>
+
           {/* Category Filter */}
           <ScrollReveal>
             <div className="flex flex-wrap justify-center gap-2 mb-8 sm:mb-12">
@@ -121,7 +141,7 @@ export default function PartnersPage() {
                       <a
                         href={partner.website}
                         target="_blank"
-                        rel="noopener noreferrer"
+                        rel="noopener"
                         className="inline-flex items-center gap-1.5 text-sm font-medium text-gray-600 hover:text-primary transition-colors"
                       >
                         <ExternalLink className="w-4 h-4" />
@@ -140,6 +160,35 @@ export default function PartnersPage() {
               No companies listed in this category yet.
             </p>
           )}
+
+          {/* SEO bottom text */}
+          <ScrollReveal>
+            <div className="max-w-3xl mx-auto text-center mt-12 sm:mt-16">
+              <p className="text-sm text-gray-400 leading-relaxed">
+                Looking for a plumber instead? C&amp;S Plumbing of Lee County offers{" "}
+                <Link href="/services" className="text-primary hover:underline">
+                  full-service plumbing
+                </Link>
+                {" "}including{" "}
+                <Link href="/services/repiping" className="text-primary hover:underline">
+                  repiping
+                </Link>
+                ,{" "}
+                <Link href="/services/water-heaters" className="text-primary hover:underline">
+                  water heaters
+                </Link>
+                ,{" "}
+                <Link href="/services/drain-cleaning" className="text-primary hover:underline">
+                  drain cleaning
+                </Link>
+                , and{" "}
+                <Link href="/emergency" className="text-primary hover:underline">
+                  24/7 emergency service
+                </Link>
+                {" "}across Cape Coral, Fort Myers, and all of Southwest Florida.
+              </p>
+            </div>
+          </ScrollReveal>
         </Container>
       </section>
     </>
