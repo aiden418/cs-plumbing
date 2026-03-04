@@ -16,7 +16,23 @@ export const metadata: Metadata = {
   alternates: { canonical: "/services/new-construction" },
   title: "New Construction Plumbing",
   description:
-    "8,500+ new construction homes plumbed across SWFL. C&S Plumbing is the trusted partner for builders who demand reliability, code-compliance, and precision.",
+    "8,500+ new construction homes plumbed in Cape Coral, Fort Myers & SWFL. C&S Plumbing is the trusted builder's partner for reliability, code-compliance & precision.",
+  keywords: [
+    "new construction plumber Cape Coral",
+    "new construction plumbing Fort Myers",
+    "builder plumber Southwest Florida",
+    "rough-in plumbing Lee County",
+    "new home plumbing SWFL",
+    "construction plumbing contractor",
+    "underground plumbing Cape Coral",
+    "trim-out plumbing Fort Myers",
+  ],
+  openGraph: {
+    title: "New Construction Plumbing | C&S Plumbing of Lee County",
+    description:
+      "8,500+ homes built. The builder's choice for new construction plumbing in Cape Coral, Fort Myers & all of Southwest Florida.",
+    url: "https://www.csplumbinglee.com/services/new-construction",
+  },
 };
 
 const process = [

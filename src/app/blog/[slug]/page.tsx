@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import PageTransition from "@/components/layout/PageTransition";
 import BlogContent from "@/components/blog/BlogContent";
 import ArticleJsonLd from "@/components/seo/ArticleJsonLd";
+import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import CTASection from "@/components/home/CTASection";
 import { BLOG_POSTS } from "@/lib/constants";
 
@@ -46,6 +47,13 @@ export default async function Page({
   return (
     <PageTransition>
       <ArticleJsonLd post={post} />
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", href: "/" },
+          { name: "Blog", href: "/blog" },
+          { name: post.title, href: `/blog/${post.slug}` },
+        ]}
+      />
       <BlogContent post={post} />
       <CTASection />
     </PageTransition>

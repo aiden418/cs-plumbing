@@ -9,9 +9,26 @@ import { SERVICES } from "@/lib/constants";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/services" },
-  title: "Services",
+  title: "Plumbing Services",
   description:
-    "Comprehensive plumbing services across Southwest Florida — emergency repairs, drain cleaning, water heaters, repiping, new construction, commercial, and more.",
+    "Full-service plumbing in Cape Coral & Fort Myers — emergency repairs, drain cleaning, water heaters, repiping, new construction, commercial plumbing & more. Free estimates.",
+  keywords: [
+    "plumbing services Cape Coral",
+    "plumbing services Fort Myers",
+    "emergency plumbing Lee County",
+    "drain cleaning Cape Coral",
+    "water heater repair Fort Myers",
+    "repiping Southwest Florida",
+    "new construction plumbing SWFL",
+    "commercial plumbing Cape Coral",
+    "plumber near me",
+  ],
+  openGraph: {
+    title: "Plumbing Services | C&S Plumbing of Lee County",
+    description:
+      "Every plumbing solution under one roof — emergency repairs, drain cleaning, water heaters, repiping, new construction & commercial plumbing across SWFL.",
+    url: "https://www.csplumbinglee.com/services",
+  },
 };
 
 export default function ServicesPage() {

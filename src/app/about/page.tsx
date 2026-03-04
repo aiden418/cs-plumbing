@@ -10,7 +10,22 @@ export const metadata: Metadata = {
   alternates: { canonical: "/about" },
   title: "About Us",
   description:
-    "Family-owned since 1997. Learn about the Pellechio family and the team behind C&S Plumbing of Lee County — Southwest Florida's most trusted plumber.",
+    "Family-owned since 1997. Learn about the Pellechio family and the team behind C&S Plumbing of Lee County — Southwest Florida's most trusted plumber. Best of Cape Coral 2025.",
+  keywords: [
+    "C&S Plumbing about",
+    "Pellechio family plumbing",
+    "family-owned plumber Cape Coral",
+    "plumbing company Lee County history",
+    "best plumber Cape Coral 2025",
+    "trusted plumber Southwest Florida",
+    "licensed plumber Fort Myers",
+  ],
+  openGraph: {
+    title: "About C&S Plumbing of Lee County",
+    description:
+      "Family-owned since 1997, 8,500+ homes built. Meet the Pellechio family and the team behind Southwest Florida's most trusted plumbing company.",
+    url: "https://www.csplumbinglee.com/about",
+  },
 };
 
 export default function AboutPage() {

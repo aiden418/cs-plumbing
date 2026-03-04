@@ -7,7 +7,24 @@ export const metadata: Metadata = {
   alternates: { canonical: "/services/commercial" },
   title: "Commercial Plumbing Services",
   description:
-    "Commercial plumbing for businesses across Lee County — preventive maintenance, emergency repairs, grease traps, backflow prevention, and tenant improvements.",
+    "Commercial plumbing for businesses in Cape Coral, Fort Myers & Lee County — preventive maintenance, emergency repairs, grease traps, backflow prevention & tenant improvements.",
+  keywords: [
+    "commercial plumber Cape Coral",
+    "commercial plumbing Fort Myers",
+    "business plumbing Lee County",
+    "grease trap service Cape Coral",
+    "backflow prevention Fort Myers",
+    "restaurant plumbing SWFL",
+    "commercial emergency plumber",
+    "tenant improvement plumbing",
+    "property management plumbing Lee County",
+  ],
+  openGraph: {
+    title: "Commercial Plumbing | C&S Plumbing of Lee County",
+    description:
+      "Reliable commercial plumbing across Lee County — maintenance, emergency repairs, grease traps, backflow prevention & tenant improvements for businesses.",
+    url: "https://www.csplumbinglee.com/services/commercial",
+  },
 };
 
 const commercialServices = [

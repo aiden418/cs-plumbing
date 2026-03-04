@@ -25,7 +25,6 @@ export default function Page() {
       <BreadcrumbJsonLd
         items={[
           { name: "Home", href: "/" },
-          { name: "Service Areas", href: `/areas/${landing.slug}` },
           { name: landing.city, href: `/areas/${landing.slug}` },
         ]}
       />

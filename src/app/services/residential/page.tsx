@@ -8,7 +8,24 @@ export const metadata: Metadata = {
   alternates: { canonical: "/services/residential" },
   title: "Residential Plumbing Services",
   description:
-    "Expert residential plumbing — emergency repairs, drain cleaning, water heaters, repiping, water quality, fixture installation. Serving Cape Coral, Fort Myers & SWFL.",
+    "Expert residential plumbing in Cape Coral & Fort Myers — emergency repairs, drain cleaning, water heaters, repiping, water quality & fixture installation. Same-day service available.",
+  keywords: [
+    "residential plumber Cape Coral",
+    "home plumbing Fort Myers",
+    "emergency plumber near me",
+    "drain cleaning Cape Coral",
+    "water heater installation Fort Myers",
+    "repiping Cape Coral FL",
+    "fixture installation Lee County",
+    "bathroom plumbing SWFL",
+    "kitchen plumbing Cape Coral",
+  ],
+  openGraph: {
+    title: "Residential Plumbing | C&S Plumbing of Lee County",
+    description:
+      "Your home deserves the best plumbing. Emergency repairs, drain cleaning, water heaters, repiping & more in Cape Coral, Fort Myers & all of SWFL.",
+    url: "https://www.csplumbinglee.com/services/residential",
+  },
 };
 
 const residentialServices = SERVICES.filter((s) =>
