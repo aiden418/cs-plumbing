@@ -1626,16 +1626,6 @@ export const PARTNERS: Partner[] = [
     image: "/images/partners/superior-plumbing.jpeg",
   },
   {
-    id: "roof-ez",
-    name: "Roof EZ",
-    category: "Roofing",
-    description:
-      "Veteran-owned and operated roofing company in Cape Coral. Roof replacements, re-roofing, and solar solutions for residential and commercial properties throughout Florida.",
-    phone: "239-990-3226",
-    website: "https://roofez.net",
-    image: "/images/partners/roofez.svg",
-  },
-  {
     id: "petros-construction",
     name: "Petros Construction Inc.",
     category: "Concrete",
@@ -1644,5 +1634,45 @@ export const PARTNERS: Partner[] = [
     phone: "239-851-8401",
     website: "https://petrosconstructioninc.com",
     image: "/images/partners/petros.webp",
+  },
+  {
+    id: "tonys-pest",
+    name: "Tony\u2019s Pest Control",
+    category: "Pest Control",
+    description:
+      "Locally-owned pest control with 42 years of experience in Cape Coral. Residential and commercial pest, termite, rodent, and lawn care services across Southwest Florida. 4.8 stars with 347+ reviews.",
+    phone: "239-574-2847",
+    website: "https://tonyspest.com",
+    image: "/images/partners/tonys-pest.webp",
+  },
+  {
+    id: "advanced-pest",
+    name: "Advanced Pest Control of SWFL",
+    category: "Pest Control",
+    description:
+      "Voted Best in Cape Coral since 1991. Full-service pest, rodent, termite, and lawn care for all of Lee County. Family-owned and operated with over 30 years of trusted service.",
+    phone: "239-772-4444",
+    website: "https://www.advancedpestfl.com",
+    image: "/images/partners/advanced-pest.png",
+  },
+  {
+    id: "randr-sprinkler",
+    name: "R & R Sprinkler & Landscaping",
+    category: "Irrigation & Landscaping",
+    description:
+      "Family-owned since 1972 with 50+ years serving Cape Coral and Fort Myers. Irrigation design, installation, and repair plus full landscaping, hardscaping, and backflow certification.",
+    phone: "239-772-2607",
+    website: "https://www.randrsprinkler.com",
+    image: "/images/partners/randr-sprinkler.png",
+  },
+  {
+    id: "barnes-pools",
+    name: "Barnes Pools",
+    category: "Pool Construction",
+    description:
+      "One of the largest and most respected pool builders in Lee and Collier Counties since 1982. Custom gunite pools, spas, renovations, and a dedicated repair department.",
+    phone: "239-433-5575",
+    website: "https://barnespools.net",
+    image: "/images/partners/barnes-pools.jpg",
   },
 ];
