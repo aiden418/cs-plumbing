@@ -148,19 +148,24 @@ export default function Footer() {
 
       {/* Bottom Bar */}
       <div className="border-t border-gray-200">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-4 sm:py-6 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
-          <p className="text-xs sm:text-sm text-gray-500 text-center sm:text-left">
-            &copy; {new Date().getFullYear()} {BUSINESS.fullName}. All rights
-            reserved. License #{BUSINESS.license}
-          </p>
-          <div className="flex items-center gap-4 sm:gap-6 text-xs sm:text-sm text-gray-500">
-            <Link href="/contact" className="hover:text-gray-700 transition-colors">
-              Privacy Policy
-            </Link>
-            <Link href="/contact" className="hover:text-gray-700 transition-colors">
-              Terms of Service
-            </Link>
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-4 sm:py-6 flex flex-col items-center gap-3 sm:gap-4">
+          <div className="flex flex-col sm:flex-row items-center justify-between w-full gap-3 sm:gap-4">
+            <p className="text-xs sm:text-sm text-gray-500 text-center sm:text-left">
+              &copy; {new Date().getFullYear()} {BUSINESS.fullName}. All rights
+              reserved. License #{BUSINESS.license}
+            </p>
+            <div className="flex items-center gap-4 sm:gap-6 text-xs sm:text-sm text-gray-500">
+              <Link href="/contact" className="hover:text-gray-700 transition-colors">
+                Privacy Policy
+              </Link>
+              <Link href="/contact" className="hover:text-gray-700 transition-colors">
+                Terms of Service
+              </Link>
+            </div>
           </div>
+          <p className="text-xs text-gray-400">
+            Designed &amp; managed by ASP LLC
+          </p>
         </div>
       </div>
     </footer>

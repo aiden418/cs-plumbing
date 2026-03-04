@@ -13,6 +13,7 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [mobileDropdown, setMobileDropdown] = useState<string | null>(null);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -21,9 +22,22 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMobileOpen]);
+
   useEffect(() => {
     setIsMobileOpen(false);
     setOpenDropdown(null);
+    setMobileDropdown(null);
   }, [pathname]);
 
   return (
@@ -158,9 +172,9 @@ export default function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className="absolute inset-0 pt-24 px-6 flex flex-col"
+              className="absolute inset-0 pt-24 px-6 flex flex-col overflow-y-auto"
             >
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-1">
                 {NAV_LINKS.map((link, i) => (
                   <motion.div
                     key={link.href}
@@ -168,35 +182,89 @@ export default function Navbar() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.05 + 0.1 }}
                   >
-                    <Link
-                      href={link.href}
-                      className={cn(
-                        "block py-3 text-2xl font-bold transition-colors",
-                        pathname === link.href
-                          ? "text-primary"
-                          : "text-gray-900"
-                      )}
-                    >
-                      {link.label}
-                    </Link>
-                    {link.children && (
-                      <div className="ml-4 flex flex-col gap-1">
-                        {link.children.map((child) => (
-                          <Link
-                            key={child.href}
-                            href={child.href}
-                            className="py-2 text-lg text-gray-500 hover:text-gray-900 transition-colors"
-                          >
-                            {child.label}
-                          </Link>
-                        ))}
-                      </div>
+                    {link.children ? (
+                      <>
+                        <button
+                          onClick={() =>
+                            setMobileDropdown(
+                              mobileDropdown === link.label
+                                ? null
+                                : link.label
+                            )
+                          }
+                          className={cn(
+                            "flex items-center justify-between w-full py-3 text-2xl font-bold transition-colors",
+                            pathname.startsWith(link.href)
+                              ? "text-primary"
+                              : "text-gray-900"
+                          )}
+                        >
+                          {link.label}
+                          <ChevronDown
+                            className={cn(
+                              "w-5 h-5 transition-transform duration-300",
+                              mobileDropdown === link.label && "rotate-180"
+                            )}
+                          />
+                        </button>
+                        <AnimatePresence>
+                          {mobileDropdown === link.label && (
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: "auto", opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                              className="overflow-hidden"
+                            >
+                              <div className="ml-4 flex flex-col gap-0.5 pb-2">
+                                <Link
+                                  href={link.href}
+                                  className={cn(
+                                    "py-2 text-base font-semibold transition-colors",
+                                    pathname === link.href
+                                      ? "text-primary"
+                                      : "text-gray-700 active:text-primary"
+                                  )}
+                                >
+                                  All {link.label}
+                                </Link>
+                                {link.children.map((child) => (
+                                  <Link
+                                    key={child.href}
+                                    href={child.href}
+                                    className={cn(
+                                      "py-2 text-base transition-colors",
+                                      pathname === child.href
+                                        ? "text-primary font-semibold"
+                                        : "text-gray-500 active:text-gray-900"
+                                    )}
+                                  >
+                                    {child.label}
+                                  </Link>
+                                ))}
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </>
+                    ) : (
+                      <Link
+                        href={link.href}
+                        className={cn(
+                          "block py-3 text-2xl font-bold transition-colors",
+                          pathname === link.href
+                            ? "text-primary"
+                            : "text-gray-900"
+                        )}
+                      >
+                        {link.label}
+                      </Link>
                     )}
                   </motion.div>
                 ))}
               </div>
 
-              <div className="mt-auto pb-12 flex flex-col gap-4">
+              <div className="mt-auto py-8 flex flex-col gap-4 shrink-0">
                 <a
                   href={`tel:${BUSINESS.phoneRaw}`}
                   className="flex items-center justify-center gap-2 py-4 text-xl font-bold text-gray-900"
