@@ -113,6 +113,16 @@ export interface BlogPost {
   readTime: string;
 }
 
+export interface Partner {
+  id: string;
+  name: string;
+  category: string;
+  description: string;
+  phone: string;
+  website?: string;
+  image?: string | null;
+}
+
 export interface ProjectImage {
   src: string;
   alt: string;

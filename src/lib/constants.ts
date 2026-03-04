@@ -1,4 +1,4 @@
-import type { Service, TeamMember, Testimonial, TimelineEvent, NavLink, Stat, ServiceLanding, AreaLanding, BlogPost, CompletedProject } from "./types";
+import type { Service, TeamMember, Testimonial, TimelineEvent, NavLink, Stat, ServiceLanding, AreaLanding, BlogPost, CompletedProject, Partner } from "./types";
 
 // ============================================
 // BUSINESS INFO
@@ -65,6 +65,7 @@ export const NAV_LINKS: NavLink[] = [
   { label: "Gallery", href: "/gallery" },
   { label: "Projects", href: "/projects" },
   { label: "Blog", href: "/blog" },
+  { label: "Recommended", href: "/partners" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -1576,5 +1577,72 @@ export const COMPLETED_PROJECTS: CompletedProject[] = [
     metaTitle: "IFHA Community Center Plumbing Project",
     metaDescription:
       "See our complete plumbing installation for the IFHA Community Center new construction — underground, rough-in, and trim out phases by C&S Plumbing of Lee County.",
+  },
+];
+
+// ============================================
+// RECOMMENDED PARTNERS
+// ============================================
+
+export const PARTNERS: Partner[] = [
+  {
+    id: "draft-construction",
+    name: "Draft Construction LLC",
+    category: "General Contractor",
+    description:
+      "Licensed and insured general contractor in Cape Coral specializing in home remodeling, additions, roofing, flooring, and new construction across Southwest Florida.",
+    phone: "239-266-5921",
+    website: "https://www.draftconstructionswfl.com",
+    image: "/images/partners/draft-construction.png",
+  },
+  {
+    id: "deep-blue-air",
+    name: "Deep Blue Air & Water",
+    category: "HVAC",
+    description:
+      "Family-owned AC and plumbing contractor serving Southwest Florida since 2013. Residential and commercial cooling, ductwork, and 24/7 emergency service. 4.9 stars with 500+ reviews.",
+    phone: "239-465-2053",
+    website: "https://www.calldeepblue.com",
+    image: null,
+  },
+  {
+    id: "fabritech-screens",
+    name: "Fabri-Tech Screen Enclosures",
+    category: "Screen Enclosures",
+    description:
+      "Fort Myers\u2019 go-to for pool rescreening and aluminum fabrication. Quality screen enclosures, lanai builds, and rescreening services for residential properties.",
+    phone: "239-722-5565",
+    website: "https://www.fabritechscreens.com",
+    image: "/images/partners/fabritech.png",
+  },
+  {
+    id: "superior-plumbing",
+    name: "Superior Plumbing Solutions",
+    category: "Plumbing & Water Treatment",
+    description:
+      "Our go-to for water treatment and softener installations. Award-winning plumbing and water treatment authority serving Cape Coral and SWFL. 5.0 stars with 559+ reviews.",
+    phone: "239-292-0651",
+    website: "https://superiorplumbingflorida.com",
+    image: "/images/partners/superior-plumbing.jpeg",
+  },
+  {
+    id: "roof-ez",
+    name: "Roof EZ",
+    category: "Roofing",
+    description:
+      "Veteran-owned and operated roofing company in Cape Coral. Roof replacements, re-roofing, and solar solutions for residential and commercial properties throughout Florida.",
+    phone: "239-990-3226",
+    website: "https://roofez.net",
+    image: "/images/partners/roofez.svg",
+  },
+  {
+    id: "petros-construction",
+    name: "Petros Construction Inc.",
+    category: "Concrete",
+    description:
+      "Over 35 years of concrete expertise in Cape Coral. Foundations, driveways, pool decks, commercial slabs, home additions, and boom pump services built to last.",
+    phone: "239-851-8401",
+    website: "https://petrosconstructioninc.com",
+    image: "/images/partners/petros.webp",
   },
 ];
