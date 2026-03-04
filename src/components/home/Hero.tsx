@@ -109,11 +109,37 @@ export default function Hero() {
           </Button>
         </motion.div>
 
+        {/* Award Badge */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="mt-8 sm:mt-10 lg:mt-12 flex justify-center"
+        >
+          <div className="flex items-center gap-3 sm:gap-4 bg-white/80 backdrop-blur-sm rounded-2xl px-4 sm:px-6 py-3 sm:py-4 border border-gray-200 shadow-sm">
+            <Image
+              src="/images/awards/best-of-cape-coral-2025.png"
+              alt="Best of Cape Coral 2025 Award"
+              width={60}
+              height={45}
+              className="sm:w-[72px] sm:h-[54px]"
+            />
+            <div className="text-left">
+              <p className="text-xs sm:text-sm font-bold text-gray-900 leading-tight">
+                Best of Cape Coral 2025
+              </p>
+              <p className="text-[10px] sm:text-xs text-gray-500">
+                Award-Winning Plumbing Company
+              </p>
+            </div>
+          </div>
+        </motion.div>
+
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 1.2 }}
-          className="mt-12 sm:mt-16 lg:mt-20 flex flex-wrap items-center justify-center gap-6 sm:gap-8 lg:gap-10 text-xs sm:text-sm lg:text-base text-gray-400"
+          className="mt-6 sm:mt-8 lg:mt-10 flex flex-wrap items-center justify-center gap-6 sm:gap-8 lg:gap-10 text-xs sm:text-sm lg:text-base text-gray-400"
         >
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 rounded-full bg-success" />

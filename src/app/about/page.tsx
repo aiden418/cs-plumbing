@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import PageTransition from "@/components/layout/PageTransition";
 import FamilyStory from "@/components/about/FamilyStory";
 import Timeline from "@/components/about/Timeline";
@@ -31,6 +32,24 @@ export default function AboutPage() {
             Florida&apos;s plumbing infrastructure — from residential homes to
             commercial projects.
           </p>
+          <div className="mt-6 sm:mt-8 flex justify-center">
+            <div className="inline-flex items-center gap-3 bg-white rounded-2xl px-5 py-3 border border-gray-200 shadow-sm">
+              <Image
+                src="/images/awards/best-of-cape-coral-2025.png"
+                alt="Best of Cape Coral 2025 Award"
+                width={56}
+                height={42}
+              />
+              <div className="text-left">
+                <p className="text-xs sm:text-sm font-bold text-gray-900 leading-tight">
+                  Best of Cape Coral 2025
+                </p>
+                <p className="text-[10px] sm:text-xs text-gray-500">
+                  Award-Winning Plumbing Company
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
