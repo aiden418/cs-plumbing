@@ -26,6 +26,42 @@ const UEP_IMAGES = [
     src: "/images/services/uep-utilities/photo-2.jpg",
     alt: "Water meter box and irrigation valve box installed with caution tape — freshly completed UEP hookup",
   },
+  {
+    src: "/images/services/uep-utilities/IMG_0646.jpeg",
+    alt: "C&S Plumbing truck on site with sewer line excavation and pipe staging for UEP connection",
+  },
+  {
+    src: "/images/services/uep-utilities/IMG_0647.jpeg",
+    alt: "Sewer line trench with new green sewer pipe and orange locate line for UEP utility hookup",
+  },
+  {
+    src: "/images/services/uep-utilities/IMG_0648.jpeg",
+    alt: "Excavation along residential property for sewer line installation — crew member in trench",
+  },
+  {
+    src: "/images/services/uep-utilities/IMG_0652.jpeg",
+    alt: "Deep trench excavation with green sewer pipe connection at residential property — mini excavator on site",
+  },
+  {
+    src: "/images/services/uep-utilities/IMG_3A81939715B2-1.jpeg",
+    alt: "Septic abandonment trench excavation in front yard with caution tape and safety barriers",
+  },
+  {
+    src: "/images/services/uep-utilities/IMG_79D5F2B66CB3-1.jpeg",
+    alt: "Mini excavator removing old septic tank drain field during septic abandonment — exposed leach field pipes",
+  },
+  {
+    src: "/images/services/uep-utilities/IMG_E37F0520EF19-1.jpeg",
+    alt: "New sewer line cleanout and connection point installed in excavated trench — green PVC pipe with cleanout cap",
+  },
+  {
+    src: "/images/services/uep-utilities/JPEG image-4165-B510-28-0.jpeg",
+    alt: "New green PVC sewer line with fittings and cleanout installed in trench — close-up of pipe connections",
+  },
+  {
+    src: "/images/services/uep-utilities/JPEG image-4E9F-81C1-6A-0.jpeg",
+    alt: "Sewer line running through deep trench from house to street — new PVC pipe with fittings ready for backfill",
+  },
 ];
 
 export default function UEPServicePage({
