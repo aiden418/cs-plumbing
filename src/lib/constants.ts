@@ -1578,6 +1578,41 @@ export const COMPLETED_PROJECTS: CompletedProject[] = [
     metaDescription:
       "See our complete plumbing installation for the IFHA Community Center new construction — underground, rough-in, and trim out phases by C&S Plumbing of Lee County.",
   },
+  {
+    slug: "mangos-bathroom-remodel",
+    name: "Mangos Restaurant & Bar Commercial Bathroom Remodel",
+    client: "Mangos Restaurant & Bar",
+    category: "Commercial Remodel",
+    timeline: "2 months",
+    cost: "$20K\u2013$25K",
+    description:
+      "Complete commercial bathroom remodel for Mangos Restaurant & Bar on North Captiva Island. C&S Plumbing handled the full scope from demolition of the existing restroom facilities through rough-in of all new supply and drain lines to final trim and fixture installation, delivering a modern, code-compliant restroom for this popular island destination.",
+    location: "North Captiva Island, FL",
+    coverImage: "/images/projects/mangos-bathroom-remodel/final/IMG_3409.jpeg",
+    phases: [
+      {
+        name: "Finished Result",
+        slug: "final",
+        description:
+          "The completed commercial bathroom remodel — modern fixtures, new plumbing throughout, and a clean, code-compliant restroom.",
+        images: [
+          { src: "/images/projects/mangos-bathroom-remodel/final/IMG_3409.jpeg", alt: "Mangos bathroom remodel finished 1" },
+          { src: "/images/projects/mangos-bathroom-remodel/final/IMG_3410.jpeg", alt: "Mangos bathroom remodel finished 2" },
+          { src: "/images/projects/mangos-bathroom-remodel/final/IMG_3416.jpeg", alt: "Mangos bathroom remodel finished 3" },
+          { src: "/images/projects/mangos-bathroom-remodel/final/IMG_3425.jpeg", alt: "Mangos bathroom remodel finished 4" },
+          { src: "/images/projects/mangos-bathroom-remodel/final/IMG_3435.jpeg", alt: "Mangos bathroom remodel finished 5" },
+          { src: "/images/projects/mangos-bathroom-remodel/final/IMG_3437.jpeg", alt: "Mangos bathroom remodel finished 6" },
+          { src: "/images/projects/mangos-bathroom-remodel/final/IMG_3445.jpeg", alt: "Mangos bathroom remodel finished 7" },
+          { src: "/images/projects/mangos-bathroom-remodel/final/IMG_3448.jpeg", alt: "Mangos bathroom remodel finished 8" },
+          { src: "/images/projects/mangos-bathroom-remodel/final/IMG_3450.jpeg", alt: "Mangos bathroom remodel finished 9" },
+          { src: "/images/projects/mangos-bathroom-remodel/final/IMG_3451.jpeg", alt: "Mangos bathroom remodel finished 10" },
+        ],
+      },
+    ],
+    metaTitle: "Mangos Restaurant Bathroom Remodel",
+    metaDescription:
+      "Commercial bathroom remodel for Mangos Restaurant & Bar on North Captiva Island by C&S Plumbing of Lee County.",
+  },
 ];
 
 // ============================================
