@@ -25,7 +25,7 @@ export const BUSINESS = {
   tagline: "Southwest Florida's Most Trusted Plumbing Team",
   description:
     "Family-owned since 1997. From emergency repairs to new construction, C&S Plumbing delivers excellence across Southwest Florida.",
-  license: "CFC1430355",
+  license: "CFC1432485",
 } as const;
 
 // ============================================
@@ -60,6 +60,9 @@ export const NAV_LINKS: NavLink[] = [
       { label: "North Fort Myers", href: "/areas/north-fort-myers" },
       { label: "Naples", href: "/areas/naples" },
       { label: "Bonita Springs", href: "/areas/bonita-springs" },
+      { label: "Lehigh Acres", href: "/areas/lehigh-acres" },
+      { label: "Estero", href: "/areas/estero" },
+      { label: "Sanibel Island", href: "/areas/sanibel" },
     ],
   },
   { label: "Gallery", href: "/gallery" },
@@ -531,7 +534,17 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       {
         question: "Do you pull permits for repiping in Lee County?",
         answer:
-          "Yes, every C&S Plumbing repipe job includes full permitting and final inspection by Lee County. This ensures your repiping is code-compliant and protects your home's value. Our license number is CFC1430355.",
+          "Yes, every C&S Plumbing repipe job includes full permitting and final inspection by Lee County. This ensures your repiping is code-compliant and protects your home's value. Our license number is CFC1432485.",
+      },
+      {
+        question: "Will repiping damage my walls or floors?",
+        answer:
+          "We minimize wall openings by using flexible PEX piping that can be routed through existing pathways. Small access holes are necessary, but we patch drywall after the job and leave your home clean. Most homeowners are surprised at how little disruption is involved.",
+      },
+      {
+        question: "Does repiping increase my home's value?",
+        answer:
+          "Yes. A whole-home repipe is one of the best investments you can make. It eliminates the risk of pipe failure, can improve water pressure, and is often required by insurance companies and home inspectors during a sale.",
       },
     ],
     priceRange: "$4,000 – $15,000",
@@ -541,7 +554,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       "Copper & PEX options available",
       "Full permit & inspection included",
       "Minimal wall damage guaranteed",
-      "Licensed & insured (CFC1430355)",
+      "Licensed & insured (CFC1432485)",
       "Free estimates with upfront pricing",
       "Lifetime warranty on PEX piping",
       "Serving all of Southwest Florida",
@@ -619,6 +632,16 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
         answer:
           "Absolutely. Florida's warm incoming water temperature means tankless heaters perform excellently here, reaching target temperatures faster and more efficiently than in colder climates.",
       },
+      {
+        question: "What brands of water heaters do you install?",
+        answer:
+          "We install all major brands including Rinnai, Navien, Rheem, A.O. Smith, and Bradford White. We'll recommend the best brand and model for your home based on your hot water needs, energy goals, and budget.",
+      },
+      {
+        question: "How do I know when my water heater needs to be replaced?",
+        answer:
+          "Common signs include inconsistent water temperature, rusty water from the hot side only, rumbling or popping noises, visible corrosion or leaking around the base, and an age of 10+ years. If your water heater shows any of these signs, schedule a free inspection.",
+      },
     ],
     priceRange: "$800 – $3,500+",
     highlights: [
@@ -627,7 +650,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       "Tankless, tank & hybrid options",
       "Energy efficiency upgrades",
       "Upfront pricing, no surprises",
-      "Licensed & insured (CFC1430355)",
+      "Licensed & insured (CFC1432485)",
       "Free estimates",
       "Warranty on all installations",
       "Serving Cape Coral, Fort Myers & SWFL",
@@ -705,6 +728,16 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
         answer:
           "Yes, we offer 24/7 emergency drain cleaning for sewage backups and critical drain failures. Call 833-PLUMB-IT any time and we'll dispatch a technician as quickly as possible.",
       },
+      {
+        question: "What is hydro-jetting and how does it work?",
+        answer:
+          "Hydro-jetting uses a high-pressure stream of water (up to 4,000 PSI) to blast through grease, mineral scale, tree roots, and debris inside your pipes. It's the most thorough cleaning method available and restores pipes to near-new condition without chemicals.",
+      },
+      {
+        question: "Can tree roots damage my sewer line?",
+        answer:
+          "Yes, tree roots are one of the most common causes of sewer line blockages in Southwest Florida. Roots seek out moisture and can infiltrate tiny cracks in pipes, growing until they block the line entirely. We use camera inspections to identify root intrusion and hydro-jetting to clear them.",
+      },
     ],
     priceRange: "$150 – $500",
     highlights: [
@@ -713,7 +746,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       "Camera inspection included",
       "Root intrusion specialists",
       "All drain types serviced",
-      "Licensed & insured (CFC1430355)",
+      "Licensed & insured (CFC1432485)",
       "Upfront pricing",
       "Preventive maintenance plans",
       "24/7 emergency service",
@@ -791,6 +824,16 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
         answer:
           "It depends on the pipe condition and location. If it's a single leak in otherwise good pipes, repair is usually best. If you have multiple slab leaks or old corroded pipes, rerouting through the attic or walls is often more cost-effective long-term.",
       },
+      {
+        question: "Does homeowner's insurance cover water leak damage?",
+        answer:
+          "Most homeowner's insurance policies cover sudden and accidental water damage, but not damage from neglected maintenance or slow leaks. Document all damage with photos before cleanup and contact your insurance provider promptly. We can provide repair documentation for your claim.",
+      },
+      {
+        question: "What should I do if I find a leak in my home?",
+        answer:
+          "First, shut off the water supply at the nearest valve or the main shutoff. Then contain the water with towels or buckets to minimize damage. Call C&S Plumbing at 833-PLUMB-IT for 24/7 emergency response — we typically arrive within 1-2 hours in our service area.",
+      },
     ],
     priceRange: "$150 – $800+",
     highlights: [
@@ -799,7 +842,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       "Slab leak specialists",
       "Non-destructive methods",
       "Fast, same-day service",
-      "Licensed & insured (CFC1430355)",
+      "Licensed & insured (CFC1432485)",
       "Free estimates",
       "All pipe types repaired",
       "Serving Cape Coral, Fort Myers & SWFL",
@@ -885,7 +928,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       "Salt-based & salt-free options",
       "Reverse osmosis systems",
       "Protects pipes & appliances",
-      "Licensed & insured (CFC1430355)",
+      "Licensed & insured (CFC1432485)",
       "Maintenance plans available",
       "Upfront pricing",
       "Serving Cape Coral, Fort Myers & SWFL",
@@ -971,7 +1014,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       "Pipe relocation services",
       "Code-compliant renovations",
       "Permit handling included",
-      "Licensed & insured (CFC1430355)",
+      "Licensed & insured (CFC1432485)",
       "Coordinates with contractors",
       "Free estimates",
       "Serving Cape Coral, Fort Myers & SWFL",
@@ -1062,7 +1105,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       "1–3 day installation",
       "Cape Coral UEP specialists",
       "Septic pump-out & abandonment included",
-      "Licensed & insured (CFC1430355)",
+      "Licensed & insured (CFC1432485)",
       "Free estimates with upfront pricing",
       "New shutoff valves & extras available",
       "Serving all Cape Coral UEP phases",
@@ -1247,6 +1290,107 @@ export const AREA_LANDINGS: AreaLanding[] = [
     localContext:
       "Bonita Springs sits at the crossroads of Lee and Collier County, and C&S Plumbing is ideally located to serve this growing community quickly. Many Bonita Springs homes, especially in established communities like Bonita Bay and Pelican Landing, are reaching the age where repiping and water heater replacement become necessary. We understand the HOA requirements and community standards that come with working in these neighborhoods.",
   },
+  {
+    slug: "lehigh-acres",
+    city: "Lehigh Acres",
+    state: "FL",
+    metaTitle: "Plumber in Lehigh Acres, FL",
+    metaDescription:
+      "Trusted plumber in Lehigh Acres, FL. Emergency plumbing, repiping, drain cleaning, water heaters & more. Family-owned since 1997. 8,500+ homes. Call 833-PLUMB-IT.",
+    keywords: [
+      "plumber Lehigh Acres",
+      "plumber Lehigh Acres FL",
+      "Lehigh Acres plumbing",
+      "emergency plumber Lehigh Acres",
+      "repiping Lehigh Acres",
+      "drain cleaning Lehigh Acres",
+      "water heater Lehigh Acres",
+      "plumber near me Lehigh Acres",
+      "best plumber Lehigh Acres",
+    ],
+    heroText: "Your Trusted Plumber in Lehigh Acres, FL",
+    description:
+      "C&S Plumbing provides fast, reliable plumbing services to Lehigh Acres homeowners and businesses. From emergency repairs to whole-home repiping, we bring 27+ years of experience and 8,500+ completed projects to every job.",
+    neighborhoods: [
+      "Lehigh Acres",
+      "Mirror Lakes",
+      "Harlem Heights",
+      "Homestead",
+      "Buckingham",
+      "East Lehigh",
+      "Lee Blvd",
+      "Joel Blvd",
+    ],
+    localContext:
+      "Lehigh Acres is one of the fastest-growing communities in Lee County, with a mix of established homes and new construction that keeps our team busy. Many homes built in the 1980s and 1990s in Lehigh Acres still have original polybutylene pipes that are overdue for replacement. We also see a lot of well water systems in the eastern parts of Lehigh Acres, which require water treatment expertise alongside standard plumbing services. C&S Plumbing's North Fort Myers headquarters is just a short drive from Lehigh Acres, ensuring fast response times for emergencies.",
+  },
+  {
+    slug: "estero",
+    city: "Estero",
+    state: "FL",
+    metaTitle: "Plumber in Estero, FL",
+    metaDescription:
+      "Professional plumber in Estero, FL. Repiping, water heaters, drain cleaning, emergency plumbing. Family-owned, 27+ years in SWFL. Call 833-PLUMB-IT.",
+    keywords: [
+      "plumber Estero",
+      "plumber Estero FL",
+      "Estero plumbing",
+      "emergency plumber Estero",
+      "repiping Estero",
+      "drain cleaning Estero",
+      "water heater Estero",
+      "plumber near me Estero",
+      "best plumber Estero",
+    ],
+    heroText: "Professional Plumbing Services in Estero, FL",
+    description:
+      "C&S Plumbing serves Estero with the same quality and reliability that has earned us 8,500+ completed projects across Southwest Florida. Fast response, fair pricing, and expert workmanship for every home and business.",
+    neighborhoods: [
+      "Estero",
+      "Coconut Point",
+      "Miromar Lakes",
+      "The Brooks",
+      "Grandezza",
+      "Bella Terra",
+      "Corkscrew Shores",
+      "Rapallo",
+    ],
+    localContext:
+      "Estero has transformed from a quiet community into one of Southwest Florida's most desirable addresses, with master-planned communities like Miromar Lakes, The Brooks, and Grandezza attracting homeowners who expect top-quality service. C&S Plumbing understands the HOA standards and architectural guidelines that come with working in these upscale neighborhoods. Whether you need a water heater replacement in a single-family home or repiping for a villa, we deliver the professionalism and attention to detail that Estero homeowners demand.",
+  },
+  {
+    slug: "sanibel",
+    city: "Sanibel Island",
+    state: "FL",
+    metaTitle: "Plumber on Sanibel Island, FL",
+    metaDescription:
+      "Experienced plumber on Sanibel Island, FL. Emergency plumbing, repiping, water heaters, hurricane recovery. Family-owned, 27+ years in SWFL. Call 833-PLUMB-IT.",
+    keywords: [
+      "plumber Sanibel Island",
+      "plumber Sanibel FL",
+      "Sanibel Island plumbing",
+      "emergency plumber Sanibel",
+      "repiping Sanibel Island",
+      "plumber near me Sanibel",
+      "Sanibel hurricane plumbing repair",
+      "Sanibel water heater",
+    ],
+    heroText: "Experienced Plumbing Services on Sanibel Island, FL",
+    description:
+      "C&S Plumbing serves Sanibel Island with the expertise required for island living. From salt-air corrosion challenges to hurricane recovery plumbing, we bring 27+ years of Southwest Florida experience to every job on the island.",
+    neighborhoods: [
+      "Sanibel",
+      "East End",
+      "West End",
+      "Captiva",
+      "Blind Pass",
+      "Sanibel Bayous",
+      "The Dunes",
+      "Gulf Pines",
+    ],
+    localContext:
+      "Sanibel Island's unique barrier island environment presents specific plumbing challenges that mainland homes don't face. Salt air accelerates pipe corrosion, hurricane damage can compromise entire plumbing systems, and the island's building codes require contractors who understand the local requirements. C&S Plumbing has been helping Sanibel and Captiva Island homeowners rebuild and maintain their plumbing systems for years, including extensive work following recent hurricane seasons. Our team is experienced with the logistics of island work, including coordinating with the causeway schedule and island-specific permitting requirements.",
+  },
 ];
 
 // ============================================
@@ -1272,7 +1416,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>2. Low Water Pressure Throughout the House</h2>
 <p>A sudden drop in water pressure at one fixture usually points to a localized problem. But when water pressure is low at every faucet, shower, and spigot in your home, it often means mineral deposits and corrosion have narrowed the inside diameter of your pipes significantly.</p>
-<p>This is especially common in Cape Coral and Fort Myers homes with hard water — the mineral buildup accelerates pipe deterioration over time.</p>
+<p>This is especially common in <a href="/areas/cape-coral">Cape Coral</a> and <a href="/areas/fort-myers">Fort Myers</a> homes with hard water — the mineral buildup accelerates pipe deterioration over time.</p>
 
 <h2>3. Frequent Leaks and Pinhole Leaks</h2>
 <p>One leak can be a fluke. Two is a coincidence. Three or more leaks in a short period means your entire pipe system is failing. Pinhole leaks in copper pipes are especially common in Southwest Florida due to our water chemistry.</p>
@@ -1284,7 +1428,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>5. Your Home Is Over 25 Years Old with Original Plumbing</h2>
 <p>Even well-maintained plumbing systems have a lifespan. Copper pipes typically last 50-70 years, but galvanized steel and polybutylene have much shorter lifespans. If your home was built before 2000 and hasn't been repiped, it's worth having a professional inspection.</p>
-<p>At C&S Plumbing, we offer free repipe consultations where we inspect your current pipes and provide an honest assessment of their condition. We've completed repiping on over 8,500 homes across Southwest Florida — we know exactly what to look for.</p>
+<p>At C&S Plumbing, we offer free repipe consultations where we inspect your current pipes and provide an honest assessment of their condition. We've completed repiping on over 8,500 homes across Southwest Florida, including <a href="/areas/cape-coral">Cape Coral</a>, <a href="/areas/fort-myers">Fort Myers</a>, and <a href="/areas/bonita-springs">Bonita Springs</a> — we know exactly what to look for.</p>
 
 <h2>What to Do Next</h2>
 <p>If you're experiencing any of these signs, don't wait for a catastrophic pipe failure. <a href="/services/repiping">Contact C&S Plumbing for a free repipe evaluation</a>. We offer both copper and PEX repiping options, complete most homes in 1-2 days, and handle all permits and inspections.</p>
@@ -1341,7 +1485,7 @@ export const BLOG_POSTS: BlogPost[] = [
 </ul>
 
 <h2>Our Recommendation for Southwest Florida</h2>
-<p>For most Cape Coral and Fort Myers homes, we recommend tankless water heaters. Florida's warm incoming water temperature (around 75°F) means tankless units perform exceptionally well here — better than in colder climates. The energy savings add up quickly, and the 20+ year lifespan means you'll replace a tank heater twice before a tankless unit needs replacement.</p>
+<p>For most <a href="/areas/cape-coral">Cape Coral</a> and <a href="/areas/fort-myers">Fort Myers</a> homes, we recommend tankless water heaters. Florida's warm incoming water temperature (around 75°F) means tankless units perform exceptionally well here — better than in colder climates. The energy savings add up quickly, and the 20+ year lifespan means you'll replace a tank heater twice before a tankless unit needs replacement.</p>
 <p>That said, traditional tanks are still a great choice for budget-conscious homeowners or homes with lower hot water demand.</p>
 
 <h2>Not Sure? We'll Help You Decide</h2>
@@ -1390,7 +1534,7 @@ export const BLOG_POSTS: BlogPost[] = [
 <p>Before you start major cleanup, take photos and video of the damage. Your homeowner's insurance will need documentation to process a claim. Photograph the source of the leak, any water damage to floors, walls, and belongings.</p>
 
 <h2>Step 6: Call C&S Plumbing</h2>
-<p>Once you've contained the immediate emergency, call <a href="tel:8337562648">833-PLUMB-IT</a> for 24/7 emergency plumbing service. We serve Cape Coral, Fort Myers, North Fort Myers, and all of Southwest Florida with rapid emergency response.</p>
+<p>Once you've contained the immediate emergency, call <a href="tel:8337562648">833-PLUMB-IT</a> for 24/7 emergency plumbing service. We serve <a href="/areas/cape-coral">Cape Coral</a>, <a href="/areas/fort-myers">Fort Myers</a>, <a href="/areas/north-fort-myers">North Fort Myers</a>, and all of Southwest Florida with rapid emergency response.</p>
 <p>Our emergency team will:</p>
 <ul>
 <li>Arrive as quickly as possible (typically within 1-2 hours in our service area)</li>
@@ -1417,7 +1561,7 @@ export const BLOG_POSTS: BlogPost[] = [
     readTime: "5 min read",
     content: `<h2>1. Verify Their License</h2>
 <p>Florida law requires plumbers to be licensed. A legitimate plumber will have a Certified Plumbing Contractor (CPC) or Registered Plumbing Contractor (RPC) license. You can verify any plumber's license at the <a href="https://www.myfloridalicense.com" target="_blank" rel="noopener noreferrer">Florida DBPR website</a>.</p>
-<p>At C&S Plumbing, our license number is CFC1430355 — we're happy to have you verify it.</p>
+<p>At C&S Plumbing, our license number is CFC1432485 — we're happy to have you verify it.</p>
 
 <h2>2. Check Google Reviews</h2>
 <p>Online reviews are the most reliable way to gauge a plumber's quality. Look for:</p>
@@ -1457,6 +1601,344 @@ export const BLOG_POSTS: BlogPost[] = [
 <h2>Ready to Experience the C&S Difference?</h2>
 <p>We've built our reputation on honest work, fair pricing, and treating every home like our own. With 8,500+ completed projects and a 5.0-star Google rating, we let our track record speak for itself.</p>
 <p>Call <a href="tel:8337562648">833-PLUMB-IT</a> or <a href="/booking">book online</a> to experience the difference a trusted, local plumber makes.</p>`,
+  },
+  {
+    slug: "hurricane-plumbing-preparation-swfl",
+    title: "How to Prepare Your Plumbing for Hurricane Season in Southwest Florida",
+    metaTitle: "How to Prepare Your Plumbing for Hurricane Season in SWFL",
+    metaDescription:
+      "Protect your home's plumbing during hurricane season. Learn essential steps to prevent water damage, pipe breaks, and flooding. Tips from C&S Plumbing in SWFL.",
+    keywords: ["hurricane plumbing preparation", "hurricane plumbing tips Florida", "protect plumbing hurricane", "storm plumbing damage", "hurricane season Cape Coral", "plumbing hurricane checklist"],
+    excerpt:
+      "Hurricane season in Southwest Florida runs from June through November. Taking a few proactive steps to protect your plumbing system can save you thousands in repairs and help your home recover faster after a storm.",
+    category: "Tips",
+    publishDate: "2026-03-10",
+    readTime: "5 min read",
+    content: `<h2>Know Your Shutoff Valves</h2>
+<p>The single most important thing you can do before a hurricane is know where your main water shutoff valve is located. In most <a href="/areas/cape-coral">Cape Coral</a> and <a href="/areas/fort-myers">Fort Myers</a> homes, it's near the front of the house by the water meter. Practice turning it off so you can act quickly when a storm approaches.</p>
+<p>You should also know the individual shutoff valves for toilets, sinks, and your water heater. Shutting these off before evacuation prevents flooding if a supply line breaks during the storm.</p>
+
+<h2>Turn Off Your Water Heater</h2>
+<p>Before evacuating or when a hurricane warning is issued, turn off your <a href="/services/water-heaters">water heater</a>. For gas units, switch to "Pilot" or "Off." For electric units, flip the breaker. Running a water heater without a consistent water supply can cause overheating and damage the unit.</p>
+<p>If your water heater is in a flood-prone area (like a garage at ground level), consider having it elevated or relocated before hurricane season.</p>
+
+<h2>Clear Your Drains and Gutters</h2>
+<p>Heavy rainfall during hurricanes can overwhelm drainage systems. Make sure all exterior drains, gutters, and downspouts are clear of debris before the storm. Inside, ensure <a href="/services/drain-cleaning">all drains are flowing freely</a> — a clogged drain during a hurricane can lead to interior flooding.</p>
+<p>Consider having a professional drain cleaning done before June to ensure your entire system is clear.</p>
+
+<h2>Protect Exposed Pipes</h2>
+<p>Exposed pipes — especially on the exterior of your home or in crawl spaces — are vulnerable to flying debris during a hurricane. Insulate or cover exposed pipes where possible. If you have older galvanized or polybutylene pipes, they're more likely to crack or burst under storm stress. A <a href="/services/repiping">whole-home repipe</a> before hurricane season eliminates this risk entirely.</p>
+
+<h2>Install Backflow Prevention</h2>
+<p>Storm surges and heavy flooding can cause sewage to back up into your home through floor drains and toilets. A backflow prevention valve stops this reverse flow. If your home doesn't have one, now is the time to get one installed.</p>
+
+<h2>Document Your Plumbing System</h2>
+<p>Before hurricane season, take photos of your plumbing system — water heater, exposed pipes, shutoff valves, and any recent work. This documentation helps with insurance claims if your plumbing is damaged during the storm.</p>
+
+<h2>After the Storm</h2>
+<p>Once it's safe to return home, inspect your plumbing carefully before turning the water back on:</p>
+<ul>
+<li>Check for visible pipe damage, cracks, or displaced connections</li>
+<li>Look for signs of sewage backup (odor, standing water near drains)</li>
+<li>Turn the water on slowly and check for <a href="/services/leak-repair">leaks</a> at every fixture</li>
+<li>Have your water tested if your area experienced flooding</li>
+</ul>
+<p>If you discover damage, call <a href="tel:8337562648">833-PLUMB-IT</a> for emergency plumbing service. We prioritize <a href="/areas/sanibel">Sanibel</a>, <a href="/areas/fort-myers">Fort Myers</a>, <a href="/areas/cape-coral">Cape Coral</a>, and all SWFL communities after storms. <a href="/booking">Book an inspection</a> today to get ahead of hurricane season.</p>`,
+  },
+  {
+    slug: "water-softener-vs-water-filter-lee-county",
+    title: "Water Softener vs Water Filter: Which Does Your Lee County Home Need?",
+    metaTitle: "Water Softener vs Water Filter — Which Does Your Home Need?",
+    metaDescription:
+      "Water softener or water filter? Learn the difference and which system your Lee County home needs. Expert advice from C&S Plumbing. Call 833-PLUMB-IT.",
+    keywords: ["water softener vs water filter", "water softener Lee County", "water filter Cape Coral", "hard water Florida", "water treatment Fort Myers", "water quality SWFL"],
+    excerpt:
+      "Southwest Florida has some of the hardest water in the country. But do you need a water softener, a water filter, or both? Here's how to decide which system is right for your home.",
+    category: "Water Quality",
+    publishDate: "2026-03-17",
+    readTime: "5 min read",
+    content: `<h2>The Hard Water Problem in Southwest Florida</h2>
+<p>If you live in <a href="/areas/cape-coral">Cape Coral</a>, <a href="/areas/fort-myers">Fort Myers</a>, <a href="/areas/lehigh-acres">Lehigh Acres</a>, or anywhere in Lee County, your water is hard. Hard water contains high levels of dissolved calcium and magnesium, which cause white buildup on faucets, dry skin and hair, soap that doesn't lather well, and shortened appliance lifespans.</p>
+<p>The question isn't whether you need water treatment — it's which type.</p>
+
+<h2>What a Water Softener Does</h2>
+<p>A <a href="/services/water-softeners">water softener</a> removes calcium and magnesium through a process called ion exchange. Salt-based softeners swap hardness minerals for sodium ions, producing "soft" water that:</p>
+<ul>
+<li>Eliminates scale buildup on fixtures, water heaters, and pipes</li>
+<li>Makes soap and shampoo lather better</li>
+<li>Extends the life of your <a href="/services/water-heaters">water heater</a> and appliances</li>
+<li>Prevents mineral deposits inside your plumbing</li>
+</ul>
+<p><strong>Best for:</strong> Most Lee County homes on city water. Softeners address the primary water quality issue in our area — extreme hardness.</p>
+
+<h2>What a Water Filter Does</h2>
+<p>Water filters remove contaminants like chlorine, sediment, bacteria, and chemicals. Different filter types target different problems:</p>
+<ul>
+<li><strong>Carbon filters:</strong> Remove chlorine, taste, and odor</li>
+<li><strong>Sediment filters:</strong> Trap sand, rust, and particles</li>
+<li><strong>Reverse osmosis (RO):</strong> Remove nearly all dissolved contaminants</li>
+<li><strong>UV filters:</strong> Kill bacteria and viruses</li>
+</ul>
+<p><strong>Best for:</strong> Homes on well water, homes wanting better-tasting drinking water, or as a complement to a water softener.</p>
+
+<h2>Do You Need Both?</h2>
+<p>For most Southwest Florida homes, we recommend a water softener as the primary system. If you also want purified drinking water, adding a reverse osmosis system under your kitchen sink gives you the best of both worlds — soft water throughout the house and purified drinking water at the tap.</p>
+<p>Homes in <a href="/areas/lehigh-acres">Lehigh Acres</a> and eastern Lee County on well water often benefit from both a softener and a whole-home sediment filter.</p>
+
+<h2>How Much Does Water Treatment Cost?</h2>
+<p>In Southwest Florida, expect to pay:</p>
+<ul>
+<li><strong>Water softener:</strong> $1,500–$3,500 installed</li>
+<li><strong>Whole-home carbon filter:</strong> $800–$2,000 installed</li>
+<li><strong>Under-sink RO system:</strong> $300–$800 installed</li>
+<li><strong>Softener + RO combo:</strong> $2,000–$4,000 installed</li>
+</ul>
+
+<h2>Get a Free Water Test</h2>
+<p>Not sure what your water needs? C&S Plumbing offers free water testing and consultations. We'll test your water hardness and quality, then recommend the right system for your home and budget.</p>
+<p>Call <a href="tel:8337562648">833-PLUMB-IT</a> or <a href="/booking">book a free water consultation</a> to find out what's in your water and how to fix it.</p>`,
+  },
+  {
+    slug: "polybutylene-pipe-problems-cape-coral",
+    title: "Why Cape Coral Homes Need Repiping: The Polybutylene Pipe Problem",
+    metaTitle: "Polybutylene Pipe Problems in Cape Coral — Why You Need to Repipe",
+    metaDescription:
+      "Cape Coral homes built 1978-1995 likely have polybutylene pipes that are failing. Learn why repiping is urgent and how C&S Plumbing can help. Call 833-PLUMB-IT.",
+    keywords: ["polybutylene pipes Cape Coral", "poly-b pipe replacement", "repiping Cape Coral", "polybutylene pipe failure", "Cape Coral plumbing problems", "PEX repiping Cape Coral"],
+    excerpt:
+      "Thousands of Cape Coral homes were built with polybutylene pipes between 1978 and 1995. These pipes are now failing at alarming rates, causing leaks, water damage, and insurance problems for homeowners.",
+    category: "Repiping",
+    publishDate: "2026-03-24",
+    readTime: "6 min read",
+    content: `<h2>What Are Polybutylene Pipes?</h2>
+<p>Polybutylene (poly-B or PB) pipes are gray plastic water supply pipes that were widely used in residential construction from the late 1970s through the mid-1990s. They were marketed as a cheaper, easier-to-install alternative to copper. At the time, builders across <a href="/areas/cape-coral">Cape Coral</a>, <a href="/areas/fort-myers">Fort Myers</a>, and <a href="/areas/north-fort-myers">North Fort Myers</a> embraced them for their low cost.</p>
+<p>The problem? Polybutylene reacts with chlorine and other oxidants in treated water, causing the pipes to become brittle, flake, and eventually crack or burst from the inside out.</p>
+
+<h2>How to Tell If Your Home Has Poly-B Pipes</h2>
+<p>Polybutylene pipes are typically gray (sometimes white or blue) and are found in several locations:</p>
+<ul>
+<li><strong>Main water line:</strong> Running from the meter to your home</li>
+<li><strong>Interior supply lines:</strong> Behind walls and under sinks</li>
+<li><strong>At the water heater:</strong> Check connections going into your <a href="/services/water-heaters">water heater</a></li>
+</ul>
+<p>If your <a href="/areas/cape-coral">Cape Coral</a> home was built between 1978 and 1995, there's a high probability it has polybutylene plumbing. A quick visual inspection or a free assessment from C&S Plumbing can confirm.</p>
+
+<h2>Why Polybutylene Pipes Fail</h2>
+<p>Chlorine in the municipal water supply gradually breaks down the molecular structure of polybutylene. This degradation happens from the inside, so the pipes can look fine on the outside while crumbling internally. Common failure signs include:</p>
+<ul>
+<li>Pinhole leaks in walls, ceilings, or under slabs</li>
+<li>Sudden pipe bursts without warning</li>
+<li>Discolored water or reduced water pressure</li>
+<li>Higher-than-normal water bills from hidden <a href="/services/leak-repair">leaks</a></li>
+</ul>
+
+<h2>Insurance and Real Estate Implications</h2>
+<p>Many insurance companies in Florida are now refusing to write or renew homeowner's policies on homes with polybutylene pipes. If your insurance company finds out you have poly-B pipes, you may face:</p>
+<ul>
+<li>Policy non-renewal or cancellation</li>
+<li>Dramatically higher premiums</li>
+<li>Requirements to repipe before coverage is issued</li>
+</ul>
+<p>From a real estate perspective, poly-B pipes are a red flag for home inspectors and buyers. Homes with modern PEX or copper plumbing sell faster and for more money.</p>
+
+<h2>The Solution: Whole-Home Repiping</h2>
+<p>The only permanent fix for polybutylene is a <a href="/services/repiping">whole-home repipe</a>. At C&S Plumbing, we replace all polybutylene with modern PEX or copper piping. Our process:</p>
+<ul>
+<li>Free in-home assessment and estimate</li>
+<li>Most homes completed in 1-2 days</li>
+<li>Full permit and county inspection included</li>
+<li>Minimal wall openings with drywall patching</li>
+<li>Lifetime warranty on PEX piping</li>
+</ul>
+<p>We've repiped thousands of <a href="/areas/cape-coral">Cape Coral</a> and <a href="/areas/fort-myers">Fort Myers</a> homes — we know the common layouts and can work efficiently to minimize disruption.</p>
+
+<h2>Don't Wait for a Catastrophic Failure</h2>
+<p>Every day you wait, your polybutylene pipes are deteriorating further. A proactive repipe on your schedule is far better than an emergency repair at 2 AM after a pipe bursts and floods your home.</p>
+<p>Call <a href="tel:8337562648">833-PLUMB-IT</a> or <a href="/booking">schedule a free repipe consultation</a> today. We'll inspect your pipes, explain your options, and provide an honest, upfront estimate.</p>`,
+  },
+  {
+    slug: "slab-leak-detection-southwest-florida",
+    title: "Slab Leaks in Southwest Florida: Warning Signs and What to Do",
+    metaTitle: "Slab Leak Detection in Southwest Florida — Signs & Solutions",
+    metaDescription:
+      "Slab leaks are common in SWFL homes and can cause major structural damage if ignored. Learn the warning signs, detection methods, and repair options from C&S Plumbing.",
+    keywords: ["slab leak detection", "slab leak Cape Coral", "slab leak Fort Myers", "slab leak repair SWFL", "underground leak detection", "slab leak signs", "slab leak repair cost Florida"],
+    excerpt:
+      "A slab leak — a water line break beneath your home's concrete foundation — is one of the most damaging and expensive plumbing problems a homeowner can face. Here's how to spot one early before it destroys your home.",
+    category: "Leak Repair",
+    publishDate: "2026-04-07",
+    readTime: "6 min read",
+    content: `<h2>What Is a Slab Leak?</h2>
+<p>A slab leak is a break or pinhole leak in the water supply or drain lines that run beneath the concrete slab your home is built on. Because these pipes are buried under several inches of concrete and soil, even a small leak can go undetected for months — silently eroding your foundation, soaking your flooring, and fostering mold growth all the while.</p>
+<p>Slab leaks are especially common in <a href="/areas/cape-coral">Cape Coral</a>, <a href="/areas/fort-myers">Fort Myers</a>, and throughout Southwest Florida for several reasons: our sandy, shifting soil puts stress on buried pipes, our hard water accelerates pipe corrosion, and many homes in the area still have original copper or galvanized pipes from the 1970s–1990s that are nearing the end of their lifespan.</p>
+
+<h2>Warning Signs You May Have a Slab Leak</h2>
+<p>Because the leak is hidden underground, homeowners often dismiss the early warning signs as something minor. Know these red flags:</p>
+
+<h3>Unexplained Spike in Your Water Bill</h3>
+<p>If your water usage hasn't changed but your bill has jumped significantly, water is escaping somewhere in your system. A slab leak can waste hundreds of gallons per day. Compare your current bill to the same month last year — a 20% or greater increase warrants investigation.</p>
+
+<h3>Sound of Running Water When Everything Is Off</h3>
+<p>Turn off every fixture in your home — all faucets, appliances, showers, and irrigation — and listen near the floor or against interior walls. A faint hissing, rushing, or gurgling sound that continues with everything shut off is a classic indicator of an active slab leak.</p>
+
+<h3>Warm or Hot Spots on the Floor</h3>
+<p>If your hot water line is leaking under the slab, it can warm the concrete above it. Tile floors may feel noticeably warm in patches, or certain areas of carpet may feel damp and warm underfoot. This is one of the most reliable physical signs of a hot-water slab leak.</p>
+
+<h3>Cracks in Walls or Flooring</h3>
+<p>Water saturating the soil beneath your slab causes uneven settling. Over time, this creates visible cracks in drywall, tile grout, or even the concrete slab itself. If you notice new cracks forming — especially horizontal cracks along the base of walls — water damage to your foundation may already be underway.</p>
+
+<h3>Damp or Discolored Flooring</h3>
+<p>Wet patches on carpet, warped hardwood, or lifting tile without an obvious surface source are serious signs. Mold odors near the floor — musty, earthy smells — often accompany slab leaks that have been active for weeks or longer.</p>
+
+<h3>Low Water Pressure</h3>
+<p>A significant leak in your main water line beneath the slab will reduce pressure throughout the house. If you notice reduced flow at multiple fixtures simultaneously, it can indicate a substantial loss occurring underground. See our post on <a href="/blog/signs-you-need-a-repipe">signs your plumbing system is failing</a> for related warning signs.</p>
+
+<h2>How Slab Leaks Are Detected</h2>
+<p>At C&S Plumbing, we use non-invasive leak detection technology to pinpoint slab leaks without unnecessary demolition:</p>
+<ul>
+<li><strong>Electronic leak detection:</strong> Sensitive listening equipment amplifies the sound of water escaping under pressure, allowing our technicians to pinpoint the leak location to within inches</li>
+<li><strong>Thermal imaging:</strong> Infrared cameras detect temperature variations in the floor caused by hot-water line leaks — no cutting or drilling required</li>
+<li><strong>Pressure testing:</strong> We isolate sections of your plumbing and test them under pressure to confirm which line is compromised and where</li>
+</ul>
+<p>Accurate detection is critical — the goal is to expose and repair only what's necessary, minimizing disruption to your flooring and foundation.</p>
+
+<h2>Slab Leak Repair Options</h2>
+<p>Once the leak is located, there are several repair approaches depending on its severity and the condition of your overall plumbing system:</p>
+
+<h3>Spot Repair</h3>
+<p>For isolated leaks in otherwise good pipes, we can jackhammer a small opening in the slab, repair or replace the damaged section, and patch the concrete. This is the most cost-effective option when the rest of your plumbing is in good condition.</p>
+
+<h3>Pipe Re-routing</h3>
+<p>Rather than cutting into the slab, we can reroute the affected line through the walls, attic, or around the exterior of the home. This avoids slab demolition entirely and is a great solution when the compromised section is particularly deep or difficult to access.</p>
+
+<h3>Whole-Home Repiping</h3>
+<p>If your home has had multiple slab leaks — or your pipes are aged polybutylene, galvanized steel, or heavily corroded copper — a <a href="/services/repiping">whole-home repipe</a> is often the smartest long-term investment. Replacing all the plumbing at once eliminates future slab leaks and ongoing repair costs. Many SWFL homeowners who've dealt with two or more slab leaks find that repiping pays for itself within a few years compared to repeated spot repairs.</p>
+
+<h2>Slab Leak Repair Costs in Southwest Florida</h2>
+<p>Repair costs vary widely based on the leak's location, accessibility, and severity:</p>
+<ul>
+<li><strong>Leak detection service:</strong> $200–$500</li>
+<li><strong>Spot repair (slab access):</strong> $1,500–$4,000</li>
+<li><strong>Pipe re-routing:</strong> $1,500–$3,500</li>
+<li><strong>Whole-home repipe:</strong> $4,500–$10,000+ (eliminates all future slab leak risk)</li>
+</ul>
+<p>Most homeowner's insurance policies in Florida cover slab leak repair, though coverage varies. Document the damage thoroughly before any repairs — photos and video of wet flooring, cracks, and water damage strengthen your claim significantly.</p>
+
+<h2>Don't Wait — Slab Leaks Get Worse Quickly</h2>
+<p>A small slab leak that costs $2,000 to repair today can become a $20,000+ foundation and mold remediation project in six months. The concrete and soil beneath your slab will erode faster than you expect once water starts flowing freely underground.</p>
+<p>If you've noticed any of the warning signs above, call <a href="tel:8337562648">833-PLUMB-IT</a> immediately. C&S Plumbing provides expert <a href="/services/leak-repair">leak detection and repair</a> throughout <a href="/areas/cape-coral">Cape Coral</a>, <a href="/areas/fort-myers">Fort Myers</a>, <a href="/areas/north-fort-myers">North Fort Myers</a>, <a href="/areas/bonita-springs">Bonita Springs</a>, and all of Lee County. <a href="/booking">Book a leak detection appointment</a> today — fast diagnosis is the difference between a minor repair and a major reconstruction.</p>`,
+  },
+  {
+    slug: "low-water-pressure-causes-fixes-swfl",
+    title: "Low Water Pressure in Your Southwest Florida Home? Here's Why and What to Do",
+    metaTitle: "Low Water Pressure in Your SWFL Home — Causes and Fixes",
+    metaDescription:
+      "Struggling with low water pressure in Cape Coral or Fort Myers? Learn the 6 most common causes and how to fix them. Expert plumbing advice from C&S Plumbing.",
+    keywords: ["low water pressure", "low water pressure Cape Coral", "water pressure problems Fort Myers", "low water pressure causes", "water pressure fix SWFL", "plumbing pressure issues Lee County"],
+    excerpt:
+      "A trickling shower or slow-filling faucet isn't just annoying — it's often a symptom of an underlying plumbing problem. Here are the six most common causes of low water pressure in Southwest Florida homes and exactly what to do about them.",
+    category: "Tips",
+    publishDate: "2026-03-11",
+    readTime: "5 min read",
+    content: `<h2>Why Low Water Pressure Is Such a Common Problem in Southwest Florida</h2>
+<p>Few things are more frustrating than a trickling shower or a kitchen faucet that takes forever to fill a pot. Low water pressure is one of the most common complaints from homeowners in <a href="/areas/cape-coral">Cape Coral</a>, <a href="/areas/fort-myers">Fort Myers</a>, and across Lee County — and it's rarely something you should ignore. Pressure problems often signal an underlying issue that, left unaddressed, can lead to much bigger repairs down the road.</p>
+<p>Here's a breakdown of the most common causes of low water pressure in Southwest Florida homes and what you can do to fix them.</p>
+
+<h2>1. Mineral Buildup from Hard Water</h2>
+<p>Southwest Florida has some of the hardest water in the country. Over time, the dissolved calcium and magnesium in our water supply accumulates inside pipes, faucets, and showerheads — gradually narrowing the passage water flows through and reducing pressure at the fixture.</p>
+<p>You can sometimes clear buildup from a showerhead by soaking it in vinegar overnight. But if mineral deposits have built up inside your supply pipes, no amount of vinegar will help. A professional inspection — and possibly <a href="/services/repiping">pipe replacement</a> — may be necessary.</p>
+<p>The long-term solution for hard water damage is a <a href="/services/water-softeners">whole-home water softener</a>. By removing hardness minerals before they enter your plumbing, a softener protects your pipes, fixtures, and water-using appliances from future buildup and the pressure loss that follows.</p>
+
+<h2>2. Corroded or Aging Pipes</h2>
+<p>If your home was built before the mid-1990s and still has its original plumbing, corroded pipes may be the culprit. Galvanized steel pipes are particularly prone to internal rust and corrosion, which gradually narrows the pipe interior until water pressure drops noticeably throughout the house.</p>
+<p>Polybutylene pipes — common in homes built from the late 1970s through the mid-1990s — can also develop internal flaking and restrictions that reduce flow. If low pressure is accompanied by discolored water, aging pipes are a likely cause. See our post on <a href="/blog/signs-you-need-a-repipe">5 signs you need a whole-home repipe</a> for more warning signs.</p>
+<p>When corrosion is the issue, the only reliable fix is <a href="/services/repiping">repiping the home with modern PEX or copper</a>. New pipes restore full water pressure and won't corrode the way galvanized steel or polybutylene does.</p>
+
+<h2>3. A Hidden Leak in Your Plumbing System</h2>
+<p>A significant leak somewhere in your plumbing diverts water before it reaches your fixtures, reducing pressure throughout the house. The tricky part: many leaks are hidden inside walls, ceilings, or — in SWFL's slab-construction homes — beneath your concrete foundation.</p>
+<p>Signs that a hidden leak may be causing your pressure drop include:</p>
+<ul>
+<li>A higher-than-normal water bill without increased usage</li>
+<li>Damp spots on floors, walls, or ceilings</li>
+<li>The sound of running water when all fixtures are off</li>
+<li>Pressure loss that appeared suddenly rather than gradually</li>
+</ul>
+<p>If you suspect a hidden leak, don't wait. <a href="/services/leak-repair">C&S Plumbing's leak detection team</a> uses non-invasive electronic equipment and thermal imaging to locate leaks without unnecessary demolition. For a detailed look at under-slab leaks, read our guide to <a href="/blog/slab-leak-detection-southwest-florida">slab leak detection in Southwest Florida</a>.</p>
+
+<h2>4. Partially Closed Shutoff Valves</h2>
+<p>It sounds simple, but a partially closed water shutoff valve is a surprisingly common cause of sudden pressure drops — especially after any recent plumbing work. If a valve near your water meter or main supply line wasn't fully reopened after a repair, water flow to your entire home is restricted.</p>
+<p>Check both the valve at your water meter and any main shutoff valve inside your home. Both should be fully open: ball valves should have the handle parallel to the pipe; gate valves should be turned fully counterclockwise. This is a free, two-minute check that's worth doing before you call anyone.</p>
+
+<h2>5. A Failing Pressure Regulating Valve</h2>
+<p>Most Southwest Florida homes have a pressure regulating valve (PRV) that limits incoming city water pressure to a safe level — typically 45–80 PSI. When the PRV fails, it can either allow pressure to surge dangerously high or drop it significantly, sometimes to nearly nothing.</p>
+<p>You can test your water pressure with an inexpensive gauge that threads onto a hose bib (outdoor faucet). If you're consistently getting less than 40 PSI, or the readings fluctuate wildly from day to day, a failing PRV is a likely cause. PRV replacement is a straightforward job for a licensed plumber and restores normal pressure immediately.</p>
+
+<h2>6. Municipal Supply Issues</h2>
+<p>Occasionally, the issue isn't your plumbing at all — it's the city supply. Main breaks, high demand during peak hours, and infrastructure maintenance can temporarily reduce pressure to your home. The easiest way to rule this out: ask a neighbor whether they're experiencing the same thing. If the whole street is affected, contact your water utility to report it.</p>
+<p>If your neighbors have normal pressure and you don't, the problem is inside your home — time to call a plumber.</p>
+
+<h2>When to Call a Plumber</h2>
+<p>A minor, isolated pressure problem at a single fixture is often a DIY fix — clean the aerator or showerhead and you're done. But when pressure is low throughout the house, developed suddenly, or is accompanied by other symptoms (discolored water, higher bills, wet spots on walls or floors), don't wait.</p>
+<p>At C&S Plumbing, we diagnose water pressure problems throughout <a href="/areas/cape-coral">Cape Coral</a>, <a href="/areas/fort-myers">Fort Myers</a>, <a href="/areas/bonita-springs">Bonita Springs</a>, <a href="/areas/north-fort-myers">North Fort Myers</a>, and all of Lee County. We identify the root cause quickly and provide upfront pricing before any work begins — no surprises.</p>
+<p>Call <a href="tel:8337562648">833-PLUMB-IT</a> or <a href="/booking">book an appointment online</a> to get your water pressure back where it belongs.</p>`,
+  },
+  {
+    slug: "septic-to-sewer-conversion-swfl",
+    title: "Septic to Sewer: What Southwest Florida Homeowners Need to Know",
+    metaTitle: "Septic to Sewer Conversion — What SWFL Homeowners Need to Know",
+    metaDescription:
+      "Switching from septic to sewer in Cape Coral or SWFL? Learn about the process, costs, and requirements. C&S Plumbing handles UEP connections. Call 833-PLUMB-IT.",
+    keywords: ["septic to sewer conversion", "septic to sewer Cape Coral", "UEP connection Cape Coral", "septic abandonment Florida", "sewer hookup cost SWFL", "septic to sewer cost"],
+    excerpt:
+      "As Cape Coral and other Southwest Florida communities expand their sewer systems, thousands of homeowners are transitioning from septic tanks to city sewer. Here's what you need to know about the process, costs, and requirements.",
+    category: "UEP & Utilities",
+    publishDate: "2026-03-31",
+    readTime: "6 min read",
+    content: `<h2>Why the Switch from Septic to Sewer?</h2>
+<p>Many <a href="/areas/cape-coral">Cape Coral</a> homes were built on septic systems because city sewer wasn't available at the time. As the city's Utilities Extension Program (UEP) expands sewer infrastructure into more neighborhoods, homeowners are required or choosing to connect to the municipal sewer system.</p>
+<p>Connecting to city sewer offers several advantages over septic:</p>
+<ul>
+<li>No more septic tank pump-outs or maintenance</li>
+<li>Eliminates the risk of septic system failure and yard flooding</li>
+<li>Better for the environment and local waterways</li>
+<li>Can increase property value</li>
+<li>Required when your area is designated for sewer connection</li>
+</ul>
+
+<h2>The Septic to Sewer Process</h2>
+<p>The conversion involves several steps, and <a href="/services/uep-utilities">C&S Plumbing handles the entire process</a>:</p>
+
+<h3>1. Sewer Lateral Installation</h3>
+<p>A new sewer line is trenched from your home to the city sewer main in the street. This involves excavation across your yard, installing new PVC sewer pipe at the proper grade, and connecting to the city main. Typical cost is $25-$33 per linear foot depending on depth and distance.</p>
+
+<h3>2. Septic Tank Abandonment</h3>
+<p>Your existing septic tank must be properly abandoned according to Lee County code. This involves pumping out the tank, collapsing or filling it with clean fill material, and obtaining a permit and inspection. We handle the entire abandonment process, including coordination with the county inspector.</p>
+
+<h3>3. Interior Connection</h3>
+<p>In most cases, the plumbing inside your home doesn't need to change — we simply redirect the existing sewer outlet from the septic tank to the new city sewer connection.</p>
+
+<h3>4. Water and Irrigation Lines</h3>
+<p>If you're also connecting to city water or irrigation as part of a UEP project, those lines are typically installed at the same time to minimize excavation and landscaping disruption.</p>
+
+<h2>How Much Does Septic to Sewer Cost?</h2>
+<p>Total project costs vary based on your property's specific situation, but typical ranges for <a href="/areas/cape-coral">Cape Coral</a> homeowners include:</p>
+<ul>
+<li><strong>Sewer lateral:</strong> $2,500–$5,000 (based on distance to main)</li>
+<li><strong>Septic abandonment:</strong> $2,500–$3,500</li>
+<li><strong>Water service line:</strong> $1,300–$2,500 (if needed)</li>
+<li><strong>Irrigation line:</strong> $900–$1,500 (if needed)</li>
+<li><strong>Total typical range:</strong> $5,000–$12,000</li>
+</ul>
+<p>The city may also charge assessment fees for the sewer infrastructure itself, which are separate from the plumbing connection costs.</p>
+
+<h2>Timeline and What to Expect</h2>
+<p>The physical plumbing work typically takes 2-3 days. However, the overall timeline depends on permitting, city inspection scheduling, and coordination with the UEP program. We recommend starting the process as soon as you receive notice that sewer is available in your area — delays can result in daily fines from the city.</p>
+
+<h2>Choosing the Right Contractor</h2>
+<p>Septic to sewer conversion requires a <a href="/blog/how-to-choose-a-plumber-cape-coral">licensed plumbing contractor</a> experienced with UEP projects. At C&S Plumbing, we've completed hundreds of UEP connections across Cape Coral and understand the specific requirements of the city's program. We handle all permitting, excavation, piping, septic abandonment, and final inspection.</p>
+
+<h2>Get Started</h2>
+<p>If you've received a UEP notice or are considering a voluntary septic to sewer conversion, call <a href="tel:8337562648">833-PLUMB-IT</a> or <a href="/booking">book a free consultation</a>. We'll visit your property, assess the scope, and provide an upfront estimate with no hidden costs. See our <a href="/services/uep-utilities">UEP services page</a> for more details and photos of our recent projects.</p>`,
   },
 ];
 
