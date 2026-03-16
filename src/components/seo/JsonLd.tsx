@@ -1,18 +1,82 @@
 export default function JsonLd() {
+  const BASE = "https://www.csplumbinglee.com";
+
+  /* ── Person entities (reusable via @id) ── */
+  const founder = {
+    "@type": "Person",
+    "@id": `${BASE}/#founder`,
+    name: "Samuel Pellechio Sr.",
+    jobTitle: "Founder",
+    worksFor: { "@id": `${BASE}/#organization` },
+    description:
+      "Founded C&S Plumbing of Lee County in 1997, building the company into one of Southwest Florida's most trusted plumbing contractors with over 8,500 homes completed.",
+  };
+
+  const owner = {
+    "@type": "Person",
+    "@id": `${BASE}/#owner`,
+    name: "Samuel Pellechio Jr.",
+    jobTitle: "Owner & President",
+    url: `${BASE}/about`,
+    image: `${BASE}/images/team/samuel.jpeg`,
+    worksFor: { "@id": `${BASE}/#organization` },
+    description:
+      "Second-generation master plumber leading C&S Plumbing with the same dedication and family values since 1997. Licensed Florida plumbing contractor (CFC1432485).",
+    hasCredential: {
+      "@type": "EducationalOccupationalCredential",
+      credentialCategory: "Professional License",
+      name: "Certified Plumbing Contractor",
+      recognizedBy: {
+        "@type": "GovernmentOrganization",
+        name: "Florida Department of Business and Professional Regulation",
+        url: "https://www.myfloridalicense.com",
+      },
+    },
+    knowsAbout: [
+      "Residential Plumbing",
+      "Commercial Plumbing",
+      "New Construction Plumbing",
+      "Whole-Home Repiping",
+      "Water Heater Installation",
+      "Florida Building Code Compliance",
+      "Backflow Prevention",
+    ],
+  };
+
+  const operationsManager = {
+    "@type": "Person",
+    "@id": `${BASE}/#operations-manager`,
+    name: "Aiden Pellechio",
+    jobTitle: "Operations Manager",
+    url: `${BASE}/about`,
+    image: `${BASE}/images/team/aiden.jpg`,
+    worksFor: { "@id": `${BASE}/#organization` },
+    description:
+      "Third-generation family member managing daily operations with a construction management background from FGCU.",
+    alumniOf: {
+      "@type": "CollegeOrUniversity",
+      name: "Florida Gulf Coast University",
+      url: "https://www.fgcu.edu",
+    },
+  };
+
+  /* ── LocalBusiness / Plumber ── */
   const localBusiness = {
     "@context": "https://schema.org",
     "@type": "Plumber",
-    "@id": "https://www.csplumbinglee.com/#organization",
+    "@id": `${BASE}/#organization`,
     name: "C&S Plumbing of Lee County",
     alternateName: "C&S Plumbing",
-    url: "https://www.csplumbinglee.com",
-    logo: "https://www.csplumbinglee.com/images/logos/logo.png",
-    image: "https://www.csplumbinglee.com/images/hero/drone-construction.jpg",
+    url: BASE,
+    logo: `${BASE}/images/logos/logo.png`,
+    image: `${BASE}/images/hero/drone-construction.jpg`,
     telephone: "+18337562648",
     email: "office@csplumbinglee.com",
     foundingDate: "1997",
+    numberOfEmployees: { "@type": "QuantitativeValue", minValue: 10, maxValue: 25 },
     description:
       "Family-owned plumbing company serving Southwest Florida since 1997. 8,500+ homes built. 24/7 emergency service. Residential, commercial & new construction plumbing across Cape Coral, Fort Myers, Naples & all of SWFL.",
+    slogan: "Southwest Florida's Most Trusted Plumbing Team",
     address: {
       "@type": "PostalAddress",
       streetAddress: "951 Pondella Rd",
@@ -39,9 +103,54 @@ export default function JsonLd() {
         opens: "09:00",
         closes: "15:00",
       },
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: "Sunday",
+        opens: "00:00",
+        closes: "23:59",
+        description: "Emergency service only",
+      },
     ],
     priceRange: "$$",
-    paymentAccepted: "Cash, Credit Card, Check",
+    currenciesAccepted: "USD",
+    paymentAccepted: "Cash, Credit Card, Check, Financing",
+    isAccessibleForFree: false,
+
+    /* ── People ── */
+    founder,
+    employee: [owner, operationsManager],
+
+    /* ── Credentials & Licensing ── */
+    hasCredential: [
+      {
+        "@type": "EducationalOccupationalCredential",
+        credentialCategory: "Professional License",
+        name: "Florida Certified Plumbing Contractor — CFC1432485",
+        recognizedBy: {
+          "@type": "GovernmentOrganization",
+          name: "Florida Department of Business and Professional Regulation",
+          url: "https://www.myfloridalicense.com",
+        },
+      },
+    ],
+
+    /* ── Expertise ── */
+    knowsAbout: [
+      "Residential plumbing repair and installation",
+      "Commercial plumbing systems",
+      "New construction plumbing — rough-in and trim",
+      "Whole-home repiping with PEX and CPVC",
+      "Tankless and hybrid water heater installation",
+      "Drain cleaning and hydro-jetting",
+      "Water softener and filtration systems",
+      "UEP utility connections in Cape Coral",
+      "Florida Building Code 8th Edition (2023) compliance",
+      "Lee County and Cape Coral permitting requirements",
+      "Backflow prevention and testing",
+      "Emergency plumbing — burst pipes, slab leaks, sewage backups",
+    ],
+
+    /* ── Service Areas ── */
     areaServed: [
       { "@type": "City", name: "Cape Coral", containedInPlace: { "@type": "State", name: "Florida" } },
       { "@type": "City", name: "Fort Myers", containedInPlace: { "@type": "State", name: "Florida" } },
@@ -56,6 +165,8 @@ export default function JsonLd() {
       { "@type": "City", name: "Port Charlotte", containedInPlace: { "@type": "State", name: "Florida" } },
       { "@type": "City", name: "Marco Island", containedInPlace: { "@type": "State", name: "Florida" } },
     ],
+
+    /* ── Service Catalog ── */
     hasOfferCatalog: {
       "@type": "OfferCatalog",
       name: "Plumbing Services",
@@ -77,7 +188,7 @@ export default function JsonLd() {
             { "@type": "Offer", itemOffered: { "@type": "Service", name: "Water Heater Installation & Repair" } },
             { "@type": "Offer", itemOffered: { "@type": "Service", name: "Whole-Home Repiping" } },
             { "@type": "Offer", itemOffered: { "@type": "Service", name: "Fixture Installation" } },
-            { "@type": "Offer", itemOffered: { "@type": "Service", name: "Water Filtration Systems" } },
+            { "@type": "Offer", itemOffered: { "@type": "Service", name: "Water Filtration & Softener Systems" } },
           ],
         },
         {
@@ -86,7 +197,7 @@ export default function JsonLd() {
           itemListElement: [
             { "@type": "Offer", itemOffered: { "@type": "Service", name: "Commercial Plumbing Maintenance" } },
             { "@type": "Offer", itemOffered: { "@type": "Service", name: "Grease Trap Service" } },
-            { "@type": "Offer", itemOffered: { "@type": "Service", name: "Backflow Prevention" } },
+            { "@type": "Offer", itemOffered: { "@type": "Service", name: "Backflow Prevention & Testing" } },
           ],
         },
         {
@@ -110,6 +221,8 @@ export default function JsonLd() {
         },
       ],
     },
+
+    /* ── Ratings & Reviews ── */
     aggregateRating: {
       "@type": "AggregateRating",
       ratingValue: "5.0",
@@ -117,15 +230,81 @@ export default function JsonLd() {
       bestRating: "5",
       worstRating: "1",
     },
+    review: [
+      {
+        "@type": "Review",
+        author: { "@type": "Person", name: "Dennis Shy" },
+        datePublished: "2025-01-15",
+        reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
+        reviewBody:
+          "Reasonable price. Great Company 100% Responsive and quick to show up and get the work done. I will use this company any time I have a plumbing need and would definitely recommend them to anyone.",
+      },
+      {
+        "@type": "Review",
+        author: { "@type": "Person", name: "Richard Pace" },
+        datePublished: "2025-02-10",
+        reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
+        reviewBody:
+          "Great service! Friendly people! They answered all my questions and made suggestions that were helpful. They only know how to do things one way, and that's the right way!",
+      },
+      {
+        "@type": "Review",
+        author: { "@type": "Person", name: "Linda" },
+        datePublished: "2024-11-20",
+        reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
+        reviewBody:
+          "Could not be happier with Sam and his team. They did a fabulous job, efficient, prompt and cleaned up beautifully. I highly recommend them. And this is a family business which we all should support.",
+      },
+    ],
+
+    /* ── Awards ── */
+    award: ["Best of Cape Coral 2025 — Plumbing"],
+
+    /* ── Citations to Authoritative Sources ── */
+    citation: [
+      {
+        "@type": "CreativeWork",
+        name: "Florida Building Code 8th Edition (2023) — Plumbing",
+        url: "https://floridabuilding.org/fbc/thecode/code-resources.aspx",
+        description:
+          "The Florida Building Code governs all plumbing installations, repairs, and inspections in Lee County. C&S Plumbing is fully compliant with the latest edition.",
+      },
+      {
+        "@type": "CreativeWork",
+        name: "Lee County Building Permits & Inspections",
+        url: "https://www.leegov.com/dcd/BldPermit",
+        description:
+          "All C&S Plumbing projects requiring permits are filed through the Lee County Department of Community Development.",
+      },
+      {
+        "@type": "CreativeWork",
+        name: "Cape Coral UEP (Utilities Extension Program)",
+        url: "https://www.capecoral.gov/department/public_works_and_utilities/utilities_extension_program_uep/index.php",
+        description:
+          "C&S Plumbing is a leading contractor for the City of Cape Coral's UEP program, connecting homes to municipal water and sewer.",
+      },
+      {
+        "@type": "CreativeWork",
+        name: "Florida DBPR — Verify a Contractor License",
+        url: "https://www.myfloridalicense.com/wl11.asp?mode=0&SID=&bession_id=vbSessionId",
+        description:
+          "C&S Plumbing's Certified Plumbing Contractor license (CFC1432485) can be verified through the Florida DBPR.",
+      },
+    ],
+
+    /* ── Social / Profiles ── */
     sameAs: [
       "https://www.google.com/maps/place/C%26S+Plumbing+of+Lee",
+      "https://www.facebook.com/csplumbingoflc",
     ],
   };
 
   return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusiness) }}
-    />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusiness) }}
+      />
+    </>
   );
 }
