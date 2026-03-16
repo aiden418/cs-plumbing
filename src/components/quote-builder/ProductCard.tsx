@@ -32,7 +32,9 @@ export default function ProductCard({
         "gap-3 sm:gap-4",
         layout === "row"
           ? "flex flex-col"
-          : "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+          : options.length === 2
+            ? "grid grid-cols-1 sm:grid-cols-2"
+            : "grid grid-cols-1 sm:grid-cols-3"
       )}
     >
       {options.map((opt) => {

@@ -51,7 +51,7 @@ export default function QuoteBuilderPage() {
 
   return (
     <>
-      <section className="pt-24 sm:pt-28 lg:pt-32 pb-8 sm:pb-12 bg-[#F5F5F7]">
+      <section className="pt-24 sm:pt-28 lg:pt-32 pb-10 sm:pb-14 bg-[#F5F5F7]">
         <Container size="narrow">
           <div className="text-center mb-8 sm:mb-10">
             <span className="inline-block text-primary text-xs sm:text-sm font-semibold tracking-widest uppercase mb-3 sm:mb-4">
@@ -67,8 +67,8 @@ export default function QuoteBuilderPage() {
         </Container>
       </section>
 
-      <section className="pb-16 sm:pb-24 lg:pb-32 -mt-2">
-        <Container size="narrow">
+      <section className="pb-16 sm:pb-24 lg:pb-32 -mt-4 sm:-mt-6">
+        <div className="max-w-5xl mx-auto px-6 lg:px-8">
           <AnimatePresence mode="wait">
             {/* Service selector */}
             {!service && !result && (
@@ -187,7 +187,7 @@ export default function QuoteBuilderPage() {
               </motion.div>
             )}
           </AnimatePresence>
-        </Container>
+        </div>
       </section>
     </>
   );

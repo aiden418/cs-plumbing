@@ -92,6 +92,17 @@ const STEP_HEADINGS = [
   "What material would you like for the new pipes?",
 ];
 
+const STEP_SUBTITLES = [
+  "We'll use this for your quote — your info stays private.",
+  "Older homes may have pipes that need special attention.",
+  "Not sure? No worries — we'll verify during your free visit.",
+  "This helps us estimate the number of water lines.",
+  "Each bathroom adds hot and cold water connections.",
+  "Multi-story homes may require additional labor.",
+  "Hose bibs are the outdoor faucet connections.",
+  "We'll recommend the best option during your visit.",
+];
+
 export default function RepipeQuiz({ onComplete }: RepipeQuizProps) {
   const [step, setStep] = useState(0);
   const [sel, setSel] = useState<RepipeSelections>({
@@ -227,9 +238,14 @@ export default function RepipeQuiz({ onComplete }: RepipeQuizProps) {
       canProceed={canProceed()}
       nextLabel={step === 7 ? "See My Estimate" : undefined}
     >
-      <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6">
-        {STEP_HEADINGS[step]}
-      </h2>
+      <div className="mb-4 sm:mb-6">
+        <h2 className="text-lg sm:text-xl font-bold text-gray-900">
+          {STEP_HEADINGS[step]}
+        </h2>
+        <p className="text-xs sm:text-sm text-gray-500 mt-1">
+          {STEP_SUBTITLES[step]}
+        </p>
+      </div>
       {renderStep()}
     </WizardShell>
   );

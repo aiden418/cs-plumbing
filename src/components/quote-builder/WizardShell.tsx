@@ -30,34 +30,41 @@ export default function WizardShell({
   return (
     <div className="bg-white rounded-2xl border border-gray-200 p-4 sm:p-6 lg:p-8">
       {/* Progress bar */}
-      <div className="flex items-center justify-between mb-6 sm:mb-8 max-w-xs sm:max-w-md mx-auto">
-        {steps.map((s, i) => (
-          <div key={s.label} className="flex items-center">
-            <div
-              className={cn(
-                "w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-xs sm:text-sm font-bold transition-all duration-300",
-                i <= currentStep
-                  ? "bg-primary text-white"
-                  : "bg-white text-gray-500 border border-gray-200"
-              )}
-            >
-              {i < currentStep ? (
-                <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5" />
-              ) : (
-                <span>{i + 1}</span>
-              )}
-            </div>
-            {i < steps.length - 1 && (
+      <div className="flex items-center justify-center mb-6 sm:mb-8">
+        <div className="flex items-center">
+          {steps.map((s, i) => (
+            <div key={s.label} className="flex items-center">
               <div
                 className={cn(
-                  "w-5 sm:w-8 md:w-12 h-0.5 mx-0.5 sm:mx-1 transition-colors duration-300",
-                  i < currentStep ? "bg-primary" : "bg-gray-200"
+                  "w-7 h-7 sm:w-9 sm:h-9 rounded-full flex items-center justify-center text-[10px] sm:text-sm font-bold transition-all duration-300",
+                  i <= currentStep
+                    ? "bg-primary text-white"
+                    : "bg-white text-gray-400 border border-gray-200"
                 )}
-              />
-            )}
-          </div>
-        ))}
+              >
+                {i < currentStep ? (
+                  <CheckCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                ) : (
+                  <span>{i + 1}</span>
+                )}
+              </div>
+              {i < steps.length - 1 && (
+                <div
+                  className={cn(
+                    "w-3 sm:w-6 md:w-10 h-0.5 transition-colors duration-300",
+                    i < currentStep ? "bg-primary" : "bg-gray-200"
+                  )}
+                />
+              )}
+            </div>
+          ))}
+        </div>
       </div>
+
+      {/* Step label */}
+      <p className="text-[10px] sm:text-xs text-primary font-semibold text-center mb-1 tracking-wide uppercase">
+        Step {currentStep + 1}: {steps[currentStep].label}
+      </p>
 
       {/* Reassurance text */}
       <p className="text-[10px] sm:text-xs text-gray-400 text-center mb-6 sm:mb-8">
