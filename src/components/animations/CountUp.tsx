@@ -39,7 +39,7 @@ export default function CountUp({
   return (
     <span ref={ref} className={className}>
       {prefix}
-      {isInView ? displayed.toLocaleString() : "0"}
+      {isInView ? displayed.toLocaleString() : end.toLocaleString()}
       {suffix}
     </span>
   );

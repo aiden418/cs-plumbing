@@ -142,6 +142,12 @@ export default function CostEstimator() {
               >
                 <RotateCcw className="w-3 h-3" /> Try another service
               </button>
+              <a
+                href="/quote-builder"
+                className="text-xs text-primary hover:text-primary-dark flex items-center justify-center gap-1 transition-colors"
+              >
+                Want a detailed estimate? Build your custom quote →
+              </a>
             </div>
           </motion.div>
         )}

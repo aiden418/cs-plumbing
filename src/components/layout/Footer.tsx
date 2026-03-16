@@ -13,6 +13,7 @@ const quickLinks = [
   { label: "Contact", href: "/contact" },
   { label: "Book a Service", href: "/booking" },
   { label: "Emergency", href: "/emergency" },
+  { label: "Instant Quote", href: "/quote-builder" },
 ];
 
 export default function Footer() {
@@ -155,10 +156,10 @@ export default function Footer() {
               reserved. License #{BUSINESS.license}
             </p>
             <div className="flex items-center gap-4 sm:gap-6 text-xs sm:text-sm text-gray-500">
-              <Link href="/contact" className="hover:text-gray-700 transition-colors">
+              <Link href="/privacy-policy" className="hover:text-gray-700 transition-colors">
                 Privacy Policy
               </Link>
-              <Link href="/contact" className="hover:text-gray-700 transition-colors">
+              <Link href="/terms-of-service" className="hover:text-gray-700 transition-colors">
                 Terms of Service
               </Link>
             </div>

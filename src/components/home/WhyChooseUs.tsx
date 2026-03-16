@@ -31,7 +31,7 @@ const reasons = [
     icon: <Shield className="w-5 h-5 sm:w-6 sm:h-6" />,
     title: "Licensed & Insured",
     description:
-      "Fully licensed (CFC1430355), bonded, and insured. Your property and your peace of mind are protected.",
+      "Fully licensed (CFC1432485), bonded, and insured. Your property and your peace of mind are protected.",
   },
   {
     icon: <ThumbsUp className="w-5 h-5 sm:w-6 sm:h-6" />,

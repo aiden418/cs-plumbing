@@ -152,7 +152,7 @@ export default function AreaLandingTemplate({
               "Family-owned since 1997",
               "8,500+ homes completed",
               "24/7 emergency service",
-              "Licensed & insured (CFC1430355)",
+              "Licensed & insured (CFC1432485)",
               "5.0-star Google rating",
               "Upfront, transparent pricing",
               "Same-day service available",
