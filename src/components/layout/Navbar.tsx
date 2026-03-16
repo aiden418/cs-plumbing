@@ -81,13 +81,13 @@ export default function Navbar() {
                   <Link
                     href={link.href}
                     className={cn(
-                      "px-2.5 xl:px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 flex items-center gap-1",
+                      "px-3 xl:px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 flex items-center gap-1",
                       pathname === link.href
                         ? "text-primary"
                         : "text-gray-600 hover:text-gray-900"
                     )}
                   >
-                    {link.label}
+                    {link.label === "Service Areas" ? "Areas" : link.label}
                     {link.children && (
                       <ChevronDown className="w-3.5 h-3.5" />
                     )}
@@ -233,7 +233,7 @@ export default function Navbar() {
                                       : "text-gray-700 active:text-primary"
                                   )}
                                 >
-                                  All {link.label}
+                                  {link.label === "More" ? "All Pages" : `All ${link.label}`}
                                 </Link>
                                 {link.children.map((child) => (
                                   <Link

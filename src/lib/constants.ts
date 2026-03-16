@@ -65,11 +65,17 @@ export const NAV_LINKS: NavLink[] = [
       { label: "Sanibel Island", href: "/areas/sanibel" },
     ],
   },
-  { label: "Gallery", href: "/gallery" },
-  { label: "Projects", href: "/projects" },
-  { label: "Blog", href: "/blog" },
-  { label: "Recommended", href: "/partners" },
   { label: "Contact", href: "/contact" },
+  {
+    label: "More",
+    href: "/gallery",
+    children: [
+      { label: "Gallery", href: "/gallery" },
+      { label: "Projects", href: "/projects" },
+      { label: "Blog", href: "/blog" },
+      { label: "Recommended", href: "/partners" },
+    ],
+  },
 ];
 
 // ============================================
