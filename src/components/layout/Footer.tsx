@@ -14,6 +14,7 @@ const quickLinks = [
   { label: "Book a Service", href: "/booking" },
   { label: "Emergency", href: "/emergency" },
   { label: "Instant Quote", href: "/quote-builder" },
+  { label: "FAQ", href: "/faq" },
 ];
 
 export default function Footer() {

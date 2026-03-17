@@ -5,6 +5,7 @@ import FamilyStory from "@/components/about/FamilyStory";
 import Timeline from "@/components/about/Timeline";
 import TeamGrid from "@/components/about/TeamGrid";
 import CTASection from "@/components/home/CTASection";
+import AboutPersonJsonLd from "@/components/seo/AboutPersonJsonLd";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/about" },
@@ -68,6 +69,7 @@ export default function AboutPage() {
         </div>
       </section>
 
+      <AboutPersonJsonLd />
       <FamilyStory />
       <Timeline />
       <TeamGrid />

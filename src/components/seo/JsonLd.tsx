@@ -299,11 +299,36 @@ export default function JsonLd() {
     ],
   };
 
+  /* ── WebSite schema with SearchAction ── */
+  const webSite = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${BASE}/#website`,
+    name: "C&S Plumbing of Lee County",
+    url: BASE,
+    description:
+      "Official website of C&S Plumbing of Lee County — family-owned plumbing contractor serving Cape Coral, Fort Myers, Naples, and all of Southwest Florida since 1997.",
+    publisher: { "@id": `${BASE}/#organization` },
+    inLanguage: "en-US",
+    potentialAction: {
+      "@type": "SearchAction",
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: `${BASE}/services?q={search_term_string}`,
+      },
+      "query-input": "required name=search_term_string",
+    },
+  };
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusiness) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(webSite) }}
       />
     </>
   );

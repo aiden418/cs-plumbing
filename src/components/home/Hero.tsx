@@ -80,10 +80,13 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
           className="mt-6 sm:mt-8 lg:mt-10 text-base sm:text-lg lg:text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed"
         >
-          From emergency repairs to new construction, we&apos;ve built our
-          reputation one home at a time.{" "}
-          <span className="text-primary font-semibold">8,500+ homes</span> and
-          counting.
+          C&S Plumbing is a licensed, family-owned plumbing contractor serving
+          homeowners, builders, and businesses across Cape Coral, Fort Myers,
+          Naples, and all of Lee County. From 24/7 emergency repairs and
+          whole-home repiping to water heater installation, drain cleaning, and
+          new construction plumbing — we&apos;ve completed{" "}
+          <span className="text-primary font-semibold">8,500+ homes</span> since
+          1997.
         </motion.p>
 
         <motion.div
