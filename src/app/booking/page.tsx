@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import BookingPage from "./BookingPage";
+import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/booking" },
@@ -22,5 +23,10 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <BookingPage />;
+  return (
+    <>
+      <BreadcrumbJsonLd items={[{ name: "Home", href: "/" }, { name: "Book a Service", href: "/booking" }]} />
+      <BookingPage />
+    </>
+  );
 }

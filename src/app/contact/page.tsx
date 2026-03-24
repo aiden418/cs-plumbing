@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import ContactPage from "./ContactPage";
+import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/contact" },
@@ -22,5 +23,10 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <ContactPage />;
+  return (
+    <>
+      <BreadcrumbJsonLd items={[{ name: "Home", href: "/" }, { name: "Contact", href: "/contact" }]} />
+      <ContactPage />
+    </>
+  );
 }

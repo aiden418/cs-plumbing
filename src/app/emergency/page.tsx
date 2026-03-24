@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import EmergencyPage from "./EmergencyPage";
+import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/emergency" },
@@ -24,5 +25,10 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <EmergencyPage />;
+  return (
+    <>
+      <BreadcrumbJsonLd items={[{ name: "Home", href: "/" }, { name: "Emergency Plumber", href: "/emergency" }]} />
+      <EmergencyPage />
+    </>
+  );
 }
