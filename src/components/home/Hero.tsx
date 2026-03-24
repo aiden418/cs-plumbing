@@ -76,7 +76,7 @@ export default function Hero() {
           whole-home repiping to water heater installation, drain cleaning, and
           new construction plumbing — we&apos;ve completed{" "}
           <span className="text-primary font-semibold">8,500+ homes</span> since
-          1997.
+          1998.
         </motion.p>
 
         <motion.div

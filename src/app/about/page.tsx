@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/about" },
   title: "About Us",
   description:
-    "Family-owned since 1997. Learn about the Pellechio family and the team behind C&S Plumbing of Lee County — Southwest Florida's most trusted plumber. Best of Cape Coral 2025.",
+    "Family-owned since 1998. Learn about the Pellechio family and the team behind C&S Plumbing of Lee County — Southwest Florida's most trusted plumber. Best of Cape Coral 2025.",
   keywords: [
     "C&S Plumbing about",
     "Pellechio family plumbing",
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "About C&S Plumbing of Lee County",
     description:
-      "Family-owned since 1997, 8,500+ homes built. Meet the Pellechio family and the team behind Southwest Florida's most trusted plumbing company.",
+      "Family-owned since 1998, 8,500+ homes built. Meet the Pellechio family and the team behind Southwest Florida's most trusted plumbing company.",
     url: "https://www.csplumbinglee.com/about",
   },
 };
@@ -44,7 +44,7 @@ export default function AboutPage() {
             <span className="text-gradient">Trusted by Thousands.</span>
           </h1>
           <p className="mt-4 sm:mt-6 text-base sm:text-lg text-gray-500 max-w-2xl mx-auto">
-            Since 1997, C&S Plumbing has been the backbone of Southwest
+            Since 1998, C&S Plumbing has been the backbone of Southwest
             Florida&apos;s plumbing infrastructure — from residential homes to
             commercial projects.
           </p>

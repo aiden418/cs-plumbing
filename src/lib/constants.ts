@@ -14,18 +14,19 @@ export const BUSINESS = {
   city: "North Fort Myers",
   state: "FL",
   zip: "33903",
-  founded: 1997,
+  founded: 1998,
   homesCompleted: 8500,
   hours: {
-    weekday: "Mon–Fri: 8:00 AM – 5:00 PM",
+    weekday: "Mon–Fri: 7:30 AM – 4:30 PM",
     saturday: "Sat: 9:00 AM – 3:00 PM",
     sunday: "Sun: Emergency Only",
     emergency: "24/7 Emergency Service",
   },
   tagline: "Southwest Florida's Most Trusted Plumbing Team",
   description:
-    "Family-owned since 1997. From emergency repairs to new construction, C&S Plumbing delivers excellence across Southwest Florida.",
+    "Family-owned since 1998. From emergency repairs to new construction, C&S Plumbing delivers excellence across Southwest Florida.",
   license: "CFC1432485",
+  license2: "CFC057076",
 } as const;
 
 // ============================================
@@ -240,13 +241,13 @@ export const TEAM_MEMBERS: TeamMember[] = [
     name: "Samuel Pellechio Jr.",
     role: "Owner & President",
     image: "/images/team/samuel.jpeg",
-    bio: "Leading C&S Plumbing with the same dedication and family values his father instilled since 1997.",
+    bio: "First-generation licensed plumber and second-generation contractor, leading C&S Plumbing with the same dedication and family values his father instilled since 1998.",
   },
   {
     name: "Aiden Pellechio",
     role: "Operations Manager",
     image: "/images/team/aiden.jpg",
-    bio: "Keeping the family legacy running smoothly with expert operations management and a construction management background from FGCU.",
+    bio: "Keeping the family legacy running smoothly with expert operations management, currently studying construction management at FGCU.",
   },
   {
     name: "Dylan Redecker",
@@ -359,7 +360,7 @@ export const TESTIMONIALS: Testimonial[] = [
 
 export const TIMELINE_EVENTS: TimelineEvent[] = [
   {
-    year: "1997",
+    year: "1998",
     title: "The Beginning",
     description:
       "Two brothers, with the support of their father, founded C&S Plumbing of Lee County with a single truck and a commitment to quality.",
@@ -377,10 +378,10 @@ export const TIMELINE_EVENTS: TimelineEvent[] = [
       "Surpassed 8,000 new construction homes plumbed across Southwest Florida, becoming one of the region's most trusted plumbing contractors.",
   },
   {
-    year: "2017",
+    year: "2018",
     title: "20 Years of Excellence",
     description:
-      "Celebrated two decades of service. Samuel Pellechio Jr. takes the helm, continuing the family legacy with fresh energy.",
+      "Celebrated two decades of service as one of Southwest Florida's most trusted plumbing contractors.",
   },
   {
     year: "2022",
@@ -513,7 +514,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       {
         title: "Lifetime Warranty on PEX",
         description:
-          "PEX piping comes with a manufacturer's lifetime warranty. Combined with our workmanship guarantee, your investment is fully protected.",
+          "PEX piping comes with a manufacturer warranty, and C&S Plumbing backs every installation with a 1-year labor warranty. Your investment is fully protected.",
       },
     ],
     faqs: [
@@ -562,7 +563,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       "Minimal wall damage guaranteed",
       "Licensed & insured (CFC1432485)",
       "Free estimates with upfront pricing",
-      "Lifetime warranty on PEX piping",
+      "1-year labor warranty + manufacturer warranty on PEX",
       "Serving all of Southwest Florida",
     ],
   },
@@ -616,7 +617,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       {
         question: "How much does a water heater cost in Cape Coral?",
         answer:
-          "Water heater costs in Cape Coral range from $800 for a basic repair to $3,500+ for a tankless installation. Traditional tank replacements typically run $1,200-$2,000 installed. C&S Plumbing provides free estimates.",
+          "Water heater costs in Cape Coral start at $195 for a basic repair. Traditional tank replacements typically run $995-$2,000 installed, and tankless installations start at $1,200. C&S Plumbing provides free estimates.",
       },
       {
         question: "Should I get a tankless or traditional water heater?",
@@ -649,7 +650,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
           "Common signs include inconsistent water temperature, rusty water from the hot side only, rumbling or popping noises, visible corrosion or leaking around the base, and an age of 10+ years. If your water heater shows any of these signs, schedule a free inspection.",
       },
     ],
-    priceRange: "$800 – $3,500+",
+    priceRange: "$195 – $4,500+",
     highlights: [
       "Same-day service available",
       "All brands installed & serviced",
@@ -1130,7 +1131,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     state: "FL",
     metaTitle: "Plumber in Cape Coral, FL",
     metaDescription:
-      "Trusted plumber in Cape Coral, FL. Emergency plumbing, repiping, drain cleaning, water heaters & more. Family-owned since 1997. 8,500+ homes. Call 833-PLUMB-IT.",
+      "Trusted plumber in Cape Coral, FL. Emergency plumbing, repiping, drain cleaning, water heaters & more. Family-owned since 1998. 8,500+ homes. Call 833-PLUMB-IT.",
     keywords: [
       "plumber Cape Coral",
       "plumber Cape Coral FL",
@@ -1144,7 +1145,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     ],
     heroText: "Your Trusted Plumber in Cape Coral, FL",
     description:
-      "C&S Plumbing has been serving Cape Coral homeowners and businesses since 1997. From emergency repairs to whole-home repiping, we deliver fast, reliable plumbing backed by 8,500+ completed homes.",
+      "C&S Plumbing has been serving Cape Coral homeowners and businesses since 1998. From emergency repairs to whole-home repiping, we deliver fast, reliable plumbing backed by 8,500+ completed homes.",
     neighborhoods: [
       "SW Cape Coral",
       "NW Cape Coral",
@@ -1202,7 +1203,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     state: "FL",
     metaTitle: "Plumber in North Fort Myers, FL — Our Hometown",
     metaDescription:
-      "North Fort Myers' hometown plumber since 1997. C&S Plumbing is headquartered right here on Pondella Rd. Emergency service, repiping, drains & more. Call 833-PLUMB-IT.",
+      "North Fort Myers' hometown plumber since 1998. C&S Plumbing is headquartered right here on Pondella Rd. Emergency service, repiping, drains & more. Call 833-PLUMB-IT.",
     keywords: [
       "plumber North Fort Myers",
       "plumber North Fort Myers FL",
@@ -1213,7 +1214,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
       "water heater North Fort Myers",
       "plumber near me North Fort Myers",
     ],
-    heroText: "North Fort Myers' Hometown Plumber Since 1997",
+    heroText: "North Fort Myers' Hometown Plumber Since 1998",
     description:
       "C&S Plumbing is headquartered right here in North Fort Myers at 951 Pondella Rd. As your neighbors, we take extra pride in serving our hometown community with fast, reliable plumbing services.",
     neighborhoods: [
@@ -1302,7 +1303,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     state: "FL",
     metaTitle: "Plumber in Lehigh Acres, FL",
     metaDescription:
-      "Trusted plumber in Lehigh Acres, FL. Emergency plumbing, repiping, drain cleaning, water heaters & more. Family-owned since 1997. 8,500+ homes. Call 833-PLUMB-IT.",
+      "Trusted plumber in Lehigh Acres, FL. Emergency plumbing, repiping, drain cleaning, water heaters & more. Family-owned since 1998. 8,500+ homes. Call 833-PLUMB-IT.",
     keywords: [
       "plumber Lehigh Acres",
       "plumber Lehigh Acres FL",
@@ -1602,7 +1603,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>6. Consider Local and Family-Owned</h2>
 <p>Local plumbing companies have a reputation to maintain in the community. They're more likely to stand behind their work because their business depends on word-of-mouth referrals from neighbors, not anonymous online leads.</p>
-<p>C&S Plumbing has been family-owned and operated in Southwest Florida since 1997. We live here, we work here, and our reputation is everything to us.</p>
+<p>C&S Plumbing has been family-owned and operated in Southwest Florida since 1998. We live here, we work here, and our reputation is everything to us.</p>
 
 <h2>Ready to Experience the C&S Difference?</h2>
 <p>We've built our reputation on honest work, fair pricing, and treating every home like our own. With 8,500+ completed projects and a 5.0-star Google rating, we let our track record speak for itself.</p>
@@ -1754,7 +1755,7 @@ export const BLOG_POSTS: BlogPost[] = [
 <li>Most homes completed in 1-2 days</li>
 <li>Full permit and county inspection included</li>
 <li>Minimal wall openings with drywall patching</li>
-<li>Lifetime warranty on PEX piping</li>
+<li>1-year labor warranty + manufacturer warranty on PEX</li>
 </ul>
 <p>We've repiped thousands of <a href="/areas/cape-coral">Cape Coral</a> and <a href="/areas/fort-myers">Fort Myers</a> homes — we know the common layouts and can work efficiently to minimize disruption.</p>
 

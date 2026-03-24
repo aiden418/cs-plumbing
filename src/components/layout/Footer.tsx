@@ -154,7 +154,13 @@ export default function Footer() {
           <div className="flex flex-col sm:flex-row items-center justify-between w-full gap-3 sm:gap-4">
             <p className="text-xs sm:text-sm text-gray-500 text-center sm:text-left">
               &copy; {new Date().getFullYear()} {BUSINESS.fullName}. All rights
-              reserved. License #{BUSINESS.license}
+              reserved.{" "}
+              <a href="https://www.myfloridalicense.com/wl11.asp?mode=0&SID=" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
+                Lic. #{BUSINESS.license2}
+              </a>{" | "}
+              <a href="https://www.myfloridalicense.com/wl11.asp?mode=0&SID=" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
+                Lic. #{BUSINESS.license}
+              </a>
             </p>
             <div className="flex items-center gap-4 sm:gap-6 text-xs sm:text-sm text-gray-500">
               <Link href="/privacy-policy" className="hover:text-gray-700 transition-colors">
@@ -166,7 +172,9 @@ export default function Footer() {
             </div>
           </div>
           <p className="text-xs text-gray-400">
-            Designed &amp; managed by ASP LLC
+            <a href="https://draftconstructionswfl.com" target="_blank" rel="noopener noreferrer" className="hover:text-gray-500 transition-colors">
+              A Division of Draft Construction
+            </a>{" · "}Designed &amp; managed by ASP LLC
           </p>
         </div>
       </div>

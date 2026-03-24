@@ -9,7 +9,7 @@ export default function JsonLd() {
     jobTitle: "Founder",
     worksFor: { "@id": `${BASE}/#organization` },
     description:
-      "Founded C&S Plumbing of Lee County in 1997, building the company into one of Southwest Florida's most trusted plumbing contractors with over 8,500 homes completed.",
+      "Co-founded C&S Plumbing of Lee County in 1998, building the company into one of Southwest Florida's most trusted plumbing contractors with over 8,500 homes completed. Passed away in 2020.",
   };
 
   const owner = {
@@ -21,7 +21,7 @@ export default function JsonLd() {
     image: `${BASE}/images/team/samuel.jpeg`,
     worksFor: { "@id": `${BASE}/#organization` },
     description:
-      "Second-generation master plumber leading C&S Plumbing with the same dedication and family values since 1997. Licensed Florida plumbing contractor (CFC1432485).",
+      "First-generation licensed plumber and second-generation contractor leading C&S Plumbing since 1998. Licensed Florida plumbing contractor (CFC1432485 / CFC057076).",
     hasCredential: {
       "@type": "EducationalOccupationalCredential",
       credentialCategory: "Professional License",
@@ -52,12 +52,7 @@ export default function JsonLd() {
     image: `${BASE}/images/team/aiden.jpg`,
     worksFor: { "@id": `${BASE}/#organization` },
     description:
-      "Third-generation family member managing daily operations with a construction management background from FGCU.",
-    alumniOf: {
-      "@type": "CollegeOrUniversity",
-      name: "Florida Gulf Coast University",
-      url: "https://www.fgcu.edu",
-    },
+      "Third-generation family member managing daily operations, currently studying construction management at Florida Gulf Coast University (FGCU).",
   };
 
   /* ── LocalBusiness / Plumber ── */
@@ -72,10 +67,10 @@ export default function JsonLd() {
     image: `${BASE}/images/hero/drone-construction.jpg`,
     telephone: "+18337562648",
     email: "office@csplumbinglee.com",
-    foundingDate: "1997",
-    numberOfEmployees: { "@type": "QuantitativeValue", minValue: 10, maxValue: 25 },
+    foundingDate: "1998",
+    numberOfEmployees: { "@type": "QuantitativeValue", minValue: 5, maxValue: 10 },
     description:
-      "Family-owned plumbing company serving Southwest Florida since 1997. 8,500+ homes built. 24/7 emergency service. Residential, commercial & new construction plumbing across Cape Coral, Fort Myers, Naples & all of SWFL.",
+      "Family-owned plumbing company serving Southwest Florida since 1998. 8,500+ homes built. 24/7 emergency service. Residential, commercial & new construction plumbing across Cape Coral, Fort Myers, Naples & all of SWFL.",
     slogan: "Southwest Florida's Most Trusted Plumbing Team",
     address: {
       "@type": "PostalAddress",
@@ -94,8 +89,8 @@ export default function JsonLd() {
       {
         "@type": "OpeningHoursSpecification",
         dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-        opens: "08:00",
-        closes: "17:00",
+        opens: "07:30",
+        closes: "16:30",
       },
       {
         "@type": "OpeningHoursSpecification",
@@ -132,6 +127,16 @@ export default function JsonLd() {
           url: "https://www.myfloridalicense.com",
         },
       },
+      {
+        "@type": "EducationalOccupationalCredential",
+        credentialCategory: "Professional License",
+        name: "Florida Certified Plumbing Contractor — CFC057076",
+        recognizedBy: {
+          "@type": "GovernmentOrganization",
+          name: "Florida Department of Business and Professional Regulation",
+          url: "https://www.myfloridalicense.com",
+        },
+      },
     ],
 
     /* ── Expertise ── */
@@ -146,7 +151,7 @@ export default function JsonLd() {
       "UEP utility connections in Cape Coral",
       "Florida Building Code 8th Edition (2023) compliance",
       "Lee County and Cape Coral permitting requirements",
-      "Backflow prevention and testing",
+      "Backflow prevention installation (inspections subcontracted)",
       "Emergency plumbing — burst pipes, slab leaks, sewage backups",
     ],
 
@@ -307,7 +312,7 @@ export default function JsonLd() {
     name: "C&S Plumbing of Lee County",
     url: BASE,
     description:
-      "Official website of C&S Plumbing of Lee County — family-owned plumbing contractor serving Cape Coral, Fort Myers, Naples, and all of Southwest Florida since 1997.",
+      "Official website of C&S Plumbing of Lee County — family-owned plumbing contractor serving Cape Coral, Fort Myers, Naples, and all of Southwest Florida since 1998.",
     publisher: { "@id": `${BASE}/#organization` },
     inLanguage: "en-US",
     potentialAction: {

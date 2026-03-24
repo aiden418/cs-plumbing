@@ -11,7 +11,7 @@ export default function AboutPersonJsonLd() {
       url: `${BASE}/about`,
       image: `${BASE}/images/team/samuel.jpeg`,
       description:
-        "Second-generation master plumber leading C&S Plumbing of Lee County. Licensed Florida Certified Plumbing Contractor (CFC1432485) with decades of experience in residential, commercial, and new construction plumbing across Southwest Florida.",
+        "First-generation licensed plumber and second-generation contractor leading C&S Plumbing of Lee County since 1998. Licensed Florida Certified Plumbing Contractor (CFC1432485 / CFC057076) with decades of experience in residential, commercial, and new construction plumbing across Southwest Florida.",
       worksFor: {
         "@type": "Plumber",
         "@id": `${BASE}/#organization`,
@@ -47,16 +47,11 @@ export default function AboutPersonJsonLd() {
       url: `${BASE}/about`,
       image: `${BASE}/images/team/aiden.jpg`,
       description:
-        "Third-generation family member managing daily operations at C&S Plumbing of Lee County. Construction management graduate from Florida Gulf Coast University (FGCU) bringing modern business practices to a family plumbing tradition.",
+        "Third-generation family member managing daily operations at C&S Plumbing of Lee County. Currently studying construction management at Florida Gulf Coast University (FGCU) while bringing modern business practices to a family plumbing tradition.",
       worksFor: {
         "@type": "Plumber",
         "@id": `${BASE}/#organization`,
         name: "C&S Plumbing of Lee County",
-      },
-      alumniOf: {
-        "@type": "CollegeOrUniversity",
-        name: "Florida Gulf Coast University",
-        url: "https://www.fgcu.edu",
       },
       knowsAbout: [
         "Construction Management",

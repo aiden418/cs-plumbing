@@ -37,7 +37,7 @@ export default function FamilyStory() {
             </h2>
             <div className="space-y-3 sm:space-y-4 text-gray-500 text-sm sm:text-base leading-relaxed">
               <p>
-                In 1997, two brothers made a bold decision. With the support of
+                In 1998, two brothers made a bold decision. With the support of
                 their father and a single work truck, they founded C&S Plumbing
                 of Lee County — built on the belief that honest work, fair
                 pricing, and treating customers like family would set them apart.

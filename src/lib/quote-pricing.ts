@@ -14,8 +14,8 @@ import type {
 // ============================================
 
 const BASE_PRICES: Record<string, PriceRange> = {
-  "traditional-40gal": { min: 1200, max: 1800 },
-  "traditional-50gal": { min: 1400, max: 2100 },
+  "traditional-40gal": { min: 995, max: 1500 },
+  "traditional-50gal": { min: 1275, max: 1675 },
   "traditional-75gal": { min: 1800, max: 2600 },
   "tankless-single-point": { min: 1500, max: 2200 },
   "tankless-whole-home": { min: 3000, max: 4500 },
@@ -249,7 +249,7 @@ export function calculateRepipe(sel: RepipeSelections): QuoteResult {
   // Permit
   lineItems.push({
     label: "Permit & inspections",
-    range: { min: 350, max: 500 },
+    range: { min: 500, max: 1000 },
   });
 
   // Total with floor

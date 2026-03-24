@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
   title: "Plumber in Cape Coral & Fort Myers",
   description:
-    "C&S Plumbing of Lee County — family-owned since 1997, 8,500+ homes built. Best of Cape Coral 2025. 24/7 emergency plumbing, repiping, drain cleaning, water heaters & new construction across Southwest Florida.",
+    "C&S Plumbing of Lee County — family-owned since 1998, 8,500+ homes built. Best of Cape Coral 2025. 24/7 emergency plumbing, repiping, drain cleaning, water heaters & new construction across Southwest Florida.",
   keywords: [
     "plumber Cape Coral",
     "plumber Fort Myers",
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "C&S Plumbing of Lee County — Cape Coral & Fort Myers Plumber",
     description:
-      "Family-owned since 1997. Best of Cape Coral 2025. 24/7 emergency service, repiping, drain cleaning, water heaters & new construction. 8,500+ homes built across SWFL.",
+      "Family-owned since 1998. Best of Cape Coral 2025. 24/7 emergency service, repiping, drain cleaning, water heaters & new construction. 8,500+ homes built across SWFL.",
     url: "https://www.csplumbinglee.com",
   },
 };

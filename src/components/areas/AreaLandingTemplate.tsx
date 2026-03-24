@@ -109,7 +109,7 @@ export default function AreaLandingTemplate({
           <ScrollReveal>
             <div className="max-w-3xl mx-auto">
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-6 sm:mb-8">
-                Serving {landing.city} Since 1997
+                Serving {landing.city} Since 1998
               </h2>
               <p className="text-gray-500 text-sm sm:text-base leading-relaxed mb-8">
                 {landing.localContext}
@@ -149,10 +149,10 @@ export default function AreaLandingTemplate({
           </ScrollReveal>
           <StaggerChildren className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-4xl mx-auto">
             {[
-              "Family-owned since 1997",
+              "Family-owned since 1998",
               "8,500+ homes completed",
               "24/7 emergency service",
-              "Licensed & insured (CFC1432485)",
+              "Licensed & insured (CFC057076 / CFC1432485)",
               "5.0-star Google rating",
               "Upfront, transparent pricing",
               "Same-day service available",

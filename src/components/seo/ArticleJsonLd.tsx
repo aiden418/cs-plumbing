@@ -16,27 +16,17 @@ export default function ArticleJsonLd({ post }: { post: BlogPost }) {
     isAccessibleForFree: true,
     author: {
       "@type": "Person",
-      "@id": `${BASE}/#owner`,
-      name: "Samuel Pellechio Jr.",
+      "@id": `${BASE}/#operations-manager`,
+      name: "Aiden Pellechio",
       url: `${BASE}/about`,
-      jobTitle: "Owner & President",
+      jobTitle: "Operations Manager",
       worksFor: {
         "@type": "Plumber",
         "@id": `${BASE}/#organization`,
         name: "C&S Plumbing of Lee County",
       },
       description:
-        "Licensed Florida plumbing contractor (CFC1432485) with decades of hands-on experience in residential, commercial, and new construction plumbing across Southwest Florida.",
-      hasCredential: {
-        "@type": "EducationalOccupationalCredential",
-        credentialCategory: "Professional License",
-        name: "Certified Plumbing Contractor — CFC1432485",
-        recognizedBy: {
-          "@type": "GovernmentOrganization",
-          name: "Florida Department of Business and Professional Regulation",
-          url: "https://www.myfloridalicense.com",
-        },
-      },
+        "Operations Manager at C&S Plumbing of Lee County, currently studying construction management at Florida Gulf Coast University. Third-generation family member in the plumbing trade.",
     },
     publisher: {
       "@type": "Organization",
