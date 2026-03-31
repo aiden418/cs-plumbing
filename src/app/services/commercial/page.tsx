@@ -2,6 +2,39 @@ import type { Metadata } from "next";
 import PageTransition from "@/components/layout/PageTransition";
 import ServiceDetail from "@/components/services/ServiceDetail";
 import CTASection from "@/components/home/CTASection";
+import FaqJsonLd from "@/components/seo/FaqJsonLd";
+import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
+
+const commercialFaqs = [
+  {
+    question: "Do you handle commercial tenant buildouts and tenant improvements in Lee County?",
+    answer: "Yes. C&S Plumbing handles all plumbing work for commercial tenant buildouts and tenant improvements throughout Lee County and Southwest Florida. This includes space layout plumbing design, fixture relocation and installation, ADA compliance upgrades, code updates, and full coordination with general contractors.",
+  },
+  {
+    question: "What types of commercial properties do you service?",
+    answer: "We service all types of commercial properties including retail spaces, restaurants, medical offices, warehouses, office buildings, multi-family complexes, and light industrial facilities across Cape Coral, Fort Myers, and all of Southwest Florida.",
+  },
+  {
+    question: "Do you work directly with general contractors on commercial projects?",
+    answer: "Yes. We regularly partner with general contractors on commercial new construction, tenant buildouts, and renovation projects. We provide scope letters, coordinate with other trades, manage permits, and deliver documentation for project closeouts.",
+  },
+  {
+    question: "Can you handle commercial plumbing permits in Lee County and Cape Coral?",
+    answer: "Yes. We manage all commercial plumbing permits through Lee County and the City of Cape Coral. Our licensed plumbing contractors (CFC1432485, CFC057076) handle the full permitting process including plan review, inspections, and final certificate of occupancy sign-off.",
+  },
+  {
+    question: "Do you offer preventive maintenance contracts for commercial properties?",
+    answer: "Yes. We offer customized preventive maintenance plans for commercial properties including scheduled inspections, drain maintenance, water heater servicing, fixture tune-ups, and priority emergency response. Contact us to build a maintenance plan for your property.",
+  },
+  {
+    question: "How fast do you respond to commercial plumbing emergencies?",
+    answer: "Our commercial emergency team is available 24/7 and typically responds within 60 minutes in the Cape Coral and Fort Myers area. We understand that plumbing emergencies can shut down your business, so we prioritize speed and provide temporary solutions to keep you operating while permanent repairs are made.",
+  },
+  {
+    question: "Do you service restaurants and food service businesses?",
+    answer: "Yes. We specialize in grease trap installation, cleaning, and maintenance for restaurants and food service businesses throughout Southwest Florida. We also handle code compliance inspections and provide documentation for health department requirements.",
+  },
+];
 
 export const metadata: Metadata = {
   alternates: { canonical: "/services/commercial" },
@@ -142,6 +175,46 @@ export default function CommercialPage() {
         services={commercialServices}
         highlights={highlights}
       />
+      {/* FAQ */}
+      <section className="py-16 sm:py-24 lg:py-32 bg-surface">
+        <div className="max-w-4xl mx-auto px-6 lg:px-8">
+          <div className="text-center mb-10 sm:mb-16">
+            <span className="inline-block text-primary text-xs sm:text-sm font-semibold tracking-widest uppercase mb-3 sm:mb-4">
+              FAQ
+            </span>
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900">
+              Commercial Plumbing Questions
+            </h2>
+          </div>
+          <div className="space-y-4">
+            {commercialFaqs.map((faq, i) => (
+              <details
+                key={i}
+                className="group bg-white border border-gray-200 rounded-xl overflow-hidden"
+              >
+                <summary className="flex items-center justify-between cursor-pointer px-5 sm:px-6 py-4 sm:py-5 text-left text-base sm:text-lg font-semibold text-gray-900 hover:text-primary transition-colors">
+                  <span className="pr-4">{faq.question}</span>
+                  <svg
+                    className="w-5 h-5 shrink-0 text-gray-400 group-open:rotate-180 transition-transform duration-200"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </summary>
+                <div className="px-5 sm:px-6 pb-5 sm:pb-6 text-gray-600 leading-relaxed">
+                  {faq.answer}
+                </div>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <BreadcrumbJsonLd items={[{ name: "Home", href: "/" }, { name: "Services", href: "/services" }, { name: "Commercial", href: "/services/commercial" }]} />
+      <FaqJsonLd faqs={commercialFaqs} />
       <CTASection />
     </PageTransition>
   );

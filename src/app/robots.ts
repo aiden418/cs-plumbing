@@ -9,6 +9,9 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/api/"],
       },
     ],
-    sitemap: "https://www.csplumbinglee.com/sitemap.xml",
+    sitemap: [
+      "https://www.csplumbinglee.com/sitemap.xml",
+      "https://www.csplumbinglee.com/llms.txt",
+    ],
   };
 }
