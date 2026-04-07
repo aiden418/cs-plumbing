@@ -66,6 +66,7 @@ export const NAV_LINKS: NavLink[] = [
       { label: "Sanibel Island", href: "/areas/sanibel" },
     ],
   },
+  { label: "Coastal Comeback", href: "/coastal-comeback-plan" },
   { label: "Contact", href: "/contact" },
   {
     label: "More",
@@ -2199,5 +2200,42 @@ export const PARTNERS: Partner[] = [
     phone: "239-433-5575",
     website: "https://barnespools.net",
     image: "/images/partners/barnes-pools.jpg",
+  },
+];
+
+// ============================================
+// COASTAL COMEBACK PLAN (Snowbird Plumbing Protection)
+// ============================================
+
+export const COASTAL_COMEBACK_FAQS = [
+  {
+    question: "What's actually included in the pre-departure visit?",
+    answer:
+      "A licensed C&S technician walks your home before you leave: shuts off the main water supply, drains key fixtures, inspects exposed supply lines, tests every shut-off valve, checks the water heater for corrosion or leaks, flushes drain traps to prevent dry-out smells, and leaves you with a written report. The goal is a vacant home that won't leak, smell, or surprise you.",
+  },
+  {
+    question: "Do you serve my city?",
+    answer:
+      "Yes — the Coastal Comeback Plan is available across our full SWFL service area: Cape Coral, Fort Myers, North Fort Myers, Naples, Bonita Springs, Estero, Lehigh Acres, and Sanibel. If you're in Lee or Collier County, we've got you covered.",
+  },
+  {
+    question: "What if you find a problem while I'm gone?",
+    answer:
+      "We call you immediately with photos and a clear quote. Nothing happens without your approval — except a true emergency (active leak, burst pipe), where we'll shut things down to stop damage and call you within minutes. Coastal Shield and Smart members get priority dispatch and 10% off any repairs we make during the season.",
+  },
+  {
+    question: "Can I add this to a property I rent on Airbnb?",
+    answer:
+      "Absolutely — short-term rental owners are a perfect fit. The Coastal Smart tier is built for multi-property and STR managers, with smart leak detector installation and monthly remote monitoring so you know about a problem before your guests do.",
+  },
+  {
+    question: "Is this a contract? Can I cancel?",
+    answer:
+      "It's an annual plan, not a long-term contract. You can cancel any time and we'll refund the unused portion. No cancellation fees, no auto-renewal traps.",
+  },
+  {
+    question: "How is this different from a home watch service?",
+    answer:
+      "Home watch services are great generalists — they look for obvious problems. We're licensed plumbers (CFC1432485 / CFC057076), so we actually shut down, drain, inspect, and fix the plumbing system. Many of our snowbird customers use both: a home watch service for general property checks, and the Coastal Comeback Plan specifically for plumbing.",
   },
 ];

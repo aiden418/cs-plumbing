@@ -13,6 +13,7 @@ const quickLinks = [
   { label: "Contact", href: "/contact" },
   { label: "Book a Service", href: "/booking" },
   { label: "Emergency", href: "/emergency" },
+  { label: "Coastal Comeback Plan", href: "/coastal-comeback-plan" },
   { label: "Instant Quote", href: "/quote-builder" },
   { label: "Builder Portal", href: "/builder-portal" },
   { label: "FAQ", href: "/faq" },

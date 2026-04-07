@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Hero from "@/components/home/Hero";
 import StatsBar from "@/components/home/StatsBar";
 import ServiceHighlights from "@/components/home/ServiceHighlights";
+import CoastalComebackTeaser from "@/components/home/CoastalComebackTeaser";
 import WhyChooseUs from "@/components/home/WhyChooseUs";
 import ServiceAreasSection from "@/components/home/ServiceAreasSection";
 import Testimonials from "@/components/home/Testimonials";
@@ -44,6 +45,7 @@ export default function Home() {
       <Hero />
       <StatsBar />
       <ServiceHighlights />
+      <CoastalComebackTeaser />
       <WhyChooseUs />
       <ServiceAreasSection />
       <Testimonials />
