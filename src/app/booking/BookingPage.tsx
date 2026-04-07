@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Wrench,
@@ -18,6 +18,7 @@ import {
   CalendarCheck,
   FileText,
   DollarSign,
+  ShieldCheck,
 } from "lucide-react";
 import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
@@ -31,7 +32,15 @@ const serviceCategories = [
   { id: "emergency", label: "Emergency", icon: <Siren className="w-6 h-6" /> },
   { id: "new-construction", label: "New Construction / Remodel", icon: <HardHat className="w-6 h-6" /> },
   { id: "uep-utilities", label: "UEP Utilities", icon: <Shovel className="w-6 h-6" /> },
+  { id: "coastal-comeback", label: "Coastal Comeback Plan", icon: <ShieldCheck className="w-6 h-6" /> },
 ];
+
+const COASTAL_TIER_LABELS: Record<string, string> = {
+  comfort: "Coastal Comfort ($349/yr)",
+  shield: "Coastal Shield ($549/yr)",
+  smart: "Coastal Smart (custom quote)",
+  "coastal-comeback": "Coastal Comeback Plan",
+};
 
 const budgetRanges = [
   "Under $500",
@@ -92,6 +101,19 @@ export default function BookingPage() {
     phone: "",
     address: "",
   });
+
+  // Pre-select Coastal Comeback when arriving from /coastal-comeback-plan?plan=...
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const plan = params.get("plan");
+    if (!plan) return;
+    const tierLabel = COASTAL_TIER_LABELS[plan] ?? COASTAL_TIER_LABELS["coastal-comeback"];
+    setForm((prev) => ({
+      ...prev,
+      service: "coastal-comeback",
+      description: prev.description || `Interested in the ${tierLabel}. Please reach out to enroll me.`,
+    }));
+  }, []);
 
   const isEstimate = requestType === "estimate";
   const steps = isEstimate ? estimateSteps : bookingSteps;
