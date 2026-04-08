@@ -1892,6 +1892,67 @@ export const BLOG_POSTS: BlogPost[] = [
 <p>Call <a href="tel:8337562648">833-PLUMB-IT</a> or <a href="/booking">book an appointment online</a> to get your water pressure back where it belongs.</p>`,
   },
   {
+    slug: "clogged-drains-causes-fixes-swfl",
+    title: "Why Your Drains Keep Clogging (and How to Fix It for Good)",
+    metaTitle: "Why Your Drains Keep Clogging — Causes and Fixes in SWFL",
+    metaDescription:
+      "Dealing with slow or clogged drains in Cape Coral or Fort Myers? Learn the real causes, when to DIY, and when to call a pro. Expert drain advice from C&S Plumbing.",
+    keywords: ["clogged drain Cape Coral", "slow drain Fort Myers", "drain cleaning SWFL", "clogged drain causes", "drain cleaning plumber Lee County", "drain cleaning near me"],
+    excerpt:
+      "A slow drain is easy to ignore — until it backs up completely at the worst possible moment. Here's why Southwest Florida drains clog more often than you might expect, and what it takes to actually fix the problem for good.",
+    category: "Drain Cleaning",
+    publishDate: "2026-04-08",
+    readTime: "6 min read",
+    content: `<h2>Why Drain Clogs Are So Common in Southwest Florida</h2>
+<p>Clogged drains are one of the most frequent plumbing calls we receive across <a href="/areas/cape-coral">Cape Coral</a>, <a href="/areas/fort-myers">Fort Myers</a>, and Lee County — and they're more common here than in most parts of the country. Southwest Florida's hard water leaves mineral deposits on pipe walls that gradually narrow the drain opening and trap grease, hair, and soap scum more aggressively than in areas with softer water. Older homes built before the 1990s often have original cast iron or galvanized drain lines that have accumulated decades of scale and buildup inside.</p>
+<p>The result: drains that seem to clog for no obvious reason, clogs that come back weeks after you cleared them, and slow drains that never seem to fully resolve no matter what you pour down them.</p>
+
+<h2>The Most Common Culprits by Drain Type</h2>
+
+<h3>Kitchen Sink</h3>
+<p>Kitchen drain clogs are almost always caused by grease, oil, and food particles. Even if you're careful about what goes down the drain, cooking oil and grease from dishes get rinsed off every day. In the pipe, this grease cools and solidifies on the pipe walls, building up layer by layer until water can barely pass. Dish soap breaks up some grease, but not all of it — a thin coating is left behind with every wash.</p>
+<p>Coffee grounds, pasta, rice, and fibrous vegetables (celery, onion peels) are also notorious drain cloggers, even with a garbage disposal.</p>
+
+<h3>Bathroom Sink and Shower</h3>
+<p>Hair is the number-one cause of bathroom drain clogs, combined with soap scum and personal care products. A single shower doesn't cause a clog — but hair accumulates in the drain trap over weeks and months until water starts backing up. In Southwest Florida's hard water, soap scum is stickier and more tenacious than elsewhere, which makes hair clogs worse.</p>
+
+<h3>Toilet</h3>
+<p>Toilets are designed to handle human waste and toilet paper — nothing else. Wipes labeled "flushable," cotton balls, paper towels, and feminine products don't break down in water the way toilet paper does. They accumulate in the drain line and eventually cause a blockage. If your toilet clogs repeatedly without any obvious overuse, the issue may be further down the line in the main sewer pipe.</p>
+
+<h3>Main Sewer Line</h3>
+<p>When multiple drains in your home are slow or backing up at the same time, the problem usually isn't individual clogs — it's a blockage in the main sewer line that serves the whole house. In Southwest Florida, tree root intrusion is a significant cause: roots seek moisture and can infiltrate sewer pipes through small cracks, then grow until they block flow entirely. The sandy soil here also shifts over time, which can cause drain lines to belly (sag) and collect debris.</p>
+
+<h2>DIY Fixes: When They Work and When They Don't</h2>
+<p>A plunger is the first tool to reach for with a toilet or sink clog. Used correctly, a good plunger can dislodge a fresh, soft clog near the drain opening. For bathroom sinks and showers, a simple drain snake (also called a drain auger) can pull out hair clogs from the trap.</p>
+<p>Liquid drain cleaners like Drano work on some light clogs, but we don't recommend them for regular use. They contain harsh chemicals (sodium hydroxide or sulfuric acid) that can damage older pipes, corrode metal fittings, and harm septic systems. More importantly, they don't actually remove the clog — they dissolve part of it, leaving residue that clogs again quickly. If a chemical cleaner doesn't clear the drain after one use, stop — repeated application increases the risk of pipe damage.</p>
+<p><strong>When DIY fails:</strong> If a drain is still slow after plunging and snaking, if the clog keeps coming back, or if multiple drains are affected at once, it's time to call a professional.</p>
+
+<h2>What Professional Drain Cleaning Actually Does</h2>
+<p>Professional drain cleaning is a different category entirely from pouring a bottle of liquid drain cleaner down a pipe. There are two main methods:</p>
+
+<h3>Drain Snaking (Mechanical Auger)</h3>
+<p>A professional-grade drain snake uses a motorized cable with a cutting head that physically breaks through and removes blockages. It's faster and more effective than a hand auger and can reach deeper into the drain line. This is effective for most routine clogs — hair, grease, soft blockages.</p>
+
+<h3>Hydrojetting</h3>
+<p>Hydrojetting uses a high-pressure water stream (typically 3,000–4,000 PSI) to scour the inside of the pipe walls, removing grease, scale, mineral buildup, and debris. Unlike snaking, which punches a hole through a clog, hydrojetting cleans the entire pipe interior — which is why drains stay clear much longer after hydrojetting than after simple snaking.</p>
+<p>Hydrojetting is particularly effective in <a href="/areas/cape-coral">Cape Coral</a> and <a href="/areas/fort-myers">Fort Myers</a> homes where hard water has left mineral scale inside drain lines, and for kitchen drains with years of accumulated grease.</p>
+
+<h2>Recurring Clogs? The Problem May Be Your Pipes</h2>
+<p>If you've had the same drain professionally cleaned multiple times and it keeps backing up, the drain line itself may be the problem. In older homes, cast iron drains corrode and roughen on the interior, trapping debris much more aggressively than smooth modern pipe. Offset joints and bellied sections created by soil movement collect waste and never fully drain.</p>
+<p>In these cases, a <a href="/services/drain-cleaning">video camera drain inspection</a> is the right next step. We run a small waterproof camera through the drain line to see exactly what's happening inside — corrosion, root intrusion, offsets, or cracked pipe. Based on what we find, we can recommend targeted repairs or line replacement to solve the problem permanently rather than treating the symptom repeatedly.</p>
+
+<h2>When to Call C&S Plumbing for Drain Cleaning</h2>
+<ul>
+<li>A drain is completely backed up and won't clear with a plunger</li>
+<li>Multiple drains are slow or backing up at the same time</li>
+<li>A drain you cleaned a month ago is clogging again</li>
+<li>You notice sewage odor coming from drains</li>
+<li>Water is backing up into a tub or floor drain when you run the dishwasher or washing machine</li>
+</ul>
+<p>C&S Plumbing provides professional drain cleaning throughout <a href="/areas/cape-coral">Cape Coral</a>, <a href="/areas/fort-myers">Fort Myers</a>, <a href="/areas/bonita-springs">Bonita Springs</a>, <a href="/areas/north-fort-myers">North Fort Myers</a>, and all of Lee County. We use professional-grade equipment and provide upfront pricing before any work begins.</p>
+<p>Call <a href="tel:8337562648">833-PLUMB-IT</a> or <a href="/booking">book a drain cleaning appointment online</a> today — we'll clear the clog and inspect the line so you know exactly what you're dealing with.</p>`,
+  },
+  {
     slug: "septic-to-sewer-conversion-swfl",
     title: "Septic to Sewer: What Southwest Florida Homeowners Need to Know",
     metaTitle: "Septic to Sewer Conversion — What SWFL Homeowners Need to Know",
