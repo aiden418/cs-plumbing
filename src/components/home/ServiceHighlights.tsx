@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
 import {
   Siren,
@@ -44,6 +45,22 @@ export default function ServiceHighlights() {
             <motion.div key={service.id} variants={staggerItem}>
               <Link href={service.href} className="group block h-full">
                 <div className="relative h-full bg-white rounded-2xl border border-gray-200 p-5 sm:p-6 lg:p-8 transition-all duration-500 hover:border-primary/30 hover:shadow-[0_2px_20px_rgba(0,0,0,0.08)] overflow-hidden">
+                  {/* Background photo layer */}
+                  {service.image && (
+                    <div className="absolute inset-0 pointer-events-none">
+                      <Image
+                        src={service.image}
+                        alt=""
+                        fill
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        className="object-cover scale-105 group-hover:scale-110 transition-transform duration-700"
+                        quality={75}
+                      />
+                      <div className="absolute inset-0 bg-white/85 group-hover:bg-white/75 transition-colors duration-500" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-white via-white/90 to-white/60" />
+                    </div>
+                  )}
+
                   {/* Glow effect on hover */}
                   <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 

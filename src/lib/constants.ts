@@ -104,6 +104,7 @@ export const SERVICES: Service[] = [
       "Plumbing emergencies don't wait, and neither do we. Our team is available 24/7 to handle burst pipes, major leaks, sewage backups, and more.",
     icon: "Siren",
     href: "/services/leak-repair",
+    image: "/images/services/cards/emergency.jpg",
     features: [
       "24/7 rapid response",
       "Burst pipe repair",
@@ -119,6 +120,7 @@ export const SERVICES: Service[] = [
       "Professional drain cleaning services to eliminate clogs, restore flow, and prevent future blockages using state-of-the-art equipment.",
     icon: "Waves",
     href: "/services/drain-cleaning",
+    image: "/images/services/cards/drain-cleaning.jpg",
     features: [
       "Hydro-jetting",
       "Camera inspection",
@@ -134,6 +136,7 @@ export const SERVICES: Service[] = [
       "Installation, repair, and replacement of traditional, tankless, and hybrid water heaters to keep your hot water flowing efficiently.",
     icon: "Flame",
     href: "/services/water-heaters",
+    image: "/images/services/cards/water-heaters.jpg",
     features: [
       "Tankless installation",
       "Traditional tank repair",
@@ -149,6 +152,7 @@ export const SERVICES: Service[] = [
       "Complete repiping solutions for aging or corroded pipe systems. We upgrade your plumbing infrastructure with modern, durable materials.",
     icon: "Wrench",
     href: "/services/repiping",
+    image: "/images/services/cards/repiping.jpg",
     features: [
       "Copper & PEX options",
       "Minimal wall damage",
@@ -164,6 +168,7 @@ export const SERVICES: Service[] = [
       "Comprehensive commercial plumbing services for businesses across Lee County. Preventive maintenance, emergency repairs, and system installations.",
     icon: "Building2",
     href: "/services/commercial",
+    image: "/images/services/cards/commercial.jpg",
     features: [
       "Preventive maintenance plans",
       "Code compliance",
@@ -179,6 +184,7 @@ export const SERVICES: Service[] = [
       "With 8,500+ new construction homes completed, we're the go-to plumbing partner for builders who demand reliability and code compliance.",
     icon: "HardHat",
     href: "/services/new-construction",
+    image: "/images/services/cards/new-construction.jpg",
     features: [
       "8,500+ homes completed",
       "Builder partnerships",
@@ -475,6 +481,7 @@ export const ESTIMATOR_SERVICES = [
 export const SERVICE_LANDINGS: ServiceLanding[] = [
   {
     slug: "repiping",
+    image: "/images/services/cards/repiping.jpg",
     title: "Whole-Home Repiping",
     heroText: "Whole-Home Repiping in Cape Coral, Fort Myers & SWFL",
     description:
@@ -571,6 +578,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
   },
   {
     slug: "water-heaters",
+    image: "/images/services/cards/water-heaters.jpg",
     title: "Water Heaters",
     heroText: "Water Heater Installation & Repair in Cape Coral & Fort Myers",
     description:
@@ -667,6 +675,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
   },
   {
     slug: "drain-cleaning",
+    image: "/images/services/cards/drain-cleaning.jpg",
     title: "Drain Cleaning",
     heroText: "Professional Drain Cleaning in Cape Coral & Fort Myers",
     description:
@@ -763,6 +772,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
   },
   {
     slug: "leak-repair",
+    image: "/images/services/cards/emergency.jpg",
     title: "Leak Detection & Repair",
     heroText: "Leak Detection & Emergency Repair in Cape Coral & Fort Myers",
     description:

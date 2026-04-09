@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { Check, Phone, Calendar, ChevronDown } from "lucide-react";
 import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
@@ -22,8 +23,23 @@ export default function ServiceLandingTemplate({
   return (
     <>
       {/* Hero */}
-      <section className="pt-24 sm:pt-28 lg:pt-32 pb-12 sm:pb-16 bg-[#F5F5F7]">
-        <Container>
+      <section className="relative pt-24 sm:pt-28 lg:pt-32 pb-12 sm:pb-16 bg-[#F5F5F7] overflow-hidden">
+        {landing.image && (
+          <div className="absolute inset-0 pointer-events-none">
+            <Image
+              src={landing.image}
+              alt=""
+              fill
+              sizes="100vw"
+              className="object-cover"
+              priority
+              quality={85}
+            />
+            <div className="absolute inset-0 bg-white/70" />
+            <div className="absolute inset-0 bg-gradient-to-t from-white via-white/60 to-white/40" />
+          </div>
+        )}
+        <Container className="relative">
           <div className="max-w-3xl">
             <span className="inline-block text-primary text-xs sm:text-sm font-semibold tracking-widest uppercase mb-3 sm:mb-4">
               {landing.title}

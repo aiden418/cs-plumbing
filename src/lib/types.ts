@@ -5,6 +5,7 @@ export interface Service {
   icon: string;
   href: string;
   features?: string[];
+  image?: string;
 }
 
 export interface TeamMember {
@@ -98,6 +99,7 @@ export interface ServiceLanding {
   faqs: FAQ[];
   priceRange?: string;
   highlights: string[];
+  image?: string;
 }
 
 export interface BlogPost {
