@@ -174,6 +174,7 @@ export default function CommercialPage() {
         description="Businesses across Lee County rely on C&S Plumbing for efficient, code-compliant commercial plumbing services. From preventive maintenance to emergency repairs, we keep your operations flowing."
         services={commercialServices}
         highlights={highlights}
+        heroImage="/images/services/cards/commercial.jpg"
       />
       {/* FAQ */}
       <section className="py-16 sm:py-24 lg:py-32 bg-surface">

@@ -35,8 +35,8 @@ export default function ServiceLandingTemplate({
               priority
               quality={85}
             />
-            <div className="absolute inset-0 bg-white/70" />
-            <div className="absolute inset-0 bg-gradient-to-t from-white via-white/60 to-white/40" />
+            <div className="absolute inset-0 bg-white/50" />
+            <div className="absolute inset-0 bg-gradient-to-r from-white via-white/70 to-white/20" />
           </div>
         )}
         <Container className="relative">

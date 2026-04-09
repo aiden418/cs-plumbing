@@ -56,8 +56,8 @@ export default function ServiceHighlights() {
                         className="object-cover scale-105 group-hover:scale-110 transition-transform duration-700"
                         quality={75}
                       />
-                      <div className="absolute inset-0 bg-white/85 group-hover:bg-white/75 transition-colors duration-500" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-white via-white/90 to-white/60" />
+                      <div className="absolute inset-0 bg-white/55 group-hover:bg-white/40 transition-colors duration-500" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-white via-white/70 to-white/20" />
                     </div>
                   )}
 
@@ -71,7 +71,7 @@ export default function ServiceHighlights() {
                     <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">
                       {service.title}
                     </h3>
-                    <p className="text-gray-500 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4">
+                    <p className="text-gray-700 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4">
                       {service.description}
                     </p>
                     <div className="flex items-center gap-1 text-primary text-sm font-medium opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-[-8px] group-hover:translate-x-0">

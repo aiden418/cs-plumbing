@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import PageTransition from "@/components/layout/PageTransition";
 import Container from "@/components/ui/Container";
 import ScrollReveal from "@/components/animations/ScrollReveal";
@@ -106,8 +107,21 @@ export default function NewConstructionPage() {
   return (
     <PageTransition>
       {/* Hero */}
-      <section className="pt-24 sm:pt-28 lg:pt-32 pb-12 sm:pb-16 bg-surface">
-        <Container>
+      <section className="relative pt-24 sm:pt-28 lg:pt-32 pb-12 sm:pb-16 bg-surface overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          <Image
+            src="/images/services/cards/new-construction.jpg"
+            alt=""
+            fill
+            sizes="100vw"
+            className="object-cover"
+            priority
+            quality={85}
+          />
+          <div className="absolute inset-0 bg-white/50" />
+          <div className="absolute inset-0 bg-gradient-to-r from-white via-white/70 to-white/20" />
+        </div>
+        <Container className="relative">
           <div className="max-w-3xl">
             <span className="inline-block text-primary text-xs sm:text-sm font-semibold tracking-widest uppercase mb-3 sm:mb-4">
               New Construction
