@@ -25,7 +25,7 @@ export default function CoastalComebackTeaser() {
                 New · For SWFL Snowbirds
               </span>
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 leading-tight mb-4 sm:mb-6">
-                Heading South for the Summer? Don&apos;t Leave Your Pipes
+                Heading North for the Summer? Don&apos;t Leave Your Pipes
                 Behind.
               </h2>
               <p className="text-base sm:text-lg text-gray-500 leading-relaxed mb-6 sm:mb-8">
