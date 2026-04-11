@@ -13,6 +13,7 @@ const BUILDERS = [
   { name: "Stellar Development", logo: "/images/builders/stellar-development.jpg" },
   { name: "Engelke Construction Solutions", logo: "/images/builders/engelke.png" },
   { name: "Itasca Construction Associates", logo: "/images/builders/itasca.png" },
+  { name: "McDowell Construction", logo: "/images/builders/mcdowell.png" },
 ];
 
 function BuilderLogo({ name, logo }: { name: string; logo: string }) {
