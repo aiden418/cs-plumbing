@@ -11,10 +11,8 @@ const BRANDS = [
   { name: "Kohler", logo: "/images/brands/kohler.png" },
   { name: "A.O. Smith", logo: "/images/brands/ao-smith.svg" },
   { name: "Rinnai", logo: "/images/brands/rinnai.svg" },
-  { name: "Bradford White", logo: "/images/brands/bradford-white.svg" },
   { name: "SharkBite", logo: "/images/brands/sharkbite.svg" },
   { name: "Uponor", logo: "/images/brands/uponor.png" },
-  { name: "Charlotte Pipe", logo: "/images/brands/charlotte-pipe.svg" },
   { name: "Navien", logo: "/images/brands/navien.png" },
   { name: "InSinkErator", logo: "/images/brands/insinkerator.png" },
 ];
