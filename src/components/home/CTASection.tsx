@@ -16,7 +16,7 @@ export default function CTASection() {
           src="/images/team/team-work-1.jpg"
           alt=""
           fill
-          className="object-cover object-center"
+          className="object-cover object-top"
           sizes="100vw"
           quality={75}
         />
