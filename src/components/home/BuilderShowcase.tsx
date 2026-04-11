@@ -10,29 +10,31 @@ import StaggerChildren, {
 } from "@/components/animations/StaggerChildren";
 
 const RESIDENTIAL_BUILDERS = [
-  "Draft Construction LLC",
-  "Poseidon Homes",
-  "Alair Homes",
-  "Red Key Builders",
-  "Baywood Homes",
-  "Friga Tyme Construction",
-  "Decker Homes",
+  { name: "Draft Construction LLC", logo: "/images/builders/draft-construction.png" },
+  { name: "Poseidon Homes", logo: "/images/builders/poseidon-homes.webp" },
+  { name: "Alair Homes", logo: "/images/builders/alair-homes.jpg" },
+  { name: "Red Key Builders", logo: "/images/builders/red-key-builders.png" },
+  { name: "Baywood Homes" },
+  { name: "Friga Tyme Construction" },
+  { name: "Decker Homes", logo: "/images/builders/decker-homes.png" },
 ];
 
 const COMMERCIAL_BUILDERS = [
-  "Draft Construction LLC",
-  "Heather Wood Construction",
-  "Stellar Development",
-  "Engelke Construction Solutions",
-  "Itasca Construction Associates, Inc",
-  "McDowell Construction",
+  { name: "Draft Construction LLC", logo: "/images/builders/draft-construction.png" },
+  { name: "Heather Wood Construction", logo: "/images/builders/heather-wood.webp" },
+  { name: "Stellar Development", logo: "/images/builders/stellar-development.png" },
+  { name: "Engelke Construction Solutions", logo: "/images/builders/engelke.png" },
+  { name: "Itasca Construction Associates, Inc", logo: "/images/builders/itasca.png" },
+  { name: "McDowell Construction", logo: "/images/builders/mcdowell.png" },
 ];
 
 function BuilderCard({
   name,
+  logo,
   type,
 }: {
   name: string;
+  logo?: string;
   type: "residential" | "commercial";
 }) {
   return (
@@ -41,8 +43,15 @@ function BuilderCard({
       className="bg-white rounded-xl border border-gray-200 p-4 sm:p-5 hover:border-primary/30 hover:shadow-[0_2px_16px_rgba(0,0,0,0.06)] transition-all duration-300"
     >
       <div className="flex items-center gap-3">
-        <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-          {type === "residential" ? (
+        <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-white border border-gray-100 flex items-center justify-center flex-shrink-0 overflow-hidden">
+          {logo ? (
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img
+              src={logo}
+              alt={name}
+              className="w-full h-full object-contain p-1"
+            />
+          ) : type === "residential" ? (
             <Home className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
           ) : (
             <Building2 className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
@@ -80,8 +89,8 @@ export default function BuilderShowcase() {
             </h3>
           </ScrollReveal>
           <StaggerChildren className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
-            {RESIDENTIAL_BUILDERS.map((name) => (
-              <BuilderCard key={name} name={name} type="residential" />
+            {RESIDENTIAL_BUILDERS.map((builder) => (
+              <BuilderCard key={builder.name} name={builder.name} logo={builder.logo} type="residential" />
             ))}
           </StaggerChildren>
         </div>
@@ -95,8 +104,8 @@ export default function BuilderShowcase() {
             </h3>
           </ScrollReveal>
           <StaggerChildren className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
-            {COMMERCIAL_BUILDERS.map((name) => (
-              <BuilderCard key={name} name={name} type="commercial" />
+            {COMMERCIAL_BUILDERS.map((builder) => (
+              <BuilderCard key={builder.name} name={builder.name} logo={builder.logo} type="commercial" />
             ))}
           </StaggerChildren>
         </div>

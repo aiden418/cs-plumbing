@@ -5,24 +5,29 @@ import SectionHeading from "@/components/ui/SectionHeading";
 import ScrollReveal from "@/components/animations/ScrollReveal";
 
 const BRANDS = [
-  "Rheem",
-  "Moen",
-  "Delta",
-  "Kohler",
-  "A.O. Smith",
-  "Rinnai",
-  "Bradford White",
-  "SharkBite",
-  "Uponor",
-  "Charlotte Pipe",
-  "Navien",
-  "InSinkErator",
+  { name: "Rheem", logo: "/images/brands/rheem.svg" },
+  { name: "Moen", logo: "/images/brands/moen.png" },
+  { name: "Delta", logo: "/images/brands/delta.svg" },
+  { name: "Kohler", logo: "/images/brands/kohler.png" },
+  { name: "A.O. Smith", logo: "/images/brands/ao-smith.svg" },
+  { name: "Rinnai", logo: "/images/brands/rinnai.svg" },
+  { name: "Bradford White", logo: "/images/brands/bradford-white.svg" },
+  { name: "SharkBite", logo: "/images/brands/sharkbite.svg" },
+  { name: "Uponor", logo: "/images/brands/uponor.png" },
+  { name: "Charlotte Pipe", logo: "/images/brands/charlotte-pipe.svg" },
+  { name: "Navien", logo: "/images/brands/navien.png" },
+  { name: "InSinkErator", logo: "/images/brands/insinkerator.png" },
 ];
 
-function BrandPill({ name }: { name: string }) {
+function BrandLogo({ name, logo }: { name: string; logo: string }) {
   return (
-    <div className="flex-shrink-0 px-5 sm:px-6 py-2.5 sm:py-3 bg-white border border-gray-200 rounded-full text-sm sm:text-base font-semibold text-gray-700 hover:text-primary hover:border-primary/30 transition-colors duration-300 whitespace-nowrap">
-      {name}
+    <div className="flex-shrink-0 px-5 sm:px-6 py-2.5 sm:py-3 bg-white border border-gray-200 rounded-full flex items-center justify-center group hover:border-primary/30 transition-all duration-300">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={logo}
+        alt={name}
+        className="h-6 sm:h-8 w-auto max-w-[100px] sm:max-w-[120px] object-contain grayscale group-hover:grayscale-0 opacity-70 group-hover:opacity-100 transition-all duration-300"
+      />
     </div>
   );
 }
@@ -49,7 +54,7 @@ export default function BrandsCarousel() {
         <div className="flex animate-marquee gap-4 sm:gap-6">
           {/* Duplicate for seamless loop */}
           {[...BRANDS, ...BRANDS].map((brand, i) => (
-            <BrandPill key={`${brand}-${i}`} name={brand} />
+            <BrandLogo key={`${brand.name}-${i}`} name={brand.name} logo={brand.logo} />
           ))}
         </div>
       </div>
