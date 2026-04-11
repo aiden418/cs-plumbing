@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import ChatWidget from "@/components/chat/ChatWidget";
+import CouponPopup from "@/components/ui/CouponPopup";
 import JsonLd from "@/components/seo/JsonLd";
 
 const inter = Inter({
@@ -97,6 +98,7 @@ export default function RootLayout({
         <main className="min-h-screen">{children}</main>
         <Footer />
         <ChatWidget />
+        <CouponPopup />
       </body>
     </html>
   );

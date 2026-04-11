@@ -186,6 +186,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.9,
     },
+    // Service Map
+    {
+      url: `${baseUrl}/service-map`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
     // Builder Portal
     {
       url: `${baseUrl}/builder-portal`,
