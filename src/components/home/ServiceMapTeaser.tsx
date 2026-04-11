@@ -1,6 +1,6 @@
 "use client";
 
-import { MapPin, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Container from "@/components/ui/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
 import ScrollReveal from "@/components/animations/ScrollReveal";
@@ -22,20 +22,16 @@ export default function ServiceMapTeaser() {
         <ScrollReveal delay={0.1}>
           <div className="max-w-4xl mx-auto">
             <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm">
-              {/* Map placeholder — will be replaced with Google My Maps embed */}
-              <div className="relative aspect-[16/9] sm:aspect-[2/1] bg-gray-100 flex items-center justify-center">
-                <div className="text-center p-6">
-                  <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                    <MapPin className="w-8 h-8 text-primary" />
-                  </div>
-                  <p className="text-gray-900 font-bold text-lg sm:text-xl mb-2">
-                    Interactive Service Map
-                  </p>
-                  <p className="text-gray-500 text-sm max-w-md">
-                    View our past, present, and future job locations across Lee &amp; Collier County
-                  </p>
-                </div>
-              </div>
+              <iframe
+                src="https://www.google.com/maps/d/u/0/embed?mid=1525gJBVH8SRdUNAF-0nemUswy8DmRjo&ehbc=2E312F"
+                width="100%"
+                height="400"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                title="C&S Plumbing Service Area & Jobs"
+                className="w-full min-h-[300px] sm:min-h-[400px]"
+              />
 
               {/* Bottom bar with stats + CTA */}
               <div className="p-4 sm:p-6 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-gray-100">

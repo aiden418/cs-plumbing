@@ -5,7 +5,7 @@ import ScrollReveal from "@/components/animations/ScrollReveal";
 import Button from "@/components/ui/Button";
 import CTASection from "@/components/home/CTASection";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
-import { MapPin, Phone, Calendar } from "lucide-react";
+import { Phone, Calendar } from "lucide-react";
 import { BUSINESS } from "@/lib/constants";
 
 export const metadata: Metadata = {
@@ -72,58 +72,16 @@ export default function ServiceMapPage() {
         <Container>
           <ScrollReveal>
             <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm">
-              {/*
-                Replace the placeholder below with your Google My Maps embed iframe:
-                <iframe src="YOUR_GOOGLE_MY_MAPS_EMBED_URL" width="100%" height="600" style={{ border: 0 }} allowFullScreen loading="lazy" />
-              */}
-              <div className="relative aspect-[16/9] sm:aspect-[2.5/1] bg-gray-100 flex items-center justify-center">
-                <div className="text-center p-8">
-                  <div className="w-20 h-20 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-5">
-                    <MapPin className="w-10 h-10 text-primary" />
-                  </div>
-                  <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-3">
-                    Interactive Service Map Coming Soon
-                  </h2>
-                  <p className="text-gray-500 text-sm sm:text-base max-w-lg mx-auto mb-6">
-                    We&apos;re building an interactive map showing all of our past, present, and
-                    future job locations across Lee &amp; Collier County.
-                  </p>
-                  <div className="flex flex-wrap justify-center gap-3 sm:gap-4 text-sm text-gray-500">
-                    <span className="flex items-center gap-1.5 bg-[#F5F5F7] px-3 py-1.5 rounded-full">
-                      <span className="w-2 h-2 rounded-full bg-primary" />
-                      Cape Coral
-                    </span>
-                    <span className="flex items-center gap-1.5 bg-[#F5F5F7] px-3 py-1.5 rounded-full">
-                      <span className="w-2 h-2 rounded-full bg-primary" />
-                      Fort Myers
-                    </span>
-                    <span className="flex items-center gap-1.5 bg-[#F5F5F7] px-3 py-1.5 rounded-full">
-                      <span className="w-2 h-2 rounded-full bg-primary" />
-                      North Fort Myers
-                    </span>
-                    <span className="flex items-center gap-1.5 bg-[#F5F5F7] px-3 py-1.5 rounded-full">
-                      <span className="w-2 h-2 rounded-full bg-primary" />
-                      Naples
-                    </span>
-                    <span className="flex items-center gap-1.5 bg-[#F5F5F7] px-3 py-1.5 rounded-full">
-                      <span className="w-2 h-2 rounded-full bg-primary" />
-                      Bonita Springs
-                    </span>
-                    <span className="flex items-center gap-1.5 bg-[#F5F5F7] px-3 py-1.5 rounded-full">
-                      <span className="w-2 h-2 rounded-full bg-primary" />
-                      Lehigh Acres
-                    </span>
-                    <span className="flex items-center gap-1.5 bg-[#F5F5F7] px-3 py-1.5 rounded-full">
-                      <span className="w-2 h-2 rounded-full bg-primary" />
-                      Estero
-                    </span>
-                    <span className="flex items-center gap-1.5 bg-[#F5F5F7] px-3 py-1.5 rounded-full">
-                      <span className="w-2 h-2 rounded-full bg-primary" />
-                      Sanibel
-                    </span>
-                  </div>
-                </div>
-              </div>
+              <iframe
+                src="https://www.google.com/maps/d/u/0/embed?mid=1525gJBVH8SRdUNAF-0nemUswy8DmRjo&ehbc=2E312F"
+                width="100%"
+                height="600"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                title="C&S Plumbing Service Area & Jobs"
+                className="w-full min-h-[400px] sm:min-h-[500px] lg:min-h-[600px]"
+              />
             </div>
           </ScrollReveal>
         </Container>
