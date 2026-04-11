@@ -53,6 +53,7 @@ export default function ResidentialPage() {
         description="Whether it's a midnight emergency or a planned renovation, our residential plumbing team delivers fast, reliable service that protects your home and keeps your family comfortable."
         services={residentialServices}
         highlights={highlights}
+        heroImage="/images/team/team-work-1.jpg"
       />
       <CTASection />
     </PageTransition>

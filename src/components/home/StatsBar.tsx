@@ -15,7 +15,8 @@ export default function StatsBar() {
           src="/images/gallery/dji_fly_20241003_120708_83_1727971638528_photo.jpg"
           alt=""
           fill
-          className="object-cover"
+          className="object-cover object-center"
+          sizes="100vw"
           quality={75}
         />
         <div className="absolute inset-0 bg-white/80 backdrop-blur-sm" />

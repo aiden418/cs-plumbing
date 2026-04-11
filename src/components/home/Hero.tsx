@@ -42,7 +42,7 @@ export default function Hero() {
           src="/images/hero/drone-construction.jpg"
           alt="C&S Plumbing new construction site aerial view"
           fill
-          className="object-cover"
+          className="object-cover object-center"
           priority
           quality={85}
         />
@@ -156,6 +156,7 @@ export default function Hero() {
                 alt="C&S Plumbing of Lee County"
                 fill
                 className="object-contain drop-shadow-[0_0_60px_rgba(0,119,204,0.3)]"
+                sizes="320px"
                 quality={90}
               />
             </div>

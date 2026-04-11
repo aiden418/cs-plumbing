@@ -23,7 +23,8 @@ export default function CoastalComebackTeaser() {
           src="/images/gallery/aerial-waterfront-newbuild.jpg"
           alt=""
           fill
-          className="object-cover"
+          className="object-cover object-center"
+          sizes="100vw"
           quality={75}
         />
         <div className="absolute inset-0 bg-white/85" />

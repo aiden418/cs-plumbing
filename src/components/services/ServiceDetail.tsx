@@ -40,7 +40,7 @@ export default function ServiceDetail({
               alt=""
               fill
               sizes="100vw"
-              className="object-cover"
+              className="object-cover object-center"
               priority
               quality={85}
             />

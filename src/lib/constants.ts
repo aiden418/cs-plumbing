@@ -200,6 +200,7 @@ export const SERVICES: Service[] = [
       "Whole-home water softening and filtration systems to improve your water quality, protect your pipes, and enhance your daily comfort.",
     icon: "Droplets",
     href: "/services/water-softeners",
+    image: "/images/services/cards/water-softeners.jpg",
     features: [
       "Water softeners",
       "Filtration systems",
@@ -215,6 +216,7 @@ export const SERVICES: Service[] = [
       "Expert plumbing for kitchen and bathroom remodels. From relocating pipes to installing premium fixtures, we ensure seamless results.",
     icon: "PaintBucket",
     href: "/services/plumbing-remodel",
+    image: "/images/services/cards/plumbing-remodel.jpg",
     features: [
       "Kitchen remodels",
       "Bathroom renovations",
@@ -869,6 +871,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
   },
   {
     slug: "water-softeners",
+    image: "/images/services/cards/water-softeners.jpg",
     title: "Water Softeners & Filtration",
     heroText: "Water Softener & Filtration Systems in Cape Coral & Fort Myers",
     description:
@@ -955,6 +958,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
   },
   {
     slug: "plumbing-remodel",
+    image: "/images/services/cards/plumbing-remodel.jpg",
     title: "Plumbing Remodels",
     heroText: "Kitchen & Bathroom Plumbing Remodels in Cape Coral & Fort Myers",
     description:

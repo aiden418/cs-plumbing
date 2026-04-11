@@ -53,7 +53,7 @@ export default function ServiceHighlights() {
                         alt=""
                         fill
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        className="object-cover scale-105 group-hover:scale-110 transition-transform duration-700"
+                        className="object-cover object-center scale-105 group-hover:scale-110 transition-transform duration-700"
                         quality={75}
                       />
                       <div className="absolute inset-0 bg-white/55 group-hover:bg-white/40 transition-colors duration-500" />
