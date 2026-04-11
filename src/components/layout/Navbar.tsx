@@ -15,6 +15,7 @@ export default function Navbar() {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [mobileDropdown, setMobileDropdown] = useState<string | null>(null);
   const pathname = usePathname();
+  const isHomepage = pathname === "/";
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
@@ -48,9 +49,9 @@ export default function Navbar() {
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
-          isScrolled
+          isScrolled || !isHomepage
             ? "bg-white/80 backdrop-blur-xl border-b border-gray-200"
-            : "bg-white/60 backdrop-blur-sm"
+            : "bg-transparent"
         )}
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -84,7 +85,9 @@ export default function Navbar() {
                       "px-3 xl:px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 flex items-center gap-1",
                       pathname === link.href
                         ? "text-primary"
-                        : "text-gray-600 hover:text-gray-900"
+                        : isScrolled || !isHomepage
+                          ? "text-gray-600 hover:text-gray-900"
+                          : "text-white/80 hover:text-white"
                     )}
                   >
                     {link.label === "Service Areas" ? "Areas" : link.label}
@@ -128,14 +131,24 @@ export default function Navbar() {
             <div className="hidden lg:flex items-center gap-3">
               <a
                 href={`tel:${BUSINESS.phoneRaw}`}
-                className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 transition-colors"
+                className={cn(
+                  "flex items-center gap-2 text-sm transition-colors",
+                  isScrolled || !isHomepage
+                    ? "text-gray-600 hover:text-gray-900"
+                    : "text-white/80 hover:text-white"
+                )}
               >
                 <Phone className="w-4 h-4" />
                 {BUSINESS.phone}
               </a>
               <Link
                 href="/quote-builder"
-                className="flex items-center gap-1.5 px-3.5 py-2.5 border border-primary text-primary text-sm font-semibold rounded-lg transition-all duration-300 hover:bg-primary/5"
+                className={cn(
+                  "flex items-center gap-1.5 px-3.5 py-2.5 border text-sm font-semibold rounded-lg transition-all duration-300",
+                  isScrolled || !isHomepage
+                    ? "border-primary text-primary hover:bg-primary/5"
+                    : "border-white/30 text-white hover:bg-white/10"
+                )}
               >
                 <Calculator className="w-3.5 h-3.5" />
                 Quote
@@ -151,7 +164,10 @@ export default function Navbar() {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMobileOpen(!isMobileOpen)}
-              className="lg:hidden p-2 text-gray-900"
+              className={cn(
+                "lg:hidden p-2 transition-colors",
+                isScrolled || !isHomepage ? "text-gray-900" : "text-white"
+              )}
               aria-label="Toggle menu"
             >
               {isMobileOpen ? (
