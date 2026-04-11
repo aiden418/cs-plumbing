@@ -102,6 +102,25 @@ export interface ServiceLanding {
   image?: string;
 }
 
+export interface ServiceCityLanding {
+  slug: string;
+  metaTitle: string;
+  metaDescription: string;
+  keywords: string[];
+  h1: string;
+  heroSubtext: string;
+  trustBadges: string[];
+  serviceDescription: string;
+  features: { title: string; description: string }[];
+  city: string;
+  state: string;
+  neighborhoods: string[];
+  faqs: FAQ[];
+  relatedPages: { label: string; href: string }[];
+  priceRange?: string;
+  image?: string;
+}
+
 export interface BlogPost {
   slug: string;
   title: string;
