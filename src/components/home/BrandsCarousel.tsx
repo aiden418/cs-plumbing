@@ -26,7 +26,7 @@ function BrandLogo({ name, logo }: { name: string; logo: string }) {
       <img
         src={logo}
         alt={name}
-        className="h-6 sm:h-8 w-auto max-w-[100px] sm:max-w-[120px] object-contain grayscale group-hover:grayscale-0 opacity-70 group-hover:opacity-100 transition-all duration-300"
+        className="h-6 sm:h-8 w-auto max-w-[100px] sm:max-w-[120px] object-contain transition-all duration-300"
       />
     </div>
   );
