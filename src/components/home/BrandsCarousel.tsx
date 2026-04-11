@@ -5,13 +5,11 @@ import SectionHeading from "@/components/ui/SectionHeading";
 import ScrollReveal from "@/components/animations/ScrollReveal";
 
 const BRANDS = [
-  { name: "Rheem", logo: "/images/brands/rheem.svg" },
   { name: "Moen", logo: "/images/brands/moen.png" },
   { name: "Delta", logo: "/images/brands/delta.svg" },
   { name: "Kohler", logo: "/images/brands/kohler.png" },
   { name: "A.O. Smith", logo: "/images/brands/ao-smith.svg" },
   { name: "Rinnai", logo: "/images/brands/rinnai.svg" },
-  { name: "SharkBite", logo: "/images/brands/sharkbite.svg" },
   { name: "Uponor", logo: "/images/brands/uponor.png" },
   { name: "Navien", logo: "/images/brands/navien.png" },
   { name: "InSinkErator", logo: "/images/brands/insinkerator.png" },
