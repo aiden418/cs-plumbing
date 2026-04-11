@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import CountUp from "@/components/animations/CountUp";
 import ScrollReveal from "@/components/animations/ScrollReveal";
 import Container from "@/components/ui/Container";
@@ -7,8 +8,19 @@ import { STATS } from "@/lib/constants";
 
 export default function StatsBar() {
   return (
-    <section className="relative py-12 sm:py-16 lg:py-20 border-y border-gray-200 bg-[#F5F5F7]">
-      <Container>
+    <section className="relative py-12 sm:py-16 lg:py-20 border-y border-gray-200 bg-[#F5F5F7] overflow-hidden">
+      {/* Background image */}
+      <div className="absolute inset-0 pointer-events-none">
+        <Image
+          src="/images/gallery/dji_fly_20241003_120708_83_1727971638528_photo.jpg"
+          alt=""
+          fill
+          className="object-cover"
+          quality={75}
+        />
+        <div className="absolute inset-0 bg-white/80 backdrop-blur-sm" />
+      </div>
+      <Container className="relative z-10">
         <ScrollReveal>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-4">
             {STATS.map((stat, i) => (

@@ -63,7 +63,7 @@ export default function JsonLd() {
     name: "C&S Plumbing of Lee County",
     alternateName: "C&S Plumbing",
     url: BASE,
-    logo: `${BASE}/images/logos/logo.png`,
+    logo: `${BASE}/images/logos/logo-new.png`,
     image: `${BASE}/images/hero/drone-construction.jpg`,
     telephone: "+18337562648",
     email: "office@csplumbinglee.com",

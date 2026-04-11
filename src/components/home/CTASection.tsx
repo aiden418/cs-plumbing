@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { Phone, Calendar } from "lucide-react";
 import Button from "@/components/ui/Button";
 import Container from "@/components/ui/Container";
@@ -9,8 +10,19 @@ import { BUSINESS } from "@/lib/constants";
 export default function CTASection() {
   return (
     <section className="py-16 sm:py-24 lg:py-32 relative overflow-hidden">
+      {/* Background image */}
+      <div className="absolute inset-0 pointer-events-none">
+        <Image
+          src="/images/team/team-work-1.jpg"
+          alt=""
+          fill
+          className="object-cover"
+          quality={75}
+        />
+        <div className="absolute inset-0 bg-white/75" />
+      </div>
       {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-white via-primary/5 to-white" />
+      <div className="absolute inset-0 bg-gradient-to-b from-white/60 via-primary/5 to-white/60" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,119,204,0.06)_0%,transparent_60%)]" />
 
       <Container className="relative z-10">

@@ -58,11 +58,11 @@ export default function Navbar() {
             {/* Logo */}
             <Link href="/" className="flex items-center gap-3 group">
               <Image
-                src="/images/logos/logo.png"
+                src="/images/logos/logo-new.png"
                 alt="C&S Plumbing of Lee County"
-                width={160}
-                height={120}
-                className="h-12 sm:h-14 w-auto object-contain group-hover:scale-105 transition-transform duration-300"
+                width={200}
+                height={200}
+                className="h-14 sm:h-16 w-auto object-contain group-hover:scale-105 transition-transform duration-300"
                 priority
               />
             </Link>

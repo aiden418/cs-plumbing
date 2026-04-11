@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { ShieldCheck, Phone, ArrowRight } from "lucide-react";
 import Container from "@/components/ui/Container";
@@ -15,8 +16,19 @@ const tierPills = [
 
 export default function CoastalComebackTeaser() {
   return (
-    <section className="py-16 sm:py-24 lg:py-28 bg-[#F5F5F7]">
-      <Container>
+    <section className="relative py-16 sm:py-24 lg:py-28 bg-[#F5F5F7] overflow-hidden">
+      {/* Background image */}
+      <div className="absolute inset-0 pointer-events-none">
+        <Image
+          src="/images/gallery/aerial-waterfront-newbuild.jpg"
+          alt=""
+          fill
+          className="object-cover"
+          quality={75}
+        />
+        <div className="absolute inset-0 bg-white/85" />
+      </div>
+      <Container className="relative z-10">
         <ScrollReveal>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center max-w-6xl mx-auto">
             {/* Left: copy */}

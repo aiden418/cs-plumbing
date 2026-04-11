@@ -1,12 +1,19 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import Image from "next/image";
 import useEmblaCarousel from "embla-carousel-react";
 import { Star, ChevronLeft, ChevronRight, Quote } from "lucide-react";
 import Container from "@/components/ui/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
 import ScrollReveal from "@/components/animations/ScrollReveal";
 import { TESTIMONIALS } from "@/lib/constants";
+
+const teamMembers = [
+  { name: "Samuel", src: "/images/team/samuel.jpeg" },
+  { name: "Aiden", src: "/images/team/aiden.jpg" },
+  { name: "Dylan", src: "/images/team/dylan.jpeg" },
+];
 
 export default function Testimonials() {
   const [emblaRef, emblaApi] = useEmblaCarousel({
@@ -31,13 +38,47 @@ export default function Testimonials() {
   }, [emblaApi]);
 
   return (
-    <section className="py-16 sm:py-24 lg:py-32">
-      <Container>
+    <section className="relative py-16 sm:py-24 lg:py-32 overflow-hidden">
+      {/* Background image */}
+      <div className="absolute inset-0 pointer-events-none">
+        <Image
+          src="/images/gallery/freestanding-tub-accent-tile.jpg"
+          alt=""
+          fill
+          className="object-cover"
+          quality={75}
+        />
+        <div className="absolute inset-0 bg-white/90" />
+      </div>
+      <Container className="relative z-10">
         <SectionHeading
           overline="Testimonials"
           title="What Our Customers Say"
           subtitle="Real reviews from real customers across Southwest Florida."
         />
+
+        {/* Team strip */}
+        <div className="flex items-center justify-center gap-4 mb-8 sm:mb-12">
+          <div className="flex -space-x-3">
+            {teamMembers.map((member) => (
+              <div
+                key={member.name}
+                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-white overflow-hidden relative"
+              >
+                <Image
+                  src={member.src}
+                  alt={member.name}
+                  fill
+                  className="object-cover"
+                  sizes="48px"
+                />
+              </div>
+            ))}
+          </div>
+          <span className="text-sm text-gray-500 font-medium">
+            Meet the C&S Team
+          </span>
+        </div>
 
         <ScrollReveal>
           <div className="relative">

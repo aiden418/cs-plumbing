@@ -29,11 +29,11 @@ export default function Footer() {
           <div className="sm:col-span-2 lg:col-span-1">
             <div className="mb-4 sm:mb-6">
               <Image
-                src="/images/logos/logo.png"
+                src="/images/logos/logo-new.png"
                 alt="C&S Plumbing of Lee County"
-                width={160}
-                height={120}
-                className="h-16 w-auto object-contain"
+                width={200}
+                height={200}
+                className="h-20 w-auto object-contain"
               />
             </div>
             <p className="text-gray-500 text-sm leading-relaxed mb-4 sm:mb-6">

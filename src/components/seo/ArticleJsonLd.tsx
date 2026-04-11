@@ -35,7 +35,7 @@ export default function ArticleJsonLd({ post }: { post: BlogPost }) {
       url: BASE,
       logo: {
         "@type": "ImageObject",
-        url: `${BASE}/images/logos/logo.png`,
+        url: `${BASE}/images/logos/logo-new.png`,
       },
     },
     mainEntityOfPage: {

@@ -62,7 +62,7 @@ export const metadata: Metadata = {
       "Family-owned since 1998. 8,500+ homes built. 24/7 emergency service across Cape Coral, Fort Myers & SWFL.",
     images: [
       {
-        url: "/images/logos/logo.png",
+        url: "/images/logos/logo-new.png",
         width: 755,
         height: 577,
         alt: "C&S Plumbing of Lee County Logo",
@@ -74,7 +74,7 @@ export const metadata: Metadata = {
     title: "C&S Plumbing of Lee County | Southwest Florida's Most Trusted Plumber",
     description:
       "Family-owned since 1998. 8,500+ homes built. 24/7 emergency service across SWFL.",
-    images: ["/images/logos/logo.png"],
+    images: ["/images/logos/logo-new.png"],
   },
   alternates: {},
   verification: {
