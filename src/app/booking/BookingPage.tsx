@@ -81,6 +81,7 @@ interface FormData {
   email: string;
   phone: string;
   address: string;
+  website: string;
 }
 
 export default function BookingPage() {
@@ -88,6 +89,7 @@ export default function BookingPage() {
   const [step, setStep] = useState(0);
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [confirmationId, setConfirmationId] = useState<string | null>(null);
   const [form, setForm] = useState<FormData>({
     requestType: "booking",
     service: "",
@@ -100,19 +102,37 @@ export default function BookingPage() {
     email: "",
     phone: "",
     address: "",
+    website: "",
   });
 
-  // Pre-select Coastal Comeback when arriving from /coastal-comeback-plan?plan=...
+  // Pre-fill from URL params: ?plan=... (Coastal), ?service=..., ?urgency=...
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const plan = params.get("plan");
-    if (!plan) return;
-    const tierLabel = COASTAL_TIER_LABELS[plan] ?? COASTAL_TIER_LABELS["coastal-comeback"];
-    setForm((prev) => ({
-      ...prev,
-      service: "coastal-comeback",
-      description: prev.description || `Interested in the ${tierLabel}. Please reach out to enroll me.`,
-    }));
+    const serviceParam = params.get("service");
+    const urgencyParam = params.get("urgency");
+    const validServices = serviceCategories.map((c) => c.id);
+    const validUrgencies = ["normal", "soon", "emergency"];
+
+    setForm((prev) => {
+      let next = prev;
+      if (plan) {
+        const tierLabel = COASTAL_TIER_LABELS[plan] ?? COASTAL_TIER_LABELS["coastal-comeback"];
+        next = {
+          ...next,
+          service: "coastal-comeback",
+          description: next.description || `Interested in the ${tierLabel}. Please reach out to enroll me.`,
+        };
+      }
+      if (serviceParam && validServices.includes(serviceParam)) {
+        next = { ...next, service: serviceParam };
+      }
+      if (urgencyParam && validUrgencies.includes(urgencyParam)) {
+        next = { ...next, urgency: urgencyParam, requestType: "booking" };
+      }
+      return next;
+    });
+    if (urgencyParam === "emergency") setRequestType("booking");
   }, []);
 
   const isEstimate = requestType === "estimate";
@@ -134,7 +154,13 @@ export default function BookingPage() {
       switch (step) {
         case 0: return form.service !== "";
         case 1: return form.description.length >= 5;
-        case 2: return form.name !== "" && form.email !== "" && form.phone !== "";
+        case 2:
+          return (
+            form.name.length >= 2 &&
+            /^\S+@\S+\.\S+$/.test(form.email) &&
+            form.phone.replace(/\D/g, "").length >= 10 &&
+            form.address.length >= 5
+          );
         default: return true;
       }
     } else {
@@ -142,7 +168,13 @@ export default function BookingPage() {
         case 0: return form.service !== "";
         case 1: return form.description.length >= 5;
         case 2: return form.date !== "" && form.time !== "";
-        case 3: return form.name !== "" && form.email !== "" && form.phone !== "";
+        case 3:
+          return (
+            form.name.length >= 2 &&
+            /^\S+@\S+\.\S+$/.test(form.email) &&
+            form.phone.replace(/\D/g, "").length >= 10 &&
+            form.address.length >= 5
+          );
         default: return true;
       }
     }
@@ -151,11 +183,18 @@ export default function BookingPage() {
   const handleSubmit = async () => {
     setSubmitting(true);
     try {
-      await fetch("/api/booking", {
+      const res = await fetch("/api/booking", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
+      const data: { success?: boolean; confirmationId?: string; error?: string } = await res
+        .json()
+        .catch(() => ({}));
+      if (!res.ok || !data.success) {
+        throw new Error(data.error ?? "Submission failed");
+      }
+      if (data.confirmationId) setConfirmationId(data.confirmationId);
       setSubmitted(true);
     } catch {
       alert("Something went wrong. Please call us directly.");
@@ -478,8 +517,22 @@ export default function BookingPage() {
                   <input
                     value={form.address}
                     onChange={(e) => update("address", e.target.value)}
-                    placeholder="Service Address"
+                    placeholder="Service Address (street, city)"
+                    aria-required="true"
+                    autoComplete="street-address"
                     className="w-full bg-white border border-gray-200 rounded-xl px-3 sm:px-4 py-2.5 sm:py-3 text-gray-900 text-sm outline-none focus:border-primary transition-colors"
+                  />
+                  <p className="text-[11px] text-gray-400">All fields required so we can dispatch the right tech to you.</p>
+                  {/* Honeypot — hidden from real users */}
+                  <input
+                    type="text"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    value={form.website}
+                    onChange={(e) => update("website", e.target.value)}
+                    aria-hidden="true"
+                    className="absolute -left-[9999px] w-px h-px opacity-0"
+                    name="website"
                   />
                 </motion.div>
               )}
@@ -492,15 +545,24 @@ export default function BookingPage() {
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.4 }}
                   className="text-center py-8"
+                  role="status"
+                  aria-live="polite"
                 >
                   <CheckCircle className="w-14 h-14 sm:w-20 sm:h-20 text-success mx-auto mb-4 sm:mb-6" />
                   <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2 sm:mb-3">
                     {isEstimate ? "Estimate Request Submitted!" : "Booking Submitted!"}
                   </h2>
+                  {confirmationId && (
+                    <p className="inline-block bg-primary/10 text-primary text-xs sm:text-sm font-mono px-3 py-1.5 rounded-full mb-3">
+                      Confirmation #{confirmationId}
+                    </p>
+                  )}
                   <p className="text-sm sm:text-base text-gray-500 mb-6 sm:mb-8 max-w-md mx-auto">
                     {isEstimate
                       ? "We\u2019ll review your project details and get back to you with a quote within 24 hours. For urgent needs, call us directly."
-                      : "We\u2019ll confirm your appointment within the hour. For urgent needs, call us directly."}
+                      : "We\u2019ll call to confirm your appointment within the hour. A copy was sent to "}
+                    {!isEstimate && <span className="font-semibold text-gray-900">{form.email}</span>}
+                    {!isEstimate && "."}
                   </p>
                   <Button
                     href={`tel:${BUSINESS.phoneRaw}`}

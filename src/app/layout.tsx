@@ -3,8 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import ChatWidget from "@/components/chat/ChatWidget";
-import CouponPopup from "@/components/ui/CouponPopup";
+import StickyMobileCTA from "@/components/layout/StickyMobileCTA";
+import DeferredWidgets from "@/components/layout/DeferredWidgets";
 import JsonLd from "@/components/seo/JsonLd";
 
 const inter = Inter({
@@ -94,11 +94,17 @@ export default function RootLayout({
         <JsonLd />
       </head>
       <body className={`${inter.variable} antialiased`}>
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:bg-primary focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:font-semibold"
+        >
+          Skip to content
+        </a>
         <Navbar />
-        <main className="min-h-screen">{children}</main>
+        <main id="main" className="min-h-screen">{children}</main>
         <Footer />
-        <ChatWidget />
-        <CouponPopup />
+        <StickyMobileCTA />
+        <DeferredWidgets />
       </body>
     </html>
   );

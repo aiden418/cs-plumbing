@@ -21,7 +21,7 @@ export default function ArticleJsonLd({ post }: { post: BlogPost }) {
       url: `${BASE}/about`,
       jobTitle: "Operations Manager",
       worksFor: {
-        "@type": "Plumber",
+        "@type": "Organization",
         "@id": `${BASE}/#organization`,
         name: "C&S Plumbing of Lee County",
       },

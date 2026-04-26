@@ -158,12 +158,29 @@ export default function Footer() {
             <p className="text-xs sm:text-sm text-gray-500 text-center sm:text-left">
               &copy; {new Date().getFullYear()} {BUSINESS.fullName}. All rights
               reserved.{" "}
-              <a href="https://www.myfloridalicense.com/wl11.asp?mode=0&SID=" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
-                Lic. #{BUSINESS.license2}
-              </a>{" | "}
-              <a href="https://www.myfloridalicense.com/wl11.asp?mode=0&SID=" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
-                Lic. #{BUSINESS.license}
-              </a>
+              <span className="block sm:inline mt-1 sm:mt-0">
+                FL Licensed:{" "}
+                <a
+                  href={BUSINESS.licenseLookupUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-semibold text-gray-700 hover:text-primary underline-offset-2 hover:underline transition-colors"
+                  title="Verify on MyFloridaLicense.com"
+                >
+                  #{BUSINESS.license}
+                </a>
+                <span className="mx-1.5 text-gray-300">·</span>
+                <a
+                  href={BUSINESS.licenseLookupUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-semibold text-gray-700 hover:text-primary underline-offset-2 hover:underline transition-colors"
+                  title="Verify on MyFloridaLicense.com"
+                >
+                  #{BUSINESS.license2}
+                </a>
+                <span className="ml-1.5 text-[10px] text-gray-400">(verify)</span>
+              </span>
             </p>
             <div className="flex items-center gap-4 sm:gap-6 text-xs sm:text-sm text-gray-500">
               <Link href="/privacy-policy" className="hover:text-gray-700 transition-colors">

@@ -4,6 +4,7 @@ import PageTransition from "@/components/layout/PageTransition";
 import FamilyStory from "@/components/about/FamilyStory";
 import Timeline from "@/components/about/Timeline";
 import TeamGrid from "@/components/about/TeamGrid";
+import Credentials from "@/components/about/Credentials";
 import CTASection from "@/components/home/CTASection";
 import AboutPersonJsonLd from "@/components/seo/AboutPersonJsonLd";
 
@@ -73,6 +74,7 @@ export default function AboutPage() {
       <FamilyStory />
       <Timeline />
       <TeamGrid />
+      <Credentials />
       <CTASection />
     </PageTransition>
   );

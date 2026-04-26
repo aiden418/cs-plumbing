@@ -6,6 +6,7 @@ import CoastalComebackTeaser from "@/components/home/CoastalComebackTeaser";
 import WhyChooseUs from "@/components/home/WhyChooseUs";
 import ServiceAreasSection from "@/components/home/ServiceAreasSection";
 import Testimonials from "@/components/home/Testimonials";
+import GoogleReviews from "@/components/home/GoogleReviews";
 import BrandsCarousel from "@/components/home/BrandsCarousel";
 import BuilderShowcase from "@/components/home/BuilderShowcase";
 import ServiceMapTeaser from "@/components/home/ServiceMapTeaser";
@@ -53,6 +54,7 @@ export default function Home() {
       <ServiceAreasSection />
       <ServiceMapTeaser />
       <Testimonials />
+      <GoogleReviews />
       <BrandsCarousel />
       <BuilderShowcase />
       <CTASection />

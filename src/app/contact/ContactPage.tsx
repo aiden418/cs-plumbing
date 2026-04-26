@@ -15,12 +15,22 @@ import { cn } from "@/lib/utils";
 const contactSchema = z.object({
   name: z.string().min(2, "Name is required"),
   email: z.string().email("Valid email is required"),
-  phone: z.string().min(10, "Phone number is required"),
+  phone: z
+    .string()
+    .refine((v) => v.replace(/\D/g, "").length >= 10, "10-digit phone number required"),
   service: z.string().min(1, "Please select a service"),
   message: z.string().min(10, "Please describe your needs"),
+  website: z.string().optional(),
 });
 
 type ContactForm = z.infer<typeof contactSchema>;
+
+function normalizePhone(value: string): string {
+  const digits = value.replace(/\D/g, "").slice(0, 10);
+  if (digits.length < 4) return digits;
+  if (digits.length < 7) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
+  return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
+}
 
 function FloatingInput({
   label,
@@ -35,6 +45,7 @@ function FloatingInput({
       <input
         {...props}
         placeholder=" "
+        aria-invalid={error ? "true" : undefined}
         className={cn(
           "peer w-full bg-[#F5F5F7] border rounded-xl px-3 sm:px-4 pt-5 sm:pt-6 pb-1.5 sm:pb-2 text-gray-900 text-sm outline-none transition-all duration-300",
           "focus:border-primary focus:ring-1 focus:ring-primary/20",
@@ -44,7 +55,11 @@ function FloatingInput({
       <label className="absolute left-3 sm:left-4 top-1.5 sm:top-2 text-[10px] sm:text-xs text-gray-500 transition-all duration-200 peer-placeholder-shown:top-3.5 sm:peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm peer-focus:top-1.5 sm:peer-focus:top-2 peer-focus:text-[10px] sm:peer-focus:text-xs peer-focus:text-primary">
         {label}
       </label>
-      {error && <p className="mt-1 text-xs text-emergency">{error}</p>}
+      {error && (
+        <p role="alert" className="mt-1 text-xs text-emergency">
+          {error}
+        </p>
+      )}
     </div>
   );
 }
@@ -56,10 +71,13 @@ export default function ContactPage() {
   const {
     register,
     handleSubmit,
+    setValue,
+    watch,
     formState: { errors },
   } = useForm<ContactForm>({
     resolver: zodResolver(contactSchema),
   });
+  const phoneValue = watch("phone") ?? "";
 
   const onSubmit = async (data: ContactForm) => {
     setSubmitting(true);
@@ -211,7 +229,15 @@ export default function ContactPage() {
                       <FloatingInput
                         label="Phone Number"
                         type="tel"
+                        inputMode="tel"
+                        autoComplete="tel"
                         {...register("phone")}
+                        value={phoneValue}
+                        onChange={(e) =>
+                          setValue("phone", normalizePhone(e.target.value), {
+                            shouldValidate: true,
+                          })
+                        }
                         error={errors.phone?.message}
                       />
                       <div className="relative">
@@ -241,7 +267,7 @@ export default function ContactPage() {
                           <option value="other">Other</option>
                         </select>
                         {errors.service && (
-                          <p className="mt-1 text-xs text-emergency">
+                          <p role="alert" className="mt-1 text-xs text-emergency">
                             {errors.service.message}
                           </p>
                         )}
@@ -253,6 +279,7 @@ export default function ContactPage() {
                         {...register("message")}
                         placeholder=" "
                         rows={4}
+                        aria-invalid={errors.message ? "true" : undefined}
                         className={cn(
                           "peer w-full bg-[#F5F5F7] border rounded-xl px-3 sm:px-4 pt-5 sm:pt-6 pb-1.5 sm:pb-2 text-gray-900 text-sm outline-none transition-all duration-300 resize-none",
                           "focus:border-primary focus:ring-1 focus:ring-primary/20",
@@ -265,11 +292,21 @@ export default function ContactPage() {
                         Tell us about your project
                       </label>
                       {errors.message && (
-                        <p className="mt-1 text-xs text-emergency">
+                        <p role="alert" className="mt-1 text-xs text-emergency">
                           {errors.message.message}
                         </p>
                       )}
                     </div>
+
+                    {/* Honeypot — hidden from real users */}
+                    <input
+                      type="text"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      aria-hidden="true"
+                      {...register("website")}
+                      className="absolute -left-[9999px] w-px h-px opacity-0"
+                    />
 
                     <Button
                       type="submit"

@@ -27,6 +27,12 @@ export const BUSINESS = {
     "Family-owned since 1998. From emergency repairs to new construction, C&S Plumbing delivers excellence across Southwest Florida.",
   license: "CFC1432485",
   license2: "CFC057076",
+  licenseLookupUrl:
+    "https://www.myfloridalicense.com/wl11.asp?mode=2&search=License&SID=&brd=&typ=",
+  rating: 5.0,
+  reviewCount: 75,
+  googleProfileUrl:
+    "https://www.google.com/maps/search/?api=1&query=C%26S+Plumbing+of+Lee+County+North+Fort+Myers",
 } as const;
 
 // ============================================
@@ -577,6 +583,37 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       "1-year labor warranty + manufacturer warranty on PEX",
       "Serving all of Southwest Florida",
     ],
+    costBreakdown: [
+      { label: "PEX repipe — 2BR / 2BA, ≤1,500 sq ft", range: "$4,200 – $6,500", note: "Most condos and small slab homes" },
+      { label: "PEX repipe — 3BR / 2BA, 1,800–2,400 sq ft", range: "$6,800 – $9,500", note: "Typical Cape Coral / Fort Myers single-family" },
+      { label: "PEX repipe — 4BR+, ≥2,500 sq ft", range: "$9,500 – $13,000", note: "Two-story or larger floor plans" },
+      { label: "Copper repipe (premium)", range: "+$2,000 – $4,000 over PEX", note: "Type-L copper, longer install time" },
+      { label: "Polybutylene removal upcharge", range: "+$500 – $1,200", note: "Required for 1978–1995 homes still on poly" },
+      { label: "Drywall patch & paint-ready finish", range: "Included", note: "We patch every access cut before we leave" },
+      { label: "Lee County permit + final inspection", range: "Included", note: "Required by code; we handle it" },
+    ],
+    caseStudies: [
+      {
+        title: "1990 Cape Coral SE — polybutylene → PEX",
+        location: "Cape Coral, FL",
+        cost: "$7,200",
+        summary: "3BR / 2BA, 1,950 sq ft. Original Quest poly with three pinhole leaks in 18 months. Crew of 3 finished rough + trim in 1.5 days, 9 access cuts patched.",
+      },
+      {
+        title: "Fort Myers River District — copper for resale",
+        location: "Fort Myers, FL",
+        cost: "$11,800",
+        summary: "4BR / 3BA, 2,650 sq ft pre-1985 home. Owner wanted Type-L copper for inspection appraisal. 2-day job; passed county final on first inspection.",
+      },
+      {
+        title: "North Fort Myers condo — fast turn",
+        location: "North Fort Myers, FL",
+        cost: "$4,950",
+        summary: "2BR / 2BA, 1,300 sq ft. PEX repipe done in a single day so the unit could be re-rented that weekend. Minimal wall openings — drywall ready for paint.",
+      },
+    ],
+    relatedServices: ["leak-repair", "water-heaters", "plumbing-remodel"],
+    relatedAreas: ["cape-coral", "fort-myers", "north-fort-myers", "naples"],
   },
   {
     slug: "water-heaters",
@@ -674,6 +711,36 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       "Warranty on all installations",
       "Serving Cape Coral, Fort Myers & SWFL",
     ],
+    costBreakdown: [
+      { label: "40-gallon electric tank — installed", range: "$1,650 – $2,200", note: "Includes haul-away of old unit, code-compliant pan & T&P" },
+      { label: "50-gallon electric tank — installed", range: "$1,850 – $2,500", note: "Most common SWFL family-of-four size" },
+      { label: "Tankless gas (Rinnai/Navien)", range: "$3,500 – $5,200", note: "Gas line + venting included; whole-home flow" },
+      { label: "Heat-pump hybrid (50–80 gal)", range: "$3,200 – $4,800", note: "Up to ~$2,000 in FL utility rebates available" },
+      { label: "Same-day repair (thermostat / element / T&P)", range: "$195 – $475", note: "If it can be repaired vs replaced" },
+      { label: "Permit + Lee County final", range: "Included on installs", note: "Required when replacing a unit" },
+    ],
+    caseStudies: [
+      {
+        title: "Tankless conversion — Cape Coral",
+        location: "Cape Coral, FL",
+        cost: "$4,650",
+        summary: "Family of 5 was running out of hot water by shower #3. Swapped a 50-gal tank for a Navien NPE-A2. Installed new gas line + concentric vent. Done in 6 hours.",
+      },
+      {
+        title: "Emergency replacement — Fort Myers",
+        location: "Fort Myers, FL",
+        cost: "$2,150",
+        summary: "11-year-old tank failed Friday at 5pm with water on the floor. On-site by 7pm Saturday with a new 50-gal Bradford White; old unit hauled away same trip.",
+      },
+      {
+        title: "Heat-pump retrofit — Naples",
+        location: "Naples, FL",
+        cost: "$3,950",
+        summary: "Replaced an 80-gal electric tank with a Rheem ProTerra hybrid. Customer netted a $1,800 utility rebate; runs ~70% less than the old unit per FPL bill comparison.",
+      },
+    ],
+    relatedServices: ["repiping", "leak-repair", "water-softeners"],
+    relatedAreas: ["cape-coral", "fort-myers", "naples", "bonita-springs"],
   },
   {
     slug: "drain-cleaning",
@@ -771,6 +838,36 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       "Preventive maintenance plans",
       "24/7 emergency service",
     ],
+    costBreakdown: [
+      { label: "Single-fixture clog (sink, tub, toilet)", range: "$150 – $250", note: "Cabling from accessible cleanout" },
+      { label: "Main line cabling (sewer)", range: "$295 – $475", note: "Includes cleanout access if available" },
+      { label: "Hydro-jetting — main line", range: "$450 – $800", note: "4,000 PSI; most thorough cleaning method" },
+      { label: "Sewer camera inspection", range: "$245 – $395", note: "Free with hydro-jetting on same trip" },
+      { label: "Root removal + jetting + camera", range: "$650 – $1,100", note: "Common for older Cape Coral homes near big trees" },
+      { label: "After-hours / weekend surcharge", range: "+$95 – $150", note: "We aim to never charge it — most jobs handled in business hours" },
+    ],
+    caseStudies: [
+      {
+        title: "Recurring kitchen backup — Lehigh Acres",
+        location: "Lehigh Acres, FL",
+        cost: "$520",
+        summary: "Customer was paying another plumber 3x/year to cable. We jetted the line, camera-inspected, and found a low spot trapping grease. Hasn't backed up in 14 months.",
+      },
+      {
+        title: "Root-blocked main — Fort Myers",
+        location: "Fort Myers, FL",
+        cost: "$895",
+        summary: "1976 home, 60-ft cast-iron run with two large oak roots. Jetting + cutter cleared it; camera found one cracked joint flagged for future replacement.",
+      },
+      {
+        title: "Restaurant grease line — Cape Coral",
+        location: "Cape Coral, FL",
+        cost: "$1,250 / quarter",
+        summary: "Quarterly preventive jetting on a 4-inch grease line keeps the kitchen open. Better than the alternative — a Friday-night shutdown for emergency cabling.",
+      },
+    ],
+    relatedServices: ["leak-repair", "repiping", "uep-utilities"],
+    relatedAreas: ["cape-coral", "fort-myers", "lehigh-acres", "north-fort-myers"],
   },
   {
     slug: "leak-repair",
@@ -868,6 +965,36 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       "All pipe types repaired",
       "Serving Cape Coral, Fort Myers & SWFL",
     ],
+    costBreakdown: [
+      { label: "Faucet / fixture leak repair", range: "$125 – $325", note: "Most common — washer, cartridge, supply line" },
+      { label: "Toilet leak (flapper, fill valve, wax seal)", range: "$165 – $385", note: "Stops $200+/yr in wasted water on a single toilet" },
+      { label: "Visible pipe leak under-sink / vanity", range: "$185 – $475", note: "Drain trap, supply, or drain arm replacement" },
+      { label: "Slab leak detection + spot repair", range: "$1,200 – $2,800", note: "Acoustic + thermal locate, single break under slab" },
+      { label: "Slab leak — full reroute (bypass)", range: "$2,800 – $5,500", note: "Often more cost-effective than chasing multiple leaks" },
+      { label: "Whole-house pressure regulator", range: "$425 – $725", note: "Fixes pressure-driven pinholes; required at 80+ PSI" },
+    ],
+    caseStudies: [
+      {
+        title: "Hidden slab leak — Cape Coral",
+        location: "Cape Coral, FL",
+        cost: "$2,450",
+        summary: "$300/mo water bill, no visible leak. Acoustic locate found a hot-side pinhole under the kitchen slab. Bypassed via attic; floor untouched.",
+      },
+      {
+        title: "Wax-ring failure — Naples",
+        location: "Naples, FL",
+        cost: "$285",
+        summary: "Customer thought they had a slab leak. Actually a 12-year-old wax ring leaking on every flush. Reset toilet + new ring; saved a $2k+ slab investigation.",
+      },
+      {
+        title: "Pinhole hot line — Bonita Springs",
+        location: "Bonita Springs, FL",
+        cost: "$675",
+        summary: "Garage ceiling staining; pinhole on hot line above. Cut a 2x2 access, replaced 8ft of copper with PEX-A, patched drywall paint-ready.",
+      },
+    ],
+    relatedServices: ["repiping", "drain-cleaning", "water-heaters"],
+    relatedAreas: ["cape-coral", "fort-myers", "naples", "bonita-springs"],
   },
   {
     slug: "water-softeners",
@@ -955,6 +1082,8 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       "Upfront pricing",
       "Serving Cape Coral, Fort Myers & SWFL",
     ],
+    relatedServices: ["repiping", "water-heaters", "leak-repair"],
+    relatedAreas: ["cape-coral", "fort-myers", "naples", "estero"],
   },
   {
     slug: "plumbing-remodel",
@@ -1042,6 +1171,8 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       "Free estimates",
       "Serving Cape Coral, Fort Myers & SWFL",
     ],
+    relatedServices: ["repiping", "water-heaters", "drain-cleaning"],
+    relatedAreas: ["cape-coral", "fort-myers", "naples", "bonita-springs"],
   },
   {
     slug: "uep-utilities",
@@ -1133,6 +1264,8 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       "New shutoff valves & extras available",
       "Serving all Cape Coral UEP phases",
     ],
+    relatedServices: ["leak-repair", "drain-cleaning", "repiping"],
+    relatedAreas: ["cape-coral", "fort-myers", "north-fort-myers", "lehigh-acres"],
   },
 ];
 
@@ -2023,6 +2156,80 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>Get Started</h2>
 <p>If you've received a UEP notice or are considering a voluntary septic to sewer conversion, call <a href="tel:8337562648">833-PLUMB-IT</a> or <a href="/booking">book a free consultation</a>. We'll visit your property, assess the scope, and provide an upfront estimate with no hidden costs. See our <a href="/services/uep-utilities">UEP services page</a> for more details and photos of our recent projects.</p>`,
+  },
+  {
+    slug: "spring-plumbing-maintenance-checklist-swfl",
+    title: "Spring Plumbing Maintenance Checklist for Southwest Florida Homeowners",
+    metaTitle: "Spring Plumbing Maintenance Checklist for Southwest Florida Homeowners",
+    metaDescription:
+      "Get your plumbing ready for SWFL's hot summer and rainy season with this complete spring maintenance checklist. Expert tips from C&S Plumbing in Cape Coral & Fort Myers.",
+    keywords: [
+      "spring plumbing maintenance",
+      "plumbing maintenance checklist Florida",
+      "plumbing maintenance Cape Coral",
+      "seasonal plumbing tips SWFL",
+      "plumbing inspection Fort Myers",
+      "summer plumbing preparation Florida",
+    ],
+    excerpt:
+      "Spring is the ideal time to inspect and tune up your home's plumbing before Southwest Florida's brutal summer heat and rainy season arrive. This complete checklist covers everything from water heaters to outdoor fixtures.",
+    category: "Tips",
+    publishDate: "2026-04-15",
+    readTime: "6 min read",
+    content: `<h2>Why Spring Plumbing Maintenance Matters in Southwest Florida</h2>
+<p>In most parts of the country, spring plumbing maintenance focuses on thawing pipes after winter. In <a href="/areas/cape-coral">Cape Coral</a>, <a href="/areas/fort-myers">Fort Myers</a>, and across Southwest Florida, the concern is the opposite: preparing for the heat, humidity, and heavy rainfall of summer. From May through October, we see temperatures regularly topping 90°F, daily afternoon thunderstorms, and the ongoing threat of tropical storms and hurricanes.</p>
+<p>A plumbing system that's already stressed from a year of hard water buildup, heat exposure, and normal wear is much more likely to fail when summer demands peak. A few hours of proactive maintenance now can prevent a plumbing emergency at the worst possible time. Here's your complete spring checklist.</p>
+
+<h2>1. Inspect Every Faucet and Fixture for Leaks</h2>
+<p>Walk through every bathroom and your kitchen with fresh eyes. Check under sinks for moisture, drips, or water stains inside the cabinet. Look at the base of toilets for soft flooring or discoloration that indicates a slow leak at the wax ring. Check showerheads and tub spouts for drips — a faucet that drips once per second wastes more than 3,000 gallons per year.</p>
+<p>Even small leaks get worse in summer heat as water pressure fluctuates and materials expand. Fixing a minor drip now prevents a bigger repair later. If you find leaks at multiple fixtures, it may indicate a broader pressure problem — read our guide on <a href="/blog/low-water-pressure-causes-fixes-swfl">low water pressure causes and fixes</a> for more context.</p>
+
+<h2>2. Service Your Water Heater</h2>
+<p>Your <a href="/services/water-heaters">water heater</a> works year-round in Florida, but spring is the right time to give it attention before summer demand increases. Check these items:</p>
+<ul>
+<li><strong>Flush the tank:</strong> Mineral sediment from our hard water settles at the bottom of the tank, reducing efficiency and accelerating corrosion. Flushing 1-2 gallons from the drain valve removes loose sediment and extends the unit's life.</li>
+<li><strong>Test the T&amp;P relief valve:</strong> The temperature and pressure relief valve is a critical safety device. Lift the lever briefly to confirm it opens and reseats properly. If it drips continuously afterward, it needs replacement.</li>
+<li><strong>Check the anode rod:</strong> This sacrificial metal rod inside the tank prevents corrosion. In Lee County's hard water, anode rods deplete faster than in softer-water areas — typically every 2-3 years rather than the national average of 4-5. A depleted anode rod allows the tank walls to corrode directly.</li>
+<li><strong>Look for rust or corrosion:</strong> Check the connections at the top and bottom of the tank. Early signs of rust mean the unit is nearing the end of its life.</li>
+</ul>
+<p>If your water heater is more than 10 years old and shows any of these signs, spring is a smart time to replace it before it fails mid-summer. A cold shower after a hot Florida day might seem appealing — but a flooded garage is not.</p>
+
+<h2>3. Check for Hidden Leaks with a Meter Test</h2>
+<p>Southwest Florida's slab-construction homes make hidden leaks particularly tricky — a <a href="/blog/slab-leak-detection-southwest-florida">slab leak</a> can go undetected for months while slowly eroding your foundation. Once a year, perform this simple check:</p>
+<ol>
+<li>Turn off every water-using fixture and appliance in the home (including the ice maker and any irrigation systems).</li>
+<li>Go to your water meter and note the reading (or look for the small triangular leak indicator dial, if your meter has one).</li>
+<li>Wait 15-20 minutes without using any water.</li>
+<li>Check the meter again. If the reading changed or the leak indicator is spinning, water is escaping somewhere in your system — and it's time to call a plumber for <a href="/services/leak-repair">leak detection</a>.</li>
+</ol>
+
+<h2>4. Test Your Toilets for Running or Silent Leaks</h2>
+<p>A running toilet is one of the most common — and wasteful — plumbing problems in residential homes. A toilet that runs continuously can waste 200 gallons per day. The flapper valve is usually the culprit: it's a rubber seal that deteriorates over time, especially in Florida's chlorinated water.</p>
+<p>To check for a silent toilet leak, put a few drops of food coloring or a dye tablet in the tank and wait 15 minutes without flushing. If color appears in the bowl, the flapper is leaking. Replacing a flapper costs about $10 and takes 10 minutes — one of the few plumbing repairs genuinely worth doing yourself before calling a plumber.</p>
+
+<h2>5. Inspect and Clear All Drains</h2>
+<p>Summer in Southwest Florida brings daily rainfall and heavy use of showers (everyone's sweating constantly). Make sure all drains are flowing freely before summer begins. Pour a bucket of water into floor drains in the garage, laundry room, and any utility areas — these drains sit unused for long periods and their water traps can evaporate, allowing sewer gas odors into the home.</p>
+<p>If kitchen or bathroom drains are running slow, now is the time to address them before heavy use makes them worse. Professional <a href="/services/drain-cleaning">drain cleaning</a> — particularly hydrojetting — removes years of mineral scale and grease buildup that a bottle of Drano can't touch. See our guide on <a href="/blog/clogged-drains-causes-fixes-swfl">why drains keep clogging in Southwest Florida</a> for more detail.</p>
+
+<h2>6. Check Outdoor Faucets and Irrigation Systems</h2>
+<p>Outdoor plumbing takes a beating in Florida's climate — UV exposure degrades fittings and hoses faster than anywhere else in the country. Walk the exterior of your home and check:</p>
+<ul>
+<li><strong>Hose bibs (outdoor faucets):</strong> Turn each one on and off. Check for drips at the spout and around the packing nut behind the handle. A slow drip from a hose bib wastes thousands of gallons over the course of a summer.</li>
+<li><strong>Irrigation system:</strong> Turn on each irrigation zone and watch for broken or misaligned heads, zones that won't turn off, or obvious leaks at the manifold. An irrigation system leak is easy to miss because it only runs at scheduled times — often at 3 AM — and the water soaks immediately into the lawn. A spike in your water bill is often the first sign.</li>
+<li><strong>Backflow preventer:</strong> Your irrigation system's backflow preventer protects drinking water from contamination. Have a licensed plumber test it annually — it's often required by local code.</li>
+</ul>
+
+<h2>7. Test Your Shut-Off Valves</h2>
+<p>Before hurricane season officially starts on June 1st, make sure every shutoff valve in your home actually works. Turn the main water shutoff valve fully off and back on to confirm it moves freely. Do the same for the individual valves under each sink and behind each toilet. Valves that sit untouched for years can seize or fail — you don't want to discover this when you're frantically trying to stop a flood.</p>
+<p>While you're at it, make sure every adult in your household knows where the main water shutoff is and how to use it. In a plumbing emergency, those first 60 seconds matter enormously. For a full hurricane preparation plan, read our guide on <a href="/blog/hurricane-plumbing-preparation-swfl">how to prepare your plumbing for hurricane season</a>.</p>
+
+<h2>8. Schedule a Professional Plumbing Inspection</h2>
+<p>Even the most thorough DIY inspection can't replace a licensed plumber's eye. A professional plumbing inspection evaluates your water pressure, checks for hidden corrosion, inspects supply and drain lines, and assesses the overall condition of your system. For homes built before 1995 with original plumbing — particularly those with <a href="/blog/polybutylene-pipe-problems-cape-coral">polybutylene pipes</a> — a professional inspection before summer is especially valuable.</p>
+<p>At C&S Plumbing, our technicians have inspected thousands of <a href="/areas/cape-coral">Cape Coral</a>, <a href="/areas/fort-myers">Fort Myers</a>, <a href="/areas/bonita-springs">Bonita Springs</a>, and <a href="/areas/north-fort-myers">North Fort Myers</a> homes. We know what to look for in Southwest Florida's specific conditions — hard water corrosion, slab movement, poly-B deterioration — and we provide honest assessments with no pressure to upsell.</p>
+
+<h2>Get Your Plumbing Summer-Ready</h2>
+<p>Don't wait until your water heater fails in August or a slab leak floods your home in the middle of rainy season. A spring plumbing checkup is the best investment you can make to avoid a summer emergency.</p>
+<p>Call <a href="tel:8337562648">833-PLUMB-IT</a> or <a href="/booking">book a spring inspection online</a>. C&S Plumbing has been keeping Southwest Florida homes running smoothly for over 27 years — we'll make sure yours is ready for whatever summer throws at it.</p>`,
   },
 ];
 

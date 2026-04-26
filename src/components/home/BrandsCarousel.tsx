@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Container from "@/components/ui/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
 import ScrollReveal from "@/components/animations/ScrollReveal";
@@ -18,12 +19,16 @@ const BRANDS = [
 function BrandLogo({ name, logo }: { name: string; logo: string }) {
   return (
     <div className="flex-shrink-0 px-5 sm:px-6 py-2.5 sm:py-3 bg-white border border-gray-200 rounded-full flex items-center justify-center group hover:border-primary/30 transition-all duration-300">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={logo}
-        alt={name}
-        className="h-6 sm:h-8 w-auto max-w-[100px] sm:max-w-[120px] object-contain transition-all duration-300"
-      />
+      <div className="relative h-6 sm:h-8 w-[100px] sm:w-[120px]">
+        <Image
+          src={logo}
+          alt={`${name} logo`}
+          fill
+          sizes="120px"
+          className="object-contain transition-all duration-300"
+          loading="lazy"
+        />
+      </div>
     </div>
   );
 }

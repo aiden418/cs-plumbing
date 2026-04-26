@@ -132,11 +132,12 @@ export default function Navbar() {
               <a
                 href={`tel:${BUSINESS.phoneRaw}`}
                 className={cn(
-                  "flex items-center gap-2 text-sm transition-colors",
+                  "flex items-center gap-2 px-3.5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300",
                   isScrolled || !isHomepage
-                    ? "text-gray-600 hover:text-gray-900"
-                    : "text-white/80 hover:text-white"
+                    ? "bg-primary/10 text-primary hover:bg-primary/15"
+                    : "bg-white/10 text-white hover:bg-white/20"
                 )}
+                aria-label={`Call ${BUSINESS.phone}`}
               >
                 <Phone className="w-4 h-4" />
                 {BUSINESS.phone}
@@ -165,10 +166,11 @@ export default function Navbar() {
             <button
               onClick={() => setIsMobileOpen(!isMobileOpen)}
               className={cn(
-                "lg:hidden p-2 transition-colors",
+                "lg:hidden p-3 -mr-1 transition-colors",
                 isScrolled || !isHomepage ? "text-gray-900" : "text-white"
               )}
               aria-label="Toggle menu"
+              aria-expanded={isMobileOpen}
             >
               {isMobileOpen ? (
                 <X className="w-6 h-6" />
