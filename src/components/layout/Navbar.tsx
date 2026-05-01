@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ChevronDown, Phone, Calculator } from "lucide-react";
+import { Menu, X, ChevronDown, Phone, Calculator, Clock, Award, ShieldCheck } from "lucide-react";
 import { NAV_LINKS, BUSINESS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
@@ -50,10 +50,51 @@ export default function Navbar() {
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
           isScrolled || !isHomepage
-            ? "bg-white/80 backdrop-blur-xl border-b border-gray-200"
-            : "bg-transparent"
+            ? "bg-white/95 backdrop-blur-xl border-b border-gray-200 shadow-sm"
+            : "bg-gradient-to-b from-black/40 via-black/20 to-transparent"
         )}
       >
+        {/* Utility strip — trust signals + quick contact */}
+        <div
+          className={cn(
+            "hidden lg:block transition-all duration-300 overflow-hidden",
+            isScrolled
+              ? "max-h-0 opacity-0"
+              : "max-h-10 opacity-100 border-b",
+            isScrolled || !isHomepage
+              ? "bg-primary text-white border-primary-dark/30"
+              : "bg-black/30 text-white border-white/10"
+          )}
+        >
+          <div className="max-w-7xl mx-auto px-6 lg:px-8">
+            <div className="flex items-center justify-between h-9 text-xs font-medium">
+              <div className="flex items-center gap-5">
+                <span className="flex items-center gap-1.5">
+                  <Clock className="w-3.5 h-3.5" />
+                  Mon–Fri 7:30 AM – 4:30 PM · 24/7 Emergency
+                </span>
+                <span className="hidden xl:flex items-center gap-1.5 opacity-80">
+                  <ShieldCheck className="w-3.5 h-3.5" />
+                  Licensed CFC1432485
+                </span>
+              </div>
+              <div className="flex items-center gap-5">
+                <span className="hidden xl:flex items-center gap-1.5">
+                  <Award className="w-3.5 h-3.5" />
+                  Best of Cape Coral 2025
+                </span>
+                <a
+                  href={`tel:${BUSINESS.phoneRaw}`}
+                  className="flex items-center gap-1.5 font-bold hover:underline"
+                >
+                  <Phone className="w-3.5 h-3.5" />
+                  {BUSINESS.phone}
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
