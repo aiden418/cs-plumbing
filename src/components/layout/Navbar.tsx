@@ -63,7 +63,7 @@ export default function Navbar() {
                 alt="C&S Plumbing of Lee"
                 width={200}
                 height={200}
-                className="h-14 sm:h-16 w-auto object-contain group-hover:scale-105 transition-transform duration-300"
+                className="h-12 sm:h-14 w-auto object-contain group-hover:scale-105 transition-transform duration-300"
                 priority
               />
             </Link>
@@ -82,7 +82,7 @@ export default function Navbar() {
                   <Link
                     href={link.href}
                     className={cn(
-                      "px-3 xl:px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 flex items-center gap-1",
+                      "px-2.5 xl:px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200 flex items-center gap-1",
                       pathname === link.href
                         ? "text-primary"
                         : isScrolled || !isHomepage

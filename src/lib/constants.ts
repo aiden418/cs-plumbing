@@ -58,6 +58,7 @@ export const NAV_LINKS: NavLink[] = [
       { label: "UEP Utilities", href: "/services/uep-utilities" },
     ],
   },
+  { label: "Projects", href: "/projects" },
   {
     label: "Service Areas",
     href: "/areas/cape-coral",
@@ -79,7 +80,6 @@ export const NAV_LINKS: NavLink[] = [
     href: "/gallery",
     children: [
       { label: "Gallery", href: "/gallery" },
-      { label: "Projects", href: "/projects" },
       { label: "Blog", href: "/blog" },
       { label: "Builder Portal", href: "/builder-portal" },
       { label: "Recommended", href: "/partners" },
