@@ -31,7 +31,7 @@ export default function Footer() {
             <div className="mb-4 sm:mb-6">
               <Image
                 src="/images/logos/logo-new.png"
-                alt="C&S Plumbing of Lee County"
+                alt="C&S Plumbing of Lee"
                 width={200}
                 height={200}
                 className="h-20 w-auto object-contain"

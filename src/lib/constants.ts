@@ -6,7 +6,7 @@ import type { Service, TeamMember, Testimonial, TimelineEvent, NavLink, Stat, Se
 
 export const BUSINESS = {
   name: "C&S Plumbing",
-  fullName: "C&S Plumbing of Lee County",
+  fullName: "C&S Plumbing of Lee",
   phone: "833-PLUMB-IT",
   phoneRaw: "8337562648",
   email: "office@csplumbinglee.com",
@@ -93,7 +93,7 @@ export const NAV_LINKS: NavLink[] = [
 
 export const STATS: Stat[] = [
   { value: 8500, suffix: "+", label: "Homes Built" },
-  { value: 27, suffix: "+", label: "Years of Service" },
+  { value: 28, suffix: "+", label: "Years of Service" },
   { value: 4, suffix: "%", label: "Top FL Contractors" },
   { value: 24, suffix: "/7", label: "Emergency Service" },
 ];
@@ -379,7 +379,7 @@ export const TIMELINE_EVENTS: TimelineEvent[] = [
     year: "1998",
     title: "The Beginning",
     description:
-      "Two brothers, with the support of their father, founded C&S Plumbing of Lee County with a single truck and a commitment to quality.",
+      "Two brothers, with the support of their father, founded C&S Plumbing of Lee with a single truck and a commitment to quality.",
   },
   {
     year: "2003",
@@ -614,6 +614,28 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
     ],
     relatedServices: ["leak-repair", "water-heaters", "plumbing-remodel"],
     relatedAreas: ["cape-coral", "fort-myers", "north-fort-myers", "naples"],
+    answerBlocks: [
+      {
+        question: "How much does whole-home repiping cost in Southwest Florida?",
+        answer: "Most repipes run $4,000–$15,000.",
+        detail: "PEX repipes for a 3-bed, 2-bath home typically land between $4,000–$8,000. Copper repipes and larger homes (4+ baths or 2-story) push the range to $10,000–$15,000. Every estimate includes Lee County permitting and final inspection.",
+      },
+      {
+        question: "How long does a repipe take?",
+        answer: "Most homes are done in 1–2 days.",
+        detail: "Standard 3/2 homes complete in a single day for the rough + trim. 4+ bath or 2-story homes take 2 days. We protect your floors and walls, patch all access points, and pressure-test before turning water back on.",
+      },
+      {
+        question: "PEX or copper — which is better in Cape Coral?",
+        answer: "PEX-A is the right answer for most Cape Coral homes.",
+        detail: "Cape Coral's high-chloride soil causes pinhole corrosion in copper from the outside in. PEX-A is flexible, corrosion-proof, and carries a 25-year warranty. We still install copper when it's required for resale appraisals or HOA rules.",
+      },
+      {
+        question: "Do you pull permits for repiping?",
+        answer: "Yes — permits and final inspection are included in every repipe.",
+        detail: "Every C&S repipe job includes Lee County permitting and final inspection. Our license number is CFC1432485. Skipping permits voids most homeowner insurance claims and creates problems at resale.",
+      },
+    ],
   },
   {
     slug: "water-heaters",
@@ -741,6 +763,28 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
     ],
     relatedServices: ["repiping", "leak-repair", "water-softeners"],
     relatedAreas: ["cape-coral", "fort-myers", "naples", "bonita-springs"],
+    answerBlocks: [
+      {
+        question: "How much does a water heater cost installed in Cape Coral?",
+        answer: "Tank replacements run $995–$2,000; tankless installs start at $1,200.",
+        detail: "Standard 40–50 gallon electric or gas tank replacement is typically $995–$1,800 installed with old unit haul-away. Tankless installs start at $1,200 and go up to $4,500 depending on gas line work and unit size. Hybrid heat-pump units are $2,500–$3,950 and often qualify for FPL rebates.",
+      },
+      {
+        question: "Tankless vs traditional — which is right for my home?",
+        answer: "Tankless wins on lifespan and energy use; tank wins on upfront cost and simplicity.",
+        detail: "Tankless units last 20+ years vs 8–12 for tank in Florida, use less energy, and never run out. But they cost 2–3× upfront and may need a gas-line upgrade. Tank water heaters are cheaper to install and replace, easier to service, but the tank fails eventually and needs replacement more often.",
+      },
+      {
+        question: "How fast can you replace a failed water heater?",
+        answer: "Same-day installation in most cases.",
+        detail: "If your tank fails in the morning, we can usually have a new unit installed and running the same day. After-hours and weekend emergency installs are available 24/7. Repairs (thermostat, element, valve) start at $195.",
+      },
+      {
+        question: "Do tankless water heaters work in Florida hard water?",
+        answer: "Yes — but plan on annual flushing.",
+        detail: "Florida's hard water builds scale inside tankless heat exchangers. We install with isolation valves so we (or you) can flush the unit annually with vinegar or descaling solution. Skipping the flush voids most manufacturer warranties and shortens unit life.",
+      },
+    ],
   },
   {
     slug: "drain-cleaning",
@@ -868,6 +912,23 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
     ],
     relatedServices: ["leak-repair", "repiping", "uep-utilities"],
     relatedAreas: ["cape-coral", "fort-myers", "lehigh-acres", "north-fort-myers"],
+    answerBlocks: [
+      {
+        question: "How much does drain cleaning cost?",
+        answer: "Most residential drains cost $150–$500.",
+        detail: "A simple sink, tub, or toilet cable runs $150–$250. Main-line cabling is $250–$400. Hydro-jetting (up to 4,000 PSI) for grease, roots, or recurring blockages is $400–$650. Sewer camera inspection is $150 standalone or included with most jet jobs.",
+      },
+      {
+        question: "Cable or hydro-jet — which do I need?",
+        answer: "Cable for a one-time clog; hydro-jet for recurring or grease/root issues.",
+        detail: "If it's the first clog in years, cabling clears it cheaply. If it backs up every few months, the line wall is coated with grease, soap scum, or root intrusion — cabling just punches a hole through it. Hydro-jetting scrubs the pipe wall back to bare and usually buys you 2–4 years before the next service.",
+      },
+      {
+        question: "How often should I have drains cleaned preventively?",
+        answer: "Homes: every 1–2 years. Commercial kitchens: quarterly.",
+        detail: "Annual mainline jetting is cheap insurance for older homes with cast iron drains, mature landscaping, or any history of backups. Restaurants and food service should be on a quarterly schedule to stay ahead of grease — including grease trap pumping if applicable.",
+      },
+    ],
   },
   {
     slug: "leak-repair",
@@ -995,6 +1056,23 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
     ],
     relatedServices: ["repiping", "drain-cleaning", "water-heaters"],
     relatedAreas: ["cape-coral", "fort-myers", "naples", "bonita-springs"],
+    answerBlocks: [
+      {
+        question: "How much does leak detection cost?",
+        answer: "Simple visible leaks start at $150; slab and underground leak detection runs $400–$800.",
+        detail: "If we can see and access the leak, repairs typically run $150–$400. Hidden leaks behind walls, under slabs, or in irrigation lines need electronic detection equipment — $400–$800 to find, plus repair cost. We use acoustic and pressure-trace methods first to avoid unnecessary demolition.",
+      },
+      {
+        question: "What are the signs of a slab leak?",
+        answer: "Warm or wet spots on floors, unexplained water bill spikes, and the sound of running water with all fixtures off.",
+        detail: "Other clues: foundation cracks appearing or widening, hot water heater running constantly, mildew or musty smell in carpets, and a water meter that keeps moving when nothing is on. If you see two or more of these together, call us — slab leaks worsen fast.",
+      },
+      {
+        question: "How fast can you respond to a leak emergency?",
+        answer: "Within 60 minutes for active leaks in Cape Coral and Fort Myers.",
+        detail: "If you have water actively running where it shouldn't be, call 833-PLUMB-IT and shut off your main water valve. We'll dispatch a licensed plumber 24/7. While you wait, move valuables off the floor and document damage with photos for insurance.",
+      },
+    ],
   },
   {
     slug: "water-softeners",
@@ -1316,7 +1394,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     state: "FL",
     metaTitle: "Plumber in Fort Myers, FL",
     metaDescription:
-      "Expert plumber in Fort Myers, FL. Residential & commercial plumbing, emergency service, repiping, water heaters. 27+ years serving SWFL. Call 833-PLUMB-IT.",
+      "Expert plumber in Fort Myers, FL. Residential & commercial plumbing, emergency service, repiping, water heaters. 28+ years serving SWFL. Call 833-PLUMB-IT.",
     keywords: [
       "plumber Fort Myers",
       "plumber Fort Myers FL",
@@ -1399,7 +1477,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     ],
     heroText: "Professional Plumbing Services in Naples, FL",
     description:
-      "C&S Plumbing extends our 27+ years of expertise to Naples and Collier County. From luxury home plumbing to emergency repairs, we deliver the same quality and reliability that's made us Southwest Florida's most trusted plumber.",
+      "C&S Plumbing extends our 28+ years of expertise to Naples and Collier County. From luxury home plumbing to emergency repairs, we deliver the same quality and reliability that's made us Southwest Florida's most trusted plumber.",
     neighborhoods: [
       "Old Naples",
       "Park Shore",
@@ -1419,7 +1497,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     state: "FL",
     metaTitle: "Plumber in Bonita Springs, FL",
     metaDescription:
-      "Reliable plumber in Bonita Springs, FL. Repiping, water heaters, drain cleaning, emergency service. 27+ years in SWFL. Call 833-PLUMB-IT.",
+      "Reliable plumber in Bonita Springs, FL. Repiping, water heaters, drain cleaning, emergency service. 28+ years in SWFL. Call 833-PLUMB-IT.",
     keywords: [
       "plumber Bonita Springs",
       "plumber Bonita Springs FL",
@@ -1466,7 +1544,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     ],
     heroText: "Your Trusted Plumber in Lehigh Acres, FL",
     description:
-      "C&S Plumbing provides fast, reliable plumbing services to Lehigh Acres homeowners and businesses. From emergency repairs to whole-home repiping, we bring 27+ years of experience and 8,500+ completed projects to every job.",
+      "C&S Plumbing provides fast, reliable plumbing services to Lehigh Acres homeowners and businesses. From emergency repairs to whole-home repiping, we bring 28+ years of experience and 8,500+ completed projects to every job.",
     neighborhoods: [
       "Lehigh Acres",
       "Mirror Lakes",
@@ -1486,7 +1564,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     state: "FL",
     metaTitle: "Plumber in Estero, FL",
     metaDescription:
-      "Professional plumber in Estero, FL. Repiping, water heaters, drain cleaning, emergency plumbing. Family-owned, 27+ years in SWFL. Call 833-PLUMB-IT.",
+      "Professional plumber in Estero, FL. Repiping, water heaters, drain cleaning, emergency plumbing. Family-owned, 28+ years in SWFL. Call 833-PLUMB-IT.",
     keywords: [
       "plumber Estero",
       "plumber Estero FL",
@@ -1520,7 +1598,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     state: "FL",
     metaTitle: "Plumber on Sanibel Island, FL",
     metaDescription:
-      "Experienced plumber on Sanibel Island, FL. Emergency plumbing, repiping, water heaters, hurricane recovery. Family-owned, 27+ years in SWFL. Call 833-PLUMB-IT.",
+      "Experienced plumber on Sanibel Island, FL. Emergency plumbing, repiping, water heaters, hurricane recovery. Family-owned, 28+ years in SWFL. Call 833-PLUMB-IT.",
     keywords: [
       "plumber Sanibel Island",
       "plumber Sanibel FL",
@@ -1533,7 +1611,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     ],
     heroText: "Experienced Plumbing Services on Sanibel Island, FL",
     description:
-      "C&S Plumbing serves Sanibel Island with the expertise required for island living. From salt-air corrosion challenges to hurricane recovery plumbing, we bring 27+ years of Southwest Florida experience to every job on the island.",
+      "C&S Plumbing serves Sanibel Island with the expertise required for island living. From salt-air corrosion challenges to hurricane recovery plumbing, we bring 28+ years of Southwest Florida experience to every job on the island.",
     neighborhoods: [
       "Sanibel",
       "East End",
@@ -2229,7 +2307,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>Get Your Plumbing Summer-Ready</h2>
 <p>Don't wait until your water heater fails in August or a slab leak floods your home in the middle of rainy season. A spring plumbing checkup is the best investment you can make to avoid a summer emergency.</p>
-<p>Call <a href="tel:8337562648">833-PLUMB-IT</a> or <a href="/booking">book a spring inspection online</a>. C&S Plumbing has been keeping Southwest Florida homes running smoothly for over 27 years — we'll make sure yours is ready for whatever summer throws at it.</p>`,
+<p>Call <a href="tel:8337562648">833-PLUMB-IT</a> or <a href="/booking">book a spring inspection online</a>. C&S Plumbing has been keeping Southwest Florida homes running smoothly for over 28 years — we'll make sure yours is ready for whatever summer throws at it.</p>`,
   },
 ];
 
@@ -2349,7 +2427,7 @@ export const COMPLETED_PROJECTS: CompletedProject[] = [
     ],
     metaTitle: "IFHA Community Center Plumbing Project",
     metaDescription:
-      "See our complete plumbing installation for the IFHA Community Center new construction — underground, rough-in, and trim out phases by C&S Plumbing of Lee County.",
+      "See our complete plumbing installation for the IFHA Community Center new construction — underground, rough-in, and trim out phases by C&S Plumbing of Lee.",
   },
   {
     slug: "mangos-bathroom-remodel",
@@ -2384,7 +2462,7 @@ export const COMPLETED_PROJECTS: CompletedProject[] = [
     ],
     metaTitle: "Mangos Restaurant Bathroom Remodel",
     metaDescription:
-      "Commercial bathroom remodel for Mangos Restaurant & Bar on North Captiva Island by C&S Plumbing of Lee County.",
+      "Commercial bathroom remodel for Mangos Restaurant & Bar on North Captiva Island by C&S Plumbing of Lee.",
   },
 ];
 

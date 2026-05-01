@@ -16,8 +16,8 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.csplumbinglee.com"),
   title: {
-    default: "C&S Plumbing of Lee County | Southwest Florida's Most Trusted Plumber",
-    template: "%s | C&S Plumbing of Lee County",
+    default: "C&S Plumbing of Lee | Southwest Florida's Most Trusted Plumber",
+    template: "%s | C&S Plumbing of Lee",
   },
   description:
     "Family-owned since 1998. 8,500+ homes built. 24/7 emergency service. Residential, commercial & new construction plumbing across Cape Coral, Fort Myers, North Fort Myers, Naples & all of SWFL.",
@@ -57,8 +57,8 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://www.csplumbinglee.com",
-    siteName: "C&S Plumbing of Lee County",
-    title: "C&S Plumbing of Lee County | Southwest Florida's Most Trusted Plumber",
+    siteName: "C&S Plumbing of Lee",
+    title: "C&S Plumbing of Lee | Southwest Florida's Most Trusted Plumber",
     description:
       "Family-owned since 1998. 8,500+ homes built. 24/7 emergency service across Cape Coral, Fort Myers & SWFL.",
     images: [
@@ -66,13 +66,13 @@ export const metadata: Metadata = {
         url: "/images/logos/logo-new.png",
         width: 755,
         height: 577,
-        alt: "C&S Plumbing of Lee County Logo",
+        alt: "C&S Plumbing of Lee Logo",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "C&S Plumbing of Lee County | Southwest Florida's Most Trusted Plumber",
+    title: "C&S Plumbing of Lee | Southwest Florida's Most Trusted Plumber",
     description:
       "Family-owned since 1998. 8,500+ homes built. 24/7 emergency service across SWFL.",
     images: ["/images/logos/logo-new.png"],

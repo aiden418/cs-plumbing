@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/partners" },
   title: "Recommended Companies",
   description:
-    "Trusted local contractors and family-owned businesses recommended by C&S Plumbing of Lee County. HVAC, roofing, general contractors, screen enclosures, concrete & more in Cape Coral and Southwest Florida.",
+    "Trusted local contractors and family-owned businesses recommended by C&S Plumbing of Lee. HVAC, roofing, general contractors, screen enclosures, concrete & more in Cape Coral and Southwest Florida.",
   keywords: [
     "recommended contractors Lee County",
     "trusted local businesses Cape Coral",
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     "C&S Plumbing recommended companies",
   ],
   openGraph: {
-    title: "Recommended Companies | C&S Plumbing of Lee County",
+    title: "Recommended Companies | C&S Plumbing of Lee",
     description:
       "Local, family-owned businesses we trust and recommend across Southwest Florida — from HVAC and roofing to general contractors and concrete work.",
     url: "https://www.csplumbinglee.com/partners",
@@ -34,7 +34,7 @@ function PartnersJsonLd() {
   const itemList = {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    name: "Recommended Companies by C&S Plumbing of Lee County",
+    name: "Recommended Companies by C&S Plumbing of Lee",
     description:
       "Local, family-owned businesses trusted and recommended by C&S Plumbing across Southwest Florida.",
     numberOfItems: PARTNERS.length,

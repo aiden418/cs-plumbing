@@ -153,7 +153,7 @@ export default function Hero() {
             <div className="relative w-72 h-72 xl:w-80 xl:h-80">
               <Image
                 src="/images/logos/logo-new.png"
-                alt="C&S Plumbing of Lee County"
+                alt="C&S Plumbing of Lee"
                 fill
                 className="object-contain drop-shadow-[0_0_60px_rgba(0,119,204,0.3)]"
                 sizes="320px"

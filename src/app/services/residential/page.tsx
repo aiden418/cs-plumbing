@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     "kitchen plumbing Cape Coral",
   ],
   openGraph: {
-    title: "Residential Plumbing | C&S Plumbing of Lee County",
+    title: "Residential Plumbing | C&S Plumbing of Lee",
     description:
       "Your home deserves the best plumbing. Emergency repairs, drain cleaning, water heaters, repiping & more in Cape Coral, Fort Myers & all of SWFL.",
     url: "https://www.csplumbinglee.com/services/residential",

@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/blog" },
   title: "Plumbing Tips & Blog",
   description:
-    "Expert plumbing tips, guides & advice from C&S Plumbing of Lee County. Learn about repiping, water heaters, emergency plumbing, and more for Southwest Florida homes.",
+    "Expert plumbing tips, guides & advice from C&S Plumbing of Lee. Learn about repiping, water heaters, emergency plumbing, and more for Southwest Florida homes.",
   keywords: [
     "plumbing tips",
     "plumbing blog",

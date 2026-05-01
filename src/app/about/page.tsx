@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/about" },
   title: "About Us",
   description:
-    "Family-owned since 1998. Learn about the Pellechio family and the team behind C&S Plumbing of Lee County — Southwest Florida's most trusted plumber. Best of Cape Coral 2025.",
+    "Family-owned since 1998. Learn about the Pellechio family and the team behind C&S Plumbing of Lee — Southwest Florida's most trusted plumber. Best of Cape Coral 2025.",
   keywords: [
     "C&S Plumbing about",
     "Pellechio family plumbing",
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     "licensed plumber Fort Myers",
   ],
   openGraph: {
-    title: "About C&S Plumbing of Lee County",
+    title: "About C&S Plumbing of Lee",
     description:
       "Family-owned since 1998, 8,500+ homes built. Meet the Pellechio family and the team behind Southwest Florida's most trusted plumbing company.",
     url: "https://www.csplumbinglee.com/about",

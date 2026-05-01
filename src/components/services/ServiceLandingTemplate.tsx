@@ -12,6 +12,7 @@ import StaggerChildren, {
 } from "@/components/animations/StaggerChildren";
 import { motion, AnimatePresence } from "framer-motion";
 import JobGallery from "@/components/services/JobGallery";
+import AnswerBlocks from "@/components/seo/AnswerBlocks";
 import { BUSINESS, SERVICE_LANDINGS, AREA_LANDINGS } from "@/lib/constants";
 import type { ServiceLanding } from "@/lib/types";
 
@@ -86,6 +87,11 @@ export default function ServiceLandingTemplate({
           </div>
         </Container>
       </section>
+
+      {/* Quick Answers (AI-citation friendly, FAQ schema) */}
+      {landing.answerBlocks && landing.answerBlocks.length > 0 && (
+        <AnswerBlocks blocks={landing.answerBlocks} />
+      )}
 
       {/* Features */}
       <section className="py-16 sm:py-24 lg:py-32">

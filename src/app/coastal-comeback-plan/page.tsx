@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     "vacant home water leak prevention",
   ],
   openGraph: {
-    title: "Coastal Comeback Plan | C&S Plumbing of Lee County",
+    title: "Coastal Comeback Plan | C&S Plumbing of Lee",
     description:
       "Annual snowbird plumbing protection. Pre-departure shutdown, mid-summer checks, and a return-ready inspection — from $349/yr.",
     url: "https://www.csplumbinglee.com/coastal-comeback-plan",

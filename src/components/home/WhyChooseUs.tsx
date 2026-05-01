@@ -54,7 +54,7 @@ export default function WhyChooseUs() {
         <SectionHeading
           overline="Why C&S"
           title="Built on Trust, Backed by Results"
-          subtitle="27+ years of keeping Southwest Florida flowing. Here's why thousands of homeowners and builders choose C&S."
+          subtitle="28+ years of keeping Southwest Florida flowing. Here's why thousands of homeowners and builders choose C&S."
         />
 
         <StaggerChildren className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">

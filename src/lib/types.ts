@@ -74,6 +74,12 @@ export interface FAQ {
   answer: string;
 }
 
+export interface AnswerBlock {
+  question: string;
+  answer: string;
+  detail?: string;
+}
+
 export interface AreaLanding {
   slug: string;
   city: string;
@@ -106,6 +112,7 @@ export interface ServiceLanding {
   relatedAreas?: string[];
   costBreakdown?: { label: string; range: string; note?: string }[];
   caseStudies?: { title: string; location: string; cost: string; summary: string }[];
+  answerBlocks?: AnswerBlock[];
 }
 
 export interface ServiceCityLanding {

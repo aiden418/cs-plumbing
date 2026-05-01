@@ -130,7 +130,7 @@ export async function POST(request: Request) {
     });
 
     await resend.emails.send({
-      from: "C&S Plumbing of Lee County <bookings@csplumbinglee.com>",
+      from: "C&S Plumbing of Lee <bookings@csplumbinglee.com>",
       to: [lead.email],
       subject: `Your ${serviceLabel} Estimate — C&S Plumbing`,
       html: `
@@ -170,7 +170,7 @@ export async function POST(request: Request) {
             </p>
 
             <p style="color: #999; font-size: 12px; margin-top: 20px;">
-              C&S Plumbing of Lee County · License #CFC1432485 · 951 Pondella Rd, North Fort Myers, FL 33903
+              C&S Plumbing of Lee · License #CFC1432485 · 951 Pondella Rd, North Fort Myers, FL 33903
             </p>
           </div>
         </div>

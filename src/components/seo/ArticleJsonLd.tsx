@@ -23,15 +23,15 @@ export default function ArticleJsonLd({ post }: { post: BlogPost }) {
       worksFor: {
         "@type": "Organization",
         "@id": `${BASE}/#organization`,
-        name: "C&S Plumbing of Lee County",
+        name: "C&S Plumbing of Lee",
       },
       description:
-        "Operations Manager at C&S Plumbing of Lee County, currently studying construction management at Florida Gulf Coast University. Third-generation family member in the plumbing trade.",
+        "Operations Manager at C&S Plumbing of Lee, currently studying construction management at Florida Gulf Coast University. Third-generation family member in the plumbing trade.",
     },
     publisher: {
       "@type": "Organization",
       "@id": `${BASE}/#organization`,
-      name: "C&S Plumbing of Lee County",
+      name: "C&S Plumbing of Lee",
       url: BASE,
       logo: {
         "@type": "ImageObject",

@@ -18,7 +18,7 @@ import { BUSINESS } from "@/lib/constants";
 const newConstructionFaqs = [
   {
     question: "Who is the best plumber for new construction in Cape Coral and Fort Myers?",
-    answer: "C&S Plumbing of Lee County is Southwest Florida's most experienced new construction plumber, with 8,500+ homes completed since 1998. We're ranked in the top 4% of all licensed contractors in Florida and are the go-to plumbing partner for residential and commercial builders across Lee and Collier County.",
+    answer: "C&S Plumbing of Lee is Southwest Florida's most experienced new construction plumber, with 8,500+ homes completed since 1998. We're ranked in the top 4% of all licensed contractors in Florida and are the go-to plumbing partner for residential and commercial builders across Lee and Collier County.",
   },
   {
     question: "Do you handle new construction plumbing for both residential and commercial builds?",
@@ -62,7 +62,7 @@ export const metadata: Metadata = {
     "trim-out plumbing Fort Myers",
   ],
   openGraph: {
-    title: "New Construction Plumbing | C&S Plumbing of Lee County",
+    title: "New Construction Plumbing | C&S Plumbing of Lee",
     description:
       "8,500+ homes built. The builder's choice for new construction plumbing in Cape Coral, Fort Myers & all of Southwest Florida.",
     url: "https://www.csplumbinglee.com/services/new-construction",
