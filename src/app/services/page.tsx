@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     "plumber near me",
   ],
   openGraph: {
-    title: "Plumbing Services | C&S Plumbing of Lee County",
+    title: "Plumbing Services | C&S Plumbing of Lee",
     description:
       "Every plumbing solution under one roof — emergency repairs, drain cleaning, water heaters, repiping, new construction & commercial plumbing across SWFL.",
     url: "https://www.csplumbinglee.com/services",

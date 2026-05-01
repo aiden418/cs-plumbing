@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/faq" },
   title: "Frequently Asked Questions",
   description:
-    "Get answers to the most common plumbing questions from C&S Plumbing of Lee County. Repiping, water heaters, drain cleaning, leak repair, costs, and more. Serving Cape Coral, Fort Myers & SWFL.",
+    "Get answers to the most common plumbing questions from C&S Plumbing of Lee. Repiping, water heaters, drain cleaning, leak repair, costs, and more. Serving Cape Coral, Fort Myers & SWFL.",
   keywords: [
     "plumbing FAQ",
     "plumbing questions Cape Coral",
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     "emergency plumber questions",
   ],
   openGraph: {
-    title: "Plumbing FAQ — C&S Plumbing of Lee County",
+    title: "Plumbing FAQ — C&S Plumbing of Lee",
     description:
       "Answers to common plumbing questions about costs, timelines, services, and more from a licensed Florida contractor.",
     url: "https://www.csplumbinglee.com/faq",

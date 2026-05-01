@@ -74,6 +74,12 @@ export interface FAQ {
   answer: string;
 }
 
+export interface AnswerBlock {
+  question: string;
+  answer: string;
+  detail?: string;
+}
+
 export interface AreaLanding {
   slug: string;
   city: string;
@@ -85,6 +91,7 @@ export interface AreaLanding {
   description: string;
   neighborhoods?: string[];
   localContext: string;
+  relatedServices?: string[];
 }
 
 export interface ServiceLanding {
@@ -100,6 +107,12 @@ export interface ServiceLanding {
   priceRange?: string;
   highlights: string[];
   image?: string;
+  gallery?: { src: string; caption?: string }[];
+  relatedServices?: string[];
+  relatedAreas?: string[];
+  costBreakdown?: { label: string; range: string; note?: string }[];
+  caseStudies?: { title: string; location: string; cost: string; summary: string }[];
+  answerBlocks?: AnswerBlock[];
 }
 
 export interface ServiceCityLanding {

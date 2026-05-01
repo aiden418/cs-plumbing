@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     description: landing.metaDescription,
     url: "https://www.csplumbinglee.com/services/uep-utilities",
     type: "website",
-    siteName: "C&S Plumbing of Lee County",
+    siteName: "C&S Plumbing of Lee",
     images: [
       {
         url: "/images/services/uep-utilities/photo-1.jpg",
@@ -46,7 +46,7 @@ function ServiceJsonLd() {
     provider: {
       "@type": "Plumber",
       "@id": "https://www.csplumbinglee.com/#organization",
-      name: "C&S Plumbing of Lee County",
+      name: "C&S Plumbing of Lee",
       telephone: "+18337562648",
     },
     areaServed: {

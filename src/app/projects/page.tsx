@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/projects" },
   title: "Completed Projects",
   description:
-    "Browse completed plumbing projects by C&S Plumbing of Lee County — new construction, remodels, and commercial work across Southwest Florida.",
+    "Browse completed plumbing projects by C&S Plumbing of Lee — new construction, remodels, and commercial work across Southwest Florida.",
   keywords: [
     "plumbing projects Cape Coral",
     "completed plumbing projects",

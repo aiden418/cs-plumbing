@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     "Southwest Florida plumber map",
   ],
   openGraph: {
-    title: "Service Map | C&S Plumbing of Lee County",
+    title: "Service Map | C&S Plumbing of Lee",
     description:
       "8,500+ jobs completed across Southwest Florida. See our service area and job locations.",
     url: "https://www.csplumbinglee.com/service-map",

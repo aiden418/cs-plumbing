@@ -18,7 +18,7 @@ export default function ServiceCityJsonLd({
     provider: {
       "@type": "Plumber",
       "@id": `${BASE}/#organization`,
-      name: "C&S Plumbing of Lee County",
+      name: "C&S Plumbing of Lee",
       telephone: "+18337562648",
       hasCredential: [
         {

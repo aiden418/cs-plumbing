@@ -9,7 +9,7 @@ export default function JsonLd() {
     jobTitle: "Founder",
     worksFor: { "@id": `${BASE}/#organization` },
     description:
-      "Co-founded C&S Plumbing of Lee County in 1998, building the company into one of Southwest Florida's most trusted plumbing contractors with over 8,500 homes completed. Passed away in 2020.",
+      "Co-founded C&S Plumbing of Lee in 1998, building the company into one of Southwest Florida's most trusted plumbing contractors with over 8,500 homes completed. Passed away in 2020.",
   };
 
   const owner = {
@@ -60,7 +60,7 @@ export default function JsonLd() {
     "@context": "https://schema.org",
     "@type": "Plumber",
     "@id": `${BASE}/#organization`,
-    name: "C&S Plumbing of Lee County",
+    name: "C&S Plumbing of Lee",
     alternateName: "C&S Plumbing",
     url: BASE,
     logo: `${BASE}/images/logos/logo-new.png`,
@@ -304,25 +304,17 @@ export default function JsonLd() {
     ],
   };
 
-  /* ── WebSite schema with SearchAction ── */
+  /* ── WebSite schema ── */
   const webSite = {
     "@context": "https://schema.org",
     "@type": "WebSite",
     "@id": `${BASE}/#website`,
-    name: "C&S Plumbing of Lee County",
+    name: "C&S Plumbing of Lee",
     url: BASE,
     description:
-      "Official website of C&S Plumbing of Lee County — family-owned plumbing contractor serving Cape Coral, Fort Myers, Naples, and all of Southwest Florida since 1998.",
+      "Official website of C&S Plumbing of Lee — family-owned plumbing contractor serving Cape Coral, Fort Myers, Naples, and all of Southwest Florida since 1998.",
     publisher: { "@id": `${BASE}/#organization` },
     inLanguage: "en-US",
-    potentialAction: {
-      "@type": "SearchAction",
-      target: {
-        "@type": "EntryPoint",
-        urlTemplate: `${BASE}/services?q={search_term_string}`,
-      },
-      "query-input": "required name=search_term_string",
-    },
   };
 
   return (

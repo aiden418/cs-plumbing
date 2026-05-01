@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Check, Phone, Calendar, ChevronDown } from "lucide-react";
+import Link from "next/link";
+import { Check, Phone, Calendar, ChevronDown, ArrowRight, MapPin } from "lucide-react";
 import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
 import ScrollReveal from "@/components/animations/ScrollReveal";
@@ -10,7 +11,9 @@ import StaggerChildren, {
   staggerItem,
 } from "@/components/animations/StaggerChildren";
 import { motion, AnimatePresence } from "framer-motion";
-import { BUSINESS } from "@/lib/constants";
+import JobGallery from "@/components/services/JobGallery";
+import AnswerBlocks from "@/components/seo/AnswerBlocks";
+import { BUSINESS, SERVICE_LANDINGS, AREA_LANDINGS } from "@/lib/constants";
 import type { ServiceLanding } from "@/lib/types";
 
 export default function ServiceLandingTemplate({
@@ -51,16 +54,22 @@ export default function ServiceLandingTemplate({
               {landing.description}
             </p>
             {landing.priceRange && (
-              <p className="text-sm text-gray-500 mb-6">
-                Typical price range:{" "}
-                <span className="text-gray-900 font-semibold">
+              <div className="inline-flex flex-wrap items-center gap-3 sm:gap-4 mb-6 px-4 py-3 rounded-xl bg-white/70 border border-gray-200">
+                <span className="text-xs sm:text-sm text-gray-500">Typical range:</span>
+                <span className="text-base sm:text-lg text-gray-900 font-bold">
                   {landing.priceRange}
                 </span>
-              </p>
+                <Link
+                  href={`/booking?service=${encodeURIComponent(landing.slug)}`}
+                  className="inline-flex items-center gap-1 text-xs sm:text-sm font-semibold text-primary hover:underline"
+                >
+                  Get an exact quote <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
             )}
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
               <Button
-                href="/booking"
+                href={`/booking?service=${encodeURIComponent(landing.slug)}`}
                 size="lg"
                 icon={<Calendar className="w-5 h-5" />}
               >
@@ -78,6 +87,11 @@ export default function ServiceLandingTemplate({
           </div>
         </Container>
       </section>
+
+      {/* Quick Answers (AI-citation friendly, FAQ schema) */}
+      {landing.answerBlocks && landing.answerBlocks.length > 0 && (
+        <AnswerBlocks blocks={landing.answerBlocks} />
+      )}
 
       {/* Features */}
       <section className="py-16 sm:py-24 lg:py-32">
@@ -134,8 +148,91 @@ export default function ServiceLandingTemplate({
         </Container>
       </section>
 
+      {/* Recent Work Gallery */}
+      <JobGallery photos={landing.gallery} serviceTitle={landing.title} />
+
+      {/* Cost Breakdown (optional) */}
+      {landing.costBreakdown && landing.costBreakdown.length > 0 && (
+        <section className="py-16 sm:py-24 bg-[#F5F5F7]">
+          <Container>
+            <ScrollReveal>
+              <div className="max-w-3xl mx-auto">
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 text-center">
+                  What it actually costs in SWFL
+                </h2>
+                <p className="text-sm sm:text-base text-gray-500 text-center mb-8 sm:mb-10">
+                  Real ranges from C&S jobs in Lee County. Final price is based on a free in-home assessment.
+                </p>
+                <div className="bg-white border border-gray-200 rounded-2xl divide-y divide-gray-200 overflow-hidden">
+                  {landing.costBreakdown.map((item) => (
+                    <div
+                      key={item.label}
+                      className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-4 p-4 sm:p-5"
+                    >
+                      <div>
+                        <p className="text-sm sm:text-base font-semibold text-gray-900">
+                          {item.label}
+                        </p>
+                        {item.note && (
+                          <p className="text-xs text-gray-500 mt-0.5">{item.note}</p>
+                        )}
+                      </div>
+                      <p className="text-sm sm:text-base font-bold text-primary whitespace-nowrap">
+                        {item.range}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+                <div className="text-center mt-6 sm:mt-8">
+                  <Button
+                    href={`/booking?service=${encodeURIComponent(landing.slug)}`}
+                    size="lg"
+                    icon={<Calendar className="w-5 h-5" />}
+                  >
+                    Get your exact quote
+                  </Button>
+                </div>
+              </div>
+            </ScrollReveal>
+          </Container>
+        </section>
+      )}
+
+      {/* Case Studies (optional) */}
+      {landing.caseStudies && landing.caseStudies.length > 0 && (
+        <section className="py-16 sm:py-24">
+          <Container>
+            <ScrollReveal>
+              <div className="max-w-3xl mx-auto text-center mb-8 sm:mb-12">
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900">
+                  Recent {landing.title} jobs
+                </h2>
+              </div>
+            </ScrollReveal>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 max-w-5xl mx-auto">
+              {landing.caseStudies.map((cs) => (
+                <article
+                  key={cs.title}
+                  className="bg-[#F5F5F7] border border-gray-200 rounded-2xl p-5 sm:p-6"
+                >
+                  <p className="text-xs uppercase tracking-widest text-primary font-semibold mb-2">
+                    {cs.cost}
+                  </p>
+                  <h3 className="text-lg font-bold text-gray-900 mb-1">{cs.title}</h3>
+                  <p className="text-xs text-gray-500 mb-3 flex items-center gap-1">
+                    <MapPin className="w-3 h-3" />
+                    {cs.location}
+                  </p>
+                  <p className="text-sm text-gray-600 leading-relaxed">{cs.summary}</p>
+                </article>
+              ))}
+            </div>
+          </Container>
+        </section>
+      )}
+
       {/* FAQ */}
-      <section className="py-16 sm:py-24 lg:py-32">
+      <section className="py-16 sm:py-24 lg:py-32 bg-[#F5F5F7]">
         <Container>
           <ScrollReveal>
             <div className="max-w-3xl mx-auto">
@@ -146,15 +243,16 @@ export default function ServiceLandingTemplate({
                 {landing.faqs.map((faq, index) => (
                   <div
                     key={index}
-                    className="bg-[#F5F5F7] rounded-xl border border-gray-200 overflow-hidden"
+                    className="bg-white rounded-xl border border-gray-200 overflow-hidden"
                   >
                     <button
                       onClick={() =>
                         setOpenFaq(openFaq === index ? null : index)
                       }
-                      className="w-full flex items-center justify-between p-4 sm:p-5 text-left"
+                      className="w-full flex items-center justify-between p-4 sm:p-5 text-left hover:bg-gray-50 transition-colors"
+                      aria-expanded={openFaq === index}
                     >
-                      <span className="text-sm sm:text-base font-medium text-gray-900 pr-4">
+                      <span className="text-sm sm:text-base font-semibold text-gray-900 pr-4">
                         {faq.question}
                       </span>
                       <ChevronDown
@@ -171,7 +269,7 @@ export default function ServiceLandingTemplate({
                           exit={{ height: 0, opacity: 0 }}
                           transition={{ duration: 0.3 }}
                         >
-                          <p className="px-4 sm:px-5 pb-4 sm:pb-5 text-gray-500 text-xs sm:text-sm leading-relaxed">
+                          <p className="px-4 sm:px-5 pb-4 sm:pb-5 text-gray-600 text-sm leading-relaxed">
                             {faq.answer}
                           </p>
                         </motion.div>
@@ -184,6 +282,65 @@ export default function ServiceLandingTemplate({
           </ScrollReveal>
         </Container>
       </section>
+
+      {/* Internal Cross-Linking */}
+      {((landing.relatedServices && landing.relatedServices.length > 0) ||
+        (landing.relatedAreas && landing.relatedAreas.length > 0)) && (
+        <section className="py-16 sm:py-20 border-t border-gray-200">
+          <Container>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12 max-w-5xl mx-auto">
+              {landing.relatedServices && landing.relatedServices.length > 0 && (
+                <div>
+                  <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-4">
+                    Related services
+                  </h3>
+                  <ul className="space-y-2">
+                    {landing.relatedServices.map((slug) => {
+                      const target = SERVICE_LANDINGS.find((s) => s.slug === slug);
+                      if (!target) return null;
+                      return (
+                        <li key={slug}>
+                          <Link
+                            href={`/services/${slug}`}
+                            className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-primary transition-colors"
+                          >
+                            <ArrowRight className="w-3.5 h-3.5 text-primary" />
+                            {target.title}
+                          </Link>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              )}
+              {landing.relatedAreas && landing.relatedAreas.length > 0 && (
+                <div>
+                  <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-4">
+                    {landing.title} across SWFL
+                  </h3>
+                  <ul className="space-y-2">
+                    {landing.relatedAreas.map((slug) => {
+                      const target = AREA_LANDINGS.find((a) => a.slug === slug);
+                      if (!target) return null;
+                      return (
+                        <li key={slug}>
+                          <Link
+                            href={`/areas/${slug}`}
+                            className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-primary transition-colors"
+                          >
+                            <MapPin className="w-3.5 h-3.5 text-primary" />
+                            {target.city}, {target.state}
+                          </Link>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              )}
+            </div>
+          </Container>
+        </section>
+      )}
     </>
   );
 }
