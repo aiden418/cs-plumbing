@@ -77,7 +77,17 @@ export default function Navbar() {
                   onMouseEnter={() =>
                     link.children && setOpenDropdown(link.label)
                   }
-                  onMouseLeave={() => setOpenDropdown(null)}
+                  onMouseLeave={() => {
+                    if (link.children) {
+                      // Small delay so the mouse can travel across the
+                      // tiny gap into the dropdown without it closing.
+                      setTimeout(() => {
+                        setOpenDropdown((current) =>
+                          current === link.label ? null : current,
+                        );
+                      }, 120);
+                    }
+                  }}
                 >
                   <Link
                     href={link.href}
@@ -104,22 +114,25 @@ export default function Navbar() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 8 }}
                         transition={{ duration: 0.2 }}
-                        className="absolute top-full left-0 mt-1 w-56 py-2 rounded-xl glass"
+                        onMouseEnter={() => setOpenDropdown(link.label)}
+                        className="absolute top-full left-0 pt-2 w-56 z-50"
                       >
-                        {link.children.map((child) => (
-                          <Link
-                            key={child.href}
-                            href={child.href}
-                            className={cn(
-                              "block px-4 py-2.5 text-sm transition-colors duration-200",
-                              pathname === child.href
-                                ? "text-primary bg-primary/5"
-                                : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
-                            )}
-                          >
-                            {child.label}
-                          </Link>
-                        ))}
+                        <div className="py-2 rounded-xl glass shadow-lg">
+                          {link.children.map((child) => (
+                            <Link
+                              key={child.href}
+                              href={child.href}
+                              className={cn(
+                                "block px-4 py-2.5 text-sm transition-colors duration-200",
+                                pathname === child.href
+                                  ? "text-primary bg-primary/5"
+                                  : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                              )}
+                            >
+                              {child.label}
+                            </Link>
+                          ))}
+                        </div>
                       </motion.div>
                     )}
                   </AnimatePresence>
