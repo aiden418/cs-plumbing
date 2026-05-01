@@ -1,7 +1,6 @@
 import { createOgImage, ogImageContentType, ogImageSize } from "@/lib/og";
 import { BLOG_POSTS } from "@/lib/constants";
 
-export const runtime = "edge";
 export const size = ogImageSize;
 export const contentType = ogImageContentType;
 export const alt = "C&S Plumbing — Blog";

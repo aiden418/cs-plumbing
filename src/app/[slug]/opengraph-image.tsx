@@ -1,7 +1,6 @@
 import { createOgImage, ogImageContentType, ogImageSize, type OgVariant } from "@/lib/og";
 import { SERVICE_CITY_LANDINGS } from "@/lib/service-city-landings";
 
-export const runtime = "edge";
 export const size = ogImageSize;
 export const contentType = ogImageContentType;
 export const alt = "C&S Plumbing service area";
