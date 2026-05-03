@@ -50,19 +50,6 @@ export default function ServiceCityJsonLd({
       },
     },
     termsOfService: `${BASE}/terms-of-service`,
-    ...(landing.priceRange && {
-      offers: {
-        "@type": "AggregateOffer",
-        priceCurrency: "USD",
-        lowPrice:
-          landing.priceRange.match(/\$([\d,]+)/)?.[1]?.replace(",", "") || "0",
-        highPrice:
-          landing.priceRange.match(/\$([\d,]+)\+?$/)?.[1]?.replace(",", "") ||
-          landing.priceRange.match(/[\d,]+/g)?.[1]?.replace(",", "") ||
-          "0",
-        availability: "https://schema.org/InStock",
-      },
-    }),
   };
 
   return (

@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import CoastalComebackPlanPage from "./CoastalComebackPlanPage";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
-import FaqJsonLd from "@/components/seo/FaqJsonLd";
-import { COASTAL_COMEBACK_FAQS } from "@/lib/constants";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/coastal-comeback-plan" },
@@ -35,7 +33,6 @@ export default function Page() {
           { name: "Coastal Comeback Plan", href: "/coastal-comeback-plan" },
         ]}
       />
-      <FaqJsonLd faqs={COASTAL_COMEBACK_FAQS} />
       <CoastalComebackPlanPage />
     </>
   );

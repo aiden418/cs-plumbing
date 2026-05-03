@@ -6,7 +6,6 @@ import ScrollReveal from "@/components/animations/ScrollReveal";
 import CountUp from "@/components/animations/CountUp";
 import Button from "@/components/ui/Button";
 import CTASection from "@/components/home/CTASection";
-import FaqJsonLd from "@/components/seo/FaqJsonLd";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import StaggerChildren, {
   staggerItem,
@@ -266,7 +265,6 @@ export default function NewConstructionPage() {
       </section>
 
       <BreadcrumbJsonLd items={[{ name: "Home", href: "/" }, { name: "Services", href: "/services" }, { name: "New Construction", href: "/services/new-construction" }]} />
-      <FaqJsonLd faqs={newConstructionFaqs} />
       <CTASection />
     </PageTransition>
   );

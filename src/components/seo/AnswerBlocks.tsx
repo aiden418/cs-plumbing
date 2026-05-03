@@ -3,19 +3,6 @@ import type { AnswerBlock } from "@/lib/types";
 export default function AnswerBlocks({ blocks }: { blocks: AnswerBlock[] }) {
   if (!blocks?.length) return null;
 
-  const schema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: blocks.map((b) => ({
-      "@type": "Question",
-      name: b.question,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: b.detail ? `${b.answer} ${b.detail}` : b.answer,
-      },
-    })),
-  };
-
   return (
     <section className="py-12 sm:py-16 bg-white">
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
@@ -46,10 +33,6 @@ export default function AnswerBlocks({ blocks }: { blocks: AnswerBlock[] }) {
           ))}
         </div>
       </div>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-      />
     </section>
   );
 }
