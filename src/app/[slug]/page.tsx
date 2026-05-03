@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import PageTransition from "@/components/layout/PageTransition";
 import ServiceCityLandingTemplate from "@/components/service-city/ServiceCityLandingTemplate";
-import FaqJsonLd from "@/components/seo/FaqJsonLd";
 import ServiceCityJsonLd from "@/components/seo/ServiceCityJsonLd";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import CTASection from "@/components/home/CTASection";
@@ -45,7 +44,6 @@ export default async function Page({
 
   return (
     <PageTransition>
-      <FaqJsonLd faqs={landing.faqs} />
       <ServiceCityJsonLd landing={landing} />
       <BreadcrumbJsonLd
         items={[

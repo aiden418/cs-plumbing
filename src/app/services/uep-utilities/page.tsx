@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import PageTransition from "@/components/layout/PageTransition";
 import UEPServicePage from "./UEPServicePage";
-import FaqJsonLd from "@/components/seo/FaqJsonLd";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import CTASection from "@/components/home/CTASection";
 import { SERVICE_LANDINGS } from "@/lib/constants";
@@ -132,7 +131,6 @@ export default function Page() {
   return (
     <PageTransition>
       <ServiceJsonLd />
-      <FaqJsonLd faqs={landing.faqs} />
       <BreadcrumbJsonLd
         items={[
           { name: "Home", href: "/" },
