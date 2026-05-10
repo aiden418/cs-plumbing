@@ -6,6 +6,7 @@ import Footer from "@/components/layout/Footer";
 import StickyMobileCTA from "@/components/layout/StickyMobileCTA";
 import DeferredWidgets from "@/components/layout/DeferredWidgets";
 import JsonLd from "@/components/seo/JsonLd";
+import MetaPixel from "@/components/analytics/MetaPixel";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -105,6 +106,7 @@ export default function RootLayout({
         <Footer />
         <StickyMobileCTA />
         <DeferredWidgets />
+        <MetaPixel />
       </body>
     </html>
   );
