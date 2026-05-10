@@ -11,6 +11,7 @@ import PageTransition from "@/components/layout/PageTransition";
 import ScrollReveal from "@/components/animations/ScrollReveal";
 import { BUSINESS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
+import { trackContactForm } from "@/lib/pixel";
 
 const contactSchema = z.object({
   name: z.string().min(2, "Name is required"),
@@ -87,6 +88,7 @@ export default function ContactPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
+      trackContactForm();
       setSubmitted(true);
     } catch {
       alert("Something went wrong. Please call us directly.");

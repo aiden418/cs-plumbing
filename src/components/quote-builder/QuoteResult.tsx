@@ -13,6 +13,7 @@ import {
 import Button from "@/components/ui/Button";
 import { BUSINESS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
+import { trackQuoteBuilder } from "@/lib/pixel";
 import type {
   QuoteResult as QuoteResultType,
   ServiceType,
@@ -71,6 +72,7 @@ export default function QuoteResult({
           lead,
         }),
       });
+      trackQuoteBuilder();
       setSubmitted(true);
     } catch {
       alert("Something went wrong. Please call us directly.");

@@ -25,6 +25,7 @@ import Button from "@/components/ui/Button";
 import PageTransition from "@/components/layout/PageTransition";
 import { BUSINESS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
+import { trackBooking } from "@/lib/pixel";
 
 const serviceCategories = [
   { id: "residential", label: "Residential", icon: <Home className="w-6 h-6" /> },
@@ -195,6 +196,7 @@ export default function BookingPage() {
         throw new Error(data.error ?? "Submission failed");
       }
       if (data.confirmationId) setConfirmationId(data.confirmationId);
+      trackBooking();
       setSubmitted(true);
     } catch {
       alert("Something went wrong. Please call us directly.");
