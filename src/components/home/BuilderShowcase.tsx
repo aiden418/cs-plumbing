@@ -3,18 +3,7 @@
 import Container from "@/components/ui/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
 import ScrollReveal from "@/components/animations/ScrollReveal";
-
-const BUILDERS = [
-  { name: "Draft Construction LLC", logo: "/images/builders/draft-construction.png" },
-  { name: "Poseidon Homes", logo: "/images/builders/poseidon-homes.webp" },
-  { name: "Alair Homes", logo: "/images/builders/alair-homes.svg" },
-  { name: "Red Key Builders", logo: "/images/builders/red-key-builders.png" },
-  { name: "Heather Wood Construction", logo: "/images/builders/heather-wood.webp" },
-  { name: "Stellar Development", logo: "/images/builders/stellar-development.jpg" },
-  { name: "Engelke Construction Solutions", logo: "/images/builders/engelke.png" },
-  { name: "Itasca Construction Associates", logo: "/images/builders/itasca.png" },
-  { name: "McDowell Construction", logo: "/images/builders/mcdowell.png" },
-];
+import { BUILDERS } from "@/lib/builders-data";
 
 function BuilderLogo({ name, logo }: { name: string; logo: string }) {
   return (

@@ -157,6 +157,45 @@ export interface Partner {
   image?: string | null;
 }
 
+export interface Builder {
+  name: string;
+  logo: string;
+  website?: string;
+}
+
+export interface BuilderStat {
+  value: number;
+  suffix: string;
+  label: string;
+}
+
+export interface BuilderGalleryItem {
+  id: string;
+  src: string;
+  alt: string;
+  category: "custom-residential" | "production" | "light-commercial" | "remodel";
+  caption: string;
+  builder?: string;
+}
+
+export interface BuilderCaseStudy {
+  id: string;
+  title: string;
+  challenge: string;
+  action: string;
+  outcome: string;
+  placeholder?: boolean;
+}
+
+export interface BuilderSpecSheet {
+  id: string;
+  title: string;
+  icon: string;
+  description: string;
+  items: string[];
+  href?: string;
+}
+
 export interface ProjectImage {
   src: string;
   alt: string;
