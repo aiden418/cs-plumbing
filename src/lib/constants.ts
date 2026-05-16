@@ -1823,7 +1823,7 @@ export const BLOG_POSTS: BlogPost[] = [
 <p>At C&S Plumbing, we provide upfront pricing on every job. You know the cost before we start — no surprises.</p>
 
 <h2>4. Look for Experience and Specialization</h2>
-<p>Plumbing covers a wide range of services. For major projects like repiping or new construction, experience matters enormously. Ask:</p>
+<p>Plumbing covers a wide range of services. For major projects like <a href="/services/repiping">whole-home repiping</a> or <a href="/services/new-construction">new construction plumbing</a>, experience matters enormously. Ask:</p>
 <ul>
 <li>How long have you been in business?</li>
 <li>How many jobs like mine have you completed?</li>
@@ -2309,7 +2309,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>8. Schedule a Professional Plumbing Inspection</h2>
 <p>Even the most thorough DIY inspection can't replace a licensed plumber's eye. A professional plumbing inspection evaluates your water pressure, checks for hidden corrosion, inspects supply and drain lines, and assesses the overall condition of your system. For homes built before 1995 with original plumbing — particularly those with <a href="/blog/polybutylene-pipe-problems-cape-coral">polybutylene pipes</a> — a professional inspection before summer is especially valuable.</p>
-<p>At C&S Plumbing, our technicians have inspected thousands of <a href="/areas/cape-coral">Cape Coral</a>, <a href="/areas/fort-myers">Fort Myers</a>, <a href="/areas/bonita-springs">Bonita Springs</a>, and <a href="/areas/north-fort-myers">North Fort Myers</a> homes. We know what to look for in Southwest Florida's specific conditions — hard water corrosion, slab movement, poly-B deterioration — and we provide honest assessments with no pressure to upsell.</p>
+<p>At C&S Plumbing, our technicians have inspected thousands of <a href="/areas/cape-coral">Cape Coral</a>, <a href="/areas/fort-myers">Fort Myers</a>, <a href="/areas/bonita-springs">Bonita Springs</a>, and <a href="/areas/north-fort-myers">North Fort Myers</a> homes. We know what to look for in Southwest Florida's specific conditions — hard water corrosion, slab movement, <a href="/services/repiping">poly-B deterioration</a> — and we provide honest assessments with no pressure to upsell.</p>
 
 <h2>Get Your Plumbing Summer-Ready</h2>
 <p>Don't wait until your water heater fails in August or a slab leak floods your home in the middle of rainy season. A spring plumbing checkup is the best investment you can make to avoid a summer emergency.</p>

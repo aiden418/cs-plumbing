@@ -137,7 +137,7 @@ export default function NewConstructionPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
               <Button
-                href="/contact"
+                href="/builders"
                 size="lg"
                 icon={<Calendar className="w-5 h-5" />}
               >
