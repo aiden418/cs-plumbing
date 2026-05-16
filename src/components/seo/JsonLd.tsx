@@ -301,6 +301,7 @@ export default function JsonLd() {
     sameAs: [
       "https://www.google.com/maps/place/C%26S+Plumbing+of+Lee",
       "https://www.facebook.com/csplumbingoflc",
+      "https://www.instagram.com/cs_plumbing_of_lee/",
     ],
   };
 
