@@ -5,6 +5,7 @@ import { Phone, AlertTriangle, Clock, Droplets, Flame, Bug, ShowerHead } from "l
 import Container from "@/components/ui/Container";
 import PageTransition from "@/components/layout/PageTransition";
 import ScrollReveal from "@/components/animations/ScrollReveal";
+import WhatHappensNext from "@/components/ui/WhatHappensNext";
 import { BUSINESS } from "@/lib/constants";
 
 const emergencyTypes = [
@@ -159,6 +160,32 @@ export default function EmergencyPage() {
           </ScrollReveal>
         </Container>
       </section>
+
+      <WhatHappensNext
+        title="What happens when you call us"
+        steps={[
+          {
+            title: "Call us 24/7",
+            description:
+              "A real dispatcher answers — not a call center. We confirm your address and get the right crew rolling.",
+          },
+          {
+            title: "Tech dispatched fast",
+            description:
+              "Lee County trucks are staged across the service area. Most arrivals within 30–45 minutes.",
+          },
+          {
+            title: "Quote before we work",
+            description:
+              "Written price for the repair before anything starts. Same rate day, night, or weekend.",
+          },
+          {
+            title: "Same-visit repair",
+            description:
+              "Trucks carry parts for burst pipes, leaks, water heater failures, and drain backups. We finish what we start.",
+          },
+        ]}
+      />
     </PageTransition>
   );
 }

@@ -7,6 +7,7 @@ import ScrollReveal from "@/components/animations/ScrollReveal";
 import StaggerChildren, {
   staggerItem,
 } from "@/components/animations/StaggerChildren";
+import CityProofBlock from "@/components/areas/CityProofBlock";
 import { motion } from "framer-motion";
 import { BUSINESS, SERVICES } from "@/lib/constants";
 import type { AreaLanding } from "@/lib/types";
@@ -136,6 +137,9 @@ export default function AreaLandingTemplate({
           </ScrollReveal>
         </Container>
       </section>
+
+      {/* Major-project proof for this city */}
+      <CityProofBlock cityName={landing.city} />
 
       {/* Why Choose C&S */}
       <section className="py-16 sm:py-24 lg:py-32">

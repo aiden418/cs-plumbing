@@ -58,11 +58,32 @@ export default function QuoteBuilderPage() {
               Instant Quote Builder
             </span>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 leading-tight">
-              Build Your <span className="text-gradient">Project Estimate</span>
+              Instant Plumbing Quote for{" "}
+              <span className="text-gradient">Water Heaters &amp; Repiping</span>{" "}
+              in Lee County
             </h1>
-            <p className="mt-3 sm:mt-4 text-sm sm:text-base text-gray-500 max-w-lg mx-auto">
-              Answer a few questions and get an instant price range. No commitment — just a starting point for your project.
+            <p className="mt-3 sm:mt-4 text-sm sm:text-base text-gray-500 max-w-xl mx-auto leading-relaxed">
+              Answer a few questions and get an instant price range for water heater
+              installation or whole-home repiping anywhere in Cape Coral, Fort Myers,
+              and Lee County. Final price set after a free on-site inspection — no
+              obligation, no pressure.
             </p>
+
+            {/* What happens next */}
+            <div className="mt-6 sm:mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs sm:text-sm text-gray-500">
+              <span className="inline-flex items-center gap-1.5">
+                <span className="flex items-center justify-center w-5 h-5 rounded-full bg-primary text-white text-[10px] font-bold">1</span>
+                Answer a few questions
+              </span>
+              <span className="inline-flex items-center gap-1.5">
+                <span className="flex items-center justify-center w-5 h-5 rounded-full bg-primary text-white text-[10px] font-bold">2</span>
+                Get your instant range
+              </span>
+              <span className="inline-flex items-center gap-1.5">
+                <span className="flex items-center justify-center w-5 h-5 rounded-full bg-primary text-white text-[10px] font-bold">3</span>
+                C&amp;S confirms within 1 business day
+              </span>
+            </div>
           </div>
         </Container>
       </section>

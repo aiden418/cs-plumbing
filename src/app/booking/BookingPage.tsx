@@ -23,6 +23,7 @@ import {
 import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
 import PageTransition from "@/components/layout/PageTransition";
+import WhatHappensNext from "@/components/ui/WhatHappensNext";
 import { BUSINESS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { trackBooking } from "@/lib/pixel";
@@ -615,6 +616,32 @@ export default function BookingPage() {
           </div>
         </Container>
       </section>
+
+      <WhatHappensNext
+        title="What happens after you submit"
+        steps={[
+          {
+            title: "Submit the form",
+            description:
+              "Pick a service, time window, and add a note if there's anything we should know in advance.",
+          },
+          {
+            title: "We call to confirm",
+            description:
+              "Expect a call within 1 business day. We confirm the appointment window and answer any quick questions.",
+          },
+          {
+            title: "Tech arrives on time",
+            description:
+              "Lee County truck shows up inside your window. We diagnose, quote, and only proceed with your sign-off.",
+          },
+          {
+            title: "Clean, code-compliant work",
+            description:
+              "Licensed under CFC1432485 / CFC057076. Permits handled when required. We leave the worksite spotless.",
+          },
+        ]}
+      />
     </PageTransition>
   );
 }

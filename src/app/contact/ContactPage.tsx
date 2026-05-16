@@ -9,6 +9,7 @@ import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
 import PageTransition from "@/components/layout/PageTransition";
 import ScrollReveal from "@/components/animations/ScrollReveal";
+import WhatHappensNext from "@/components/ui/WhatHappensNext";
 import { BUSINESS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { trackContactForm } from "@/lib/pixel";
@@ -330,6 +331,31 @@ export default function ContactPage() {
           </div>
         </Container>
       </section>
+
+      <WhatHappensNext
+        steps={[
+          {
+            title: "Send your message",
+            description:
+              "Use the form, email, or call. Tell us what you need — we route it to the right person on our team.",
+          },
+          {
+            title: "Reply within 1 business day",
+            description:
+              "Most messages get a response within a few hours during business hours. Urgent? Call 833-PLUMB-IT.",
+          },
+          {
+            title: "Free site visit if needed",
+            description:
+              "For quotes that need eyes on the work, we'll set up a no-charge visit at a time that fits your schedule.",
+          },
+          {
+            title: "Written estimate",
+            description:
+              "Clear scope, fair price, no pressure. You decide if and when to schedule the work.",
+          },
+        ]}
+      />
     </PageTransition>
   );
 }

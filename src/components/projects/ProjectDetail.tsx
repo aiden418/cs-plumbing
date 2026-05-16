@@ -93,6 +93,123 @@ export default function ProjectDetail({ project }: { project: CompletedProject }
         </Container>
       </section>
 
+      {/* Case Study (renders only when any case-study field is set) */}
+      {(project.challenge ||
+        project.solution ||
+        (project.scopeDetails && project.scopeDetails.length > 0) ||
+        (project.permits && project.permits.length > 0) ||
+        (project.materials && project.materials.length > 0)) && (
+        <section className="py-12 sm:py-16 lg:py-20 bg-white">
+          <Container>
+            <ScrollReveal>
+              <div className="max-w-3xl mb-8 sm:mb-10">
+                <span className="inline-block text-primary text-xs sm:text-sm font-semibold tracking-widest uppercase mb-3">
+                  Case study
+                </span>
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 leading-tight">
+                  How we approached this project
+                </h2>
+              </div>
+            </ScrollReveal>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 max-w-5xl">
+              {project.challenge && (
+                <ScrollReveal>
+                  <div className="bg-[#F5F5F7] rounded-2xl border border-gray-200 p-6 sm:p-7">
+                    <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-2">
+                      The challenge
+                    </h3>
+                    <p className="text-sm sm:text-base text-gray-500 leading-relaxed">
+                      {project.challenge}
+                    </p>
+                  </div>
+                </ScrollReveal>
+              )}
+
+              {project.solution && (
+                <ScrollReveal delay={0.08}>
+                  <div className="bg-[#F5F5F7] rounded-2xl border border-gray-200 p-6 sm:p-7">
+                    <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-2">
+                      Our solution
+                    </h3>
+                    <p className="text-sm sm:text-base text-gray-500 leading-relaxed">
+                      {project.solution}
+                    </p>
+                  </div>
+                </ScrollReveal>
+              )}
+            </div>
+
+            {(project.scopeDetails || project.permits || project.materials) && (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 max-w-5xl mt-6 sm:mt-8">
+                {project.scopeDetails && project.scopeDetails.length > 0 && (
+                  <ScrollReveal>
+                    <div>
+                      <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-3">
+                        Scope of work
+                      </h3>
+                      <ul className="space-y-2 text-sm text-gray-700">
+                        {project.scopeDetails.map((item) => (
+                          <li
+                            key={item}
+                            className="flex items-start gap-2 leading-relaxed"
+                          >
+                            <span className="text-primary mt-0.5">•</span>
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </ScrollReveal>
+                )}
+
+                {project.permits && project.permits.length > 0 && (
+                  <ScrollReveal delay={0.05}>
+                    <div>
+                      <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-3">
+                        Permits &amp; inspections
+                      </h3>
+                      <ul className="space-y-2 text-sm text-gray-700">
+                        {project.permits.map((item) => (
+                          <li
+                            key={item}
+                            className="flex items-start gap-2 leading-relaxed"
+                          >
+                            <span className="text-primary mt-0.5">•</span>
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </ScrollReveal>
+                )}
+
+                {project.materials && project.materials.length > 0 && (
+                  <ScrollReveal delay={0.1}>
+                    <div>
+                      <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-3">
+                        Materials installed
+                      </h3>
+                      <ul className="space-y-2 text-sm text-gray-700">
+                        {project.materials.map((item) => (
+                          <li
+                            key={item}
+                            className="flex items-start gap-2 leading-relaxed"
+                          >
+                            <span className="text-primary mt-0.5">•</span>
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </ScrollReveal>
+                )}
+              </div>
+            )}
+          </Container>
+        </section>
+      )}
+
       {/* Phase Sections */}
       {project.phases.map((phase) => {
         const phaseStartIndex = imageOffset;
