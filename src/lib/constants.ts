@@ -179,6 +179,7 @@ export const SERVICES: Service[] = [
       "Full-service Cape Coral UEP utilities connection — water service, irrigation, sewer laterals, and septic abandonment. We handle every permit and inspection from start to finish.",
     icon: "Shovel",
     href: "/services/uep-utilities",
+    image: "/images/services/uep-utilities/photo-1.jpg",
     features: [
       "Water service line",
       "Irrigation line",
