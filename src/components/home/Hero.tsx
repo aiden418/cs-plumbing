@@ -93,8 +93,10 @@ export default function Hero() {
               transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
               className="mt-5 sm:mt-6 text-base sm:text-lg text-white/70 max-w-lg leading-relaxed"
             >
-              Family-owned since 1998. 8,500+ homes built. Licensed, insured,
-              and ready 24/7 for Cape Coral, Fort Myers, and all of Lee County.
+              Family-owned since 1998. 8,500+ homes built. The new
+              construction, remodel, and repipe partner Cape Coral and Fort
+              Myers builders and homeowners trust — with 24/7 emergency
+              service when you need it.
             </motion.p>
 
             <motion.div
