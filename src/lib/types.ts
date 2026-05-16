@@ -121,6 +121,13 @@ export interface ServiceCityLanding {
   metaDescription: string;
   keywords: string[];
   h1: string;
+  /**
+   * Section H2 shown above the main service description block. Should read
+   * naturally — written by a human, not templated. Keep it short (5–10 words)
+   * and include the city when it fits. If omitted, falls back to a clean
+   * city + state default.
+   */
+  sectionHeading?: string;
   heroSubtext: string;
   trustBadges: string[];
   serviceDescription: string;
@@ -208,6 +215,12 @@ export interface ProjectPhase {
   images: ProjectImage[];
 }
 
+/**
+ * Optional case-study fields. When populated, ProjectDetail renders a
+ * "Case study" block (challenge + solution + scope + permits + materials)
+ * between the project hero and the phase galleries. Leave undefined for
+ * a phase-only project page.
+ */
 export interface CompletedProject {
   slug: string;
   name: string;
@@ -220,6 +233,16 @@ export interface CompletedProject {
   location?: string;
   coverImage: string;
   phases: ProjectPhase[];
+  /** 1–3 sentences on the core constraint or problem on this job. */
+  challenge?: string;
+  /** 1–3 sentences on what we did and why. */
+  solution?: string;
+  /** Bullet list — scope of work performed (e.g. "Underground rough-in", "Hot water recirc"). */
+  scopeDetails?: string[];
+  /** Bullet list — permits pulled and inspections cleared. */
+  permits?: string[];
+  /** Bullet list — materials / brands installed. */
+  materials?: string[];
   metaTitle: string;
   metaDescription: string;
 }

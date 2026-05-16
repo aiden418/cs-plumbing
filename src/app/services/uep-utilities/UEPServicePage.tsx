@@ -127,7 +127,7 @@ export default function UEPServicePage({
                 size="lg"
                 icon={<Calendar className="w-5 h-5" />}
               >
-                Book This Service
+                Book a Service
               </Button>
               <Button
                 href={`tel:${BUSINESS.phoneRaw}`}

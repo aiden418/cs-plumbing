@@ -95,7 +95,8 @@ export default function ServiceCityLandingTemplate({
           <ScrollReveal>
             <div className="max-w-3xl mx-auto">
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-6 sm:mb-8">
-                Professional {landing.h1.replace(/^(Emergency |24\/7 )/i, "")} Services
+                {landing.sectionHeading ??
+                  `Plumbing services in ${landing.city}, ${landing.state}`}
               </h2>
               <div className="prose prose-gray max-w-none">
                 {landing.serviceDescription.split("\n\n").map((paragraph, i) => (

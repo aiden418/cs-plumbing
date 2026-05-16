@@ -14,7 +14,7 @@ export default function CTASection() {
       <div className="absolute inset-0 pointer-events-none">
         <Image
           src="/images/team/team-work-1.jpg"
-          alt=""
+          alt="C&S Plumbing team working on a Lee County jobsite"
           fill
           className="object-cover object-top"
           sizes="100vw"

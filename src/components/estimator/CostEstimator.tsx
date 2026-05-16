@@ -134,7 +134,7 @@ export default function CostEstimator() {
             </p>
             <div className="flex flex-col gap-2">
               <Button href="/booking" size="sm" className="w-full">
-                Book This Service
+                Book a Service
               </Button>
               <button
                 onClick={reset}

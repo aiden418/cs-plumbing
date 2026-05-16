@@ -63,7 +63,7 @@ export default function ServiceLandingTemplate({
                   href={`/booking?service=${encodeURIComponent(landing.slug)}`}
                   className="inline-flex items-center gap-1 text-xs sm:text-sm font-semibold text-primary hover:underline"
                 >
-                  Get an exact quote <ArrowRight className="w-3.5 h-3.5" />
+                  Get a Quote <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
             )}
@@ -73,7 +73,7 @@ export default function ServiceLandingTemplate({
                 size="lg"
                 icon={<Calendar className="w-5 h-5" />}
               >
-                Book This Service
+                Book a Service
               </Button>
               <Button
                 href={`tel:${BUSINESS.phoneRaw}`}

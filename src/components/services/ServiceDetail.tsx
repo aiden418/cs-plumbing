@@ -37,7 +37,7 @@ export default function ServiceDetail({
           <div className="absolute inset-0 pointer-events-none">
             <Image
               src={heroImage}
-              alt=""
+              alt={`${title} services by C&S Plumbing of Lee`}
               fill
               sizes="100vw"
               className="object-cover object-center"
@@ -65,7 +65,7 @@ export default function ServiceDetail({
                 size="lg"
                 icon={<Calendar className="w-5 h-5" />}
               >
-                Book This Service
+                Book a Service
               </Button>
               <Button
                 href={`tel:${BUSINESS.phoneRaw}`}

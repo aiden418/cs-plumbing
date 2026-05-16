@@ -50,7 +50,7 @@ export default function ServiceHighlights() {
                     <div className="absolute inset-0 pointer-events-none">
                       <Image
                         src={service.image}
-                        alt=""
+                        alt={`${service.title} by C&S Plumbing`}
                         fill
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                         className="object-cover object-center scale-105 group-hover:scale-110 transition-transform duration-700"

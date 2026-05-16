@@ -51,6 +51,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       "hurricane plumbing repair Cape Coral",
     ],
     h1: "Emergency Plumber in Cape Coral, FL",
+    sectionHeading: "How we handle plumbing emergencies in Cape Coral",
     heroSubtext:
       "Water damage doubles every hour. C&S Plumbing responds to Cape Coral emergencies 24/7 with licensed master plumbers who know your canal-lot home inside and out.",
     trustBadges: TRUST_BADGES,
@@ -146,6 +147,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       "night plumber Fort Myers",
     ],
     h1: "Emergency Plumber in Fort Myers, FL",
+    sectionHeading: "How we handle plumbing emergencies in Fort Myers",
     heroSubtext:
       "Every minute of delay means more water damage. C&S Plumbing's licensed emergency crews are dispatched across Fort Myers 24/7 — call 833-PLUMB-IT now.",
     trustBadges: TRUST_BADGES,
@@ -241,6 +243,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       "home repiping service Cape Coral",
     ],
     h1: "Whole-Home Repiping in Cape Coral, FL",
+    sectionHeading: "What whole-home repiping looks like in Cape Coral",
     heroSubtext:
       "Cape Coral's soil eats copper pipes. C&S Plumbing has repiped thousands of canal-lot homes since 1998 — get a free estimate on modern, corrosion-proof piping today.",
     trustBadges: TRUST_BADGES,
@@ -347,6 +350,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       "residential plumber North Fort Myers",
     ],
     h1: "Your Trusted Plumber in North Fort Myers, FL",
+    sectionHeading: "Licensed plumbing service across North Fort Myers",
     heroSubtext:
       "C&S Plumbing is headquartered right here in North Fort Myers. We know your well water, your soil, and your pipes — because we live here too. Call 833-PLUMB-IT.",
     trustBadges: TRUST_BADGES,
@@ -450,6 +454,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       "Cape Coral pipe burst water damage",
     ],
     h1: "Water Damage Repair in Cape Coral, FL",
+    sectionHeading: "Water damage repair for Cape Coral homes",
     heroSubtext:
       "Most Cape Coral water damage starts with a plumbing failure. C&S fixes the source, stops the damage, and restores your home — one call handles it all.",
     trustBadges: TRUST_BADGES,
@@ -545,6 +550,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       "home repiping Fort Myers",
     ],
     h1: "Whole-Home Repiping in Fort Myers, FL",
+    sectionHeading: "What whole-home repiping looks like in Fort Myers",
     heroSubtext:
       "Fort Myers' oldest homes have the oldest pipes. C&S Plumbing replaces failing galvanized, cast iron, and poly-B systems with modern piping built to last. Free estimates.",
     trustBadges: TRUST_BADGES,
@@ -646,6 +652,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       "Cape Coral plumber drain service",
     ],
     h1: "Drain Cleaning Services in Cape Coral, FL",
+    sectionHeading: "How we clear stubborn drains in Cape Coral",
     heroSubtext:
       "Cape Coral's tropical roots and sandy soil create stubborn clogs that store-bought solutions can't fix. C&S Plumbing clears drains right the first time — guaranteed.",
     trustBadges: TRUST_BADGES,
@@ -741,6 +748,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       "water heater plumber Cape Coral",
     ],
     h1: "Water Heater Repair & Replacement in Cape Coral, FL",
+    sectionHeading: "Water heater problems we fix across Cape Coral",
     heroSubtext:
       "No hot water? Cape Coral's hard water destroys water heaters faster than anywhere else. C&S Plumbing repairs or replaces your unit today — call 833-PLUMB-IT.",
     trustBadges: TRUST_BADGES,
@@ -837,6 +845,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       "best plumber Lehigh Acres",
     ],
     h1: "Licensed Plumber in Lehigh Acres, FL",
+    sectionHeading: "Licensed plumbing service across Lehigh Acres",
     heroSubtext:
       "Lehigh Acres is growing fast, and its plumbing needs are growing with it. C&S Plumbing has served Lee County since 1998 — call 833-PLUMB-IT for honest, reliable service.",
     trustBadges: TRUST_BADGES,
@@ -941,6 +950,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       "multi-story plumbing Fort Myers",
     ],
     h1: "Commercial Plumbing Services in Fort Myers, FL",
+    sectionHeading: "Commercial plumbing for Fort Myers businesses",
     heroSubtext:
       "From restaurant buildouts to backflow certification, C&S Plumbing keeps Fort Myers businesses running. Licensed commercial contractor since 1998 — call 833-PLUMB-IT.",
     trustBadges: TRUST_BADGES,
@@ -1048,6 +1058,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       "residential construction plumber Cape Coral",
     ],
     h1: "New Construction Plumbing in Cape Coral, FL",
+    sectionHeading: "New construction plumbing for Cape Coral builders",
     heroSubtext:
       "8,500+ homes built. C&S Plumbing is the new construction partner Cape Coral builders trust for canal-lot expertise, code compliance, and on-schedule delivery.",
     trustBadges: TRUST_BADGES,
@@ -1153,6 +1164,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       "Fort Myers plumbing leak damage",
     ],
     h1: "Water Damage Repair in Fort Myers, FL",
+    sectionHeading: "Water damage repair for Fort Myers homes",
     heroSubtext:
       "When pipes fail in Fort Myers homes, water damage follows fast. C&S Plumbing finds the source, makes the repair, and restores what was damaged — call 833-PLUMB-IT.",
     trustBadges: TRUST_BADGES,

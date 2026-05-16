@@ -157,7 +157,7 @@ export default function Hero() {
                 fill
                 className="object-contain drop-shadow-[0_0_60px_rgba(0,119,204,0.3)]"
                 sizes="320px"
-                quality={90}
+                quality={85}
               />
             </div>
             <div className="mt-6 flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-2xl px-5 py-3 border border-white/15">

@@ -43,7 +43,7 @@ export default function Testimonials() {
       <div className="absolute inset-0 pointer-events-none">
         <Image
           src="/images/gallery/freestanding-tub-accent-tile.jpg"
-          alt=""
+          alt="Freestanding soaking tub with accent tile installed by C&S Plumbing"
           fill
           className="object-cover object-center"
           sizes="100vw"

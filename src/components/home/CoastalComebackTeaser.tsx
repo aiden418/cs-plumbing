@@ -21,7 +21,7 @@ export default function CoastalComebackTeaser() {
       <div className="absolute inset-0 pointer-events-none">
         <Image
           src="/images/gallery/aerial-waterfront-newbuild.jpg"
-          alt=""
+          alt="Aerial view of a waterfront Cape Coral new construction home"
           fill
           className="object-cover object-center"
           sizes="100vw"
