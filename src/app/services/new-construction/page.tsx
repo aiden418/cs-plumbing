@@ -7,6 +7,7 @@ import CountUp from "@/components/animations/CountUp";
 import Button from "@/components/ui/Button";
 import CTASection from "@/components/home/CTASection";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
+import FaqJsonLd from "@/components/seo/FaqJsonLd";
 import StaggerChildren, {
   staggerItem,
 } from "@/components/animations/StaggerChildren";
@@ -47,7 +48,7 @@ const newConstructionFaqs = [
 
 export const metadata: Metadata = {
   alternates: { canonical: "/services/new-construction" },
-  title: "New Construction Plumbing",
+  title: "New Construction Plumbing in Cape Coral & Fort Myers",
   description:
     "8,500+ new construction homes plumbed in Cape Coral, Fort Myers & SWFL. C&S Plumbing is the trusted builder's partner for reliability, code-compliance & precision.",
   keywords: [
@@ -110,7 +111,7 @@ export default function NewConstructionPage() {
         <div className="absolute inset-0 pointer-events-none">
           <Image
             src="/images/services/cards/new-construction.jpg"
-            alt=""
+            alt="C&S Plumbing new construction site in Southwest Florida"
             fill
             sizes="100vw"
             className="object-cover object-center"
@@ -265,6 +266,7 @@ export default function NewConstructionPage() {
       </section>
 
       <BreadcrumbJsonLd items={[{ name: "Home", href: "/" }, { name: "Services", href: "/services" }, { name: "New Construction", href: "/services/new-construction" }]} />
+      <FaqJsonLd faqs={newConstructionFaqs} />
       <CTASection />
     </PageTransition>
   );

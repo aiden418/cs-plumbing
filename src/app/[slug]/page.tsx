@@ -4,6 +4,7 @@ import PageTransition from "@/components/layout/PageTransition";
 import ServiceCityLandingTemplate from "@/components/service-city/ServiceCityLandingTemplate";
 import ServiceCityJsonLd from "@/components/seo/ServiceCityJsonLd";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
+import FaqJsonLd from "@/components/seo/FaqJsonLd";
 import CTASection from "@/components/home/CTASection";
 import { SERVICE_CITY_LANDINGS } from "@/lib/service-city-landings";
 
@@ -45,6 +46,7 @@ export default async function Page({
   return (
     <PageTransition>
       <ServiceCityJsonLd landing={landing} />
+      <FaqJsonLd faqs={landing.faqs} />
       <BreadcrumbJsonLd
         items={[
           { name: "Home", href: "/" },

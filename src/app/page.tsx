@@ -28,19 +28,29 @@ const CTASection = dynamic(() => import("@/components/home/CTASection"));
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
-  title: "Plumber in Cape Coral & Fort Myers",
+  title:
+    "New Construction, Remodel & Service Plumber in Cape Coral & Fort Myers",
   description:
-    "C&S Plumbing of Lee — family-owned since 1998, 8,500+ homes built. Best of Cape Coral 2025. 24/7 emergency plumbing, repiping, drain cleaning, water heaters & new construction across Southwest Florida.",
+    "Southwest Florida's trusted new construction, remodel, repipe, and service plumber. 8,500+ homes built since 1998. Best of Cape Coral 2025. Serving Cape Coral, Fort Myers, Naples & all of Lee County. 24/7 emergency available.",
   keywords: [
+    "new construction plumber SWFL",
+    "new construction plumbing Cape Coral",
+    "new construction plumbing Fort Myers",
+    "remodel plumber Cape Coral",
+    "remodel plumber Fort Myers",
+    "kitchen remodel plumber SWFL",
+    "bathroom remodel plumber Lee County",
+    "whole-home repiping Cape Coral",
+    "whole-home repiping Fort Myers",
+    "polybutylene repipe Lee County",
+    "builder plumbing partner Southwest Florida",
     "plumber Cape Coral",
     "plumber Fort Myers",
     "plumbing company Lee County",
     "emergency plumber Cape Coral",
     "24/7 plumber Southwest Florida",
-    "repiping Cape Coral",
     "drain cleaning Fort Myers",
     "water heater installation Cape Coral",
-    "new construction plumbing SWFL",
     "best plumber Cape Coral",
     "C&S Plumbing",
     "plumber near me",
@@ -49,9 +59,10 @@ export const metadata: Metadata = {
     "commercial plumbing Fort Myers",
   ],
   openGraph: {
-    title: "C&S Plumbing of Lee — Cape Coral & Fort Myers Plumber",
+    title:
+      "C&S Plumbing of Lee — New Construction, Remodel & Service Plumber in SWFL",
     description:
-      "Family-owned since 1998. Best of Cape Coral 2025. 24/7 emergency service, repiping, drain cleaning, water heaters & new construction. 8,500+ homes built across SWFL.",
+      "Family-owned since 1998. 8,500+ homes built. The new construction, remodel, and repipe partner Cape Coral and Fort Myers builders and homeowners trust. 24/7 emergency available.",
     url: "https://www.csplumbinglee.com",
   },
 };

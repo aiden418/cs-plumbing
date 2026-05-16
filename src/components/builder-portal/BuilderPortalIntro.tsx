@@ -1,3 +1,4 @@
+import Link from "next/link";
 import {
   Hammer,
   ClipboardCheck,
@@ -96,9 +97,16 @@ export default function BuilderPortalIntro() {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(0,119,204,0.08)_0%,transparent_60%)]" />
         <Container className="relative z-10">
           <div className="max-w-3xl">
-            <span className="inline-block text-primary text-xs sm:text-sm font-semibold tracking-widest uppercase mb-3 sm:mb-4">
-              Builder Portal
-            </span>
+            <Link
+              href="/builders"
+              className="inline-flex items-center gap-1.5 text-primary text-xs sm:text-sm font-semibold tracking-widest uppercase mb-3 sm:mb-4 hover:underline"
+            >
+              <span>Builder Portal</span>
+              <span className="text-gray-400 normal-case tracking-normal font-normal">
+                · See our full builder story
+              </span>
+              <ArrowRight className="w-3 h-3" />
+            </Link>
             <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-gray-900 leading-[1.05] tracking-tight mb-5 sm:mb-6">
               Plans in. Quote out.{" "}
               <span className="text-gradient">Crews ready.</span>

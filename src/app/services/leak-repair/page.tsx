@@ -3,6 +3,7 @@ import PageTransition from "@/components/layout/PageTransition";
 import ServiceLandingTemplate from "@/components/services/ServiceLandingTemplate";
 import ServiceJsonLd from "@/components/seo/ServiceJsonLd";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
+import FaqJsonLd from "@/components/seo/FaqJsonLd";
 import CTASection from "@/components/home/CTASection";
 import { SERVICE_LANDINGS } from "@/lib/constants";
 
@@ -24,6 +25,7 @@ export default function Page() {
   return (
     <PageTransition>
       <ServiceJsonLd landing={landing} />
+      <FaqJsonLd faqs={landing.faqs} />
       <BreadcrumbJsonLd
         items={[
           { name: "Home", href: "/" },

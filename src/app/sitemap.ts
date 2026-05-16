@@ -194,7 +194,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.7,
     },
-    // Builder Portal
+    // Builder funnel page (SEO-targeted for builder/GC traffic)
+    {
+      url: `${baseUrl}/builders`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
+    // Builder Portal (plan upload form)
     {
       url: `${baseUrl}/builder-portal`,
       lastModified: new Date(),
