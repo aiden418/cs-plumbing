@@ -62,14 +62,14 @@ export default function Home() {
       <Hero />
       <StatsBar />
       <ServiceHighlights />
-      <CoastalComebackTeaser />
+      <BuilderShowcase />
       <WhyChooseUs />
+      <CoastalComebackTeaser />
       <ServiceAreasSection />
       <ServiceMapTeaser />
       <Testimonials />
       <GoogleReviews />
       <BrandsCarousel />
-      <BuilderShowcase />
       <CTASection />
     </PageTransition>
   );

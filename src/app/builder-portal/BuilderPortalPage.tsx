@@ -17,6 +17,8 @@ import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
 import PageTransition from "@/components/layout/PageTransition";
 import FileUpload from "@/components/builder-portal/FileUpload";
+import BuilderPortalIntro from "@/components/builder-portal/BuilderPortalIntro";
+import WhatHappensNext from "@/components/ui/WhatHappensNext";
 import { BUSINESS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
@@ -167,20 +169,26 @@ export default function BuilderPortalPage() {
 
   return (
     <PageTransition>
-      <section className="pt-24 sm:pt-28 lg:pt-32 pb-16 sm:pb-24">
+      <BuilderPortalIntro />
+
+      <section
+        id="upload-plans"
+        className="pt-16 sm:pt-20 lg:pt-24 pb-16 sm:pb-24 bg-white scroll-mt-24"
+      >
         <Container>
           <div className="max-w-2xl mx-auto">
             {/* Header */}
             <div className="text-center mb-8 sm:mb-12">
               <span className="inline-block text-primary text-xs sm:text-sm font-semibold tracking-widest uppercase mb-3">
-                Builder Portal
+                Submit your plans
               </span>
-              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-gray-900 mb-3">
-                Submit Plans for a Quote
-              </h1>
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-gray-900 mb-3">
+                Send us your project
+              </h2>
               <p className="text-gray-500 text-sm sm:text-base max-w-lg mx-auto">
-                Upload your blueprints and project details. We&apos;ll review
-                everything and get back to you with a detailed scope and quote.
+                Four short steps — contact info, project details, plans, then
+                review. We&apos;ll get back to you with a detailed scope and
+                quote within 3–5 business days.
               </p>
             </div>
 
@@ -572,6 +580,32 @@ export default function BuilderPortalPage() {
           </div>
         </Container>
       </section>
+
+      <WhatHappensNext
+        title="What happens after you submit"
+        steps={[
+          {
+            title: "Plans received",
+            description:
+              "You'll get a confirmation email immediately. The right project manager picks it up next business day.",
+          },
+          {
+            title: "Takeoff & questions",
+            description:
+              "We work through the plumbing scope and reach out with any clarifying questions on fixtures, materials, or scheduling.",
+          },
+          {
+            title: "Written proposal",
+            description:
+              "Detailed proposal back to you within 3–5 business days — scope, materials, schedule, price, and warranty terms.",
+          },
+          {
+            title: "Kickoff scheduled",
+            description:
+              "Once approved, we lock in rough-in dates and coordinate with your other trades to keep the build on track.",
+          },
+        ]}
+      />
     </PageTransition>
   );
 }

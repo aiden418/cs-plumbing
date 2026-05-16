@@ -103,53 +103,25 @@ export const STATS: Stat[] = [
 // SERVICES
 // ============================================
 
+// Order is intentional: major-project lanes (new construction, repiping,
+// remodels) lead, followed by commercial / UEP, then service work, with
+// emergency contained at the end. Emergency stays prominent on its own
+// /emergency page and in the sticky CTA — homepage doesn't lead with it.
 export const SERVICES: Service[] = [
   {
-    id: "emergency",
-    title: "Emergency Plumbing",
+    id: "new-construction",
+    title: "New Construction",
     description:
-      "Plumbing emergencies don't wait, and neither do we. Our team is available 24/7 to handle burst pipes, major leaks, sewage backups, and more.",
-    icon: "Siren",
-    href: "/services/leak-repair",
-    image: "/images/services/cards/emergency.jpg",
+      "With 8,500+ new construction homes completed, we're the go-to plumbing partner for builders who demand reliability and code compliance.",
+    icon: "HardHat",
+    href: "/services/new-construction",
+    image: "/images/services/cards/new-construction.jpg",
     features: [
-      "24/7 rapid response",
-      "Burst pipe repair",
-      "Sewage backup cleanup",
-      "Gas leak detection",
-      "Flood damage mitigation",
-    ],
-  },
-  {
-    id: "drain-cleaning",
-    title: "Drain Cleaning",
-    description:
-      "Professional drain cleaning services to eliminate clogs, restore flow, and prevent future blockages using state-of-the-art equipment.",
-    icon: "Waves",
-    href: "/services/drain-cleaning",
-    image: "/images/services/cards/drain-cleaning.jpg",
-    features: [
-      "Hydro-jetting",
-      "Camera inspection",
-      "Root intrusion removal",
-      "Preventive maintenance",
-      "All drain types",
-    ],
-  },
-  {
-    id: "water-heaters",
-    title: "Water Heaters",
-    description:
-      "Installation, repair, and replacement of traditional, tankless, and hybrid water heaters to keep your hot water flowing efficiently.",
-    icon: "Flame",
-    href: "/services/water-heaters",
-    image: "/images/services/cards/water-heaters.jpg",
-    features: [
-      "Tankless installation",
-      "Traditional tank repair",
-      "Hybrid systems",
-      "Energy-efficient upgrades",
-      "Same-day service",
+      "8,500+ homes completed",
+      "Builder partnerships",
+      "Timeline precision",
+      "Full permit management",
+      "Warranty coverage",
     ],
   },
   {
@@ -169,6 +141,22 @@ export const SERVICES: Service[] = [
     ],
   },
   {
+    id: "remodeling",
+    title: "Plumbing Remodels",
+    description:
+      "Expert plumbing for kitchen and bathroom remodels. From relocating pipes to installing premium fixtures, we ensure seamless results.",
+    icon: "PaintBucket",
+    href: "/services/plumbing-remodel",
+    image: "/images/services/cards/plumbing-remodel.jpg",
+    features: [
+      "Kitchen remodels",
+      "Bathroom renovations",
+      "Fixture upgrades",
+      "Pipe relocation",
+      "Code updates",
+    ],
+  },
+  {
     id: "commercial",
     title: "Commercial Plumbing",
     description:
@@ -185,19 +173,50 @@ export const SERVICES: Service[] = [
     ],
   },
   {
-    id: "new-construction",
-    title: "New Construction",
+    id: "uep-utilities",
+    title: "UEP Utilities Hookup",
     description:
-      "With 8,500+ new construction homes completed, we're the go-to plumbing partner for builders who demand reliability and code compliance.",
-    icon: "HardHat",
-    href: "/services/new-construction",
-    image: "/images/services/cards/new-construction.jpg",
+      "Full-service Cape Coral UEP utilities connection — water service, irrigation, sewer laterals, and septic abandonment. We handle every permit and inspection from start to finish.",
+    icon: "Shovel",
+    href: "/services/uep-utilities",
     features: [
-      "8,500+ homes completed",
-      "Builder partnerships",
-      "Timeline precision",
-      "Full permit management",
-      "Warranty coverage",
+      "Water service line",
+      "Irrigation line",
+      "Sewer lateral",
+      "Septic abandonment",
+      "All permits included",
+    ],
+  },
+  {
+    id: "water-heaters",
+    title: "Water Heaters",
+    description:
+      "Installation, repair, and replacement of traditional, tankless, and hybrid water heaters to keep your hot water flowing efficiently.",
+    icon: "Flame",
+    href: "/services/water-heaters",
+    image: "/images/services/cards/water-heaters.jpg",
+    features: [
+      "Tankless installation",
+      "Traditional tank repair",
+      "Hybrid systems",
+      "Energy-efficient upgrades",
+      "Same-day service",
+    ],
+  },
+  {
+    id: "drain-cleaning",
+    title: "Drain Cleaning",
+    description:
+      "Professional drain cleaning services to eliminate clogs, restore flow, and prevent future blockages using state-of-the-art equipment.",
+    icon: "Waves",
+    href: "/services/drain-cleaning",
+    image: "/images/services/cards/drain-cleaning.jpg",
+    features: [
+      "Hydro-jetting",
+      "Camera inspection",
+      "Root intrusion removal",
+      "Preventive maintenance",
+      "All drain types",
     ],
   },
   {
@@ -217,34 +236,19 @@ export const SERVICES: Service[] = [
     ],
   },
   {
-    id: "remodeling",
-    title: "Plumbing Remodels",
+    id: "emergency",
+    title: "Emergency Plumbing",
     description:
-      "Expert plumbing for kitchen and bathroom remodels. From relocating pipes to installing premium fixtures, we ensure seamless results.",
-    icon: "PaintBucket",
-    href: "/services/plumbing-remodel",
-    image: "/images/services/cards/plumbing-remodel.jpg",
+      "Plumbing emergencies don't wait, and neither do we. Our team is available 24/7 to handle burst pipes, major leaks, sewage backups, and more.",
+    icon: "Siren",
+    href: "/services/leak-repair",
+    image: "/images/services/cards/emergency.jpg",
     features: [
-      "Kitchen remodels",
-      "Bathroom renovations",
-      "Fixture upgrades",
-      "Pipe relocation",
-      "Code updates",
-    ],
-  },
-  {
-    id: "uep-utilities",
-    title: "UEP Utilities Hookup",
-    description:
-      "Full-service Cape Coral UEP utilities connection — water service, irrigation, sewer laterals, and septic abandonment. We handle every permit and inspection from start to finish.",
-    icon: "Shovel",
-    href: "/services/uep-utilities",
-    features: [
-      "Water service line",
-      "Irrigation line",
-      "Sewer lateral",
-      "Septic abandonment",
-      "All permits included",
+      "24/7 rapid response",
+      "Burst pipe repair",
+      "Sewage backup cleanup",
+      "Gas leak detection",
+      "Flood damage mitigation",
     ],
   },
 ];
