@@ -82,12 +82,15 @@ export default function ServiceAreasSection() {
         },
       });
 
-      // Refresh once images finish loading so the distance accounts for
-      // real layout (intrinsic image sizes can subtly re-flow card widths).
-      const imgs = Array.from(track.querySelectorAll("img"));
+      // Refresh once images settle. Debounced so 8 parallel image-loads
+      // don't fire 8 separate refreshes (which would cause micro-jitter
+      // during scroll).
+      let refreshTimer: ReturnType<typeof setTimeout> | null = null;
       const onAnyImageLoad = () => {
-        requestAnimationFrame(() => ScrollTrigger.refresh());
+        if (refreshTimer) clearTimeout(refreshTimer);
+        refreshTimer = setTimeout(() => ScrollTrigger.refresh(), 120);
       };
+      const imgs = Array.from(track.querySelectorAll("img"));
       imgs.forEach((img) => {
         if (!img.complete) {
           img.addEventListener("load", onAnyImageLoad, { once: true });
@@ -102,12 +105,13 @@ export default function ServiceAreasSection() {
     <section
       ref={sectionRef}
       id="service-areas"
-      className="relative bg-[#F5F5F7] overflow-hidden py-20 sm:py-28 lg:py-0 lg:h-screen lg:flex lg:items-center"
+      className="relative bg-[#F5F5F7] overflow-hidden py-20 sm:py-28 motion-safe:lg:py-0 motion-safe:lg:h-screen motion-safe:lg:flex motion-safe:lg:items-center"
       aria-label="Service areas"
     >
-      {/* Headline column — visible at all sizes; pinned on lg */}
-      <Container className="lg:absolute lg:inset-0 lg:flex lg:flex-col lg:justify-center lg:pointer-events-none lg:z-20">
-        <div className="lg:max-w-md lg:pointer-events-auto">
+      {/* Headline column — visible at all sizes; pinned on lg (motion-safe only).
+          Reduced-motion users get the static stacked layout instead. */}
+      <Container className="motion-safe:lg:absolute motion-safe:lg:inset-0 motion-safe:lg:flex motion-safe:lg:flex-col motion-safe:lg:justify-center motion-safe:lg:pointer-events-none motion-safe:lg:z-20">
+        <div className="motion-safe:lg:max-w-md motion-safe:lg:pointer-events-auto">
           <SectionHeading
             overline="Service Areas"
             title="Serving All of Southwest Florida"
@@ -116,12 +120,14 @@ export default function ServiceAreasSection() {
         </div>
       </Container>
 
-      {/* Horizontal track. Desktop: GSAP translates `x`. Mobile/tablet:
-          native overflow-x scroll-snap rail. */}
+      {/* Horizontal track. Desktop motion-safe: GSAP translates `x`. Mobile +
+          reduced-motion: native overflow-x scroll-snap rail (data-lenis-prevent
+          keeps Lenis from hijacking the native touch scroll). */}
       <div
+        data-lenis-prevent
         className="
-          relative w-full lg:absolute lg:inset-y-0 lg:right-0 lg:left-[35%] lg:flex lg:items-center
-          overflow-x-auto lg:overflow-visible snap-x snap-mandatory
+          relative w-full motion-safe:lg:absolute motion-safe:lg:inset-y-0 motion-safe:lg:right-0 motion-safe:lg:left-[35%] motion-safe:lg:flex motion-safe:lg:items-center
+          overflow-x-auto motion-safe:lg:overflow-visible snap-x snap-mandatory
           [-ms-overflow-style:none] [scrollbar-width:none]
           [&::-webkit-scrollbar]:hidden
         "
@@ -142,11 +148,13 @@ export default function ServiceAreasSection() {
                   h-[420px] sm:h-[460px] lg:h-[520px]
                   rounded-3xl overflow-hidden
                   border border-gray-200
+                  bg-gradient-to-br from-primary/20 via-primary/10 to-surface
                   card-lift card-lift-hover
                 "
                 aria-label={`Plumber in ${area.city}, ${area.state}`}
               >
-                {/* City image background */}
+                {/* City image background — eager so all 8 are loaded before
+                    pin-scroll starts; eliminates mid-scroll image pop-in. */}
                 <Image
                   src={imageSrc}
                   alt={`Aerial view of ${area.city}, ${area.state}`}
@@ -154,7 +162,7 @@ export default function ServiceAreasSection() {
                   sizes="(max-width: 640px) 78vw, (max-width: 1024px) 420px, 460px"
                   className="object-cover object-center scale-105 group-hover:scale-110 transition-transform duration-[1200ms] ease-[var(--ease-out-expo)]"
                   quality={80}
-                  loading="lazy"
+                  loading="eager"
                 />
 
                 {/* Apple-style gradient overlay — readable text bottom, image breathes top */}
