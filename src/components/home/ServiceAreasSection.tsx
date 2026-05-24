@@ -1,52 +1,238 @@
 "use client";
 
-import { MapPin, ArrowRight } from "lucide-react";
+import { useEffect, useRef } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { MapPin, ArrowRight, ArrowUpRight } from "lucide-react";
 import Container from "@/components/ui/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
 import ScrollReveal from "@/components/animations/ScrollReveal";
-import StaggerChildren, {
-  staggerItem,
-} from "@/components/animations/StaggerChildren";
-import { motion } from "framer-motion";
+import { registerGSAP, gsap, ScrollTrigger } from "@/lib/gsap";
 import { AREA_LANDINGS } from "@/lib/constants";
 
+// Per-city response copy. Falls back to "Same-day service" for any slug
+// not listed. Move into AREA_LANDINGS in Phase 2 once we verify per-city.
+const RESPONSE_TIMES: Record<string, string> = {
+  "north-fort-myers": "15 min response", // shop is here
+  "cape-coral": "30 min response",
+  "fort-myers": "30 min response",
+  "lehigh-acres": "45 min response",
+  "estero": "45 min response",
+  "bonita-springs": "60 min response",
+  "naples": "60 min response",
+  "sanibel": "60 min response",
+};
+
+// Per-city imagery sourced from Unsplash (free for commercial use).
+// Stored locally in /public/images/areas/<slug>.jpg so card load doesn't
+// depend on an external CDN.
+const AREA_IMAGES: Record<string, string> = {
+  "cape-coral": "/images/areas/cape-coral.jpg",
+  "fort-myers": "/images/areas/fort-myers.jpg",
+  "north-fort-myers": "/images/areas/north-fort-myers.jpg",
+  "naples": "/images/areas/naples.jpg",
+  "bonita-springs": "/images/areas/bonita-springs.jpg",
+  "lehigh-acres": "/images/areas/lehigh-acres.jpg",
+  "estero": "/images/areas/estero.jpg",
+  "sanibel": "/images/areas/sanibel.jpg",
+};
+
+// Soft fallback for any future slug that doesn't have an image yet
+const FALLBACK_IMAGE = "/images/gallery/aerial-waterfront-newbuild.jpg";
+
 export default function ServiceAreasSection() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    registerGSAP();
+
+    const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    if (!isDesktop || prefersReducedMotion) return;
+    if (!sectionRef.current || !trackRef.current) return;
+
+    const section = sectionRef.current;
+    const track = trackRef.current;
+
+    const ctx = gsap.context(() => {
+      // Slide the track until the LAST card's left edge sits at the parent's
+      // left edge. That guarantees Sanibel becomes the front-most visible
+      // card by end-of-scroll. Measured from offsetLeft (transform-immune).
+      const getDistance = () => {
+        const lastCard = track.lastElementChild as HTMLElement | null;
+        if (!lastCard) return 0;
+        // 24px nudge so Sanibel doesn't kiss the very edge.
+        return Math.max(0, lastCard.offsetLeft - 24);
+      };
+
+      gsap.to(track, {
+        x: () => -getDistance(),
+        ease: "none",
+        scrollTrigger: {
+          trigger: section,
+          start: "top top",
+          end: () => `+=${getDistance()}`,
+          scrub: 0.4,
+          pin: true,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+        },
+      });
+
+      // Refresh once images finish loading so the distance accounts for
+      // real layout (intrinsic image sizes can subtly re-flow card widths).
+      const imgs = Array.from(track.querySelectorAll("img"));
+      const onAnyImageLoad = () => {
+        requestAnimationFrame(() => ScrollTrigger.refresh());
+      };
+      imgs.forEach((img) => {
+        if (!img.complete) {
+          img.addEventListener("load", onAnyImageLoad, { once: true });
+        }
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="py-16 sm:py-24 lg:py-32">
-      <Container>
-        <SectionHeading
-          overline="Service Areas"
-          title="Serving All of Southwest Florida"
-          subtitle="From Cape Coral to Naples, C&S Plumbing delivers fast, reliable plumbing services across Lee and Collier County."
-        />
+    <section
+      ref={sectionRef}
+      id="service-areas"
+      className="relative bg-[#F5F5F7] overflow-hidden py-20 sm:py-28 lg:py-0 lg:h-screen lg:flex lg:items-center"
+      aria-label="Service areas"
+    >
+      {/* Headline column — visible at all sizes; pinned on lg */}
+      <Container className="lg:absolute lg:inset-0 lg:flex lg:flex-col lg:justify-center lg:pointer-events-none lg:z-20">
+        <div className="lg:max-w-md lg:pointer-events-auto">
+          <SectionHeading
+            overline="Service Areas"
+            title="Serving All of Southwest Florida"
+            subtitle="From Cape Coral to Naples — fast, reliable plumbing across Lee and Collier County."
+          />
+        </div>
+      </Container>
 
-        <StaggerChildren className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
-          {AREA_LANDINGS.map((area) => (
-            <motion.a
-              key={area.slug}
-              href={`/areas/${area.slug}`}
-              variants={staggerItem}
-              className="group flex items-center gap-2.5 p-4 sm:p-5 rounded-xl bg-[#F5F5F7] border border-gray-200 hover:border-primary/30 hover:shadow-sm transition-all duration-300"
-            >
-              <MapPin className="w-4 h-4 text-primary flex-shrink-0" />
-              <span className="text-sm font-medium text-gray-700 group-hover:text-primary transition-colors">
-                {area.city}, {area.state}
-              </span>
-            </motion.a>
-          ))}
-        </StaggerChildren>
+      {/* Horizontal track. Desktop: GSAP translates `x`. Mobile/tablet:
+          native overflow-x scroll-snap rail. */}
+      <div
+        className="
+          relative w-full lg:absolute lg:inset-y-0 lg:right-0 lg:left-[35%] lg:flex lg:items-center
+          overflow-x-auto lg:overflow-visible snap-x snap-mandatory
+          [-ms-overflow-style:none] [scrollbar-width:none]
+          [&::-webkit-scrollbar]:hidden
+        "
+      >
+        <div
+          ref={trackRef}
+          className="flex gap-4 sm:gap-6 px-6 lg:px-12 lg:will-change-transform"
+        >
+          {AREA_LANDINGS.map((area) => {
+            const imageSrc = AREA_IMAGES[area.slug] ?? FALLBACK_IMAGE;
+            return (
+              <Link
+                key={area.slug}
+                href={`/areas/${area.slug}`}
+                className="
+                  group relative shrink-0 snap-center
+                  w-[78vw] sm:w-[420px] lg:w-[460px]
+                  h-[420px] sm:h-[460px] lg:h-[520px]
+                  rounded-3xl overflow-hidden
+                  border border-gray-200
+                  card-lift card-lift-hover
+                "
+                aria-label={`Plumber in ${area.city}, ${area.state}`}
+              >
+                {/* City image background */}
+                <Image
+                  src={imageSrc}
+                  alt={`Aerial view of ${area.city}, ${area.state}`}
+                  fill
+                  sizes="(max-width: 640px) 78vw, (max-width: 1024px) 420px, 460px"
+                  className="object-cover object-center scale-105 group-hover:scale-110 transition-transform duration-[1200ms] ease-[var(--ease-out-expo)]"
+                  quality={80}
+                  loading="lazy"
+                />
 
+                {/* Apple-style gradient overlay — readable text bottom, image breathes top */}
+                <div
+                  aria-hidden
+                  className="absolute inset-0 pointer-events-none"
+                  style={{
+                    background:
+                      "linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.15) 40%, rgba(0,0,0,0.75) 100%)",
+                  }}
+                />
+
+                {/* Subtle primary-tinted glow on hover for cohesion with rest of site */}
+                <div
+                  aria-hidden
+                  className="absolute -top-20 -right-20 w-72 h-72 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
+                  style={{
+                    background:
+                      "radial-gradient(circle, rgba(0,119,204,0.35) 0%, rgba(0,119,204,0) 70%)",
+                  }}
+                />
+
+                {/* Big city name as graphic — now in white over the photo */}
+                <div className="absolute inset-0 flex items-end p-6 sm:p-8">
+                  <div className="relative z-10">
+                    <div className="inline-flex items-center gap-2 mb-3 sm:mb-4 px-3 py-1.5 rounded-full bg-white/90 backdrop-blur-sm border border-white/40">
+                      <MapPin className="w-3.5 h-3.5 text-primary" />
+                      <span className="text-xs font-semibold text-gray-800">
+                        {RESPONSE_TIMES[area.slug] ?? "Same-day service"}
+                      </span>
+                    </div>
+                    <h3
+                      className="text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-[0.95] tracking-tight"
+                      style={{ textShadow: "0 2px 24px rgba(0,0,0,0.45)" }}
+                    >
+                      {area.city}
+                    </h3>
+                    <p
+                      className="text-sm text-white/80 mt-1 font-medium"
+                      style={{ textShadow: "0 1px 8px rgba(0,0,0,0.5)" }}
+                    >
+                      {area.state}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Hover arrow disc */}
+                <div
+                  className="
+                    absolute top-6 right-6 w-11 h-11 rounded-full
+                    bg-white/95 backdrop-blur-sm text-primary flex items-center justify-center
+                    opacity-0 translate-x-2
+                    group-hover:opacity-100 group-hover:translate-x-0
+                    transition-all duration-400
+                  "
+                  style={{ transitionTimingFunction: "var(--ease-out-expo)" }}
+                >
+                  <ArrowUpRight className="w-5 h-5" />
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Closing copy — only renders below lg so the pinned section stays clean */}
+      <Container className="relative z-10 mt-10 lg:hidden">
         <ScrollReveal>
-          <div className="mt-8 sm:mt-10 text-center">
+          <div className="text-center">
             <p className="text-gray-500 text-sm mb-4">
               Plus Fort Myers Beach, Captiva Island, Punta Gorda, Port Charlotte, Marco Island & more.
             </p>
-            <a
+            <Link
               href="/booking"
               className="inline-flex items-center gap-1.5 text-primary text-sm font-medium hover:gap-2.5 transition-all"
             >
               Book a Plumber in Your Area <ArrowRight className="w-4 h-4" />
-            </a>
+            </Link>
           </div>
         </ScrollReveal>
       </Container>

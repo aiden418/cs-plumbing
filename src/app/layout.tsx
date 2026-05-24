@@ -7,6 +7,7 @@ import StickyMobileCTA from "@/components/layout/StickyMobileCTA";
 import DeferredWidgets from "@/components/layout/DeferredWidgets";
 import JsonLd from "@/components/seo/JsonLd";
 import MetaPixel from "@/components/analytics/MetaPixel";
+import SmoothScrollProvider from "@/components/providers/SmoothScrollProvider";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -102,8 +103,10 @@ export default function RootLayout({
           Skip to content
         </a>
         <Navbar />
-        <main id="main" className="min-h-screen">{children}</main>
-        <Footer />
+        <SmoothScrollProvider>
+          <main id="main" className="min-h-screen">{children}</main>
+          <Footer />
+        </SmoothScrollProvider>
         <StickyMobileCTA />
         <DeferredWidgets />
         <MetaPixel />

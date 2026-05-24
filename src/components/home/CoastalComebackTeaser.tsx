@@ -75,7 +75,7 @@ export default function CoastalComebackTeaser() {
                   <li key={t.name}>
                     <Link
                       href="/coastal-comeback-plan#plans"
-                      className={`group flex items-center justify-between rounded-xl px-4 py-3 sm:px-5 sm:py-4 border transition-all duration-300 ${
+                      className={`group flex items-center justify-between rounded-xl px-4 py-3 sm:px-5 sm:py-4 border card-lift card-lift-hover-subtle ${
                         t.featured
                           ? "bg-primary/5 border-primary/30 hover:border-primary"
                           : "bg-[#F5F5F7] border-gray-200 hover:border-primary/40"

@@ -91,7 +91,7 @@ export default function Testimonials() {
                     key={i}
                     className="flex-[0_0_100%] sm:flex-[0_0_calc(50%-8px)] lg:flex-[0_0_calc(33.333%-16px)] min-w-0"
                   >
-                    <div className="h-full bg-white rounded-2xl border border-gray-200 p-5 sm:p-6 lg:p-8 flex flex-col">
+                    <div className="h-full bg-white rounded-2xl border border-gray-200 p-5 sm:p-6 lg:p-8 flex flex-col card-lift card-lift-hover-subtle">
                       <Quote className="w-6 h-6 sm:w-8 sm:h-8 text-primary/30 mb-3 sm:mb-4" />
 
                       <div className="flex gap-1 mb-3 sm:mb-4">

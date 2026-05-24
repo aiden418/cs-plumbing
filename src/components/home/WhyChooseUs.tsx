@@ -62,7 +62,7 @@ export default function WhyChooseUs() {
             <motion.div
               key={reason.title}
               variants={staggerItem}
-              className="group p-5 sm:p-6 lg:p-8 rounded-2xl bg-white border border-gray-200 hover:border-primary/20 hover:shadow-[0_2px_20px_rgba(0,0,0,0.06)] transition-all duration-500"
+              className="group p-5 sm:p-6 lg:p-8 rounded-2xl bg-white border border-gray-200 hover:border-primary/20 card-lift card-lift-hover"
             >
               <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-4 sm:mb-5 group-hover:scale-110 transition-transform duration-300">
                 {reason.icon}

@@ -125,7 +125,7 @@ export default async function GoogleReviews() {
             {live.reviews.map((r, i) => (
               <article
                 key={i}
-                className="bg-[#F5F5F7] border border-gray-200 rounded-2xl p-5"
+                className="bg-[#F5F5F7] border border-gray-200 rounded-2xl p-5 card-lift card-lift-hover-subtle"
               >
                 <div className="flex items-center justify-between mb-3">
                   <Stars rating={r.rating} />

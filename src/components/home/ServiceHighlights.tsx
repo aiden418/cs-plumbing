@@ -44,7 +44,7 @@ export default function ServiceHighlights() {
           {highlighted.map((service) => (
             <motion.div key={service.id} variants={staggerItem}>
               <Link href={service.href} className="group block h-full">
-                <div className="relative h-full bg-white rounded-2xl border border-gray-200 p-5 sm:p-6 lg:p-8 transition-all duration-500 hover:border-primary/30 hover:shadow-[0_2px_20px_rgba(0,0,0,0.08)] overflow-hidden">
+                <div className="relative h-full bg-white rounded-2xl border border-gray-200 p-5 sm:p-6 lg:p-8 hover:border-primary/30 overflow-hidden card-lift card-lift-hover">
                   {/* Background photo layer */}
                   {service.image && (
                     <div className="absolute inset-0 pointer-events-none">

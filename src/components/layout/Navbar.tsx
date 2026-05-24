@@ -25,13 +25,19 @@ export default function Navbar() {
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
+    const lenis = (
+      window as unknown as { __lenis?: { stop: () => void; start: () => void } }
+    ).__lenis;
     if (isMobileOpen) {
       document.body.style.overflow = "hidden";
+      lenis?.stop();
     } else {
       document.body.style.overflow = "";
+      lenis?.start();
     }
     return () => {
       document.body.style.overflow = "";
+      lenis?.start();
     };
   }, [isMobileOpen]);
 

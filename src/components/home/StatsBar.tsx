@@ -1,14 +1,14 @@
 "use client";
 
 import Image from "next/image";
+import { motion } from "framer-motion";
 import CountUp from "@/components/animations/CountUp";
-import ScrollReveal from "@/components/animations/ScrollReveal";
 import Container from "@/components/ui/Container";
 import { STATS } from "@/lib/constants";
 
 export default function StatsBar() {
   return (
-    <section className="relative py-12 sm:py-16 lg:py-20 border-y border-gray-200 bg-[#F5F5F7] overflow-hidden">
+    <section className="relative py-20 sm:py-28 lg:py-36 border-y border-gray-200 bg-[#F5F5F7] overflow-hidden">
       {/* Background image */}
       <div className="absolute inset-0 pointer-events-none">
         <Image
@@ -19,30 +19,40 @@ export default function StatsBar() {
           sizes="100vw"
           quality={75}
         />
-        <div className="absolute inset-0 bg-white/80 backdrop-blur-sm" />
+        {/* Lighter overlay so the drone photo reads through */}
+        <div className="absolute inset-0 bg-white/50 backdrop-blur-[6px]" />
       </div>
       <Container className="relative z-10">
-        <ScrollReveal>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-4">
-            {STATS.map((stat, i) => (
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-4">
+          {STATS.map((stat, i) => (
+            <motion.div
+              key={stat.label}
+              initial={{ scale: 0.92, opacity: 0 }}
+              whileInView={{ scale: 1, opacity: 1 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{
+                duration: 0.7,
+                delay: i * 0.08,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+              className="text-center"
+            >
               <div
-                key={stat.label}
-                className="text-center"
+                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-gray-900 mb-1 sm:mb-2 tabular-nums"
+                style={{ textShadow: "0 0 32px rgba(0,119,204,0.15)" }}
               >
-                <div className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 mb-1 sm:mb-2">
-                  <CountUp
-                    end={stat.value}
-                    suffix={stat.suffix}
-                    duration={2 + i * 0.2}
-                  />
-                </div>
-                <div className="text-[10px] sm:text-xs md:text-sm text-gray-500 uppercase tracking-wider font-medium">
-                  {stat.label}
-                </div>
+                <CountUp
+                  end={stat.value}
+                  suffix={stat.suffix}
+                  duration={2 + i * 0.2}
+                />
               </div>
-            ))}
-          </div>
-        </ScrollReveal>
+              <div className="text-[10px] sm:text-xs md:text-sm text-gray-500 uppercase tracking-wider font-medium">
+                {stat.label}
+              </div>
+            </motion.div>
+          ))}
+        </div>
       </Container>
     </section>
   );

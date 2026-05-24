@@ -7,7 +7,7 @@ import { BUILDERS } from "@/lib/builders-data";
 
 function BuilderLogo({ name, logo }: { name: string; logo: string }) {
   return (
-    <div className="flex-shrink-0 px-5 sm:px-6 py-2.5 sm:py-3 bg-white border border-gray-200 rounded-full flex items-center justify-center group hover:border-primary/30 transition-all duration-300">
+    <div className="flex-shrink-0 px-5 sm:px-6 py-2.5 sm:py-3 bg-white border border-gray-200 rounded-full flex items-center justify-center group hover:border-primary/30 card-lift card-lift-hover-subtle">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={logo}
@@ -17,6 +17,9 @@ function BuilderLogo({ name, logo }: { name: string; logo: string }) {
     </div>
   );
 }
+
+const PILL_INTERACT =
+  "transition-all duration-400 ease-[var(--ease-out-expo)] group-hover/marquee:opacity-50 hover:!opacity-100 hover:scale-[1.06]";
 
 export default function BuilderShowcase() {
   return (
@@ -31,17 +34,28 @@ export default function BuilderShowcase() {
         </ScrollReveal>
       </Container>
 
-      {/* Marquee — reverse direction for visual variety */}
-      <div className="relative overflow-hidden mt-8 sm:mt-12">
+      {/* Marquee — reverse direction for visual variety. Two-unit no-outer-gap
+          structure to keep the loop seamless; pause + spotlight on hover. */}
+      <div className="relative overflow-hidden mt-8 sm:mt-12 group/marquee marquee-pausable">
         {/* Fade edges */}
         <div className="absolute left-0 top-0 bottom-0 w-16 sm:w-24 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
         <div className="absolute right-0 top-0 bottom-0 w-16 sm:w-24 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
 
-        <div className="flex animate-marquee-reverse gap-4 sm:gap-6">
-          {/* Duplicate for seamless loop */}
-          {[...BUILDERS, ...BUILDERS].map((builder, i) => (
-            <BuilderLogo key={`${builder.name}-${i}`} name={builder.name} logo={builder.logo} />
-          ))}
+        <div className="flex animate-marquee-reverse">
+          <ul className="flex shrink-0 gap-4 sm:gap-6 pr-4 sm:pr-6">
+            {BUILDERS.map((builder) => (
+              <li key={builder.name} className={PILL_INTERACT}>
+                <BuilderLogo name={builder.name} logo={builder.logo} />
+              </li>
+            ))}
+          </ul>
+          <ul className="flex shrink-0 gap-4 sm:gap-6 pr-4 sm:pr-6" aria-hidden="true">
+            {BUILDERS.map((builder) => (
+              <li key={`dup-${builder.name}`} className={PILL_INTERACT}>
+                <BuilderLogo name={builder.name} logo={builder.logo} />
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </section>
