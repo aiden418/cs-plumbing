@@ -1,3 +1,5 @@
+import { BUSINESS } from "@/lib/constants";
+
 export default function JsonLd() {
   const BASE = "https://www.csplumbinglee.com";
 
@@ -65,7 +67,7 @@ export default function JsonLd() {
     url: BASE,
     logo: `${BASE}/images/logos/logo-new.png`,
     image: `${BASE}/images/hero/drone-construction.jpg`,
-    telephone: "+18337562648",
+    telephone: `+1${BUSINESS.phoneRaw}`,
     email: "office@csplumbinglee.com",
     foundingDate: "1998",
     numberOfEmployees: { "@type": "QuantitativeValue", minValue: 5, maxValue: 10 },

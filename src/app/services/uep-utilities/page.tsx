@@ -3,7 +3,7 @@ import PageTransition from "@/components/layout/PageTransition";
 import UEPServicePage from "./UEPServicePage";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import CTASection from "@/components/home/CTASection";
-import { SERVICE_LANDINGS } from "@/lib/constants";
+import { BUSINESS, SERVICE_LANDINGS } from "@/lib/constants";
 
 const landing = SERVICE_LANDINGS.find((s) => s.slug === "uep-utilities")!;
 
@@ -46,7 +46,7 @@ function ServiceJsonLd() {
       "@type": "Plumber",
       "@id": "https://www.csplumbinglee.com/#organization",
       name: "C&S Plumbing of Lee",
-      telephone: "+18337562648",
+      telephone: `+1${BUSINESS.phoneRaw}`,
     },
     areaServed: {
       "@type": "City",

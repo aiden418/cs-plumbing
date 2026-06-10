@@ -1,4 +1,5 @@
 import type { ServiceLanding } from "@/lib/types";
+import { BUSINESS } from "@/lib/constants";
 
 export default function ServiceJsonLd({ landing }: { landing: ServiceLanding }) {
   const BASE = "https://www.csplumbinglee.com";
@@ -15,7 +16,7 @@ export default function ServiceJsonLd({ landing }: { landing: ServiceLanding }) 
       "@type": "Plumber",
       "@id": `${BASE}/#organization`,
       name: "C&S Plumbing of Lee",
-      telephone: "+18337562648",
+      telephone: `+1${BUSINESS.phoneRaw}`,
       hasCredential: {
         "@type": "EducationalOccupationalCredential",
         credentialCategory: "Professional License",

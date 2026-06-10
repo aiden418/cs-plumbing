@@ -4,6 +4,7 @@ import PageTransition from "@/components/layout/PageTransition";
 import CTASection from "@/components/home/CTASection";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import FaqJsonLd from "@/components/seo/FaqJsonLd";
+import { BUSINESS } from "@/lib/constants";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/faq" },
@@ -237,7 +238,7 @@ export default function FAQPage() {
               Contact us
             </Link>{" "}
             or call{" "}
-            <a href="tel:8337562648" className="text-primary font-semibold hover:underline">
+            <a href={`tel:${BUSINESS.phoneRaw}`} className="text-primary font-semibold hover:underline">
               833-PLUMB-IT
             </a>
             .
@@ -333,7 +334,7 @@ export default function FAQPage() {
               Get an Instant Quote
             </Link>
             <a
-              href="tel:8337562648"
+              href={`tel:${BUSINESS.phoneRaw}`}
               className="inline-flex items-center justify-center px-6 py-3 text-gray-600 font-semibold hover:text-primary transition-colors"
             >
               Call 833-PLUMB-IT

@@ -166,7 +166,7 @@ export async function POST(request: Request) {
             </div>
 
             <p style="color: #666; font-size: 14px;">
-              Or call us anytime: <a href="tel:8337562648" style="color: #0099FF;">833-PLUMB-IT</a>
+              Or call us anytime: <a href="tel:8337586248" style="color: #0099FF;">833-PLUMB-IT</a>
             </p>
 
             <p style="color: #999; font-size: 12px; margin-top: 20px;">
