@@ -106,7 +106,7 @@ export default function Hero() {
               </span>
             </motion.div>
 
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[5.5rem] xl:text-[6.5rem] font-black text-white leading-[0.95] tracking-tight">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[4.5rem] xl:text-[5.25rem] font-black text-white leading-[0.95] tracking-tight">
               {HEADLINE_LINES.map((line, lineIdx) => {
                 const isAccentLine = lineIdx === 1;
                 return (

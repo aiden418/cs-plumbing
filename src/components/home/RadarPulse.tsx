@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { gsap, registerGSAP } from "@/lib/gsap";
 
 const GOLD = "#E8A427";
@@ -8,20 +8,14 @@ const GOLD = "#E8A427";
 /**
  * Scroll-scrubbed radar rings behind the emergency phone number — the
  * "pressure release" payoff of the pipeline. Transform/opacity only.
- * Reduced motion: a single static ring.
+ * Reduced motion: CSS swaps the animated rings for a single static ring.
  */
 export default function RadarPulse() {
   const hostRef = useRef<HTMLDivElement>(null);
-  const [mounted, setMounted] = useState(false);
-  const [reduced, setReduced] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
-    setReduced(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
-  }, []);
-
-  useEffect(() => {
-    if (!mounted || reduced || !hostRef.current) return;
+    if (!hostRef.current) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     registerGSAP();
     const rings = hostRef.current.querySelectorAll(".radar-ring");
 
@@ -51,19 +45,7 @@ export default function RadarPulse() {
     }, hostRef);
 
     return () => ctx.revert();
-  }, [mounted, reduced]);
-
-  if (!mounted) return null;
-
-  if (reduced) {
-    return (
-      <div
-        aria-hidden
-        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 rounded-full border-2 pointer-events-none"
-        style={{ borderColor: "rgba(232,164,39,0.25)" }}
-      />
-    );
-  }
+  }, []);
 
   return (
     <div
@@ -74,10 +56,15 @@ export default function RadarPulse() {
       {[0, 1, 2].map((i) => (
         <div
           key={i}
-          className="radar-ring absolute inset-0 rounded-full border-2 opacity-0 will-change-transform"
+          className="radar-ring motion-reduce:hidden absolute inset-0 rounded-full border-2 opacity-0 will-change-transform"
           style={{ borderColor: GOLD }}
         />
       ))}
+      {/* Static ring for reduced-motion users */}
+      <div
+        className="hidden motion-reduce:block absolute inset-[15%] rounded-full border-2"
+        style={{ borderColor: "rgba(232,164,39,0.25)" }}
+      />
     </div>
   );
 }

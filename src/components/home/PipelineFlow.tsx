@@ -128,10 +128,14 @@ export default function PipelineFlow() {
       const startX = c.left + 36;
       const startY = c.bottom + 28;
 
+      // Adaptive first drop: deep enough to read as a drop, but never so
+      // deep that the cross-elbow collides with the stats band below.
+      const dropY = startY + Math.min(110, Math.max(36, (st.top - startY) * 0.45));
+
       const points: Pt[] = [
         { x: startX, y: startY },
-        { x: startX, y: startY + 110 },          // drop out of the CTA
-        { x: centerX, y: startY + 110 },          // elbow toward center  [gauge 0]
+        { x: startX, y: dropY },                  // drop out of the CTA
+        { x: centerX, y: dropY },                 // elbow toward center  [gauge 0]
         { x: centerX, y: st.top },                // down to the stats band [gauge 1 = gold tick]
         { x: centerX, y: sv.top + 56 },           // straight through stats into services
         { x: gutterX, y: sv.top + 56 },           // elbow into the gutter [gauge 2]

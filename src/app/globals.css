@@ -103,7 +103,9 @@
 @layer base {
   h1, h2, h3, h4, h5, h6 {
     color: #1D1D1F;
-    font-family: var(--font-display), var(--font-sans), system-ui, sans-serif;
+    /* --font-montserrat directly: @theme inline tokens aren't emitted as
+       runtime vars, but the next/font variable lives on <body> */
+    font-family: var(--font-montserrat), var(--font-inter), system-ui, sans-serif;
     font-weight: 700;
     letter-spacing: -0.02em;
     line-height: 1.1;
