@@ -42,63 +42,111 @@ const FALLBACK_IMAGE = "/images/gallery/aerial-waterfront-newbuild.jpg";
 
 export default function ServiceAreasSection() {
   const sectionRef = useRef<HTMLElement>(null);
+  const railRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     registerGSAP();
-
-    const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
-    if (!isDesktop || prefersReducedMotion) return;
-    if (!sectionRef.current || !trackRef.current) return;
+    if (!sectionRef.current || !trackRef.current || !railRef.current) return;
 
     const section = sectionRef.current;
+    const rail = railRef.current;
     const track = trackRef.current;
+    let cancelled = false;
 
-    const ctx = gsap.context(() => {
-      // Slide the track until the LAST card's left edge sits at the parent's
-      // left edge. That guarantees Sanibel becomes the front-most visible
-      // card by end-of-scroll. Measured from offsetLeft (transform-immune).
-      const getDistance = () => {
-        const lastCard = track.lastElementChild as HTMLElement | null;
-        if (!lastCard) return 0;
-        // 24px nudge so Sanibel doesn't kiss the very edge.
-        return Math.max(0, lastCard.offsetLeft - 24);
-      };
+    // matchMedia (instead of a one-shot matches check) so resizing across
+    // the lg boundary cleanly creates/destroys the pin — the old version
+    // left a stale pin behind.
+    const mm = gsap.matchMedia();
+    mm.add(
+      "(min-width: 1024px) and (prefers-reduced-motion: no-preference)",
+      () => {
+        // While pinned, the rail covers most of the viewport. With
+        // data-lenis-prevent set, wheel events over it escaped Lenis and
+        // raw-scrolled the page against the scrubbed pin — the source of
+        // the "buggy" scroll feel. Desktop hands the wheel back to Lenis.
+        rail.removeAttribute("data-lenis-prevent");
 
-      gsap.to(track, {
-        x: () => -getDistance(),
-        ease: "none",
-        scrollTrigger: {
-          trigger: section,
-          start: "top top",
-          end: () => `+=${getDistance()}`,
-          scrub: 0.4,
-          pin: true,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
-        },
-      });
+        const watermarks = Array.from(
+          section.querySelectorAll<HTMLElement>(".area-watermark"),
+        );
+        const counter = section.querySelector<HTMLElement>(".area-counter");
+        const progressFill =
+          section.querySelector<HTMLElement>(".progress-fill");
+        const cardImages = track.querySelectorAll<HTMLElement>(
+          ".card-img-inner",
+        );
+        const total = watermarks.length;
+        let activeIdx = -1;
 
-      // Refresh once images settle. Debounced so 8 parallel image-loads
-      // don't fire 8 separate refreshes (which would cause micro-jitter
-      // during scroll).
-      let refreshTimer: ReturnType<typeof setTimeout> | null = null;
-      const onAnyImageLoad = () => {
-        if (refreshTimer) clearTimeout(refreshTimer);
-        refreshTimer = setTimeout(() => ScrollTrigger.refresh(), 120);
-      };
-      const imgs = Array.from(track.querySelectorAll("img"));
-      imgs.forEach((img) => {
-        if (!img.complete) {
-          img.addEventListener("load", onAnyImageLoad, { once: true });
-        }
-      });
-    }, sectionRef);
+        const setActive = (idx: number) => {
+          if (idx === activeIdx) return;
+          activeIdx = idx;
+          watermarks.forEach((el, i) => {
+            gsap.to(el, {
+              opacity: i === idx ? 1 : 0,
+              duration: 0.35,
+              ease: "power2.out",
+              overwrite: true,
+            });
+          });
+          if (counter) {
+            counter.textContent = `${String(idx + 1).padStart(2, "0")} / ${String(total).padStart(2, "0")}`;
+          }
+        };
 
-    return () => ctx.revert();
+        // Slide the track until the LAST card's left edge sits at the
+        // parent's left edge (24px nudge). offsetLeft is transform-immune.
+        const getDistance = () => {
+          const lastCard = track.lastElementChild as HTMLElement | null;
+          if (!lastCard) return 0;
+          return Math.max(0, lastCard.offsetLeft - 24);
+        };
+
+        const tl = gsap.timeline({
+          defaults: { ease: "none" },
+          scrollTrigger: {
+            trigger: section,
+            start: "top top",
+            end: () => `+=${getDistance()}`,
+            scrub: 0.6,
+            pin: true,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+            onUpdate(self) {
+              setActive(
+                Math.min(total - 1, Math.round(self.progress * (total - 1))),
+              );
+            },
+          },
+        });
+        tl.to(track, { x: () => -getDistance() }, 0);
+        if (progressFill) tl.to(progressFill, { scaleX: 1 }, 0);
+        if (cardImages.length) tl.fromTo(cardImages, { xPercent: 0 }, { xPercent: -6 }, 0);
+
+        setActive(0);
+
+        return () => {
+          rail.setAttribute("data-lenis-prevent", "");
+          tl.kill();
+        };
+      },
+    );
+
+    // One refresh after every card image has actually decoded — replaces
+    // the old per-load debounce that could still fire mid-scroll.
+    Promise.all(
+      Array.from(track.querySelectorAll("img")).map((img) =>
+        img.decode().catch(() => {}),
+      ),
+    ).then(() => {
+      if (!cancelled) ScrollTrigger.refresh();
+    });
+
+    return () => {
+      cancelled = true;
+      mm.revert();
+    };
   }, []);
 
   return (
@@ -108,6 +156,22 @@ export default function ServiceAreasSection() {
       className="relative bg-[#F5F5F7] overflow-hidden py-20 sm:py-28 motion-safe:lg:py-0 motion-safe:lg:h-screen motion-safe:lg:flex motion-safe:lg:items-center"
       aria-label="Service areas"
     >
+      {/* Giant city-name watermark — crossfades as the rail traverses SWFL.
+          Decorative duplicate of the card headings; desktop pin only. */}
+      <div
+        aria-hidden
+        className="hidden motion-safe:lg:flex absolute inset-0 items-center justify-center overflow-hidden pointer-events-none select-none"
+      >
+        {AREA_LANDINGS.map((area) => (
+          <span
+            key={area.slug}
+            className="area-watermark absolute font-display font-black text-[10rem] xl:text-[13rem] leading-none tracking-tighter text-navy/[0.06] whitespace-nowrap opacity-0"
+          >
+            {area.city}
+          </span>
+        ))}
+      </div>
+
       {/* Headline column — visible at all sizes; pinned on lg (motion-safe only).
           Reduced-motion users get the static stacked layout instead. */}
       <Container className="motion-safe:lg:absolute motion-safe:lg:inset-0 motion-safe:lg:flex motion-safe:lg:flex-col motion-safe:lg:justify-center motion-safe:lg:pointer-events-none motion-safe:lg:z-20">
@@ -124,6 +188,7 @@ export default function ServiceAreasSection() {
           reduced-motion: native overflow-x scroll-snap rail (data-lenis-prevent
           keeps Lenis from hijacking the native touch scroll). */}
       <div
+        ref={railRef}
         data-lenis-prevent
         className="
           relative w-full motion-safe:lg:absolute motion-safe:lg:inset-y-0 motion-safe:lg:right-0 motion-safe:lg:left-[35%] motion-safe:lg:flex motion-safe:lg:items-center
@@ -153,17 +218,20 @@ export default function ServiceAreasSection() {
                 "
                 aria-label={`Plumber in ${area.city}, ${area.state}`}
               >
-                {/* City image background — eager so all 8 are loaded before
-                    pin-scroll starts; eliminates mid-scroll image pop-in. */}
-                <Image
-                  src={imageSrc}
-                  alt={`Aerial view of ${area.city}, ${area.state}`}
-                  fill
-                  sizes="(max-width: 640px) 78vw, (max-width: 1024px) 420px, 460px"
-                  className="object-cover object-center scale-105 group-hover:scale-110 transition-transform duration-[1200ms] ease-[var(--ease-out-expo)]"
-                  quality={80}
-                  loading="eager"
-                />
+                {/* City image — eager so all 8 are decoded before pin-scroll
+                    starts. The inner wrapper is 16% wider than the card and
+                    pans (transform-only) as the rail scrubs for depth. */}
+                <div className="card-img-inner absolute inset-y-0 -left-[8%] -right-[8%] will-change-transform">
+                  <Image
+                    src={imageSrc}
+                    alt={`Aerial view of ${area.city}, ${area.state}`}
+                    fill
+                    sizes="(max-width: 640px) 90vw, (max-width: 1024px) 488px, 534px"
+                    className="object-cover object-center scale-105 group-hover:scale-110 transition-transform duration-[1200ms] ease-[var(--ease-out-expo)]"
+                    quality={80}
+                    loading="eager"
+                  />
+                </div>
 
                 {/* Apple-style gradient overlay — readable text bottom, image breathes top */}
                 <div
@@ -172,16 +240,6 @@ export default function ServiceAreasSection() {
                   style={{
                     background:
                       "linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.15) 40%, rgba(0,0,0,0.75) 100%)",
-                  }}
-                />
-
-                {/* Subtle primary-tinted glow on hover for cohesion with rest of site */}
-                <div
-                  aria-hidden
-                  className="absolute -top-20 -right-20 w-72 h-72 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
-                  style={{
-                    background:
-                      "radial-gradient(circle, rgba(0,119,204,0.35) 0%, rgba(0,119,204,0) 70%)",
                   }}
                 />
 
@@ -225,6 +283,19 @@ export default function ServiceAreasSection() {
               </Link>
             );
           })}
+        </div>
+      </div>
+
+      {/* Progress line + counter — desktop pin only */}
+      <div
+        aria-hidden
+        className="hidden motion-safe:lg:flex absolute bottom-10 left-[35%] right-12 z-20 items-center gap-5 pointer-events-none"
+      >
+        <span className="area-counter text-sm font-bold text-gray-700 tabular-nums tracking-[0.2em]">
+          01 / 08
+        </span>
+        <div className="relative flex-1 h-[2px] bg-gray-300/80 rounded-full overflow-hidden">
+          <div className="progress-fill absolute inset-0 bg-gold origin-left scale-x-0 will-change-transform rounded-full" />
         </div>
       </div>
 
