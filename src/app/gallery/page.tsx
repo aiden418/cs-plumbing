@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import GalleryPage from "./GalleryPage";
+import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/gallery" },
@@ -22,5 +23,15 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <GalleryPage />;
+  return (
+    <>
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", href: "/" },
+          { name: "Our Work", href: "/gallery" },
+        ]}
+      />
+      <GalleryPage />
+    </>
+  );
 }

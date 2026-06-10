@@ -1,5 +1,15 @@
 import type { BlogPost } from "@/lib/types";
 
+const CATEGORY_IMAGES: Record<string, string> = {
+  Repiping: "/images/services/cards/repiping.jpg",
+  "Water Heaters": "/images/services/cards/water-heaters.jpg",
+  Emergency: "/images/services/cards/emergency.jpg",
+  "Drain Cleaning": "/images/services/cards/drain-cleaning.jpg",
+  "Water Quality": "/images/services/cards/water-softeners.jpg",
+  "Leak Repair": "/images/services/cards/emergency.jpg",
+  "UEP & Utilities": "/images/services/uep-utilities/photo-1.jpg",
+};
+
 export default function ArticleJsonLd({ post }: { post: BlogPost }) {
   const BASE = "https://www.csplumbinglee.com";
 
@@ -10,7 +20,7 @@ export default function ArticleJsonLd({ post }: { post: BlogPost }) {
     description: post.metaDescription,
     datePublished: post.publishDate,
     dateModified: post.publishDate,
-    image: `${BASE}/images/hero/drone-construction.jpg`,
+    image: `${BASE}${CATEGORY_IMAGES[post.category] ?? "/images/hero/drone-construction.jpg"}`,
     url: `${BASE}/blog/${post.slug}`,
     inLanguage: "en-US",
     isAccessibleForFree: true,

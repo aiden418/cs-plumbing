@@ -22,11 +22,18 @@ export async function generateMetadata({
   return {
     title: project.metaTitle,
     description: project.metaDescription,
+    keywords: [
+      project.name,
+      `${project.category} plumbing`,
+      ...(project.location ? [`plumbing project ${project.location}`] : []),
+      "C&S Plumbing projects",
+    ],
     alternates: { canonical: `/projects/${project.slug}` },
     openGraph: {
       title: project.metaTitle,
       description: project.metaDescription,
       url: `https://www.csplumbinglee.com/projects/${project.slug}`,
+      images: [project.coverImage],
     },
   };
 }
