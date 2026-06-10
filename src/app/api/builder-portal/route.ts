@@ -34,14 +34,6 @@ export async function POST(request: Request) {
     const rl = rateLimit(ip);
     if (!rl.ok) return tooManyRequests(rl.retryAfter);
 
-    if (!process.env.RESEND_API_KEY) {
-      console.error("RESEND_API_KEY is not configured");
-      return NextResponse.json(
-        { error: "Email service unavailable. Please call 833-PLUMB-IT." },
-        { status: 500 }
-      );
-    }
-    const resend = new Resend(process.env.RESEND_API_KEY);
     const formData = await request.formData();
 
     const raw = Object.fromEntries(
@@ -57,6 +49,15 @@ export async function POST(request: Request) {
     if (isHoneypotTripped(website)) {
       return NextResponse.json({ success: true });
     }
+
+    if (!process.env.RESEND_API_KEY) {
+      console.error("RESEND_API_KEY is not configured");
+      return NextResponse.json(
+        { error: "Email service unavailable. Please call 833-PLUMB-IT." },
+        { status: 500 }
+      );
+    }
+    const resend = new Resend(process.env.RESEND_API_KEY);
 
     // Extract files
     const fileEntries = formData.getAll("files") as File[];
