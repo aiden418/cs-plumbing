@@ -32,8 +32,9 @@ export default function ServiceHighlights() {
   const highlighted = SERVICES.slice(0, 6);
 
   return (
-    <section className="py-16 sm:py-24 lg:py-32">
-      <Container>
+    <section data-pipe-node="services" className="py-16 sm:py-24 lg:py-32">
+      {/* relative z-10 keeps cards/heading above the decorative pipeline overlay */}
+      <Container className="relative z-10">
         <SectionHeading
           overline="What We Do"
           title="Expert Plumbing Services"

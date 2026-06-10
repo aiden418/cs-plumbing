@@ -3,6 +3,7 @@ import dynamic from "next/dynamic";
 import Hero from "@/components/home/Hero";
 import StatsBar from "@/components/home/StatsBar";
 import ServiceHighlights from "@/components/home/ServiceHighlights";
+import PipelineSection from "@/components/home/PipelineSection";
 import PageTransition from "@/components/layout/PageTransition";
 
 // Below-the-fold sections — server-rendered for SEO, JS deferred for performance
@@ -70,9 +71,11 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <PageTransition>
-      <Hero />
-      <StatsBar />
-      <ServiceHighlights />
+      <PipelineSection>
+        <Hero />
+        <StatsBar />
+        <ServiceHighlights />
+      </PipelineSection>
       <BuilderShowcase />
       <WhyChooseUs />
       <CoastalComebackTeaser />
