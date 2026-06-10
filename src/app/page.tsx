@@ -26,6 +26,7 @@ const BuilderShowcase = dynamic(
   () => import("@/components/home/BuilderShowcase"),
 );
 const CTASection = dynamic(() => import("@/components/home/CTASection"));
+const EmergencyBand = dynamic(() => import("@/components/home/EmergencyBand"));
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
@@ -76,13 +77,14 @@ export default function Home() {
         <StatsBar />
         <ServiceHighlights />
       </PipelineSection>
-      <BuilderShowcase />
-      <WhyChooseUs />
-      <CoastalComebackTeaser />
       <ServiceAreasSection />
-      <ServiceMapTeaser />
+      <EmergencyBand />
+      <WhyChooseUs />
+      <BuilderShowcase />
+      <CoastalComebackTeaser />
       <Testimonials />
       <GoogleReviews />
+      <ServiceMapTeaser />
       <BrandsCarousel />
       <CTASection />
     </PageTransition>
