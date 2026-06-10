@@ -18,7 +18,19 @@ export default function Navbar() {
   const isHomepage = pathname === "/";
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
+    // rAF-throttled; only commits state when the boolean actually flips so
+    // scrolling doesn't re-render the fixed nav every frame
+    let ticking = false;
+    const handleScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const next = window.scrollY > 50;
+        setIsScrolled((prev) => (prev === next ? prev : next));
+        ticking = false;
+      });
+    };
+    handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -54,19 +66,20 @@ export default function Navbar() {
         animate={{ y: 0 }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         className={cn(
-          "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
+          "fixed top-0 left-0 right-0 z-50 transition-[background-color,border-color,box-shadow,translate] duration-300",
+          isScrolled && "lg:-translate-y-9",
           isScrolled || !isHomepage
-            ? "bg-white/95 backdrop-blur-xl border-b border-gray-200 shadow-sm"
+            ? "bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm"
             : "bg-gradient-to-b from-black/40 via-black/20 to-transparent"
         )}
       >
-        {/* Utility strip — trust signals + quick contact */}
+        {/* Utility strip — trust signals + quick contact. Hidden by sliding
+            the whole nav up (transform) instead of collapsing max-height,
+            which forced layout on a fixed full-width element mid-scroll. */}
         <div
           className={cn(
-            "hidden lg:block transition-all duration-300 overflow-hidden",
-            isScrolled
-              ? "max-h-0 opacity-0"
-              : "max-h-10 opacity-100 border-b",
+            "hidden lg:block border-b transition-opacity duration-300",
+            isScrolled && "opacity-0 pointer-events-none",
             isScrolled || !isHomepage
               ? "bg-primary text-white border-primary-dark/30"
               : "bg-black/30 text-white border-white/10"

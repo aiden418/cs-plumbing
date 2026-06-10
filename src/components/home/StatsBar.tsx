@@ -8,7 +8,15 @@ import { STATS } from "@/lib/constants";
 
 export default function StatsBar() {
   return (
-    <section className="relative py-20 sm:py-28 lg:py-36 border-y border-gray-200 bg-[#F5F5F7] overflow-hidden">
+    <section
+      data-pipe-node="stats"
+      className="relative py-20 sm:py-28 lg:py-36 border-y border-gray-200 bg-[#F5F5F7] overflow-hidden"
+    >
+      {/* Gold tick where the pipeline crosses into the section */}
+      <div
+        aria-hidden
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-[3px] bg-gold rounded-full hidden lg:block"
+      />
       {/* Background image */}
       <div className="absolute inset-0 pointer-events-none">
         <Image
@@ -19,8 +27,9 @@ export default function StatsBar() {
           sizes="100vw"
           quality={75}
         />
-        {/* Lighter overlay so the drone photo reads through */}
-        <div className="absolute inset-0 bg-white/50 backdrop-blur-[6px]" />
+        {/* Flat overlay — a full-bleed backdrop-blur here repainted the whole
+            band on every scrolled frame */}
+        <div className="absolute inset-0 bg-white/65" />
       </div>
       <Container className="relative z-10">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-4">
@@ -29,7 +38,7 @@ export default function StatsBar() {
               key={stat.label}
               initial={{ scale: 0.92, opacity: 0 }}
               whileInView={{ scale: 1, opacity: 1 }}
-              viewport={{ once: true, margin: "-80px" }}
+              viewport={{ once: true, margin: "-160px" }}
               transition={{
                 duration: 0.7,
                 delay: i * 0.08,

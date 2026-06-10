@@ -119,10 +119,14 @@ export default function Hero() {
                       return (
                         <span
                           key={`${lineIdx}-${word}-${i}`}
-                          className={`word-reveal ${revealed ? "word-reveal-on" : ""} mr-[0.18em]`}
-                          style={{ transitionDelay: `${i * 60}ms` }}
+                          className="word-mask mr-[0.18em]"
                         >
-                          {word}
+                          <span
+                            className={`word-mask-inner ${revealed ? "word-mask-on" : ""}`}
+                            style={{ transitionDelay: `${i * 60}ms` }}
+                          >
+                            {word}
+                          </span>
                         </span>
                       );
                     })}
@@ -136,7 +140,7 @@ export default function Hero() {
                           delay: 1.0,
                           ease: [0.16, 1, 0.3, 1],
                         }}
-                        className="absolute left-0 -bottom-1 h-[5px] sm:h-[6px] lg:h-[8px] w-full bg-primary origin-left rounded-full"
+                        className="absolute left-0 -bottom-1 h-[5px] sm:h-[6px] lg:h-[8px] w-full bg-gold origin-left rounded-full"
                       />
                     )}
                   </span>
@@ -168,6 +172,7 @@ export default function Hero() {
                 delay: TOTAL_WORDS * 0.06 + 0.4,
                 ease: [0.16, 1, 0.3, 1],
               }}
+              data-pipe-node="hero-cta"
               className="mt-8 sm:mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4"
             >
               <Link
@@ -232,6 +237,7 @@ export default function Hero() {
                 className="relative object-contain"
                 sizes="320px"
                 quality={85}
+                priority
               />
             </div>
             <div className="mt-6 flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-2xl px-5 py-3 border border-white/15">
@@ -266,6 +272,7 @@ export default function Hero() {
               alt="Best of Cape Coral 2025 Award"
               width={50}
               height={38}
+              priority
             />
             <div className="text-left">
               <p className="text-sm font-bold text-white leading-tight">

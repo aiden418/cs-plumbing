@@ -27,9 +27,10 @@ export default function SmoothScrollProvider({
 
     registerGSAP();
 
+    // lerp-only mode — passing `duration` flips Lenis into easing mode and
+    // the scroll trails the wheel by over a second, which reads as lag.
     const lenis = new Lenis({
-      lerp: 0.1,
-      duration: 1.2,
+      lerp: 0.12,
       smoothWheel: true,
       wheelMultiplier: 1,
       touchMultiplier: 1.2,
@@ -50,12 +51,15 @@ export default function SmoothScrollProvider({
     gsap.ticker.add(tick);
     gsap.ticker.lagSmoothing(0);
 
-    // After everything mounts, recalc pin positions once so the first paint
-    // doesn't show a stale measurement.
-    const refreshId = requestAnimationFrame(() => ScrollTrigger.refresh());
+    // Recalc pin positions once webfonts settle — measuring before the swap
+    // bakes fallback-font line heights into every trigger position.
+    let cancelled = false;
+    document.fonts.ready.then(() => {
+      if (!cancelled) ScrollTrigger.refresh();
+    });
 
     return () => {
-      cancelAnimationFrame(refreshId);
+      cancelled = true;
       gsap.ticker.remove(tick);
       lenis.off("scroll", onScroll);
       lenis.destroy();

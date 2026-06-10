@@ -21,8 +21,15 @@
   --color-emergency: #FF3B30;
   --color-success: #34C759;
 
+  /* Brand (C&S identity — navy/gold accents for showpiece elements) */
+  --color-navy: #1B2B4B;
+  --color-gold: #E8A427;
+  --color-gold-dark: #C98A1B;
+  --color-light: #F4F6F9;
+
   /* Typography */
   --font-sans: var(--font-inter);
+  --font-display: var(--font-montserrat);
 
   /* Display type scale (Apple-style fluid, clamped) */
   --text-display-2xl: clamp(3.5rem, 10vw, 9rem);
@@ -96,6 +103,7 @@
 @layer base {
   h1, h2, h3, h4, h5, h6 {
     color: #1D1D1F;
+    font-family: var(--font-display), var(--font-sans), system-ui, sans-serif;
     font-weight: 700;
     letter-spacing: -0.02em;
     line-height: 1.1;
@@ -116,15 +124,6 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-}
-
-@utility glow {
-  box-shadow: 0 4px 24px rgba(0, 119, 204, 0.12),
-              0 1px 4px rgba(0, 0, 0, 0.06);
-}
-
-@utility glow-text {
-  text-shadow: none;
 }
 
 @utility glass {
@@ -178,15 +177,27 @@
    HERO KINETIC HEADLINE — WORD REVEAL
    ======================================== */
 
-@utility word-reveal {
+/* Overflow mask + translateY keeps the reveal fully on the compositor
+   (the old clip-path transition repainted on the CPU every frame). The
+   padding/negative-margin pair gives descenders room inside the mask
+   without changing layout. */
+@utility word-mask {
   display: inline-block;
-  clip-path: inset(0 0 0 100%);
-  transition: clip-path 1s var(--ease-out-expo);
-  will-change: clip-path;
+  overflow: hidden;
+  vertical-align: top;
+  padding-bottom: 0.12em;
+  margin-bottom: -0.12em;
 }
 
-@utility word-reveal-on {
-  clip-path: inset(0 0 0 0%);
+@utility word-mask-inner {
+  display: inline-block;
+  transform: translateY(110%);
+  transition: transform 0.9s var(--ease-out-expo);
+  will-change: transform;
+}
+
+@utility word-mask-on {
+  transform: translateY(0);
 }
 
 /* ========================================
@@ -206,54 +217,6 @@
 
 @utility logo-aura {
   animation: logo-aura 10s ease-in-out infinite;
-}
-
-/* ========================================
-   ANIMATED GRADIENT BACKGROUND
-   ======================================== */
-
-@keyframes gradient-shift {
-  0%, 100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-}
-
-@utility animated-gradient {
-  background: linear-gradient(
-    -45deg,
-    #FFFFFF,
-    #F0F4FF,
-    #F5F5F7,
-    #FFFFFF
-  );
-  background-size: 400% 400%;
-  animation: gradient-shift 15s ease infinite;
-}
-
-/* ========================================
-   HERO PARTICLES (CSS-only water effect)
-   ======================================== */
-
-@keyframes float {
-  0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0; }
-  10% { opacity: 1; }
-  90% { opacity: 1; }
-  100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
-}
-
-@layer components {
-  .particle {
-    position: absolute;
-    width: 4px;
-    height: 4px;
-    background: var(--color-primary);
-    border-radius: 50%;
-    opacity: 0;
-    animation: float linear infinite;
-  }
 }
 
 /* ========================================
@@ -313,5 +276,10 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+
+  /* Headline must be readable even if the reveal transition never runs */
+  .word-mask-inner {
+    transform: none !important;
   }
 }
