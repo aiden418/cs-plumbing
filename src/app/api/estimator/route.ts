@@ -20,7 +20,8 @@ export async function POST(request: Request) {
     const max = Math.round((service.baseMax * multiplier) / 50) * 50;
 
     return NextResponse.json({ min, max, service: service.label, factor });
-  } catch {
+  } catch (error) {
+    console.error("Estimator error:", error);
     return NextResponse.json(
       { error: "Failed to calculate estimate" },
       { status: 500 }

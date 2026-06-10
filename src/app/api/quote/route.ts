@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { z } from "zod";
 import {
+  ADMIN_EMAIL,
   escapeHtml,
   getClientIp,
   isHoneypotTripped,
@@ -55,6 +56,13 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: true });
     }
 
+    if (!process.env.RESEND_API_KEY) {
+      console.error("RESEND_API_KEY is not configured");
+      return NextResponse.json(
+        { error: "Email service unavailable" },
+        { status: 500 }
+      );
+    }
     const resend = new Resend(process.env.RESEND_API_KEY);
     const serviceLabel = service === "water-heater" ? "Water Heater" : "Whole-Home Repipe";
 
@@ -93,7 +101,7 @@ export async function POST(request: Request) {
 
     await resend.emails.send({
       from: "C&S Plumbing Website <bookings@csplumbinglee.com>",
-      to: ["aiden@csplumbinglee.com"],
+      to: [ADMIN_EMAIL],
       subject: `New Quote: ${serviceLabel} $${result.total.min.toLocaleString()}–$${result.total.max.toLocaleString()} — ${lead.name}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">

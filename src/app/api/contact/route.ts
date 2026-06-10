@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { z } from "zod";
 import {
+  ADMIN_EMAIL,
   escapeHtml,
   getClientIp,
   isHoneypotTripped,
@@ -39,6 +40,13 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: true });
     }
 
+    if (!process.env.RESEND_API_KEY) {
+      console.error("RESEND_API_KEY is not configured");
+      return NextResponse.json(
+        { error: "Email service unavailable" },
+        { status: 500 }
+      );
+    }
     const resend = new Resend(process.env.RESEND_API_KEY);
     const safe = {
       name: escapeHtml(name),
@@ -50,7 +58,7 @@ export async function POST(request: Request) {
 
     await resend.emails.send({
       from: "C&S Plumbing Website <contact@csplumbinglee.com>",
-      to: ["aiden@csplumbinglee.com"],
+      to: [ADMIN_EMAIL],
       replyTo: email,
       subject: `New Contact: ${service} — ${name}`,
       html: `

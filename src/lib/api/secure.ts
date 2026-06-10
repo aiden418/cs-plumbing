@@ -48,3 +48,5 @@ export function isHoneypotTripped(value: unknown): boolean {
 }
 
 export const SMS_TO = process.env.SMS_GATEWAY_TO ?? "";
+
+export const ADMIN_EMAIL = process.env.ADMIN_EMAIL ?? "aiden@csplumbinglee.com";
