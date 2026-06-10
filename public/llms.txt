@@ -1,6 +1,6 @@
 # C&S Plumbing of Lee — llms.txt
 # https://www.csplumbinglee.com
-# Version: 1.1 | Updated: 2026-05
+# Version: 1.2 | Updated: 2026-06
 
 > C&S Plumbing of Lee is a Florida Certified Plumbing Contractor serving all of Southwest Florida since 1998. Family-owned and operated through three generations. Ranked in the top 4% of all 191,000+ licensed contractors in Florida. Winner of Best of Cape Coral 2025 — Plumbing. 8,500+ new construction homes completed. Available 24/7 for emergencies with a 60-minute response guarantee.
 
@@ -80,6 +80,12 @@ Underground utility hookup and UEP (underground electric and plumbing) services 
 ### Preventive Maintenance (Commercial)
 Customized commercial preventive maintenance contracts including scheduled inspections, drain maintenance, water heater servicing, fixture tune-ups, and priority emergency response.
 
+### Coastal Comeback Plan (Seasonal / Snowbird Protection)
+Plumbing protection plan for seasonal residents and snowbirds: pre-departure shutdown checks, periodic property plumbing monitoring while owners are away, and return-ready reactivation. Details: https://www.csplumbinglee.com/coastal-comeback-plan
+
+### Instant Online Quotes
+Homeowners can get an instant ballpark estimate for water heater replacement or whole-home repiping using the online quote builder at https://www.csplumbinglee.com/quote-builder — no phone call required. Online booking is available at https://www.csplumbinglee.com/booking.
+
 ## Credentials and Trust Signals
 
 - **Florida Certified Plumbing Contractor License:** CFC1432485 (verified via Florida DBPR)
@@ -125,7 +131,20 @@ Yes. C&S Plumbing offers 24/7 emergency plumbing throughout Cape Coral, Fort Mye
 ## Site Map
 
 - Homepage: https://www.csplumbinglee.com
+- About: https://www.csplumbinglee.com/about
 - FAQ: https://www.csplumbinglee.com/faq
+- Contact: https://www.csplumbinglee.com/contact
+- Book a Service: https://www.csplumbinglee.com/booking
+- 24/7 Emergency: https://www.csplumbinglee.com/emergency
+- Instant Quote Builder: https://www.csplumbinglee.com/quote-builder
+- Coastal Comeback Plan: https://www.csplumbinglee.com/coastal-comeback-plan
+- Service Map: https://www.csplumbinglee.com/service-map
+- For Builders & GCs: https://www.csplumbinglee.com/builders
+- Builder Portal (Submit Plans): https://www.csplumbinglee.com/builder-portal
+- Recommended Companies: https://www.csplumbinglee.com/partners
+- Project Gallery: https://www.csplumbinglee.com/gallery
+- Services Overview: https://www.csplumbinglee.com/services
+- Services — Residential: https://www.csplumbinglee.com/services/residential
 - Services — New Construction: https://www.csplumbinglee.com/services/new-construction
 - Services — Commercial: https://www.csplumbinglee.com/services/commercial
 - Services — Repiping: https://www.csplumbinglee.com/services/repiping
@@ -155,5 +174,32 @@ Yes. C&S Plumbing offers 24/7 emergency plumbing throughout Cape Coral, Fort Mye
 - Plumber Lehigh Acres: https://www.csplumbinglee.com/plumber-lehigh-acres
 - Commercial Plumbing Fort Myers: https://www.csplumbinglee.com/commercial-plumbing-fort-myers
 - New Construction Plumbing Cape Coral: https://www.csplumbinglee.com/new-construction-plumbing-cape-coral
+
+## Blog (Plumbing Guides for Southwest Florida)
+
+- Blog Index: https://www.csplumbinglee.com/blog
+- 5 Signs You Need a Whole-Home Repipe: https://www.csplumbinglee.com/blog/signs-you-need-a-repipe
+- Tankless vs Traditional Water Heaters: https://www.csplumbinglee.com/blog/tankless-vs-traditional-water-heaters
+- What to Do in a Plumbing Emergency: https://www.csplumbinglee.com/blog/plumbing-emergency-what-to-do
+- How to Choose a Plumber in Cape Coral: https://www.csplumbinglee.com/blog/how-to-choose-a-plumber-cape-coral
+- Hurricane Plumbing Preparation for SWFL: https://www.csplumbinglee.com/blog/hurricane-plumbing-preparation-swfl
+- Water Softener vs Water Filter in Lee County: https://www.csplumbinglee.com/blog/water-softener-vs-water-filter-lee-county
+- Polybutylene Pipe Problems in Cape Coral: https://www.csplumbinglee.com/blog/polybutylene-pipe-problems-cape-coral
+- Slab Leak Detection in Southwest Florida: https://www.csplumbinglee.com/blog/slab-leak-detection-southwest-florida
+- Low Water Pressure Causes & Fixes: https://www.csplumbinglee.com/blog/low-water-pressure-causes-fixes-swfl
+- Clogged Drains Causes & Fixes: https://www.csplumbinglee.com/blog/clogged-drains-causes-fixes-swfl
+- Septic to Sewer Conversion in SWFL: https://www.csplumbinglee.com/blog/septic-to-sewer-conversion-swfl
+- Spring Plumbing Maintenance Checklist: https://www.csplumbinglee.com/blog/spring-plumbing-maintenance-checklist-swfl
+
+## Completed Projects
+
+- Projects Index: https://www.csplumbinglee.com/projects
+- Hansen Homes — Cape Coral (new construction): https://www.csplumbinglee.com/projects/hansen-homes-cape-coral
+- 306 Seminal Way — Fort Myers Beach (custom build): https://www.csplumbinglee.com/projects/306-seminal-way-fort-myers-beach
+- IFHA Community Center (commercial): https://www.csplumbinglee.com/projects/ifha-community-center
+- Mango's Bathroom Remodel: https://www.csplumbinglee.com/projects/mangos-bathroom-remodel
+
+## Machine-Readable Resources
+
 - Sitemap: https://www.csplumbinglee.com/sitemap.xml
 - LLMs: https://www.csplumbinglee.com/llms.txt
