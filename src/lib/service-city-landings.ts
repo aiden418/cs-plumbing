@@ -29,6 +29,28 @@ const FORT_MYERS_NEIGHBORHOODS = [
   "Page Park",
 ];
 
+const PUNTA_GORDA_NEIGHBORHOODS = [
+  "Punta Gorda Isles",
+  "Burnt Store Isles",
+  "Historic District",
+  "Burnt Store Meadows",
+  "Seminole Lakes",
+  "Charlotte Park",
+  "Solana",
+  "Charlotte Harbor",
+];
+
+const PORT_CHARLOTTE_NEIGHBORHOODS = [
+  "Murdock",
+  "Parkside",
+  "Deep Creek",
+  "Harbour Heights",
+  "Gulf Cove",
+  "El Jobean",
+  "Charlotte Harbor",
+  "Midway",
+];
+
 export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
   // ============================================
   // 1. EMERGENCY PLUMBER - CAPE CORAL
@@ -1236,6 +1258,655 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       { label: "Emergency Plumber Fort Myers", href: "/emergency-plumber-fort-myers" },
       { label: "Repiping in Fort Myers", href: "/repiping-fort-myers" },
       { label: "Leak Repair Services", href: "/services/leak-repair" },
+    ],
+  },
+
+  // ============================================
+  // 13. WATER HEATER REPAIR - FORT MYERS
+  // ============================================
+  {
+    slug: "water-heater-repair-fort-myers",
+    metaTitle: "Water Heater Repair Fort Myers | Same-Day Service",
+    metaDescription:
+      "Water heater repair in Fort Myers, FL. Tank, tankless & hybrid units fixed fast — often same day. Licensed CFC1432485, family-owned since 1998. Call 833-PLUMB-IT.",
+    keywords: [
+      "water heater repair Fort Myers",
+      "water heater repair Fort Myers FL",
+      "water heater replacement Fort Myers",
+      "tankless water heater Fort Myers",
+      "no hot water Fort Myers",
+      "water heater leaking Fort Myers",
+      "hot water heater service Fort Myers",
+      "same day water heater repair Fort Myers",
+      "water heater installation Fort Myers",
+    ],
+    h1: "Water Heater Repair in Fort Myers, FL",
+    sectionHeading: "Why Fort Myers water heaters fail early",
+    heroSubtext:
+      "No hot water is not a tomorrow problem. C&S Plumbing repairs and replaces tank, tankless, and hybrid water heaters across Fort Myers — often the same day you call.",
+    trustBadges: TRUST_BADGES,
+    serviceDescription:
+      `Fort Myers water heaters work harder than the labels suggest. Lee County's hard water leaves mineral scale on heating elements and tank bottoms, which is why a unit rated for 10–12 years often starts failing at year seven or eight here. If your showers run lukewarm, your tank pops and rumbles as it heats, or you've found rust-tinted water at the tap, the scale has likely already done its work.\n\nC&S Plumbing has repaired and replaced water heaters across Fort Myers since 1998 — from older homes along McGregor Boulevard with units tucked in garages and utility closets, to newer Gateway and Daniels Corridor homes with attic installations where a slow leak can soak a ceiling before anyone notices. We diagnose first and quote before any work begins: sometimes the fix is a heating element, a thermostat, or a relief valve, not a whole new unit.\n\nWhen replacement is the right call, we'll size the new unit to how your household actually uses hot water. We install standard tank, tankless, and hybrid heat-pump water heaters, and we'll give you a straight comparison of operating costs instead of pushing the most expensive option. Tankless conversions are popular in Fort Myers for good reason — endless hot water and less floor space — but they're not right for every home, and we'll tell you when they're not.\n\nEvery installation includes the Lee County permit, pan and expansion tank where code requires, and haul-away of the old unit. With two active Florida licenses (CFC057076 and CFC1432485) and a 5.0 Google rating, C&S is the water heater crew Fort Myers homeowners call when they want it done once and done right.`,
+    features: [
+      {
+        title: "Same-Day Repair & Replacement",
+        description:
+          "Common 40- and 50-gallon tanks are stocked and ready. Morning calls are usually back in hot water by dinner.",
+      },
+      {
+        title: "Repair-First Diagnosis",
+        description:
+          "Elements, thermostats, and valves get fixed when fixing makes sense — we don't sell you a new tank you don't need.",
+      },
+      {
+        title: "Tank, Tankless & Hybrid",
+        description:
+          "Honest sizing and cost comparison across all three options, matched to your home's gas or electric supply.",
+      },
+      {
+        title: "Permitted & Inspected",
+        description:
+          "Lee County permit and inspection handled on every replacement, with pan and expansion tank installed where code requires.",
+      },
+      {
+        title: "Hard-Water Protection",
+        description:
+          "Anode rod checks and softener recommendations that extend the life of the next unit, not just this one.",
+      },
+    ],
+    city: "Fort Myers",
+    state: "FL",
+    neighborhoods: FORT_MYERS_NEIGHBORHOODS,
+    faqs: [
+      {
+        question: "How fast can you repair a water heater in Fort Myers?",
+        answer:
+          "Most Fort Myers water heater calls are handled same day. We stock common replacement parts and standard tank sizes on our trucks, and our North Fort Myers shop is minutes from most Fort Myers neighborhoods. Call 833-PLUMB-IT in the morning and you're usually back in hot water that evening.",
+      },
+      {
+        question: "Should I repair or replace my water heater?",
+        answer:
+          "As a rule of thumb: if the tank itself is leaking, replacement is the only fix. If the unit is under 8 years old and the problem is an element, thermostat, or valve, repair usually makes sense. We diagnose first, explain what failed, and quote both paths when both are realistic — the choice is yours.",
+      },
+      {
+        question: "Why do water heaters fail faster in Fort Myers?",
+        answer:
+          "Hard water. Lee County water carries enough dissolved minerals that scale builds up on heating elements and tank bottoms years ahead of the national average. Scale makes the unit work harder, raises your electric bill, and eventually burns out elements or corrodes the tank. Annual flushes and a healthy anode rod buy years of extra life.",
+      },
+      {
+        question: "Do you install tankless water heaters in Fort Myers?",
+        answer:
+          "Yes — we install gas and electric tankless units, including the upgraded gas line or electrical circuit most conversions require. Tankless works well for many Fort Myers homes, but we'll assess your usage and infrastructure first and tell you honestly whether the conversion cost pays off for your household.",
+      },
+      {
+        question: "Is a permit required to replace a water heater in Fort Myers?",
+        answer:
+          "Yes. Lee County requires a permit for water heater replacement, and unpermitted installs can cause problems with insurance claims and home sales. C&S pulls the permit and schedules the inspection on every job — it's included, not an upsell. Our licenses are CFC057076 and CFC1432485.",
+      },
+      {
+        question: "My water heater is leaking — what should I do right now?",
+        answer:
+          "Shut off the cold-water supply valve on top of the unit, and if it's electric, flip the breaker (gas: turn the dial to OFF). Then call 833-PLUMB-IT — we answer 24/7. A leaking tank won't fix itself, and water damage gets more expensive by the hour.",
+      },
+    ],
+    relatedPages: [
+      { label: "Water Heater Services", href: "/services/water-heaters" },
+      { label: "Emergency Plumber in Fort Myers", href: "/emergency-plumber-fort-myers" },
+      { label: "Fort Myers Service Area", href: "/areas/fort-myers" },
+    ],
+  },
+
+  // ============================================
+  // 14. DRAIN CLEANING - FORT MYERS
+  // ============================================
+  {
+    slug: "drain-cleaning-fort-myers",
+    metaTitle: "Drain Cleaning Fort Myers | Camera Inspection & Jetting",
+    metaDescription:
+      "Professional drain cleaning in Fort Myers, FL. Hydro-jetting, camera inspection & root removal for slow or backed-up drains. 5-star rated. Call 833-PLUMB-IT.",
+    keywords: [
+      "drain cleaning Fort Myers",
+      "drain cleaning Fort Myers FL",
+      "clogged drain Fort Myers",
+      "sewer backup Fort Myers",
+      "hydro jetting Fort Myers",
+      "drain camera inspection Fort Myers",
+      "root removal drains Fort Myers",
+      "main line clog Fort Myers",
+      "slow drain repair Fort Myers",
+    ],
+    h1: "Drain Cleaning in Fort Myers, FL",
+    sectionHeading: "Clearing Fort Myers drains the right way",
+    heroSubtext:
+      "A drain that keeps clogging is telling you something. C&S Plumbing clears Fort Myers drains and then shows you why they clogged — with a camera, not a guess.",
+    trustBadges: TRUST_BADGES,
+    serviceDescription:
+      `Fort Myers is a tale of two drain systems. The established neighborhoods — McGregor, the River District, Whiskey Creek — were largely plumbed with cast iron drain lines that are now fifty-plus years old, rusting rough on the inside and narrowing a little more every year. The newer communities east of I-75 run PVC, but sit among some of the most aggressively rooted landscaping in Florida. Either way, the result lands in the same place: drains that slow down, back up, and keep coming back no matter how much store-bought chemical gets poured at them.\n\nC&S Plumbing clears drains across Fort Myers with the equipment the problem actually calls for. Cable machines handle everyday kitchen, tub, and toilet clogs. For main lines, recurring backups, and grease-bound pipe, we hydro-jet — high-pressure water that scours the pipe wall clean instead of just punching a hole through the blockage. And before we recommend anything beyond a basic clearing, we run a camera down the line so you can see exactly what we see.\n\nThat camera matters in Fort Myers more than most places. In older neighborhoods, what looks like a simple clog is often a bellied or root-invaded section of original cast iron — and clearing it monthly is more expensive than fixing it once. Mature ficus and oak roots around McGregor-area homes find their way into pipe joints with remarkable persistence. We'll show you the footage, explain the options, and quote spot repair, lining, or replacement honestly. Sometimes the answer really is just a good jetting and an annual maintenance schedule.\n\nFamily-owned since 1998, licensed under CFC057076 and CFC1432485, and rated 5.0 on Google — C&S is the drain crew Fort Myers homeowners call when they're tired of renting the same clog twice.`,
+    features: [
+      {
+        title: "Camera Inspection Included",
+        description:
+          "On main-line and recurring clogs we scope the pipe and show you the footage — you see the problem before you pay to fix it.",
+      },
+      {
+        title: "Hydro-Jetting",
+        description:
+          "High-pressure water scours grease, scale, and roots off the full pipe wall — the clog doesn't grow back next month.",
+      },
+      {
+        title: "Root Intrusion Removal",
+        description:
+          "Mechanical cutting and jetting for the tree roots that work into older Fort Myers drain joints.",
+      },
+      {
+        title: "Cast Iron Specialists",
+        description:
+          "Honest assessment of aging cast iron lines — cleaning, spot repair, or replacement, quoted straight.",
+      },
+      {
+        title: "24/7 Backup Response",
+        description:
+          "Sewage backups don't keep office hours. Emergency drain calls are answered around the clock at 833-PLUMB-IT.",
+      },
+    ],
+    city: "Fort Myers",
+    state: "FL",
+    neighborhoods: FORT_MYERS_NEIGHBORHOODS,
+    faqs: [
+      {
+        question: "Why does my Fort Myers drain keep clogging after I clear it?",
+        answer:
+          "A clog that returns is almost always a pipe problem, not a usage problem. In older Fort Myers neighborhoods the usual culprits are corroded cast iron with a rough interior that catches debris, a bellied (sagging) section that holds water, or tree roots at a joint. A camera inspection identifies which one you have — then you can fix the cause instead of re-renting the symptom.",
+      },
+      {
+        question: "What is hydro-jetting and do I need it?",
+        answer:
+          "Hydro-jetting uses high-pressure water to scrub the entire inside wall of the pipe, removing grease, scale, and root fragments that a cable machine just pokes through. It's the right call for recurring main-line clogs and grease-heavy kitchen lines. For a one-off hair clog in a bathroom sink, a standard cable clearing is cheaper and perfectly adequate — we'll tell you which you need.",
+      },
+      {
+        question: "Can tree roots really get inside drain pipes?",
+        answer:
+          "Constantly — it's one of the most common drain problems in established Fort Myers neighborhoods like McGregor and Whiskey Creek. Roots are drawn to the moisture at pipe joints, work in through tiny gaps, and grow into a net that catches everything. We cut and jet the roots out, then show you on camera whether the pipe joint needs a permanent repair.",
+      },
+      {
+        question: "Do you handle sewage backups in Fort Myers?",
+        answer:
+          "Yes, 24/7. A sewage backup is a health hazard and qualifies as an emergency — call 833-PLUMB-IT any hour. We clear the main line, camera it to find the cause, and document the condition, which helps if an insurance claim is involved.",
+      },
+      {
+        question: "How much does drain cleaning cost in Fort Myers?",
+        answer:
+          "It depends on the drain and the blockage, so we quote upfront before work begins rather than publishing a teaser price that doubles on site. Simple fixture clearings cost less; main-line jetting with camera inspection costs more. The price we quote is the price you pay — that's been C&S policy since 1998.",
+      },
+    ],
+    relatedPages: [
+      { label: "Drain Cleaning Services", href: "/services/drain-cleaning" },
+      { label: "Drain Cleaning in Cape Coral", href: "/drain-cleaning-cape-coral" },
+      { label: "Fort Myers Service Area", href: "/areas/fort-myers" },
+    ],
+  },
+
+  // ============================================
+  // 15. EMERGENCY PLUMBER - PUNTA GORDA
+  // ============================================
+  {
+    slug: "emergency-plumber-punta-gorda",
+    metaTitle: "Emergency Plumber Punta Gorda | 24/7 Service",
+    metaDescription:
+      "24/7 emergency plumber serving Punta Gorda, FL. Burst pipes, water heater failures & backups. Licensed CFC1432485, family-owned since 1998. Call 833-PLUMB-IT.",
+    keywords: [
+      "emergency plumber Punta Gorda",
+      "24 hour plumber Punta Gorda FL",
+      "burst pipe repair Punta Gorda",
+      "after hours plumber Punta Gorda",
+      "emergency plumbing Punta Gorda",
+      "weekend plumber Punta Gorda",
+      "water heater emergency Punta Gorda",
+      "Charlotte County emergency plumber",
+    ],
+    h1: "Emergency Plumber Serving Punta Gorda, FL",
+    sectionHeading: "When a Punta Gorda pipe fails at 2 AM",
+    heroSubtext:
+      "Burst pipe, failed water heater, sewage backup — the emergency line at 833-PLUMB-IT is answered 24/7, and a licensed plumber rolls to Punta Gorda, not an answering service promise.",
+    trustBadges: TRUST_BADGES,
+    serviceDescription:
+      `Plumbing emergencies in Punta Gorda have a way of finding the worst possible moment — the supply line that lets go while you're at dinner on Marion Avenue, the water heater that dumps forty gallons into the garage on a Sunday morning, the main drain that backs up with a house full of guests. When it happens, you need two things: someone who answers the phone, and someone who actually shows up.\n\nC&S Plumbing of Lee covers Punta Gorda and Charlotte County 24 hours a day from our shop in North Fort Myers — a straight run up US-41 or I-75 that puts us at most Punta Gorda addresses in 25 to 35 minutes. The person who answers 833-PLUMB-IT dispatches a licensed plumber with a stocked truck, and we quote before work begins, even at midnight. No call-center runaround, no surprise overtime math.\n\nPunta Gorda's housing mix shapes the emergencies we see. Canal-front homes in Punta Gorda Isles and Burnt Store Isles carry salt-air-exposed exterior plumbing and water heaters that fail with less warning than their inland counterparts. Older homes around the Historic District still run original supply lines reaching the end of their service life. And homes rebuilt after Hurricane Charley are now twenty years on — old enough that the water heaters and fixtures installed in the rebuild wave are failing in batches.\n\nC&S has worked Southwest Florida storm recoveries since Charley in 2004, holds two active Florida licenses (CFC057076 and CFC1432485), and carries a 5.0 Google rating. When Punta Gorda needs a plumber right now, this is the number that gets answered.`,
+    features: [
+      {
+        title: "True 24/7 Dispatch",
+        description:
+          "The emergency line is answered around the clock, every day of the year — nights, weekends, and holidays included.",
+      },
+      {
+        title: "25–35 Minute Run from Our Shop",
+        description:
+          "North Fort Myers to Punta Gorda is a straight shot up US-41 or I-75 — Charlotte County calls get real response, not next-day promises.",
+      },
+      {
+        title: "Quote Before Work Begins",
+        description:
+          "Written pricing before we start, even on after-hours calls. No surprise overtime surcharges.",
+      },
+      {
+        title: "Stocked Emergency Trucks",
+        description:
+          "Common water heaters, supply line fittings, and shutoff valves ride on the truck — most emergencies are fixed in one visit.",
+      },
+      {
+        title: "Storm & Hurricane Response",
+        description:
+          "Post-storm plumbing triage experience in every major Southwest Florida storm since Hurricane Charley in 2004.",
+      },
+    ],
+    city: "Punta Gorda",
+    state: "FL",
+    neighborhoods: PUNTA_GORDA_NEIGHBORHOODS,
+    faqs: [
+      {
+        question: "How fast can an emergency plumber reach Punta Gorda?",
+        answer:
+          "Our shop is at 951 Pondella Rd in North Fort Myers, about 25–35 minutes from most Punta Gorda neighborhoods via US-41 or I-75. Emergency calls are dispatched immediately, 24/7 — call 833-PLUMB-IT and a licensed plumber is on the way.",
+      },
+      {
+        question: "What should I do while I wait for the plumber?",
+        answer:
+          "Shut off the water at the main valve — in most Punta Gorda homes it's near the water meter at the street or where the supply line enters the house. For a leaking water heater, close the cold-water valve on top of the unit and kill the breaker. Stopping the water buys time and limits damage; we'll walk you through it on the phone if you can't find the valve.",
+      },
+      {
+        question: "Do you charge extra for night and weekend calls in Punta Gorda?",
+        answer:
+          "We charge a flat diagnostic fee for emergency calls regardless of the hour, and every repair is quoted in writing before work begins. The price we quote is the price you pay — no hidden overtime multipliers.",
+      },
+      {
+        question: "Do you handle emergencies in Punta Gorda Isles canal homes?",
+        answer:
+          "Yes. PGI and Burnt Store Isles homes have their own failure patterns — salt-air-corroded exterior fixtures, garage water heaters past their prime, and slab-on-grade supply lines where leaks hide until the floor feels warm. We've worked Southwest Florida waterfront homes since 1998.",
+      },
+      {
+        question: "Are you licensed to work in Charlotte County?",
+        answer:
+          "Yes. C&S Plumbing holds two active Florida state plumbing contractor licenses — CFC057076 and CFC1432485 — valid throughout Florida, including Charlotte County. Where follow-up permitted work is needed after an emergency repair, we pull the Charlotte County permit and handle the inspection.",
+      },
+    ],
+    relatedPages: [
+      { label: "Punta Gorda Service Area", href: "/areas/punta-gorda" },
+      { label: "Water Heater Replacement in Punta Gorda", href: "/water-heater-replacement-punta-gorda" },
+      { label: "Leak Repair Services", href: "/services/leak-repair" },
+    ],
+  },
+
+  // ============================================
+  // 16. WATER HEATER REPLACEMENT - PUNTA GORDA
+  // ============================================
+  {
+    slug: "water-heater-replacement-punta-gorda",
+    metaTitle: "Water Heater Replacement Punta Gorda | Tank & Tankless",
+    metaDescription:
+      "Water heater replacement in Punta Gorda, FL. Tank, tankless & hybrid installs with Charlotte County permits handled. Family-owned since 1998. Call 833-PLUMB-IT.",
+    keywords: [
+      "water heater replacement Punta Gorda",
+      "water heater Punta Gorda FL",
+      "water heater installation Punta Gorda",
+      "tankless water heater Punta Gorda",
+      "water heater repair Punta Gorda",
+      "new water heater Punta Gorda",
+      "hot water heater Punta Gorda",
+      "Charlotte County water heater",
+    ],
+    h1: "Water Heater Replacement in Punta Gorda, FL",
+    sectionHeading: "Replacing Punta Gorda's aging water heaters",
+    heroSubtext:
+      "If your water heater went in during the post-Charley rebuild, it's living on borrowed time. C&S replaces tank, tankless, and hybrid units across Punta Gorda — permits and haul-away included.",
+    trustBadges: TRUST_BADGES,
+    serviceDescription:
+      `Punta Gorda is quietly working through a water heater replacement wave. Thousands of homes here were rebuilt or substantially renovated after Hurricane Charley in 2004, and the water heaters installed in that era are now well past the 10–12 years a unit is built to deliver. Add Ian-era repairs on top, and a large share of the city's water heaters are either due or overdue. The warning signs are familiar: lukewarm showers, rumbling and popping as the tank heats, rusty water at the hot tap, or moisture in the pan that wasn't there last month.\n\nC&S Plumbing replaces water heaters across Punta Gorda with the job done completely — Charlotte County permit pulled, pan and expansion tank installed where code requires, inspection scheduled, old unit hauled away. We stock common 40- and 50-gallon tanks, so a morning call is usually a same-day swap. For canal homes in Punta Gorda Isles and Burnt Store Isles, where garage units live with salt air year-round, we'll also talk frankly about placement and corrosion protection so the next unit lasts longer than the last one.\n\nThinking about going tankless? It's a genuinely good fit for many Punta Gorda homes — seasonal residents especially like not keeping fifty gallons hot for an empty house. But a tankless conversion needs the right gas or electrical supply, and the install cost is meaningfully higher. We'll size your usage, quote both options, and give you the honest math instead of a sales pitch.\n\nFamily-owned since 1998, two active Florida licenses (CFC057076 and CFC1432485), 8,500+ homes completed across Southwest Florida, and a 5.0 Google rating. When the water runs cold in Punta Gorda, call 833-PLUMB-IT.`,
+    features: [
+      {
+        title: "Same-Day Tank Swaps",
+        description:
+          "Common tank sizes are in stock — call in the morning and you're usually back in hot water the same evening.",
+      },
+      {
+        title: "Charlotte County Permits Handled",
+        description:
+          "Permit and final inspection included on every replacement, with pan and expansion tank installed where code requires.",
+      },
+      {
+        title: "Tank, Tankless & Hybrid Options",
+        description:
+          "Honest sizing and operating-cost comparison — including whether tankless actually pays off for your household.",
+      },
+      {
+        title: "Salt-Air Smart Installations",
+        description:
+          "Placement and corrosion-protection guidance for PGI and Burnt Store Isles garage units exposed to canal air.",
+      },
+      {
+        title: "Old Unit Haul-Away",
+        description:
+          "The failed unit leaves with us — disposal is part of the job, not an extra line item.",
+      },
+    ],
+    city: "Punta Gorda",
+    state: "FL",
+    neighborhoods: PUNTA_GORDA_NEIGHBORHOODS,
+    faqs: [
+      {
+        question: "How long does a water heater replacement take in Punta Gorda?",
+        answer:
+          "A like-for-like tank replacement typically takes 2–3 hours on site, and with common sizes stocked we can usually do it the same day you call. Tankless conversions take 1–2 days because of the gas line or electrical upgrades most homes need.",
+      },
+      {
+        question: "Do I need a permit to replace a water heater in Charlotte County?",
+        answer:
+          "Yes — Charlotte County requires a permit for water heater replacement, and an unpermitted install can complicate insurance claims and home sales later. C&S pulls the permit and schedules the inspection on every job. Our Florida licenses are CFC057076 and CFC1432485.",
+      },
+      {
+        question: "My water heater was installed after Hurricane Charley — should I replace it?",
+        answer:
+          "If it's original to the post-Charley rebuild, it's roughly twenty years old — nearly double a typical service life. At that age, failure isn't a question of if but when, and tanks tend to fail by leaking. Replacing on your schedule beats replacing during a flooded-garage emergency, and a new unit will heat noticeably more efficiently.",
+      },
+      {
+        question: "Is a tankless water heater worth it in Punta Gorda?",
+        answer:
+          "Often, yes — especially for seasonal residents who don't want a tank holding fifty hot gallons for an empty house half the year. The trade-off is a higher install cost and possible gas or electrical upgrades. We'll quote tank and tankless side by side with honest operating-cost math so you can decide with real numbers.",
+      },
+      {
+        question: "Can you also fix my water heater instead of replacing it?",
+        answer:
+          "Yes. If the tank itself isn't leaking and the unit has reasonable life left, repairing an element, thermostat, or valve is often the smarter spend. We diagnose first and quote repair and replacement honestly whenever both are realistic options.",
+      },
+    ],
+    relatedPages: [
+      { label: "Punta Gorda Service Area", href: "/areas/punta-gorda" },
+      { label: "Emergency Plumber in Punta Gorda", href: "/emergency-plumber-punta-gorda" },
+      { label: "Water Heater Services", href: "/services/water-heaters" },
+    ],
+  },
+
+  // ============================================
+  // 17. DRAIN CLEANING - PORT CHARLOTTE
+  // ============================================
+  {
+    slug: "drain-cleaning-port-charlotte",
+    metaTitle: "Drain Cleaning Port Charlotte | Cast Iron Specialists",
+    metaDescription:
+      "Drain cleaning in Port Charlotte, FL. Camera inspection, hydro-jetting & cast iron drain solutions for 1970s–80s homes. 5-star rated. Call 833-PLUMB-IT.",
+    keywords: [
+      "drain cleaning Port Charlotte",
+      "drain cleaning Port Charlotte FL",
+      "clogged drain Port Charlotte",
+      "sewer backup Port Charlotte",
+      "cast iron drain repair Port Charlotte",
+      "hydro jetting Port Charlotte",
+      "drain camera inspection Port Charlotte",
+      "main line clog Port Charlotte",
+      "Charlotte County drain cleaning",
+    ],
+    h1: "Drain Cleaning in Port Charlotte, FL",
+    sectionHeading: "Port Charlotte's forty-year-old drain problem",
+    heroSubtext:
+      "Most Port Charlotte homes still drain through original 1970s–80s cast iron. C&S clears the clog, cameras the line, and tells you the truth about what's down there.",
+    trustBadges: TRUST_BADGES,
+    serviceDescription:
+      `Port Charlotte was platted and built out in a hurry — most of its housing stock went up in the 1970s and 1980s, and the majority of those homes still drain through their original cast iron pipe. Four decades in Florida's soil and humidity is a hard life for cast iron. The pipe interior rusts rough and scaly, the diameter narrows year over year, and eventually every shower drains slow, the toilets gurgle, and a backup becomes a quarterly event instead of a freak occurrence.\n\nC&S Plumbing approaches Port Charlotte drains with a simple rule: diagnose before prescribing. A cable machine handles the everyday clogs. For main lines and repeat offenders, we hydro-jet — high-pressure water that scours rust scale and grease off the full pipe wall rather than punching a temporary hole through the blockage. And on any recurring or main-line problem, we run a camera so you can see exactly what your pipe looks like from the inside before spending another dollar.\n\nThat footage drives an honest conversation. Sometimes the cast iron has years of life left and a jetting plus annual maintenance is genuinely the right answer. Sometimes there's a collapsed or channel-rotted section where spot repair or replacement stops the backup cycle for good. Around Gulf Cove, El Jobean, and the outlying sections, we also check the septic side of the equation — a "drain problem" in a well-and-septic home is sometimes a tank or drainfield problem wearing a disguise, and you deserve to know which before paying for the wrong fix.\n\nFamily-owned since 1998, licensed CFC057076 and CFC1432485, rated 5.0 on Google. When Port Charlotte drains slow down, call 833-PLUMB-IT.`,
+    features: [
+      {
+        title: "Cast Iron Assessment",
+        description:
+          "Camera inspection shows the real condition of original 1970s–80s drain lines — clean, repair, or replace, quoted straight.",
+      },
+      {
+        title: "Hydro-Jetting",
+        description:
+          "High-pressure scouring removes rust scale and grease from the full pipe wall, not just a hole through the clog.",
+      },
+      {
+        title: "Main Line & Sewer Backups",
+        description:
+          "24/7 response for sewage backups, with the cause documented on camera for your records and insurance.",
+      },
+      {
+        title: "Septic-Aware Diagnosis",
+        description:
+          "In well-and-septic areas like Gulf Cove and El Jobean, we rule out tank and drainfield issues before treating pipe symptoms.",
+      },
+      {
+        title: "Upfront Pricing",
+        description:
+          "Quoted before work begins — the price we give is the price you pay, day or night.",
+      },
+    ],
+    city: "Port Charlotte",
+    state: "FL",
+    neighborhoods: PORT_CHARLOTTE_NEIGHBORHOODS,
+    faqs: [
+      {
+        question: "Why do drains clog so often in Port Charlotte homes?",
+        answer:
+          "Age. Most Port Charlotte homes were built in the 1970s and 1980s with cast iron drain lines that are now past forty years old. The pipe interior rusts rough and narrow, catching grease, paper, and debris that smooth pipe would pass. Cleaning helps, but once the pipe wall itself is the problem, a camera inspection tells you whether repair or replacement is the permanent fix.",
+      },
+      {
+        question: "What does a drain camera inspection show?",
+        answer:
+          "Everything we can't see from the surface: rust scale and channel rot in cast iron, bellied sections that hold water, root intrusion at joints, and any collapsed pipe. We show you the footage and explain it in plain English — you see the evidence before you approve any work beyond the clearing.",
+      },
+      {
+        question: "Is hydro-jetting safe for old cast iron pipes?",
+        answer:
+          "When the pipe is sound, yes — we camera the line first and adjust pressure to the pipe's condition. If the cast iron is too far gone for jetting, that's important information by itself, and we'll show you why and quote the repair options instead of jetting a pipe that can't take it.",
+      },
+      {
+        question: "I'm on a septic system — can you still help with my drains?",
+        answer:
+          "Yes. Plenty of Port Charlotte homes in Gulf Cove, El Jobean, and the outlying sections run on septic. Slow drains in a septic home are sometimes a full tank or saturated drainfield rather than a pipe clog, and we diagnose which it is before recommending anything. We handle the house-side plumbing and coordinate with septic services when the tank is the issue.",
+      },
+      {
+        question: "Do you respond to sewage backups in Port Charlotte after hours?",
+        answer:
+          "Yes — a sewage backup is a health hazard and gets emergency response 24/7. Our North Fort Myers shop reaches most of Port Charlotte in 30–40 minutes via US-41 or I-75. Call 833-PLUMB-IT any hour.",
+      },
+    ],
+    relatedPages: [
+      { label: "Port Charlotte Service Area", href: "/areas/port-charlotte" },
+      { label: "Drain Cleaning Services", href: "/services/drain-cleaning" },
+      { label: "Water Softeners & Treatment", href: "/services/water-softeners" },
+    ],
+  },
+
+  // ============================================
+  // 18. SEPTIC TO SEWER - NORTH FORT MYERS
+  // ============================================
+  {
+    slug: "septic-to-sewer-north-fort-myers",
+    metaTitle: "Septic to Sewer Conversion North Fort Myers | C&S Plumbing",
+    metaDescription:
+      "Septic-to-sewer conversion in North Fort Myers, FL by your hometown plumber. Permits, connection & septic decommissioning handled. Call 833-PLUMB-IT.",
+    keywords: [
+      "septic to sewer North Fort Myers",
+      "septic to sewer conversion North Fort Myers",
+      "sewer connection North Fort Myers",
+      "sewer hookup North Fort Myers FL",
+      "septic abandonment North Fort Myers",
+      "Lee County sewer connection",
+      "connect to sewer North Fort Myers",
+      "septic tank decommissioning North Fort Myers",
+    ],
+    h1: "Septic-to-Sewer Conversion in North Fort Myers, FL",
+    sectionHeading: "Converting our own hometown, one street at a time",
+    heroSubtext:
+      "When sewer service reaches your North Fort Myers street, the connection clock starts. C&S is headquartered right here on Pondella Rd — we handle the permit, the connection, and the septic decommissioning.",
+    trustBadges: TRUST_BADGES,
+    serviceDescription:
+      `North Fort Myers is C&S Plumbing's hometown — our shop has been at 951 Pondella Rd since the beginning — and a lot of our hometown still runs on septic tanks installed decades ago. As utility sewer service extends into more North Fort Myers neighborhoods, homeowners face a project most have never dealt with before: disconnecting from the septic tank, connecting the home to the new sewer line, and decommissioning the old tank to code. Done right, it's a few days of orderly work. Done wrong, it's torn-up yards, failed inspections, and change orders.\n\nC&S handles the homeowner's side of the conversion start to finish. We pull the Lee County plumbing permit, excavate and run the new sewer lateral from your house to the utility connection point, reroute the home's drain line, and properly abandon the septic tank — pumped, crushed or filled per code, and inspected. You get one contractor, one schedule, and one number to call, instead of coordinating an excavator, a plumber, and a septic hauler yourself.\n\nBecause we're local, we also give straight answers to the questions that actually matter: what the conversion does and doesn't include, how to plan for the utility's connection and capacity fees (those are billed by the utility, not the plumber), what happens to your yard and driveway, and whether your home's existing drain plumbing is ready for the switch. Older North Fort Myers homes sometimes need a section of aging drain line addressed at the same time — better to know before the trench is open than after it's closed.\n\nFamily-owned since 1998, two active Florida licenses (CFC057076 and CFC1432485), and thousands of jobs in Lee County soil. If your street is on the sewer map, call 833-PLUMB-IT and we'll walk the project with you before you commit to anything.`,
+    features: [
+      {
+        title: "Complete Conversion, One Contractor",
+        description:
+          "Permit, excavation, sewer lateral, drain reroute, and septic decommissioning — handled end to end by one licensed crew.",
+      },
+      {
+        title: "Code-Compliant Septic Abandonment",
+        description:
+          "Tank pumped and properly abandoned per Lee County requirements, with the inspection scheduled and passed.",
+      },
+      {
+        title: "Hometown Response",
+        description:
+          "Our shop is on Pondella Rd — site visits, questions, and follow-ups happen fast because we're already here.",
+      },
+      {
+        title: "Honest Project Scoping",
+        description:
+          "Clear breakdown of what the plumber's scope covers versus utility connection fees, so there are no surprise bills.",
+      },
+      {
+        title: "Yard-Conscious Excavation",
+        description:
+          "Trench routes planned around driveways, trees, and irrigation — and the yard put back the way we found it.",
+      },
+    ],
+    city: "North Fort Myers",
+    state: "FL",
+    neighborhoods: [
+      "North Fort Myers",
+      "Bayshore",
+      "Pine Island Rd",
+      "Pondella",
+      "Hancock Bridge",
+      "Tropicana",
+      "Lochmoor",
+      "Del Prado",
+    ],
+    faqs: [
+      {
+        question: "Do I have to connect to sewer when it reaches my North Fort Myers street?",
+        answer:
+          "Generally, yes — when utility sewer service becomes available, Florida law and local ordinance require connection within a set timeframe, and the utility will notify you of your deadline. The specifics vary by program and area, so check your notice or call us and we'll help you read it. Converting on your own schedule, early in the window, usually beats a deadline scramble.",
+      },
+      {
+        question: "What does a septic-to-sewer conversion actually involve?",
+        answer:
+          "Three main pieces: running a new sewer lateral from your home to the utility's connection point at the property line, rerouting your home's drain line from the septic tank to that lateral, and decommissioning the old tank — pumped and crushed or filled per code. C&S handles all three under one Lee County permit, including the inspections.",
+      },
+      {
+        question: "How much of the cost is plumbing versus utility fees?",
+        answer:
+          "They're separate bills, and it's important to know which is which. The utility charges its own connection and capacity fees directly. C&S quotes the plumbing side — lateral, reroute, tank abandonment, permit — upfront and in writing before any digging starts, so the total picture is clear before you commit.",
+      },
+      {
+        question: "How long does the conversion take and what happens to my yard?",
+        answer:
+          "Most single-family conversions take a few days of on-site work. We plan the trench route around driveways, mature trees, and irrigation before we dig, and we backfill and rough-grade when we're done. Where the lateral has to cross a driveway or planted bed, we'll tell you exactly what to expect before work begins.",
+      },
+      {
+        question: "Can you check my home's old drain lines during the conversion?",
+        answer:
+          "Yes, and it's smart to ask. Many North Fort Myers homes old enough to be on septic also have original cast iron drain pipe. We can camera the line while the system is exposed — if a section needs attention, fixing it during the conversion is far cheaper than opening the ground twice.",
+      },
+    ],
+    relatedPages: [
+      { label: "North Fort Myers Service Area", href: "/areas/north-fort-myers" },
+      { label: "Your North Fort Myers Plumber", href: "/north-fort-myers-plumber" },
+      { label: "UEP & Utility Connections", href: "/services/uep-utilities" },
+    ],
+  },
+
+  // ============================================
+  // 19. REMODEL PLUMBING - NAPLES
+  // ============================================
+  {
+    slug: "remodel-plumbing-naples",
+    metaTitle: "Remodel Plumbing Naples | Kitchen & Bath Specialists",
+    metaDescription:
+      "Remodel plumbing in Naples, FL. Kitchen & bathroom relocations, high-end fixtures & slab work for luxury renovations. Licensed CFC1432485. Call 833-PLUMB-IT.",
+    keywords: [
+      "remodel plumbing Naples",
+      "bathroom remodel plumber Naples",
+      "kitchen remodel plumbing Naples FL",
+      "plumbing relocation Naples",
+      "luxury bathroom plumbing Naples",
+      "renovation plumber Naples",
+      "master bath remodel Naples",
+      "high end plumbing Naples",
+    ],
+    h1: "Remodel Plumbing in Naples, FL",
+    sectionHeading: "Plumbing Naples renovations to the finish level they deserve",
+    heroSubtext:
+      "A Naples remodel lives or dies on what's behind the walls. C&S brings 8,500 homes' worth of rough-in experience to kitchen and bath renovations from Old Naples to Pelican Bay.",
+    trustBadges: TRUST_BADGES,
+    serviceDescription:
+      `Naples renovations operate at a different standard. The fixtures are specified months in advance, the stone is already ordered, and the schedule has a designer, a cabinet maker, and a GC all stacked behind the plumbing rough-in. There is no slack for a plumber who measures a drain location twice and still misses it. This is exactly the work C&S Plumbing has built its reputation on — we've roughed in over 8,500 homes across Southwest Florida, and remodel plumbing is where that repetition pays off.\n\nWe handle the full plumbing scope of Naples kitchen and bath renovations: relocating supply and drain lines for new layouts, slab cuts and re-routes when an island sink or freestanding tub moves across the room, new rough-ins for steam showers, body sprays, and pot fillers, and the careful finish work that high-end fixtures demand. Wall-hung toilets, thermostatic shower valves, and imported fixtures arrive with unforgiving tolerances — we set them right the first time, because re-doing tile is nobody's change order.\n\nOlder homes in Old Naples, Park Shore, and along Gulf Shore Boulevard add their own layer: original galvanized or copper supply lines and cast iron drains that should be evaluated — and often replaced — while the walls are already open. We'll camera and assess what's exposed and give you a straight recommendation, because finding out about a failing drain line after the new marble is installed is the most expensive way to learn.\n\nC&S is licensed (CFC057076 and CFC1432485), insured, accustomed to working alongside GCs, designers, and HOA rules, and rated 5.0 on Google. For Collier County remodels where the finish level matters, call 833-PLUMB-IT.`,
+    features: [
+      {
+        title: "Layout Relocations & Slab Work",
+        description:
+          "Supply and drain re-routes, slab cuts, and under-slab work for island sinks, freestanding tubs, and moved walls.",
+      },
+      {
+        title: "High-End Fixture Expertise",
+        description:
+          "Thermostatic valves, wall-hung toilets, steam showers, and imported fixtures set to spec the first time.",
+      },
+      {
+        title: "Open-Wall Pipe Assessment",
+        description:
+          "Aging supply and drain lines evaluated while walls are open — repipe recommendations made before the tile goes up, not after.",
+      },
+      {
+        title: "GC & Designer Coordination",
+        description:
+          "Rough-in delivered on the construction schedule, inspections passed, and finish dates protected.",
+      },
+      {
+        title: "Collier County Permitting",
+        description:
+          "Plumbing permits and inspections handled for remodel scopes, including HOA-sensitive communities.",
+      },
+    ],
+    city: "Naples",
+    state: "FL",
+    neighborhoods: [
+      "Old Naples",
+      "Park Shore",
+      "Pelican Bay",
+      "Vanderbilt Beach",
+      "North Naples",
+      "Golden Gate",
+      "Lely Resort",
+      "East Naples",
+    ],
+    faqs: [
+      {
+        question: "Can you move my kitchen sink or tub to a new location?",
+        answer:
+          "Yes — relocations are the heart of remodel plumbing. Moving a sink, tub, or toilet means re-routing supply and drain lines, and in Naples' slab-on-grade homes that usually involves cutting the slab and running new lines beneath it. We've done it thousands of times, we quote it upfront, and we coordinate the timing with your GC so the slab work lands before flooring, not after.",
+      },
+      {
+        question: "Do you work with general contractors and designers?",
+        answer:
+          "Constantly — coordinating with GCs is the core of our business, with 20+ builder partnerships across Southwest Florida. We work from your designer's fixture schedule, hit the rough-in dates on the construction calendar, and handle the inspection milestones so the project keeps moving.",
+      },
+      {
+        question: "Should I replace old pipes during my Naples remodel?",
+        answer:
+          "If your home has original galvanized supply lines or aging cast iron drains, the remodel is by far the cheapest moment to address them — the walls are already open. We assess what's exposed, camera the drains if warranted, and give you a straight recommendation. Skipping it and discovering a pipe failure behind new marble is the outcome we're trying to save you from.",
+      },
+      {
+        question: "Can you install high-end and imported fixtures?",
+        answer:
+          "Yes. Wall-hung toilets, thermostatic shower systems, body sprays, steam units, pot fillers, and European fixtures all have tight rough-in tolerances — the valve placement has to be right before tile. We set rough-ins to the fixture's spec sheet and return for precise trim-out after finishes are complete.",
+      },
+      {
+        question: "Do you handle permits for remodel plumbing in Collier County?",
+        answer:
+          "Yes. Remodel plumbing scopes in Naples require Collier County permits, and we pull them and schedule the inspections as part of the job. C&S holds two active Florida licenses, CFC057076 and CFC1432485, and we're experienced with the documentation HOA communities require.",
+      },
+    ],
+    relatedPages: [
+      { label: "Naples Service Area", href: "/areas/naples" },
+      { label: "Plumbing Remodel Services", href: "/services/plumbing-remodel" },
+      { label: "Whole-Home Repiping", href: "/services/repiping" },
     ],
   },
 ];

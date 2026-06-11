@@ -127,7 +127,7 @@ export default function Footer() {
               Service Areas
             </h3>
             <div className="flex flex-wrap gap-x-1.5 gap-y-1 text-xs sm:text-sm text-gray-500">
-              {SERVICE_AREAS.slice(0, 8).map((area, i) => {
+              {SERVICE_AREAS.slice(0, 10).map((area, i) => {
                 const areaLanding = AREA_LANDINGS.find((a) => a.city === area);
                 return (
                   <span key={area}>
@@ -141,7 +141,7 @@ export default function Footer() {
                     ) : (
                       area
                     )}
-                    {i < 7 && " · "}
+                    {i < 9 && " · "}
                   </span>
                 );
               })}

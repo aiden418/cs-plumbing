@@ -71,6 +71,8 @@ export const NAV_LINKS: NavLink[] = [
       { label: "Lehigh Acres", href: "/areas/lehigh-acres" },
       { label: "Estero", href: "/areas/estero" },
       { label: "Sanibel Island", href: "/areas/sanibel" },
+      { label: "Punta Gorda", href: "/areas/punta-gorda" },
+      { label: "Port Charlotte", href: "/areas/port-charlotte" },
     ],
   },
   { label: "Coastal Comeback", href: "/coastal-comeback-plan" },
@@ -97,6 +99,22 @@ export const STATS: Stat[] = [
   { value: 28, suffix: "+", label: "Years of Service" },
   { value: 4, suffix: "%", label: "Top FL Contractors" },
   { value: 24, suffix: "/7", label: "Emergency Service" },
+];
+
+// Shared proof bullets — keep these identical everywhere they appear so
+// search engines and AI assistants extract one consistent story.
+export const TRUST_PROOF_POINTS = [
+  "Family-owned since 1998",
+  "8,500+ homes completed",
+  "Top 4% of Florida contractors",
+  "Best of Cape Coral 2025",
+  "24/7 emergency service",
+  "Licensed & insured (CFC057076 / CFC1432485)",
+  "5.0-star Google rating",
+  "Upfront, transparent pricing",
+  "Same-day service available",
+  "All work permitted & inspected",
+  "Serving Lee, Collier & Charlotte counties",
 ];
 
 // ============================================
@@ -427,6 +445,8 @@ export const SERVICE_AREAS = [
   "Cape Coral",
   "Fort Myers",
   "North Fort Myers",
+  "Punta Gorda",
+  "Port Charlotte",
   "Naples",
   "Bonita Springs",
   "Estero",
@@ -434,8 +454,6 @@ export const SERVICE_AREAS = [
   "Sanibel Island",
   "Captiva Island",
   "Fort Myers Beach",
-  "Punta Gorda",
-  "Port Charlotte",
   "Marco Island",
 ];
 
@@ -1630,6 +1648,130 @@ export const AREA_LANDINGS: AreaLanding[] = [
     ],
     localContext:
       "Sanibel Island's unique barrier island environment presents specific plumbing challenges that mainland homes don't face. Salt air accelerates pipe corrosion, hurricane damage can compromise entire plumbing systems, and the island's building codes require contractors who understand the local requirements. C&S Plumbing has been helping Sanibel and Captiva Island homeowners rebuild and maintain their plumbing systems for years, including extensive work following recent hurricane seasons. Our team is experienced with the logistics of island work, including coordinating with the causeway schedule and island-specific permitting requirements.",
+  },
+  {
+    slug: "punta-gorda",
+    city: "Punta Gorda",
+    state: "FL",
+    metaTitle: "Plumber in Punta Gorda, FL",
+    metaDescription:
+      "Trusted plumber in Punta Gorda, FL. Water heaters, emergency plumbing, repiping & drain service across Charlotte County. Family-owned since 1998. Call 833-PLUMB-IT.",
+    keywords: [
+      "plumber Punta Gorda",
+      "plumber Punta Gorda FL",
+      "Punta Gorda plumbing",
+      "emergency plumber Punta Gorda",
+      "water heater Punta Gorda",
+      "water heater replacement Punta Gorda",
+      "repiping Punta Gorda",
+      "drain cleaning Punta Gorda",
+      "plumber near me Punta Gorda",
+      "Charlotte County plumber",
+    ],
+    heroText: "Your Trusted Plumber in Punta Gorda, FL",
+    description:
+      "C&S Plumbing brings 28+ years of Southwest Florida experience to Punta Gorda and Charlotte County. Water heater replacements, emergency repairs, repiping, and drain service — backed by 8,500+ completed homes and two active state licenses.",
+    neighborhoods: [
+      "Punta Gorda Isles",
+      "Burnt Store Isles",
+      "Historic District",
+      "Burnt Store Meadows",
+      "Seminole Lakes",
+      "Charlotte Park",
+      "Solana",
+      "Charlotte Harbor",
+    ],
+    localContext:
+      "Punta Gorda's housing stock is a mix that keeps plumbers honest: canal-front homes in Punta Gorda Isles with aging water heaters and salt-air exposure, rebuilt homes from the Hurricane Charley and Ian recovery years, and older properties in and around the Historic District where original supply lines and fixtures are reaching end of life. Water heaters are a recurring theme in Punta Gorda — many units installed during the post-Charley rebuild wave are now past their service life. C&S Plumbing is licensed to pull permits in Charlotte County, and our North Fort Myers shop is a straight run up US-41 or I-75, so Punta Gorda jobs get the same response we give Lee County.",
+    faqs: [
+      {
+        question: "Do you really service Punta Gorda from North Fort Myers?",
+        answer:
+          "Yes. Our shop at 951 Pondella Rd in North Fort Myers is about 25–35 minutes from most of Punta Gorda via US-41 or I-75. We schedule Charlotte County work daily, and emergency calls are dispatched 24/7 — same as Lee County.",
+      },
+      {
+        question: "Can you replace a water heater in Punta Gorda the same day?",
+        answer:
+          "In most cases, yes. We stock common 40- and 50-gallon tank water heaters, and if you call in the morning we can usually have a new unit installed and permitted the same day. Tankless conversions typically take 1–2 days including the upgraded gas or electric supply.",
+      },
+      {
+        question: "Do you work on canal-front homes in Punta Gorda Isles?",
+        answer:
+          "All the time. PGI homes come with their own plumbing quirks — exterior fixtures and water heaters exposed to salt air, dock and outdoor shower lines, and slab-on-grade construction where leaks hide. We've worked waterfront homes across Southwest Florida since 1998.",
+      },
+      {
+        question: "Do you pull permits with Charlotte County?",
+        answer:
+          "Yes. C&S Plumbing holds two active Florida CFC licenses (CFC1432485 and CFC057076) and we pull permits and coordinate inspections with Charlotte County for water heaters, repipes, and remodel work. You never have to handle the paperwork yourself.",
+      },
+      {
+        question: "Is your emergency service available in Punta Gorda?",
+        answer:
+          "Yes — 24/7 emergency plumbing covers Punta Gorda and all of Charlotte County. Call 833-PLUMB-IT any hour. Office hours are Mon–Fri 7:30 AM–4:30 PM and Sat 9 AM–3 PM, but the emergency line never closes.",
+      },
+    ],
+  },
+  {
+    slug: "port-charlotte",
+    city: "Port Charlotte",
+    state: "FL",
+    metaTitle: "Plumber in Port Charlotte, FL",
+    metaDescription:
+      "Reliable plumber in Port Charlotte, FL. Drain cleaning, water treatment, water heaters & emergency plumbing. Family-owned since 1998. Call 833-PLUMB-IT.",
+    keywords: [
+      "plumber Port Charlotte",
+      "plumber Port Charlotte FL",
+      "Port Charlotte plumbing",
+      "emergency plumber Port Charlotte",
+      "drain cleaning Port Charlotte",
+      "water treatment Port Charlotte",
+      "water heater Port Charlotte",
+      "well water plumber Port Charlotte",
+      "plumber near me Port Charlotte",
+      "Charlotte County plumber",
+    ],
+    heroText: "Reliable Plumbing Services in Port Charlotte, FL",
+    description:
+      "C&S Plumbing serves Port Charlotte homeowners with drain cleaning, water treatment, water heaters, and 24/7 emergency repairs. Family-owned since 1998, with 8,500+ completed homes across Southwest Florida.",
+    neighborhoods: [
+      "Murdock",
+      "Parkside",
+      "Deep Creek",
+      "Harbour Heights",
+      "Gulf Cove",
+      "El Jobean",
+      "Charlotte Harbor",
+      "Midway",
+    ],
+    localContext:
+      "Port Charlotte was largely built out in the 1970s and 1980s, and the plumbing shows it: cast iron drain lines that have spent forty-plus years in Florida soil are behind a steady share of the calls we get from Port Charlotte. Slow drains, recurring backups, and that sewer smell in the yard usually trace back to original drain pipe that's due for cleaning, lining, or replacement. The other big one is water quality — homes in Gulf Cove, El Jobean, and the outlying sections often run on well water with the sulfur and hardness problems that come with it, and even Charlotte County Utilities customers deal with hard water that scales up fixtures and water heaters. C&S Plumbing handles drain cleaning with camera inspection, whole-home water treatment, and everything in between, with Charlotte County permits pulled and inspections handled by us.",
+    faqs: [
+      {
+        question: "Why do drains keep backing up in older Port Charlotte homes?",
+        answer:
+          "Most Port Charlotte homes built in the 1970s and 1980s still have original cast iron drain lines. After four decades in Florida's soil and humidity, the pipe walls rust rough and narrow, catching grease and paper until backups become routine. We camera-inspect the line first, so you know whether a cleaning, a spot repair, or a replacement actually solves it.",
+      },
+      {
+        question: "Do you treat well water in Port Charlotte?",
+        answer:
+          "Yes. Homes in Gulf Cove, El Jobean, and other outlying areas often run on private wells with sulfur odor, iron staining, and hardness. We install and service whole-home treatment systems — softeners, carbon filtration, and aeration — sized to your well and water test results.",
+      },
+      {
+        question: "How fast can you get to Port Charlotte for an emergency?",
+        answer:
+          "Our North Fort Myers shop is roughly 30–40 minutes from most of Port Charlotte via US-41 or I-75. The emergency line at 833-PLUMB-IT is answered 24/7, and a licensed plumber is dispatched — not an answering service promise.",
+      },
+      {
+        question: "Do you pull permits with Charlotte County?",
+        answer:
+          "Yes. We hold two active Florida CFC licenses (CFC1432485 and CFC057076) and handle Charlotte County permitting and inspections for water heaters, repipes, drain line replacements, and remodel plumbing.",
+      },
+      {
+        question: "Can you replace a water heater in Port Charlotte?",
+        answer:
+          "Yes — tank, tankless, and hybrid water heaters, usually with same-day availability on common tank sizes. Hard water in Charlotte County shortens water heater life, so we'll also tell you honestly whether a softener will pay for itself on the next unit.",
+      },
+    ],
   },
 ];
 

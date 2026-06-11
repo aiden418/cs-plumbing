@@ -9,7 +9,7 @@ import StaggerChildren, {
 } from "@/components/animations/StaggerChildren";
 import CityProofBlock from "@/components/areas/CityProofBlock";
 import { motion } from "framer-motion";
-import { BUSINESS, SERVICES } from "@/lib/constants";
+import { BUSINESS, SERVICES, TRUST_PROOF_POINTS } from "@/lib/constants";
 import type { AreaLanding } from "@/lib/types";
 
 export default function AreaLandingTemplate({
@@ -152,17 +152,7 @@ export default function AreaLandingTemplate({
             </div>
           </ScrollReveal>
           <StaggerChildren className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-4xl mx-auto">
-            {[
-              "Family-owned since 1998",
-              "8,500+ homes completed",
-              "24/7 emergency service",
-              "Licensed & insured (CFC057076 / CFC1432485)",
-              "5.0-star Google rating",
-              "Upfront, transparent pricing",
-              "Same-day service available",
-              "All work permitted & inspected",
-              `Fast response to ${landing.city}`,
-            ].map((highlight) => (
+            {[...TRUST_PROOF_POINTS, `Fast response to ${landing.city}`].map((highlight) => (
               <motion.div
                 key={highlight}
                 variants={staggerItem}
@@ -177,6 +167,50 @@ export default function AreaLandingTemplate({
           </StaggerChildren>
         </Container>
       </section>
+
+      {/* City FAQ */}
+      {landing.faqs && landing.faqs.length > 0 && (
+        <section className="py-16 sm:py-24 lg:py-32 bg-[#F5F5F7]">
+          <Container>
+            <ScrollReveal>
+              <div className="max-w-4xl mx-auto">
+                <div className="text-center mb-10 sm:mb-16">
+                  <span className="inline-block text-primary text-xs sm:text-sm font-semibold tracking-widest uppercase mb-3 sm:mb-4">
+                    FAQ
+                  </span>
+                  <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900">
+                    {landing.city} Plumbing Questions
+                  </h2>
+                </div>
+                <div className="space-y-4">
+                  {landing.faqs.map((faq, i) => (
+                    <details
+                      key={i}
+                      className="group bg-white border border-gray-200 rounded-xl overflow-hidden"
+                    >
+                      <summary className="flex items-center justify-between cursor-pointer px-5 sm:px-6 py-4 sm:py-5 text-left text-base sm:text-lg font-semibold text-gray-900 hover:text-primary transition-colors">
+                        <span className="pr-4">{faq.question}</span>
+                        <svg
+                          className="w-5 h-5 shrink-0 text-gray-400 group-open:rotate-180 transition-transform duration-200"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          strokeWidth={2}
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </summary>
+                      <div className="px-5 sm:px-6 pb-5 sm:pb-6 text-gray-600 leading-relaxed">
+                        {faq.answer}
+                      </div>
+                    </details>
+                  ))}
+                </div>
+              </div>
+            </ScrollReveal>
+          </Container>
+        </section>
+      )}
     </>
   );
 }

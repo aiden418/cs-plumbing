@@ -92,6 +92,7 @@ export interface AreaLanding {
   neighborhoods?: string[];
   localContext: string;
   relatedServices?: string[];
+  faqs?: FAQ[];
 }
 
 export interface ServiceLanding {

@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { BLOG_POSTS, COMPLETED_PROJECTS } from "@/lib/constants";
+import { AREA_LANDINGS, BLOG_POSTS, COMPLETED_PROJECTS } from "@/lib/constants";
 import { SERVICE_CITY_LANDINGS } from "@/lib/service-city-landings";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -116,56 +116,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.9,
     },
-    // City/area landing pages
-    {
-      url: `${baseUrl}/areas/cape-coral`,
+    // City/area landing pages — driven by AREA_LANDINGS so new cities
+    // appear automatically (each still needs its /areas/<slug> route files).
+    ...AREA_LANDINGS.map((area) => ({
+      url: `${baseUrl}/areas/${area.slug}`,
       lastModified: new Date(),
-      changeFrequency: "monthly",
+      changeFrequency: "monthly" as const,
       priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/areas/fort-myers`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/areas/north-fort-myers`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/areas/naples`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/areas/bonita-springs`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    // New area pages
-    {
-      url: `${baseUrl}/areas/lehigh-acres`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/areas/estero`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/areas/sanibel`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
+    })),
     // FAQ
     {
       url: `${baseUrl}/faq`,

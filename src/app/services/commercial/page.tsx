@@ -3,6 +3,7 @@ import PageTransition from "@/components/layout/PageTransition";
 import ServiceDetail from "@/components/services/ServiceDetail";
 import CTASection from "@/components/home/CTASection";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
+import FaqJsonLd from "@/components/seo/FaqJsonLd";
 
 const commercialFaqs = [
   {
@@ -214,6 +215,7 @@ export default function CommercialPage() {
       </section>
 
       <BreadcrumbJsonLd items={[{ name: "Home", href: "/" }, { name: "Services", href: "/services" }, { name: "Commercial", href: "/services/commercial" }]} />
+      <FaqJsonLd faqs={commercialFaqs} />
       <CTASection />
     </PageTransition>
   );

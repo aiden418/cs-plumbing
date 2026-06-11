@@ -31,9 +31,9 @@ const EmergencyBand = dynamic(() => import("@/components/home/EmergencyBand"));
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
   title:
-    "New Construction, Remodel & Service Plumber in Cape Coral & Fort Myers",
+    "Plumber in Cape Coral, Fort Myers & Punta Gorda | 24/7 Emergency Service",
   description:
-    "Southwest Florida's trusted new construction, remodel, repipe, and service plumber. 8,500+ homes built since 1998. Best of Cape Coral 2025. Serving Cape Coral, Fort Myers, Naples & all of Lee County. 24/7 emergency available.",
+    "Southwest Florida's trusted new construction, remodel, repipe, and service plumber. 8,500+ homes built since 1998. Best of Cape Coral 2025. Serving Cape Coral, Fort Myers, North Fort Myers, Punta Gorda, Port Charlotte & Naples — Lee, Charlotte & Collier counties. 24/7 emergency available.",
   keywords: [
     "new construction plumber SWFL",
     "new construction plumbing Cape Coral",
@@ -59,6 +59,10 @@ export const metadata: Metadata = {
     "licensed plumber Lee County FL",
     "residential plumbing Cape Coral",
     "commercial plumbing Fort Myers",
+    "plumber Punta Gorda",
+    "plumber Port Charlotte",
+    "plumber North Fort Myers",
+    "Charlotte County plumber",
   ],
   openGraph: {
     title:

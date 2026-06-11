@@ -21,6 +21,8 @@ const RESPONSE_TIMES: Record<string, string> = {
   "bonita-springs": "60 min response",
   "naples": "60 min response",
   "sanibel": "60 min response",
+  "punta-gorda": "45 min response",
+  "port-charlotte": "60 min response",
 };
 
 // Per-city imagery sourced from Unsplash (free for commercial use).
@@ -35,6 +37,8 @@ const AREA_IMAGES: Record<string, string> = {
   "lehigh-acres": "/images/areas/lehigh-acres.jpg",
   "estero": "/images/areas/estero.jpg",
   "sanibel": "/images/areas/sanibel.jpg",
+  // punta-gorda + port-charlotte photos pending — fallback image used until
+  // /images/areas/punta-gorda.jpg and port-charlotte.jpg are added.
 };
 
 // Soft fallback for any future slug that doesn't have an image yet
