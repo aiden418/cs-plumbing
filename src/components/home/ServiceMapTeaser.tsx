@@ -23,7 +23,7 @@ export default function ServiceMapTeaser() {
           <div className="max-w-4xl mx-auto">
             <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm">
               <iframe
-                src="https://www.google.com/maps/d/u/0/embed?mid=1525gJBVH8SRdUNAF-0nemUswy8DmRjo&ehbc=2E312F"
+                src="https://www.google.com/maps/d/embed?mid=1525gJBVH8SRdUNAF-0nemUswy8DmRjo&ehbc=2E312F"
                 width="100%"
                 height="400"
                 style={{ border: 0 }}
