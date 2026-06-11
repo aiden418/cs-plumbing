@@ -37,8 +37,8 @@ const AREA_IMAGES: Record<string, string> = {
   "lehigh-acres": "/images/areas/lehigh-acres.jpg",
   "estero": "/images/areas/estero.jpg",
   "sanibel": "/images/areas/sanibel.jpg",
-  // punta-gorda + port-charlotte photos pending — fallback image used until
-  // /images/areas/punta-gorda.jpg and port-charlotte.jpg are added.
+  "punta-gorda": "/images/areas/punta-gorda.jpg",
+  "port-charlotte": "/images/areas/port-charlotte.jpg",
 };
 
 // Soft fallback for any future slug that doesn't have an image yet
