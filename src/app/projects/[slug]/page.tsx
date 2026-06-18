@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import PageTransition from "@/components/layout/PageTransition";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import ProjectDetail from "@/components/projects/ProjectDetail";
+import ProjectJsonLd from "@/components/seo/ProjectJsonLd";
 import CTASection from "@/components/home/CTASection";
 import { COMPLETED_PROJECTS } from "@/lib/constants";
 
@@ -30,10 +31,19 @@ export async function generateMetadata({
     ],
     alternates: { canonical: `/projects/${project.slug}` },
     openGraph: {
+      type: "article",
       title: project.metaTitle,
       description: project.metaDescription,
       url: `https://www.csplumbinglee.com/projects/${project.slug}`,
-      images: [project.coverImage],
+      images: project.coverImage
+        ? [{ url: project.coverImage, alt: project.name }]
+        : [],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: project.metaTitle,
+      description: project.metaDescription,
+      images: project.coverImage ? [project.coverImage] : [],
     },
   };
 }
@@ -56,6 +66,7 @@ export default async function Page({
           { name: project.name, href: `/projects/${project.slug}` },
         ]}
       />
+      <ProjectJsonLd project={project} />
       <ProjectDetail project={project} />
       <CTASection />
     </PageTransition>

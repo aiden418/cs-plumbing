@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import PageTransition from "@/components/layout/PageTransition";
 import ProjectsIndexPage from "./ProjectsIndexPage";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
+import ProjectsListJsonLd from "@/components/seo/ProjectsListJsonLd";
+import { COMPLETED_PROJECTS } from "@/lib/constants";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/projects" },
@@ -32,6 +34,7 @@ export default function Page() {
           { name: "Projects", href: "/projects" },
         ]}
       />
+      <ProjectsListJsonLd projects={COMPLETED_PROJECTS} />
       <ProjectsIndexPage />
     </PageTransition>
   );
