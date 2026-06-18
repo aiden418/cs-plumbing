@@ -2707,7 +2707,7 @@ export const COMPLETED_PROJECTS: CompletedProject[] = [
     description:
       "C&S Plumbing is the commercial plumbing contractor for Hangar 97, a new-construction aviation hangar at Punta Gorda Airport (PGD) built by Stellar Development. Below-slab underground rough-in is complete — supply, drain, waste, and vent piping set and inspected before the pour — and the building is now through second rough. Trim and finish phases will follow as the build progresses.",
     location: "Punta Gorda, FL",
-    coverImage: "/images/projects/hangar-97-punta-gorda-airport/2nd-rough/photo-1.jpg",
+    coverImage: "/images/projects/hangar-97-punta-gorda-airport/2nd-rough/photo-10.jpg",
     phases: [
       {
         name: "Underground",
