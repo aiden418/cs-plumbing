@@ -3049,7 +3049,7 @@ export const COMPLETED_PROJECTS: CompletedProject[] = [
   },
   {
     slug: "hansen-homes-1210-cape-coral",
-    name: "Hansen Homes — 1210 New Construction (Cape Coral)",
+    name: "Hansen Homes — 1210 Trim-Out (Cape Coral)",
     client: "Hansen Homes",
     clientUrl: "https://www.hansenhomes.net",
     category: "New Construction",
@@ -3085,7 +3085,7 @@ export const COMPLETED_PROJECTS: CompletedProject[] = [
   },
   {
     slug: "hansen-homes-2210-cape-coral",
-    name: "Hansen Homes — 2210 New Construction (Cape Coral)",
+    name: "Hansen Homes — 2210 Trim-Out (Cape Coral)",
     client: "Hansen Homes",
     clientUrl: "https://www.hansenhomes.net",
     category: "New Construction",
