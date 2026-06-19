@@ -2514,7 +2514,7 @@ export const COMPLETED_PROJECTS: CompletedProject[] = [
     name: "306 Seminal Way — Fort Myers Beach New Construction",
     client: "Custom Home Build",
     category: "New Construction",
-    timeline: "Underground to Trim-Out",
+    timeline: "Completed",
     cost: "On Request",
     description:
       "Full residential new construction plumbing on Fort Myers Beach. C&S Plumbing handled every phase — underground supply and DWV, in-wall rough-in, water heater set, and final fixture trim — for a custom home built to current Florida Building Code with hurricane and salt-air considerations. Bath fixtures and water heater detail shots included below.",
@@ -3024,7 +3024,7 @@ export const COMPLETED_PROJECTS: CompletedProject[] = [
     name: "Decker Homes — New Construction (Punta Gorda)",
     client: "Decker Homes",
     category: "New Construction",
-    timeline: "In Progress",
+    timeline: "Completed",
     cost: "On Request",
     description:
       "C&S Plumbing is the plumbing partner for a Decker Homes new-construction build in Punta Gorda. Work is underway with underground and rough-in plumbing; this page will be updated with photos from each phase as the build progresses.",
@@ -3053,7 +3053,7 @@ export const COMPLETED_PROJECTS: CompletedProject[] = [
     client: "Hansen Homes",
     clientUrl: "https://www.hansenhomes.net",
     category: "New Construction",
-    timeline: "In Progress",
+    timeline: "Completed",
     cost: "On Request",
     description:
       "C&S Plumbing handled the trim-out phase on a Hansen Homes new-construction build (1210) in Cape Coral — finish fixtures, water heater, and final connections set after rough-in and inspection. C&S is the plumbing partner across multiple Hansen Homes Cape Coral builds.",
@@ -3089,7 +3089,7 @@ export const COMPLETED_PROJECTS: CompletedProject[] = [
     client: "Hansen Homes",
     clientUrl: "https://www.hansenhomes.net",
     category: "New Construction",
-    timeline: "In Progress",
+    timeline: "Completed",
     cost: "On Request",
     description:
       "C&S Plumbing handled the trim-out phase on a Hansen Homes new-construction build (2210) in Cape Coral — finish fixtures and final connections set after rough-in and inspection. C&S is the plumbing partner across multiple Hansen Homes Cape Coral builds.",

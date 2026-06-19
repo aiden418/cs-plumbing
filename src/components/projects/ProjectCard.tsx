@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { MapPin, ArrowUpRight, Camera, Layers } from "lucide-react";
+import { MapPin, ArrowUpRight, Camera, Layers, Check } from "lucide-react";
 import Image from "next/image";
 import type { CompletedProject } from "@/lib/types";
 
@@ -12,7 +12,7 @@ export function projectPhotoCount(project: CompletedProject) {
 export default function ProjectCard({ project }: { project: CompletedProject }) {
   const photoCount = projectPhotoCount(project);
   const phaseCount = project.phases.length;
-  const live = /progress|underground|rough|trim|to /i.test(project.timeline);
+  const live = /progress/i.test(project.timeline);
 
   return (
     <motion.a
@@ -48,13 +48,18 @@ export default function ProjectCard({ project }: { project: CompletedProject }) 
           <span className="rounded-full bg-white/90 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-navy backdrop-blur">
             {project.category}
           </span>
-          {live && (
+          {live ? (
             <span className="flex items-center gap-1.5 rounded-full bg-gold/95 px-2.5 py-1 text-[11px] font-extrabold uppercase tracking-wider text-navy">
               <span className="relative flex h-1.5 w-1.5">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-navy/70" />
                 <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-navy" />
               </span>
               Live
+            </span>
+          ) : (
+            <span className="flex items-center gap-1 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-extrabold uppercase tracking-wider text-navy backdrop-blur">
+              <Check className="h-3 w-3 text-[#34C759]" strokeWidth={3} />
+              Completed
             </span>
           )}
         </div>
