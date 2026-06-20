@@ -7,11 +7,11 @@ import { TIMELINE_EVENTS } from "@/lib/constants";
 
 export default function Timeline() {
   return (
-    <section className="py-16 sm:py-24 lg:py-32 bg-[#F5F5F7]">
+    <section className="py-16 sm:py-24 lg:py-32 bg-white">
       <Container size="narrow">
         <SectionHeading
           overline="Our Journey"
-          title="27+ Years of Excellence"
+          title="28+ Years of Excellence"
           subtitle="From a single truck to Southwest Florida's most trusted plumbing team."
         />
 
@@ -49,7 +49,7 @@ export default function Timeline() {
                   </div>
 
                   {/* Dot */}
-                  <div className="absolute left-5 sm:left-8 lg:left-1/2 -translate-x-1/2 w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-primary border-[3px] sm:border-4 border-[#F5F5F7] z-10" />
+                  <div className="absolute left-5 sm:left-8 lg:left-1/2 -translate-x-1/2 w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-primary border-[3px] sm:border-4 border-white z-10" />
 
                   {/* Spacer for alternating layout */}
                   <div className="hidden lg:block flex-1" />

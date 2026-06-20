@@ -51,7 +51,7 @@ export default function PartnersPage() {
                 <Link href="/about" className="text-primary hover:underline">
                   family-owned plumbing company
                 </Link>{" "}
-                serving Cape Coral and Southwest Florida since 1998, we know the value of working with
+                serving Cape Coral and Southwest Florida since 1997, we know the value of working with
                 contractors who share our commitment to quality and customer service. Whether you need a{" "}
                 <Link href="/services/residential" className="text-primary hover:underline">
                   residential plumbing

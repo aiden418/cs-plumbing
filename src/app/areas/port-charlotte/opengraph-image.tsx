@@ -10,6 +10,6 @@ export default function OgImage() {
     variant: "area",
     eyebrow: "Port Charlotte · FL",
     title: "Plumbing in Port Charlotte",
-    subtitle: "Drain cleaning, water treatment & 24/7 emergency plumbing — family-owned since 1998.",
+    subtitle: "Drain cleaning, water treatment & 24/7 emergency plumbing — family-owned since 1997.",
   });
 }

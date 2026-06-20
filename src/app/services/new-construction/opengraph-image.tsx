@@ -9,7 +9,7 @@ export default function OgImage() {
   return createOgImage({
     variant: "service",
     eyebrow: "New Construction",
-    title: "8,500+ Homes Plumbed Since 1998",
+    title: "8,500+ Homes Plumbed Since 1997",
     subtitle: "SWFL's most experienced new-construction plumbing partner for residential & commercial builders.",
   });
 }

@@ -8,10 +8,10 @@ export default function JsonLd() {
     "@type": "Person",
     "@id": `${BASE}/#founder`,
     name: "Samuel Pellechio Sr.",
-    jobTitle: "Founder",
+    jobTitle: "Founding Patriarch",
     worksFor: { "@id": `${BASE}/#organization` },
     description:
-      "Co-founded C&S Plumbing of Lee in 1998, building the company into one of Southwest Florida's most trusted plumbing contractors with over 8,500 homes completed. Passed away in 2020.",
+      "A mason and general contractor who built thousands of homes in Philadelphia before moving the family to Cape Coral in 1984. He taught the trade to his sons Chris and Sam, who founded C&S Plumbing of Lee — every standard the company holds traces back to him. Passed away in 2020.",
   };
 
   const owner = {
@@ -23,7 +23,7 @@ export default function JsonLd() {
     image: `${BASE}/images/team/samuel.jpeg`,
     worksFor: { "@id": `${BASE}/#organization` },
     description:
-      "First-generation licensed plumber and second-generation contractor leading C&S Plumbing since 1998. Licensed Florida plumbing contractor (CFC1432485 / CFC057076).",
+      "First-generation licensed plumber and second-generation contractor leading C&S Plumbing since 1997. Licensed Florida plumbing contractor (CFC1432485 / CFC057076).",
     hasCredential: {
       "@type": "EducationalOccupationalCredential",
       credentialCategory: "Professional License",
@@ -49,12 +49,12 @@ export default function JsonLd() {
     "@type": "Person",
     "@id": `${BASE}/#operations-manager`,
     name: "Aiden Pellechio",
-    jobTitle: "Operations Manager",
+    jobTitle: "Project Manager & Estimator",
     url: `${BASE}/about`,
     image: `${BASE}/images/team/aiden.jpg`,
     worksFor: { "@id": `${BASE}/#organization` },
     description:
-      "Third-generation family member managing daily operations, currently studying construction management at Florida Gulf Coast University (FGCU).",
+      "Third-generation Pellechio working full-time as project manager and estimator at C&S Plumbing of Lee — also handling permitting and marketing — while earning a construction management degree at Florida Gulf Coast University (FGCU), Class of 2028.",
   };
 
   /* ── LocalBusiness / Plumber ── */
@@ -69,10 +69,10 @@ export default function JsonLd() {
     image: `${BASE}/images/hero/drone-construction.jpg`,
     telephone: `+1${BUSINESS.phoneRaw}`,
     email: "office@csplumbinglee.com",
-    foundingDate: "1998",
+    foundingDate: "1997",
     numberOfEmployees: { "@type": "QuantitativeValue", minValue: 5, maxValue: 10 },
     description:
-      "Family-owned plumbing company serving Southwest Florida since 1998. 8,500+ homes built. 24/7 emergency service. Residential, commercial & new construction plumbing across Cape Coral, Fort Myers, Naples & all of SWFL.",
+      "Family-owned plumbing company serving Southwest Florida since 1997. 8,500+ homes built. 24/7 emergency service. Residential, commercial & new construction plumbing across Cape Coral, Fort Myers, Naples & all of SWFL.",
     slogan: "Southwest Florida's Most Trusted Plumbing Team",
     address: {
       "@type": "PostalAddress",
@@ -233,7 +233,7 @@ export default function JsonLd() {
     aggregateRating: {
       "@type": "AggregateRating",
       ratingValue: "5.0",
-      reviewCount: "75",
+      reviewCount: "46",
       bestRating: "5",
       worstRating: "1",
     },
@@ -315,7 +315,7 @@ export default function JsonLd() {
     name: "C&S Plumbing of Lee",
     url: BASE,
     description:
-      "Official website of C&S Plumbing of Lee — family-owned plumbing contractor serving Cape Coral, Fort Myers, Naples, and all of Southwest Florida since 1998.",
+      "Official website of C&S Plumbing of Lee — family-owned plumbing contractor serving Cape Coral, Fort Myers, Naples, and all of Southwest Florida since 1997.",
     publisher: { "@id": `${BASE}/#organization` },
     inLanguage: "en-US",
   };

@@ -63,7 +63,7 @@ export default function ServiceCityLandingTemplate({
               </Button>
             </div>
             <p className="mt-4 text-xs text-gray-400">
-              Serving {landing.city} since 1998 · License #CFC057076 · #CFC1432485
+              Serving {landing.city} since 1997 · License #CFC057076 · #CFC1432485
             </p>
           </div>
         </Container>

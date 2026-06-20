@@ -14,7 +14,7 @@ export const BUSINESS = {
   city: "North Fort Myers",
   state: "FL",
   zip: "33903",
-  founded: 1998,
+  founded: 1997,
   homesCompleted: 8500,
   hours: {
     weekday: "Mon–Fri: 7:30 AM – 4:30 PM",
@@ -24,13 +24,13 @@ export const BUSINESS = {
   },
   tagline: "Southwest Florida's Most Trusted Plumbing Team",
   description:
-    "Family-owned since 1998. From emergency repairs to new construction, C&S Plumbing delivers excellence across Southwest Florida.",
+    "Family-owned since 1997. From emergency repairs to new construction, C&S Plumbing delivers excellence across Southwest Florida.",
   license: "CFC1432485",
   license2: "CFC057076",
   licenseLookupUrl:
     "https://www.myfloridalicense.com/wl11.asp?mode=2&search=License&SID=&brd=&typ=",
   rating: 5.0,
-  reviewCount: 75,
+  reviewCount: 46,
   googleProfileUrl:
     "https://www.google.com/maps/search/?api=1&query=C%26S+Plumbing+of+Lee+County+North+Fort+Myers",
 } as const;
@@ -104,9 +104,9 @@ export const STATS: Stat[] = [
 // Shared proof bullets — keep these identical everywhere they appear so
 // search engines and AI assistants extract one consistent story.
 export const TRUST_PROOF_POINTS = [
-  "Family-owned since 1998",
+  "Family-owned since 1997",
   "8,500+ homes completed",
-  "Top 4% of Florida contractors",
+  "5.0 stars across 46 Google reviews",
   "Best of Cape Coral 2025",
   "24/7 emergency service",
   "Licensed & insured (CFC057076 / CFC1432485)",
@@ -281,19 +281,19 @@ export const TEAM_MEMBERS: TeamMember[] = [
     name: "Samuel Pellechio Jr.",
     role: "Owner & President",
     image: "/images/team/samuel.jpeg",
-    bio: "First-generation licensed plumber and second-generation contractor, leading C&S Plumbing with the same dedication and family values his father instilled since 1998.",
+    bio: "Second-generation plumber and co-founder — the “S” in C&S. A Cape Coral High grad who earned his plumbing license in 1997 and has led the company ever since with the values his father instilled: honest work, fair pricing, and treating every customer like family.",
   },
   {
     name: "Aiden Pellechio",
-    role: "Operations Manager",
+    role: "Project Manager & Estimator",
     image: "/images/team/aiden.jpg",
-    bio: "Keeping the family legacy running smoothly with expert operations management, currently studying construction management at FGCU.",
+    bio: "Third-generation Pellechio. Runs projects, estimating, permitting, and marketing at C&S while earning his construction-management degree at FGCU (Class of 2028), with plans to pursue his GC and plumbing licenses.",
   },
   {
     name: "Dylan Redecker",
     role: "Lead Plumber",
     image: "/images/team/dylan.jpeg",
-    bio: "Bringing hands-on expertise and dedication to every job site across Southwest Florida.",
+    bio: "Hands-on expertise and dedication on every job site across Southwest Florida.",
   },
 ];
 
@@ -400,7 +400,7 @@ export const TESTIMONIALS: Testimonial[] = [
 
 export const TIMELINE_EVENTS: TimelineEvent[] = [
   {
-    year: "1998",
+    year: "1997",
     title: "The Beginning",
     description:
       "Two brothers, with the support of their father, founded C&S Plumbing of Lee with a single truck and a commitment to quality.",
@@ -433,7 +433,7 @@ export const TIMELINE_EVENTS: TimelineEvent[] = [
     year: "2024",
     title: "8,500+ Homes & Counting",
     description:
-      "Surpassed 8,500 new construction homes. Now ranked in the top 4% of all licensed contractors in Florida.",
+      "Surpassed 8,500 new construction homes — among Lee County's most experienced new-construction plumbers.",
   },
 ];
 
@@ -1382,7 +1382,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     state: "FL",
     metaTitle: "Plumber in Cape Coral, FL",
     metaDescription:
-      "Trusted plumber in Cape Coral, FL. Emergency plumbing, repiping, drain cleaning, water heaters & more. Family-owned since 1998. 8,500+ homes. Call 833-PLUMB-IT.",
+      "Trusted plumber in Cape Coral, FL. Emergency plumbing, repiping, drain cleaning, water heaters & more. Family-owned since 1997. 8,500+ homes. Call 833-PLUMB-IT.",
     keywords: [
       "plumber Cape Coral",
       "plumber Cape Coral FL",
@@ -1396,7 +1396,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     ],
     heroText: "Your Trusted Plumber in Cape Coral, FL",
     description:
-      "C&S Plumbing has been serving Cape Coral homeowners and businesses since 1998. From emergency repairs to whole-home repiping, we deliver fast, reliable plumbing backed by 8,500+ completed homes.",
+      "C&S Plumbing has been serving Cape Coral homeowners and businesses since 1997. From emergency repairs to whole-home repiping, we deliver fast, reliable plumbing backed by 8,500+ completed homes.",
     neighborhoods: [
       "SW Cape Coral",
       "NW Cape Coral",
@@ -1454,7 +1454,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     state: "FL",
     metaTitle: "Plumber in North Fort Myers, FL — Our Hometown",
     metaDescription:
-      "North Fort Myers' hometown plumber since 1998. C&S Plumbing is headquartered right here on Pondella Rd. Emergency service, repiping, drains & more. Call 833-PLUMB-IT.",
+      "North Fort Myers' hometown plumber since 1997. C&S Plumbing is headquartered right here on Pondella Rd. Emergency service, repiping, drains & more. Call 833-PLUMB-IT.",
     keywords: [
       "plumber North Fort Myers",
       "plumber North Fort Myers FL",
@@ -1465,7 +1465,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
       "water heater North Fort Myers",
       "plumber near me North Fort Myers",
     ],
-    heroText: "North Fort Myers' Hometown Plumber Since 1998",
+    heroText: "North Fort Myers' Hometown Plumber Since 1997",
     description:
       "C&S Plumbing is headquartered right here in North Fort Myers at 951 Pondella Rd. As your neighbors, we take extra pride in serving our hometown community with fast, reliable plumbing services.",
     neighborhoods: [
@@ -1554,7 +1554,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     state: "FL",
     metaTitle: "Plumber in Lehigh Acres, FL",
     metaDescription:
-      "Trusted plumber in Lehigh Acres, FL. Emergency plumbing, repiping, drain cleaning, water heaters & more. Family-owned since 1998. 8,500+ homes. Call 833-PLUMB-IT.",
+      "Trusted plumber in Lehigh Acres, FL. Emergency plumbing, repiping, drain cleaning, water heaters & more. Family-owned since 1997. 8,500+ homes. Call 833-PLUMB-IT.",
     keywords: [
       "plumber Lehigh Acres",
       "plumber Lehigh Acres FL",
@@ -1655,7 +1655,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     state: "FL",
     metaTitle: "Plumber in Punta Gorda, FL",
     metaDescription:
-      "Trusted plumber in Punta Gorda, FL. Water heaters, emergency plumbing, repiping & drain service across Charlotte County. Family-owned since 1998. Call 833-PLUMB-IT.",
+      "Trusted plumber in Punta Gorda, FL. Water heaters, emergency plumbing, repiping & drain service across Charlotte County. Family-owned since 1997. Call 833-PLUMB-IT.",
     keywords: [
       "plumber Punta Gorda",
       "plumber Punta Gorda FL",
@@ -1697,7 +1697,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
       {
         question: "Do you work on canal-front homes in Punta Gorda Isles?",
         answer:
-          "All the time. PGI homes come with their own plumbing quirks — exterior fixtures and water heaters exposed to salt air, dock and outdoor shower lines, and slab-on-grade construction where leaks hide. We've worked waterfront homes across Southwest Florida since 1998.",
+          "All the time. PGI homes come with their own plumbing quirks — exterior fixtures and water heaters exposed to salt air, dock and outdoor shower lines, and slab-on-grade construction where leaks hide. We've worked waterfront homes across Southwest Florida since 1997.",
       },
       {
         question: "Do you pull permits with Charlotte County?",
@@ -1717,7 +1717,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     state: "FL",
     metaTitle: "Plumber in Port Charlotte, FL",
     metaDescription:
-      "Reliable plumber in Port Charlotte, FL. Drain cleaning, water treatment, water heaters & emergency plumbing. Family-owned since 1998. Call 833-PLUMB-IT.",
+      "Reliable plumber in Port Charlotte, FL. Drain cleaning, water treatment, water heaters & emergency plumbing. Family-owned since 1997. Call 833-PLUMB-IT.",
     keywords: [
       "plumber Port Charlotte",
       "plumber Port Charlotte FL",
@@ -1732,7 +1732,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     ],
     heroText: "Reliable Plumbing Services in Port Charlotte, FL",
     description:
-      "C&S Plumbing serves Port Charlotte homeowners with drain cleaning, water treatment, water heaters, and 24/7 emergency repairs. Family-owned since 1998, with 8,500+ completed homes across Southwest Florida.",
+      "C&S Plumbing serves Port Charlotte homeowners with drain cleaning, water treatment, water heaters, and 24/7 emergency repairs. Family-owned since 1997, with 8,500+ completed homes across Southwest Florida.",
     neighborhoods: [
       "Murdock",
       "Parkside",
@@ -1978,7 +1978,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>6. Consider Local and Family-Owned</h2>
 <p>Local plumbing companies have a reputation to maintain in the community. They're more likely to stand behind their work because their business depends on word-of-mouth referrals from neighbors, not anonymous online leads.</p>
-<p>C&S Plumbing has been family-owned and operated in Southwest Florida since 1998. We live here, we work here, and our reputation is everything to us.</p>
+<p>C&S Plumbing has been family-owned and operated in Southwest Florida since 1997. We live here, we work here, and our reputation is everything to us.</p>
 
 <h2>Ready to Experience the C&S Difference?</h2>
 <p>We've built our reputation on honest work, fair pricing, and treating every home like our own. With 8,500+ completed projects and a 5.0-star Google rating, we let our track record speak for itself.</p>

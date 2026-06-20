@@ -11,7 +11,7 @@ export default function AboutPersonJsonLd() {
       url: `${BASE}/about`,
       image: `${BASE}/images/team/samuel.jpeg`,
       description:
-        "First-generation licensed plumber and second-generation contractor leading C&S Plumbing of Lee since 1998. Licensed Florida Certified Plumbing Contractor (CFC1432485 / CFC057076) with decades of experience in residential, commercial, and new construction plumbing across Southwest Florida.",
+        "First-generation licensed plumber and second-generation contractor leading C&S Plumbing of Lee since 1997. Licensed Florida Certified Plumbing Contractor (CFC1432485 / CFC057076) with decades of experience in residential, commercial, and new construction plumbing across Southwest Florida.",
       worksFor: {
         "@type": "Plumber",
         "@id": `${BASE}/#organization`,
@@ -43,11 +43,11 @@ export default function AboutPersonJsonLd() {
       "@type": "Person",
       "@id": `${BASE}/#operations-manager`,
       name: "Aiden Pellechio",
-      jobTitle: "Operations Manager",
+      jobTitle: "Project Manager & Estimator",
       url: `${BASE}/about`,
       image: `${BASE}/images/team/aiden.jpg`,
       description:
-        "Third-generation family member managing daily operations at C&S Plumbing of Lee. Currently studying construction management at Florida Gulf Coast University (FGCU) while bringing modern business practices to a family plumbing tradition.",
+        "Third-generation Pellechio working full-time as project manager and estimator at C&S Plumbing of Lee — also handling permitting and marketing — while earning a construction management degree at Florida Gulf Coast University (FGCU), Class of 2028, with plans to pursue his GC and plumbing licenses.",
       worksFor: {
         "@type": "Plumber",
         "@id": `${BASE}/#organization`,

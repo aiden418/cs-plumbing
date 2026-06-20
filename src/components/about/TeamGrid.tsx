@@ -11,12 +11,12 @@ import { TEAM_MEMBERS } from "@/lib/constants";
 
 export default function TeamGrid() {
   return (
-    <section className="py-16 sm:py-24 lg:py-32">
+    <section id="team" className="scroll-mt-20 py-16 sm:py-24 lg:py-32">
       <Container>
         <SectionHeading
           overline="Our Team"
-          title="Meet the Family"
-          subtitle="The people behind every perfectly plumbed home in Southwest Florida."
+          title="Meet the People Behind Every Job"
+          subtitle="The family and crew keeping Southwest Florida flowing."
         />
 
         <StaggerChildren className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 max-w-4xl mx-auto">

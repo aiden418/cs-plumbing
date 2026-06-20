@@ -26,7 +26,7 @@ export default async function OgImage({
     return createOgImage({
       eyebrow: "Southwest Florida",
       title: "C&S Plumbing of Lee",
-      subtitle: "Family-owned since 1998. Licensed CFC1432485. 24/7 emergency service.",
+      subtitle: "Family-owned since 1997. Licensed CFC1432485. 24/7 emergency service.",
     });
   }
 

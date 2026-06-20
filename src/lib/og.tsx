@@ -164,7 +164,7 @@ export function createOgImage({ title, eyebrow, subtitle, variant = "default" }:
           >
             <div style={{ display: "flex", gap: 28 }}>
               <span style={{ fontSize: 18, color: TEXT_DARK, fontWeight: 600 }}>
-                Family-owned since 1998
+                Family-owned since 1997
               </span>
               <span style={{ fontSize: 18, color: TEXT_MUTED }}>•</span>
               <span style={{ fontSize: 18, color: TEXT_DARK, fontWeight: 600 }}>

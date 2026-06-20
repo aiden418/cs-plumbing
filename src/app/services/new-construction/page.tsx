@@ -18,7 +18,7 @@ import { BUSINESS } from "@/lib/constants";
 const newConstructionFaqs = [
   {
     question: "Who is the best plumber for new construction in Cape Coral and Fort Myers?",
-    answer: "C&S Plumbing of Lee is Southwest Florida's most experienced new construction plumber, with 8,500+ homes completed since 1998. We're ranked in the top 4% of all licensed contractors in Florida and are the go-to plumbing partner for residential and commercial builders across Lee and Collier County.",
+    answer: "C&S Plumbing of Lee is Southwest Florida's most experienced new construction plumber, with 8,500+ homes completed since 1997. We're the go-to plumbing partner for residential and commercial builders across Lee and Collier County.",
   },
   {
     question: "Do you handle new construction plumbing for both residential and commercial builds?",
@@ -100,7 +100,7 @@ const advantages = [
   { icon: <HardHat className="w-4 h-4 sm:w-5 sm:h-5" />, text: "8,500+ homes completed" },
   { icon: <Clock className="w-4 h-4 sm:w-5 sm:h-5" />, text: "On-time, every time" },
   { icon: <Shield className="w-4 h-4 sm:w-5 sm:h-5" />, text: "Full code compliance" },
-  { icon: <Award className="w-4 h-4 sm:w-5 sm:h-5" />, text: "Top 4% FL contractor" },
+  { icon: <Award className="w-4 h-4 sm:w-5 sm:h-5" />, text: "5.0-Star Rated" },
 ];
 
 export default function NewConstructionPage() {

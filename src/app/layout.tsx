@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     template: "%s | C&S Plumbing of Lee",
   },
   description:
-    "Family-owned since 1998. 8,500+ homes built. 24/7 emergency service. Residential, commercial & new construction plumbing across Cape Coral, Fort Myers, North Fort Myers, Naples & all of SWFL.",
+    "Family-owned since 1997. 8,500+ homes built. 24/7 emergency service. Residential, commercial & new construction plumbing across Cape Coral, Fort Myers, North Fort Myers, Naples & all of SWFL.",
   keywords: [
     "plumber",
     "plumbing",
@@ -69,7 +69,7 @@ export const metadata: Metadata = {
     siteName: "C&S Plumbing of Lee",
     title: "C&S Plumbing of Lee | Southwest Florida's Most Trusted Plumber",
     description:
-      "Family-owned since 1998. 8,500+ homes built. 24/7 emergency service across Cape Coral, Fort Myers & SWFL.",
+      "Family-owned since 1997. 8,500+ homes built. 24/7 emergency service across Cape Coral, Fort Myers & SWFL.",
     images: [
       {
         url: "/images/logos/logo-new.png",
@@ -83,7 +83,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "C&S Plumbing of Lee | Southwest Florida's Most Trusted Plumber",
     description:
-      "Family-owned since 1998. 8,500+ homes built. 24/7 emergency service across SWFL.",
+      "Family-owned since 1997. 8,500+ homes built. 24/7 emergency service across SWFL.",
     images: ["/images/logos/logo-new.png"],
   },
   alternates: {},

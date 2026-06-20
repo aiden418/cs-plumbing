@@ -97,7 +97,7 @@ export default function CityProofBlock({ cityName }: CityProofBlockProps) {
                     8,500+
                   </p>
                   <p className="text-sm sm:text-base font-medium text-white/90">
-                    homes built across Lee County since 1998
+                    homes built across Lee County since 1997
                   </p>
                 </div>
                 <Link
@@ -116,7 +116,7 @@ export default function CityProofBlock({ cityName }: CityProofBlockProps) {
               <div className="md:col-span-2 rounded-2xl bg-[#F5F5F7] border border-gray-200 p-6 sm:p-8">
                 <Hammer className="w-7 h-7 text-primary mb-4" />
                 <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2">
-                  We&apos;ve built across Lee County since 1998
+                  We&apos;ve built across Lee County since 1997
                 </h3>
                 <p className="text-sm sm:text-base text-gray-500 leading-relaxed mb-4">
                   Cape Coral, Fort Myers, North Fort Myers, Bonita Springs,

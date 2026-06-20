@@ -14,7 +14,7 @@ export const BUILDERS: Builder[] = [
 ];
 
 export const BUILDER_STATS: BuilderStat[] = [
-  { value: 8500, suffix: "+", label: "Homes Since 1998" },
+  { value: 8500, suffix: "+", label: "Homes Since 1997" },
   { value: 3, suffix: "", label: "Counties: Lee, Collier, Charlotte" },
   { value: 20, suffix: "+", label: "Builder Partnerships" },
 ];
