@@ -35,6 +35,9 @@ export interface TimelineEvent {
   year: string;
   title: string;
   description: string;
+  /** Optional historical photo for this milestone. */
+  image?: string;
+  imageAlt?: string;
 }
 
 export interface BookingFormData {

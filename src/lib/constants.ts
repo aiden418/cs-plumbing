@@ -403,19 +403,25 @@ export const TIMELINE_EVENTS: TimelineEvent[] = [
     year: "1997",
     title: "The Beginning",
     description:
-      "Two brothers, with the support of their father, founded C&S Plumbing of Lee with a single truck and a commitment to quality.",
+      "Brothers Chris and Sam — with the support of their father — founded C&S Plumbing of Lee with a single truck and a commitment to quality. The name says it plainly: C&S, for Chris and Sam.",
+    image: "/images/history/first-shop.jpg",
+    imageAlt: "The original C&S Plumbing of Lee shop in the early days",
   },
   {
     year: "2003",
     title: "1,000 Homes Milestone",
     description:
       "Completed plumbing for our 1,000th new construction home, solidifying our reputation as a premier builder partner in Southwest Florida's growth boom.",
+    image: "/images/history/sam-working-2002.jpg",
+    imageAlt: "Sam Pellechio Jr. running underground plumbing on a job site in the early 2000s",
   },
   {
     year: "2010",
     title: "8,000 Homes & Growing",
     description:
       "Surpassed 8,000 new construction homes plumbed across Southwest Florida, becoming one of the region's most trusted plumbing contractors.",
+    image: "/images/history/og-truck.jpg",
+    imageAlt: "An early C&S Plumbing of Lee box truck",
   },
   {
     year: "2018",

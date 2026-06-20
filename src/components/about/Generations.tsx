@@ -13,6 +13,7 @@ type Generation = {
   name: string;
   label: string;
   image?: string;
+  note?: string;
   body: string;
 };
 
@@ -21,14 +22,15 @@ const GENERATIONS: Generation[] = [
     gen: "First Generation",
     name: "Samuel Pellechio Sr.",
     label: "The Foundation",
-    // No photo on file yet — graceful placeholder until one is found.
+    image: "/images/team/sam-sr.jpg",
+    note: "In loving memory",
     body: "A mason and general contractor in Philadelphia who built thousands of homes before moving the family to Cape Coral in 1984. He taught his sons that craftsmanship isn't a shortcut business — you do it right, and you stand behind it. Every standard C&S holds today traces back to him.",
   },
   {
     gen: "Second Generation",
     name: "Chris & Sam — Founders",
     label: "Owner & President: Samuel Pellechio Jr.",
-    image: "/images/team/samuel.jpeg",
+    image: "/images/team/chris-and-sam.jpg",
     body: "Both Cape Coral High grads. Sam earned his plumbing license in December 1997 and, with his brother Chris and their father's backing, founded C&S Plumbing of Lee — C&S, for Chris and Sam. Sam has led it ever since: honest work, fair pricing, and treating every customer like family, growing C&S into one of Southwest Florida's most trusted plumbing companies.",
   },
   {
@@ -91,6 +93,9 @@ export default function Generations() {
                   {g.name}
                 </h3>
                 <p className="mt-0.5 text-sm font-semibold text-gray-700">{g.label}</p>
+                {g.note && (
+                  <p className="mt-1 text-xs italic text-gray-400">{g.note}</p>
+                )}
                 <p className="mt-3 text-sm leading-relaxed text-gray-500">{g.body}</p>
               </div>
               <span className="absolute bottom-0 left-0 h-1 w-0 bg-gold transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:w-full" />

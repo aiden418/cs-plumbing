@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Container from "@/components/ui/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
 import ScrollReveal from "@/components/animations/ScrollReveal";
@@ -46,6 +47,21 @@ export default function Timeline() {
                     <p className="text-gray-500 text-xs sm:text-sm leading-relaxed">
                       {event.description}
                     </p>
+                    {event.image && (
+                      <div
+                        className={`relative mt-4 aspect-[3/2] w-full max-w-sm overflow-hidden rounded-xl border border-gray-200 ${
+                          i % 2 === 0 ? "lg:ml-auto" : ""
+                        }`}
+                      >
+                        <Image
+                          src={event.image}
+                          alt={event.imageAlt ?? `C&S Plumbing — ${event.title}`}
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 1024px) 90vw, 384px"
+                        />
+                      </div>
+                    )}
                   </div>
 
                   {/* Dot */}
