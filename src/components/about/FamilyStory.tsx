@@ -13,8 +13,8 @@ export default function FamilyStory() {
           <ScrollReveal direction="left">
             <div className="relative aspect-[4/3] rounded-3xl overflow-hidden bg-gray-100 border border-gray-200">
               <Image
-                src="/images/team/family.jpeg"
-                alt="The Pellechio family — the people behind C&S Plumbing of Lee"
+                src="/images/history/og-storefront.jpg"
+                alt="The original C&S Plumbing of Lee storefront in the early days"
                 fill
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"

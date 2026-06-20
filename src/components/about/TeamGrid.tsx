@@ -44,7 +44,6 @@ export default function TeamGrid() {
                     </div>
                   </div>
                 )}
-                <div className="absolute inset-0 bg-gradient-to-t from-white/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </div>
               <h3 className="text-base sm:text-lg font-bold text-gray-900">{member.name}</h3>
               <p className="text-primary text-sm font-medium mt-1">

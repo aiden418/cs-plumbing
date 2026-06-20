@@ -97,16 +97,16 @@ export default function AboutPage() {
             </div>
 
             {/* Photo */}
-            <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-white/10">
+            <div className="relative aspect-[4/5] overflow-hidden rounded-3xl border border-white/10">
               <Image
-                src="/images/team/family.jpeg"
-                alt="The Pellechio family — three generations behind C&S Plumbing of Lee"
+                src="/images/team/sam-and-aiden.jpg"
+                alt="Sam Pellechio Jr. with a young Aiden — the family trade passed down by hand"
                 fill
                 priority
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-navy/50 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-navy/40 to-transparent" />
             </div>
           </div>
         </Container>
