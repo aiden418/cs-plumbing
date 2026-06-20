@@ -38,7 +38,7 @@ const GENERATIONS: Generation[] = [
     name: "Aiden Pellechio",
     label: "Project Manager & Estimator",
     image: "/images/team/aiden.jpg",
-    body: "Born in 2005 and a 2023 North Fort Myers High grad, Aiden runs projects and estimating at C&S — plus permitting, marketing, and more — while earning a construction-management degree at FGCU (Class of 2028). His goal from there: a GC license, then his own plumbing license. The future of C&S, same name on the truck.",
+    body: "Aiden grew up around C&S job sites and never really left. These days he runs projects and estimating — and a little of everything else — while finishing his construction management degree at FGCU. The plan from there is to earn his GC license, then his plumbing license, and keep the name on the truck right where it's always been.",
   },
 ];
 

@@ -57,12 +57,11 @@ export default function FamilyStory() {
               </p>
               <p>
                 Today the third generation is on the job.{" "}
-                <strong className="text-gray-900">Aiden Pellechio</strong> — born in 2005, a 2023
-                North Fort Myers High grad — works full-time for C&S as a project manager and
-                estimator, wearing a dozen hats from permitting to marketing, while earning his
-                construction-management degree at FGCU (Class of 2028). His plan from there: a GC
-                license, then his own plumbing license. Same name on the truck. Same standard on
-                every pipe.
+                <strong className="text-gray-900">Aiden Pellechio</strong> grew up around these
+                job sites and learned the trade the way his dad did — by working it. He runs
+                projects and estimating for C&S while finishing his construction management degree
+                at FGCU, with plans to earn his GC and plumbing licenses down the road. Same name
+                on the truck. Same standard on every pipe.
               </p>
             </div>
             <div className="mt-7 sm:mt-8 grid grid-cols-3 gap-4 sm:gap-6 lg:gap-8">

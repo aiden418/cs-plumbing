@@ -428,18 +428,24 @@ export const TIMELINE_EVENTS: TimelineEvent[] = [
     title: "20 Years of Excellence",
     description:
       "Celebrated two decades of service as one of Southwest Florida's most trusted plumbing contractors.",
+    image: "/images/history/truck-tundra.jpg",
+    imageAlt: "A branded C&S Plumbing of Lee service truck",
   },
   {
     year: "2022",
     title: "Hurricane Ian Response",
     description:
       "Stepped up for our community during Hurricane Ian, providing emergency plumbing services across the hardest-hit areas including Sanibel and Fort Myers Beach.",
+    image: "/images/history/ian-response.jpg",
+    imageAlt: "Hurricane Ian storm damage during cleanup and restoration work",
   },
   {
     year: "2024",
     title: "8,500+ Homes & Counting",
     description:
       "Surpassed 8,500 new construction homes — among Lee County's most experienced new-construction plumbers.",
+    image: "/images/history/truck-new-home.jpg",
+    imageAlt: "A C&S Plumbing of Lee truck at a new-construction home in Southwest Florida",
   },
 ];
 
