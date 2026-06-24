@@ -1421,6 +1421,33 @@ export const AREA_LANDINGS: AreaLanding[] = [
       "Yacht Club",
       "Cape Coral Parkway",
     ],
+    faqs: [
+      {
+        question: "Do you handle UEP water and sewer connections in Cape Coral?",
+        answer:
+          "Yes — UEP hookups are one of our specialties. As Cape Coral expands municipal water and sewer through the Utilities Extension Program, we connect homes to the new lines, properly abandon old septic tanks and wells to code, and pull the required City of Cape Coral permits.",
+      },
+      {
+        question: "My Cape Coral home still has its original pipes — should I repipe?",
+        answer:
+          "Many Cape Coral homes built in the 1970s–90s still have polybutylene or galvanized pipe that's prone to leaks and low pressure. We've repiped thousands of Cape homes in PEX or copper, usually in 1–2 days, with a free upfront estimate.",
+      },
+      {
+        question: "Can you help with Cape Coral's hard water?",
+        answer:
+          "Absolutely. Cape Coral's hard water scales fixtures and shortens water-heater life. We install and service whole-home water softeners and filtration sized to your water quality and household.",
+      },
+      {
+        question: "Do you offer 24/7 emergency plumbing in Cape Coral?",
+        answer:
+          "Yes. Burst pipes, slab leaks, and sewage backups don't wait, so we're available around the clock across all four quadrants of the Cape plus Cape Harbour, Tarpon Point, and the Yacht Club area.",
+      },
+      {
+        question: "Are you licensed to pull permits in Cape Coral?",
+        answer:
+          "Yes. We're Florida Certified Plumbing Contractors (CFC1432485 / CFC057076), fully insured, and we pull every required City of Cape Coral permit and pass inspection — no exceptions.",
+      },
+    ],
     localContext:
       "Cape Coral's unique canal system and waterfront properties require plumbers who understand the area's specific challenges. From salt-air corrosion on outdoor plumbing to the hard water that's common throughout the Cape, C&S Plumbing has the local expertise to keep your home's plumbing running smoothly. We've repiped thousands of Cape Coral homes built in the 1970s-1990s that still have original polybutylene or galvanized pipes.",
   },
@@ -1457,6 +1484,33 @@ export const AREA_LANDINGS: AreaLanding[] = [
       "Iona",
       "San Carlos",
     ],
+    faqs: [
+      {
+        question: "Do you handle commercial plumbing in Fort Myers?",
+        answer:
+          "Yes. We serve restaurants, offices, retail, and new commercial construction across Fort Myers — including grease traps, backflow prevention, and tenant build-outs, alongside our residential work.",
+      },
+      {
+        question: "Can you repipe older Fort Myers homes?",
+        answer:
+          "Yes. Many older and historic Fort Myers homes still run on galvanized or polybutylene pipe. We repipe in PEX or copper to restore pressure and stop chronic leaks, with free estimates.",
+      },
+      {
+        question: "Do you offer 24/7 emergency plumbing in Fort Myers?",
+        answer:
+          "Yes — around the clock across Fort Myers, including downtown, McGregor, Whiskey Creek, and the surrounding neighborhoods. Call any time for burst pipes, leaks, or backups.",
+      },
+      {
+        question: "Are you a new construction plumber in Fort Myers?",
+        answer:
+          "Yes. C&S is one of Southwest Florida's most experienced new-construction plumbers, with 8,500+ homes completed since 1997 for residential and commercial builders across Lee County.",
+      },
+      {
+        question: "Are you licensed and insured in Fort Myers?",
+        answer:
+          "Yes — Florida Certified Plumbing Contractors (CFC1432485 / CFC057076), fully insured, pulling every required Lee County permit.",
+      },
+    ],
     localContext:
       "Fort Myers is the commercial hub of Lee County, and C&S Plumbing serves both its residential neighborhoods and thriving business community. Whether you're a homeowner in McGregor needing a water heater replacement or a restaurant on Cleveland Avenue needing grease trap service, we have the team and equipment to handle it. Our proximity to Fort Myers means fast response times for emergencies.",
   },
@@ -1489,6 +1543,33 @@ export const AREA_LANDINGS: AreaLanding[] = [
       "Hancock Bridge",
       "Tropicana",
       "Lochmoor",
+    ],
+    faqs: [
+      {
+        question: "Where is C&S Plumbing located?",
+        answer:
+          "We're based right here in North Fort Myers, at 951 Pondella Rd — it's our hometown. Being local means fast response times across North Fort Myers and the surrounding area.",
+      },
+      {
+        question: "Do you service well and septic homes in North Fort Myers?",
+        answer:
+          "Yes. Many North Fort Myers properties are on well water and septic. We handle well-water plumbing and filtration, septic-to-sewer connections, and the related permitting.",
+      },
+      {
+        question: "Do you offer 24/7 emergency plumbing in North Fort Myers?",
+        answer:
+          "Yes — and because we're local, we get to North Fort Myers emergencies fast, day or night, for burst pipes, slab leaks, and sewage backups.",
+      },
+      {
+        question: "Can you repipe homes in North Fort Myers?",
+        answer:
+          "Yes. Older North Fort Myers and manufactured homes often need repiping; we replace failing galvanized or polybutylene with PEX or copper, usually in 1–2 days.",
+      },
+      {
+        question: "Are you licensed and insured?",
+        answer:
+          "Yes — Florida Certified Plumbing Contractors (CFC1432485 / CFC057076), fully insured, and family-owned since 1997.",
+      },
     ],
     localContext:
       "North Fort Myers is our home. C&S Plumbing's office is located at 951 Pondella Rd, and many of our team members live right here in the community. That means the fastest response times in the area — often under 30 minutes for emergencies. We've plumbed hundreds of homes in North Fort Myers and understand the specific needs of properties in this area, from older homes near the river to newer construction east of I-75.",
@@ -1524,6 +1605,33 @@ export const AREA_LANDINGS: AreaLanding[] = [
       "Golden Gate",
       "Lely Resort",
     ],
+    faqs: [
+      {
+        question: "Do you serve Naples and Collier County?",
+        answer:
+          "Yes. We serve Naples and the surrounding Collier County communities for residential and commercial plumbing, from service calls to full new construction.",
+      },
+      {
+        question: "Do you work on luxury and custom homes in Naples?",
+        answer:
+          "Yes. We handle high-end and custom Naples homes — premium fixtures, tankless water heaters, whole-home filtration, and the careful finish work those projects demand.",
+      },
+      {
+        question: "Do you offer 24/7 emergency plumbing in Naples?",
+        answer:
+          "Yes, around the clock. Burst pipes, slab leaks, and backups get a fast response anywhere in the Naples area.",
+      },
+      {
+        question: "Do you do new construction plumbing in Naples?",
+        answer:
+          "Yes. As a builder partner across Southwest Florida, we handle underground, rough-in, and trim for new residential and commercial construction in Naples and Collier County.",
+      },
+      {
+        question: "Do you pull permits in Naples?",
+        answer:
+          "Yes. We're Florida Certified Plumbing Contractors (CFC1432485 / CFC057076), fully insured, and we pull every required Collier County permit.",
+      },
+    ],
     localContext:
       "Naples homeowners expect the highest quality — and C&S Plumbing delivers. We have extensive experience with Naples' luxury homes, including custom plumbing installations, high-end fixture work, and whole-home repiping for older properties in neighborhoods like Old Naples and Park Shore. Our licensed team handles everything from routine maintenance to complex renovations with the attention to detail Naples residents deserve.",
   },
@@ -1556,6 +1664,33 @@ export const AREA_LANDINGS: AreaLanding[] = [
       "Brooks",
       "Highland Woods",
       "Bonita Fairways",
+    ],
+    faqs: [
+      {
+        question: "Do you serve Bonita Springs?",
+        answer:
+          "Yes. C&S Plumbing covers Bonita Springs and the surrounding communities for repairs, remodels, water heaters, repipes, and new construction.",
+      },
+      {
+        question: "Can you check on a seasonal or snowbird home in Bonita Springs?",
+        answer:
+          "Yes. We help seasonal residents protect their homes — pre-season inspections, leak prevention, and water shutoff while you're away. Ask about our Coastal Comeback Plan for snowbirds.",
+      },
+      {
+        question: "Do you offer 24/7 emergency plumbing in Bonita Springs?",
+        answer:
+          "Yes, around the clock for burst pipes, leaks, and sewage backups across Bonita Springs.",
+      },
+      {
+        question: "Do you install and repair water heaters in Bonita Springs?",
+        answer:
+          "Yes — tank and tankless installation, repair, and replacement, plus water softeners and whole-home filtration.",
+      },
+      {
+        question: "Are you licensed and insured?",
+        answer:
+          "Yes — Florida Certified Plumbing Contractors (CFC1432485 / CFC057076), fully insured, family-owned since 1997.",
+      },
     ],
     localContext:
       "Bonita Springs sits at the crossroads of Lee and Collier County, and C&S Plumbing is ideally located to serve this growing community quickly. Many Bonita Springs homes, especially in established communities like Bonita Bay and Pelican Landing, are reaching the age where repiping and water heater replacement become necessary. We understand the HOA requirements and community standards that come with working in these neighborhoods.",
@@ -1591,6 +1726,33 @@ export const AREA_LANDINGS: AreaLanding[] = [
       "Lee Blvd",
       "Joel Blvd",
     ],
+    faqs: [
+      {
+        question: "Do you handle well water and water treatment in Lehigh Acres?",
+        answer:
+          "Yes. Many Lehigh Acres homes are on well water that's hard or carries a sulfur smell. We install and service water softeners, filtration, and treatment systems sized to your water.",
+      },
+      {
+        question: "Do you do new construction plumbing in Lehigh Acres?",
+        answer:
+          "Yes — Lehigh Acres is one of our most active new-construction areas. We partner with builders on underground, rough-in, and trim for new homes throughout the community.",
+      },
+      {
+        question: "Do you offer 24/7 emergency plumbing in Lehigh Acres?",
+        answer:
+          "Yes, around the clock for burst pipes, slab leaks, and sewage backups across Lehigh Acres.",
+      },
+      {
+        question: "Can you connect my Lehigh Acres home from septic to sewer, or repipe it?",
+        answer:
+          "Yes. We handle septic-to-sewer connections where service is available, and we repipe older homes in PEX or copper with free upfront estimates.",
+      },
+      {
+        question: "Are you licensed and insured in Lehigh Acres?",
+        answer:
+          "Yes — Florida Certified Plumbing Contractors (CFC1432485 / CFC057076), fully insured, pulling every required Lee County permit.",
+      },
+    ],
     localContext:
       "Lehigh Acres is one of the fastest-growing communities in Lee County, with a mix of established homes and new construction that keeps our team busy. Many homes built in the 1980s and 1990s in Lehigh Acres still have original polybutylene pipes that are overdue for replacement. We also see a lot of well water systems in the eastern parts of Lehigh Acres, which require water treatment expertise alongside standard plumbing services. C&S Plumbing's North Fort Myers headquarters is just a short drive from Lehigh Acres, ensuring fast response times for emergencies.",
   },
@@ -1625,6 +1787,33 @@ export const AREA_LANDINGS: AreaLanding[] = [
       "Corkscrew Shores",
       "Rapallo",
     ],
+    faqs: [
+      {
+        question: "Do you serve Estero and the surrounding communities?",
+        answer:
+          "Yes. C&S Plumbing covers Estero and the nearby Coconut Point and Miromar areas for service, remodels, water heaters, repipes, and new construction.",
+      },
+      {
+        question: "Do you work on newer Estero homes and gated communities?",
+        answer:
+          "Yes. We service Estero's newer homes and communities — from fixture and water-heater work to remodels and warranty-friendly repairs.",
+      },
+      {
+        question: "Do you offer 24/7 emergency plumbing in Estero?",
+        answer:
+          "Yes, around the clock for burst pipes, leaks, and sewage backups throughout Estero.",
+      },
+      {
+        question: "Do you install tankless water heaters in Estero?",
+        answer:
+          "Yes — tank and tankless water heater installation and repair, plus water softeners and whole-home filtration.",
+      },
+      {
+        question: "Are you licensed and insured?",
+        answer:
+          "Yes — Florida Certified Plumbing Contractors (CFC1432485 / CFC057076), fully insured, family-owned since 1997.",
+      },
+    ],
     localContext:
       "Estero has transformed from a quiet community into one of Southwest Florida's most desirable addresses, with master-planned communities like Miromar Lakes, The Brooks, and Grandezza attracting homeowners who expect top-quality service. C&S Plumbing understands the HOA standards and architectural guidelines that come with working in these upscale neighborhoods. Whether you need a water heater replacement in a single-family home or repiping for a villa, we deliver the professionalism and attention to detail that Estero homeowners demand.",
   },
@@ -1657,6 +1846,33 @@ export const AREA_LANDINGS: AreaLanding[] = [
       "Sanibel Bayous",
       "The Dunes",
       "Gulf Pines",
+    ],
+    faqs: [
+      {
+        question: "Do you work on Sanibel Island?",
+        answer:
+          "Yes. We provide residential plumbing across Sanibel — repairs, repipes, water heaters, fixture upgrades, and storm-recovery work.",
+      },
+      {
+        question: "Do you handle hurricane and flood plumbing repairs on Sanibel?",
+        answer:
+          "Yes. After storms like Hurricane Ian, we handle repipes, fixture and water-heater replacement, and full plumbing rebuilds for flood-damaged and elevated Sanibel homes. Ask about our Coastal Comeback Plan.",
+      },
+      {
+        question: "How do you handle salt-air corrosion on Sanibel plumbing?",
+        answer:
+          "Sanibel's coastal exposure corrodes outdoor plumbing and fixtures over time. We use corrosion-resistant materials and can upgrade the components most vulnerable to salt air.",
+      },
+      {
+        question: "Do you offer emergency plumbing on Sanibel?",
+        answer:
+          "Yes — around the clock for burst pipes, leaks, and backups. Island access can affect timing, but we respond as fast as conditions allow.",
+      },
+      {
+        question: "Are you licensed and insured?",
+        answer:
+          "Yes — Florida Certified Plumbing Contractors (CFC1432485 / CFC057076), fully insured, family-owned since 1997.",
+      },
     ],
     localContext:
       "Sanibel Island's unique barrier island environment presents specific plumbing challenges that mainland homes don't face. Salt air accelerates pipe corrosion, hurricane damage can compromise entire plumbing systems, and the island's building codes require contractors who understand the local requirements. C&S Plumbing has been helping Sanibel and Captiva Island homeowners rebuild and maintain their plumbing systems for years, including extensive work following recent hurricane seasons. Our team is experienced with the logistics of island work, including coordinating with the causeway schedule and island-specific permitting requirements.",
