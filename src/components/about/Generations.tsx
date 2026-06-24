@@ -22,7 +22,7 @@ const GENERATIONS: Generation[] = [
     gen: "First Generation",
     name: "Samuel Pellechio Sr.",
     label: "The Foundation",
-    image: "/images/team/sam-sr.jpg",
+    image: "/images/team/sam-sr-office.jpg",
     note: "In loving memory",
     body: "A mason and general contractor in Philadelphia who built thousands of homes before moving the family to Cape Coral in 1984. He taught his sons that craftsmanship isn't a shortcut business — you do it right, and you stand behind it. Every standard C&S holds today traces back to him.",
   },
