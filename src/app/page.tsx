@@ -5,6 +5,8 @@ import StatsBar from "@/components/home/StatsBar";
 import ServiceHighlights from "@/components/home/ServiceHighlights";
 import PipelineSection from "@/components/home/PipelineSection";
 import PageTransition from "@/components/layout/PageTransition";
+import HomeFaq, { HOME_FAQS } from "@/components/home/HomeFaq";
+import FaqJsonLd from "@/components/seo/FaqJsonLd";
 
 // Below-the-fold sections — server-rendered for SEO, JS deferred for performance
 const CoastalComebackTeaser = dynamic(
@@ -30,8 +32,7 @@ const EmergencyBand = dynamic(() => import("@/components/home/EmergencyBand"));
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
-  title:
-    "Plumber in Cape Coral, Fort Myers & Punta Gorda | 24/7 Emergency Service",
+  title: "Plumber in Cape Coral & Fort Myers | 24/7 Emergency Service",
   description:
     "Southwest Florida's trusted new construction, remodel, repipe, and service plumber. 8,500+ homes built since 1997. Best of Cape Coral 2025. Serving Cape Coral, Fort Myers, North Fort Myers, Punta Gorda, Port Charlotte & Naples — Lee, Charlotte & Collier counties. 24/7 emergency available.",
   keywords: [
@@ -90,6 +91,8 @@ export default function Home() {
       <GoogleReviews />
       <ServiceMapTeaser />
       <BrandsCarousel />
+      <FaqJsonLd faqs={HOME_FAQS} />
+      <HomeFaq />
       <CTASection />
     </PageTransition>
   );

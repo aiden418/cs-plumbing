@@ -6,7 +6,7 @@ import { BUSINESS } from "@/lib/constants";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/builders" },
-  title: "Builders — New Construction Plumbing Partner",
+  title: "New Construction Plumbing for Builders",
   description:
     "8,500+ homes since 1997. C&S Plumbing partners with builders and general contractors across Lee, Collier, and Charlotte counties for new construction rough-in, top-out, trim, and commercial plumbing.",
   keywords: [

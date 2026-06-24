@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import PageTransition from "@/components/layout/PageTransition";
 import AreaLandingTemplate from "@/components/areas/AreaLandingTemplate";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
-import FaqJsonLd from "@/components/seo/FaqJsonLd";
 import CTASection from "@/components/home/CTASection";
 import { AREA_LANDINGS } from "@/lib/constants";
 
@@ -29,7 +28,6 @@ export default function Page() {
           { name: landing.city, href: `/areas/${landing.slug}` },
         ]}
       />
-      {landing.faqs && <FaqJsonLd faqs={landing.faqs} />}
       <AreaLandingTemplate landing={landing} />
       <CTASection />
     </PageTransition>

@@ -8,6 +8,7 @@ import StaggerChildren, {
   staggerItem,
 } from "@/components/animations/StaggerChildren";
 import CityProofBlock from "@/components/areas/CityProofBlock";
+import FaqJsonLd from "@/components/seo/FaqJsonLd";
 import { motion } from "framer-motion";
 import { BUSINESS, SERVICES, TRUST_PROOF_POINTS } from "@/lib/constants";
 import type { AreaLanding } from "@/lib/types";
@@ -23,6 +24,9 @@ export default function AreaLandingTemplate({
 
   return (
     <>
+      {landing.faqs && landing.faqs.length > 0 && (
+        <FaqJsonLd faqs={landing.faqs} />
+      )}
       {/* Hero */}
       <section className="pt-24 sm:pt-28 lg:pt-32 pb-12 sm:pb-16 bg-[#F5F5F7]">
         <Container>

@@ -6,7 +6,7 @@ import CTASection from "@/components/home/CTASection";
 import QuoteBuilderPage from "./QuoteBuilderPage";
 
 export const metadata: Metadata = {
-  title: "Instant Quote Builder — Water Heater & Repipe Estimates",
+  title: "Instant Water Heater & Repipe Quote",
   description:
     "Get an instant price estimate for water heater installation or whole-home repiping in Lee County. Answer a few questions and see your custom quote — no obligation.",
   alternates: { canonical: "/quote-builder" },
