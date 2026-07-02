@@ -4,24 +4,39 @@ import { useEffect, useRef, useState } from "react";
 import { gsap, ScrollTrigger, registerGSAP } from "@/lib/gsap";
 
 /**
- * "The Pipeline" — a scroll-scrubbed gold pipe that drops out of the Hero
+ * "The Pipeline" — a scroll-scrubbed copper pipe that drops out of the Hero
  * CTA, snakes through the stats band, and runs the gutter past the service
  * cards. Pure decoration: pointer-events-none, aria-hidden, desktop-only,
  * skipped entirely under prefers-reduced-motion.
  *
- * Everything animates on the compositor: the flow is a stroke-dashoffset
- * scrub, gauges are scale/rotate pops at their arc-length positions.
+ * The pipe is three concentric strokes on one path (dark edge, copper body,
+ * specular highlight) so it reads as a lit cylinder in any direction. Ball
+ * valves and solder couplings sit on the straight runs; each valve's lever
+ * swings open as the flow reaches it. Everything animates on the
+ * compositor: the draw is a stroke-dashoffset scrub, fittings are
+ * scale/rotate pops at their arc-length positions.
  */
 
 const ELBOW_RADIUS = 28;
-const CASING_COLOR = "rgba(27, 43, 75, 0.14)"; // navy 14%
-const GOLD = "#E8A427";
 const NAVY = "#1B2B4B";
+// Copper pipe palette
+const COPPER_DARK = "#7A3E1D";
+const COPPER = "#B87333";
+const COPPER_HI = "#EBAF7E";
+const COPPER_JOINT = "#8A4A20";
+const CASING_COLOR = "rgba(122, 62, 29, 0.12)";
+// Brass fittings
+const BRASS = "#C9A227";
+const BRASS_DARK = "#8A6D1A";
+const BRASS_HI = "#E3C258";
+// Ball-valve lever
+const LEVER_RED = "#C0392B";
+const LEVER_RED_DARK = "#7B241C";
 
 type Pt = { x: number; y: number };
 
 /** Polyline → SVG path with rounded elbows, plus cumulative length fractions
- *  for each original point so gauges can pop when the flow reaches them. */
+ *  for each original point so fittings can pop when the flow reaches them. */
 function roundedPath(points: Pt[], r: number) {
   if (points.length < 2) return { d: "", fractions: [] as number[] };
 
@@ -56,13 +71,45 @@ function roundedPath(points: Pt[], r: number) {
   return { d, fractions };
 }
 
-function Gauge({ className }: { className?: string }) {
+/** Brass ball valve drawn along +x, centered on the pipe axis. The lever
+ *  line's left end sits at the pivot so a bbox-origin rotation swings it
+ *  from closed (across the pipe) to open (along it). */
+function BallValve({ className }: { className?: string }) {
   return (
     <g className={className}>
-      <circle r="14" fill="white" stroke={GOLD} strokeWidth="3" />
-      <circle r="3" fill={NAVY} />
-      <line className="gauge-needle" x1="0" y1="0" x2="0" y2="-9" stroke={NAVY} strokeWidth="2.5" strokeLinecap="round" />
-      <circle r="14" fill="none" stroke={NAVY} strokeOpacity="0.15" strokeWidth="1" transform="scale(1.25)" />
+      {/* union nuts */}
+      <rect x="-22" y="-10" width="8" height="20" rx="1.5" fill={BRASS} stroke={BRASS_DARK} strokeWidth="1" />
+      <rect x="14" y="-10" width="8" height="20" rx="1.5" fill={BRASS} stroke={BRASS_DARK} strokeWidth="1" />
+      {/* body */}
+      <rect x="-15" y="-9" width="30" height="18" rx="4" fill={BRASS} stroke={BRASS_DARK} strokeWidth="1.2" />
+      <rect x="-13" y="-7.5" width="26" height="6" rx="3" fill={BRASS_HI} opacity="0.55" />
+      {/* stem */}
+      <rect x="-2.5" y="-14" width="5" height="6" rx="1" fill={BRASS_DARK} />
+      {/* lever — pivot at the stem top */}
+      <g transform="translate(0, -14)">
+        <line
+          className="valve-lever"
+          x1="0"
+          y1="0"
+          x2="21"
+          y2="0"
+          stroke={LEVER_RED}
+          strokeWidth="5.5"
+          strokeLinecap="round"
+        />
+        <circle r="2.6" fill={LEVER_RED_DARK} />
+      </g>
+    </g>
+  );
+}
+
+/** Solder coupling — a short dark band across the pipe, drawn for a
+ *  horizontal run and rotated into place with the segment. */
+function Coupling({ className }: { className?: string }) {
+  return (
+    <g className={className}>
+      <rect x="-5.5" y="-8" width="11" height="16" rx="2" fill={COPPER_JOINT} stroke={COPPER_DARK} strokeWidth="1" />
+      <rect x="-4.5" y="-6.5" width="9" height="4" rx="2" fill={COPPER_HI} opacity="0.5" />
     </g>
   );
 }
@@ -89,11 +136,16 @@ export default function PipelineFlow() {
     const wrapper = host.parentElement as HTMLElement; // PipelineSection div
     const svg = host.querySelector("svg") as SVGSVGElement;
     const casing = svg.querySelector(".pipe-casing") as SVGPathElement;
-    const flow = svg.querySelector(".pipe-flow") as SVGPathElement;
-    const gauges = Array.from(svg.querySelectorAll(".pipe-gauge")) as SVGGElement[];
-    const valve = svg.querySelector(".pipe-valve") as SVGGElement;
+    const drawPaths = Array.from(svg.querySelectorAll(".pipe-draw")) as SVGPathElement[];
+    const body = svg.querySelector(".pipe-draw-body") as SVGPathElement;
+    const valves = Array.from(svg.querySelectorAll(".pipe-ball-valve")) as SVGGElement[];
+    const couplings = Array.from(svg.querySelectorAll(".pipe-coupling")) as SVGGElement[];
+    const levers = Array.from(svg.querySelectorAll(".valve-lever")) as SVGLineElement[];
+    const terminal = svg.querySelector(".pipe-terminal") as SVGGElement;
+    const wheel = svg.querySelector(".terminal-wheel") as SVGGElement;
 
-    let gaugeFractions: number[] = [];
+    let valveFractions: number[] = [];
+    let couplingFractions: number[] = [];
 
     const measure = () => {
       const wrapRect = wrapper.getBoundingClientRect();
@@ -135,13 +187,13 @@ export default function PipelineFlow() {
       const points: Pt[] = [
         { x: startX, y: startY },
         { x: startX, y: dropY },                  // drop out of the CTA
-        { x: centerX, y: dropY },                 // elbow toward center  [gauge 0]
-        { x: centerX, y: st.top },                // down to the stats band [gauge 1 = gold tick]
+        { x: centerX, y: dropY },                 // elbow toward center
+        { x: centerX, y: st.top },                // down to the stats band
         { x: centerX, y: sv.top + 56 },           // straight through stats into services
-        { x: gutterX, y: sv.top + 56 },           // elbow into the gutter [gauge 2]
+        { x: gutterX, y: sv.top + 56 },           // elbow into the gutter
         { x: gutterX, y: H - 64 },                // run the gutter past the cards
         { x: centerX, y: H - 64 },                // elbow back to center
-        { x: centerX, y: H - 8 },                 // terminal drop [valve]
+        { x: centerX, y: H - 8 },                 // terminal drop
       ];
 
       const { d, fractions } = roundedPath(points, ELBOW_RADIUS);
@@ -149,20 +201,46 @@ export default function PipelineFlow() {
       svg.setAttribute("width", String(W));
       svg.setAttribute("height", String(H));
       casing.setAttribute("d", d);
-      flow.setAttribute("d", d);
+      drawPaths.forEach((p) => p.setAttribute("d", d));
 
-      // Gauges sit at the corner points 2, 3 and 5; valve at the end.
-      // Position via GSAP x/y so scale tweens compose with the translation.
-      const gaugePts = [points[2], points[3], points[5]];
-      gauges.forEach((g, i) => {
-        const p = gaugePts[i];
-        if (p) gsap.set(g, { x: p.x, y: p.y });
+      // Fittings sit mid-segment on the straight runs — never on an elbow.
+      // Each spec: segment index i (points[i] → points[i+1]) and 0–1 lerp t.
+      const lerpPt = (a: Pt, b: Pt, t: number): Pt => ({
+        x: a.x + (b.x - a.x) * t,
+        y: a.y + (b.y - a.y) * t,
       });
-      gaugeFractions = [fractions[2], fractions[3], fractions[5]];
-      const end = points[points.length - 1];
-      gsap.set(valve, { x: end.x, y: end.y - 18 });
+      const segAngle = (a: Pt, b: Pt) => (Math.atan2(b.y - a.y, b.x - a.x) * 180) / Math.PI;
+      const frac = (i: number, t: number) => fractions[i] + (fractions[i + 1] - fractions[i]) * t;
 
-      return flow.getTotalLength();
+      const valveSpecs = [
+        { i: 1, t: 0.5 },  // horizontal run toward center
+        { i: 3, t: 0.25 }, // vertical run entering the stats band
+        { i: 5, t: 0.5 },  // gutter run past the cards
+      ];
+      valves.forEach((g, k) => {
+        const s = valveSpecs[k];
+        if (!s) return;
+        const p = lerpPt(points[s.i], points[s.i + 1], s.t);
+        gsap.set(g, { x: p.x, y: p.y, rotation: segAngle(points[s.i], points[s.i + 1]) });
+      });
+      valveFractions = valveSpecs.map((s) => frac(s.i, s.t));
+
+      const couplingSpecs = [
+        { i: 2, t: 0.5 },  // center run between hero and stats
+        { i: 6, t: 0.5 },  // bottom return toward center
+      ];
+      couplings.forEach((g, k) => {
+        const s = couplingSpecs[k];
+        if (!s) return;
+        const p = lerpPt(points[s.i], points[s.i + 1], s.t);
+        gsap.set(g, { x: p.x, y: p.y, rotation: segAngle(points[s.i], points[s.i + 1]) });
+      });
+      couplingFractions = couplingSpecs.map((s) => frac(s.i, s.t));
+
+      const end = points[points.length - 1];
+      gsap.set(terminal, { x: end.x, y: end.y - 18 });
+
+      return body.getTotalLength();
     };
 
     let tl: gsap.core.Timeline | null = null;
@@ -172,9 +250,10 @@ export default function PipelineFlow() {
       const len = measure();
       if (!len) return;
 
-      gsap.set(flow, { strokeDasharray: len });
-      gsap.set(gauges, { scale: 0, transformOrigin: "center center" });
-      gsap.set(valve, { opacity: 0 });
+      gsap.set(drawPaths, { strokeDasharray: len });
+      gsap.set([...valves, ...couplings], { scale: 0, transformOrigin: "center center" });
+      gsap.set(levers, { rotation: -90, transformOrigin: "0px 0px" });
+      gsap.set(terminal, { opacity: 0 });
 
       tl = gsap.timeline({
         defaults: { ease: "none" },
@@ -187,27 +266,29 @@ export default function PipelineFlow() {
         },
       });
       tl.fromTo(
-        flow,
+        drawPaths,
         { strokeDashoffset: len },
         { strokeDashoffset: 0, duration: 1 },
         0
       );
-      gauges.forEach((g, i) => {
-        const at = Math.max(0, Math.min(0.96, gaugeFractions[i] ?? 0));
+      valves.forEach((g, i) => {
+        const at = Math.max(0, Math.min(0.96, valveFractions[i] ?? 0));
         tl!.to(g, { scale: 1, duration: 0.04, ease: "back.out(2)" }, at);
-        const needle = g.querySelector(".gauge-needle");
-        if (needle) {
-          // pivot at the gauge center: the needle's bbox is 9px tall ending
-          // at local (0,0), so the origin sits at bbox bottom
-          tl!.fromTo(
-            needle,
-            { rotation: 0, transformOrigin: "0px 9px" },
-            { rotation: 250, duration: Math.max(0.1, 1 - at) },
-            at
-          );
+        // Lever swings from closed (across the pipe) to open (along it)
+        // just as the flow arrives.
+        const lever = g.querySelector(".valve-lever");
+        if (lever) {
+          tl!.to(lever, { rotation: 0, duration: 0.12, ease: "power2.out" }, Math.min(0.96, at + 0.02));
         }
       });
-      tl.to(valve, { opacity: 1, duration: 0.04 }, 0.96);
+      couplings.forEach((g, i) => {
+        const at = Math.max(0, Math.min(0.96, couplingFractions[i] ?? 0));
+        tl!.to(g, { scale: 1, duration: 0.04, ease: "back.out(2)" }, at);
+      });
+      tl.to(terminal, { opacity: 1, duration: 0.04 }, 0.96);
+      if (wheel) {
+        tl.to(wheel, { rotation: 120, duration: 0.04, transformOrigin: "center center" }, 0.96);
+      }
     };
 
     build();
@@ -239,23 +320,31 @@ export default function PipelineFlow() {
       className="absolute inset-0 pointer-events-none z-[5] hidden lg:block"
     >
       <svg className="absolute inset-0" fill="none">
-        <path className="pipe-casing" stroke={CASING_COLOR} strokeWidth="10" strokeLinecap="round" />
+        <path className="pipe-casing" stroke={CASING_COLOR} strokeWidth="12" strokeLinecap="round" />
+        {/* Copper cylinder: dark edge, body, specular highlight on one path */}
+        <path className="pipe-draw pipe-draw-dark" stroke={COPPER_DARK} strokeWidth="11" strokeLinecap="round" />
         <path
-          className="pipe-flow"
-          stroke={GOLD}
-          strokeWidth="4"
+          className="pipe-draw pipe-draw-body"
+          stroke={COPPER}
+          strokeWidth="8"
           strokeLinecap="round"
-          style={{ filter: "drop-shadow(0 0 6px rgba(232,164,39,0.45))" }}
+          style={{ filter: "drop-shadow(0 0 5px rgba(184,115,51,0.35))" }}
         />
-        <Gauge className="pipe-gauge" />
-        <Gauge className="pipe-gauge" />
-        <Gauge className="pipe-gauge" />
-        {/* Terminal valve — a wheel on the pipe mouth feeding the next section */}
-        <g className="pipe-valve">
-          <circle r="11" fill="white" stroke={GOLD} strokeWidth="3.5" />
-          <line x1="-16" y1="0" x2="16" y2="0" stroke={GOLD} strokeWidth="3.5" strokeLinecap="round" />
-          <line x1="0" y1="-16" x2="0" y2="16" stroke={GOLD} strokeWidth="3.5" strokeLinecap="round" />
-          <circle r="3.5" fill={NAVY} />
+        <path className="pipe-draw pipe-draw-hi" stroke={COPPER_HI} strokeWidth="2.5" strokeLinecap="round" />
+        <Coupling className="pipe-coupling" />
+        <Coupling className="pipe-coupling" />
+        <BallValve className="pipe-ball-valve" />
+        <BallValve className="pipe-ball-valve" />
+        <BallValve className="pipe-ball-valve" />
+        {/* Terminal fixture — brass gate-valve handwheel on the pipe mouth */}
+        <g className="pipe-terminal">
+          <g className="terminal-wheel">
+            <circle r="11" fill="white" stroke={BRASS_DARK} strokeWidth="5" />
+            <circle r="11" fill="none" stroke={BRASS} strokeWidth="3" />
+            <line x1="-15" y1="0" x2="15" y2="0" stroke={BRASS} strokeWidth="3" strokeLinecap="round" />
+            <line x1="0" y1="-15" x2="0" y2="15" stroke={BRASS} strokeWidth="3" strokeLinecap="round" />
+            <circle r="3.5" fill={NAVY} />
+          </g>
         </g>
       </svg>
     </div>
