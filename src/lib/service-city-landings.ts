@@ -51,6 +51,39 @@ const PORT_CHARLOTTE_NEIGHBORHOODS = [
   "Midway",
 ];
 
+const NAPLES_NEIGHBORHOODS = [
+  "Old Naples",
+  "Park Shore",
+  "Pelican Bay",
+  "North Naples",
+  "Golden Gate",
+  "Lely Resort",
+  "Vineyards",
+  "Pine Ridge",
+];
+
+const BONITA_SPRINGS_NEIGHBORHOODS = [
+  "Bonita Beach",
+  "Barefoot Beach",
+  "Spanish Wells",
+  "Worthington",
+  "Pelican Landing",
+  "Village Walk",
+  "Bay Creek",
+  "Imperial",
+];
+
+const ESTERO_NEIGHBORHOODS = [
+  "Coconut Point",
+  "Estero Bay",
+  "Miromar Lakes",
+  "The Brooks",
+  "Bella Terra",
+  "Shadow Wood",
+  "West Bay Club",
+  "Rapallo",
+];
+
 export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
   // ============================================
   // 1. EMERGENCY PLUMBER - CAPE CORAL
@@ -1907,6 +1940,761 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       { label: "Naples Service Area", href: "/areas/naples" },
       { label: "Plumbing Remodel Services", href: "/services/plumbing-remodel" },
       { label: "Whole-Home Repiping", href: "/services/repiping" },
+    ],
+  },
+
+  // ============================================
+  {
+    slug: "water-softeners-cape-coral",
+    metaTitle: "Water Softeners Cape Coral | Hard Water Fix",
+    metaDescription:
+      "Water softener installation in Cape Coral, FL. Fix 300+ ppm hard water damaging pipes & fixtures. Licensed CFC1432485, 5-star rated. Call 833-PLUMB-IT today.",
+    keywords: [
+      "water softener Cape Coral",
+      "water softener installation Cape Coral FL",
+      "hard water Cape Coral",
+      "whole house water softener Cape Coral",
+      "water treatment Cape Coral",
+      "salt-free water softener Cape Coral",
+      "water softener repair Cape Coral",
+      "Cape Coral water quality",
+      "calcium buildup Cape Coral pipes",
+      "water conditioning Cape Coral Florida",
+    ],
+    h1: "Water Softener Installation in Cape Coral, FL",
+    heroSubtext:
+      "Cape Coral's water tests above 300 ppm hardness — among the hardest in Florida. C&S Plumbing installs and services whole-home water softeners that protect your pipes, fixtures, and water heater.",
+    trustBadges: TRUST_BADGES,
+    serviceDescription:
+      `Cape Coral's municipal water supply consistently tests above 300 parts per million for hardness, driven by dissolved calcium and magnesium from the region's limestone aquifer. For context, the EPA classifies anything above 180 ppm as "very hard." That mineral load leaves white crusty deposits on faucets and showerheads, clogs aerators, reduces water heater efficiency by up to 30 percent, and accelerates the failure of appliances like dishwashers and washing machines. If you've noticed scale buildup around your fixtures or your water heater is making popping and rumbling sounds, hard water is the culprit.\n\nC&S Plumbing of Lee has been installing and servicing water softeners in Cape Coral since 1998. We've seen firsthand how untreated hard water shortens the life of water heaters from a national average of 12 years down to 6–8 years in Cape Coral, and how calcium deposits inside supply lines gradually reduce flow to a trickle. A properly sized water softener eliminates these problems at the point of entry, treating every drop of water before it reaches your fixtures.\n\nWe install both salt-based ion exchange systems and salt-free water conditioners depending on your household needs and preferences. Salt-based softeners remove calcium and magnesium entirely, producing genuinely soft water that lathers well and leaves no scale. Salt-free conditioners use template-assisted crystallization to neutralize minerals without removing them — a good option for homeowners who prefer not to handle salt or who are on sodium-restricted diets. We'll test your water, assess your household size and usage patterns, and recommend the right system.\n\nFor homes on Cape Coral's canal lots, we also install under-sink reverse osmosis systems for drinking water. The combination of a whole-home softener and a point-of-use RO system gives you the best of both worlds: protected plumbing throughout the house and crystal-clear drinking water at the kitchen tap. Our installation includes all supply connections, drain line routing for the brine tank, and electrical hookup if needed.\n\nEvery C&S water softener installation includes a post-install water test to verify the system is performing correctly, plus a walkthrough on salt replenishment and basic maintenance. We also service and repair existing softeners of all brands — if your current system isn't keeping up with Cape Coral's water, we can diagnose and fix it.`,
+    features: [
+      {
+        title: "Free Water Hardness Testing",
+        description:
+          "We test your water on-site and show you the exact mineral content before recommending any system.",
+      },
+      {
+        title: "Whole-Home Ion Exchange Systems",
+        description:
+          "Salt-based softeners that fully remove calcium and magnesium, protecting every fixture and appliance in your home.",
+      },
+      {
+        title: "Salt-Free Conditioner Option",
+        description:
+          "Template-assisted crystallization systems for homeowners who prefer a maintenance-free, no-salt alternative.",
+      },
+      {
+        title: "Under-Sink RO Systems",
+        description:
+          "Point-of-use reverse osmosis for clean drinking water, often paired with a whole-home softener for complete treatment.",
+      },
+      {
+        title: "Existing System Repair",
+        description:
+          "We service and repair all brands of water softeners — resin replacement, valve rebuilds, and controller reprogramming.",
+      },
+    ],
+    city: "Cape Coral",
+    state: "FL",
+    neighborhoods: CAPE_CORAL_NEIGHBORHOODS,
+    faqs: [
+      {
+        question: "How hard is Cape Coral's water?",
+        answer:
+          "Cape Coral's municipal water consistently tests between 280 and 350 parts per million for total hardness, depending on the season and which well field is supplying your area. The EPA classifies anything above 180 ppm as very hard. This is among the hardest municipal water in the state of Florida and significantly harder than the national average of 100–150 ppm.",
+      },
+      {
+        question: "Will a water softener help my water heater last longer in Cape Coral?",
+        answer:
+          "Yes, significantly. Hard water causes calcium scale to accumulate on the heating elements and inside the tank, reducing efficiency and eventually causing premature failure. In Cape Coral, untreated hard water typically shortens water heater life to 6–8 years compared to the national average of 12 years. A water softener eliminates the mineral buildup and can extend your water heater's lifespan back toward its design life.",
+      },
+      {
+        question: "What's the difference between salt-based and salt-free water softeners?",
+        answer:
+          "Salt-based softeners use ion exchange resin to physically remove calcium and magnesium from your water, replacing them with sodium ions. They produce truly soft water with zero scale. Salt-free conditioners use a process called template-assisted crystallization to change the structure of minerals so they don't stick to surfaces, but the minerals remain in the water. Salt-based systems are more effective for Cape Coral's extreme hardness levels, but salt-free systems require less maintenance and don't add sodium to your water.",
+      },
+      {
+        question: "How much does a water softener cost to install in Cape Coral?",
+        answer:
+          "A whole-home water softener installation in Cape Coral typically ranges from $1,500 to $4,000 depending on the system capacity, type (salt-based vs salt-free), and the complexity of the plumbing connections. This includes the unit, all plumbing connections, drain line for the brine tank, and a post-installation water test. We provide free in-home estimates with exact pricing.",
+      },
+      {
+        question: "How often do I need to add salt to my water softener?",
+        answer:
+          "For a typical Cape Coral household of 2–4 people, you'll add salt approximately once every 4–6 weeks. The exact frequency depends on your water usage, the hardness level, and the size of your brine tank. We set up the system during installation and show you how to check salt levels. Most homeowners find it takes about 5 minutes once a month.",
+      },
+      {
+        question: "Do you install water softeners for homes on well water in Cape Coral?",
+        answer:
+          "Yes. Some properties in the Cape Coral area, particularly near the northern edges, still use private wells. Well water in this region is typically even harder than municipal water and may also contain iron and sulfur. We test well water for a full panel of contaminants and recommend a treatment system tailored to your specific water chemistry, which may include a softener combined with an iron filter or sulfur treatment.",
+      },
+    ],
+    relatedPages: [
+      { label: "Water Softener Services", href: "/services/water-softeners" },
+      { label: "Cape Coral Service Area", href: "/areas/cape-coral" },
+      { label: "Repiping in Cape Coral", href: "/repiping-cape-coral" },
+    ],
+  },
+
+  // ============================================
+  {
+    slug: "leak-repair-cape-coral",
+    metaTitle: "Leak Repair Cape Coral | Slab Leak Detection",
+    metaDescription:
+      "Expert leak repair in Cape Coral, FL. Slab leak detection, hidden leak location & pipe repair. Licensed CFC1432485, 5-star rated. Call 833-PLUMB-IT for service.",
+    keywords: [
+      "leak repair Cape Coral",
+      "slab leak detection Cape Coral",
+      "water leak repair Cape Coral FL",
+      "hidden leak detection Cape Coral",
+      "pipe leak repair Cape Coral",
+      "leak detection service Cape Coral",
+      "under slab leak Cape Coral",
+      "Cape Coral leak specialist",
+      "polybutylene leak repair Cape Coral",
+      "copper pipe leak Cape Coral Florida",
+    ],
+    h1: "Leak Repair & Detection in Cape Coral, FL",
+    heroSubtext:
+      "Cape Coral's canal-lot soil and corrosive water cause more hidden leaks per capita than almost anywhere in Florida. C&S Plumbing pinpoints and fixes leaks fast — call 833-PLUMB-IT.",
+    trustBadges: TRUST_BADGES,
+    serviceDescription:
+      `Cape Coral's geography creates a perfect storm for residential pipe leaks. The city's 400-mile canal system means most homes sit on sandy, water-saturated soil that shifts with tidal cycles, seasonal rain, and irrigation patterns. That constant soil movement stresses underground supply lines and drain pipes, creating fractures and joint separations that allow water to escape — often without any visible sign above ground until the damage is significant.\n\nSlab leaks are the most common — and most destructive — type of leak we repair in Cape Coral. When a supply line beneath your concrete foundation develops a pinhole or crack, pressurized water erodes the sand and fill material under the slab, creating voids that can eventually lead to foundation settlement. Early signs include unexplained spikes in your water bill, warm spots on tile floors (from hot-side leaks), the sound of running water when all fixtures are off, or damp baseboards with no obvious source. C&S Plumbing uses acoustic leak detection equipment that listens for the sound signature of pressurized water escaping a pipe, along with thermal imaging cameras that detect temperature differences in your slab — allowing us to locate the exact failure point without exploratory demolition.\n\nCopper pipe corrosion is a leading cause of leaks in Cape Coral homes built before 2000. The high chloride content in Cape Coral's soil attacks copper from the outside in, creating pinhole leaks that start small and grow over time. Homes built between 1978 and 1995 face a double risk — many also have polybutylene supply lines that deteriorate from the inside out when exposed to chlorinated municipal water. If you've had two or more pinhole leaks in the past year, it's usually a sign of systemic pipe failure, and a whole-home repipe may be more cost-effective than continued spot repairs.\n\nC&S Plumbing has been repairing leaks in Cape Coral since 1998, giving us deep familiarity with every subdivision, builder, and piping system in the city. We know which neighborhoods were plumbed with poly-B, which developments used thin-wall copper, and where the soil conditions are most aggressive. That knowledge translates to faster diagnoses and fewer return visits. Every leak repair comes with a written warranty, and if we determine your home needs more extensive work, we'll give you honest advice rather than a patch that fails in six months.`,
+    features: [
+      {
+        title: "Acoustic Leak Detection",
+        description:
+          "Ground microphones and correlators isolate the sound of escaping water to pinpoint slab leaks without tearing up floors.",
+      },
+      {
+        title: "Thermal Imaging",
+        description:
+          "Infrared cameras detect temperature anomalies in your foundation caused by hot or cold water leaks beneath the slab.",
+      },
+      {
+        title: "Slab Leak Repair",
+        description:
+          "Spot repair, reroute, or full replacement options depending on the pipe material, leak location, and overall system condition.",
+      },
+      {
+        title: "Polybutylene Leak Specialists",
+        description:
+          "Expert repair and replacement of poly-B piping found in thousands of Cape Coral homes built in the 1980s and early 1990s.",
+      },
+      {
+        title: "Written Repair Warranty",
+        description:
+          "Every leak repair is backed by a written warranty so you have confidence the fix is permanent.",
+      },
+    ],
+    city: "Cape Coral",
+    state: "FL",
+    neighborhoods: CAPE_CORAL_NEIGHBORHOODS,
+    faqs: [
+      {
+        question: "How do I know if I have a slab leak in my Cape Coral home?",
+        answer:
+          "Common signs include an unexplained increase in your water bill, the sound of running water when all fixtures are off, warm or damp spots on your floor, cracks in walls or baseboards, or a water meter that keeps spinning when nothing is turned on. If you notice any of these, call C&S Plumbing for a leak detection inspection before the damage spreads.",
+      },
+      {
+        question: "Why are slab leaks so common in Cape Coral?",
+        answer:
+          "Cape Coral's canal-lot soil is sandy and water-saturated, causing it to shift with tidal cycles and seasonal rain. That movement stresses the copper and polybutylene supply lines running beneath your foundation. Additionally, Cape Coral's soil has high chloride levels that corrode copper from the outside in. The combination of ground movement and chemical corrosion makes Cape Coral one of the highest slab leak markets in Florida.",
+      },
+      {
+        question: "How much does slab leak repair cost in Cape Coral?",
+        answer:
+          "Slab leak repair in Cape Coral typically costs between $500 and $3,000 depending on the location, accessibility, and repair method. A simple spot repair where the leak is accessible may be on the lower end, while a reroute that bypasses the under-slab section with new overhead piping will be higher. We provide a written estimate before starting any work.",
+      },
+      {
+        question: "Can you detect leaks without breaking my floors?",
+        answer:
+          "Yes. Our acoustic leak detection and thermal imaging equipment allows us to locate leaks beneath your slab without exploratory demolition. We identify the precise location of the failure before making any cuts, which means smaller access openings, less mess, and faster repairs. In most cases, we only need to open a small section of flooring directly over the leak.",
+      },
+      {
+        question: "Should I repair or repipe if I keep getting leaks in Cape Coral?",
+        answer:
+          "If you've had two or more leaks within a year, or if your home has polybutylene or thin-wall copper pipes, a whole-home repipe is usually more cost-effective than repeated spot repairs. Each repair addresses one failure point, but systemic pipe degradation means more leaks are coming. C&S can inspect your entire system and give you honest advice on whether repair or repipe makes more financial sense.",
+      },
+      {
+        question: "Do you repair leaks in irrigation and outdoor plumbing?",
+        answer:
+          "Yes. Cape Coral's extensive irrigation systems are subject to the same soil movement and corrosion issues that affect indoor plumbing. We repair supply line leaks, sprinkler system connections, and outdoor hose bibs. We also locate and repair leaks in pool supply and return lines using the same detection technology we use for slab leaks.",
+      },
+    ],
+    relatedPages: [
+      { label: "Leak Repair Services", href: "/services/leak-repair" },
+      { label: "Cape Coral Service Area", href: "/areas/cape-coral" },
+      { label: "Emergency Plumber Cape Coral", href: "/emergency-plumber-cape-coral" },
+    ],
+  },
+
+  // ============================================
+  {
+    slug: "plumbing-remodel-cape-coral",
+    metaTitle: "Plumbing Remodel Cape Coral | Kitchen & Bath",
+    metaDescription:
+      "Kitchen & bathroom remodel plumbing in Cape Coral, FL. Fixture upgrades, rough-in relocation, code compliance. Licensed CFC1432485. Call 833-PLUMB-IT for a quote.",
+    keywords: [
+      "plumbing remodel Cape Coral",
+      "bathroom remodel plumber Cape Coral",
+      "kitchen plumbing remodel Cape Coral FL",
+      "fixture relocation Cape Coral",
+      "remodel plumber Cape Coral",
+      "rough-in plumbing Cape Coral",
+      "bathroom renovation plumber Cape Coral",
+      "Cape Coral kitchen plumbing upgrade",
+      "plumbing renovation Cape Coral Florida",
+      "remodel plumbing contractor Cape Coral",
+    ],
+    h1: "Plumbing Remodel Services in Cape Coral, FL",
+    heroSubtext:
+      "Remodeling your Cape Coral kitchen or bathroom? C&S Plumbing handles every pipe, drain, and fixture — from rough-in relocation to final hookup. Licensed, permitted, inspected.",
+    trustBadges: TRUST_BADGES,
+    serviceDescription:
+      `Cape Coral's housing stock is aging into its remodel years. Thousands of homes built during the building booms of the 1980s, 1990s, and early 2000s are now 25–40 years old, and homeowners are upgrading kitchens and bathrooms to match modern standards and aesthetics. Every remodel that moves a sink, adds a shower, or relocates a dishwasher requires a licensed plumber to modify the supply, drain, and vent systems inside the walls — and in Cape Coral, that work must meet current Florida Building Code requirements regardless of what was originally installed.\n\nC&S Plumbing of Lee works with homeowners and general contractors across Cape Coral to deliver remodel plumbing that's done right the first time. We handle everything from pre-construction planning and rough-in layout to final fixture installation and city inspection. Our plumbers are experienced with the specific challenges of Cape Coral remodels: relocating drain lines in slab-on-grade homes, upgrading undersized water supply lines in older construction, and replacing corroded or obsolete piping discovered during demo.\n\nBathroom remodels are our most common remodel project in Cape Coral. Whether you're converting a tub to a walk-in shower, adding a dual vanity, or building out a master suite with a freestanding tub, we handle the entire plumbing scope: moving drain rough-ins in the slab, running new supply lines through walls, installing mixing valves and shower systems, and connecting fixtures. We coordinate our schedule with your GC or tile installer so our rough-in is complete and inspected before walls close up.\n\nKitchen remodels in Cape Coral often involve moving the sink to an island, adding a pot filler, upgrading to a commercial-style faucet, or installing a second dishwasher. Each of these requires modifications to supply and drain lines, and island sinks need an air admittance valve or loop vent to meet code. C&S handles the engineering and permitting so your kitchen passes inspection without delays.\n\nWe also frequently discover outdated or failing piping during remodel demolition — polybutylene supply lines, corroded copper, or deteriorating cast iron drains. When that happens, we advise you on whether to address it now while the walls are open, which is far less expensive than coming back later. Our remodel plumbing work comes with a full warranty and includes all necessary permits and inspections.`,
+    features: [
+      {
+        title: "Slab Rough-In Relocation",
+        description:
+          "We cut and reroute drain lines in Cape Coral's slab-on-grade foundations to accommodate new fixture layouts.",
+      },
+      {
+        title: "Fixture Selection Guidance",
+        description:
+          "We help you choose fixtures that work with your water pressure, hard water conditions, and existing pipe sizing.",
+      },
+      {
+        title: "Full Permit & Inspection",
+        description:
+          "All remodel plumbing work is permitted through the City of Cape Coral and passes inspection before we leave.",
+      },
+      {
+        title: "GC Coordination",
+        description:
+          "We work seamlessly with your general contractor, scheduling rough-in and trim-out to keep the project on timeline.",
+      },
+      {
+        title: "Pipe Upgrade During Remodel",
+        description:
+          "If we discover poly-B, corroded copper, or undersized lines during demo, we recommend upgrading now while walls are open — saving thousands later.",
+      },
+    ],
+    city: "Cape Coral",
+    state: "FL",
+    neighborhoods: CAPE_CORAL_NEIGHBORHOODS,
+    faqs: [
+      {
+        question: "Do I need a plumber for my Cape Coral bathroom remodel?",
+        answer:
+          "Yes. Any remodel that moves, adds, or modifies water supply lines, drain lines, or vent piping requires a licensed plumber and a plumbing permit in Cape Coral. Even swapping a tub for a shower typically requires drain relocation and valve changes. Working without a permit can result in fines and complications when you sell your home.",
+      },
+      {
+        question: "Can you move plumbing in a slab-on-grade Cape Coral home?",
+        answer:
+          "Yes. Most Cape Coral homes are slab-on-grade, which means drain pipes run beneath the concrete foundation. Moving a toilet, shower, or sink to a new location requires cutting the slab, rerouting the drain pipe, and patching the concrete. C&S has extensive experience with slab work in Cape Coral and we minimize the size and number of cuts needed.",
+      },
+      {
+        question: "How much does remodel plumbing cost in Cape Coral?",
+        answer:
+          "Remodel plumbing costs vary widely depending on scope. A simple fixture swap with no pipe relocation might be $300–$800. A full bathroom remodel with slab work, new supply lines, and multiple fixture installations typically runs $2,500–$6,000. Kitchen remodels with island sink installation are $1,500–$4,000. We provide detailed written estimates after reviewing your remodel plans.",
+      },
+      {
+        question: "How long does remodel plumbing take?",
+        answer:
+          "Rough-in plumbing for a bathroom remodel typically takes 1–2 days, and final fixture installation takes another half day to full day. Kitchen rough-ins are usually 1 day. The total plumbing timeline depends on how many fixtures are being moved, whether slab work is needed, and coordination with other trades. We'll give you an exact schedule during the estimate.",
+      },
+      {
+        question: "What happens if you find old or bad pipes during my Cape Coral remodel?",
+        answer:
+          "It's common to discover polybutylene supply lines, corroded copper, or deteriorating drain pipes during remodel demolition in Cape Coral. We'll show you what we found, explain the condition and risk, and give you a quote to replace the affected piping while the walls are open. Addressing it during the remodel is significantly cheaper than coming back after the walls are closed up.",
+      },
+      {
+        question: "Do you work with general contractors on Cape Coral remodels?",
+        answer:
+          "Absolutely. We work with dozens of GCs across Cape Coral and Lee County on residential remodels. We coordinate our rough-in and trim-out schedules to fit your project timeline, attend pre-construction meetings when needed, and communicate directly with your GC to avoid delays. Many Cape Coral contractors use C&S as their preferred plumbing subcontractor.",
+      },
+    ],
+    relatedPages: [
+      { label: "Plumbing Remodel Services", href: "/services/plumbing-remodel" },
+      { label: "Cape Coral Service Area", href: "/areas/cape-coral" },
+      { label: "Repiping in Cape Coral", href: "/repiping-cape-coral" },
+    ],
+  },
+
+  // ============================================
+  {
+    slug: "leak-repair-fort-myers",
+    metaTitle: "Leak Repair Fort Myers | Slab Leak Experts",
+    metaDescription:
+      "Leak detection & repair in Fort Myers, FL. Slab leaks, hidden leaks & pipe repair for older homes. Licensed CFC1432485, 5-star rated. Call 833-PLUMB-IT now.",
+    keywords: [
+      "leak repair Fort Myers",
+      "slab leak detection Fort Myers",
+      "water leak repair Fort Myers FL",
+      "hidden leak Fort Myers",
+      "pipe leak repair Fort Myers",
+      "leak detection Fort Myers Florida",
+      "galvanized pipe leak Fort Myers",
+      "cast iron leak Fort Myers",
+      "Fort Myers leak specialist",
+      "under slab leak repair Fort Myers",
+    ],
+    h1: "Leak Repair & Detection in Fort Myers, FL",
+    heroSubtext:
+      "Fort Myers' older homes are prone to pipe failures from galvanized steel, cast iron, and early copper systems. C&S Plumbing finds and fixes leaks fast — call 833-PLUMB-IT.",
+    trustBadges: TRUST_BADGES,
+    serviceDescription:
+      `Fort Myers' plumbing inventory spans nearly a century of construction, and every era brought different pipe materials and installation methods — each with its own failure modes. Homes in the River District and along First Street may still have original galvanized steel supply lines from the 1920s–1950s that have corroded shut, reducing flow to a trickle and eventually springing leaks at joints and fittings. Mid-century ranches in Whiskey Creek and Villas often have cast iron drain pipes that are developing holes and cracks after 50+ years in Florida's humid, acidic soil. And homes built in the 1970s–1990s throughout Gateway and Iona may have copper supply lines with pinhole corrosion from aggressive water chemistry.\n\nC&S Plumbing of Lee has been diagnosing and repairing pipe leaks in Fort Myers since 1998. We start every leak investigation with non-invasive detection: acoustic listening equipment that amplifies the sound of water escaping a pipe, thermal imaging cameras that reveal temperature anomalies in your slab or walls, and moisture meters that identify wet areas behind drywall. This technology lets us locate the exact failure point without exploratory demolition — saving you time, money, and unnecessary damage to your home.\n\nSlab leaks are a frequent issue in Fort Myers, particularly in neighborhoods with high water tables near the Caloosahatchee River. Hydrostatic pressure from the water table pushes against the underside of your foundation, and soil settlement over decades shifts the sand and fill material supporting the slab. Both forces stress the supply lines and drain pipes running beneath your concrete floor, creating leaks that show up as warm spots, damp areas, or an unexplained water bill increase.\n\nFor galvanized pipe leaks, we often recommend a section replacement or full repipe rather than patching. Galvanized steel corrodes from the inside out, and a leak at one fitting typically means the entire system is near the end of its life. The same applies to cast iron drain pipes — once one section fails, the rest is usually in similar condition. C&S will give you honest advice on whether a repair or replacement makes more financial sense based on what our camera and detection equipment reveal.\n\nEvery leak repair from C&S Plumbing includes a pressure test after completion to verify the fix is holding, and a written warranty on all repair work. If we determine during the repair that more extensive work is needed, we'll discuss it with you before proceeding.`,
+    features: [
+      {
+        title: "Non-Invasive Leak Detection",
+        description:
+          "Acoustic, thermal, and moisture detection technology locates hidden leaks without unnecessary demolition or floor removal.",
+      },
+      {
+        title: "Galvanized & Cast Iron Experts",
+        description:
+          "Specialized experience with the older piping materials found throughout Fort Myers' historic and mid-century neighborhoods.",
+      },
+      {
+        title: "Slab Leak Repair & Reroute",
+        description:
+          "Spot repair or overhead reroute options for under-slab leaks, depending on pipe condition and cost-effectiveness.",
+      },
+      {
+        title: "Pressure Testing",
+        description:
+          "Post-repair pressure test verifies your system is holding and the leak is permanently resolved before we leave.",
+      },
+      {
+        title: "Insurance Documentation",
+        description:
+          "Photos, detailed invoices, and direct communication with your insurance adjuster for covered plumbing leak claims.",
+      },
+    ],
+    city: "Fort Myers",
+    state: "FL",
+    neighborhoods: FORT_MYERS_NEIGHBORHOODS,
+    faqs: [
+      {
+        question: "What types of pipe leaks are most common in Fort Myers?",
+        answer:
+          "The most common leaks we repair in Fort Myers depend on the age of the home. Homes from the 1920s–1950s often have galvanized steel pipes that corrode internally and leak at joints. Homes from the 1960s–1970s frequently have cast iron drain pipes developing holes and cracks. Homes from the 1980s–1990s commonly have copper supply lines with pinhole corrosion. Each material has its own failure pattern, and our plumbers are trained to diagnose and repair all of them.",
+      },
+      {
+        question: "How do you detect a leak under my slab in Fort Myers?",
+        answer:
+          "We use a combination of acoustic listening equipment and thermal imaging cameras. The acoustic equipment amplifies the sound of pressurized water escaping a pipe beneath the slab, allowing us to pinpoint the location. Thermal imaging detects temperature differences in the slab surface caused by leaking hot or cold water. Together, these methods locate the exact failure point so we only need to open a small section of floor directly over the leak.",
+      },
+      {
+        question: "Are galvanized pipes a serious problem in Fort Myers?",
+        answer:
+          "Yes. Galvanized steel pipes were commonly used in Fort Myers homes built before the 1960s. After 60–80 years, these pipes are severely corroded internally — the zinc coating has long since deteriorated and the steel is rusting, reducing flow and eventually leaking. If you have galvanized supply lines and experience a leak, we typically recommend a repipe because the entire system is in similar condition. A camera inspection can confirm the state of your galvanized piping.",
+      },
+      {
+        question: "Is cast iron pipe failure common in Fort Myers?",
+        answer:
+          "Very common. Cast iron was the standard drain pipe material through the mid-1970s, and Fort Myers has thousands of homes from that era. After 40–60 years in Florida's humid environment with acidic soil, cast iron corrodes internally, develops holes, and eventually collapses. Signs include persistent sewage odor, slow drains throughout the house, fruit flies near floor drains, and wet spots in the yard. A camera inspection confirms the condition and shows you exactly where failures are occurring.",
+      },
+      {
+        question: "How much does leak repair cost in Fort Myers?",
+        answer:
+          "Leak repair costs depend on the location, pipe material, and repair method. A simple exposed pipe repair might cost $200–$500. Slab leak repairs range from $500 to $3,000 depending on whether we do a spot repair or reroute. Leak detection itself is typically $200–$400. We provide a written estimate before beginning any repair work so there are no surprises.",
+      },
+      {
+        question: "Should I repair or repipe if I have multiple leaks?",
+        answer:
+          "If you've had two or more leaks within a 12-month period, or if leak detection reveals systemic pipe deterioration, repiping is usually the better long-term investment. Repeated spot repairs on failing galvanized, cast iron, or corroded copper systems become increasingly expensive and each repair addresses only one point of failure. C&S will inspect your entire system and give you an honest comparison of repair-by-repair costs versus a one-time repipe.",
+      },
+    ],
+    relatedPages: [
+      { label: "Leak Repair Services", href: "/services/leak-repair" },
+      { label: "Fort Myers Service Area", href: "/areas/fort-myers" },
+      { label: "Repiping in Fort Myers", href: "/repiping-fort-myers" },
+    ],
+  },
+
+  // ============================================
+  {
+    slug: "repiping-naples",
+    metaTitle: "Repiping Naples FL | Luxury Home Specialists",
+    metaDescription:
+      "Whole-home repiping in Naples, FL. Luxury home pipe replacement, $5,000-$15,000. Waterfront corrosion experts. Licensed CFC1432485. Call 833-PLUMB-IT for a quote.",
+    keywords: [
+      "repiping Naples FL",
+      "whole house repipe Naples",
+      "Naples plumber repiping",
+      "luxury home repiping Naples",
+      "copper repipe Naples Florida",
+      "pipe replacement Naples FL",
+      "waterfront home repiping Naples",
+      "Naples repipe cost",
+      "repipe specialist Naples",
+      "CPVC replacement Naples FL",
+    ],
+    h1: "Whole-Home Repiping in Naples, FL",
+    heroSubtext:
+      "Naples' luxury waterfront homes demand premium repiping solutions. C&S Plumbing has repiped thousands of Southwest Florida homes since 1998 — get a free estimate today.",
+    trustBadges: TRUST_BADGES,
+    serviceDescription:
+      `Naples presents repiping challenges that are unique even by Southwest Florida standards. The city's housing stock skews toward larger, higher-value homes — many with 4,000 to 8,000+ square feet of living space spread across multiple wings and floors. A repipe in Naples is a fundamentally different project than a standard 3/2 home in Cape Coral or Fort Myers: more fixtures, longer pipe runs, higher-end finishes that demand careful protection during the work, and homeowners who expect flawless execution.\n\nC&S Plumbing of Lee brings 28 years of experience and 8,500+ homes built across Southwest Florida to every Naples repipe project. We understand that in communities like Pelican Bay, Park Shore, and Old Naples, the quality of the workmanship matters as much as the plumbing itself. Our crews protect marble floors with padded drop cloths, use dust containment barriers when cutting through finished ceilings, and restore all access points with precision patching and paint matching that meets the standards Naples homeowners expect.\n\nWaterfront properties in Naples face accelerated pipe corrosion from salt air and brackish groundwater. Homes along the Gulf, in Port Royal, and along Naples Bay have copper supply lines exposed to chloride-laden soil conditions that are more aggressive than inland neighborhoods. Even homes that are only 15–20 years old may show significant copper corrosion if they were built near the water. CPVC pipes in coastal Naples homes also fail prematurely — the combination of UV exposure in attic runs and chemical interaction with certain fitting cements causes cracking at joints, particularly in homes built between 2000 and 2015.\n\nOur Naples repipe process uses PEX-A tubing for supply lines — the same corrosion-proof material we install throughout Southwest Florida, but sized and configured for the higher flow demands of larger Naples homes. We engineer the system to maintain adequate pressure across long fixture runs, support multiple simultaneous showers, and feed specialty fixtures like outdoor kitchens, pool bathrooms, and multi-head shower systems. For drain lines, we use Schedule 40 PVC with proper slope and clean-out access.\n\nA typical Naples whole-home repipe ranges from $5,000 for a modest single-story home to $15,000+ for larger estates with complex layouts. We provide detailed written estimates that break down material, labor, and restoration costs so you know exactly what you're paying for. Permits and inspections are included, and we coordinate with your housekeeper or property manager to schedule the work at the most convenient time — including accommodating seasonal residents' schedules.`,
+    features: [
+      {
+        title: "Luxury Home Experience",
+        description:
+          "Padded floor protection, dust containment, and precision finish restoration for high-end Naples properties.",
+      },
+      {
+        title: "Engineered for Large Homes",
+        description:
+          "PEX-A systems designed to maintain pressure and flow across 4,000–8,000+ square foot floor plans with multiple zones.",
+      },
+      {
+        title: "Waterfront Corrosion Experts",
+        description:
+          "Deep experience with the accelerated pipe failures in coastal Naples homes caused by salt air and brackish groundwater.",
+      },
+      {
+        title: "Seasonal Resident Scheduling",
+        description:
+          "We coordinate with property managers to complete repipes while you're away or at a time that fits your seasonal schedule.",
+      },
+      {
+        title: "Full Finish Restoration",
+        description:
+          "All drywall, texture, and paint at access points are restored to match your existing finish — critical in Naples' premium homes.",
+      },
+    ],
+    city: "Naples",
+    state: "FL",
+    neighborhoods: NAPLES_NEIGHBORHOODS,
+    faqs: [
+      {
+        question: "How much does it cost to repipe a home in Naples?",
+        answer:
+          "Naples whole-home repiping typically ranges from $5,000 to $15,000 depending on the home's square footage, number of fixtures, layout complexity, and whether drain lines are included. Larger estate homes with multiple wings, outdoor kitchens, and pool bathrooms can exceed $15,000. We provide free in-home estimates with a detailed cost breakdown before any work begins.",
+      },
+      {
+        question: "Why do waterfront Naples homes need repiping sooner?",
+        answer:
+          "Homes near the Gulf, Naples Bay, and along the waterways are exposed to salt air and brackish groundwater that accelerate copper pipe corrosion. The chloride content in the soil is significantly higher in coastal zones, attacking copper from the outside in. Even homes that are only 15–20 years old in these locations may have advanced corrosion. If you live on or near the water in Naples and have copper pipes, a free inspection from C&S can assess your pipe condition.",
+      },
+      {
+        question: "How long does repiping take for a large Naples home?",
+        answer:
+          "A standard 2,000–3,000 square foot Naples home is typically completed in 2–3 days. Larger homes of 4,000–6,000+ square feet with complex layouts, multiple stories, or extensive fixture counts may require 3–5 days. We provide an exact timeline during the estimate and coordinate with your schedule. Water is typically off for 4–8 hours per day during the main installation phase.",
+      },
+      {
+        question: "Will repiping damage the finishes in my Naples home?",
+        answer:
+          "We take extraordinary care with high-end finishes. Our crews use padded drop cloths over marble, tile, and wood floors, install dust containment barriers before cutting drywall, and restore all access points with precision texture matching and paint touch-up. We understand that Naples homes have premium finishes, and our restoration work reflects that standard. Most homeowners are surprised at how clean and non-disruptive the process is.",
+      },
+      {
+        question: "What pipe material do you use for Naples repiping?",
+        answer:
+          "We use PEX-A (cross-linked polyethylene) for supply lines. PEX-A is completely immune to the corrosion that destroys copper in coastal Naples soil, it's flexible enough to handle any layout, and it provides excellent flow rates for large homes with high fixture counts. It carries a 25-year manufacturer warranty. For drain lines, we use Schedule 40 PVC. Both materials are approved by Florida Building Code and are the current industry standard.",
+      },
+      {
+        question: "Can you repipe my Naples home while I'm out of state?",
+        answer:
+          "Absolutely. Many of our Naples clients are seasonal residents. We coordinate with your property manager, neighbor, or trusted contact to access the home, complete the repipe, and handle the city inspection. We send photo updates throughout the project and conduct a final walkthrough with your representative. The home is fully functional with tested water pressure before we leave.",
+      },
+      {
+        question: "Do I need a permit to repipe in Naples?",
+        answer:
+          "Yes. Collier County requires a plumbing permit for whole-home repiping. C&S handles all permit applications, scheduling, and inspections as part of our service — no extra charge and no hassle. We maintain strong working relationships with Collier County inspectors and ensure every repipe meets or exceeds current code requirements.",
+      },
+    ],
+    relatedPages: [
+      { label: "Repiping Services", href: "/services/repiping" },
+      { label: "Naples Service Area", href: "/areas/naples" },
+    ],
+    priceRange: "$5,000–$15,000",
+  },
+
+  // ============================================
+  {
+    slug: "emergency-plumber-bonita-springs",
+    metaTitle: "Emergency Plumber Bonita Springs | 24/7",
+    metaDescription:
+      "24/7 emergency plumber in Bonita Springs, FL. Burst pipes, condo leaks & slab repair. Licensed CFC1432485, 5-star rated. Call 833-PLUMB-IT for immediate help.",
+    keywords: [
+      "emergency plumber Bonita Springs",
+      "24 hour plumber Bonita Springs FL",
+      "Bonita Springs emergency plumbing",
+      "burst pipe repair Bonita Springs",
+      "condo plumber Bonita Springs",
+      "plumbing emergency Bonita Springs",
+      "after hours plumber Bonita Springs FL",
+      "slab leak Bonita Springs",
+      "Bonita Springs plumber 24/7",
+      "weekend plumber Bonita Springs Florida",
+    ],
+    h1: "Emergency Plumber in Bonita Springs, FL",
+    heroSubtext:
+      "Plumbing emergencies don't wait for business hours — and neither do we. C&S Plumbing provides 24/7 emergency service to Bonita Springs homeowners and condo communities. Call 833-PLUMB-IT.",
+    trustBadges: TRUST_BADGES,
+    serviceDescription:
+      `Bonita Springs is one of Southwest Florida's fastest-growing communities, and its mix of single-family homes, condominiums, and gated communities creates a diverse range of plumbing emergencies that demand fast, knowledgeable response. C&S Plumbing of Lee has expanded our emergency coverage into Bonita Springs to serve this growing market with the same 24/7 reliability that Cape Coral and Fort Myers homeowners have relied on since 1998.\n\nCondo and HOA communities present unique emergency challenges in Bonita Springs. When a pipe bursts on the third floor of a condo building, it doesn't just affect one unit — water cascades down through the floors below, damaging multiple residences simultaneously. Response time is critical. C&S emergency crews carry water extraction equipment and can isolate the failed pipe quickly to stop the flow before damage spreads. We're experienced in working with HOA management companies and understand the access protocols, insurance requirements, and documentation that multi-unit emergencies demand.\n\nBonita Springs' seasonal population surge adds another dimension to emergency plumbing. During peak season from November through April, the population in communities like Pelican Landing, Spanish Wells, and Worthington more than doubles as seasonal residents return. Homes that have been closed up for months can develop leaks, corroded fittings, and water heater failures that weren't present when the homeowner left in the spring. We see a spike in emergency calls every October and November as returning residents discover problems that developed over the summer.\n\nThe Bonita Springs area also includes properties in flood-prone zones near the Imperial River and Estero Bay. Heavy rain events and tropical storms can overwhelm drainage systems, force sewage backups, and flood lower-level plumbing. C&S maintains emergency pumping equipment and backflow prevention devices on our trucks so we can protect your home even during active weather.\n\nWhen you call 833-PLUMB-IT from Bonita Springs, you reach a live dispatcher who can have a licensed plumber at your door fast. We're a family-owned company with two active state licenses (CFC057076 and CFC1432485), full insurance, and a track record of over 8,500 homes across Southwest Florida. Emergency pricing is quoted upfront before work begins — no surprises.`,
+    features: [
+      {
+        title: "24/7 Emergency Dispatch",
+        description:
+          "Live dispatchers available around the clock — call 833-PLUMB-IT any time for Bonita Springs emergency plumbing service.",
+      },
+      {
+        title: "Condo & Multi-Unit Experience",
+        description:
+          "Trained in multi-story pipe isolations and water damage containment for Bonita Springs condo communities and HOA properties.",
+      },
+      {
+        title: "Seasonal Home Startup",
+        description:
+          "Inspect and restart plumbing systems in homes that have been closed up during off-season — catching problems before they become emergencies.",
+      },
+      {
+        title: "Flood & Storm Response",
+        description:
+          "Emergency pumping, backflow prevention, and sewer line clearing during heavy weather events in flood-prone Bonita Springs areas.",
+      },
+      {
+        title: "Upfront Emergency Pricing",
+        description:
+          "Written quotes before work begins, even on nights and weekends. No hidden overtime or after-hours surcharges.",
+      },
+    ],
+    city: "Bonita Springs",
+    state: "FL",
+    neighborhoods: BONITA_SPRINGS_NEIGHBORHOODS,
+    faqs: [
+      {
+        question: "How fast can you get to a plumbing emergency in Bonita Springs?",
+        answer:
+          "C&S Plumbing responds to Bonita Springs emergency calls with typical arrival times of 30–60 minutes depending on time of day and crew availability. We maintain truck coverage in the southern Lee County area and our dispatch line at 833-PLUMB-IT is staffed 24/7/365. Your dispatcher will give you an accurate ETA when you call.",
+      },
+      {
+        question: "Do you handle condo plumbing emergencies in Bonita Springs?",
+        answer:
+          "Yes. We regularly respond to plumbing emergencies in Bonita Springs condo and townhome communities including Pelican Landing, Worthington, and Village Walk. Our crews are experienced with multi-unit pipe isolations, vertical riser repairs, and working with HOA management companies on access, documentation, and insurance coordination. We understand the urgency of condo leaks that can affect multiple units.",
+      },
+      {
+        question: "What plumbing emergencies are most common in Bonita Springs?",
+        answer:
+          "The most frequent emergency calls we receive from Bonita Springs are water heater failures (especially in homes reopened after seasonal closure), burst supply lines in older homes, slab leaks, condo riser failures, and sewage backups during heavy rain events. Seasonal home shutoffs and startups are also a major source of emergencies when old fittings fail under renewed pressure.",
+      },
+      {
+        question: "Do you charge extra for emergency calls on nights and weekends?",
+        answer:
+          "We provide a flat diagnostic fee for all emergency calls regardless of the time or day. All repair costs are quoted in writing before we begin work, and the quoted price is the price you pay. There are no hidden overtime surcharges, holiday fees, or after-hours markups. You'll know exactly what the repair will cost before we turn a wrench.",
+      },
+      {
+        question: "Can you help with my seasonal home's plumbing when I return to Bonita Springs?",
+        answer:
+          "Absolutely. We offer seasonal startup inspections where we check all fixtures, test water heaters, inspect under sinks for leaks, run all drains, and verify the water supply is operating correctly. This service catches problems before they become emergencies and is especially valuable for homes that have been closed up for 4–6 months during the off-season. Call us before you return and we'll have your home ready.",
+      },
+      {
+        question: "Are you licensed to work in Bonita Springs?",
+        answer:
+          "Yes. C&S Plumbing holds two active Florida state plumbing contractor licenses: CFC057076 and CFC1432485. These are state-level licenses that authorize us to perform plumbing work in any Florida jurisdiction, including Bonita Springs (unincorporated Lee County). We are fully insured and bonded with 28 years of continuous operation in Southwest Florida.",
+      },
+    ],
+    relatedPages: [
+      { label: "Leak Repair Services", href: "/services/leak-repair" },
+      { label: "Bonita Springs Service Area", href: "/areas/bonita-springs" },
+      { label: "Emergency Plumber Fort Myers", href: "/emergency-plumber-fort-myers" },
+    ],
+  },
+
+  // ============================================
+  {
+    slug: "plumber-estero",
+    metaTitle: "Plumber Estero FL | Licensed & Local",
+    metaDescription:
+      "Trusted plumber in Estero, FL. Repairs, repiping, water heaters & drain cleaning. Licensed CFC1432485, 5-star rated. Call 833-PLUMB-IT for a free estimate.",
+    keywords: [
+      "plumber Estero FL",
+      "Estero plumber",
+      "plumbing service Estero Florida",
+      "licensed plumber Estero",
+      "residential plumber Estero FL",
+      "Estero plumbing repair",
+      "plumbing company Estero",
+      "affordable plumber Estero",
+      "best plumber Estero FL",
+      "local plumber Estero Florida",
+    ],
+    h1: "Your Trusted Plumber in Estero, FL",
+    heroSubtext:
+      "Estero deserves a plumber who knows the community. C&S Plumbing brings 28 years of Southwest Florida experience to every Estero home — from The Brooks to Coconut Point and everything in between.",
+    trustBadges: TRUST_BADGES,
+    serviceDescription:
+      `Estero has grown from a quiet unincorporated community into one of the most sought-after addresses in Southwest Florida. Master-planned communities like The Brooks, Miromar Lakes, Shadow Wood, and Bella Terra offer resort-style living with modern homes, but even newer construction requires expert plumbing service — and the older established neighborhoods around Estero Bay and US-41 have their own set of plumbing challenges that come with age.\n\nC&S Plumbing of Lee serves Estero homeowners with the full range of residential plumbing services: leak detection and repair, water heater replacement, drain cleaning, fixture installation, bathroom and kitchen remodel plumbing, repiping, and water softener systems. We've been working in Southwest Florida since 1998 and our familiarity with Estero's builders, developments, and water conditions means faster diagnoses and better recommendations for your specific home.\n\nHomes in Estero's newer communities were built primarily between 2000 and 2020, which means many have CPVC supply lines that are now entering the age range where joint failures become more common. The combination of Florida's heat cycling — especially in un-insulated attic pipe runs — and chemical interaction between CPVC pipe and certain fitting cements causes cracking at joints, typically starting around the 15–20 year mark. If your Estero home was built in the early 2000s and you're noticing small drips at pipe connections, it may be the beginning of a systemic CPVC issue that's best addressed proactively.\n\nEstero's water supply comes from the same regional aquifer as the rest of Lee County, which means hard water is a fact of life. We install and service whole-home water softeners that protect your pipes, water heater, and fixtures from mineral scale buildup. For homes in communities near Estero Bay, salt air exposure can also affect outdoor plumbing fixtures and hose bibs, and we stock marine-grade replacement parts that hold up better in coastal environments.\n\nWhether you need a simple faucet repair or a complex whole-home repipe, C&S Plumbing brings the same quality and professionalism to every Estero service call. We provide free written estimates, pull all necessary permits, and stand behind every job with a workmanship warranty. Call 833-PLUMB-IT to schedule service in any Estero neighborhood.`,
+    features: [
+      {
+        title: "Full-Service Residential Plumbing",
+        description:
+          "Repairs, repiping, water heaters, drain cleaning, remodel plumbing, and water softeners — everything your Estero home needs.",
+      },
+      {
+        title: "CPVC Joint Failure Experts",
+        description:
+          "Experienced with the CPVC supply line issues emerging in Estero homes built in the 2000s–2010s as joints reach their failure threshold.",
+      },
+      {
+        title: "Hard Water Solutions",
+        description:
+          "Water softener installation and service to protect your Estero home from Lee County's mineral-heavy water supply.",
+      },
+      {
+        title: "Free Written Estimates",
+        description:
+          "Detailed estimates with no service call fee for standard plumbing projects — you know the cost before we start.",
+      },
+      {
+        title: "Permit & Code Compliance",
+        description:
+          "All permitted work is filed with Lee County, inspected, and documented for your records and future home sale requirements.",
+      },
+    ],
+    city: "Estero",
+    state: "FL",
+    neighborhoods: ESTERO_NEIGHBORHOODS,
+    faqs: [
+      {
+        question: "What plumbing services do you offer in Estero?",
+        answer:
+          "C&S Plumbing provides comprehensive residential plumbing services in Estero including leak detection and repair, water heater repair and replacement (tank and tankless), drain cleaning and hydro-jetting, bathroom and kitchen remodel plumbing, whole-home repiping, water softener installation and service, fixture repair and replacement, and 24/7 emergency plumbing. We serve all Estero communities from The Brooks to Coconut Point.",
+      },
+      {
+        question: "Do you service the newer communities in Estero?",
+        answer:
+          "Yes. We service all Estero communities including The Brooks, Miromar Lakes, Shadow Wood, Bella Terra, West Bay Club, Rapallo, Coconut Point, and the older neighborhoods along US-41 and near Estero Bay. Our plumbers are familiar with the builders and piping systems used in each development, which helps us diagnose issues faster and recommend the right solutions for your specific home.",
+      },
+      {
+        question: "My Estero home is only 15 years old — can it already have pipe problems?",
+        answer:
+          "Yes. Many Estero homes built between 2000 and 2012 use CPVC supply lines, and we're seeing an increasing number of joint failures in this age range. The combination of heat cycling (especially in attic pipe runs), chemical interaction between CPVC and fitting cements, and Florida's water chemistry causes joints to crack and develop small leaks. If you're noticing drips at pipe connections, it's worth having us inspect the system before a joint fails catastrophically.",
+      },
+      {
+        question: "How hard is the water in Estero?",
+        answer:
+          "Estero's water comes from the same regional aquifer as the rest of Lee County and typically tests between 250 and 350 parts per million for hardness — well into the EPA's 'very hard' classification. Without a water softener, that mineral load causes scale buildup on fixtures, reduces water heater efficiency, and shortens the life of appliances. We recommend a whole-home softener for every Estero residence.",
+      },
+      {
+        question: "Do you offer emergency plumbing service in Estero?",
+        answer:
+          "Yes. C&S provides 24/7 emergency plumbing service in Estero. Call 833-PLUMB-IT any time and our live dispatcher will send a licensed plumber to your home. Emergency services include burst pipe repair, slab leak response, sewer backups, water heater failures, and any situation causing active water damage. We provide upfront pricing before starting any emergency repair.",
+      },
+      {
+        question: "Are you licensed and insured to work in Estero?",
+        answer:
+          "Absolutely. C&S Plumbing holds two active Florida state plumbing contractor licenses: CFC057076 and CFC1432485. These state licenses authorize us to work in any Florida jurisdiction including the Village of Estero and unincorporated Lee County. We carry full general liability insurance, workers' compensation coverage, and have been in continuous operation since 1998.",
+      },
+    ],
+    relatedPages: [
+      { label: "Residential Plumbing Services", href: "/services/residential" },
+      { label: "Estero Service Area", href: "/areas/estero" },
+      { label: "Emergency Plumber Fort Myers", href: "/emergency-plumber-fort-myers" },
+    ],
+  },
+
+  // ============================================
+  {
+    slug: "plumbing-subcontractor-swfl",
+    metaTitle: "Plumbing Subcontractor SWFL | GC Partner",
+    metaDescription:
+      "Licensed plumbing subcontractor in SWFL. 8,500+ homes, AIA pay apps, full prequalification package. CFC1432485 & CFC057076. Call 833-PLUMB-IT for GC inquiries.",
+    keywords: [
+      "plumbing subcontractor Southwest Florida",
+      "plumbing sub SWFL",
+      "commercial plumbing subcontractor Fort Myers",
+      "plumbing contractor for builders SWFL",
+      "AIA pay app plumber Florida",
+      "prequalified plumbing subcontractor",
+      "tenant improvement plumber SWFL",
+      "plumbing sub for general contractor",
+      "bonded plumbing contractor Lee County",
+      "new construction plumber Southwest Florida",
+    ],
+    h1: "Plumbing Subcontractor for General Contractors — SWFL",
+    heroSubtext:
+      "C&S Plumbing of Lee delivers prequalified, production-ready plumbing subcontract services across Southwest Florida. 8,500+ homes built. Two active CFC licenses. Full AIA billing capability.",
+    trustBadges: TRUST_BADGES,
+    serviceDescription:
+      `General contractors need plumbing subcontractors who show up on schedule, manage their own scope without hand-holding, and deliver work that passes inspection the first time. C&S Plumbing of Lee has been that partner for builders across Southwest Florida since 1998, completing plumbing on over 8,500 residential units — from single-family production homes to multi-story condominium buildings and commercial tenant improvements.\n\nOur prequalification package is ready to submit with your bid. We maintain current W-9, certificate of insurance (GL, auto, umbrella, and workers' comp), bonding capacity documentation, EMR letter from our insurer, and copies of both active Florida plumbing contractor licenses: CFC057076 and CFC1432485. For GCs who require additional documentation such as financial statements, safety plans, or trade-specific quality control procedures, we can provide those within 48 hours of request.\n\nC&S handles AIA-format billing as standard practice. We submit G702/G703 pay applications with schedule of values, process change orders through proper AIA channels (G701), and maintain detailed daily logs for progress tracking. Our project management team is experienced with GC billing portals including Procore, Textura, and BuilderTrend. We understand that your pay app deadlines don't flex, and we submit on time every month.\n\nOur scope capabilities span the full range of plumbing subcontract work: ground rough-in and underslab, top-out and stack-out, trim and fixture installation, gas piping, medical gas (if applicable), storm drainage, and specialty systems like grease interceptors and backflow preventers for commercial tenant improvements. We self-perform all work with our own crews — no sub-to-sub layering — which gives GCs direct accountability and eliminates communication gaps.\n\nFor tenant improvement and renovation projects, we bring particular value. Our residential service division gives us deep knowledge of existing building plumbing systems throughout Lee, Collier, and Charlotte counties. When a GC is renovating a restaurant space or converting an office to medical use, our familiarity with the building's original plumbing — sometimes from having built it — accelerates the TI scope and reduces unforeseen conditions.\n\nC&S Plumbing is bonded, fully insured, and maintains an EMR below 1.0. We carry $2M in general liability coverage, participate in random drug testing programs, and require all field personnel to complete OSHA-10 training. We operate across Lee, Collier, and Charlotte counties and are available for multi-phase and multi-site programs.`,
+    features: [
+      {
+        title: "Full Prequalification Package",
+        description:
+          "W-9, insurance certificates, bonding capacity, EMR letter, and dual CFC licenses ready to submit with your bid package.",
+      },
+      {
+        title: "AIA G702/G703 Pay Applications",
+        description:
+          "Standard AIA billing with schedule of values, change order processing via G701, and compatibility with Procore, Textura, and BuilderTrend.",
+      },
+      {
+        title: "8,500+ Homes Track Record",
+        description:
+          "28 years of production plumbing across Southwest Florida — from single-family homes to multi-story condominium projects.",
+      },
+      {
+        title: "Self-Performed Work",
+        description:
+          "All plumbing work performed by our own crews — no sub-to-sub layering. Direct accountability and consistent quality control.",
+      },
+      {
+        title: "Tenant Improvement Expertise",
+        description:
+          "Restaurant, medical, and office TI plumbing with deep knowledge of existing building systems across Lee, Collier, and Charlotte counties.",
+      },
+    ],
+    city: "Fort Myers",
+    state: "FL",
+    neighborhoods: FORT_MYERS_NEIGHBORHOODS,
+    faqs: [
+      {
+        question: "What prequalification documents can C&S provide?",
+        answer:
+          "Our standard prequalification package includes current W-9, certificate of insurance (general liability, auto, umbrella, and workers' compensation), bonding capacity letter, EMR letter, copies of both active CFC licenses (CFC057076 and CFC1432485), and references from current GC partners. We can also provide financial statements, safety program documentation, quality control procedures, and OSHA training records within 48 hours of request.",
+      },
+      {
+        question: "Do you handle AIA billing and pay applications?",
+        answer:
+          "Yes. AIA-format billing is our standard practice for all subcontract work. We submit G702/G703 pay applications with schedule of values, process change orders through G701, and maintain the supporting documentation your accounting department requires. We're experienced with major GC billing portals including Procore, Textura, and BuilderTrend, and we meet pay app deadlines consistently.",
+      },
+      {
+        question: "What types of projects does C&S take on as a subcontractor?",
+        answer:
+          "We handle the full scope of plumbing subcontract work: new construction residential (single-family and multi-family), commercial tenant improvements (restaurant, medical, office, retail), ground-up commercial plumbing, renovation and remodel plumbing, and multi-phase development programs. Our sweet spot is projects in the $50K–$500K plumbing scope range, though we've handled larger projects and are open to discussing any opportunity in Lee, Collier, or Charlotte counties.",
+      },
+      {
+        question: "Do you self-perform all plumbing work?",
+        answer:
+          "Yes. C&S self-performs 100 percent of our plumbing scope with our own licensed journeymen and apprentices. We do not sub out any portion of our contracted work. This gives GCs a single point of accountability, consistent quality control, and direct communication with the people doing the work. Our field supervisors are on-site daily for active projects.",
+      },
+      {
+        question: "What is your bonding capacity and insurance coverage?",
+        answer:
+          "C&S Plumbing is bondable for individual projects and aggregate programs. We carry $2M in general liability coverage, commercial auto liability, umbrella coverage, and full workers' compensation insurance. Our EMR (Experience Modification Rate) is below 1.0, reflecting our strong safety record. We can provide additional insured endorsements naming your company and project as required.",
+      },
+      {
+        question: "What geographic area do you cover for subcontract work?",
+        answer:
+          "We operate across Lee County (Fort Myers, Cape Coral, Bonita Springs, Estero, Lehigh Acres, North Fort Myers), Collier County (Naples, Marco Island, Immokalee), and Charlotte County (Punta Gorda, Port Charlotte). Our headquarters is in North Fort Myers, which provides central access to the entire Southwest Florida market. For large or multi-phase projects, we're open to discussing locations beyond our standard service area.",
+      },
+      {
+        question: "How do I request a bid from C&S for a plumbing subcontract?",
+        answer:
+          "Send your bid documents, plans, and specifications to our estimating team by calling 833-PLUMB-IT or through our builder portal. We typically return bids within 5–7 business days for standard residential and TI projects. For larger or more complex projects, we'll confirm turnaround time upon receipt. Our bids include a detailed scope letter, schedule of values, and any clarifications or exclusions — everything you need to evaluate and compare.",
+      },
+    ],
+    relatedPages: [
+      { label: "Builder Services", href: "/builders" },
+      { label: "Builder Portal", href: "/builder-portal" },
+      { label: "Commercial Plumbing Fort Myers", href: "/commercial-plumbing-fort-myers" },
+      { label: "New Construction Plumbing", href: "/new-construction-plumbing-cape-coral" },
     ],
   },
 ];

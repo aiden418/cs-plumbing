@@ -1,0 +1,37 @@
+C&S PLUMBING OF LEE COUNTY — BRAND FONTS & COLORS
+===================================================
+
+FONTS
+-----
+Primary Font: Inter (Google Fonts)
+  - Used for: All body text, headings, buttons, navigation
+  - Weights: 400 (regular), 500 (medium), 600 (semibold), 700 (bold)
+  - Headings: 700 weight, letter-spacing -0.02em, line-height 1.1
+  - Body: Regular weight, font-size 1.125rem (18px), line-height 1.7
+
+Fallback Stack: system-ui, -apple-system, sans-serif
+
+Email Font: Arial, sans-serif (for email templates)
+
+
+COLORS
+------
+Primary Blue:       #0077CC
+Primary Dark Blue:  #005FA3
+Primary Glow:       rgba(0, 119, 204, 0.12)
+
+Background:         #FFFFFF
+Surface (Light BG): #F5F5F7
+Surface Light:      #E8E8ED
+
+Body Text:          #424245
+Heading Text:       #1D1D1F
+
+Gray 100:           #F3F4F6
+Gray 300:           #D2D2D7
+Gray 500:           #86868B
+Gray 700:           #1D1D1F
+
+Emergency Red:      #FF3B30
+Success Green:      #34C759
+White:              #FFFFFF

@@ -31,6 +31,7 @@ import {
   BUILDER_SPEC_SHEETS,
   AIDEN_CONTACT,
 } from "@/lib/builders-data";
+import { BUILDER_FAQS } from "./builder-faqs";
 
 const ICON_MAP: Record<string, React.ReactNode> = {
   Hammer: <Hammer className="w-6 h-6" />,
@@ -336,6 +337,46 @@ export default function BuildersPage() {
               </motion.div>
             ))}
           </StaggerChildren>
+        </Container>
+      </section>
+
+      {/* Builder FAQ */}
+      <section className="py-16 sm:py-24 lg:py-32">
+        <Container>
+          <ScrollReveal>
+            <div className="text-center mb-10 sm:mb-16">
+              <span className="inline-block text-primary text-xs sm:text-sm font-semibold tracking-widest uppercase mb-3 sm:mb-4">
+                FAQ
+              </span>
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900">
+                Questions from Builders &amp; GCs
+              </h2>
+            </div>
+          </ScrollReveal>
+          <div className="max-w-3xl mx-auto space-y-4">
+            {BUILDER_FAQS.map((faq, i) => (
+              <details
+                key={i}
+                className="group bg-white border border-gray-200 rounded-xl overflow-hidden"
+              >
+                <summary className="flex items-center justify-between cursor-pointer px-5 sm:px-6 py-4 sm:py-5 text-left text-base sm:text-lg font-semibold text-gray-900 hover:text-primary transition-colors">
+                  <span className="pr-4">{faq.question}</span>
+                  <svg
+                    className="w-5 h-5 shrink-0 text-gray-400 group-open:rotate-180 transition-transform duration-200"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </summary>
+                <div className="px-5 sm:px-6 pb-5 sm:pb-6 text-gray-600 leading-relaxed">
+                  {faq.answer}
+                </div>
+              </details>
+            ))}
+          </div>
         </Container>
       </section>
 

@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import PageTransition from "@/components/layout/PageTransition";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
+import FaqJsonLd from "@/components/seo/FaqJsonLd";
 import BuildersPage from "./BuildersPage";
+import { BUILDER_FAQS } from "./builder-faqs";
 import { BUSINESS } from "@/lib/constants";
 
 export const metadata: Metadata = {
@@ -20,6 +22,11 @@ export const metadata: Metadata = {
     "new home plumbing contractor",
     "GC plumbing subcontractor Lee County",
     "custom home plumber Cape Coral",
+    "plumbing subcontractor SWFL",
+    "prequalified plumbing contractor",
+    "bonded plumber Lee County",
+    "AIA pay app plumber",
+    "tenant improvement plumber Fort Myers",
   ],
   openGraph: {
     title: "Builders — New Construction Plumbing Partner | C&S Plumbing of Lee",
@@ -120,6 +127,7 @@ export default function Page() {
         ]}
       />
       <BuildersJsonLd />
+      <FaqJsonLd faqs={BUILDER_FAQS} />
       <BuildersPage />
     </PageTransition>
   );
