@@ -18,7 +18,7 @@ export default function ChatWidget() {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40">
+    <div className="fixed bottom-20 right-4 sm:right-6 lg:bottom-6 z-40">
       <AnimatePresence>
         {isOpen && (
           <motion.div
