@@ -172,7 +172,7 @@ export function createOgImage({ title, eyebrow, subtitle, variant = "default" }:
               </span>
               <span style={{ fontSize: 18, color: TEXT_MUTED }}>•</span>
               <span style={{ fontSize: 18, color: TEXT_DARK, fontWeight: 600 }}>
-                {isEmergency ? "24/7 Emergency" : "5.0 stars · 75+ Reviews"}
+                {isEmergency ? "24/7 Emergency" : "5.0 stars · 46+ Reviews"}
               </span>
             </div>
           </div>
