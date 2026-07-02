@@ -6,6 +6,7 @@ import ServiceCityJsonLd from "@/components/seo/ServiceCityJsonLd";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import FaqJsonLd from "@/components/seo/FaqJsonLd";
 import CTASection from "@/components/home/CTASection";
+import GoogleReviews from "@/components/home/GoogleReviews";
 import { SERVICE_CITY_LANDINGS } from "@/lib/service-city-landings";
 
 export function generateStaticParams() {
@@ -54,6 +55,7 @@ export default async function Page({
         ]}
       />
       <ServiceCityLandingTemplate landing={landing} />
+      <GoogleReviews />
       <CTASection />
     </PageTransition>
   );

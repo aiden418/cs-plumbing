@@ -6,6 +6,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { ChevronDown, Phone, Calendar, Star } from "lucide-react";
 import Container from "@/components/ui/Container";
+import HeroVideo from "@/components/home/HeroVideo";
 import { BUSINESS } from "@/lib/constants";
 import { registerGSAP, gsap } from "@/lib/gsap";
 
@@ -75,6 +76,7 @@ export default function Hero() {
           priority
           quality={85}
         />
+        <HeroVideo />
         <div className="absolute inset-0 bg-gray-900/40" />
         <div
           className="absolute inset-0 pointer-events-none"
@@ -102,7 +104,7 @@ export default function Hero() {
                 ))}
               </div>
               <span className="text-white/90 text-xs sm:text-sm font-medium">
-                5.0 Stars · 46 Reviews
+                {BUSINESS.rating.toFixed(1)} Stars · {BUSINESS.reviewCount}+ Reviews
               </span>
             </motion.div>
 

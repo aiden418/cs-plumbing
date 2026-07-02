@@ -154,6 +154,8 @@ export interface BlogPost {
   excerpt: string;
   content: string;
   publishDate: string;
+  /** Set when a post gets a substantive refresh; feeds Article dateModified. */
+  updatedDate?: string;
   category: string;
   readTime: string;
 }

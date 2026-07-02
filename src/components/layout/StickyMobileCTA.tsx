@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Phone, Calendar } from "lucide-react";
+import { Phone, Calendar, MessageSquareText } from "lucide-react";
 import { BUSINESS } from "@/lib/constants";
+import { trackPhoneClick, trackTextClick } from "@/lib/pixel";
 
 const HIDDEN_PATHS = ["/booking", "/contact", "/quote-builder"];
 
@@ -19,18 +20,28 @@ export default function StickyMobileCTA() {
       role="region"
       aria-label="Quick contact"
     >
-      <div className="grid grid-cols-5 gap-2 p-2">
+      <div className="grid grid-cols-3 gap-2 p-2">
         <a
           href={`tel:${BUSINESS.phoneRaw}`}
-          className="col-span-3 flex items-center justify-center gap-2 h-12 rounded-xl bg-primary text-white text-sm font-bold shadow-sm active:bg-primary-dark"
+          onClick={trackPhoneClick}
+          className="flex items-center justify-center gap-1.5 h-12 rounded-xl bg-primary text-white text-sm font-bold shadow-sm active:bg-primary-dark"
           aria-label={`Call ${BUSINESS.phone}`}
         >
           <Phone className="w-4 h-4" />
-          Call Now
+          Call
+        </a>
+        <a
+          href={BUSINESS.smsHref}
+          onClick={trackTextClick}
+          className="flex items-center justify-center gap-1.5 h-12 rounded-xl border border-primary text-primary text-sm font-bold bg-white active:bg-primary/5"
+          aria-label="Text us"
+        >
+          <MessageSquareText className="w-4 h-4" />
+          Text
         </a>
         <Link
           href="/booking"
-          className="col-span-2 flex items-center justify-center gap-1.5 h-12 rounded-xl border border-primary text-primary text-sm font-bold bg-white active:bg-primary/5"
+          className="flex items-center justify-center gap-1.5 h-12 rounded-xl border border-primary text-primary text-sm font-bold bg-white active:bg-primary/5"
         >
           <Calendar className="w-4 h-4" />
           Book

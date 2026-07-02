@@ -10,7 +10,9 @@ import StaggerChildren, {
 import CityProofBlock from "@/components/areas/CityProofBlock";
 import FaqJsonLd from "@/components/seo/FaqJsonLd";
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { BUSINESS, SERVICES, TRUST_PROOF_POINTS } from "@/lib/constants";
+import { SERVICE_CITY_LANDINGS } from "@/lib/service-city-landings";
 import type { AreaLanding } from "@/lib/types";
 
 export default function AreaLandingTemplate({
@@ -144,6 +146,42 @@ export default function AreaLandingTemplate({
 
       {/* Major-project proof for this city */}
       <CityProofBlock cityName={landing.city} />
+
+      {/* Popular Service+City Pages */}
+      {(() => {
+        const cityPages = SERVICE_CITY_LANDINGS.filter(
+          (p) => p.city === landing.city
+        );
+        if (cityPages.length === 0) return null;
+        return (
+          <section className="py-16 sm:py-24 lg:py-32">
+            <Container>
+              <ScrollReveal>
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
+                  Popular Services in {landing.city}
+                </h2>
+                <p className="text-gray-500 text-base sm:text-lg mb-8 sm:mb-12 max-w-2xl">
+                  Dedicated pages with local pricing, FAQs, and details for {landing.city} homeowners.
+                </p>
+              </ScrollReveal>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+                {cityPages.map((page) => (
+                  <Link
+                    key={page.slug}
+                    href={`/${page.slug}`}
+                    className="flex items-center gap-3 bg-[#F5F5F7] rounded-xl border border-gray-200 p-4 sm:p-5 hover:border-primary/30 transition-all duration-300"
+                  >
+                    <MapPin className="w-4 h-4 text-primary flex-shrink-0" />
+                    <span className="text-sm font-medium text-gray-700">
+                      {page.h1}
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            </Container>
+          </section>
+        );
+      })()}
 
       {/* Why Choose C&S */}
       <section className="py-16 sm:py-24 lg:py-32">

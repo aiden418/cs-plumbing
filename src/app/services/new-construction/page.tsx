@@ -60,6 +60,9 @@ export const metadata: Metadata = {
     "construction plumbing contractor",
     "underground plumbing Cape Coral",
     "trim-out plumbing Fort Myers",
+    "plumbing subcontractor new construction",
+    "builder plumbing sub SWFL",
+    "new construction plumbing bid",
   ],
   openGraph: {
     title: "New Construction Plumbing | C&S Plumbing of Lee",

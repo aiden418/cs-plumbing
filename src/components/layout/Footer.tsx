@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Phone, Mail, MapPin, Clock, ChevronRight } from "lucide-react";
+import { Phone, Mail, MapPin, Clock, ChevronRight, MessageSquareText } from "lucide-react";
 import { BUSINESS, SERVICES, SERVICE_AREAS, AREA_LANDINGS } from "@/lib/constants";
 
 const quickLinks = [
@@ -10,6 +10,7 @@ const quickLinks = [
   { label: "About Us", href: "/about" },
   { label: "Services", href: "/services" },
   { label: "Gallery", href: "/gallery" },
+  { label: "Reviews", href: "/reviews" },
   { label: "Contact", href: "/contact" },
   { label: "Book a Service", href: "/booking" },
   { label: "Emergency", href: "/emergency" },
@@ -47,6 +48,13 @@ export default function Footer() {
               >
                 <Phone className="w-4 h-4 text-primary flex-shrink-0" />
                 {BUSINESS.phone}
+              </a>
+              <a
+                href={BUSINESS.smsHref}
+                className="flex items-center gap-2 text-gray-600 hover:text-primary transition-colors"
+              >
+                <MessageSquareText className="w-4 h-4 text-primary flex-shrink-0" />
+                Text us anytime
               </a>
               <a
                 href={`mailto:${BUSINESS.email}`}

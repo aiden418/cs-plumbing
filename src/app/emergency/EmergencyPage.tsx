@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Phone, AlertTriangle, Clock, Droplets, Flame, Bug, ShowerHead } from "lucide-react";
+import { Phone, AlertTriangle, Clock, Droplets, Flame, Bug, ShowerHead, MessageSquareText } from "lucide-react";
 import Container from "@/components/ui/Container";
 import PageTransition from "@/components/layout/PageTransition";
 import ScrollReveal from "@/components/animations/ScrollReveal";
@@ -72,6 +72,17 @@ export default function EmergencyPage() {
             >
               <Phone className="w-5 h-5 sm:w-6 sm:h-6" />
               Call {BUSINESS.phone}
+            </motion.a>
+
+            <motion.a
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+              href={BUSINESS.smsHref}
+              className="mt-3 sm:mt-4 flex items-center justify-center gap-2 text-sm sm:text-base font-semibold text-gray-600 hover:text-gray-900 transition-colors"
+            >
+              <MessageSquareText className="w-4 h-4" />
+              Can&apos;t talk? Text us instead
             </motion.a>
 
             <motion.div

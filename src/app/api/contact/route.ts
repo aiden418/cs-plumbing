@@ -13,10 +13,12 @@ import {
 
 const ContactSchema = z.object({
   name: z.string().min(2).max(100),
-  email: z.string().email().max(200),
+  // Optional so quick-capture sources (chat widget) can submit phone-only leads
+  email: z.string().email().max(200).optional(),
   phone: z.string().min(7).max(30),
   service: z.string().min(2).max(120),
   message: z.string().min(5).max(5000),
+  source: z.string().max(40).optional(),
   website: z.string().optional(),
 });
 
@@ -34,7 +36,7 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
-    const { name, email, phone, service, message, website } = parsed.data;
+    const { name, email, phone, service, message, source, website } = parsed.data;
 
     if (isHoneypotTripped(website)) {
       return NextResponse.json({ success: true });
@@ -50,7 +52,7 @@ export async function POST(request: Request) {
     const resend = new Resend(process.env.RESEND_API_KEY);
     const safe = {
       name: escapeHtml(name),
-      email: escapeHtml(email),
+      email: email ? escapeHtml(email) : "",
       phone: escapeHtml(phone),
       service: escapeHtml(service),
       message: escapeHtml(message),
@@ -59,8 +61,8 @@ export async function POST(request: Request) {
     await resend.emails.send({
       from: "C&S Plumbing Website <contact@csplumbinglee.com>",
       to: [ADMIN_EMAIL],
-      replyTo: email,
-      subject: `New Contact: ${service} — ${name}`,
+      ...(email ? { replyTo: email } : {}),
+      subject: `New ${source === "chat" ? "Chat Lead" : "Contact"}: ${service} — ${name}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background: #0A0A0F; padding: 20px; text-align: center;">
@@ -68,7 +70,7 @@ export async function POST(request: Request) {
           </div>
           <div style="padding: 20px; background: #f9f9f9;">
             <p><strong>Name:</strong> ${safe.name}</p>
-            <p><strong>Email:</strong> <a href="mailto:${safe.email}">${safe.email}</a></p>
+            ${safe.email ? `<p><strong>Email:</strong> <a href="mailto:${safe.email}">${safe.email}</a></p>` : ""}
             <p><strong>Phone:</strong> <a href="tel:${safe.phone}">${safe.phone}</a></p>
             <p><strong>Service:</strong> ${safe.service}</p>
             <h3 style="color: #333; border-bottom: 2px solid #0099FF; padding-bottom: 8px; margin-top: 16px;">Message</h3>

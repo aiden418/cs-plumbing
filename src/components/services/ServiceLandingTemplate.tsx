@@ -14,6 +14,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import JobGallery from "@/components/services/JobGallery";
 import AnswerBlocks from "@/components/seo/AnswerBlocks";
 import { BUSINESS, SERVICE_LANDINGS, AREA_LANDINGS } from "@/lib/constants";
+import { SERVICE_CITY_LANDINGS } from "@/lib/service-city-landings";
 import type { ServiceLanding } from "@/lib/types";
 
 export default function ServiceLandingTemplate({
@@ -284,63 +285,93 @@ export default function ServiceLandingTemplate({
       </section>
 
       {/* Internal Cross-Linking */}
-      {((landing.relatedServices && landing.relatedServices.length > 0) ||
-        (landing.relatedAreas && landing.relatedAreas.length > 0)) && (
-        <section className="py-16 sm:py-20 border-t border-gray-200">
-          <Container>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12 max-w-5xl mx-auto">
-              {landing.relatedServices && landing.relatedServices.length > 0 && (
-                <div>
-                  <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-4">
-                    Related services
-                  </h3>
-                  <ul className="space-y-2">
-                    {landing.relatedServices.map((slug) => {
-                      const target = SERVICE_LANDINGS.find((s) => s.slug === slug);
-                      if (!target) return null;
-                      return (
-                        <li key={slug}>
+      {(() => {
+        const cityPages = SERVICE_CITY_LANDINGS.filter((p) =>
+          p.slug.includes(landing.slug)
+        );
+        const hasRelatedServices = landing.relatedServices && landing.relatedServices.length > 0;
+        const hasRelatedAreas = landing.relatedAreas && landing.relatedAreas.length > 0;
+        const hasCityPages = cityPages.length > 0;
+
+        if (!hasRelatedServices && !hasRelatedAreas && !hasCityPages) return null;
+
+        return (
+          <section className="py-16 sm:py-20 border-t border-gray-200">
+            <Container>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-12 max-w-5xl mx-auto">
+                {hasRelatedServices && (
+                  <div>
+                    <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-4">
+                      Related services
+                    </h3>
+                    <ul className="space-y-2">
+                      {landing.relatedServices!.map((slug) => {
+                        const target = SERVICE_LANDINGS.find((s) => s.slug === slug);
+                        if (!target) return null;
+                        return (
+                          <li key={slug}>
+                            <Link
+                              href={`/services/${slug}`}
+                              className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-primary transition-colors"
+                            >
+                              <ArrowRight className="w-3.5 h-3.5 text-primary" />
+                              {target.title}
+                            </Link>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                )}
+                {hasRelatedAreas && (
+                  <div>
+                    <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-4">
+                      {landing.title} across SWFL
+                    </h3>
+                    <ul className="space-y-2">
+                      {landing.relatedAreas!.map((slug) => {
+                        const target = AREA_LANDINGS.find((a) => a.slug === slug);
+                        if (!target) return null;
+                        return (
+                          <li key={slug}>
+                            <Link
+                              href={`/areas/${slug}`}
+                              className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-primary transition-colors"
+                            >
+                              <MapPin className="w-3.5 h-3.5 text-primary" />
+                              {target.city}, {target.state}
+                            </Link>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                )}
+                {hasCityPages && (
+                  <div>
+                    <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-4">
+                      Get local pricing
+                    </h3>
+                    <ul className="space-y-2">
+                      {cityPages.map((page) => (
+                        <li key={page.slug}>
                           <Link
-                            href={`/services/${slug}`}
-                            className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-primary transition-colors"
-                          >
-                            <ArrowRight className="w-3.5 h-3.5 text-primary" />
-                            {target.title}
-                          </Link>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
-              )}
-              {landing.relatedAreas && landing.relatedAreas.length > 0 && (
-                <div>
-                  <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-4">
-                    {landing.title} across SWFL
-                  </h3>
-                  <ul className="space-y-2">
-                    {landing.relatedAreas.map((slug) => {
-                      const target = AREA_LANDINGS.find((a) => a.slug === slug);
-                      if (!target) return null;
-                      return (
-                        <li key={slug}>
-                          <Link
-                            href={`/areas/${slug}`}
+                            href={`/${page.slug}`}
                             className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-primary transition-colors"
                           >
                             <MapPin className="w-3.5 h-3.5 text-primary" />
-                            {target.city}, {target.state}
+                            {page.h1}
                           </Link>
                         </li>
-                      );
-                    })}
-                  </ul>
-                </div>
-              )}
-            </div>
-          </Container>
-        </section>
-      )}
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            </Container>
+          </section>
+        );
+      })()}
     </>
   );
 }

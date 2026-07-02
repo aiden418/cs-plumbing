@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ChevronDown, Phone, Calculator, Clock, Award, ShieldCheck } from "lucide-react";
+import { Menu, X, ChevronDown, Phone, Calculator, Clock, Award, ShieldCheck, MessageSquareText } from "lucide-react";
 import { NAV_LINKS, BUSINESS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
@@ -369,6 +369,13 @@ export default function Navbar() {
                 >
                   <Phone className="w-5 h-5" />
                   {BUSINESS.phone}
+                </a>
+                <a
+                  href={BUSINESS.smsHref}
+                  className="flex items-center justify-center gap-2 py-4 border-2 border-gray-200 text-gray-900 text-lg font-bold rounded-xl"
+                >
+                  <MessageSquareText className="w-5 h-5" />
+                  Text Us
                 </a>
                 <Link
                   href="/quote-builder"

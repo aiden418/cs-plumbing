@@ -10,6 +10,10 @@ export function trackPhoneClick() {
   trackEvent('Contact', { content_name: 'Phone Call', content_category: 'Lead' });
 }
 
+export function trackTextClick() {
+  trackEvent('Contact', { content_name: 'Text Message', content_category: 'Lead' });
+}
+
 export function trackContactForm() {
   trackEvent('Lead', { content_name: 'Contact Form', content_category: 'Service Request' });
 }
