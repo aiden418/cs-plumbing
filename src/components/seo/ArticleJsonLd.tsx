@@ -19,7 +19,7 @@ export default function ArticleJsonLd({ post }: { post: BlogPost }) {
     headline: post.title,
     description: post.metaDescription,
     datePublished: post.publishDate,
-    dateModified: post.publishDate,
+    dateModified: post.updatedDate ?? post.publishDate,
     image: `${BASE}${CATEGORY_IMAGES[post.category] ?? "/images/hero/drone-construction.jpg"}`,
     url: `${BASE}/blog/${post.slug}`,
     inLanguage: "en-US",

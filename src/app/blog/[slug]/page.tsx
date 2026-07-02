@@ -31,6 +31,7 @@ export async function generateMetadata({
       url: `https://www.csplumbinglee.com/blog/${post.slug}`,
       type: "article",
       publishedTime: post.publishDate,
+      modifiedTime: post.updatedDate ?? post.publishDate,
     },
   };
 }

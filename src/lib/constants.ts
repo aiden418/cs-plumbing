@@ -2688,6 +2688,146 @@ export const BLOG_POSTS: BlogPost[] = [
 <p>Don't wait until your water heater fails in August or a slab leak floods your home in the middle of rainy season. A spring plumbing checkup is the best investment you can make to avoid a summer emergency.</p>
 <p>Call <a href="tel:8337586248">833-PLUMB-IT</a> or <a href="/booking">book a spring inspection online</a>. C&S Plumbing has been keeping Southwest Florida homes running smoothly for over 28 years — we'll make sure yours is ready for whatever summer throws at it.</p>`,
   },
+  {
+    slug: "plumbing-checklist-after-hurricane-swfl",
+    title: "After the Storm: A Plumbing Damage Checklist for Southwest Florida Homeowners",
+    metaTitle: "Post-Hurricane Plumbing Checklist for SWFL Homes",
+    metaDescription:
+      "Just rode out a storm in Lee County? Walk through this post-hurricane plumbing checklist before turning your water back on. From C&S Plumbing, SWFL's storm-response veterans.",
+    keywords: ["plumbing after hurricane", "post storm plumbing checklist", "hurricane plumbing damage Florida", "when to turn water back on after hurricane", "plumber after storm Cape Coral"],
+    excerpt:
+      "You've prepped, you've ridden it out, the wind has died down. Before you turn the water back on and flush that first toilet, walk through this checklist — the hours after a storm are when hidden plumbing damage does its worst.",
+    category: "Emergency",
+    publishDate: "2026-06-24",
+    readTime: "6 min read",
+    content: `<p>Most hurricane guides stop at preparation. But in our experience responding to every major storm in Lee County since Hurricane Charley in 2004, the most expensive plumbing damage usually happens <em>after</em> the storm — when homeowners turn everything back on before checking what the storm did underground. If you haven't prepped yet, start with our <a href="/blog/hurricane-plumbing-preparation-swfl">hurricane plumbing preparation guide</a>. If the storm has already passed, work through this checklist in order.</p>
+
+<h2>1. Don't Turn the Main Water Back On Yet</h2>
+<p>If you shut off your main before the storm, leave it off until you've completed the visual checks below. Storm surge, uprooted trees, and shifting soil can crack underground supply lines — and a pressurized line with a hidden break can pump hundreds of gallons under your slab or into your walls before you notice.</p>
+
+<h2>2. Walk the Property and Look Down</h2>
+<p>Before you look at the house, look at the ground. Soggy patches or standing water in spots that usually drain, unusually green stripes of grass, or sunken trenches along the path from the meter to the house are classic signs of a broken service line. Check around the water meter box itself — if the dial is spinning with everything in the house off, water is escaping somewhere between the meter and your fixtures.</p>
+
+<h2>3. Check Vent Stacks and the Roof Line</h2>
+<p>The plumbing vents that poke through your roof keep sewer gases out of your home and let drains flow freely. High winds drive debris — and occasionally shingles — into vent openings. A blocked vent shows up as gurgling drains, slow flushing, or sewer smell inside the house. Don't climb up yourself while shingles are wet; a ground-level look with binoculars is enough to spot damage worth reporting.</p>
+
+<h2>4. Inspect the Water Heater Before Re-Energizing</h2>
+<p>If flood water reached your water heater — even a few inches — do not simply relight it or flip the breaker. Water contaminates gas valves, thermostats, and electrical components, and a damaged unit can be dangerous. Our guide on <a href="/blog/water-heater-hurricane-prep-florida">what to do with your water heater before and after a storm</a> covers this in detail, and our <a href="/water-heater-repair-cape-coral">water heater team</a> can assess whether yours is safe to restart.</p>
+
+<h2>5. Flush Toilets Once — Then Watch</h2>
+<p>Municipal sewer systems and lift stations lose power in storms, and surge can push debris into laterals. Flush each toilet once and watch: slow drainage, bubbling in other fixtures, or backflow in tubs and showers means the problem is downstream in the sewer line, and continuing to run water will put sewage on your floors. Stop and call before using more water.</p>
+
+<h2>6. Run Taps and Smell the Water</h2>
+<p>Once the main is back on, run cold taps for a few minutes. Cloudy water usually clears; a persistent sulfur or sewage smell, or grit in the stream, can mean a compromised line drawing in contamination. If your utility has issued a boil-water notice — common across <a href="/areas/cape-coral">Cape Coral</a> and <a href="/areas/fort-myers">Fort Myers</a> after major storms — follow it strictly until cleared.</p>
+
+<h2>7. Document Everything for Insurance</h2>
+<p>Photograph standing water, damaged fixtures, water lines on walls, and your meter reading before cleanup. If a plumbing failure caused interior damage, your insurer will want evidence of both the cause and the extent. Our post on <a href="/blog/slab-leak-insurance-florida">how Florida homeowners insurance treats plumbing leaks</a> explains what's typically covered and what to ask your adjuster.</p>
+
+<h2>When to Call Us</h2>
+<p>Spinning meter with the house off, sewage backing up, no water pressure, a flooded water heater, or any soggy-ground signs of a broken underground line — those are same-day calls. C&S Plumbing runs <a href="/emergency">24/7 storm-response crews</a> across Lee, Collier, and Charlotte counties, and after 28+ years of Southwest Florida storm seasons, we've triaged every one of these situations hundreds of times.</p>
+<p>Call <a href="tel:8337586248">833-PLUMB-IT</a> — or if lines are jammed after a major storm, <a href="/booking">book online</a> and dispatch will call you back in priority order.</p>`,
+  },
+  {
+    slug: "storm-surge-canal-home-plumbing-cape-coral",
+    title: "What Storm Surge Does to Canal-Home Plumbing in Cape Coral",
+    metaTitle: "Storm Surge & Canal-Home Plumbing — Cape Coral Guide",
+    metaDescription:
+      "Cape Coral's 400 miles of canals put waterfront homes at unique plumbing risk during storm surge. What saltwater flooding does to pipes, and what to check after the water recedes.",
+    keywords: ["storm surge plumbing damage", "canal home plumbing Cape Coral", "saltwater flooding pipes", "plumbing after storm surge Florida", "waterfront home plumber Cape Coral"],
+    excerpt:
+      "Four hundred miles of canals make Cape Coral a boater's paradise — and put thousands of homes within feet of storm surge. Here's what saltwater flooding actually does to a home's plumbing, from the water heater to the pipes under the slab.",
+    category: "Leak Repair",
+    publishDate: "2026-06-29",
+    readTime: "6 min read",
+    content: `<p>Cape Coral has more navigable canals than any city on earth — and that same geography means storm surge doesn't have to travel far to reach living rooms. After Hurricane Ian pushed feet of Gulf water into Southwest Florida neighborhoods in 2022, our crews spent months repairing what the saltwater left behind. Most homeowners were surprised by <em>which</em> parts of their plumbing failed. Here's what we learned, and what canal-home owners should know.</p>
+
+<h2>Saltwater Is the Slow Killer</h2>
+<p>The dramatic damage — ripped-out docks, flooded floors — is obvious. The plumbing damage is quieter. Saltwater is aggressively corrosive to the metals in your plumbing system: copper supply lines, brass valves and fittings, the anode rod and tank fittings on your water heater, and the electrical connections on every pump and appliance. A system that "works fine" the week after a surge event can start developing pinhole leaks and valve failures months later as corrosion eats through metal that was submerged.</p>
+
+<h2>What Surge Does Under the Ground</h2>
+<p>Surge doesn't just cover the ground — it saturates and moves it. Cape Coral's sandy canal-lot soil shifts when it's suddenly loaded with water, and that movement stresses the underground supply and drain lines running to your home. The result shows up weeks later as unexplained water bill spikes, damp spots in the yard, or the classic signs of a <a href="/blog/slab-leak-detection-southwest-florida">slab leak</a>. Our <a href="/leak-repair-cape-coral">Cape Coral leak repair team</a> uses acoustic detection and thermal imaging to find these failures without tearing up your floors.</p>
+
+<h2>Fixtures and Systems That Took the Water</h2>
+<p>If surge water entered your home or garage, treat these as suspect even if they appear to work:</p>
+<p><strong>Water heaters.</strong> A submerged gas valve, burner assembly, or electric element is a replacement, not a repair — moisture and salt compromise them in ways that create real safety risks. <a href="/water-heater-repair-cape-coral">Have it assessed</a> before re-energizing.</p>
+<p><strong>Outdoor and dock plumbing.</strong> Hose bibbs, outdoor showers, and dock water lines take the brunt of surge and debris. A cracked line out there can bleed pressure and money invisibly.</p>
+<p><strong>Backflow preventers and irrigation valves.</strong> Salt and sand foul the internals. If your home has a backflow assembly, it should be inspected and tested after any submersion.</p>
+
+<h2>The Polybutylene Complication</h2>
+<p>Thousands of Cape Coral homes built between 1978 and 1995 still have <a href="/blog/polybutylene-pipe-problems-cape-coral">polybutylene supply lines</a> that are already brittle with age. Soil movement from surge events is exactly the kind of stress that pushes an aging poly-B system over the edge. If your canal home still has original poly-B and just went through a surge event, a <a href="/repiping-cape-coral">repipe evaluation</a> is worth scheduling before the next season.</p>
+
+<h2>What to Do Before the Next Storm</h2>
+<p>Know where your main shutoff is and exercise it twice a year. Photograph your plumbing fixtures and water heater data plate now — it makes insurance claims dramatically easier. And if your home flooded in a past storm and you never had the plumbing inspected, get ahead of it: corrosion damage compounds quietly. Our full <a href="/blog/hurricane-plumbing-preparation-swfl">hurricane prep guide</a> covers the pre-storm checklist, and our <a href="/blog/plumbing-checklist-after-hurricane-swfl">post-storm checklist</a> covers the aftermath.</p>
+<p>C&S Plumbing has worked Cape Coral's canal neighborhoods — from Tarpon Point to Burnt Store — since 1997. Call <a href="tel:8337586248">833-PLUMB-IT</a> or <a href="/booking">book an inspection online</a>.</p>`,
+  },
+  {
+    slug: "slab-leak-insurance-florida",
+    title: "Does Homeowners Insurance Cover Slab Leaks in Florida?",
+    metaTitle: "Slab Leaks & Florida Homeowners Insurance — What's Covered",
+    metaDescription:
+      "Does Florida homeowners insurance pay for slab leak repairs? What's typically covered, what's excluded, and how to document a claim — from SWFL's slab leak specialists.",
+    keywords: ["slab leak insurance Florida", "does insurance cover slab leak", "water damage claim Florida", "slab leak coverage homeowners policy", "plumbing leak insurance claim"],
+    excerpt:
+      "The repair bill for a slab leak has two parts — fixing the pipe and fixing the damage — and Florida insurance policies usually treat them very differently. Here's how coverage typically works and how to protect your claim.",
+    category: "Leak Repair",
+    publishDate: "2026-07-01",
+    readTime: "7 min read",
+    content: `<p><em>We're plumbers, not insurance agents — every policy is different, and the only answer that counts is in your policy documents. But after helping hundreds of Southwest Florida homeowners through slab leak repairs and the claims that follow, we can tell you how this usually plays out.</em></p>
+
+<h2>The Two-Part Bill</h2>
+<p>A slab leak generates two distinct costs, and Florida policies typically treat them differently:</p>
+<p><strong>1. Fixing the pipe itself.</strong> Most standard homeowners policies treat the failed pipe as a maintenance item — wear and tear — and do <em>not</em> pay to repair or replace the plumbing. That part of the bill is usually yours.</p>
+<p><strong>2. The damage the water caused, and getting to the pipe.</strong> This is where coverage usually lives. If the leak was sudden and accidental, policies commonly cover the resulting damage — ruined flooring, drywall, cabinets — and many include coverage for the cost of tearing out and replacing the part of the slab or structure needed to access the leak. That access coverage matters enormously, because demolition and restoration are often the largest share of a slab leak bill.</p>
+
+<h2>The Words That Decide Your Claim</h2>
+<p><strong>"Sudden and accidental" vs. "constant or repeated seepage."</strong> Florida policies commonly exclude damage from leaks that seeped over weeks or months. This is why acting fast — and documenting when you discovered the leak — matters. A homeowner who calls a plumber the week they notice a warm spot on the floor is in a much stronger claim position than one who ignored a climbing water bill for six months.</p>
+<p><strong>Wear, tear, and deterioration exclusions.</strong> If the insurer determines the pipe failed from long-term corrosion, they may still cover the sudden damage while excluding the pipe repair. Some older policies also carry specific exclusions or limited water-damage caps for homes with certain pipe materials — owners of homes with <a href="/blog/polybutylene-pipe-problems-cape-coral">polybutylene plumbing</a> should read their policy carefully, as some Florida insurers require replacement of poly-B as a condition of coverage.</p>
+
+<h2>How to Protect Your Claim</h2>
+<p><strong>Act the day you suspect it.</strong> Warm floor spots, the sound of running water with fixtures off, or an unexplained bill spike — get it diagnosed immediately. Early action supports the "sudden and accidental" framing and limits the damage. Our guide to <a href="/blog/slab-leak-detection-southwest-florida">slab leak warning signs</a> covers what to look for.</p>
+<p><strong>Get professional leak detection documentation.</strong> A written diagnosis showing the leak's exact location and cause — the kind our <a href="/leak-repair-fort-myers">leak detection crews</a> produce with acoustic and thermal equipment — gives your adjuster the evidence a claim needs.</p>
+<p><strong>Photograph everything before repairs.</strong> The meter reading, the wet flooring, the moisture readings, the exposed pipe once accessed.</p>
+<p><strong>Mitigate, but don't fully repair, before the adjuster.</strong> Florida policyholders have a duty to prevent further damage — shutting off water, drying the area — but leave the full repair until you've coordinated with your insurer, or at minimum documented thoroughly.</p>
+
+<h2>When a Repipe Beats a Repair</h2>
+<p>If your home has had two or more slab or pinhole leaks, insurers take notice — some carriers non-renew policies on homes with recurring leak claims. At that point a <a href="/repiping-cape-coral">whole-home repipe</a> often costs less than the combination of repeated repairs, rising premiums, and a potential non-renewal. We'll always tell you honestly which side of that line your home is on.</p>
+
+<h2>Suspect a Slab Leak Right Now?</h2>
+<p>Shut off the main, note your meter reading, and call <a href="tel:8337586248">833-PLUMB-IT</a>. C&S Plumbing provides same-day <a href="/leak-repair-cape-coral">leak detection across Southwest Florida</a>, with written documentation you can hand straight to your adjuster.</p>`,
+  },
+  {
+    slug: "water-heater-hurricane-prep-florida",
+    title: "Should You Turn Off Your Water Heater Before a Hurricane?",
+    metaTitle: "Water Heater Hurricane Prep — Before & After the Storm",
+    metaDescription:
+      "Should you shut down your water heater before a hurricane? When to turn it off, how to do it safely for gas and electric units, and when a flooded water heater must be replaced.",
+    keywords: ["turn off water heater hurricane", "water heater flood damage", "water heater after hurricane", "hurricane prep water heater Florida", "flooded water heater replace"],
+    excerpt:
+      "It's one of the most common questions we get every June: should the water heater be shut down before a storm? Short answer — it depends on whether you're evacuating and whether flooding is possible. Here's the full answer.",
+    category: "Water Heaters",
+    publishDate: "2026-07-02",
+    readTime: "5 min read",
+    content: `<p>Every hurricane season, Southwest Florida homeowners ask us the same question: "Do I need to do anything with the water heater?" It's a smart question — the water heater is the most expensive single plumbing appliance in most homes, and it's usually installed in a garage a few inches off the floor, right where flood water goes first. Here's how we advise our own family and customers.</p>
+
+<h2>If You're Staying and Flooding Isn't Expected</h2>
+<p>Leave it running. A tank water heater full of clean water is actually an asset in a storm: your tank holds 40–80 gallons of potable water you can drain and use if the municipal supply is disrupted. Know where the drain valve at the bottom of the tank is, and keep a food-safe hose or containers on hand.</p>
+
+<h2>If You're Evacuating or Flooding Is Possible</h2>
+<p>Shut it down before you leave:</p>
+<p><strong>Electric units:</strong> flip the water heater's dedicated breaker off at the panel. If storm surge or flooding is forecast for your zone, this is essential — energized elements in a flooded tank are a hazard and guarantee component damage.</p>
+<p><strong>Gas units:</strong> turn the gas control valve to "off" (not just "pilot"). If you smell gas at any point, leave and call your gas provider from outside.</p>
+<p><strong>Both types:</strong> if you're also shutting off your home's main water supply — which we recommend for evacuations, as covered in our <a href="/blog/hurricane-plumbing-preparation-swfl">hurricane prep guide</a> — the water heater must be off too. A heater that fires with no incoming supply can overheat and damage the tank.</p>
+
+<h2>After the Storm: The Flood Line Rule</h2>
+<p>When you return, look at the unit before you restore power or gas. The rule our techs use is simple: <strong>if flood water reached the controls, the unit doesn't get re-energized until it's been professionally assessed — and if it was submerged, plan on replacement.</strong> Salt and contaminated flood water destroy gas valves, thermostats, burner assemblies, and electrical elements from the inside; a unit that "seems fine" can fail dangerously later. Manufacturers and safety agencies are consistent on this point, and so are we, even though it's not the answer anyone wants.</p>
+<p>If the water never got close, restore power or gas and give the unit a few hours. No hot water, tripping breakers, popping sounds, or moisture around fittings are all reasons to <a href="/water-heater-repair-cape-coral">have it looked at</a>.</p>
+
+<h2>Worth Considering: Elevation and Tankless</h2>
+<p>If your garage has taken water before, two upgrades are worth discussing when your current unit ages out. Raising a replacement tank on a code-compliant stand buys you protection from shallow flooding. And wall-mounted <a href="/blog/tankless-vs-traditional-water-heaters">tankless units</a> sit several feet off the floor by design — one reason they've become popular in flood-prone <a href="/areas/cape-coral">Cape Coral</a> and coastal <a href="/areas/fort-myers">Fort Myers</a> neighborhoods.</p>
+
+<h2>Need It Assessed?</h2>
+<p>Whether it's pre-season peace of mind or a post-storm evaluation, C&S Plumbing services every make of gas, electric, and tankless water heater across Southwest Florida. Call <a href="tel:8337586248">833-PLUMB-IT</a> or <a href="/booking">book online</a> — and stay safe out there this season.</p>`,
+  },
 ];
 
 // ============================================
