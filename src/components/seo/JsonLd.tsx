@@ -1,7 +1,14 @@
 import { BUSINESS } from "@/lib/constants";
+import { fetchPlaceData } from "@/lib/google-reviews";
 
-export default function JsonLd() {
+export default async function JsonLd() {
   const BASE = "https://www.csplumbinglee.com";
+
+  // Live Google rating when configured (24h-cached, deduped with the
+  // homepage reviews strip); falls back to the static constants.
+  const live = await fetchPlaceData(0);
+  const ratingValue = (live?.rating ?? BUSINESS.rating).toFixed(1);
+  const reviewCount = String(live?.total ?? BUSINESS.reviewCount);
 
   /* ── Person entities (reusable via @id) ── */
   const founder = {
@@ -232,8 +239,8 @@ export default function JsonLd() {
     /* ── Ratings & Reviews ── */
     aggregateRating: {
       "@type": "AggregateRating",
-      ratingValue: "5.0",
-      reviewCount: "46",
+      ratingValue,
+      reviewCount,
       bestRating: "5",
       worstRating: "1",
     },

@@ -1,54 +1,8 @@
-import { Star, ExternalLink } from "lucide-react";
+import Link from "next/link";
+import { Star, ExternalLink, ArrowRight } from "lucide-react";
 import Container from "@/components/ui/Container";
 import { BUSINESS } from "@/lib/constants";
-
-interface PlaceReview {
-  author_name: string;
-  rating: number;
-  text: string;
-  relative_time_description: string;
-  profile_photo_url?: string;
-}
-
-interface PlacesResponse {
-  result?: {
-    rating?: number;
-    user_ratings_total?: number;
-    reviews?: PlaceReview[];
-    url?: string;
-  };
-  status?: string;
-}
-
-async function fetchPlaceData(): Promise<{
-  rating: number;
-  total: number;
-  reviews: PlaceReview[];
-  url: string;
-} | null> {
-  const apiKey = process.env.GOOGLE_PLACES_API_KEY;
-  const placeId = process.env.GOOGLE_PLACE_ID;
-  if (!apiKey || !placeId) return null;
-  try {
-    const url = new URL("https://maps.googleapis.com/maps/api/place/details/json");
-    url.searchParams.set("place_id", placeId);
-    url.searchParams.set("fields", "rating,user_ratings_total,reviews,url");
-    url.searchParams.set("reviews_sort", "newest");
-    url.searchParams.set("key", apiKey);
-    const res = await fetch(url.toString(), { next: { revalidate: 86400 } });
-    if (!res.ok) return null;
-    const data: PlacesResponse = await res.json();
-    if (data.status !== "OK" || !data.result) return null;
-    return {
-      rating: data.result.rating ?? BUSINESS.rating,
-      total: data.result.user_ratings_total ?? BUSINESS.reviewCount,
-      reviews: (data.result.reviews ?? []).slice(0, 3),
-      url: data.result.url ?? BUSINESS.googleProfileUrl,
-    };
-  } catch {
-    return null;
-  }
-}
+import { fetchPlaceData } from "@/lib/google-reviews";
 
 function Stars({ rating, className = "w-4 h-4" }: { rating: number; className?: string }) {
   const filled = Math.round(rating);
@@ -109,15 +63,24 @@ export default async function GoogleReviews() {
             </div>
           </div>
 
-          <a
-            href={profileUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-primary text-white text-sm font-semibold hover:bg-primary-dark transition-colors"
-          >
-            Read all reviews on Google
-            <ExternalLink className="w-4 h-4" />
-          </a>
+          <div className="flex flex-col items-center sm:items-end justify-center gap-2">
+            <a
+              href={profileUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-primary text-white text-sm font-semibold hover:bg-primary-dark transition-colors"
+            >
+              Read all reviews on Google
+              <ExternalLink className="w-4 h-4" />
+            </a>
+            <Link
+              href="/reviews"
+              className="inline-flex items-center gap-1 text-sm font-medium text-gray-500 hover:text-primary transition-colors"
+            >
+              See what neighbors say
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
         </div>
 
         {live?.reviews && live.reviews.length > 0 && (
