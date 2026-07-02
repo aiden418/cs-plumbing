@@ -2697,4 +2697,610 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       { label: "New Construction Plumbing", href: "/new-construction-plumbing-cape-coral" },
     ],
   },
+
+  // ============================================
+  // UEP CONNECTION - CAPE CORAL
+  // ============================================
+  {
+    slug: "uep-connection-cape-coral",
+    metaTitle: "UEP Connection Cape Coral | Water & Sewer Hookup",
+    metaDescription:
+      "Cape Coral UEP connection specialists. Water service, sewer lateral & septic abandonment — permits handled, upfront per-foot pricing. Call 833-PLUMB-IT today.",
+    keywords: [
+      "UEP connection Cape Coral",
+      "Cape Coral UEP plumber",
+      "Utilities Extension Project Cape Coral",
+      "UEP hookup cost Cape Coral",
+      "Cape Coral city water connection",
+      "sewer lateral installation Cape Coral",
+      "septic abandonment Cape Coral UEP",
+      "North 1 UEP plumber",
+      "North 2 UEP connection",
+      "Cape Coral utilities hookup contractor",
+    ],
+    h1: "Cape Coral UEP Connection Specialists",
+    sectionHeading: "How the UEP hookup actually works in Cape Coral",
+    heroSubtext:
+      "Got your UEP notice? C&S Plumbing handles the entire customer-side connection — water service, irrigation, sewer lateral, and septic abandonment — with permits pulled and pricing quoted per foot before we dig.",
+    trustBadges: TRUST_BADGES,
+    serviceDescription:
+      `Cape Coral's Utilities Extension Project (UEP) is the largest municipal utilities expansion in Southwest Florida, and if you own a home in one of the active expansion areas, the letter from the city eventually lands in your mailbox: city water and sewer have reached your street, and you're required to connect. The city's contractors install the mains, meters, and stubs in the right-of-way — but everything from the property line to your house is on you. That customer-side connection is exactly what C&S Plumbing has specialized in through phase after phase of the UEP.\n\nThe scope is bigger than most homeowners expect. A complete UEP conversion typically means a new water service line from the city meter to your home ($13–15 per foot), an optional separate irrigation line from the irrigation meter ($9–10 per foot) so your sprinklers don't run on metered potable water, a sewer lateral from your house to the city stub ($25–33 per foot depending on distance and depth), and pump-out and code-compliant abandonment of your old septic tank (flat $2,500). Each piece needs its own permit and inspection through the City of Cape Coral, and the water connection requires you to list a licensed plumber with Cape Coral Utilities before the meter goes live. We handle all of it — permits, utility coordination, trenching, connection, testing, and final inspection.\n\nBecause we've connected homes across the completed southwest phases and the northern expansion areas, we know the practical details that make the difference: how to route a trench around mature landscaping and concrete driveways, why capping the well correctly matters if you keep it for irrigation, and how to plan the sewer lateral's grade on Cape Coral's flat lots so it drains properly for the next fifty years. The northern UEP areas — North 1, North 2, and the phases still to come around Gator Circle and the Jacaranda and Diplomat corridors — have some of the longest lot-to-main runs in the city, which makes per-foot pricing and an accurate site measurement essential before you sign anything.\n\nOne thing we tell every UEP customer upfront: the city's assessments and impact fees are billed by the city, not the plumber. Our quote covers the plumbing scope, in writing, before the first shovel hits the ground. The installation itself typically takes 1–3 days once permits are issued and your meter is set.\n\nC&S Plumbing of Lee is family-owned, based just across the river in North Fort Myers, and licensed under CFC057076 and CFC1432485. We've built and connected thousands of homes in Cape Coral's soil since 1997. If your neighborhood is in an active UEP phase — or you want to connect voluntarily before the deadline crunch — call 833-PLUMB-IT for a free on-site estimate.`,
+    features: [
+      {
+        title: "Complete Customer-Side Connection",
+        description:
+          "Water service, irrigation line, sewer lateral, and septic abandonment — one contractor, one schedule, one written quote.",
+      },
+      {
+        title: "Transparent Per-Foot Pricing",
+        description:
+          "Water $13–15/ft, irrigation $9–10/ft, sewer $25–33/ft, septic abandonment $2,500 flat. Measured on-site, quoted before work begins.",
+      },
+      {
+        title: "Permits & Utility Coordination Handled",
+        description:
+          "We pull every City of Cape Coral permit, get listed as your plumber with Cape Coral Utilities, and schedule all inspections.",
+      },
+      {
+        title: "Code-Compliant Septic Abandonment",
+        description:
+          "Tank pumped, crushed or filled per code, permitted and inspected — done right so it never comes back to haunt a home sale.",
+      },
+      {
+        title: "Yard-Conscious Trenching",
+        description:
+          "Trench routes planned around driveways, pools, trees, and irrigation, with backfill and rough grading when we're done.",
+      },
+    ],
+    city: "Cape Coral",
+    state: "FL",
+    neighborhoods: [
+      "North 1 UEP Area",
+      "North 2 UEP Area",
+      "North 3 UEP Area",
+      "Gator Circle",
+      "Jacaranda Pkwy Corridor",
+      "Diplomat Pkwy Corridor",
+      "Burnt Store Rd Corridor",
+      "NE Cape Coral",
+    ],
+    faqs: [
+      {
+        question: "Do I have to connect when the UEP reaches my Cape Coral street?",
+        answer:
+          "Yes. Once city water and sewer are available to your property, Cape Coral requires connection within the timeframe stated in your notice, and septic systems must be properly abandoned once you're on city sewer. Connecting early in your window — before every plumber in town is booked with your neighbors — almost always means better scheduling and less stress than a deadline scramble.",
+      },
+      {
+        question: "How much does a UEP connection cost in Cape Coral?",
+        answer:
+          "It depends on your lot. The plumbing side is priced per foot: water service runs $13–15/ft, irrigation $9–10/ft, and sewer lateral $25–33/ft depending on depth, plus a flat $2,500 for septic pump-out and abandonment. A typical Cape Coral lot lands in the $5,000–$10,000 range for the full scope, but corner lots and long setbacks vary — which is why we measure on-site and quote in writing for free. City assessments and impact fees are separate and billed by the city.",
+      },
+      {
+        question: "What happens to my well and septic tank after the UEP connection?",
+        answer:
+          "Your septic tank must be pumped out and abandoned per code — crushed or filled, with a permit and inspection — which we handle as part of the job. Your well is different: many Cape Coral homeowners legally keep their well for irrigation, which saves significantly on water bills. We can plumb your sprinkler system to stay on the well or connect it to the city's separate irrigation meter, whichever pencils out better for you.",
+      },
+      {
+        question: "How long does the UEP hookup take, and how torn up will my yard be?",
+        answer:
+          "The on-site work typically takes 1–3 days once permits are issued and your meter is set; permitting itself usually takes a few weeks before that. We plan trench routes around driveways, pools, and mature landscaping before digging, and we backfill and rough-grade when finished. If a run has to cross concrete, we'll tell you exactly where and what the restoration involves before you sign.",
+      },
+      {
+        question: "Can you do other plumbing work while the ground is open?",
+        answer:
+          "Yes, and it's the cheapest time to do it. While we're trenching we can add or replace shutoff valves, install a pressure regulator, add hose bibs, or address aging supply lines. Homes switching from well water to city water sometimes also want a whole-house filter or softener evaluated — city water chemistry is different from what your well was delivering.",
+      },
+      {
+        question: "Which UEP areas do you serve?",
+        answer:
+          "All of them. We've connected homes throughout the completed southwest phases and are actively working in the northern expansion areas — North 1, North 2, and the neighborhoods around Gator Circle, Jacaranda Parkway, and Del Prado Boulevard North. Wherever the city extends lines next, the customer-side process is the same, and we're based just across the bridge in North Fort Myers.",
+      },
+    ],
+    relatedPages: [
+      { label: "UEP & Utility Services", href: "/services/uep-utilities" },
+      { label: "Septic-to-Sewer in North Fort Myers", href: "/septic-to-sewer-north-fort-myers" },
+      { label: "Cape Coral Service Area", href: "/areas/cape-coral" },
+    ],
+    priceRange: "Water: $13–15/ft · Irrigation: $9–10/ft · Sewer: $25–33/ft · Septic: $2,500",
+  },
+
+  // ============================================
+  // EMERGENCY PLUMBER - NORTH FORT MYERS
+  // ============================================
+  {
+    slug: "emergency-plumber-north-fort-myers",
+    metaTitle: "Emergency Plumber North Fort Myers | 24/7 Local",
+    metaDescription:
+      "24/7 emergency plumber based in North Fort Myers, FL. Our shop is on Pondella Rd — fastest response in our home territory. Licensed. Call 833-PLUMB-IT now.",
+    keywords: [
+      "emergency plumber North Fort Myers",
+      "24 hour plumber North Fort Myers FL",
+      "burst pipe repair North Fort Myers",
+      "plumber near me North Fort Myers",
+      "after hours plumber North Fort Myers",
+      "sewage backup North Fort Myers",
+      "slab leak North Fort Myers",
+      "weekend plumber North Fort Myers",
+      "mobile home plumber North Fort Myers",
+      "emergency plumbing service North Fort Myers",
+    ],
+    h1: "Emergency Plumber in North Fort Myers, FL",
+    sectionHeading: "Emergency response from your own neighborhood",
+    heroSubtext:
+      "Our shop is at 951 Pondella Rd — when a pipe bursts in North Fort Myers, you're calling the plumber who's already here. 24/7 dispatch at 833-PLUMB-IT.",
+    trustBadges: TRUST_BADGES,
+    serviceDescription:
+      `Every plumbing company claims fast response. In North Fort Myers, C&S Plumbing can back it up with an address: our shop has been at 951 Pondella Road since the beginning. When a supply line lets go at 2 AM in Lochmoor or a sewer backs up in Suncoast Estates on a Sunday, the truck rolling to your door isn't coming across a bridge from somewhere else — it's coming from your own zip code. That's the difference between a soaked closet and a flooded living room.\n\nNorth Fort Myers is older than most of the communities around it, and its plumbing shows it. The riverfront and waterway neighborhoods off Hancock Bridge Parkway — Lochmoor, Waterway Estates, Moody River — are full of 1960s and 1970s ranch homes with original cast iron drains and copper supply lines reaching the end of their service life. Cast iron of that age fails two ways: slowly, as scale builds until the line barely drains, and suddenly, when a corroded section collapses and sewage has nowhere to go but backward. Our emergency trucks carry the cameras, no-hub couplings, and repair materials to diagnose and fix both on the first visit.\n\nThe community also has one of the largest concentrations of manufactured and mobile home communities in Lee County — Suncoast Estates, Old Bridge Village, Tamiami Village, Six Lakes, and others along the US-41 and Bayshore corridors. Mobile home plumbing is its own discipline: shallow supply lines that burst during cold snaps, polybutylene still in service under homes from the 1980s, belly-mounted drain lines with sags, and tight crawl spaces that many plumbers simply won't work in. We do, and we've handled hundreds of these calls over the years.\n\nAdd the septic factor: large portions of North Fort Myers still run on septic tanks, so what looks like a drain emergency is sometimes a septic or drainfield problem instead. Because we handle both drain work and septic-to-sewer conversions here, we can tell you honestly which one you have — and not sell you a jetting job when the real problem is a saturated drainfield, or a septic pump-out when the real problem is a collapsed cast iron line under the slab.\n\nC&S Plumbing of Lee is family-owned, licensed under CFC057076 and CFC1432485, and has served this community since 1997. When you call 833-PLUMB-IT, you reach our dispatch, not a call center, and every emergency repair is quoted in writing before work starts — at noon or at midnight.`,
+    features: [
+      {
+        title: "Home-Territory Response Times",
+        description:
+          "Headquartered on Pondella Rd, we reach most North Fort Myers emergencies in 20–30 minutes — often faster than anyone can reach anywhere else.",
+      },
+      {
+        title: "Cast Iron & Older-Home Expertise",
+        description:
+          "Camera diagnosis, spot repairs, and replacements for the aging cast iron and copper found in North Fort Myers' 1960s–70s housing stock.",
+      },
+      {
+        title: "Mobile & Manufactured Home Service",
+        description:
+          "Crawl-space supply repairs, polybutylene replacement, and drain work for Suncoast Estates, Old Bridge Village, Tamiami Village, and beyond.",
+      },
+      {
+        title: "Septic-Aware Diagnosis",
+        description:
+          "We handle drains and septic-to-sewer work, so we can tell you honestly whether the emergency is your plumbing or your septic system.",
+      },
+      {
+        title: "Upfront Emergency Pricing",
+        description:
+          "Written quotes before work begins on every call, day or night. No overtime surprises from your hometown plumber.",
+      },
+    ],
+    city: "North Fort Myers",
+    state: "FL",
+    neighborhoods: [
+      "Suncoast Estates",
+      "Lochmoor",
+      "Waterway Estates",
+      "Moody River Estates",
+      "Bayshore",
+      "Hancock Bridge",
+      "Pondella",
+      "Palmona Park",
+    ],
+    faqs: [
+      {
+        question: "How fast can you reach an emergency in North Fort Myers?",
+        answer:
+          "Faster here than anywhere — North Fort Myers is our home base. Our shop is at 951 Pondella Road, so most emergency calls in the community see a truck in 20–30 minutes. Neighborhoods off Hancock Bridge Parkway, Pondella, and Bayshore Road are often quicker than that. Call 833-PLUMB-IT and dispatch will give you a live ETA.",
+      },
+      {
+        question: "Do you handle plumbing emergencies in mobile and manufactured homes?",
+        answer:
+          "Yes — it's a big part of our North Fort Myers work. Mobile home plumbing fails differently: shallow lines burst during cold snaps, 1980s polybutylene fails without warning, and drain bellies sag under the home. Our crews work crawl spaces routinely and carry the specialty fittings manufactured-home systems need, so repairs get done in one visit.",
+      },
+      {
+        question: "My drains are backing up — is it my plumbing or my septic tank?",
+        answer:
+          "In North Fort Myers, it's a fair question, because much of the community is still on septic. A quick set of checks tells the story: if the lowest fixtures back up first and the tank hasn't been pumped in years, it's likely septic; if a single line gurgles or the cleanout shows a blockage between house and tank, it's plumbing. We diagnose both honestly — we do drain work and septic-to-sewer conversions, so we have no incentive to guess wrong.",
+      },
+      {
+        question: "What should I do while waiting for your truck?",
+        answer:
+          "Shut off the main water valve — in most North Fort Myers homes it's near the front hose bib or at the meter by the street. For a sewer backup, stop running water entirely, including the washing machine. If water is near outlets or appliances, kill the breaker to that room. Our dispatcher will walk you through all of it when you call 833-PLUMB-IT.",
+      },
+      {
+        question: "Do older North Fort Myers homes need different emergency repairs?",
+        answer:
+          "Often, yes. A 1965 ranch in Waterway Estates with original cast iron and galvanized pipe can't be patched with the same approach as a 2005 build. Corroded cast iron won't hold a standard coupling, and disturbing brittle galvanized lines can create new leaks. Our trucks carry transition fittings and no-hub couplings for older systems, and we'll tell you straight when a section is beyond spot repair.",
+      },
+      {
+        question: "Are you licensed and insured for emergency work?",
+        answer:
+          "Fully. C&S Plumbing holds two active Florida plumbing contractor licenses — CFC057076 and CFC1432485 — and is insured and bonded. We're family-owned, we've been part of this community since 1997, and you can verify both licenses on the Florida DBPR website.",
+      },
+    ],
+    relatedPages: [
+      { label: "Your North Fort Myers Plumber", href: "/north-fort-myers-plumber" },
+      { label: "Drain Cleaning in North Fort Myers", href: "/drain-cleaning-north-fort-myers" },
+      { label: "North Fort Myers Service Area", href: "/areas/north-fort-myers" },
+    ],
+  },
+
+  // ============================================
+  // WATER HEATER REPAIR - LEHIGH ACRES
+  // ============================================
+  {
+    slug: "water-heater-repair-lehigh-acres",
+    metaTitle: "Water Heater Repair Lehigh Acres | Same-Day Fix",
+    metaDescription:
+      "Water heater repair in Lehigh Acres, FL. No hot water, leaks & element failures fixed fast — well water experts. Licensed CFC1432485. Call 833-PLUMB-IT today.",
+    keywords: [
+      "water heater repair Lehigh Acres",
+      "no hot water Lehigh Acres",
+      "water heater leaking Lehigh Acres FL",
+      "water heater element replacement Lehigh Acres",
+      "hot water heater repair Lehigh Acres",
+      "tankless water heater repair Lehigh Acres",
+      "water heater replacement Lehigh Acres",
+      "well water water heater problems",
+      "water heater service Lehigh Acres Florida",
+    ],
+    h1: "Water Heater Repair in Lehigh Acres, FL",
+    sectionHeading: "Why Lehigh Acres is hard on water heaters",
+    heroSubtext:
+      "Cold shower this morning? Lehigh Acres' well water and boom-era builder heaters make this one of our busiest repair calls. Same-day service — call 833-PLUMB-IT.",
+    trustBadges: TRUST_BADGES,
+    serviceDescription:
+      `Water heaters in Lehigh Acres live a harder life than almost anywhere else in Lee County, and it comes down to what's in the water. Large portions of the community — especially along the eastern and southern edges — run on private wells drawing from an aquifer heavy in iron, sulfur, and dissolved minerals. Inside a water heater tank, that chemistry is brutal: iron and hardness minerals drop out of solution the moment the water is heated, coating the lower element in scale, burying it in sediment, and chewing through the sacrificial anode rod years ahead of schedule. When the anode is gone, the tank itself starts corroding. A heater that would last twelve years on treated city water can fail in six or seven on untreated Lehigh well water.\n\nThe second factor is age. Thousands of Lehigh Acres homes went up in the 2004–2007 building boom, and nearly all of them got the same thing: an economy builder-grade 40-gallon electric heater in the garage. Those units are now approaching twenty years old — well past their design life — and they're failing across the community in predictable ways: burned-out lower elements buried in sediment, failed thermostats, leaking drain valves, and rusted-through tank bottoms. C&S Plumbing repairs what's repairable and tells you honestly when a tank is done, because putting a $300 repair into a rusted 2005 tank is money we'd rather not take.\n\nOur repair visits start with a real diagnosis, not a sales pitch. Elements and thermostats are tested electrically, the tank is checked for sediment load and anode condition, and the T&P relief valve — the safety device most homeowners have never touched — gets inspected. Most common repairs, including element and thermostat replacement, are completed the same visit from truck stock, with repairs typically running $150–$500 quoted upfront.\n\nWhen replacement is the honest answer, we install quality tank and tankless units sized for your household, pull the Lee County permit, and haul away the old unit — replacements run $1,200–$4,500 installed. For well-water homes we'll also give you the numbers on treatment: a properly configured softener or iron filter often doubles the life of the new heater and pays for itself in avoided repairs.\n\nC&S Plumbing of Lee has serviced Lehigh Acres since 1997, from the original neighborhoods off Lee Boulevard to the newest builds off Gunnery and Sunshine. Family-owned, licensed CFC057076 and CFC1432485, and rated 5.0 on Google. If the shower's gone cold, call 833-PLUMB-IT.`,
+    features: [
+      {
+        title: "Same-Day Repair Service",
+        description:
+          "Elements, thermostats, T&P valves, and drain valves stocked on the truck — most Lehigh Acres repairs finished in one visit.",
+      },
+      {
+        title: "Well Water Expertise",
+        description:
+          "We know what iron, sulfur, and hard well water do inside a tank — and how to fix it, flush it, and slow it down with treatment.",
+      },
+      {
+        title: "Honest Repair-or-Replace Advice",
+        description:
+          "Electrical testing and tank inspection first. If a repair will hold, we do it; if the tank is done, we say so with a written replacement quote.",
+      },
+      {
+        title: "Boom-Era Heater Specialists",
+        description:
+          "Thousands of 2004–2007 builder-grade heaters are failing across Lehigh Acres. We've repaired and replaced them in every subdivision.",
+      },
+      {
+        title: "Permitted Replacements",
+        description:
+          "Tank and tankless installs with the Lee County permit pulled, code-required pan and T&P discharge done right, and the old unit hauled away.",
+      },
+    ],
+    city: "Lehigh Acres",
+    state: "FL",
+    neighborhoods: [
+      "Lehigh Acres",
+      "Mirror Lakes",
+      "Lee Blvd",
+      "Homestead Road",
+      "Joel Blvd",
+      "Gunnery Road",
+      "Sunshine Blvd",
+      "Veterans Park",
+    ],
+    faqs: [
+      {
+        question: "Why did my hot water suddenly stop working?",
+        answer:
+          "In Lehigh Acres electric heaters, the usual culprit is a failed heating element or thermostat — and on well water, it's usually the lower element, buried in sediment until it burns out. A tripped breaker or a triggered high-limit reset can also cut hot water entirely. We test each component electrically and quote the fix before touching anything; most element and thermostat repairs are done the same visit.",
+      },
+      {
+        question: "How much does water heater repair cost in Lehigh Acres?",
+        answer:
+          "Most repairs run $150–$500 depending on parts: element and thermostat replacements sit at the lower end, T&P valve and drain valve work in the middle, and combined repairs at the top. You get a written quote before work begins. If the tank itself is corroded or leaking, repair isn't an option — replacements run $1,200–$4,500 installed, permit included.",
+      },
+      {
+        question: "Is well water really that hard on water heaters?",
+        answer:
+          "Yes, measurably. Untreated Lehigh Acres well water carries iron and hardness minerals that scale onto elements, pile up as sediment, and consume the anode rod that protects the tank from rust. We regularly see six- and seven-year-old tanks on well water in worse shape than twelve-year-old tanks on treated water. Annual flushing helps; a softener or iron filter helps far more.",
+      },
+      {
+        question: "My water smells like rotten eggs but only on the hot side — why?",
+        answer:
+          "That's a classic well-water reaction between sulfur bacteria in the water and the magnesium anode rod inside the heater. The fix is usually swapping to an aluminum-zinc anode or a powered anode, sometimes with a tank sanitization. It's a common Lehigh Acres call and a same-day repair — you don't need a new water heater for this one.",
+      },
+      {
+        question: "Should I repair or replace a 2005-era builder heater?",
+        answer:
+          "Age is the deciding factor. If your heater went in during the 2004–2007 boom, it's past its design life, and a failed element is often the tank's way of announcing bigger problems. We check the anode and tank condition during diagnosis: a sound tank gets a repair, and one showing rust at the fittings or moisture in the pan gets an honest replacement recommendation — never a hard sell.",
+      },
+      {
+        question: "Do you install tankless water heaters in Lehigh Acres?",
+        answer:
+          "Yes, with one caveat we're upfront about: on untreated well water, tankless units scale up quickly and need a softener or scale-prevention system upstream to honor the warranty. Where the water treatment is right, tankless is a great fit — endless hot water and no tank to rust out in the garage. We'll size and quote both options so you can compare real numbers.",
+      },
+    ],
+    relatedPages: [
+      { label: "Your Lehigh Acres Plumber", href: "/plumber-lehigh-acres" },
+      { label: "Water Heater Services", href: "/services/water-heaters" },
+      { label: "Lehigh Acres Service Area", href: "/areas/lehigh-acres" },
+    ],
+    priceRange: "$150–$500 repair · $1,200–$4,500 replacement",
+  },
+
+  // ============================================
+  // DRAIN CLEANING - NORTH FORT MYERS
+  // ============================================
+  {
+    slug: "drain-cleaning-north-fort-myers",
+    metaTitle: "Drain Cleaning North Fort Myers | Clogs Cleared",
+    metaDescription:
+      "Drain cleaning in North Fort Myers, FL. Clogged drains, root intrusion & cast iron blockages cleared with camera diagnosis. Licensed. Call 833-PLUMB-IT today.",
+    keywords: [
+      "drain cleaning North Fort Myers",
+      "clogged drain North Fort Myers FL",
+      "sewer line cleaning North Fort Myers",
+      "hydro jetting North Fort Myers",
+      "root intrusion drain North Fort Myers",
+      "cast iron drain cleaning North Fort Myers",
+      "drain camera inspection North Fort Myers",
+      "slow drain North Fort Myers",
+      "main line clog North Fort Myers",
+    ],
+    h1: "Drain Cleaning in North Fort Myers, FL",
+    sectionHeading: "Clearing North Fort Myers drains the right way",
+    heroSubtext:
+      "Slow drains and backups in North Fort Myers usually trace to aging cast iron or hungry oak roots. We're based on Pondella Rd — camera diagnosis and honest fixes, fast.",
+    trustBadges: TRUST_BADGES,
+    serviceDescription:
+      `North Fort Myers has some of the oldest housing stock in Lee County, and its drains tell the story. The ranch homes built here through the 1960s and 1970s — in Lochmoor, Waterway Estates, along Bayshore Road and the Pondella corridor — were plumbed with cast iron drain lines that are now fifty and sixty years old. Cast iron doesn't fail overnight; it fails by degrees. Decades of scale build-up narrow a 3-inch line to the diameter of a garden hose, grease and soap catch on the rough interior walls, and eventually the kitchen sink that always drained \"a little slow\" stops draining at all. Snaking that line punches a hole through the clog; it doesn't fix the pipe. That's why every C&S drain call includes the option of a camera inspection — so you can see exactly what your line looks like inside and decide with real information.\n\nThe second big culprit in North Fort Myers is roots. This community grew up under mature live oaks, ficus, and melaleuca, and their roots find every joint in an aging drain line, especially where older homes still connect to septic tanks through clay or early-generation pipe. Root intrusion starts as an occasional gurgle and ends as a mainline backup on a holiday weekend. Depending on severity, we clear roots mechanically with a root-cutting head, or hydro jet the line — high-pressure water that scours roots, grease, and scale off the pipe walls rather than just drilling through the blockage.\n\nBecause much of North Fort Myers still runs on septic, we diagnose before we clear. A backup at the lowest fixtures with a full septic tank is not a drain problem, and jetting won't fix it. We handle both sides of that line — drain cleaning and septic-to-sewer conversions are core services for us in this community — so you get a straight answer about which problem you actually have, not the service that happens to be on the truck.\n\nMobile and manufactured home communities along US-41 and Bayshore get special mention: their drain systems run shallow, with long horizontal runs and sags (\"bellies\") that collect standing water and debris. We clear and camera these lines routinely, and we know how to work under a manufactured home without turning a drain call into a demolition project.\n\nC&S Plumbing of Lee has been headquartered at 951 Pondella Road since 1997 — this is our home turf. Licensed CFC057076 and CFC1432485, family-owned, upfront flat-rate pricing quoted before we start. Call 833-PLUMB-IT and let's get it flowing.`,
+    features: [
+      {
+        title: "Camera-First Diagnosis",
+        description:
+          "See inside your line before deciding anything. Video inspection shows whether you need a simple clearing, a jetting, or a repair.",
+      },
+      {
+        title: "Hydro Jetting",
+        description:
+          "High-pressure water scours grease, scale, and roots off the pipe walls — a real cleaning, not just a hole punched through the clog.",
+      },
+      {
+        title: "Cast Iron Specialists",
+        description:
+          "Decades of experience with the aging cast iron under North Fort Myers' 1960s–70s homes, including spot repair and replacement when clearing isn't enough.",
+      },
+      {
+        title: "Root Intrusion Removal",
+        description:
+          "Mechanical root cutting and jetting for oak and ficus roots, with camera verification and honest advice on whether the line needs repair.",
+      },
+      {
+        title: "Septic-Smart Service",
+        description:
+          "On septic? We check that first. No point paying for a drain cleaning when the real problem is a tank that needs pumping.",
+      },
+    ],
+    city: "North Fort Myers",
+    state: "FL",
+    neighborhoods: [
+      "Lochmoor",
+      "Waterway Estates",
+      "Bayshore",
+      "Pondella",
+      "Hancock Bridge",
+      "Suncoast Estates",
+      "Palmona Park",
+      "Tropicana",
+    ],
+    faqs: [
+      {
+        question: "How much does drain cleaning cost in North Fort Myers?",
+        answer:
+          "Straightforward fixture clogs — a kitchen sink, tub, or single toilet — are our most affordable calls, quoted flat-rate upfront. Mainline clearings cost more, and hydro jetting more still, depending on line length and severity. We quote in writing before starting, and if a camera inspection reveals the line needs repair rather than another cleaning, we'll show you the footage and price both options honestly.",
+      },
+      {
+        question: "Why do my drains keep clogging every few months?",
+        answer:
+          "Recurring clogs are a symptom, not bad luck. In North Fort Myers the usual causes are scale-choked cast iron that catches everything passing through, roots re-growing into a joint, or a belly in the line holding standing water. A camera inspection finds which one you have. Repeatedly paying for snaking is the most expensive way to manage a line that needs jetting or a spot repair.",
+      },
+      {
+        question: "Is hydro jetting safe for old cast iron pipes?",
+        answer:
+          "Usually yes, with judgment applied. We camera the line first — sound cast iron with heavy scale is a perfect jetting candidate, and clearing the scale extends its life. But if the pipe bottom is rotted through (common in 60-year-old lines), jetting can finish what corrosion started. That's exactly why we inspect before we jet, and why we'll show you the video either way.",
+      },
+      {
+        question: "Tree roots keep getting into my sewer line — can you fix it permanently?",
+        answer:
+          "Clearing roots restores flow; keeping them out takes more. Options range from scheduled maintenance cuttings, to spot-repairing the joint the roots are entering through, to replacing the compromised run. After clearing, we camera the line and mark exactly where the intrusion is, so you know the location and cost of a permanent fix before deciding.",
+      },
+      {
+        question: "My whole house is backing up — drain problem or septic problem?",
+        answer:
+          "In North Fort Myers, check septic first. If the lowest drains back up when you run water anywhere, and the tank hasn't been pumped in 3–5 years, the tank or drainfield is the likely culprit. If one branch of the house gurgles while others run fine, it's a drain blockage. We diagnose both honestly — and if your street has sewer available, we can also talk about converting off septic entirely.",
+      },
+    ],
+    relatedPages: [
+      { label: "Emergency Plumber North Fort Myers", href: "/emergency-plumber-north-fort-myers" },
+      { label: "Septic-to-Sewer Conversion", href: "/septic-to-sewer-north-fort-myers" },
+      { label: "Drain Cleaning Services", href: "/services/drain-cleaning" },
+    ],
+  },
+
+  // ============================================
+  // EMERGENCY PLUMBER - NAPLES
+  // ============================================
+  {
+    slug: "emergency-plumber-naples",
+    metaTitle: "Emergency Plumber Naples FL | 24/7 Response",
+    metaDescription:
+      "24/7 emergency plumber in Naples, FL. Burst pipes, slab leaks & seasonal-home water damage. Licensed CFC1432485, 5-star rated. Call 833-PLUMB-IT for fast help.",
+    keywords: [
+      "emergency plumber Naples",
+      "24 hour plumber Naples FL",
+      "burst pipe repair Naples",
+      "slab leak emergency Naples",
+      "after hours plumber Naples",
+      "emergency plumbing Naples Florida",
+      "water leak seasonal home Naples",
+      "condo plumbing emergency Naples",
+      "weekend plumber Naples FL",
+    ],
+    h1: "Emergency Plumber in Naples, FL",
+    sectionHeading: "How we handle plumbing emergencies in Naples",
+    heroSubtext:
+      "In a Naples home, a burst pipe doesn't just soak drywall — it soaks marble, hardwood, and art. C&S dispatches licensed emergency crews to Collier County 24/7. Call 833-PLUMB-IT.",
+    trustBadges: TRUST_BADGES,
+    serviceDescription:
+      `Plumbing emergencies in Naples carry higher stakes than almost anywhere in Southwest Florida, for a simple reason: what the water lands on. A supply line failure that would cost a few thousand dollars in drywall elsewhere can destroy stone floors, custom millwork, and irreplaceable furnishings in a Port Royal or Park Shore home. Speed matters everywhere; in Naples it's the whole game. C&S Plumbing dispatches emergency crews into Collier County 24/7, and our dispatcher will walk you through stopping the water — finding the main shutoff, killing the water heater breaker — the moment you call 833-PLUMB-IT, before our truck is even loaded.\n\nNaples has a plumbing risk profile all its own. Start with seasonality: a large share of homes here sit empty from May through November, and an unattended pinhole leak has months to work. Some of the worst damage we see isn't from dramatic pipe bursts but from slow failures discovered when the owner returns in season — a corroded supply stop weeping into a vanity for eight weeks, or a failed water heater flooding a garage in week two of a six-month absence. When a neighbor, house watcher, or smart leak detector raises the alarm, we can respond, stop the source, document everything for insurance, and coordinate with your property manager even when you're a thousand miles away.\n\nThe housing stock cuts both ways too. Old Naples and the neighborhoods along Gulf Shore Boulevard hold homes from the 1960s and earlier with original copper and cast iron reaching end of life, while high-rise and mid-rise condos from Pelican Bay to Park Shore add the complication of shared risers, unit shutoffs, and HOA notification requirements — an emergency in a sixth-floor unit is also an emergency for the five floors below. We work cleanly in occupied luxury units, coordinate with building management, and document to the standard that Collier County associations and insurers expect.\n\nHurricane season brings the rest: post-storm municipal water advisories, backflow issues, and the surge-related damage this coastline knows too well. C&S has responded to every major storm event in Southwest Florida since 2004.\n\nC&S Plumbing of Lee is family-owned, has built and serviced more than 8,500 homes across Southwest Florida since 1997, and holds two active state licenses (CFC057076 and CFC1432485). When water is going where it shouldn't in Naples, call 833-PLUMB-IT — quotes in writing before work begins, even at 3 AM.`,
+    features: [
+      {
+        title: "24/7 Collier County Dispatch",
+        description:
+          "Emergency crews dispatched to Naples around the clock, with phone guidance to stop the water while the truck is en route.",
+      },
+      {
+        title: "Seasonal & Absent-Owner Response",
+        description:
+          "We work with house watchers, property managers, and leak-detection alerts to handle emergencies while you're out of state — with full photo documentation.",
+      },
+      {
+        title: "Condo & HOA Coordination",
+        description:
+          "Shared risers, unit shutoffs, building notifications — we know how Naples condo emergencies work and keep management in the loop.",
+      },
+      {
+        title: "Finish-Conscious Repairs",
+        description:
+          "Emergency work done with the care a luxury interior demands: floor protection, clean access cuts, and repairs that respect the finishes around them.",
+      },
+      {
+        title: "Insurance-Grade Documentation",
+        description:
+          "Photos, moisture readings, and detailed invoices that make claims straightforward — and adjuster questions easy to answer.",
+      },
+    ],
+    city: "Naples",
+    state: "FL",
+    neighborhoods: NAPLES_NEIGHBORHOODS,
+    faqs: [
+      {
+        question: "How quickly can you respond to a plumbing emergency in Naples?",
+        answer:
+          "We dispatch to Naples 24/7 and prioritize active-water emergencies. Response time depends on where crews are working in Collier County when you call — our dispatcher gives you a live ETA and, more importantly, walks you through shutting off the water immediately, which is what actually limits the damage in the first hour.",
+      },
+      {
+        question: "A leak started while I'm away for the summer — can you handle it without me there?",
+        answer:
+          "Yes, this is one of our most common Naples calls. We coordinate access with your house watcher, property manager, or neighbor, stop the source, photograph and document everything for your insurer, and walk you through findings by phone or video before any repair work is authorized. You stay in control without getting on a plane.",
+      },
+      {
+        question: "How do I prevent plumbing disasters in a seasonal Naples home?",
+        answer:
+          "Three things, in order of impact: shut off the main water supply when you leave for the season (and the water heater breaker with it), have someone physically check the home every week or two, and consider a smart leak detector with automatic shutoff. We can install an automatic shutoff valve and walk your house watcher through the system before you head north.",
+      },
+      {
+        question: "Can you handle emergencies in Naples high-rise condos?",
+        answer:
+          "Yes. Condo emergencies add layers — locating the unit shutoff versus the riser shutoff, notifying building management, and protecting the units below. We work in occupied luxury buildings regularly, coordinate with management and the association's requirements, and document the source and scope carefully, since condo claims often involve multiple insurers.",
+      },
+      {
+        question: "Do you charge more for nights and weekends in Naples?",
+        answer:
+          "We charge a flat emergency diagnostic fee regardless of the hour, and every repair is quoted in writing before work begins. No hidden overtime multipliers. The price we quote at 2 AM is the same price we'd quote at 2 PM.",
+      },
+      {
+        question: "Are you licensed to work in Collier County?",
+        answer:
+          "Yes. Our Florida state plumbing contractor licenses (CFC057076 and CFC1432485) cover work throughout the state, including all of Collier County. We're fully insured, family-owned since 1997, and experienced with the permitting and HOA documentation requirements common in Naples communities.",
+      },
+    ],
+    relatedPages: [
+      { label: "Repiping in Naples", href: "/repiping-naples" },
+      { label: "Remodel Plumbing in Naples", href: "/remodel-plumbing-naples" },
+      { label: "Naples Service Area", href: "/areas/naples" },
+    ],
+  },
+
+  // ============================================
+  // REPIPING - PUNTA GORDA
+  // ============================================
+  {
+    slug: "repiping-punta-gorda",
+    metaTitle: "Repiping Punta Gorda | Whole-Home Pipe Replacement",
+    metaDescription:
+      "Whole-home repiping in Punta Gorda, FL from $4,000. Replace polybutylene & pinhole-leaking copper. Licensed CFC1432485. Free estimates — call 833-PLUMB-IT.",
+    keywords: [
+      "repiping Punta Gorda",
+      "whole house repipe Punta Gorda FL",
+      "polybutylene replacement Punta Gorda",
+      "copper pinhole leaks Punta Gorda",
+      "repipe cost Punta Gorda",
+      "PEX repiping Punta Gorda",
+      "pipe replacement Punta Gorda Isles",
+      "repipe specialist Charlotte County",
+      "Punta Gorda plumber repiping",
+    ],
+    h1: "Whole-Home Repiping in Punta Gorda, FL",
+    sectionHeading: "When a Punta Gorda home is ready for new pipes",
+    heroSubtext:
+      "If your Punta Gorda home predates Hurricane Charley, its pipes are living on borrowed time. C&S repipes homes in 2–4 days with walls patched and water back on every night.",
+    trustBadges: TRUST_BADGES,
+    serviceDescription:
+      `Punta Gorda's housing stock splits cleanly at August 13, 2004 — the day Hurricane Charley came ashore. Homes built or substantially rebuilt after Charley generally carry modern CPVC or PEX supply lines with decades of life left. But the homes that rode out the storm — the waterfront properties in Punta Gorda Isles and Burnt Store Isles from the 1970s and 80s, the mid-century houses around the Historic District, the ranches in Charlotte Park and Solana — still carry their original piping, and that's where our repiping crews spend their time.\n\nTwo materials drive most Punta Gorda repipes. The first is copper from the 1970s and 80s, which develops pinhole leaks as Southwest Florida's aggressive water chemistry thins the pipe walls from the inside. Pinholes rarely come alone: the first one behind a bathroom wall means the whole system has reached the same age and condition, and insurers know it — many now surcharge or decline homes with a history of copper leaks. The second is polybutylene, the gray plastic pipe installed widely from 1978 to 1995, which fails suddenly and catastrophically enough that it was the subject of one of the largest class-action settlements in U.S. history. If your Punta Gorda home has poly, no repair makes it trustworthy; replacement is the fix.\n\nA whole-home repipe sounds invasive, but a practiced crew makes it routine. We run new PEX or CPVC through the attic and down the walls, cutting small, precise access openings rather than tearing out walls, and we keep your water on every night of the job. Most single-family Punta Gorda homes take two to four days, including drywall patching, at $4,000–$12,000 depending on size and fixture count. Every repipe is permitted through Charlotte County (or the City of Punta Gorda, where applicable) and inspected — no shortcuts, because the whole point of a repipe is never thinking about your pipes again.\n\nWaterfront homes in PGI and BSI deserve a specific note: the combination of salt air, canal-side humidity, and slab-on-grade construction makes under-slab supply repairs especially miserable, and a repipe that reroutes lines overhead removes the slab from the equation entirely. It's also the natural moment to add a whole-home shutoff, replace crusty angle stops, and bring hose bibs up to code.\n\nC&S Plumbing of Lee has replaced piping in homes across Charlotte, Lee, and Collier counties since 1997 — over 8,500 homes built and serviced. Family-owned, licensed CFC057076 and CFC1432485, free in-home estimates. Call 833-PLUMB-IT before the next pinhole finds your drywall.`,
+    features: [
+      {
+        title: "2–4 Day Completion",
+        description:
+          "Most Punta Gorda single-family homes repiped, patched, and inspected within four days — with water restored every evening.",
+      },
+      {
+        title: "Polybutylene Replacement",
+        description:
+          "Complete removal of failure-prone gray poly pipe from 1978–1995 homes, replaced with PEX backed by a manufacturer warranty.",
+      },
+      {
+        title: "Copper Pinhole Solutions",
+        description:
+          "When pinholes start, patching is a treadmill. We replace the whole thinning system so you and your insurer can stop worrying.",
+      },
+      {
+        title: "Slab-Bypass Routing",
+        description:
+          "New lines routed overhead through attic and walls — under-slab leaks in PGI's slab-on-grade waterfront homes become a thing of the past.",
+      },
+      {
+        title: "Permits, Patching & Cleanup Included",
+        description:
+          "Charlotte County permits and inspections handled, access openings drywall-patched, and the house left clean.",
+      },
+    ],
+    city: "Punta Gorda",
+    state: "FL",
+    neighborhoods: PUNTA_GORDA_NEIGHBORHOODS,
+    faqs: [
+      {
+        question: "How much does it cost to repipe a house in Punta Gorda?",
+        answer:
+          "Most Punta Gorda repipes run $4,000–$12,000. The main cost drivers are square footage, number of bathrooms and fixtures, one story versus two, and material choice (PEX versus CPVC). Waterfront homes in Punta Gorda Isles with three baths land higher in the range than a two-bath ranch in Charlotte Park. We provide free in-home estimates with a firm written price — not a per-hour guess.",
+      },
+      {
+        question: "How do I know if my Punta Gorda home has polybutylene pipe?",
+        answer:
+          "Check where supply lines are visible — at the water heater, under sinks, or in the garage. Polybutylene is usually gray (sometimes blue or black), flexible plastic, often stamped \"PB2110.\" It was installed roughly 1978–1995, which covers a large share of pre-Charley Punta Gorda construction. If you're unsure, we'll identify it at no charge during an estimate visit.",
+      },
+      {
+        question: "Will a repipe destroy my walls?",
+        answer:
+          "No — that's the biggest misconception about repiping. We route new lines through the attic and down wall cavities, making small access cuts only where connections require them, typically behind fixtures. Every opening is drywall-patched as part of the job, ready for paint. Tile and stone walls get special planning so finished surfaces stay intact.",
+      },
+      {
+        question: "My insurance company is asking about my pipes — will a repipe help?",
+        answer:
+          "Very often, yes. Florida insurers increasingly surcharge, exclude water damage, or decline coverage on homes with polybutylene or leak-history copper. A permitted, inspected repipe with documentation resolves the underwriting issue, and many Punta Gorda homeowners find the premium reduction offsets a meaningful part of the project cost. We provide the permit records and material documentation your carrier asks for.",
+      },
+      {
+        question: "Is PEX or CPVC better for a Punta Gorda repipe?",
+        answer:
+          "We install both, and for most Punta Gorda homes we recommend PEX: fewer fittings (fewer potential leak points), flexibility that handles thermal movement in hot attics, and quiet operation. CPVC remains a solid, code-approved choice some homeowners prefer. We'll walk you through the trade-offs for your specific house rather than pushing one answer.",
+      },
+      {
+        question: "Do I need a permit to repipe in Punta Gorda?",
+        answer:
+          "Yes — whole-home repiping requires a plumbing permit and inspections, through the City of Punta Gorda or Charlotte County depending on your address. We pull the permit, schedule the inspections, and close it out as part of every job. A permitted repipe also protects you at resale, since unpermitted plumbing work is a red flag on inspection reports.",
+      },
+    ],
+    relatedPages: [
+      { label: "Emergency Plumber Punta Gorda", href: "/emergency-plumber-punta-gorda" },
+      { label: "Water Heater Replacement Punta Gorda", href: "/water-heater-replacement-punta-gorda" },
+      { label: "Repiping Services", href: "/services/repiping" },
+    ],
+    priceRange: "$4,000–$12,000",
+  },
 ];
