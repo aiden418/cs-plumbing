@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageCircle, X, Send, Phone } from "lucide-react";
+import { MessageCircle, X, Send, Phone, MessageSquareText } from "lucide-react";
 import { BUSINESS } from "@/lib/constants";
+import { trackPhoneClick, trackTextClick } from "@/lib/pixel";
 
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
@@ -85,10 +86,19 @@ export default function ChatWidget() {
               <div className="mt-auto space-y-1.5 sm:space-y-2">
                 <a
                   href={`tel:${BUSINESS.phoneRaw}`}
+                  onClick={trackPhoneClick}
                   className="flex items-center gap-2 w-full p-2.5 sm:p-3 rounded-xl bg-primary/10 text-primary text-xs sm:text-sm font-medium hover:bg-primary/20 transition-colors"
                 >
                   <Phone className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                   Call {BUSINESS.phone}
+                </a>
+                <a
+                  href={BUSINESS.smsHref}
+                  onClick={trackTextClick}
+                  className="flex items-center gap-2 w-full p-2.5 sm:p-3 rounded-xl border border-gray-200 text-gray-600 text-xs sm:text-sm font-medium hover:border-primary/30 hover:text-gray-900 transition-all"
+                >
+                  <MessageSquareText className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                  Text Us
                 </a>
                 <a
                   href="/booking"

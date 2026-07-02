@@ -9,6 +9,9 @@ export const BUSINESS = {
   fullName: "C&S Plumbing of Lee",
   phone: "833-PLUMB-IT",
   phoneRaw: "8337586248",
+  // "?&body=" works on both iOS and Android
+  smsHref:
+    "sms:+18337586248?&body=Hi%20C%26S%20Plumbing%2C%20I%20need%20help%20with%20",
   email: "office@csplumbinglee.com",
   address: "951 Pondella Rd",
   city: "North Fort Myers",
