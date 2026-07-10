@@ -84,11 +84,12 @@ export default function ContactPage() {
   const onSubmit = async (data: ContactForm) => {
     setSubmitting(true);
     try {
-      await fetch("/api/contact", {
+      const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
+      if (!res.ok) throw new Error("Submission failed");
       trackContactForm();
       setSubmitted(true);
     } catch {
