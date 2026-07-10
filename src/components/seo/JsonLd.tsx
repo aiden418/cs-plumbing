@@ -72,7 +72,7 @@ export default async function JsonLd() {
     name: "C&S Plumbing of Lee",
     alternateName: "C&S Plumbing",
     url: BASE,
-    logo: `${BASE}/images/logos/logo-new.png`,
+    logo: `${BASE}/images/logos/logo-512.png`,
     image: `${BASE}/images/hero/drone-construction.jpg`,
     telephone: `+1${BUSINESS.phoneRaw}`,
     email: "office@csplumbinglee.com",

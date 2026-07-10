@@ -52,6 +52,7 @@ const galleryItems: GalleryItem[] = [
   { id: "34", src: "/images/gallery/underground-water-tank.jpg", alt: "Underground water tank installation", category: "commercial", title: "Underground Water Tank Installation" },
   { id: "35", src: "/images/gallery/backflow-preventer-meter.jpg", alt: "Backflow preventer and meter assembly", category: "commercial", title: "Backflow Preventer & Meter Assembly" },
   { id: "36", src: "/images/gallery/exterior-hose-bib.jpg", alt: "Exterior hose bib installation", category: "commercial", title: "Exterior Hose Bib Installation" },
+  { id: "64", src: "/images/gallery/prerinse-faucet-three-compartment-sink.jpg", alt: "Pre-rinse spray faucet installed at a commercial three-compartment sink", category: "commercial", title: "Pre-Rinse Faucet — Three-Compartment Sink" },
 
   // New Construction
   { id: "37", src: "/images/gallery/new-construction-underground.jpg", alt: "New construction underground plumbing", category: "new-construction", title: "New Construction Underground Plumbing" },

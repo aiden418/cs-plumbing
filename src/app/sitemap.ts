@@ -7,7 +7,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   // Bump when a real content pass ships. A blanket `new Date()` told Google
   // the whole site changed on every deploy, which trains it to ignore lastmod.
-  const LAST_CONTENT_PASS = new Date("2026-07-02");
+  const LAST_CONTENT_PASS = new Date("2026-07-10");
 
   const blogPages = BLOG_POSTS.map((post) => ({
     url: `${baseUrl}/blog/${post.slug}`,

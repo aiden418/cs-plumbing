@@ -62,7 +62,7 @@ export default function QuoteResult({
   const handleSubmit = async () => {
     setSubmitting(true);
     try {
-      await fetch("/api/quote", {
+      const res = await fetch("/api/quote", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -72,6 +72,7 @@ export default function QuoteResult({
           lead,
         }),
       });
+      if (!res.ok) throw new Error("Submission failed");
       trackQuoteBuilder();
       setSubmitted(true);
     } catch {

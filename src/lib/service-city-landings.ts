@@ -84,12 +84,46 @@ const ESTERO_NEIGHBORHOODS = [
   "Rapallo",
 ];
 
+const SANIBEL_NEIGHBORHOODS = [
+  "East End",
+  "West Gulf Drive",
+  "Gulf Pines",
+  "The Dunes",
+  "Shell Harbor",
+  "Sanibel Bayous",
+  "Beachview",
+  "Captiva",
+];
+
+const LEHIGH_ACRES_NEIGHBORHOODS = [
+  "Lehigh Acres",
+  "Mirror Lakes",
+  "Sunshine Blvd",
+  "Lee Blvd",
+  "Homestead Road",
+  "Joel Blvd",
+  "Gunnery Road",
+  "Veterans Park",
+];
+
+const NORTH_FORT_MYERS_NEIGHBORHOODS = [
+  "North Fort Myers",
+  "Bayshore",
+  "Pine Island Road",
+  "Hancock Bridge",
+  "Lochmoor",
+  "Waterway Estates",
+  "Suncoast Estates",
+  "Del Tura",
+];
+
 export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
   // ============================================
   // 1. EMERGENCY PLUMBER - CAPE CORAL
   // ============================================
   {
     slug: "emergency-plumber-cape-coral",
+    serviceSlug: "emergency",
     metaTitle: "Emergency Plumber Cape Coral | 24/7 Service",
     metaDescription:
       "24/7 emergency plumber in Cape Coral, FL. Burst pipes, slab leaks & flooding repair. Licensed CFC1432485, 5-star rated. Call 833-PLUMB-IT now for fast response.",
@@ -186,6 +220,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
   // ============================================
   {
     slug: "emergency-plumber-fort-myers",
+    serviceSlug: "emergency",
     metaTitle: "Emergency Plumber Fort Myers | 24/7 Repairs",
     metaDescription:
       "24/7 emergency plumber in Fort Myers, FL. Fast response for burst pipes, sewer backups & slab leaks. Licensed, 5-star rated. Call 833-PLUMB-IT for immediate help.",
@@ -282,6 +317,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
   // ============================================
   {
     slug: "repiping-cape-coral",
+    serviceSlug: "repiping",
     metaTitle: "Repiping Cape Coral | Whole-Home Pipe Replacement",
     metaDescription:
       "Cape Coral whole-home repiping from $4,000. Replace polybutylene & corroded copper pipes. 8,500+ homes completed. Licensed CFC1432485. Free estimates — call today.",
@@ -482,9 +518,9 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       },
     ],
     relatedPages: [
-      { label: "Emergency Plumber Fort Myers", href: "/emergency-plumber-fort-myers" },
+      { label: "Emergency Plumber in North Fort Myers", href: "/emergency-plumber-north-fort-myers" },
+      { label: "Repiping in North Fort Myers", href: "/repiping-north-fort-myers" },
       { label: "North Fort Myers Service Area", href: "/areas/north-fort-myers" },
-      { label: "Repiping Services", href: "/services/repiping" },
     ],
   },
 
@@ -493,6 +529,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
   // ============================================
   {
     slug: "water-damage-repair-cape-coral",
+    serviceSlug: "leak-repair",
     metaTitle: "Water Damage Repair Cape Coral | Plumbing Experts",
     metaDescription:
       "Plumbing-caused water damage repair in Cape Coral, FL. Slab leaks, burst pipes & pipe corrosion fixed at the source. Licensed CFC1432485. Call 833-PLUMB-IT now.",
@@ -589,6 +626,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
   // ============================================
   {
     slug: "repiping-fort-myers",
+    serviceSlug: "repiping",
     metaTitle: "Repiping Fort Myers | Pipe Replacement Experts",
     metaDescription:
       "Fort Myers whole-home repiping from $4,000. Galvanized, cast iron & poly-B replacement. 28 years experience, 5-star rated. Call 833-PLUMB-IT for a free estimate.",
@@ -691,6 +729,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
   // ============================================
   {
     slug: "drain-cleaning-cape-coral",
+    serviceSlug: "drain-cleaning",
     metaTitle: "Drain Cleaning Cape Coral | Fast & Affordable",
     metaDescription:
       "Professional drain cleaning in Cape Coral, FL. Root removal, hydro jetting & camera inspections. Same-day service available. Call 833-PLUMB-IT — licensed & insured.",
@@ -787,6 +826,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
   // ============================================
   {
     slug: "water-heater-repair-cape-coral",
+    serviceSlug: "water-heaters",
     metaTitle: "Water Heater Repair Cape Coral | Same-Day Service",
     metaDescription:
       "Water heater repair & replacement in Cape Coral, FL from $1,200. Tank & tankless options. Same-day service, licensed CFC1432485. Call 833-PLUMB-IT for fast help.",
@@ -978,9 +1018,9 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       },
     ],
     relatedPages: [
-      { label: "Emergency Plumber Cape Coral", href: "/emergency-plumber-cape-coral" },
+      { label: "Drain Cleaning in Lehigh Acres", href: "/drain-cleaning-lehigh-acres" },
+      { label: "Emergency Plumber in Lehigh Acres", href: "/emergency-plumber-lehigh-acres" },
       { label: "Lehigh Acres Service Area", href: "/areas/lehigh-acres" },
-      { label: "Repiping Services", href: "/services/repiping" },
     ],
   },
 
@@ -989,6 +1029,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
   // ============================================
   {
     slug: "commercial-plumbing-fort-myers",
+    serviceSlug: "commercial",
     metaTitle: "Commercial Plumber Fort Myers | Licensed Contractor",
     metaDescription:
       "Commercial plumbing in Fort Myers, FL. Restaurants, retail, offices & multi-story. Backflow testing, grease traps, buildouts. Licensed CFC1432485. Call 833-PLUMB-IT.",
@@ -1097,6 +1138,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
   // ============================================
   {
     slug: "new-construction-plumbing-cape-coral",
+    serviceSlug: "new-construction",
     metaTitle: "New Construction Plumber Cape Coral | 8,500+ Homes",
     metaDescription:
       "Cape Coral new construction plumbing by the team that's built 8,500+ homes. Canal-lot experts, builder partnerships. Licensed CFC1432485. Call 833-PLUMB-IT today.",
@@ -1203,6 +1245,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
   // ============================================
   {
     slug: "water-damage-repair-fort-myers",
+    serviceSlug: "leak-repair",
     metaTitle: "Water Damage Repair Fort Myers | Plumbing Experts",
     metaDescription:
       "Plumbing-caused water damage repair in Fort Myers, FL. Slab leaks, pipe bursts & cast iron failures fixed at the source. Licensed CFC1432485. Call 833-PLUMB-IT now.",
@@ -1299,6 +1342,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
   // ============================================
   {
     slug: "water-heater-repair-fort-myers",
+    serviceSlug: "water-heaters",
     metaTitle: "Water Heater Repair Fort Myers | Same-Day Service",
     metaDescription:
       "Water heater repair in Fort Myers, FL. Tank, tankless & hybrid units fixed fast — often same day. Licensed CFC1432485, family-owned since 1997. Call 833-PLUMB-IT.",
@@ -1394,6 +1438,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
   // ============================================
   {
     slug: "drain-cleaning-fort-myers",
+    serviceSlug: "drain-cleaning",
     metaTitle: "Drain Cleaning Fort Myers | Camera Inspection & Jetting",
     metaDescription:
       "Professional drain cleaning in Fort Myers, FL. Hydro-jetting, camera inspection & root removal for slow or backed-up drains. 5-star rated. Call 833-PLUMB-IT.",
@@ -1484,6 +1529,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
   // ============================================
   {
     slug: "emergency-plumber-punta-gorda",
+    serviceSlug: "emergency",
     metaTitle: "Emergency Plumber Punta Gorda | 24/7 Service",
     metaDescription:
       "24/7 emergency plumber serving Punta Gorda, FL. Burst pipes, water heater failures & backups. Licensed CFC1432485, family-owned since 1997. Call 833-PLUMB-IT.",
@@ -1573,6 +1619,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
   // ============================================
   {
     slug: "water-heater-replacement-punta-gorda",
+    serviceSlug: "water-heaters",
     metaTitle: "Water Heater Replacement Punta Gorda | Tank & Tankless",
     metaDescription:
       "Water heater replacement in Punta Gorda, FL. Tank, tankless & hybrid installs with Charlotte County permits handled. Family-owned since 1997. Call 833-PLUMB-IT.",
@@ -1662,6 +1709,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
   // ============================================
   {
     slug: "drain-cleaning-port-charlotte",
+    serviceSlug: "drain-cleaning",
     metaTitle: "Drain Cleaning Port Charlotte | Cast Iron Specialists",
     metaDescription:
       "Drain cleaning in Port Charlotte, FL. Camera inspection, hydro-jetting & cast iron drain solutions for 1970s–80s homes. 5-star rated. Call 833-PLUMB-IT.",
@@ -1741,9 +1789,9 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       },
     ],
     relatedPages: [
+      { label: "Emergency Plumber in Port Charlotte", href: "/emergency-plumber-port-charlotte" },
+      { label: "Repiping in Port Charlotte", href: "/repiping-port-charlotte" },
       { label: "Port Charlotte Service Area", href: "/areas/port-charlotte" },
-      { label: "Drain Cleaning Services", href: "/services/drain-cleaning" },
-      { label: "Water Softeners & Treatment", href: "/services/water-softeners" },
     ],
   },
 
@@ -1752,6 +1800,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
   // ============================================
   {
     slug: "septic-to-sewer-north-fort-myers",
+    serviceSlug: "uep-utilities",
     metaTitle: "Septic to Sewer Conversion North Fort Myers | C&S Plumbing",
     metaDescription:
       "Septic-to-sewer conversion in North Fort Myers, FL by your hometown plumber. Permits, connection & septic decommissioning handled. Call 833-PLUMB-IT.",
@@ -1850,6 +1899,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
   // ============================================
   {
     slug: "remodel-plumbing-naples",
+    serviceSlug: "plumbing-remodel",
     metaTitle: "Remodel Plumbing Naples | Kitchen & Bath Specialists",
     metaDescription:
       "Remodel plumbing in Naples, FL. Kitchen & bathroom relocations, high-end fixtures & slab work for luxury renovations. Licensed CFC1432485. Call 833-PLUMB-IT.",
@@ -1946,6 +1996,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
   // ============================================
   {
     slug: "water-softeners-cape-coral",
+    serviceSlug: "water-softeners",
     metaTitle: "Water Softeners Cape Coral | Hard Water Fix",
     metaDescription:
       "Water softener installation in Cape Coral, FL. Fix 300+ ppm hard water damaging pipes & fixtures. Licensed CFC1432485, 5-star rated. Call 833-PLUMB-IT today.",
@@ -2039,6 +2090,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
   // ============================================
   {
     slug: "leak-repair-cape-coral",
+    serviceSlug: "leak-repair",
     metaTitle: "Leak Repair Cape Coral | Slab Leak Detection",
     metaDescription:
       "Expert leak repair in Cape Coral, FL. Slab leak detection, hidden leak location & pipe repair. Licensed CFC1432485, 5-star rated. Call 833-PLUMB-IT for service.",
@@ -2132,6 +2184,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
   // ============================================
   {
     slug: "plumbing-remodel-cape-coral",
+    serviceSlug: "plumbing-remodel",
     metaTitle: "Plumbing Remodel Cape Coral | Kitchen & Bath",
     metaDescription:
       "Kitchen & bathroom remodel plumbing in Cape Coral, FL. Fixture upgrades, rough-in relocation, code compliance. Licensed CFC1432485. Call 833-PLUMB-IT for a quote.",
@@ -2225,6 +2278,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
   // ============================================
   {
     slug: "leak-repair-fort-myers",
+    serviceSlug: "leak-repair",
     metaTitle: "Leak Repair Fort Myers | Slab Leak Experts",
     metaDescription:
       "Leak detection & repair in Fort Myers, FL. Slab leaks, hidden leaks & pipe repair for older homes. Licensed CFC1432485, 5-star rated. Call 833-PLUMB-IT now.",
@@ -2318,6 +2372,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
   // ============================================
   {
     slug: "repiping-naples",
+    serviceSlug: "repiping",
     metaTitle: "Repiping Naples FL | Luxury Home Specialists",
     metaDescription:
       "Whole-home repiping in Naples, FL. Luxury home pipe replacement, $5,000-$15,000. Waterfront corrosion experts. Licensed CFC1432485. Call 833-PLUMB-IT for a quote.",
@@ -2416,6 +2471,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
   // ============================================
   {
     slug: "emergency-plumber-bonita-springs",
+    serviceSlug: "emergency",
     metaTitle: "Emergency Plumber Bonita Springs | 24/7",
     metaDescription:
       "24/7 emergency plumber in Bonita Springs, FL. Burst pipes, condo leaks & slab repair. Licensed CFC1432485, 5-star rated. Call 833-PLUMB-IT for immediate help.",
@@ -2500,9 +2556,9 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       },
     ],
     relatedPages: [
-      { label: "Leak Repair Services", href: "/services/leak-repair" },
+      { label: "Repiping in Bonita Springs", href: "/repiping-bonita-springs" },
+      { label: "Leak Repair in Bonita Springs", href: "/leak-repair-bonita-springs" },
       { label: "Bonita Springs Service Area", href: "/areas/bonita-springs" },
-      { label: "Emergency Plumber Fort Myers", href: "/emergency-plumber-fort-myers" },
     ],
   },
 
@@ -2593,9 +2649,9 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       },
     ],
     relatedPages: [
-      { label: "Residential Plumbing Services", href: "/services/residential" },
+      { label: "Water Heater Repair in Estero", href: "/water-heater-repair-estero" },
+      { label: "Leak Repair in Estero", href: "/leak-repair-estero" },
       { label: "Estero Service Area", href: "/areas/estero" },
-      { label: "Emergency Plumber Fort Myers", href: "/emergency-plumber-fort-myers" },
     ],
   },
 
@@ -2703,6 +2759,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
   // ============================================
   {
     slug: "uep-connection-cape-coral",
+    serviceSlug: "uep-utilities",
     metaTitle: "UEP Connection Cape Coral | Water & Sewer Hookup",
     metaDescription:
       "Cape Coral UEP connection specialists. Water service, sewer lateral & septic abandonment — permits handled, upfront per-foot pricing. Call 833-PLUMB-IT today.",
@@ -2809,6 +2866,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
   // ============================================
   {
     slug: "emergency-plumber-north-fort-myers",
+    serviceSlug: "emergency",
     metaTitle: "Emergency Plumber North Fort Myers | 24/7 Local",
     metaDescription:
       "24/7 emergency plumber based in North Fort Myers, FL. Our shop is on Pondella Rd — fastest response in our home territory. Licensed. Call 833-PLUMB-IT now.",
@@ -2914,6 +2972,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
   // ============================================
   {
     slug: "water-heater-repair-lehigh-acres",
+    serviceSlug: "water-heaters",
     metaTitle: "Water Heater Repair Lehigh Acres | Same-Day Fix",
     metaDescription:
       "Water heater repair in Lehigh Acres, FL. No hot water, leaks & element failures fixed fast — well water experts. Licensed CFC1432485. Call 833-PLUMB-IT today.",
@@ -3007,8 +3066,8 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       },
     ],
     relatedPages: [
+      { label: "Drain Cleaning in Lehigh Acres", href: "/drain-cleaning-lehigh-acres" },
       { label: "Your Lehigh Acres Plumber", href: "/plumber-lehigh-acres" },
-      { label: "Water Heater Services", href: "/services/water-heaters" },
       { label: "Lehigh Acres Service Area", href: "/areas/lehigh-acres" },
     ],
     priceRange: "$150–$500 repair · $1,200–$4,500 replacement",
@@ -3019,6 +3078,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
   // ============================================
   {
     slug: "drain-cleaning-north-fort-myers",
+    serviceSlug: "drain-cleaning",
     metaTitle: "Drain Cleaning North Fort Myers | Clogs Cleared",
     metaDescription:
       "Drain cleaning in North Fort Myers, FL. Clogged drains, root intrusion & cast iron blockages cleared with camera diagnosis. Licensed. Call 833-PLUMB-IT today.",
@@ -3118,6 +3178,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
   // ============================================
   {
     slug: "emergency-plumber-naples",
+    serviceSlug: "emergency",
     metaTitle: "Emergency Plumber Naples FL | 24/7 Response",
     metaDescription:
       "24/7 emergency plumber in Naples, FL. Burst pipes, slab leaks & seasonal-home water damage. Licensed CFC1432485, 5-star rated. Call 833-PLUMB-IT for fast help.",
@@ -3203,7 +3264,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     ],
     relatedPages: [
       { label: "Repiping in Naples", href: "/repiping-naples" },
-      { label: "Remodel Plumbing in Naples", href: "/remodel-plumbing-naples" },
+      { label: "Water Heater Repair in Naples", href: "/water-heater-repair-naples" },
       { label: "Naples Service Area", href: "/areas/naples" },
     ],
   },
@@ -3213,6 +3274,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
   // ============================================
   {
     slug: "repiping-punta-gorda",
+    serviceSlug: "repiping",
     metaTitle: "Repiping Punta Gorda | Whole-Home Pipe Replacement",
     metaDescription:
       "Whole-home repiping in Punta Gorda, FL from $4,000. Replace polybutylene & pinhole-leaking copper. Licensed CFC1432485. Free estimates — call 833-PLUMB-IT.",
@@ -3298,8 +3360,2145 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     ],
     relatedPages: [
       { label: "Emergency Plumber Punta Gorda", href: "/emergency-plumber-punta-gorda" },
+      { label: "Leak Repair in Punta Gorda", href: "/leak-repair-punta-gorda" },
       { label: "Water Heater Replacement Punta Gorda", href: "/water-heater-replacement-punta-gorda" },
-      { label: "Repiping Services", href: "/services/repiping" },
+    ],
+    priceRange: "$4,000–$12,000",
+  },
+
+  // ============================================
+  // 34. PLUMBER - SANIBEL ISLAND
+  // ============================================
+  {
+    slug: "plumber-sanibel",
+    metaTitle: "Plumber Sanibel Island FL | Licensed & Local",
+    metaDescription:
+      "Trusted plumber on Sanibel Island, FL. Repairs, repiping, water heaters & seasonal home service. Licensed CFC1432485. Call 833-PLUMB-IT for a free estimate.",
+    keywords: [
+      "plumber Sanibel Island",
+      "Sanibel plumber",
+      "plumbing service Sanibel FL",
+      "licensed plumber Sanibel Island",
+      "Sanibel Island plumbing repair",
+      "plumber Sanibel Captiva",
+      "seasonal home plumber Sanibel",
+      "Sanibel plumbing company",
+      "best plumber Sanibel Island FL",
+      "local plumber Sanibel Florida",
+    ],
+    h1: "Plumber on Sanibel Island, FL",
+    sectionHeading: "How we serve Sanibel Island homeowners",
+    heroSubtext:
+      "Sanibel homes face plumbing conditions the mainland never sees. C&S Plumbing crosses the causeway with 28 years of Southwest Florida experience — from East End cottages to stilt homes on West Gulf Drive.",
+    trustBadges: TRUST_BADGES,
+    serviceDescription:
+      `Sanibel Island is one of the most distinctive places to own a home in Florida — and one of the most demanding on a plumbing system. Salt air, storm exposure, elevated construction, and a housing stock that ranges from 1960s East End cottages to modern stilt homes along West Gulf Drive all create service needs that mainland plumbers rarely encounter. Since Hurricane Ian in 2022, the island has also been in a sustained rebuild, with hundreds of homes undergoing repairs and renovations that require licensed, permitted plumbing work done right. Owning here is worth it — but your plumbing needs a contractor who understands what the island does to it.\n\nC&S Plumbing of Lee has served Sanibel homeowners since 1997, and we treat the causeway as part of the job — not an excuse. We schedule island service runs so a single trip covers everything your home needs, our trucks arrive fully stocked so we're not driving back to the mainland for parts, and our dispatchers give you honest arrival windows that account for causeway and Periwinkle Way traffic. For emergencies, we prioritize island calls precisely because we know help is farther away out here.\n\nThe island environment itself is hard on pipes and fixtures. Salt-laden air corrodes exposed supply lines, hose bibs, water heater connections, and the plumbing runs beneath elevated homes far faster than in inland neighborhoods. Homes on stilts and pilings — common in Gulf Pines, The Dunes, and along Sanibel-Captiva Road — have supply and drain lines exposed to the elements underneath the living space, where UV, salt, and storm-driven debris take a constant toll. We stock marine-grade fixtures, brass fittings, and stainless hardware that hold up in this environment, and we recommend them by default on every island job because standard builder-grade parts simply don't last out here.\n\nSanibel's large population of seasonal owners adds another layer. A home that sits unoccupied from May through November can hide a slow leak for months, and water heaters, valves, and supply lines that sit idle often fail the day the water gets turned back on. We offer seasonal shutdown and startup service so your Sanibel home is protected while you're away and ready when you return — including checking every fixture, testing the water heater, and verifying your main shutoff works. Catching a failed fitting during a scheduled startup costs a service call; discovering it in December after it ran all summer costs a renovation.\n\nFrom the older cottage stock on the East End to post-Ian rebuilds in Shell Harbor and Beachview, C&S brings the same family-owned standard to every Sanibel service call: upfront written quotes, two active state licenses (CFC057076 and CFC1432485), and a 5.0 Google rating earned across Lee County since 1997. Call 833-PLUMB-IT to schedule service anywhere on Sanibel or Captiva.`,
+    features: [
+      {
+        title: "Full-Service Island Plumbing",
+        description:
+          "Repairs, repiping, water heaters, drain cleaning, remodel plumbing, and fixture work for every style of Sanibel home.",
+      },
+      {
+        title: "Stocked Trucks, One Trip",
+        description:
+          "Our trucks cross the causeway fully loaded with marine-grade parts so most Sanibel jobs are finished in a single visit.",
+      },
+      {
+        title: "Seasonal Home Shutdown & Startup",
+        description:
+          "Complete off-season shutoff service and return inspections that protect unoccupied Sanibel homes from silent leaks.",
+      },
+      {
+        title: "Salt-Air Corrosion Expertise",
+        description:
+          "Marine-grade fixtures, fittings, and connections selected specifically for Sanibel's corrosive barrier-island environment.",
+      },
+      {
+        title: "Post-Ian Rebuild Plumbing",
+        description:
+          "Permitted plumbing for hurricane repairs and renovations, coordinated with the City of Sanibel and your general contractor.",
+      },
+    ],
+    city: "Sanibel Island",
+    state: "FL",
+    neighborhoods: SANIBEL_NEIGHBORHOODS,
+    faqs: [
+      {
+        question: "Do you really service Sanibel Island, or just the mainland?",
+        answer:
+          "We genuinely service Sanibel — it has been part of our territory since 1997. We schedule dedicated island runs, our trucks arrive stocked so we don't lose time driving back over the causeway for parts, and our dispatchers quote arrival windows that account for island traffic. Many Sanibel homeowners use us precisely because larger companies treat the island as an afterthought.",
+      },
+      {
+        question: "How much does a plumber cost on Sanibel Island?",
+        answer:
+          "Every job starts with an upfront written quote before any work begins, so you know the exact price first. Island work can run modestly higher than equivalent mainland jobs because of travel time and the marine-grade materials Sanibel homes need, but there are no hidden trip charges — the quoted price is the price you pay.",
+      },
+      {
+        question: "Why do Sanibel homes have so many plumbing problems?",
+        answer:
+          "Three factors combine on Sanibel: salt air corrodes exposed pipes, fixtures, and water heater connections faster than anywhere inland; much of the East End housing stock dates to the 1960s–1980s and still carries original copper and galvanized lines; and elevated stilt homes expose plumbing runs to UV, salt, and storms underneath the living space. Hurricane Ian's saltwater flooding in 2022 accelerated corrosion in many systems that survived the storm itself.",
+      },
+      {
+        question: "Are you licensed to work on Sanibel Island?",
+        answer:
+          "Yes. C&S Plumbing holds two active Florida state plumbing contractor licenses: CFC057076 and CFC1432485, both verifiable on the Florida DBPR website. State licensure authorizes us to work in every Florida jurisdiction, including the City of Sanibel, and we pull City of Sanibel permits for all work that requires them. We are fully insured and bonded.",
+      },
+      {
+        question: "Can you maintain my Sanibel home while I'm away for the season?",
+        answer:
+          "Absolutely. Our seasonal service includes a proper shutdown before you leave — main valve off, water heater set appropriately, fixtures checked — and a startup inspection when you return, where we repressurize the system slowly, test every fixture and the water heater, and look for leaks that developed over the summer. It's the single best way to protect an unoccupied island home from water damage.",
+      },
+      {
+        question: "Do you work on stilt and elevated homes on Sanibel?",
+        answer:
+          "Yes, regularly. Elevated homes in Gulf Pines, The Dunes, and along West Gulf Drive route supply and drain lines beneath the living space, where they're exposed to salt air and storm damage. We repair, insulate, and re-secure these runs, replace corroded sections with materials rated for coastal exposure, and can re-route vulnerable lines during larger renovations.",
+      },
+    ],
+    relatedPages: [
+      { label: "Emergency Plumber on Sanibel", href: "/emergency-plumber-sanibel" },
+      { label: "Repiping on Sanibel Island", href: "/repiping-sanibel" },
+      { label: "Sanibel Service Area", href: "/areas/sanibel" },
+    ],
+  },
+
+  // ============================================
+  // 35. EMERGENCY PLUMBER - SANIBEL ISLAND
+  // ============================================
+  {
+    slug: "emergency-plumber-sanibel",
+    serviceSlug: "emergency",
+    metaTitle: "Emergency Plumber Sanibel | 24/7 Island Response",
+    metaDescription:
+      "24/7 emergency plumber on Sanibel Island, FL. Burst pipes, slab leaks & flooding in island homes. Licensed CFC1432485. Call 833-PLUMB-IT for fast response.",
+    keywords: [
+      "emergency plumber Sanibel Island",
+      "24 hour plumber Sanibel FL",
+      "burst pipe repair Sanibel",
+      "Sanibel plumbing emergency",
+      "after hours plumber Sanibel Island",
+      "emergency plumber Captiva",
+      "water leak emergency Sanibel",
+      "weekend plumber Sanibel FL",
+      "storm damage plumber Sanibel",
+      "second home water leak Sanibel",
+    ],
+    h1: "Emergency Plumber on Sanibel Island, FL",
+    sectionHeading: "How we handle plumbing emergencies on Sanibel Island",
+    heroSubtext:
+      "On an island, a burst pipe can't wait for a plumber who 'might make it out there.' C&S Plumbing dispatches to Sanibel 24/7 with trucks stocked to finish the repair in one trip — call 833-PLUMB-IT now.",
+    trustBadges: TRUST_BADGES,
+    serviceDescription:
+      `The number one question Sanibel homeowners ask us is simple: will you actually come over the causeway at 2 AM? The answer is yes — and we have been doing it since 1997. C&S Plumbing of Lee treats Sanibel emergency calls as priority dispatches precisely because the island's geography works against you. There is one road on and off, the nearest hardware store may be closed, and every hour a leak runs is an hour of compounding damage. Our emergency trucks cross the causeway stocked with fittings, valves, pipe, and water heater parts so the repair gets finished on the first visit, not scheduled for a second trip. That preparation matters more on Sanibel than anywhere else we serve, because a return trip that costs twenty minutes in Cape Coral costs well over an hour on the island.\n\nSanibel's biggest emergency risk isn't the pipe that bursts while you're home — it's the one that bursts while you're not. A large share of island homes sit unoccupied from May through November, and a failed supply line or water heater fitting in an empty house can run for days or weeks before a neighbor, landscaper, or property watch service notices water seeping out the door. We respond to these calls constantly, and we work directly with island property managers and caretakers who can let us in when the owner is a thousand miles away.\n\nStorm history is part of every Sanibel plumbing emergency plan. C&S has responded to every major Lee County storm since Hurricane Charley in 2004, including Hurricane Ian in 2022, when storm surge crossed the island and left saltwater inside plumbing systems from Shell Harbor to Beachview. Post-storm emergencies on Sanibel look different: surge-contaminated water heaters, corroded connections failing months later, and drain systems choked with sand and debris. Our crews are trained in exactly this kind of triage, and we know which failures need attention tonight and which can safely wait for daylight.\n\nIf you're a seasonal owner, the single most important thing you can do is know your shutoff. Before you leave the island, close the main valve — usually at the front of the home near the meter, or at the base of the stairs on elevated homes — and consider shutting off the water heater. If you get a high water bill alert or a call from your property watch, call 833-PLUMB-IT and we'll walk you or your caretaker through an emergency shutoff over the phone at no charge, then dispatch a truck.\n\nEvery emergency call gets a written quote before work begins — even at midnight, even on the island. C&S is family-owned, holds two active state licenses (CFC057076 and CFC1432485), and carries a 5.0 Google rating from 46+ Lee County homeowners. When water is going where it shouldn't on Sanibel, we're the call.`,
+    features: [
+      {
+        title: "True Island Emergency Dispatch",
+        description:
+          "Sanibel calls are prioritized, not deferred — our dispatchers give honest causeway-adjusted ETAs 24/7/365.",
+      },
+      {
+        title: "One-Trip Stocked Trucks",
+        description:
+          "Emergency trucks cross the causeway loaded with pipe, fittings, valves, and heater parts to finish repairs the same visit.",
+      },
+      {
+        title: "Unoccupied Home Response",
+        description:
+          "We coordinate with property managers, caretakers, and neighbors to access and secure seasonal homes when owners are away.",
+      },
+      {
+        title: "Phone Shutoff Guidance",
+        description:
+          "Free over-the-phone walkthrough to stop the water before we arrive — for you, your caretaker, or your property watch service.",
+      },
+      {
+        title: "Storm & Surge Triage",
+        description:
+          "Post-hurricane plumbing assessment honed over every major Lee County storm since Charley in 2004, including Ian.",
+      },
+    ],
+    city: "Sanibel Island",
+    state: "FL",
+    neighborhoods: SANIBEL_NEIGHBORHOODS,
+    faqs: [
+      {
+        question: "How fast can an emergency plumber actually reach Sanibel Island?",
+        answer:
+          "Honestly: the causeway adds time, and any plumber who promises Sanibel in 20 minutes isn't being straight with you. Our dispatchers quote a realistic ETA based on current truck positions and causeway traffic — typically 45–75 minutes — and we start helping immediately by walking you through shutting off the water over the phone, which stops the damage before we arrive. Call 833-PLUMB-IT any hour.",
+      },
+      {
+        question: "My Sanibel home is unoccupied — what if a pipe bursts while I'm away?",
+        answer:
+          "This is the most common serious emergency we see on Sanibel. The best protection is closing the main shutoff valve before you leave for the season. If a leak does happen, we can coordinate directly with your property manager, caretaker, or a trusted neighbor to access the home, stop the water, complete the repair, and send you photos and a written report of everything we did — without you flying back.",
+      },
+      {
+        question: "Do you charge extra for emergency calls to Sanibel?",
+        answer:
+          "We charge a flat diagnostic fee for emergency calls, and all repair costs are quoted in writing before we begin — even at 2 AM, even on the island. There are no hidden overtime surcharges or after-hours markups. Island calls involve real travel time, so we make up for it by arriving stocked to finish the job in one trip rather than billing you for a return visit.",
+      },
+      {
+        question: "Why do Sanibel homes have so many plumbing emergencies?",
+        answer:
+          "Salt air corrodes supply lines, fittings, and water heater connections faster than anywhere on the mainland; the East End's 1960s–1980s cottage stock still carries aging copper and galvanized pipe; and Hurricane Ian's 2022 storm surge left saltwater damage that continues to surface as failures months and years later. Add hundreds of homes sitting empty half the year, and small failures have time to become disasters.",
+      },
+      {
+        question: "Are you licensed for emergency plumbing work on Sanibel?",
+        answer:
+          "Yes. C&S Plumbing holds two active Florida state plumbing contractor licenses — CFC057076 and CFC1432485, verifiable on the Florida DBPR website — which authorize us to work in every Florida jurisdiction including the City of Sanibel. We are fully insured and bonded, family-owned, and have served Lee County continuously since 1997.",
+      },
+      {
+        question: "What should I do while waiting for an emergency plumber on Sanibel?",
+        answer:
+          "Shut off the main water valve — at the front of the home near the meter, or at the base of the stairs on elevated homes. If the water heater is involved, turn off its breaker or gas supply. Move furniture and rugs out of standing water, and photograph the damage for insurance. When you call 833-PLUMB-IT, our dispatcher will walk you through each step for your specific situation.",
+      },
+    ],
+    relatedPages: [
+      { label: "Sanibel Island Plumber", href: "/plumber-sanibel" },
+      { label: "Repiping on Sanibel Island", href: "/repiping-sanibel" },
+      { label: "Sanibel Service Area", href: "/areas/sanibel" },
+    ],
+  },
+
+  // ============================================
+  // 36. REPIPING - SANIBEL ISLAND
+  // ============================================
+  {
+    slug: "repiping-sanibel",
+    serviceSlug: "repiping",
+    metaTitle: "Repiping Sanibel Island | Whole-Home Repipe",
+    metaDescription:
+      "Whole-home repiping on Sanibel Island, FL. Replace salt-corroded copper & galvanized pipe with PEX. Licensed CFC1432485. Call 833-PLUMB-IT for a free estimate.",
+    keywords: [
+      "repiping Sanibel Island",
+      "whole house repipe Sanibel FL",
+      "copper pipe replacement Sanibel",
+      "PEX repiping Sanibel Island",
+      "Sanibel repipe cost",
+      "galvanized pipe replacement Sanibel",
+      "pinhole leak repair Sanibel",
+      "repipe after Hurricane Ian Sanibel",
+      "Sanibel Island pipe corrosion",
+      "repiping company Sanibel Captiva",
+    ],
+    h1: "Repiping on Sanibel Island, FL",
+    sectionHeading: "Whole-home repiping built for Sanibel Island",
+    heroSubtext:
+      "Salt air and Ian's floodwater are quietly finishing off Sanibel's original copper. C&S Plumbing repipes island homes with coastal-rated PEX — permitted with the City of Sanibel and quoted in writing up front.",
+    trustBadges: TRUST_BADGES,
+    serviceDescription:
+      `No environment in Lee County is harder on residential piping than Sanibel Island. Salt-laden air attacks copper from the outside while chlorinated water works on it from the inside, and Hurricane Ian's 2022 storm surge pushed saltwater into wall cavities, under slabs, and through the exposed pipe runs beneath elevated homes across the island. Copper that took saltwater immersion during Ian is corroding on an accelerated clock — we regularly open walls in Shell Harbor and Beachview homes and find green-crusted pipe that looks decades older than it is. If your Sanibel home has had one pinhole leak, more are coming; pinholes are a systemic symptom, not a one-off failure.\n\nThe island's housing stock compounds the problem. Much of Sanibel was built out in the 1970s and 1980s — the cottage-era neighborhoods on the East End, Gulf Pines, The Dunes, and the homes along West Gulf Drive — and those homes carry original copper supply lines now 40 to 50 years old, with some older cottages still running galvanized steel that corrodes shut from the inside. On a barrier island, that aging pipe fails years sooner than the identical system would in Fort Myers or Cape Coral. Repiping is not a question of if for these homes; it is a question of before or after the flood damage.\n\nFor Sanibel, we repipe almost exclusively with PEX, and the coastal environment is exactly why. PEX doesn't corrode in salt air, doesn't pit from water chemistry, tolerates the thermal swings of un-air-conditioned pipe chases and under-home runs on stilt houses, and its flexibility means fewer joints — the failure points — in the whole system. For exposed runs beneath elevated homes we sleeve and secure the lines against UV and storm debris, and we replace hose bibs, valves, and connections with marine-grade brass that stands up to island air.\n\nEvery Sanibel repipe is permitted with the City of Sanibel, and we handle the entire process: permit application, scheduling around the city's inspection calendar, and final sign-off documentation for your records and any future sale. Most single-family repipes take two to four days, we keep water on each night, and all access openings in walls and ceilings are patched, textured, and painted as part of the standard package. For seasonal owners, we can complete the entire project while you're off-island, with photo updates at every stage.\n\nC&S Plumbing of Lee has repiped homes across Lee County since 1997 and has been part of thousands of plumbing projects across 8,500+ homes. We hold two active state licenses (CFC057076 and CFC1432485), carry a 5.0 Google rating, and quote every repipe in writing before a single wall is opened. Call 833-PLUMB-IT for a free Sanibel repipe estimate.`,
+    features: [
+      {
+        title: "Coastal-Rated PEX Systems",
+        description:
+          "Corrosion-proof PEX supply lines with marine-grade brass valves and fittings selected for Sanibel's salt-air environment.",
+      },
+      {
+        title: "Post-Ian Corrosion Assessment",
+        description:
+          "Free pipe inspection that identifies surge-accelerated copper corrosion before it becomes the next round of pinhole leaks.",
+      },
+      {
+        title: "City of Sanibel Permits Handled",
+        description:
+          "We file the permit, schedule every inspection, and deliver final sign-off documentation — no extra charge, no hassle.",
+      },
+      {
+        title: "Elevated & Stilt Home Experience",
+        description:
+          "Under-home pipe runs sleeved, secured, and protected against UV, salt air, and storm debris on Sanibel's raised homes.",
+      },
+      {
+        title: "Off-Island Owner Friendly",
+        description:
+          "Complete repipes finished while you're away, with photo documentation at every stage and walls patched and painted.",
+      },
+    ],
+    city: "Sanibel Island",
+    state: "FL",
+    neighborhoods: SANIBEL_NEIGHBORHOODS,
+    faqs: [
+      {
+        question: "How much does it cost to repipe a home on Sanibel Island?",
+        answer:
+          "Most Sanibel single-family repipes run $4,500–$14,000 depending on square footage, fixture count, and construction type. Island projects price modestly above equivalent mainland homes because of travel logistics, marine-grade materials, and the extra protection work on elevated pipe runs. Every project starts with a free inspection and a written quote — the price you approve is the price you pay.",
+      },
+      {
+        question: "Why do Sanibel homes need repiping sooner than mainland homes?",
+        answer:
+          "Copper on Sanibel is attacked from both sides: salt air corrodes it externally while water chemistry pits it internally, and Hurricane Ian's storm surge soaked many systems in saltwater outright. Combine that with a housing stock largely built in the 1970s and 1980s — meaning original copper now 40–50 years old, plus galvanized steel in the oldest East End cottages — and Sanibel pipe simply reaches end-of-life years ahead of the identical system in Fort Myers.",
+      },
+      {
+        question: "Is PEX really better than new copper for an island home?",
+        answer:
+          "For Sanibel specifically, yes. PEX cannot corrode in salt air or pit from water chemistry — the two failure modes that kill copper on a barrier island. It flexes with thermal movement, requires far fewer joints, and performs well in the exposed under-home runs on stilt houses when properly sleeved against UV. New copper on Sanibel starts the same corrosion clock all over again; PEX takes corrosion off the table.",
+      },
+      {
+        question: "Do I need a permit to repipe my Sanibel home?",
+        answer:
+          "Yes. The City of Sanibel requires a plumbing permit for whole-home repiping, and inspections are part of the process. C&S handles the entire permit workflow — application, inspection scheduling, and final sign-off documentation — at no extra charge. Since Hurricane Ian, the city has seen heavy permit volume from the rebuild, and our familiarity with their process keeps your project moving.",
+      },
+      {
+        question: "How long does a Sanibel repipe take, and can it happen while I'm away?",
+        answer:
+          "Most single-family repipes take two to four days. We restore water service each evening, protect floors and furnishings throughout, and patch, texture, and paint all access openings as part of the standard package. For seasonal owners, we routinely complete the entire project off-season while you're away — coordinating access through your property manager and sending photo updates at every stage.",
+      },
+      {
+        question: "Are you licensed to repipe homes on Sanibel Island?",
+        answer:
+          "Yes. C&S Plumbing holds two active Florida state plumbing contractor licenses — CFC057076 and CFC1432485, both verifiable on the Florida DBPR website — authorizing work in every Florida jurisdiction including the City of Sanibel. We are fully insured and bonded, family-owned since 1997, and have plumbed and serviced homes across 8,500+ Lee County properties.",
+      },
+    ],
+    relatedPages: [
+      { label: "Emergency Plumber on Sanibel", href: "/emergency-plumber-sanibel" },
+      { label: "Sanibel Island Plumber", href: "/plumber-sanibel" },
+      { label: "Sanibel Service Area", href: "/areas/sanibel" },
+    ],
+    priceRange: "$4,500–$14,000",
+  },
+
+  // ============================================
+  // 37. WATER HEATER REPAIR - ESTERO
+  // ============================================
+  {
+    slug: "water-heater-repair-estero",
+    serviceSlug: "water-heaters",
+    metaTitle: "Water Heater Repair Estero FL | Same-Day Fix",
+    metaDescription:
+      "Water heater repair & replacement in Estero, FL. Tank, tankless & heat pump units. Licensed CFC1432485, 5-star rated. Call 833-PLUMB-IT for same-day service.",
+    keywords: [
+      "water heater repair Estero",
+      "water heater replacement Estero FL",
+      "tankless water heater Estero",
+      "no hot water Estero",
+      "water heater installation Estero Florida",
+      "heat pump water heater Estero",
+      "water heater leaking Estero FL",
+      "same day water heater repair Estero",
+      "condo water heater replacement Estero",
+      "Estero water heater company",
+    ],
+    h1: "Water Heater Repair in Estero, FL",
+    sectionHeading: "Water heater repair and replacement in Estero",
+    heroSubtext:
+      "Estero's gated-community housing stock is hitting water heater age all at once. C&S Plumbing repairs what can be repaired, replaces what can't, and quotes both options in writing before we start.",
+    trustBadges: TRUST_BADGES,
+    serviceDescription:
+      `Estero's housing boom ran from roughly 1998 to 2008, when The Brooks, Shadow Wood, Bella Terra, Rapallo, and the communities around Coconut Point filled in the corridor between US-41 and Corkscrew Road. That construction timeline has a plumbing consequence: the original water heaters in those homes — and in many cases the first replacement units — are now reaching the 10-to-15-year mark where tanks fail. When we get a no-hot-water call from an Estero gated community, it's rarely a surprise; it's a generation of equipment aging out on schedule. If your neighbors have started replacing theirs, yours is likely on the same clock.\n\nC&S Plumbing of Lee repairs and replaces every type of residential water heater in Estero: standard tank units (electric and gas), tankless systems, and heat pump water heaters. We start every call with an honest diagnosis. A failed heating element, thermostat, or relief valve on a mid-life tank is worth repairing; a leaking tank or a unit past the 12-year mark usually isn't, because the next failure is a burst tank flooding your laundry room or garage. We quote the repair and the replacement side by side, in writing, so you can make the call with real numbers.\n\nIf you're replacing, Estero homes present a genuine choice. Tankless units free up floor space and deliver endless hot water, which suits larger households and homes with big soaking tubs. Heat pump water heaters are the efficiency play — they cut water heating energy use dramatically in Florida's warm garages, and FPL rebate programs periodically offset part of the purchase price, which meaningfully changes the math. We'll walk you through operating costs, recovery rates, and rebate eligibility for your specific home rather than pushing whatever's on the truck.\n\nLee County's hard water is the quiet killer of Estero water heaters. Mineral scale builds up on electric heating elements and tank bottoms, forcing elements to work hotter and fail sooner and cutting years off tank life. Annual flushing helps, and pairing a new heater with a water softener is the single best way to make it last. We handle both, and every replacement we install includes a new code-compliant expansion tank, shutoff valve, and drain pan where required — the small parts that determine whether the unit's eventual failure is a nuisance or a flood.\n\nEstero's condo and coach-home communities add logistics that we've long since mastered: HOA notification requirements, elevator and access scheduling in The Brooks and Bella Terra, drain pan and shutoff code requirements for units above living space, and the paperwork some associations require before work begins. C&S is family-owned, licensed (CFC057076 and CFC1432485), and has served Southwest Florida since 1997 with a 5.0 Google rating. Call 833-PLUMB-IT for same-day water heater service in Estero.`,
+    features: [
+      {
+        title: "Same-Day Repair & Replacement",
+        description:
+          "Trucks stocked with elements, thermostats, valves, and common tank sizes so most Estero calls end with hot water restored same day.",
+      },
+      {
+        title: "Repair vs. Replace Honesty",
+        description:
+          "Side-by-side written quotes for repairing your current unit and replacing it, so you decide with real numbers — not pressure.",
+      },
+      {
+        title: "Tankless & Heat Pump Options",
+        description:
+          "Expert installation of tankless and heat pump water heaters, including guidance on current FPL rebate eligibility.",
+      },
+      {
+        title: "Hard Water Protection",
+        description:
+          "Tank flushing, element service, and water softener pairing to counter the mineral scale that shortens Estero water heater life.",
+      },
+      {
+        title: "HOA & Condo Logistics Handled",
+        description:
+          "Familiar with association requirements, access scheduling, and code-required drain pans across Estero's gated communities.",
+      },
+    ],
+    city: "Estero",
+    state: "FL",
+    neighborhoods: ESTERO_NEIGHBORHOODS,
+    faqs: [
+      {
+        question: "How quickly can you repair a water heater in Estero?",
+        answer:
+          "Most Estero water heater calls get same-day service. Our trucks carry heating elements, thermostats, relief valves, and common 40- and 50-gallon tank units, so both repairs and straightforward replacements are typically completed in a single visit. Call 833-PLUMB-IT in the morning and in most cases you'll have hot water again by evening.",
+      },
+      {
+        question: "Should I repair or replace my Estero water heater?",
+        answer:
+          "Age is the deciding factor. If your unit is under 10 years old and the failure is a component — element, thermostat, relief valve — repair usually makes sense. If the tank itself is leaking, or the unit is past 12 years, replacement is the smarter spend, because a corroded tank's next failure is often a full rupture. We quote both options in writing on every call so the decision is yours, made with real numbers.",
+      },
+      {
+        question: "Why are so many Estero water heaters failing right now?",
+        answer:
+          "Estero's biggest construction wave ran from 1998 to 2008 across The Brooks, Shadow Wood, Bella Terra, and the Coconut Point corridor. Water heaters last roughly 10–15 years, so that entire generation of homes is now cycling through original units or first replacements simultaneously. Lee County's hard water accelerates the timeline by scaling up elements and tank bottoms.",
+      },
+      {
+        question: "Are heat pump water heaters worth it in Estero?",
+        answer:
+          "Often, yes. Heat pump units pull warmth from surrounding air, and a Florida garage supplies that warmth nearly year-round, so they run at a fraction of a standard electric tank's operating cost. FPL rebate programs periodically offset part of the upfront price. They cost more to buy and need adequate clearance space, so we assess your garage and utility layout before recommending one.",
+      },
+      {
+        question: "Can you replace water heaters in Estero condos and coach homes?",
+        answer:
+          "Yes — it's a large part of our Estero work. We handle HOA notification and paperwork, schedule access and elevators where required in communities like The Brooks and Bella Terra, and install code-required drain pans and shutoffs for units located above living space. If your association has specific contractor requirements, we provide license and insurance documentation directly to the management office.",
+      },
+      {
+        question: "Are you licensed for water heater work in Estero?",
+        answer:
+          "Yes. C&S Plumbing holds two active Florida state plumbing contractor licenses — CFC057076 and CFC1432485, verifiable on the Florida DBPR website — covering all plumbing work in the Village of Estero and throughout Lee County. We're family-owned, in continuous operation since 1997, fully insured and bonded, and carry a 5.0 Google rating from 46+ homeowners.",
+      },
+    ],
+    relatedPages: [
+      { label: "Leak Repair in Estero", href: "/leak-repair-estero" },
+      { label: "Estero Plumber", href: "/plumber-estero" },
+      { label: "Estero Service Area", href: "/areas/estero" },
+    ],
+  },
+
+  // ============================================
+  // 38. LEAK REPAIR - ESTERO
+  // ============================================
+  {
+    slug: "leak-repair-estero",
+    serviceSlug: "leak-repair",
+    metaTitle: "Leak Repair Estero FL | Slab Leak Detection",
+    metaDescription:
+      "Leak detection & repair in Estero, FL. Slab leaks & CPVC failures found without demolition. Licensed CFC1432485, 5-star rated. Call 833-PLUMB-IT for fast help.",
+    keywords: [
+      "leak repair Estero",
+      "slab leak detection Estero FL",
+      "leak detection Estero Florida",
+      "CPVC pipe leak Estero",
+      "high water bill Estero",
+      "hidden water leak Estero FL",
+      "slab leak repair Estero",
+      "non-invasive leak detection Estero",
+      "water leak under floor Estero",
+      "Estero leak detection company",
+    ],
+    h1: "Leak Repair in Estero, FL",
+    sectionHeading: "How we find and fix leaks in Estero",
+    heroSubtext:
+      "A hidden leak under an Estero slab wastes thousands of gallons before you see a drop. C&S Plumbing pinpoints it with acoustic and thermal detection — no tearing up your travertine to find it.",
+    trustBadges: TRUST_BADGES,
+    serviceDescription:
+      `Estero's homes were built predominantly between 1998 and 2008, and nearly all of that construction used CPVC supply piping routed through and under concrete slabs. CPVC has a known aging pattern in Southwest Florida: two decades of daily heat cycling — hot attics, warm slabs, chlorinated water — gradually embrittles the material until joints and fittings crack under stress that new pipe would shrug off. Across The Brooks, Bella Terra, Shadow Wood, and the communities along Corkscrew Road, we're now seeing that generation of CPVC reach the brittle stage, and slab leaks are the result. The same embrittlement shows up above the slab too — at manifold connections, water heater hookups, and attic runs — but it's the under-slab failures that do the real financial damage.\n\nThe cruel thing about a slab leak is that you almost never see it. The first sign in most Estero homes is a water bill that jumps with no change in habits — a leak under the slab can waste hundreds of gallons a day straight into the ground. Other tells: the sound of running water when everything is off, a warm spot on the floor (a hot-side leak), hairline cracks in tile, or the water meter spinning with every fixture closed. If any of those sound familiar, shut off the main and call 833-PLUMB-IT before the damage spreads.\n\nFinding the leak without wrecking the house is the entire craft. C&S uses electronic acoustic detection to hear the leak through the slab, thermal imaging to map hot-water leaks through flooring, and pipe cameras to inspect lines from the inside. We pinpoint the failure to within inches before any tool touches your floor. In Estero homes finished with travertine, marble, and hardwood — flooring that's expensive or impossible to match — that precision is the difference between opening one tile and demolishing a room. Where the flooring or the pipe condition warrants it, we can often reroute the line overhead and avoid opening the slab entirely.\n\nBecause one brittle CPVC joint usually means others are close behind, we also give you a straight assessment of the whole system. Sometimes the right answer is a single repair; sometimes, especially after a second or third leak, a reroute or whole-home repipe stops the cycle for good. We quote every option in writing and let you choose — no scare tactics, no pressure. What we won't do is patch the same failing system a fourth time without telling you the truth about where it's headed.\n\nEvery leak job is documented for your homeowner's insurance: photos of the failure, moisture readings, a written cause-of-loss description, and itemized invoices your adjuster can work with directly. C&S Plumbing of Lee is family-owned, has served Southwest Florida since 1997, holds two active state licenses (CFC057076 and CFC1432485), and carries a 5.0 Google rating from 46+ homeowners. Call 833-PLUMB-IT for leak detection anywhere in Estero.`,
+    features: [
+      {
+        title: "Pinpoint Acoustic Detection",
+        description:
+          "Electronic listening equipment locates slab leaks to within inches through concrete — before any demolition begins.",
+      },
+      {
+        title: "Thermal Imaging & Pipe Cameras",
+        description:
+          "Infrared mapping of hot-water leaks and in-pipe camera inspection to confirm the failure point and pipe condition.",
+      },
+      {
+        title: "Floor-Safe Repair Methods",
+        description:
+          "Minimal, targeted access that protects travertine, marble, and hardwood — with overhead reroutes when opening the slab isn't worth it.",
+      },
+      {
+        title: "CPVC System Assessment",
+        description:
+          "Honest evaluation of whether one repair solves it or aging CPVC calls for a reroute or repipe — quoted side by side.",
+      },
+      {
+        title: "Insurance-Ready Documentation",
+        description:
+          "Photos, moisture readings, cause-of-loss reports, and itemized invoices prepared for your homeowner's insurance claim.",
+      },
+    ],
+    city: "Estero",
+    state: "FL",
+    neighborhoods: ESTERO_NEIGHBORHOODS,
+    faqs: [
+      {
+        question: "How fast can you respond to a leak in Estero?",
+        answer:
+          "Active leaks are treated as priority calls, and we typically reach Estero homes within the hour from our Lee County dispatch. For suspected slab leaks that aren't actively flooding, we usually schedule detection within 24 hours. Either way, call 833-PLUMB-IT and we'll walk you through shutting off the main water valve over the phone to stop the damage immediately.",
+      },
+      {
+        question: "How much does leak detection and repair cost in Estero?",
+        answer:
+          "Detection is a flat diagnostic fee, and the repair is quoted in writing before any work begins — the price depends on the leak's location, depth, and whether a spot repair or a reroute is the right fix. Because we pinpoint leaks before opening anything, you're not paying for exploratory demolition or the flooring restoration that comes with it. Many slab leak repairs are also partially covered by homeowner's insurance.",
+      },
+      {
+        question: "Why do Estero homes get so many slab leaks?",
+        answer:
+          "Almost all of Estero was built between 1998 and 2008 with CPVC supply lines run through and under the slab. After 15–25 years of Florida heat cycling and chlorinated water, CPVC becomes brittle, and joints crack under stress that new pipe would tolerate. That aging curve means communities like The Brooks, Bella Terra, and Shadow Wood are all reaching the leak-prone years at the same time.",
+      },
+      {
+        question: "What are the warning signs of a slab leak in my Estero home?",
+        answer:
+          "The most common first sign is a water bill that jumps with no change in usage. Others include the sound of running water when every fixture is off, warm spots on tile or wood floors, new hairline cracks in flooring, damp baseboards, and a water meter that spins with the house shut down. Any one of these justifies a detection visit — slab leaks only get more expensive with time.",
+      },
+      {
+        question: "Can you find the leak without tearing up my travertine or wood floors?",
+        answer:
+          "Yes — that's the entire point of our approach. Acoustic detection, thermal imaging, and pipe cameras let us pinpoint the leak to within inches before touching the floor. In most cases we open a single small access point directly over the failure, and where flooring is irreplaceable or the pipe is failing systemically, we can often reroute the line overhead and avoid opening the slab at all.",
+      },
+      {
+        question: "Are you licensed for leak detection and repair in Estero?",
+        answer:
+          "Yes. C&S Plumbing holds two active Florida state plumbing contractor licenses — CFC057076 and CFC1432485, verifiable on the Florida DBPR website — covering all plumbing work in the Village of Estero and unincorporated Lee County. We're family-owned, fully insured and bonded, and have been finding and fixing Southwest Florida leaks since 1997.",
+      },
+    ],
+    relatedPages: [
+      { label: "Water Heater Repair in Estero", href: "/water-heater-repair-estero" },
+      { label: "Estero Plumber", href: "/plumber-estero" },
+      { label: "Estero Service Area", href: "/areas/estero" },
+    ],
+  },
+
+  // ============================================
+  // 39. WATER HEATER REPAIR - BONITA SPRINGS
+  // ============================================
+  {
+    slug: "water-heater-repair-bonita-springs",
+    serviceSlug: "water-heaters",
+    metaTitle: "Water Heater Repair Bonita Springs | Fast Fix",
+    metaDescription:
+      "Water heater repair & replacement in Bonita Springs, FL. Same-week tank swaps, tankless installs & honest repair advice. Licensed CFC1432485. Call 833-PLUMB-IT.",
+    keywords: [
+      "water heater repair Bonita Springs",
+      "water heater replacement Bonita Springs FL",
+      "tankless water heater Bonita Springs",
+      "water heater installation Bonita Springs",
+      "no hot water Bonita Springs",
+      "leaking water heater Bonita Springs",
+      "water heater leaking in garage Bonita Springs",
+      "Bonita Springs water heater cost",
+      "hot water heater service Bonita Springs FL",
+      "emergency water heater repair Bonita Springs",
+    ],
+    h1: "Water Heater Repair in Bonita Springs, FL",
+    sectionHeading: "Why Bonita Springs water heaters fail early",
+    heroSubtext:
+      "A rusty puddle under the garage tank is your only warning before forty gallons hit the floor. C&S repairs and replaces Bonita Springs water heaters fast — call 833-PLUMB-IT.",
+    trustBadges: TRUST_BADGES,
+    serviceDescription:
+      `Bonita Springs built out fast through the 1990s and early 2000s, and the golf-course communities that define the city — Pelican Landing, Worthington, Spanish Wells, Hunters Ridge — are now full of water heaters on their second or even third replacement cycle. A tank water heater is a wear item, not a lifetime appliance, and in Southwest Florida the clock runs faster than the national average. If your Bonita Springs home still has the tank that came with a mid-2000s build, it's living on borrowed time.\n\nThe garage is part of the problem. Most Bonita Springs water heaters sit in the garage, where summer temperatures routinely push past 100 degrees. That ambient heat stresses tank linings, cooks thermostats and electrical components, and shortens the life of the anode rod that's supposed to sacrifice itself to protect the tank. Add the mineral content in our water — scale builds up on heating elements and settles into the tank bottom, forcing the unit to work harder and rumble louder every year — and a tank that might last twelve years up north often fails at eight to ten here. Rumbling or popping sounds, rusty hot water, and lukewarm showers are the early warnings — the rusty ring on the garage floor is the last one.\n\nC&S Plumbing of Lee diagnoses before prescribing. If the tank itself is sound and the failure is an element, thermostat, valve, or connection, we quote the repair honestly. If the tank is leaking or the unit is past the point where a repair makes financial sense, we quote replacement side by side so you can decide with real numbers. Most Bonita Springs replacements are completed the same week you call, and often the same day the old tank fails.\n\nWe also handle a steady stream of calls every fall from seasonal residents returning to Pelican Landing and Worthington after the summer away. A water heater that sat idle for six months in a closed, hot garage is a common casualty — corroded fittings, seized valves, and tanks that let go the first week the house is occupied again. If you're returning for the season, a quick startup inspection costs far less than a flooded garage. And if you're ready to stop feeding a tank altogether, we install tankless systems that fit Bonita Springs homes well: endless hot water when the house is full at Christmas, and no fifty hot gallons standing by while it's empty all summer.\n\nC&S has been family-owned since 1997, holds two active Florida licenses (CFC057076 and CFC1432485), and carries a 5.0 Google rating from 46+ Southwest Florida homeowners. Every job starts with an upfront written quote. When the hot water quits in Bonita Springs, call 833-PLUMB-IT.`,
+    features: [
+      {
+        title: "Same-Week Replacement",
+        description:
+          "Most Bonita Springs tank replacements are installed within days of your call — often the same day the old unit fails.",
+      },
+      {
+        title: "Repair-First Diagnosis",
+        description:
+          "If an element, thermostat, or valve is the real problem, we fix it — we don't sell tanks to people who don't need them.",
+      },
+      {
+        title: "Tankless Retrofits",
+        description:
+          "Endless hot water and no standby tank — ideal for seasonal Bonita Springs homes that sit empty half the year.",
+      },
+      {
+        title: "Hard Water Scale Service",
+        description:
+          "Tank flushing, anode rod replacement, and element service that fight the mineral buildup shortening water heater life here.",
+      },
+      {
+        title: "Seasonal Startup Checks",
+        description:
+          "Returning for the season? We inspect and restart your water heater before a summer of idle corrosion becomes a flood.",
+      },
+    ],
+    city: "Bonita Springs",
+    state: "FL",
+    neighborhoods: BONITA_SPRINGS_NEIGHBORHOODS,
+    faqs: [
+      {
+        question: "How fast can you repair a water heater in Bonita Springs?",
+        answer:
+          "Most repair calls are handled same-day or next-day, and no hot water is treated as a priority call. Full replacements are typically completed within the same week — often within 24 hours if the old tank is actively leaking. Call 833-PLUMB-IT and our dispatcher will give you an honest timeline based on current crew availability.",
+      },
+      {
+        question: "How much does water heater replacement cost in Bonita Springs?",
+        answer:
+          "Cost depends on tank size, fuel type, location, and code items like drain pans, expansion tanks, and shutoff valves that may need updating on older installs. We quote every job in writing before work begins, and if a repair is the smarter spend than replacement, we'll tell you that too. The price we quote is the price you pay.",
+      },
+      {
+        question: "Why do water heaters fail faster in Bonita Springs?",
+        answer:
+          "Three reasons: garage installations bake in 100-degree summer heat, mineral-heavy water builds scale on elements and tank bottoms, and many homes in communities like Pelican Landing, Worthington, and Spanish Wells still run tanks from the original 1990s–2000s construction era. A tank that lasts twelve years elsewhere often fails at eight to ten here — so if yours is past that age, it's worth an inspection before it decides for you.",
+      },
+      {
+        question: "Are you licensed to replace water heaters in Bonita Springs?",
+        answer:
+          "Yes. C&S Plumbing holds two active Florida state plumbing contractor licenses, CFC057076 and CFC1432485, both verifiable on the Florida DBPR website. We're fully insured, family-owned since 1997, and we pull the required permit and handle the inspection on every water heater replacement.",
+      },
+      {
+        question: "What happens during a water heater service call?",
+        answer:
+          "We start with diagnosis: testing elements and thermostats, checking the anode rod and tank condition, and inspecting valves, connections, and the drain pan. Then you get a straight answer — repair with a written quote, or replacement quoted side by side if the tank is done. If you approve a replacement, we haul off the old unit, install to current code, and test everything before we leave.",
+      },
+      {
+        question: "Is a tankless water heater a good idea for a seasonal Bonita Springs home?",
+        answer:
+          "Often, yes. Seasonal residents pay to keep a tank of hot water on standby in an empty house all summer — a tankless unit heats only when a tap opens, and there's no aging tank waiting to rupture while you're out of state. The trade-off is higher upfront cost and possible electrical or gas upgrades. We quote tank and tankless side by side with honest operating-cost math so you can decide.",
+      },
+    ],
+    relatedPages: [
+      { label: "Repiping in Bonita Springs", href: "/repiping-bonita-springs" },
+      { label: "Leak Repair in Bonita Springs", href: "/leak-repair-bonita-springs" },
+      { label: "Bonita Springs Service Area", href: "/areas/bonita-springs" },
+    ],
+  },
+
+  // ============================================
+  // 40. REPIPING - BONITA SPRINGS
+  // ============================================
+  {
+    slug: "repiping-bonita-springs",
+    serviceSlug: "repiping",
+    metaTitle: "Repiping Bonita Springs | Whole-Home PEX",
+    metaDescription:
+      "Whole-home repiping in Bonita Springs, FL. Replace pinhole-leaking copper & brittle CPVC with PEX — minimal wall damage. Licensed CFC1432485. Call 833-PLUMB-IT.",
+    keywords: [
+      "repiping Bonita Springs",
+      "whole house repipe Bonita Springs FL",
+      "copper pinhole leaks Bonita Springs",
+      "PEX repiping Bonita Springs",
+      "CPVC pipe replacement Bonita Springs",
+      "Bonita Springs repipe cost",
+      "repipe company Bonita Springs",
+      "pipe replacement Bonita Springs FL",
+      "slab leak repipe Bonita Springs",
+      "condo repiping Bonita Springs",
+    ],
+    h1: "Repiping in Bonita Springs, FL",
+    sectionHeading: "When Bonita Springs pipes reach the end of the line",
+    heroSubtext:
+      "One pinhole leak in 1990s copper is rarely the last. C&S repipes Bonita Springs homes in days, not weeks — with walls patched and water back on fast.",
+    trustBadges: TRUST_BADGES,
+    serviceDescription:
+      `The copper supply lines installed across Bonita Springs in the 1990s building boom are failing, and they're failing in a predictable pattern: pinhole leaks. Southwest Florida's water chemistry is aggressive toward copper — over two or three decades it eats pits into the pipe wall from the inside out until a pinprick opening starts spraying inside your wall or under your slab. The cruel part is that pinholes rarely come alone. The same corrosion that opened the first leak is working on every foot of copper in the house, which is why homeowners who patch leak number one so often call us back for leaks two, three, and four within a year or two.\n\nHomes near the water face an added attacker. Along Bonita Beach Road, on Bonita Beach and out toward Barefoot Beach, salt air works on exposed copper, fittings, and valve bodies from the outside while the water chemistry works from within. Coastal homes routinely show corrosion years ahead of comparable inland construction, and we factor that exposure into both the inspection and the material choices when we repipe near the beach.\n\nThe 2000s-era builds have their own ticking clock. Many were plumbed with CPVC, which turns brittle as it ages in Florida heat — pipe that shatters like old plastic when a handyman so much as bumps it. If your CPVC has gone yellow or snaps instead of flexing, it's telling you something.\n\nA whole-home repipe sounds disruptive, but modern PEX repiping is far less invasive than most Bonita Springs homeowners expect. We route flexible PEX-A through attics and wall cavities using small, strategic access openings rather than tearing out entire walls, then patch and texture every opening before we're done. A typical single-family repipe takes two to three days, and the water is usually only off for a few hours at a time. PEX is immune to the corrosion that killed your copper, handles Florida's heat cycling without going brittle, and carries a 25-year manufacturer warranty. Before we close a single wall, the entire new system is pressure-tested, and every fixture in the house is run and checked — you see the proof before we patch.\n\nBonita Springs' gated communities add a coordination layer that we handle routinely: HOA notification and approval paperwork, gate access for crews, protecting common areas, and scheduling around community quiet hours. Many of our repipe clients are seasonal residents, and we regularly complete repipes while the owner is out of state — coordinating access through a property manager, sending photo updates, and walking the finished job with your local contact. Family-owned since 1997, licensed CFC057076 and CFC1432485, with 8,500+ Southwest Florida homes behind us. Get the straight answer on your pipes — call 833-PLUMB-IT for a free repipe estimate.`,
+    features: [
+      {
+        title: "PEX-A Whole-Home Repipes",
+        description:
+          "Corrosion-immune PEX replaces failing copper and brittle CPVC, backed by a 25-year manufacturer warranty.",
+      },
+      {
+        title: "Minimal Wall Damage",
+        description:
+          "Small, strategic access openings instead of demolished walls — every opening patched, textured, and ready for paint.",
+      },
+      {
+        title: "2–3 Day Completion",
+        description:
+          "Most Bonita Springs single-family repipes finish in two to three days, with water off only a few hours at a time.",
+      },
+      {
+        title: "HOA & Gated Community Coordination",
+        description:
+          "We handle association paperwork, gate access, and community rules in Pelican Landing, Worthington, Spanish Wells, and beyond.",
+      },
+      {
+        title: "Seasonal-Owner Friendly",
+        description:
+          "Out of state? We coordinate access, send photo updates, and complete the permit inspection while you're away.",
+      },
+    ],
+    city: "Bonita Springs",
+    state: "FL",
+    neighborhoods: BONITA_SPRINGS_NEIGHBORHOODS,
+    faqs: [
+      {
+        question: "How long does a whole-home repipe take in Bonita Springs?",
+        answer:
+          "A typical 2,000–3,000 square foot Bonita Springs home takes two to three days. Larger homes or complex layouts may run a day or two longer. Water is usually off only 4–8 hours per working day, and the house stays livable throughout. We give you an exact timeline in your written estimate before any work begins.",
+      },
+      {
+        question: "How much does repiping cost in Bonita Springs?",
+        answer:
+          "Most whole-home repipes in Bonita Springs fall between $4,000 and $12,000 depending on square footage, fixture count, number of stories, and access. That includes materials, labor, permits, inspections, and drywall patching. We provide a free written estimate with a firm price — not an hourly guess that grows as the job goes.",
+      },
+      {
+        question: "Why are so many Bonita Springs homes getting repiped right now?",
+        answer:
+          "Timing. The city's biggest construction wave ran through the 1990s and early 2000s, so a huge share of local homes have copper that's hitting the 25–30 year pinhole-leak window or CPVC that's gone brittle in the heat — all at once. Coastal homes near Bonita Beach and Barefoot Beach age even faster because salt air attacks pipe and fittings from the outside while the water chemistry corrodes from within.",
+      },
+      {
+        question: "Are you licensed and permitted for repiping in Bonita Springs?",
+        answer:
+          "Yes. C&S Plumbing holds two active Florida plumbing contractor licenses — CFC057076 and CFC1432485, verifiable on the Florida DBPR website — and we pull the required plumbing permit and schedule all inspections with the City of Bonita Springs as part of every repipe. Permits and inspections are included in your quote, not an add-on.",
+      },
+      {
+        question: "What does the repipe process look like day to day?",
+        answer:
+          "Day one: we protect floors and furniture, open small access points, and begin routing PEX through the attic and walls. Day two: we connect fixtures, pressure-test the new system, and switch your home over to the new lines. Final phase: inspection, then drywall patching and texture on every opening. You get photo updates at each stage, and we don't leave until every fixture runs right.",
+      },
+      {
+        question: "My home has had one pinhole leak — do I really need a full repipe?",
+        answer:
+          "Not always, and we'll tell you honestly. But a pinhole is a symptom of corrosion happening throughout the copper, not an isolated defect — most homes that get one see more within a couple of years. We can inspect accessible pipe and give you a straight read: if a spot repair buys you meaningful time, we'll say so; if you're patching a system that's failing everywhere, we'll show you why the repipe is the cheaper path over five years.",
+      },
+    ],
+    relatedPages: [
+      { label: "Leak Repair in Bonita Springs", href: "/leak-repair-bonita-springs" },
+      { label: "Emergency Plumber in Bonita Springs", href: "/emergency-plumber-bonita-springs" },
+      { label: "Bonita Springs Service Area", href: "/areas/bonita-springs" },
+    ],
+    priceRange: "$4,000–$12,000",
+  },
+
+  // ============================================
+  // 41. LEAK REPAIR - BONITA SPRINGS
+  // ============================================
+  {
+    slug: "leak-repair-bonita-springs",
+    serviceSlug: "leak-repair",
+    metaTitle: "Leak Repair Bonita Springs | Slab Leak Experts",
+    metaDescription:
+      "Leak detection & repair in Bonita Springs, FL. Slab leaks found with acoustic & thermal tech — no torn-up tile. Licensed CFC1432485. Call 833-PLUMB-IT today.",
+    keywords: [
+      "leak repair Bonita Springs",
+      "leak detection Bonita Springs FL",
+      "slab leak repair Bonita Springs",
+      "water leak Bonita Springs",
+      "hidden leak detection Bonita Springs",
+      "high water bill Bonita Springs",
+      "pipe leak repair Bonita Springs FL",
+      "slab leak detection Bonita Springs",
+      "under slab leak Bonita Springs",
+      "plumbing leak Bonita Springs Florida",
+    ],
+    h1: "Leak Repair in Bonita Springs, FL",
+    sectionHeading: "Finding the leaks Bonita Springs homes hide",
+    heroSubtext:
+      "A water bill that doubled or a warm spot on the tile means water is going somewhere it shouldn't. C&S finds Bonita Springs leaks without tearing up your floors.",
+    trustBadges: TRUST_BADGES,
+    serviceDescription:
+      `The most expensive leaks in Bonita Springs are the ones you can't see. Homes here were built through the 1990s and 2000s on concrete slabs, with copper supply lines running beneath or through that concrete — and as those lines age, pinhole corrosion opens leaks under the slab where water can run for weeks before anyone notices. By the time a warm spot shows up on the tile or a stain creeps across the baseboard, the water has often been flowing for a long time.\n\nFor Bonita Springs' large seasonal population, the stakes are higher still. We take calls every October and November from residents returning to Pelican Landing, Worthington, and Spanish Wells who open the front door to a wet floor, buckled flooring, or a mold smell — a small leak that started in June and ran unattended all summer. If you're a seasonal owner, two things protect you: shutting off the main before you leave, and calling us the moment anything looks or smells wrong when you return, because leak damage compounds daily. We can also coordinate directly with your property manager if you're still out of state when the problem surfaces.\n\nOften the first symptom isn't visible at all — it's the water bill. A Bonita Springs utility bill that jumps with no change in usage is the classic signature of a hidden leak, and it's worth a professional look before the next billing cycle. Our diagnostic process starts with meter isolation testing to confirm a leak exists and narrow it to a zone, then acoustic listening equipment and thermal imaging to pinpoint the failure — through tile, terrazzo, or laminate — without exploratory demolition. We locate the leak first and open only the spot that needs opening. That precision matters in homes with matched tile that can't be replaced.\n\nBonita Springs' sandy coastal soil adds its own pressure. Soil movement from seasonal water-table swings and heavy storm years flexes underground lines and slab penetrations, stressing pipes at exactly the points that are hardest to see. Once we've located a leak, we quote your options straight: a spot repair where the pipe is otherwise healthy, a reroute overhead when the under-slab section can't be trusted, or a repipe conversation if the leak is one symptom of system-wide corrosion. We also document everything — photos, moisture readings, and a written cause-of-loss description — because slab leak claims go smoother when the paperwork is done right, and we'll communicate directly with your adjuster if needed.\n\nFamily-owned since 1997, licensed CFC057076 and CFC1432485, rated 5.0 on Google by 46+ homeowners. If Bonita Springs water is going where it shouldn't, call 833-PLUMB-IT.`,
+    features: [
+      {
+        title: "Acoustic & Thermal Detection",
+        description:
+          "Electronic listening equipment and thermal imaging pinpoint leaks under slabs and behind walls — no exploratory demolition.",
+      },
+      {
+        title: "Slab Leak Specialists",
+        description:
+          "Spot repair, overhead reroute, or repipe — we quote every realistic option after locating the leak precisely.",
+      },
+      {
+        title: "High Water Bill Investigations",
+        description:
+          "Meter isolation testing confirms whether a jump in your bill is a hidden leak and narrows down exactly where.",
+      },
+      {
+        title: "Seasonal Home Response",
+        description:
+          "Came back to a wet floor? We prioritize returning-resident calls and can coordinate with property managers year-round.",
+      },
+      {
+        title: "Insurance Documentation",
+        description:
+          "Photos, moisture readings, and written cause-of-loss detail — and direct communication with your adjuster when needed.",
+      },
+    ],
+    city: "Bonita Springs",
+    state: "FL",
+    neighborhoods: BONITA_SPRINGS_NEIGHBORHOODS,
+    faqs: [
+      {
+        question: "How quickly can you respond to a leak in Bonita Springs?",
+        answer:
+          "Active leaks are treated with urgency — typical response in Bonita Springs is 30–60 minutes for emergencies, and same-day or next-day for suspected hidden leaks that aren't actively flooding. If water is actively flowing, shut off your main valve and call 833-PLUMB-IT; our dispatcher will walk you through it and give you a real ETA.",
+      },
+      {
+        question: "How much does leak detection and repair cost in Bonita Springs?",
+        answer:
+          "Detection is quoted as a flat diagnostic service, and the repair is quoted in writing once we've pinpointed the leak — before any repair work begins. Costs vary widely depending on whether the fix is a spot repair, an overhead reroute, or part of a larger repipe, which is exactly why we locate first and quote second. No hourly open-ended digging.",
+      },
+      {
+        question: "Why are slab leaks so common in Bonita Springs?",
+        answer:
+          "Most Bonita Springs homes were built in the 1990s and 2000s on concrete slabs with copper supply lines running beneath them. Southwest Florida's water chemistry corrodes that copper from the inside, and sandy coastal soil that shifts with the water table stresses pipes at slab penetrations. Thirty years in, those lines are failing — usually as pinhole leaks in the one place you can't see them.",
+      },
+      {
+        question: "Can you find a leak without tearing up my tile floors?",
+        answer:
+          "Yes — that's the entire point of electronic detection. Acoustic listening equipment picks up the sound of pressurized water escaping underground, and thermal imaging reveals temperature changes through the floor surface. We pinpoint the leak location before opening anything, so instead of trenching across a tiled room, we open one precise access point — or route around the slab entirely.",
+      },
+      {
+        question: "Are you licensed for leak repair in Bonita Springs?",
+        answer:
+          "Yes. C&S Plumbing of Lee holds two active Florida state plumbing contractor licenses, CFC057076 and CFC1432485, both verifiable on the Florida DBPR website. We're fully insured and have been family-owned since 1997, with more than 8,500 Southwest Florida homes behind us.",
+      },
+      {
+        question: "Will my homeowner's insurance cover a slab leak in Bonita Springs?",
+        answer:
+          "Many policies cover the sudden water damage a slab leak causes and the access work needed to reach the pipe, though coverage for the pipe repair itself varies by policy. We can't promise what your insurer will pay, but we document everything — photos, moisture readings, and a written cause-of-loss description — and communicate directly with your adjuster so your claim is built on solid evidence.",
+      },
+    ],
+    relatedPages: [
+      { label: "Repiping in Bonita Springs", href: "/repiping-bonita-springs" },
+      { label: "Water Heater Repair in Bonita Springs", href: "/water-heater-repair-bonita-springs" },
+      { label: "Bonita Springs Service Area", href: "/areas/bonita-springs" },
+    ],
+  },
+
+  // ============================================
+  // 42. EMERGENCY PLUMBER - PORT CHARLOTTE
+  // ============================================
+  {
+    slug: "emergency-plumber-port-charlotte",
+    serviceSlug: "emergency",
+    metaTitle: "Emergency Plumber Port Charlotte | 24/7",
+    metaDescription:
+      "24/7 emergency plumber serving Port Charlotte, FL. Burst pipes, sewage backups & storm damage. Licensed CFC1432485, 5-star rated. Call 833-PLUMB-IT for help.",
+    keywords: [
+      "emergency plumber Port Charlotte",
+      "24 hour plumber Port Charlotte FL",
+      "burst pipe repair Port Charlotte",
+      "sewage backup Port Charlotte",
+      "after hours plumber Port Charlotte",
+      "emergency plumbing Charlotte County",
+      "Port Charlotte plumbing emergency",
+      "weekend plumber Port Charlotte FL",
+      "storm damage plumber Port Charlotte",
+      "night plumber Port Charlotte",
+    ],
+    h1: "Emergency Plumber in Port Charlotte, FL",
+    sectionHeading: "How we handle plumbing emergencies in Port Charlotte",
+    heroSubtext:
+      "A burst pipe in a 1980s Port Charlotte home doesn't wait for morning. C&S dispatches licensed plumbers to Charlotte County 24/7 — call 833-PLUMB-IT now.",
+    trustBadges: TRUST_BADGES,
+    serviceDescription:
+      `Port Charlotte's housing stock has reached the age where plumbing emergencies stop being freak events and start being statistics. Most of the city was built out in the 1970s and 1980s, which means original copper and galvanized supply lines pushing forty to fifty years old, cast iron drains rusted rough and narrow, and water heaters, valves, and fittings that were never meant to serve this long. When one of those systems finally lets go — a supply line bursting inside a wall at 2 AM, a main drain backing sewage into the shower — you need someone who answers the phone and shows up.\n\nC&S Plumbing of Lee provides 24/7 emergency response to Port Charlotte and greater Charlotte County from our shop in North Fort Myers. We'll be straight with you about what that means: we're not around the corner, and our trucks typically reach most of Port Charlotte in 30–45 minutes via US-41 or I-75 depending on time of day and where in the county you are. Our dispatcher gives you a realistic ETA when you call 833-PLUMB-IT — not a promise designed to win the call — and walks you through shutting off your main and protecting the house while the truck is rolling. For active water emergencies, those first ten minutes of phone guidance often save more damage than any response time could.\n\nCharlotte County also carries scars that shape its plumbing. Hurricane Ian came ashore in this area in 2022 and hit Charlotte County as hard as anywhere in Florida. Beyond the visible destruction, storms like Ian shift and compact the sandy soil under slabs and yards, stressing underground supply and drain lines — and some of those stressed pipes are still failing years later. C&S has responded to every major storm in Southwest Florida since Hurricane Charley in 2004, and our crews are trained in post-storm plumbing triage: isolating broken lines, clearing storm-fouled drains, and preventing the secondary water damage that turns a bad week into a gutted house.\n\nThe emergencies we run to most in Port Charlotte are burst and pinhole-leaking supply lines in 1970s–80s homes, sewage backups through aging cast iron mains, failed water heaters flooding garages, and post-storm line breaks. Every truck carries leak detection equipment, pipe cameras, and the fittings older homes demand, so most emergency repairs are permanent — completed on the first visit, not patched until a return trip. When a backup or burst line has already done damage, we photograph and document everything for your insurance claim before cleanup begins.\n\nWhen you call 833-PLUMB-IT, you reach a family-owned company, not a call center: licensed CFC057076 and CFC1432485, fully insured, in business since 1997, rated 5.0 on Google. Emergency work is quoted in writing before it starts — even at midnight.`,
+    features: [
+      {
+        title: "24/7 Live Dispatch",
+        description:
+          "A real dispatcher answers 833-PLUMB-IT around the clock and walks you through protecting your home while the truck rolls.",
+      },
+      {
+        title: "Honest Response Times",
+        description:
+          "We reach most of Port Charlotte in 30–45 minutes from North Fort Myers — and we tell you the real ETA, not a sales pitch.",
+      },
+      {
+        title: "Aging-Pipe Expertise",
+        description:
+          "Trucks stocked with the fittings and materials that 1970s–80s copper, galvanized, and cast iron systems demand for permanent first-visit repairs.",
+      },
+      {
+        title: "Sewage Backup Response",
+        description:
+          "Emergency drain clearing and cleanup guidance for backups through Port Charlotte's original cast iron mains — a health hazard we treat as top priority.",
+      },
+      {
+        title: "Storm & Hurricane Triage",
+        description:
+          "Post-storm line isolation, drain clearing, and damage prevention — we've responded to every major storm since Charley in 2004, including Ian.",
+      },
+    ],
+    city: "Port Charlotte",
+    state: "FL",
+    neighborhoods: PORT_CHARLOTTE_NEIGHBORHOODS,
+    faqs: [
+      {
+        question: "How fast can an emergency plumber reach my Port Charlotte home?",
+        answer:
+          "Our trucks come from North Fort Myers and typically reach most of Port Charlotte in 30–45 minutes via US-41 or I-75, depending on time of day and your location in the county. We'd rather give you an honest ETA than an inflated promise — and while the truck is en route, our dispatcher walks you through shutting off the main and containing the damage, which is where the most water is actually saved.",
+      },
+      {
+        question: "Do you charge extra for nights and weekends in Port Charlotte?",
+        answer:
+          "We use a flat diagnostic fee for emergency calls regardless of the hour, and all repair work is quoted in writing before it begins. There are no hidden overtime surcharges — the price we quote at 2 AM is the same kind of upfront, honest number you'd get at 2 PM.",
+      },
+      {
+        question: "Why do Port Charlotte homes have so many plumbing emergencies?",
+        answer:
+          "Age, mostly. The majority of Port Charlotte was built in the 1970s and 1980s, so original supply lines, cast iron drains, and fittings are now forty to fifty years old — well past their design life. Hurricane Ian added another layer: the storm shifted and compacted soil under slabs and yards across Charlotte County, and stressed underground lines from that event are still failing years later.",
+      },
+      {
+        question: "Are you licensed to do emergency plumbing work in Charlotte County?",
+        answer:
+          "Yes. C&S Plumbing holds two active Florida state plumbing contractor licenses — CFC057076 and CFC1432485 — which are valid throughout Florida, including Charlotte County, and verifiable on the Florida DBPR website. We're fully insured and have been family-owned since 1997.",
+      },
+      {
+        question: "What should I do while waiting for the emergency plumber?",
+        answer:
+          "Shut off the main water valve — in most Port Charlotte homes it's near the front hose bib or at the meter by the street. If sewage is backing up, stop using all fixtures immediately. If water is near outlets or appliances, kill the breaker to that area. Call 833-PLUMB-IT first, though: our dispatcher will walk you through each step for your specific situation while the truck is on its way.",
+      },
+      {
+        question: "Can you handle storm and hurricane plumbing damage in Port Charlotte?",
+        answer:
+          "Yes. We've responded to every major Southwest Florida storm since Hurricane Charley in 2004, including Hurricane Ian, which hit Charlotte County directly. Post-storm calls include broken underground lines from shifted soil, storm-fouled drains, backflow issues, and water heaters damaged by flooding. We triage safety first, stop active water loss, and document damage for your insurance claim.",
+      },
+    ],
+    relatedPages: [
+      { label: "Water Heater Repair in Port Charlotte", href: "/water-heater-repair-port-charlotte" },
+      { label: "Drain Cleaning in Port Charlotte", href: "/drain-cleaning-port-charlotte" },
+      { label: "Port Charlotte Service Area", href: "/areas/port-charlotte" },
+    ],
+  },
+
+  // ============================================
+  // 43. WATER HEATER REPAIR - PORT CHARLOTTE
+  // ============================================
+  {
+    slug: "water-heater-repair-port-charlotte",
+    serviceSlug: "water-heaters",
+    metaTitle: "Water Heater Repair Port Charlotte | Same-Week",
+    metaDescription:
+      "Water heater repair & replacement in Port Charlotte, FL. Honest repair-vs-replace advice, same-week installs. Licensed CFC1432485. Call 833-PLUMB-IT today.",
+    keywords: [
+      "water heater repair Port Charlotte",
+      "water heater replacement Port Charlotte FL",
+      "no hot water Port Charlotte",
+      "leaking water heater Port Charlotte",
+      "water heater installation Port Charlotte",
+      "tankless water heater Port Charlotte",
+      "Port Charlotte water heater cost",
+      "hot water heater service Port Charlotte FL",
+      "water heater element replacement Port Charlotte",
+      "Charlotte County water heater repair",
+    ],
+    h1: "Water Heater Repair in Port Charlotte, FL",
+    sectionHeading: "Straight answers on Port Charlotte water heaters",
+    heroSubtext:
+      "Rumbling tank, rusty water, or a cold shower this morning? C&S repairs what's repairable and replaces what isn't — with the honest math to tell you which. Call 833-PLUMB-IT.",
+    trustBadges: TRUST_BADGES,
+    serviceDescription:
+      `Port Charlotte has one of the oldest housing stocks in Southwest Florida — most of the city went up in the 1970s and 1980s — and that age shows up in water heaters before almost anything else. A tank lasts eight to twelve years here, which means the average Port Charlotte home is on its third or fourth unit, and plenty are running tanks that should have been retired years ago. The warning signs are consistent: rumbling and popping as the burner or elements fight through sediment, rusty or metallic-tasting hot water, lukewarm showers that used to be hot, and finally the rusty ring on the garage floor that means the tank wall has been breached.\n\nSediment is the local accelerant. Sections of Port Charlotte and the surrounding county — especially out toward Gulf Cove and El Jobean — run on well water with heavy mineral content, and even the utility-served parts of town carry enough hardness to matter. Minerals settle into the tank bottom and bake onto heating elements, insulating the water from the heat source. The unit runs longer, costs more, and dies younger. Regular tank flushing and element service slow that clock considerably, and it's a service call that costs a fraction of a new unit.\n\nMost Port Charlotte water heaters live in the garage or an interior closet, and each location has its own failure mode. Garage tanks bake through Florida summers, which is hard on thermostats, wiring, and tank linings. Closet installs fail quieter and uglier — a slow leak inside an air-conditioned closet can soak drywall and flooring for weeks before anyone notices. If your tank sits in a closet, the drain pan and its drain line are not optional details, and we check both on every service call.\n\nOur rule is diagnosis before prescription. If your unit is a few years old and the problem is an element, thermostat, or valve, we repair it and you keep years of remaining life — we don't sell tanks to people who need a $40 part. If the tank itself is leaking or the unit is old enough that a repair is throwing good money after bad, we say that plainly and quote the replacement in writing. When replacement is the answer, we typically complete Port Charlotte installs within the same week, often within a day or two, including haul-away of the old unit, code-required pan and valve updates, and full testing before we leave. We also quote tankless side by side for homeowners ready to stop feeding a tank.\n\nC&S Plumbing of Lee is family-owned since 1997, licensed CFC057076 and CFC1432485, and rated 5.0 on Google by 46+ homeowners. For hot water help in Port Charlotte, call 833-PLUMB-IT.`,
+    features: [
+      {
+        title: "Repair-vs-Replace Honesty",
+        description:
+          "We diagnose first and quote both paths when both are realistic — we don't sell a new tank when a $40 element is the fix.",
+      },
+      {
+        title: "Same-Week Installation",
+        description:
+          "Most Port Charlotte replacements are completed within the week, often within a day or two of the old tank failing.",
+      },
+      {
+        title: "Well Water & Sediment Service",
+        description:
+          "Tank flushing and element service that fight the mineral buildup common in Gulf Cove, El Jobean, and well-served sections of the county.",
+      },
+      {
+        title: "Garage & Closet Install Experts",
+        description:
+          "Drain pans, pan drains, and code-required valves done right — especially critical for closet tanks that leak silently into drywall.",
+      },
+      {
+        title: "Upfront Written Quotes",
+        description:
+          "Every repair and replacement is quoted in writing before work begins. The price we quote is the price you pay.",
+      },
+    ],
+    city: "Port Charlotte",
+    state: "FL",
+    neighborhoods: PORT_CHARLOTTE_NEIGHBORHOODS,
+    faqs: [
+      {
+        question: "How fast can you fix a water heater in Port Charlotte?",
+        answer:
+          "No hot water is a priority call — most Port Charlotte repairs are handled same-day or next-day, with our trucks reaching most of the city in 30–45 minutes from North Fort Myers. Full replacements are typically installed within the same week, and often within a day or two if your old tank is actively leaking. Call 833-PLUMB-IT for a realistic timeline.",
+      },
+      {
+        question: "How much does water heater replacement cost in Port Charlotte?",
+        answer:
+          "It depends on tank size, electric versus gas, the install location, and what code items need updating — many older Port Charlotte installs are missing drain pans, expansion tanks, or proper shutoff valves that current code requires. We quote the full job in writing before any work starts, and if a repair makes more financial sense than replacement, we'll tell you that first.",
+      },
+      {
+        question: "Why do water heaters fail so often in Port Charlotte?",
+        answer:
+          "Age and minerals. Much of Port Charlotte's housing went up in the 1970s and 1980s, so a lot of homes are running tanks well past the eight-to-twelve-year lifespan typical here. Mineral-heavy water — especially in well-served sections like Gulf Cove and El Jobean — builds sediment that insulates elements, forces the unit to run longer, and rusts the tank from the inside out.",
+      },
+      {
+        question: "Are you licensed for water heater work in Charlotte County?",
+        answer:
+          "Yes. C&S Plumbing holds two active Florida state plumbing contractor licenses, CFC057076 and CFC1432485, valid throughout Florida including Charlotte County and verifiable on the Florida DBPR website. We're fully insured, family-owned since 1997, and we handle the permit and inspection on every replacement.",
+      },
+      {
+        question: "What happens when you come out for a water heater call?",
+        answer:
+          "We test the elements, thermostats, and valves, check the tank for corrosion and leaks, and inspect the pan, drain, and connections. Then you get a plain-English verdict: a written repair quote if the unit has life left, or repair and replacement quoted side by side if it's borderline. If you approve a replacement, we install to current code, haul off the old unit, and test everything before we go.",
+      },
+      {
+        question: "Should I repair my old water heater or just replace it?",
+        answer:
+          "A good rule: if the tank itself is leaking, replacement is the only real option — tanks can't be patched. If the tank is sound and the unit is under eight years old, a repair usually wins. In between, it's a math problem: repair cost versus remaining life versus the efficiency of a new unit. We put both numbers in front of you and let you decide — we make the same fair margin either way.",
+      },
+    ],
+    relatedPages: [
+      { label: "Emergency Plumber in Port Charlotte", href: "/emergency-plumber-port-charlotte" },
+      { label: "Repiping in Port Charlotte", href: "/repiping-port-charlotte" },
+      { label: "Port Charlotte Service Area", href: "/areas/port-charlotte" },
+    ],
+  },
+
+  // ============================================
+  // 44. REPIPING - PORT CHARLOTTE
+  // ============================================
+  {
+    slug: "repiping-port-charlotte",
+    serviceSlug: "repiping",
+    metaTitle: "Repiping Port Charlotte | Poly-B & Copper Pros",
+    metaDescription:
+      "Whole-home repiping in Port Charlotte, FL. Replace failing 1980s copper & polybutylene with PEX — permits handled. Licensed CFC1432485. Call 833-PLUMB-IT.",
+    keywords: [
+      "repiping Port Charlotte",
+      "whole house repipe Port Charlotte FL",
+      "polybutylene pipe replacement Port Charlotte",
+      "copper repiping Port Charlotte",
+      "Port Charlotte repipe cost",
+      "PEX repiping Port Charlotte",
+      "poly b pipe Port Charlotte",
+      "pipe replacement Charlotte County",
+      "repipe company Port Charlotte",
+      "polybutylene insurance Port Charlotte",
+    ],
+    h1: "Repiping in Port Charlotte, FL",
+    sectionHeading: "Port Charlotte's copper and poly-b problem",
+    heroSubtext:
+      "Forty-year-old copper and class-action-era polybutylene are both on borrowed time. C&S repipes Port Charlotte homes in days — permits, patches, and all.",
+    trustBadges: TRUST_BADGES,
+    serviceDescription:
+      `Port Charlotte's plumbing is aging out on two fronts at once. The first is copper: most of the city was built in the 1970s and 1980s, and copper supply lines from that era are now forty to fifty years old — at or past the end of their working life in Southwest Florida's aggressive water chemistry. The failure pattern is pinhole leaks, corrosion pits that eat through the pipe wall from the inside and start spraying inside walls and under slabs. One pinhole is a warning; the same corrosion is working on every foot of copper in the house, which is why the leaks come in clusters once they start.\n\nThe second front is worse. Homes built in Port Charlotte from the late 1980s into the early 1990s were often plumbed with polybutylene — the gray plastic pipe at the center of one of the largest class-action settlements in U.S. history. Poly-b degrades from the inside as chlorinated water attacks the pipe material, and it fails without warning: no slow drip, no stain creeping down the wall, just a rupture and a flooded house. Insurance companies know this history, and many now decline to write or renew policies on homes with polybutylene supply lines, or charge steep premiums until it's replaced. If your insurer has sent that letter, or if you've spotted gray pipe at your water heater or under a sink, a repipe stops being a someday project.\n\nCharlotte County's soil adds a third pressure. Hurricane Ian came ashore near here in 2022, and major storms shift and compact the sandy soil that underground service and supply lines run through. Lines stressed in that event are still failing years later, and repeated storm cycles keep working on every buried pipe in the county.\n\nThe fix for all of it is the same: a whole-home PEX repipe. We route flexible PEX-A through the attic and wall cavities using small, strategic access openings — not demolished walls — then pressure-test the new system, switch the house over, and patch and texture every opening before we call it done. A typical Port Charlotte single-family repipe takes two to three days, with water off only a few hours at a time. PEX is immune to the corrosion killing your copper, has none of poly-b's failure history, and carries a 25-year manufacturer warranty. We pull the plumbing permit and schedule inspections with Charlotte County as part of every job, and the final inspection paperwork gives you exactly what your insurance company wants to see.\n\nC&S Plumbing of Lee has been family-owned since 1997, holds Florida licenses CFC057076 and CFC1432485, and has 8,500+ Southwest Florida homes behind us. For a free Port Charlotte repipe estimate, call 833-PLUMB-IT.`,
+    features: [
+      {
+        title: "Polybutylene Replacement",
+        description:
+          "Full removal of class-action-era poly-b supply lines — with the inspection paperwork insurance companies ask for.",
+      },
+      {
+        title: "PEX-A Whole-Home Repipes",
+        description:
+          "Corrosion-immune PEX replaces 1980s copper for good, backed by a 25-year manufacturer warranty.",
+      },
+      {
+        title: "2–3 Day Completion",
+        description:
+          "Most Port Charlotte repipes finish in two to three days, with water off only a few hours at a time and the home livable throughout.",
+      },
+      {
+        title: "Charlotte County Permits Handled",
+        description:
+          "We pull the plumbing permit, schedule every inspection, and close out the job with the county — included, not extra.",
+      },
+      {
+        title: "Minimal Wall Damage",
+        description:
+          "Small, strategic access openings instead of torn-out walls — every opening patched, textured, and ready for paint.",
+      },
+    ],
+    city: "Port Charlotte",
+    state: "FL",
+    neighborhoods: PORT_CHARLOTTE_NEIGHBORHOODS,
+    faqs: [
+      {
+        question: "How long does a whole-home repipe take in Port Charlotte?",
+        answer:
+          "A typical Port Charlotte single-family home takes two to three days. Water is off only 4–8 hours per working day, and you can live in the house throughout the project. We give you an exact timeline in your written estimate, and our crews reach Port Charlotte easily from our North Fort Myers shop via US-41 or I-75.",
+      },
+      {
+        question: "How much does repiping cost in Port Charlotte?",
+        answer:
+          "Most Port Charlotte whole-home repipes fall between $4,000 and $12,000 depending on square footage, fixture count, and access. That price includes materials, labor, the Charlotte County permit and inspections, and drywall patching. We provide a free written estimate with a firm number — not an hourly rate that grows as the job goes.",
+      },
+      {
+        question: "How do I know if my Port Charlotte home has polybutylene pipe?",
+        answer:
+          "Look for gray plastic pipe, usually a half-inch to an inch in diameter, at the water heater connections, under sinks, or where the main line enters the house — it's often stamped \"PB2110.\" Homes built in Port Charlotte from the late 1980s through the early 1990s are the prime suspects. If you're not sure, we'll identify your pipe material during a free estimate visit.",
+      },
+      {
+        question: "Will my insurance really drop me over polybutylene pipes?",
+        answer:
+          "It's increasingly common. Polybutylene was the subject of a massive class-action settlement because it fails suddenly and causes major water damage, and many Florida insurers now decline to write or renew policies on homes that still have it — or require replacement within a set window. After your repipe, we provide the permit and inspection documentation that shows your insurer the poly-b is gone.",
+      },
+      {
+        question: "Are you licensed and permitted to repipe in Charlotte County?",
+        answer:
+          "Yes. C&S Plumbing holds two active Florida state plumbing contractor licenses — CFC057076 and CFC1432485, verifiable on the Florida DBPR website — which are valid throughout Florida including Charlotte County. We pull the plumbing permit and handle all county inspections as part of the job, at no extra charge.",
+      },
+      {
+        question: "What does the repipe process look like day to day?",
+        answer:
+          "Day one: we protect your floors and furniture, open small access points, and start routing PEX through the attic and walls. Day two: we connect fixtures, pressure-test the new system, and switch the house over — your old pipes are abandoned in place, depressurized and harmless. Final phase: county inspection, then drywall patching and texture on every opening. We don't leave until every fixture runs right.",
+      },
+    ],
+    relatedPages: [
+      { label: "Emergency Plumber in Port Charlotte", href: "/emergency-plumber-port-charlotte" },
+      { label: "Drain Cleaning in Port Charlotte", href: "/drain-cleaning-port-charlotte" },
+      { label: "Port Charlotte Service Area", href: "/areas/port-charlotte" },
+    ],
+    priceRange: "$4,000–$12,000",
+  },
+
+  // ============================================
+  // 45. DRAIN CLEANING - LEHIGH ACRES
+  // ============================================
+  {
+    slug: "drain-cleaning-lehigh-acres",
+    serviceSlug: "drain-cleaning",
+    metaTitle: "Drain Cleaning Lehigh Acres | Camera-First Service",
+    metaDescription:
+      "Drain cleaning in Lehigh Acres, FL. Camera inspections, hydro jetting & root removal for septic and sewer homes. Licensed CFC1432485. Call 833-PLUMB-IT today.",
+    keywords: [
+      "drain cleaning Lehigh Acres",
+      "clogged drain Lehigh Acres FL",
+      "hydro jetting Lehigh Acres",
+      "sewer line cleaning Lehigh Acres",
+      "root intrusion drain Lehigh Acres",
+      "septic backup Lehigh Acres",
+      "drain camera inspection Lehigh Acres",
+      "main line clog Lehigh Acres",
+      "Lehigh Acres drain cleaning service",
+      "slow drains Lehigh Acres Florida",
+    ],
+    h1: "Drain Cleaning in Lehigh Acres, FL",
+    sectionHeading: "Honest drain cleaning across Lehigh Acres",
+    heroSubtext:
+      "Recurring clogs are a symptom, not bad luck. C&S Plumbing cameras your Lehigh Acres drain line first, then quotes the right fix in writing — call 833-PLUMB-IT.",
+    trustBadges: TRUST_BADGES,
+    serviceDescription:
+      `Lehigh Acres spans more than 90 square miles of former agricultural land, and its drains reflect every era of that history. The original neighborhoods platted in the 1950s and 60s along Lee Boulevard and Homestead Road carry drain lines that have been in the ground for half a century, while the enormous wave of homes built during the 2004–2007 boom is now approaching the twenty-year mark — the age when builder-grade drain installations start showing their weaknesses. C&S Plumbing has been clearing and repairing drain lines across Lee County since 1997, and we know what fails in each generation of Lehigh Acres construction.\n\nThe first question we ask on many Lehigh Acres calls isn't about the drain at all — it's about the septic system. A large share of Lehigh Acres homes sit on private septic, and a whole-house backup can mean a blocked drain line, a full tank, or a saturated drainfield. Those are three very different repairs at three very different prices, and paying for a drain cleaning when the real problem is a tank that needs pumping helps nobody. We diagnose which system is actually failing before we quote anything, and we'll tell you plainly if the answer is a septic contractor rather than a plumber.\n\nFor homes on drain lines that are genuinely clogged, Lehigh Acres presents two recurring villains. The first is root intrusion: the community's sandy soil lets oak and ficus roots travel far in search of water, and the joints in older cast iron and clay-era drain lines are exactly where they find it. The second is the settling that sandy fill soil causes over decades — bellies and offset joints that catch paper and grease until the line chokes. Both problems look identical from the drain opening, and heavy summer rains saturate that same soil and shift lines further — one reason blockages so often surface in July and August. That's why we run a camera before recommending anything.\n\nThat camera-first approach also settles the cabling-versus-jetting question honestly. Cabling punches through soft blockages and cuts roots, and for many clogs it's all you need — we won't upsell hydro jetting where a cable does the job. But when the camera shows heavy grease, scale, or root mats regrowing every few months, jetting scrubs the pipe wall clean and buys you years instead of weeks. And if the camera shows a line that's structurally failed, we'll show you the footage and price the repair options rather than charging you for cleanings that can't last.\n\nC&S Plumbing of Lee is family-owned, has served Lehigh Acres since 1997, and holds two active Florida plumbing contractor licenses (CFC057076 and CFC1432485), both verifiable on the Florida DBPR website. Every job starts with an upfront written quote — call 833-PLUMB-IT and get your drains flowing again.`,
+    features: [
+      {
+        title: "Camera Inspection First",
+        description:
+          "We scope the line before quoting so you pay for the fix your drain actually needs — and you see the footage yourself.",
+      },
+      {
+        title: "Septic vs. Drain Diagnosis",
+        description:
+          "Many Lehigh Acres homes are on septic. We determine whether the backup is the drain line, tank, or drainfield before any work begins.",
+      },
+      {
+        title: "Root Intrusion Removal",
+        description:
+          "Mechanical root cutting and hydro jetting for the roots that invade older Lehigh Acres drain lines, with camera verification afterward.",
+      },
+      {
+        title: "Honest Jetting Recommendations",
+        description:
+          "Cabling when cabling is enough, hydro jetting when the pipe wall needs scrubbing — never the expensive option by default.",
+      },
+      {
+        title: "Upfront Written Quotes",
+        description:
+          "Flat-rate pricing in writing before we start. No hourly meters running while we work on your drain.",
+      },
+    ],
+    city: "Lehigh Acres",
+    state: "FL",
+    neighborhoods: LEHIGH_ACRES_NEIGHBORHOODS,
+    faqs: [
+      {
+        question: "How fast can you get to a clogged drain in Lehigh Acres?",
+        answer:
+          "Our trucks reach Lehigh Acres via SR-82 and Joel Boulevard, and most neighborhoods are a 20–30 minute drive from our Lee County base. Same-day service is the norm for main line backups, since a home with no working drains can't wait. Call 833-PLUMB-IT and our dispatcher will give you a live ETA.",
+      },
+      {
+        question: "How much does drain cleaning cost in Lehigh Acres?",
+        answer:
+          "Single-fixture clogs — a kitchen sink, tub, or one toilet — are our most affordable calls and are quoted flat-rate upfront. Main line clearings cost more, and hydro jetting more still, depending on line length and severity. Every price is put in writing before work begins, and if the camera shows the line needs repair rather than another cleaning, we'll price both options honestly.",
+      },
+      {
+        question: "Why do Lehigh Acres drains clog so often?",
+        answer:
+          "Three local factors do most of the damage: sandy soil that settles and creates bellies in buried drain lines, aggressive root growth from mature landscaping in the older sections along Lee Boulevard and Homestead Road, and builder-grade drain installations in the thousands of homes thrown up during the 2004–2007 boom. A camera inspection tells you which one your home is dealing with.",
+      },
+      {
+        question: "My house is on septic — is a backup a drain problem or a septic problem?",
+        answer:
+          "It can be either, and the distinction matters because the fixes are completely different. If the lowest drains in the house back up whenever water runs anywhere, and the tank hasn't been pumped in 3–5 years, suspect the septic system. If one branch of the house gurgles while the rest drains fine, it's likely a drain blockage. We diagnose both honestly before quoting.",
+      },
+      {
+        question: "Is hydro jetting safe for older Lehigh Acres drain lines?",
+        answer:
+          "Usually, but we verify first. We camera the line before jetting — sound pipe with heavy buildup is a perfect jetting candidate, and clearing the scale extends its life. If the camera shows a pipe that's cracked or rotted through, jetting can make things worse, so we'll show you the footage and talk repair options instead. That judgment call is exactly why we inspect before we jet.",
+      },
+      {
+        question: "Are you licensed for drain work in Lehigh Acres?",
+        answer:
+          "Yes. C&S Plumbing holds two active Florida state plumbing contractor licenses, CFC057076 and CFC1432485, both verifiable on the Florida DBPR website. We're fully insured, family-owned, and have served Lehigh Acres and the rest of Lee County since 1997. That coverage extends from a single clogged fixture to full drain line excavation and replacement, so the same licensed company can handle whatever the camera finds.",
+      },
+    ],
+    relatedPages: [
+      { label: "Emergency Plumber in Lehigh Acres", href: "/emergency-plumber-lehigh-acres" },
+      { label: "Water Heater Repair in Lehigh Acres", href: "/water-heater-repair-lehigh-acres" },
+      { label: "Lehigh Acres Service Area", href: "/areas/lehigh-acres" },
+    ],
+  },
+
+  // ============================================
+  // 46. EMERGENCY PLUMBER - LEHIGH ACRES
+  // ============================================
+  {
+    slug: "emergency-plumber-lehigh-acres",
+    serviceSlug: "emergency",
+    metaTitle: "Emergency Plumber Lehigh Acres | 24/7 Fast Help",
+    metaDescription:
+      "24/7 emergency plumber in Lehigh Acres, FL. Burst pipes, sewage backups & well pump failures. Licensed CFC1432485, 5-star rated. Call 833-PLUMB-IT now.",
+    keywords: [
+      "emergency plumber Lehigh Acres",
+      "24 hour plumber Lehigh Acres FL",
+      "burst pipe repair Lehigh Acres",
+      "sewage backup Lehigh Acres",
+      "well pump emergency Lehigh Acres",
+      "after hours plumber Lehigh Acres",
+      "emergency plumbing Lehigh Acres Florida",
+      "no water emergency Lehigh Acres",
+      "weekend plumber Lehigh Acres",
+      "night plumber Lehigh Acres FL",
+    ],
+    h1: "Emergency Plumber in Lehigh Acres, FL",
+    sectionHeading: "How we handle plumbing emergencies in Lehigh Acres",
+    heroSubtext:
+      "A burst line doesn't care that you're east of the interstate. C&S Plumbing dispatches licensed emergency crews to Lehigh Acres 24/7 — call 833-PLUMB-IT now.",
+    trustBadges: TRUST_BADGES,
+    serviceDescription:
+      `Lehigh Acres is one of the fastest-growing communities in Southwest Florida, but plumbing emergencies don't wait for the infrastructure to catch up. When a supply line bursts behind a wall at 2 AM or sewage starts backing into a shower, you need a crew that actually comes out this far — and comes fast. C&S Plumbing of Lee has dispatched emergency plumbers across Lee County since 1997, and our trucks reach Lehigh Acres via SR-82 and Joel Boulevard around the clock. The moment you call 833-PLUMB-IT, our dispatcher walks you through stopping the water — locating the main shutoff or the well pump breaker — before the truck is even loaded.\n\nLehigh Acres' housing mix creates a wide range of failure modes. The original neighborhoods along Lee Boulevard and Homestead Road hold homes from the 1960s and 70s with aging galvanized and copper supply lines that fail with little warning. The thousands of homes built during the 2004–2007 boom used builder-grade CPVC that turns brittle in Florida attic heat and cracks at fittings — one of the most common sources of sudden, high-volume leaks we see in the community. And brand-new construction brings its own first-year surprises. We've worked on every era of Lehigh Acres home, so our crews arrive knowing what they're likely to find behind the wall — and knowing the vintage tells us which fittings and materials to load before we leave the shop, which saves precious time at 2 AM.\n\nWell water adds an emergency category most city plumbers rarely handle. Large portions of eastern and southern Lehigh Acres rely on private wells, and when a well pump quits or a pressure tank ruptures, the house has no water at all — no showers, no toilets, no drinking water. That's every bit as urgent as a burst pipe, and we treat it that way. Our emergency crews diagnose and repair well pumps, pressure tanks, pressure switches, and the supply lines between wellhead and house.\n\nSewage backups round out the big three. Whether your home is on septic or one of the sewered sections of Lehigh Acres, wastewater coming up a drain is a health emergency. We clear the blockage, identify whether the root cause is the drain line, tank, or drainfield, and get your home safe and usable again. Storm season raises the stakes further — C&S has responded to every major storm event in Southwest Florida since Hurricane Charley in 2004, including Hurricane Ian in 2022, and after a storm we prioritize homes with active water intrusion and sewage exposure first.\n\nWhen you call 833-PLUMB-IT you reach a family-owned company with two active state licenses (CFC057076 and CFC1432485) and a 5.0 Google rating from 46+ Southwest Florida homeowners. Every repair is quoted in writing before work begins — even at midnight.`,
+    features: [
+      {
+        title: "24/7 Lehigh Acres Dispatch",
+        description:
+          "Emergency crews reach Lehigh Acres around the clock via SR-82 and Joel Boulevard, with phone guidance to stop the water while the truck is en route.",
+      },
+      {
+        title: "Well Pump & Pressure Tank Emergencies",
+        description:
+          "No water is an emergency too. We diagnose and repair well pumps, pressure tanks, and switches for Lehigh Acres homes on private wells.",
+      },
+      {
+        title: "Burst Supply Line Repair",
+        description:
+          "Permanent same-visit repairs for failed CPVC, copper, and galvanized lines — the most common sudden failures in Lehigh Acres homes.",
+      },
+      {
+        title: "Sewage Backup Response",
+        description:
+          "Emergency drain clearing plus honest diagnosis of whether the real problem is the line, the septic tank, or the drainfield.",
+      },
+      {
+        title: "Upfront Emergency Pricing",
+        description:
+          "Flat diagnostic fee and written quotes before any repair begins, at any hour. No overtime surprises.",
+      },
+    ],
+    city: "Lehigh Acres",
+    state: "FL",
+    neighborhoods: LEHIGH_ACRES_NEIGHBORHOODS,
+    faqs: [
+      {
+        question: "How fast can an emergency plumber reach my Lehigh Acres home?",
+        answer:
+          "Most Lehigh Acres neighborhoods are a 20–30 minute drive from our Lee County base via SR-82 and Joel Boulevard; the far eastern and southern sections may take slightly longer. Our dispatch line at 833-PLUMB-IT is staffed 24/7, and the dispatcher will give you a live ETA plus walk you through shutting off the water immediately — which is what actually limits the damage.",
+      },
+      {
+        question: "Do you charge extra for nights and weekends in Lehigh Acres?",
+        answer:
+          "No hidden overtime multipliers. We charge a flat emergency diagnostic fee regardless of the hour, and every repair is quoted in writing before work begins. The price we quote at 3 AM is the same price we'd quote at 3 PM, and Lehigh Acres is within our standard service area with no travel surcharge.",
+      },
+      {
+        question: "Why do Lehigh Acres homes have so many sudden pipe failures?",
+        answer:
+          "The community's building history is the main culprit. Homes from the 2004–2007 boom used builder-grade CPVC supply lines that become brittle in attic heat and crack at fittings without warning, while the older neighborhoods along Lee Boulevard and Homestead Road still carry 50-year-old galvanized and copper lines at end of life. Both fail suddenly rather than gradually, which is why burst-pipe calls are so common here.",
+      },
+      {
+        question: "My well stopped working — is that really a plumbing emergency?",
+        answer:
+          "Absolutely. A failed well pump or ruptured pressure tank leaves your home with no running water at all, which we treat with the same urgency as a burst pipe. Our emergency crews carry the diagnostic equipment to determine whether the problem is the pump, pressure tank, pressure switch, or wiring, and we repair or replace most components on the spot.",
+      },
+      {
+        question: "What should I do while waiting for your crew?",
+        answer:
+          "For a leak or burst pipe, close the main water shutoff — usually near the front of the house or at the well's pressure tank — and switch off the water heater breaker. For a sewage backup, stop using all fixtures. If water is near outlets or appliances, kill the breaker to that area. Our dispatcher walks you through all of this when you call 833-PLUMB-IT.",
+      },
+      {
+        question: "Are you licensed for emergency work in Lehigh Acres?",
+        answer:
+          "Yes. C&S Plumbing holds two active Florida state plumbing contractor licenses, CFC057076 and CFC1432485, verifiable on the Florida DBPR website. We're fully insured, family-owned since 1997, and have responded to every major storm event in Southwest Florida since Hurricane Charley in 2004.",
+      },
+    ],
+    relatedPages: [
+      { label: "Drain Cleaning in Lehigh Acres", href: "/drain-cleaning-lehigh-acres" },
+      { label: "Lehigh Acres Plumber", href: "/plumber-lehigh-acres" },
+      { label: "Lehigh Acres Service Area", href: "/areas/lehigh-acres" },
+    ],
+  },
+
+  // ============================================
+  // 47. WATER HEATER REPAIR - NAPLES
+  // ============================================
+  {
+    slug: "water-heater-repair-naples",
+    serviceSlug: "water-heaters",
+    metaTitle: "Water Heater Repair Naples | Tank & Tankless",
+    metaDescription:
+      "Water heater repair & replacement in Naples, FL. Tank, tankless & heat-pump units for estates, condos & seasonal homes. Licensed CFC1432485. Call 833-PLUMB-IT.",
+    keywords: [
+      "water heater repair Naples",
+      "water heater replacement Naples FL",
+      "tankless water heater Naples",
+      "heat pump water heater Naples",
+      "condo water heater Naples",
+      "no hot water Naples",
+      "water heater installation Naples Florida",
+      "recirculation pump Naples",
+      "seasonal home water heater Naples",
+      "Naples water heater service",
+    ],
+    h1: "Water Heater Repair in Naples, FL",
+    sectionHeading: "Water heater service built for Naples homes",
+    heroSubtext:
+      "From estate homes with multiple tanks to high-rise condo closets, Naples water heaters aren't one-size-fits-all. C&S repairs and replaces them all — call 833-PLUMB-IT.",
+    trustBadges: TRUST_BADGES,
+    serviceDescription:
+      `Hot water in Naples is rarely a simple 40-gallon-tank affair. Estate homes in Port Royal, Pine Ridge, and along the Gulf Shore corridor routinely run larger-capacity units, multiple tanks serving different wings, and recirculation loops that deliver instant hot water to a primary bath sixty feet from the garage. When one component in a system like that fails, diagnosing it takes a plumber who understands how the pieces work together — not a parts-swapper guessing at the problem. C&S Plumbing of Lee has installed and serviced water heating systems across Southwest Florida since 1997, from single-tank villas in Lely Resort to multi-tank estates with dedicated recirculation pumps.\n\nNaples' seasonal rhythm creates a failure pattern all its own. A large share of homes here sit unoccupied from May through November, and water heaters age whether anyone is home or not. Every fall we take a wave of calls from returning owners who walk into a cold shower — or worse, a garage flooded by a tank that let go in week three of a six-month absence. If your unit is past eight years old, replacing it before you head north is far cheaper than discovering the failure from a house watcher's phone call — a fifteen-minute conversation in April that can prevent a five-figure water damage claim in September. We also install pans, automatic shutoff valves, and leak detection so a tank failure in July doesn't become a renovation in December.\n\nCondo living adds its own logistics. High-rise and mid-rise buildings in Park Shore and Pelican Bay put water heaters in tight interior closets, and replacing one means navigating elevator reservations, building work-hour rules, association insurance certificates, and code-required pans and drain lines. We handle those buildings regularly: we coordinate with management, protect the hallways and finishes on the way in and out, and leave the unit inspection-ready.\n\nHigh-end remodels increasingly call for something better than a like-for-like tank swap. Tankless water heaters free up closet space and deliver endless hot water for oversized soaking tubs and multi-head showers, while heat-pump water heaters cut energy use dramatically and fit naturally in Naples garages. We'll walk you through sizing, venting or electrical requirements, and honest payback math for each option — and if a straightforward tank replacement is genuinely the right call, we'll tell you that too. Remodels are also the ideal moment to add or upgrade a recirculation loop — an aging pump or an uninsulated line wastes energy around the clock, and correcting it while walls are open costs a fraction of retrofitting later.\n\nC&S Plumbing is family-owned, holds two active Florida plumbing contractor licenses (CFC057076 and CFC1432485), and carries a 5.0 Google rating from 46+ Southwest Florida homeowners. Every repair and replacement is quoted upfront in writing. Call 833-PLUMB-IT and get your hot water handled properly.`,
+    features: [
+      {
+        title: "Large-Capacity & Multi-Tank Systems",
+        description:
+          "Diagnosis and repair for the multiple-tank and high-capacity systems common in Naples estate homes, including balancing and staging issues.",
+      },
+      {
+        title: "Tankless & Heat-Pump Retrofits",
+        description:
+          "Upgrade during your remodel to endless hot water or dramatically lower energy use, with honest sizing and payback guidance.",
+      },
+      {
+        title: "Condo High-Rise Replacement",
+        description:
+          "We handle Park Shore and Pelican Bay building logistics — management coordination, elevator scheduling, insurance certificates, and code-required pans.",
+      },
+      {
+        title: "Seasonal-Home Protection",
+        description:
+          "Pre-departure inspections, pans, automatic shutoff valves, and leak detection so an aging tank doesn't flood an empty home.",
+      },
+      {
+        title: "Recirculation System Service",
+        description:
+          "Repair and installation of recirculation pumps and loops that deliver instant hot water to fixtures far from the heater.",
+      },
+    ],
+    city: "Naples",
+    state: "FL",
+    neighborhoods: NAPLES_NEIGHBORHOODS,
+    faqs: [
+      {
+        question: "How quickly can you repair a water heater in Naples?",
+        answer:
+          "In most cases, same day. Our trucks carry common repair parts — heating elements, thermostats, T&P valves, anode rods — and we stock popular replacement models when a unit is beyond repair. No hot water gets priority scheduling, so call 833-PLUMB-IT in the morning for the best same-day availability in Naples.",
+      },
+      {
+        question: "How much does water heater replacement cost in Naples?",
+        answer:
+          "It depends on the system. A standard tank replacement is the most affordable option; larger-capacity units, tankless conversions, and heat-pump water heaters cost more up front but can pay back in energy savings and space. Condo installations may add building-logistics time. Every job is quoted in writing before work begins, and estimates are free.",
+      },
+      {
+        question: "I'm a seasonal resident — how do I keep my water heater from failing while I'm away?",
+        answer:
+          "Three steps, in order of impact: shut off the water heater breaker and the main water supply when you leave for the season, have your house watcher check the unit periodically, and if the tank is past eight years old, replace it before you go rather than gambling on another summer. We can also install a pan, automatic shutoff valve, and leak detector as cheap insurance.",
+      },
+      {
+        question: "Can you replace a water heater in my Park Shore or Pelican Bay condo?",
+        answer:
+          "Yes, and we do it regularly. High-rise replacements involve building management approval, insurance certificates, elevator reservations, and strict work hours — we handle all of that coordination. We protect common-area finishes during the carry-in and carry-out, install code-required pans and drain lines, and leave the closet inspection-ready.",
+      },
+      {
+        question: "Why do Naples water heaters seem to fail right when owners return in the fall?",
+        answer:
+          "They don't fail on return — they fail quietly over the summer and get discovered on return. Tanks corrode and fittings weep whether anyone is home or not, and months of sitting can be harder on a system than daily use. That's why the first cold shower of the season is such a common Naples call, and why we push pre-departure inspections for units past their eighth year.",
+      },
+      {
+        question: "Are you licensed to install water heaters in Collier County?",
+        answer:
+          "Yes. Our two active Florida state plumbing contractor licenses, CFC057076 and CFC1432485, cover work throughout the state including all of Collier County, and both are verifiable on the Florida DBPR website. We're fully insured, family-owned since 1997, and pull permits where required so your installation passes inspection.",
+      },
+    ],
+    relatedPages: [
+      { label: "Leak Repair in Naples", href: "/leak-repair-naples" },
+      { label: "Repiping in Naples", href: "/repiping-naples" },
+      { label: "Naples Service Area", href: "/areas/naples" },
+    ],
+  },
+
+  // ============================================
+  // 48. LEAK REPAIR - NAPLES
+  // ============================================
+  {
+    slug: "leak-repair-naples",
+    serviceSlug: "leak-repair",
+    metaTitle: "Leak Repair Naples | Non-Invasive Detection",
+    metaDescription:
+      "Leak detection & repair in Naples, FL. Acoustic & thermal tools find slab leaks without tearing up marble or hardwood. Licensed CFC1432485. Call 833-PLUMB-IT.",
+    keywords: [
+      "leak repair Naples",
+      "leak detection Naples FL",
+      "slab leak repair Naples",
+      "acoustic leak detection Naples",
+      "high water bill Naples",
+      "hidden water leak Naples",
+      "copper pipe leak Naples",
+      "slab leak under marble Naples",
+      "Naples leak detection service",
+      "water leak seasonal home Naples",
+    ],
+    h1: "Leak Repair in Naples, FL",
+    sectionHeading: "Finding Naples leaks without destroying the finishes",
+    heroSubtext:
+      "In a Naples home, guessing where a slab leak is means jackhammering marble. C&S pinpoints leaks with acoustic and thermal detection first — call 833-PLUMB-IT.",
+    trustBadges: TRUST_BADGES,
+    serviceDescription:
+      `A slab leak is a headache in any home. Under a Naples home, it's a different order of problem — because the pipe isn't just under concrete, it's under marble, imported tile, or wide-plank hardwood that can't simply be patched to match. The old-school approach of opening the floor in two or three spots until you find the leak is unacceptable when every exploratory hole costs thousands in finish restoration. That's why C&S Plumbing leads every Naples leak call with non-invasive detection: acoustic equipment that hears pressurized water escaping through the slab, thermal imaging that maps hot-water leaks through the floor, and pipe cameras for drain-side failures. We pinpoint the leak first, so if the floor must be opened at all, it's opened once, in exactly the right place — and often we can reroute the line overhead and avoid touching the floor entirely.\n\nNaples' housing stock produces leaks at both ends of its age range. The cottages and ranches of Old Naples and the streets near the Gulf carry copper supply lines from the 1960s and earlier, now developing the pinhole leaks that end-of-life copper is known for — and where one pinhole appears, more are coming. Catching that pattern early is the difference between a repipe you plan on your schedule and one you do as an emergency. Newer construction isn't immune either: a poorly bedded line under a slab or a failed fitting behind a wall shows up in homes of every vintage. We'll tell you honestly when a spot repair makes sense and when the pattern of failures means repiping is the smarter spend.\n\nSeasonal occupancy makes Naples leaks uniquely sneaky. In an occupied home, a leak announces itself as a warm spot, a sound, or a stain. In a home that sits empty from May to November, the first clue is often a shocking water bill forwarded to an address up north. If your bill jumps while the house is unoccupied, don't wait for the return trip — we can coordinate access with your house watcher or property manager, locate the leak, stop it, and walk you through the findings by phone or video before any repair is authorized.\n\nDocumentation and discretion round out the job. We photograph the leak source, the moisture footprint, and every step of the repair to the standard insurers expect, which matters enormously on claims involving high-value finishes; if a claim is likely, we build that documentation into the job from the first visit rather than reconstructing it afterward. And we work the way Naples homeowners expect trades to work: floor protection down, dust contained, work area spotless when we leave.\n\nC&S Plumbing of Lee is family-owned, licensed (CFC057076 and CFC1432485, verifiable on Florida DBPR), and has served Southwest Florida since 1997 with upfront written quotes. Call 833-PLUMB-IT before a small leak becomes a large renovation.`,
+    features: [
+      {
+        title: "Acoustic & Thermal Detection",
+        description:
+          "We pinpoint slab and in-wall leaks with listening equipment and thermal imaging before anything is opened — no exploratory demolition.",
+      },
+      {
+        title: "Finish-Sparing Repairs",
+        description:
+          "Overhead reroutes and single-point access repairs designed to protect marble, tile, and hardwood from unnecessary cutting.",
+      },
+      {
+        title: "Aging Copper Specialists",
+        description:
+          "Pinhole leak repair for the original copper in Old Naples homes, with honest guidance on when repiping beats repeated spot fixes.",
+      },
+      {
+        title: "Absent-Owner Coordination",
+        description:
+          "We work with house watchers and property managers to locate and stop leaks in seasonal homes, briefing you by phone or video.",
+      },
+      {
+        title: "Insurance-Grade Documentation",
+        description:
+          "Photos of the source, moisture mapping, and detailed invoices that support claims involving high-value finishes.",
+      },
+    ],
+    city: "Naples",
+    state: "FL",
+    neighborhoods: NAPLES_NEIGHBORHOODS,
+    faqs: [
+      {
+        question: "How quickly can you find a leak in my Naples home?",
+        answer:
+          "Most leaks are located in a single visit. Our trucks carry acoustic detection gear, thermal imaging, and pipe cameras, so the same appointment that finds the leak can usually begin the repair. Active leaks causing damage get priority dispatch — call 833-PLUMB-IT and we'll also walk you through shutting off the water immediately.",
+      },
+      {
+        question: "How much does leak detection and repair cost in Naples?",
+        answer:
+          "Detection is quoted as a flat fee, and the repair is quoted separately in writing once we know exactly what and where the failure is — that's the benefit of pinpointing first. A simple spot repair costs far less than the finish restoration a wrong guess causes, which is why we never open a floor on a hunch. You approve every number before work begins.",
+      },
+      {
+        question: "Why do Naples homes get slab leaks?",
+        answer:
+          "Two main reasons. Older neighborhoods like Old Naples carry copper supply lines from the 1960s and earlier that are reaching end of life and developing pinhole corrosion. And across homes of every age, supply lines run under the slab, where decades of thermal expansion and contact with concrete or shifting sand eventually wear through a pipe wall. Seasonal vacancy makes it worse — leaks run for months before anyone notices.",
+      },
+      {
+        question: "My water bill spiked while the house was empty — what should I do?",
+        answer:
+          "Treat it as a running leak until proven otherwise. Have your house watcher shut off the main water valve, then call 833-PLUMB-IT. We'll coordinate access, locate the leak with acoustic and thermal equipment, document everything for your insurer, and review the findings with you by phone or video before you authorize any repair. You don't need to fly back for this.",
+      },
+      {
+        question: "Will you have to tear up my marble floors to fix a slab leak?",
+        answer:
+          "Usually not. Once we've pinpointed the leak, we evaluate rerouting the line overhead through walls and the attic, which bypasses the failed section without touching the floor at all. When opening the slab is genuinely the best option, it's one precise opening in the located spot — not exploratory holes — and we protect and contain the work area throughout.",
+      },
+      {
+        question: "Are you licensed for leak repair in Collier County?",
+        answer:
+          "Yes. C&S Plumbing holds two active Florida state plumbing contractor licenses, CFC057076 and CFC1432485, valid throughout the state including Collier County and verifiable on the Florida DBPR website. We're fully insured and family-owned, serving Southwest Florida since 1997. That matters on leak work in particular, because a spot repair can grow into a repipe — the same licensed company carries the job from detection through final repair.",
+      },
+    ],
+    relatedPages: [
+      { label: "Water Heater Repair in Naples", href: "/water-heater-repair-naples" },
+      { label: "Repiping in Naples", href: "/repiping-naples" },
+      { label: "Naples Service Area", href: "/areas/naples" },
+    ],
+  },
+
+  // ============================================
+  // 49. COMMERCIAL PLUMBING - NAPLES
+  // ============================================
+  {
+    slug: "commercial-plumbing-naples",
+    serviceSlug: "commercial",
+    metaTitle: "Commercial Plumber Naples | Licensed Contractor",
+    metaDescription:
+      "Commercial plumbing in Naples, FL. Restaurants, condo associations, tenant build-outs, grease traps & backflow testing. Licensed CFC1432485. Call 833-PLUMB-IT.",
+    keywords: [
+      "commercial plumber Naples",
+      "commercial plumbing Naples FL",
+      "restaurant plumber Naples",
+      "grease trap service Naples",
+      "backflow testing Naples",
+      "condo association plumber Naples",
+      "tenant buildout plumber Naples",
+      "riser replacement Naples",
+      "Fifth Avenue restaurant plumbing Naples",
+      "commercial plumbing contractor Collier County",
+    ],
+    h1: "Commercial Plumbing Services in Naples, FL",
+    sectionHeading: "Commercial plumbing for Naples businesses and associations",
+    heroSubtext:
+      "A backed-up drain on Fifth Avenue South during season is a revenue emergency. C&S Plumbing keeps Naples restaurants, condos, and retail running — call 833-PLUMB-IT.",
+    trustBadges: TRUST_BADGES,
+    serviceDescription:
+      `Commercial plumbing in Naples runs on a calendar unlike anywhere else in Florida. From December through April, the restaurants along Fifth Avenue South and Third Street South are packed nightly, hotel and club occupancy peaks, and a plumbing failure during a Saturday dinner rush costs real money by the minute. The off-season, meanwhile, is when the smart work happens — riser replacements, grease trap upgrades, and build-outs scheduled while the customers are up north. C&S Plumbing of Lee has worked both sides of that calendar since 1997, delivering emergency response when season demands it and planning capital work for the months when disruption costs least. We hold our scheduled dates and communicate clearly, because in this market a missed off-season window can cost a client a full year.\n\nRestaurant and food service plumbing anchors our Naples commercial work. We install, repair, and maintain grease traps and interceptors to keep kitchens compliant with pretreatment requirements and ready for health inspections — because a failed inspection on Fifth Avenue is a public, expensive problem. We handle three-compartment sinks, floor drain systems, commercial water heaters, and the high-volume drainage that a full dining room demands. When a main line backs up during service, our commercial emergency crews respond with jetting equipment to get the kitchen open again fast.\n\nCondo associations and property managers are the other pillar. Naples' inventory of mid-rise and high-rise buildings from Park Shore to Pelican Bay is aging, and associations increasingly face riser replacements, recirculation problems, and domestic water system upgrades that require careful unit-by-unit coordination. We work with management companies and boards on scoping, scheduling, and resident communication, and our licensed technicians handle the annual backflow preventer testing and certification that keeps buildings compliant, with documentation filed on the association's behalf.\n\nRetail and office tenant build-outs round out the practice. Naples landlords and general contractors need a plumbing sub who knows commercial code, ADA fixture requirements, and how to hit an inspection date the first time. From a single boutique suite to a full restaurant conversion, we coordinate with your GC, architect, and the other trades from permit through final. Between build-outs, we also service the water heaters, restrooms, and break-room plumbing that keep office and retail tenants comfortable day to day. And for hospitality clients, we build schedules around your business: overnight work, off-season windows, and phased shutdowns that keep guests and diners undisturbed.\n\nC&S Plumbing holds two active Florida plumbing contractor licenses (CFC057076 and CFC1432485), carries full commercial insurance, and brings the depth of a company that has built more than 8,500 homes for Southwest Florida builders like Hansen Homes. Whether you manage a single storefront or a portfolio of buildings, you get the same crews, the same responsiveness, and the same upfront written quotes. Family-owned since day one — one number to call: 833-PLUMB-IT.`,
+    features: [
+      {
+        title: "Restaurant & Food Service Plumbing",
+        description:
+          "Grease trap installation and maintenance, floor drains, commercial water heaters, and health-inspection readiness for Fifth Avenue and Third Street kitchens.",
+      },
+      {
+        title: "Condo Association Programs",
+        description:
+          "Riser replacements, domestic water upgrades, and annual backflow testing with the documentation and resident coordination boards expect.",
+      },
+      {
+        title: "Tenant Build-Out Plumbing",
+        description:
+          "Complete commercial plumbing for retail and office build-outs — permits, ADA compliance, and first-time inspection passes, coordinated with your GC.",
+      },
+      {
+        title: "Minimal-Disruption Scheduling",
+        description:
+          "Overnight work, off-season capital projects, and phased shutdowns designed around hospitality operations and seasonal occupancy.",
+      },
+      {
+        title: "Commercial Emergency Response",
+        description:
+          "Priority dispatch with jetting and repair equipment to get Naples kitchens, lobbies, and restrooms back in service fast.",
+      },
+    ],
+    city: "Naples",
+    state: "FL",
+    neighborhoods: NAPLES_NEIGHBORHOODS,
+    faqs: [
+      {
+        question: "How fast do you respond to commercial plumbing emergencies in Naples?",
+        answer:
+          "Commercial clients get priority dispatch, because a failure during business hours means lost revenue and potential health code exposure. Our crews arrive with jetting and repair equipment to resolve most failures in a single visit, and our dispatcher at 833-PLUMB-IT will give you a live ETA. During season we know every hour a Fifth Avenue kitchen is down is money out the door.",
+      },
+      {
+        question: "How is commercial plumbing work priced?",
+        answer:
+          "Service and emergency calls are quoted flat-rate in writing before work begins. Larger projects — riser replacements, build-outs, grease trap installations — get detailed written proposals after a site walk, with scope, schedule, and price spelled out so boards and owners can approve with confidence. Maintenance contracts are priced to your facility and visit frequency.",
+      },
+      {
+        question: "Why do Naples commercial buildings need so much plumbing attention?",
+        answer:
+          "Two structural reasons. First, seasonality concentrates a year's worth of restaurant and hotel wear into five months, which is brutal on drains, grease traps, and water heaters. Second, much of Naples' condo and commercial inventory dates to the 1970s–90s building waves, so risers, drain stacks, and domestic water systems are reaching replacement age at the same time across many buildings.",
+      },
+      {
+        question: "Can you handle a riser replacement in an occupied Naples condo building?",
+        answer:
+          "Yes. Riser work in an occupied building is as much a coordination problem as a plumbing one: unit-by-unit access scheduling, water shutdown notices, protection of finishes, and daily restoration of service. We plan the sequencing with your management company, communicate schedules to residents, and where possible time the heaviest work for the off-season months when units sit empty.",
+      },
+      {
+        question: "Do you provide backflow testing and certification in Naples?",
+        answer:
+          "Yes. Commercial properties and associations require periodic backflow preventer testing by a licensed technician. We test, repair, and replace backflow assemblies and file the certification paperwork on your behalf, and we can put your properties on an annual schedule so compliance deadlines are never missed.",
+      },
+      {
+        question: "Are you licensed for commercial plumbing in Collier County?",
+        answer:
+          "Yes. C&S Plumbing holds two active Florida state plumbing contractor licenses, CFC057076 and CFC1432485, valid throughout the state including Collier County and verifiable on the Florida DBPR website. We're fully insured for commercial work and have operated family-owned since 1997, with construction experience spanning more than 8,500 homes across Southwest Florida.",
+      },
+    ],
+    relatedPages: [
+      { label: "Emergency Plumber in Naples", href: "/emergency-plumber-naples" },
+      { label: "Remodel Plumbing in Naples", href: "/remodel-plumbing-naples" },
+      { label: "Naples Service Area", href: "/areas/naples" },
+    ],
+  },
+
+  // ============================================
+  // 50. DRAIN CLEANING - PUNTA GORDA
+  // ============================================
+  {
+    slug: "drain-cleaning-punta-gorda",
+    serviceSlug: "drain-cleaning",
+    metaTitle: "Drain Cleaning Punta Gorda | Hydro Jetting Pros",
+    metaDescription:
+      "Drain cleaning in Punta Gorda, FL. Camera inspection, hydro jetting & root removal for clogged drains. Licensed CFC1432485. Call 833-PLUMB-IT for fast service.",
+    keywords: [
+      "drain cleaning Punta Gorda",
+      "clogged drain Punta Gorda FL",
+      "hydro jetting Punta Gorda",
+      "sewer camera inspection Punta Gorda",
+      "root removal drain Punta Gorda",
+      "drain snake Punta Gorda",
+      "slow drain repair Punta Gorda",
+      "Punta Gorda Isles drain cleaning",
+      "cast iron drain cleaning Punta Gorda",
+      "sewer line cleaning Punta Gorda Florida",
+    ],
+    h1: "Drain Cleaning in Punta Gorda, FL",
+    sectionHeading: "How we clear stubborn drains in Punta Gorda",
+    heroSubtext:
+      "A slow drain in Punta Gorda rarely fixes itself. C&S Plumbing runs a camera first, then clears the line for good — from PGI canal homes to the Historic District.",
+    trustBadges: TRUST_BADGES,
+    serviceDescription:
+      `Punta Gorda's drains work harder than most. In Punta Gorda Isles and Burnt Store Isles, canal-front homes sit on long, flat lots where the sewer lateral can run 80 feet or more from the back of the house out to the city main under the street. Long, low-slope runs like these are exactly where grease, soap scum, and paper accumulate — waste simply doesn't have the fall it needs to carry through, and a partial blockage quietly builds until the whole house backs up at once.\n\nThe Historic District and the older neighborhoods between US-41 and Charlotte Harbor have the opposite problem: age. Homes here still drain through original cast iron, and after decades in Florida's climate the interior of those pipes is rough with scale and channeled from corrosion. Cast iron in this condition snags everything that passes through it, and no amount of drain chemicals from the hardware store will change the pipe's geometry. It takes mechanical cleaning — and a plan for the pipe's remaining life.\n\nC&S Plumbing of Lee approaches every Punta Gorda drain call camera-first. Before we recommend anything, we run a pipe camera through the line and show you exactly what's causing the problem: a grease-choked kitchen branch, a root ball at a joint, a bellied section holding water, or a cast iron line that's flaking apart. That diagnosis is the difference between a $200 fix and a wasted afternoon. Punta Gorda's mature landscaping — the banyans, oaks, and ficus that make the older streets so beautiful — sends roots straight into any drain joint that seeps moisture, and root intrusion is one of the most common findings on our camera inspections here.\n\nFor heavy blockages, we bring hydro jetting. A jetter scours the full diameter of the pipe with high-pressure water, cutting out roots, stripping grease off the walls, and flushing years of buildup down to the main. It's the most thorough drain cleaning available, and on Punta Gorda's long PGI laterals it restores flow that a basic cable machine can't match — a snake pokes a hole through a clog; jetting removes it. For kitchens, laundry lines, and homes with a history of backups, periodic jetting is also the cheapest insurance against the emergency call — clearing the line on your schedule instead of the clog's. The warning signs are worth acting on early: gurgling from a toilet when the washer drains, or more than one slow fixture at a time, points to a developing main-line blockage rather than a simple clogged trap.\n\nC&S has served Southwest Florida since 1997 under Florida licenses CFC057076 and CFC1432485, with a 5.0 Google rating from 46+ homeowners. We quote in writing before we start, we show you the camera footage before and after, and if your line has a problem that cleaning can't solve, we'll tell you straight and price the repair honestly. Call 833-PLUMB-IT and get your Punta Gorda drains flowing again.`,
+    features: [
+      {
+        title: "Camera-First Diagnosis",
+        description:
+          "We inspect the line with a pipe camera before quoting, so you see the actual cause — roots, grease, or pipe damage — not a guess.",
+      },
+      {
+        title: "Hydro Jetting",
+        description:
+          "High-pressure water jetting scours the full pipe wall, removing roots and grease buildup that cable machines leave behind.",
+      },
+      {
+        title: "Root Intrusion Removal",
+        description:
+          "Punta Gorda's mature trees invade drain joints. We cut roots out mechanically and identify the entry points so you can stop repeat clogs.",
+      },
+      {
+        title: "Cast Iron Drain Expertise",
+        description:
+          "Careful cleaning methods for the aging cast iron drains in the Historic District — thorough without accelerating pipe deterioration.",
+      },
+      {
+        title: "Upfront Written Quotes",
+        description:
+          "You approve an exact price before any cleaning begins. No hourly meters, no surprise add-ons at the end.",
+      },
+    ],
+    city: "Punta Gorda",
+    state: "FL",
+    neighborhoods: PUNTA_GORDA_NEIGHBORHOODS,
+    faqs: [
+      {
+        question: "How fast can you clear a clogged drain in Punta Gorda?",
+        answer:
+          "Most Punta Gorda drain calls are reached the same day, and our crews arrive from Lee County typically within an hour via US-41 or I-75. A standard single-drain clog is usually cleared in one visit — we carry cable machines, jetting equipment, and cameras on the truck, so there's no second trip to finish the job. Call 833-PLUMB-IT to get on the schedule.",
+      },
+      {
+        question: "How much does drain cleaning cost in Punta Gorda?",
+        answer:
+          "A straightforward single-fixture clog typically runs $150–$350. Main sewer line clogs, root removal, and hydro jetting cost more depending on the length of the run and the severity of the buildup. Because we camera the line first, we can quote an exact written price before starting — and you'll see the footage that justifies it.",
+      },
+      {
+        question: "Why do Punta Gorda Isles homes get so many drain backups?",
+        answer:
+          "PGI's canal lots are long and flat, so sewer laterals run a long distance to the city main with minimal slope. Waste moves slowly through these runs, letting grease and solids settle and accumulate. Combine that with decades of use and the occasional root intrusion, and a partial blockage can build for months before the first backup. Periodic jetting keeps these long laterals clear.",
+      },
+      {
+        question: "Are you licensed to work in Punta Gorda and Charlotte County?",
+        answer:
+          "Yes. C&S Plumbing of Lee holds two active Florida state plumbing contractor licenses — CFC057076 and CFC1432485 — which authorize us to work anywhere in the state, including Punta Gorda and Charlotte County. Both licenses are verifiable on the Florida DBPR website, and we're fully insured. We've served Southwest Florida since 1997.",
+      },
+      {
+        question: "What happens during a drain cleaning visit?",
+        answer:
+          "We start by running a camera through the line to identify the blockage and its location, then recommend the right method — cable machine for simple clogs, hydro jetting for grease and roots. You approve a written quote before we begin. After cleaning, we run the camera again so you can see the cleared pipe, and we flag any underlying damage the cleaning revealed.",
+      },
+      {
+        question: "Is hydro jetting safe for older cast iron drains?",
+        answer:
+          "Usually, but not always — which is exactly why we camera the line first. Cast iron in decent condition handles jetting well, and it's the best way to strip decades of scale off the pipe walls. But if the camera shows severe corrosion, cracking, or missing pipe bottom, jetting can make things worse, and we'll recommend a gentler cleaning or a repair instead. You get an honest read on your pipe's condition either way.",
+      },
+    ],
+    relatedPages: [
+      { label: "Leak Repair in Punta Gorda", href: "/leak-repair-punta-gorda" },
+      { label: "Emergency Plumber in Punta Gorda", href: "/emergency-plumber-punta-gorda" },
+      { label: "Punta Gorda Service Area", href: "/areas/punta-gorda" },
+    ],
+  },
+
+  // ============================================
+  // 51. LEAK REPAIR - PUNTA GORDA
+  // ============================================
+  {
+    slug: "leak-repair-punta-gorda",
+    serviceSlug: "leak-repair",
+    metaTitle: "Leak Repair Punta Gorda | Slab Leak Detection",
+    metaDescription:
+      "Leak detection & repair in Punta Gorda, FL. Slab leaks, hidden pipe leaks & high water bills diagnosed fast. Licensed CFC1432485. Call 833-PLUMB-IT today.",
+    keywords: [
+      "leak repair Punta Gorda",
+      "slab leak detection Punta Gorda FL",
+      "water leak repair Punta Gorda",
+      "hidden leak detection Punta Gorda",
+      "high water bill Punta Gorda",
+      "pipe leak repair Punta Gorda",
+      "Punta Gorda Isles slab leak",
+      "acoustic leak detection Punta Gorda",
+      "leak detection service Punta Gorda Florida",
+      "under slab leak Punta Gorda",
+    ],
+    h1: "Leak Repair in Punta Gorda, FL",
+    sectionHeading: "Finding and fixing hidden leaks in Punta Gorda",
+    heroSubtext:
+      "A hidden leak under a Punta Gorda slab wastes water every hour it runs. C&S Plumbing pinpoints leaks with acoustic and thermal detection — no guesswork, no needless demolition.",
+    trustBadges: TRUST_BADGES,
+    serviceDescription:
+      `Punta Gorda's most desirable real estate is also its most leak-prone. Punta Gorda Isles was built on dredged fill — material excavated from the canals and placed to create the buildable lots — and fill soil settles. Decades after construction, that slow settlement continues to work on the copper supply lines running beneath PGI slabs, flexing pipes at their weakest points until a pinhole opens. Seawall-adjacent lots see it most: the soil closest to the canal edge moves with water levels and tidal cycles, and the plumbing underneath moves with it.\n\nThen there are the storms. Punta Gorda was ground zero for Hurricane Charley in 2004 — the eyewall crossed Charlotte Harbor directly over the city — and Hurricane Ian delivered another blow in 2022. Beyond the visible wind damage, major storms shift and re-settle the ground beneath foundations. We routinely find slab leaks in Punta Gorda homes that trace back to storm-related ground movement, sometimes surfacing months after the weather has passed. A slab that shifted a fraction of an inch can stress a rigid copper line past its limit.\n\nThe first sign is usually the water bill. If your City of Punta Gorda utility bill jumps with no change in usage, if you hear water running when every fixture is off, or if you find a warm spot on the tile floor, there's a strong chance water is escaping somewhere you can't see. C&S Plumbing of Lee diagnoses these leaks with acoustic listening equipment and thermal imaging, pinpointing the failure to within inches before we open anything. That precision is the difference between a small, targeted access hole and a torn-up floor — and it matters even more in homes with tile, terrazzo, or wood flooring that can't be patched invisibly.\n\nOnce located, we walk you through the repair options: a direct spot repair where the leak is accessible, or a reroute that abandons the failed under-slab section and runs new line overhead through the attic — often the smarter choice when the pipe has failed once, because the same soil conditions that broke it are still working on the rest of the line. If a home has had multiple leaks, we'll give you an honest read on whether a whole-home repipe makes more financial sense than paying for failures one at a time. Every option comes with a written quote before work begins, and every repair is documented with photos.\n\nThat documentation matters in Punta Gorda, where many leaks end up as insurance claims. C&S photographs the damage, records the cause of failure, and provides the detailed invoices adjusters ask for, so your claim moves without friction. Family-owned since 1997, licensed under CFC057076 and CFC1432485, and rated 5.0 on Google by 46+ homeowners — call 833-PLUMB-IT and stop paying for water you never use.`,
+    features: [
+      {
+        title: "Acoustic & Thermal Detection",
+        description:
+          "We locate hidden leaks to within inches using listening equipment and thermal imaging — before any floor or wall is opened.",
+      },
+      {
+        title: "Slab Leak Specialists",
+        description:
+          "Deep experience with the settlement-driven slab leaks common in PGI and Burnt Store Isles homes built on dredged canal fill.",
+      },
+      {
+        title: "High Water Bill Diagnosis",
+        description:
+          "We trace unexplained water bill spikes to their source — under-slab leaks, irrigation failures, or fixture leaks — and price the fix upfront.",
+      },
+      {
+        title: "Repair or Reroute Options",
+        description:
+          "Honest guidance on spot repair versus rerouting the line overhead, based on the pipe's condition and failure history.",
+      },
+      {
+        title: "Insurance Documentation",
+        description:
+          "Photos, cause-of-failure notes, and detailed invoices prepared the way adjusters expect, so your claim isn't delayed.",
+      },
+    ],
+    city: "Punta Gorda",
+    state: "FL",
+    neighborhoods: PUNTA_GORDA_NEIGHBORHOODS,
+    faqs: [
+      {
+        question: "How quickly can you get to a leak in Punta Gorda?",
+        answer:
+          "Active leaks are prioritized, and we typically reach Punta Gorda within an hour from our Lee County base — PGI, Burnt Store Isles, and the Historic District are all a straight run up US-41 or I-75. If water is actively flowing, call 833-PLUMB-IT and our dispatcher will walk you through shutting off your main valve while a truck heads your way.",
+      },
+      {
+        question: "How much does leak repair cost in Punta Gorda?",
+        answer:
+          "Leak detection with a written diagnosis typically runs $250–$450, and that fee is credited toward the repair if you proceed with us. Repairs range from roughly $500 for an accessible spot fix to $3,000+ for an under-slab reroute, depending on location and method. Every price is quoted in writing before we open a single tile.",
+      },
+      {
+        question: "Why do Punta Gorda Isles homes get slab leaks?",
+        answer:
+          "PGI was built on dredged fill soil, which continues to settle for decades — and settlement flexes the copper supply lines under the slab until they fail. Seawall-adjacent lots see extra soil movement from canal water levels, and major hurricanes like Charley in 2004 and Ian in 2022 added storm-driven ground shifts on top. It's a combination few other Florida cities experience at this intensity.",
+      },
+      {
+        question: "Are you licensed for leak repair in Punta Gorda?",
+        answer:
+          "Yes. C&S Plumbing of Lee holds two active Florida state plumbing contractor licenses, CFC057076 and CFC1432485, both verifiable on the Florida DBPR website. State licensure covers our work throughout Charlotte County. We're fully insured, family-owned since 1997, and we put every quote in writing before work begins.",
+      },
+      {
+        question: "How does leak detection work without tearing up my floors?",
+        answer:
+          "We pressurize and isolate sections of your plumbing to confirm which line is leaking, then use acoustic listening gear to hear the leak through the slab and thermal imaging to spot the temperature signature of escaping water. The result is a marked location accurate to within inches. We open one small access point directly over the leak instead of trenching across your floor hunting for it.",
+      },
+      {
+        question: "Will my homeowner's insurance cover a slab leak in Punta Gorda?",
+        answer:
+          "Many policies cover the water damage caused by a sudden pipe failure and the access work required to reach it, though the pipe repair itself is often excluded — every policy differs. We document the failure with photos and a written cause-of-loss description, provide itemized invoices, and can speak directly with your adjuster. That documentation is often the difference between a smooth claim and a denied one.",
+      },
+    ],
+    relatedPages: [
+      { label: "Drain Cleaning in Punta Gorda", href: "/drain-cleaning-punta-gorda" },
+      { label: "Repiping in Punta Gorda", href: "/repiping-punta-gorda" },
+      { label: "Punta Gorda Service Area", href: "/areas/punta-gorda" },
+    ],
+  },
+
+  // ============================================
+  // 52. WATER SOFTENERS - FORT MYERS
+  // ============================================
+  {
+    slug: "water-softeners-fort-myers",
+    serviceSlug: "water-softeners",
+    metaTitle: "Water Softeners Fort Myers | Hard Water Fix",
+    metaDescription:
+      "Water softener installation in Fort Myers, FL. Stop scale on fixtures & protect your water heater from hard water. Licensed CFC1432485. Call 833-PLUMB-IT today.",
+    keywords: [
+      "water softener Fort Myers",
+      "water softener installation Fort Myers FL",
+      "hard water Fort Myers",
+      "whole house water softener Fort Myers",
+      "water treatment Fort Myers",
+      "salt-free water softener Fort Myers",
+      "reverse osmosis Fort Myers",
+      "Fort Myers water quality",
+      "scale buildup Fort Myers fixtures",
+      "water conditioning Fort Myers Florida",
+    ],
+    h1: "Water Softener Installation in Fort Myers, FL",
+    sectionHeading: "Solving Fort Myers hard water for good",
+    heroSubtext:
+      "Fort Myers water is hard enough to scale fixtures, cloud glassware, and cut your water heater's life short. C&S Plumbing sizes and installs softeners that fix it at the point of entry.",
+    trustBadges: TRUST_BADGES,
+    serviceDescription:
+      `If you live in Fort Myers, you've seen the evidence: white crust around faucet aerators, cloudy spots on glassware straight out of the dishwasher, showerheads that spray sideways because half the nozzles are blocked with scale. Lee County Utilities draws from Southwest Florida's limestone aquifer, and the water arrives at your tap loaded with dissolved calcium and magnesium. It's safe to drink — but it's genuinely hard water, and every gallon that passes through your home leaves a little mineral behind.\n\nThe damage you can't see costs the most. Inside your water heater, hardness minerals precipitate out as the water heats, building a layer of scale on the tank bottom and heating elements. That scale forces the heater to work harder for the same hot water, raising energy bills, and it shortens the equipment's life — the popping and rumbling sound many Fort Myers water heaters make is steam bubbling through a sediment layer. Dishwashers, washing machines, and tankless units all suffer the same slow strangulation — tankless heaters in particular lose efficiency quickly as scale narrows their heat exchanger passages, which is why manufacturers in hard-water areas like Fort Myers recommend treatment upstream of the unit.\n\nC&S Plumbing of Lee has installed and serviced water treatment systems across Fort Myers since 1997, from the older homes along McGregor Boulevard to newer construction in Gateway and off Daniels Parkway. We start with an on-site water test, then size a whole-home softener to your actual household — number of people, number of bathrooms, and measured hardness — rather than selling whatever unit is on the shelf. An undersized softener exhausts between regenerations and lets hard water through; an oversized one wastes salt and water. Correct sizing is most of the job.\n\nWe'll also tell you honestly what a softener does and doesn't do. A softener removes hardness minerals — it will not remove chlorine taste or improve drinking water flavor. For the chlorine that city water carries, we add carbon filtration; for polished drinking water at the kitchen tap, an under-sink reverse osmosis system is the right tool. Some homes want all three, many need only one. We match the equipment to the complaint instead of upselling a rack of tanks you don't need. The same honesty applies to salt-based versus salt-free systems: salt-based ion exchange actually removes hardness and delivers true soft water, while salt-free conditioners neutralize scale formation without removing minerals — lower maintenance, but not the same result. We'll lay out the tradeoffs and let you choose.\n\nEvery installation includes supply and drain connections with a proper bypass valve, a post-install water test to verify the system is actually delivering soft water, and a walkthrough on salt refills and routine maintenance. We also service and repair existing softeners of all brands across Fort Myers — if your current unit isn't keeping up, a diagnosis is often cheaper than a replacement. C&S is family-owned, licensed under CFC057076 and CFC1432485, and rated 5.0 on Google by 46+ homeowners. Call 833-PLUMB-IT for a free water test and written quote.`,
+    features: [
+      {
+        title: "Free On-Site Water Testing",
+        description:
+          "We measure your actual hardness and chlorine levels before recommending anything, and show you the numbers.",
+      },
+      {
+        title: "Right-Sized Softener Systems",
+        description:
+          "Whole-home softeners sized to your household and measured water hardness — not a one-size-fits-all unit off the shelf.",
+      },
+      {
+        title: "Honest Equipment Guidance",
+        description:
+          "Straight answers on softener vs. carbon filtration vs. reverse osmosis, so you buy the treatment that fixes your actual complaint.",
+      },
+      {
+        title: "Salt-Based & Salt-Free Options",
+        description:
+          "True ion-exchange softening or low-maintenance salt-free conditioning — we explain the tradeoffs and install either one properly.",
+      },
+      {
+        title: "Water Heater Protection",
+        description:
+          "Softened water stops scale from building inside your tank and elements, extending water heater life and cutting energy waste.",
+      },
+    ],
+    city: "Fort Myers",
+    state: "FL",
+    neighborhoods: FORT_MYERS_NEIGHBORHOODS,
+    faqs: [
+      {
+        question: "How soon can you install a water softener in Fort Myers?",
+        answer:
+          "Most Fort Myers installations are scheduled within a few days of your free water test and quote, and a standard whole-home softener install takes about half a day. We're headquartered in North Fort Myers, minutes from most Fort Myers neighborhoods, so scheduling is fast. Call 833-PLUMB-IT to book the water test that starts the process.",
+      },
+      {
+        question: "How much does a water softener cost in Fort Myers?",
+        answer:
+          "A quality whole-home softener installed typically runs $1,500–$3,500 depending on system capacity, brand, and installation complexity. Adding carbon filtration or an under-sink reverse osmosis system increases the total. We provide an exact written quote after testing your water and assessing your plumbing — no pressure, no mystery pricing.",
+      },
+      {
+        question: "Why is Fort Myers water so hard?",
+        answer:
+          "Fort Myers water comes from Southwest Florida's limestone aquifer, where water sits in contact with calcium-rich rock and dissolves minerals along the way. Lee County Utilities treats the water to federal safety standards, but hardness minerals aren't a health hazard, so they stay in. The result is water that's safe to drink but hard enough to scale fixtures, spot glassware, and shorten appliance life across the city.",
+      },
+      {
+        question: "Are you licensed to install water softeners in Fort Myers?",
+        answer:
+          "Yes. C&S Plumbing of Lee holds two active Florida plumbing contractor licenses, CFC057076 and CFC1432485, both verifiable on the Florida DBPR website. We've served Fort Myers since 1997, we're fully insured, and every installation is done to code with proper supply, drain, and bypass connections.",
+      },
+      {
+        question: "What does the installation process involve?",
+        answer:
+          "We start with an on-site water test and a written quote. On install day, we place the softener at your point of entry — typically the garage — tie in the supply lines with a bypass valve, route the drain line for regeneration cycles, and program the unit to your measured hardness. Before we leave, we retest the water to confirm the system is delivering soft water and walk you through salt refills.",
+      },
+      {
+        question: "Will a softener fix the chlorine taste in my Fort Myers tap water?",
+        answer:
+          "No — and any company that tells you otherwise is selling, not solving. Softeners remove calcium and magnesium; they don't touch chlorine. If taste is your complaint, the fix is a whole-home carbon filter or an under-sink reverse osmosis system at the kitchen tap. Many Fort Myers homes pair a softener with one of these for both scale protection and better-tasting water. We'll tell you which combination your water actually calls for.",
+      },
+    ],
+    relatedPages: [
+      { label: "Water Heater Repair in Fort Myers", href: "/water-heater-repair-fort-myers" },
+      { label: "Leak Repair in Fort Myers", href: "/leak-repair-fort-myers" },
+      { label: "Fort Myers Service Area", href: "/areas/fort-myers" },
+    ],
+  },
+
+  // ============================================
+  // 53. PLUMBING REMODEL - FORT MYERS
+  // ============================================
+  {
+    slug: "plumbing-remodel-fort-myers",
+    serviceSlug: "plumbing-remodel",
+    metaTitle: "Plumbing Remodel Fort Myers | Kitchen & Bath",
+    metaDescription:
+      "Kitchen & bathroom remodel plumbing in Fort Myers, FL. Fixture relocation, slab work, cast iron conversion & permits. Licensed CFC1432485. Call 833-PLUMB-IT.",
+    keywords: [
+      "plumbing remodel Fort Myers",
+      "bathroom remodel plumber Fort Myers",
+      "kitchen plumbing remodel Fort Myers FL",
+      "fixture relocation Fort Myers",
+      "remodel plumber Fort Myers",
+      "rough-in plumbing Fort Myers",
+      "cast iron to PVC Fort Myers",
+      "McGregor remodel plumbing",
+      "plumbing renovation Fort Myers Florida",
+      "remodel plumbing contractor Fort Myers",
+    ],
+    h1: "Plumbing Remodel Services in Fort Myers, FL",
+    sectionHeading: "Remodel plumbing done right in Fort Myers",
+    heroSubtext:
+      "Renovating a Fort Myers kitchen or bathroom? C&S Plumbing handles the slab cuts, pipe relocations, permits, and fixture installs — coordinated with your GC from rough-in to trim.",
+    trustBadges: TRUST_BADGES,
+    serviceDescription:
+      `Fort Myers is in the middle of a renovation wave. Along the McGregor corridor and in the River District, buyers are taking homes from the 1920s through the 1970s down to the studs and rebuilding them for modern living — and every one of those projects runs new plumbing through old bones. The charm of a McGregor bungalow comes with original galvanized supply lines and cast iron drains that have been quietly deteriorating for fifty years or more. A remodel is the one moment those systems are exposed and affordable to replace, and it's the moment to get the plumbing scope right.\n\nC&S Plumbing of Lee has worked Fort Myers remodels since 1997, from single-bathroom updates to full gut renovations. The most common structural challenge is relocation: moving a kitchen sink to a new island, converting a tub to a walk-in shower, or reworking a bathroom layout entirely. In Fort Myers' slab-on-grade homes, relocating a drain means cutting the slab, trenching to the new fixture location, and setting new drain and vent lines beneath the floor. We do this work cleanly and in sequence — slab cuts happen early, inspections happen on schedule, and the concrete is patched before flooring goes down. We also upgrade the supply side during these projects — many older Fort Myers homes have undersized lines that can't feed a modern multi-head shower system, and a remodel is the right time to fix that.\n\nCast iron conversion is the other big-ticket item in older Fort Myers homes. Original cast iron drains from the mid-century era are typically scaled, channeled, or cracked by now, and connecting brand-new fixtures to a failing drain system is a renovation mistake that surfaces a year later under new tile. During your remodel, we camera the existing drains, show you their condition, and convert failing cast iron to PVC while the walls and floors are open — the cheapest this work will ever be. Homeowners who skip this step and tie new fixtures into failing drains often find themselves cutting into brand-new finishes within a few years.\n\nWe pull our permits through the City of Fort Myers and handle the rough-in and final inspections that remodel plumbing requires, keeping the paperwork off your plate and the project off the inspector's problem list. And we're built to work inside a bigger team: we coordinate with general contractors, designers, and tile installers daily, working from fixture schedules, hitting rough-in dates on the construction calendar, and returning for precise trim-out after finishes are in.\n\nFrom wall-hung toilets and thermostatic shower systems to pot fillers and freestanding tubs, we set rough-ins to each fixture's spec sheet so the finished product looks and works the way the designer drew it. C&S is family-owned, licensed under CFC057076 and CFC1432485, with a 5.0 Google rating from 46+ homeowners. Call 833-PLUMB-IT to walk through your Fort Myers remodel scope.`,
+    features: [
+      {
+        title: "Slab Cut & Fixture Relocation",
+        description:
+          "We cut, trench, and reroute drain lines in slab-on-grade homes to support new kitchen islands, shower conversions, and layout changes.",
+      },
+      {
+        title: "Cast Iron to PVC Conversion",
+        description:
+          "We camera aging cast iron drains during demo and replace failing sections with PVC while walls and floors are open.",
+      },
+      {
+        title: "City of Fort Myers Permitting",
+        description:
+          "We pull the plumbing permits and schedule rough-in and final inspections, keeping your remodel on the right side of code.",
+      },
+      {
+        title: "GC & Designer Coordination",
+        description:
+          "We work from fixture schedules, hit rough-in dates on the construction calendar, and return for trim-out after finishes.",
+      },
+      {
+        title: "High-End Fixture Installation",
+        description:
+          "Wall-hung toilets, thermostatic showers, pot fillers, and freestanding tubs set precisely to each fixture's rough-in spec.",
+      },
+    ],
+    city: "Fort Myers",
+    state: "FL",
+    neighborhoods: FORT_MYERS_NEIGHBORHOODS,
+    faqs: [
+      {
+        question: "How soon can you start on my Fort Myers remodel?",
+        answer:
+          "We typically walk the project and deliver a written scope and quote within a few days of your call. Start dates depend on your construction schedule — remodel plumbing happens in phases, and we coordinate our rough-in and trim dates with your GC's calendar rather than yours alone. Being headquartered in North Fort Myers means we're minutes from most Fort Myers job sites. Call 833-PLUMB-IT to set up the walkthrough.",
+      },
+      {
+        question: "How much does remodel plumbing cost in Fort Myers?",
+        answer:
+          "It varies with scope. A fixture-swap bathroom update where nothing moves might run $1,500–$3,500 in plumbing labor and materials, while a full bathroom relocation with slab cuts typically lands between $5,000 and $15,000. Converting old cast iron drains or adding a new bathroom increases the number. We provide a detailed written quote from your plans or an on-site walkthrough before any work begins.",
+      },
+      {
+        question: "Why do Fort Myers remodels so often uncover plumbing problems?",
+        answer:
+          "The neighborhoods being renovated — McGregor, the River District, the mid-century streets off Colonial — are also the city's oldest housing stock. Homes there were plumbed with galvanized steel supply lines and cast iron drains that are now 50 to 100 years old. When demo opens the walls, corrosion and scale that have been hidden for decades come into view. A remodel is genuinely the cheapest moment to fix them, because the demolition is already paid for.",
+      },
+      {
+        question: "Do you handle permits for remodel plumbing in Fort Myers?",
+        answer:
+          "Yes. Remodel plumbing scopes in the city require permits through the City of Fort Myers, and we pull them and schedule the inspections as part of the job. C&S holds two active Florida plumbing contractor licenses — CFC057076 and CFC1432485, verifiable on the Florida DBPR website — and we've been permitting work in Lee County since 1997.",
+      },
+      {
+        question: "How does the remodel plumbing process work with my contractor?",
+        answer:
+          "We work as a trade under your GC's schedule. First comes rough-in: slab cuts, drain and vent lines, and supply piping, followed by the rough inspection before walls close. After tile, cabinets, and counters are in, we return for trim-out — setting fixtures, valves, and final connections — and the final inspection. We communicate directly with your GC and designer throughout so nothing waits on plumbing.",
+      },
+      {
+        question: "Should I replace my old pipes during a Fort Myers remodel?",
+        answer:
+          "If your home has galvanized supply lines or original cast iron drains, almost certainly yes. The walls and floors are already open, which removes most of the cost of a repipe or drain conversion. We camera the drains and inspect the exposed supply lines during demo, then give you a straight recommendation with pricing. Discovering a failed pipe under brand-new tile a year later is the expensive version of this decision.",
+      },
+    ],
+    relatedPages: [
+      { label: "Repiping in Fort Myers", href: "/repiping-fort-myers" },
+      { label: "Water Softeners in Fort Myers", href: "/water-softeners-fort-myers" },
+      { label: "Fort Myers Service Area", href: "/areas/fort-myers" },
+    ],
+  },
+
+  // ============================================
+  // 54. COMMERCIAL PLUMBING - CAPE CORAL
+  // ============================================
+  {
+    slug: "commercial-plumbing-cape-coral",
+    serviceSlug: "commercial",
+    metaTitle: "Commercial Plumber Cape Coral | Licensed Contractor",
+    metaDescription:
+      "Commercial plumbing in Cape Coral, FL. Restaurants, medical offices, retail build-outs & backflow testing. Licensed CFC1432485. Call 833-PLUMB-IT for service.",
+    keywords: [
+      "commercial plumber Cape Coral",
+      "commercial plumbing Cape Coral FL",
+      "restaurant plumber Cape Coral",
+      "backflow testing Cape Coral",
+      "grease trap service Cape Coral",
+      "retail buildout plumber Cape Coral",
+      "medical office plumbing Cape Coral",
+      "commercial plumbing contractor Cape Coral",
+      "Pine Island Road commercial plumbing",
+      "Cape Coral business plumbing service",
+    ],
+    h1: "Commercial Plumbing Services in Cape Coral, FL",
+    sectionHeading: "Commercial plumbing for Cape Coral businesses",
+    heroSubtext:
+      "From Pine Island Road build-outs to backflow certification downtown, C&S Plumbing keeps Cape Coral businesses open and compliant. Licensed commercial contractor since 1997.",
+    trustBadges: TRUST_BADGES,
+    serviceDescription:
+      `Cape Coral's commercial map is being redrawn. The Pine Island Road corridor has become one of Southwest Florida's fastest-growing commercial strips, filling in with restaurants, medical plazas, retail centers, and service businesses to serve a city that has long outgrown its bedroom-community roots. Downtown, the 47th Terrace redevelopment is bringing new restaurants, offices, and mixed-use projects into the city's original commercial core. Every one of these projects — and every existing business between them — depends on commercial plumbing that's installed correctly, maintained on schedule, and repaired fast when something fails.\n\nC&S Plumbing of Lee has served commercial clients across Lee County since 1997, holding two Florida state licenses (CFC057076 and CFC1432485) that qualify us for commercial work of any scale. In Cape Coral, our commercial book runs from single-suite tenant improvements to full build-outs, alongside the service and compliance work that keeps established businesses running. Our new-construction background — more than 8,500 homes built with Lee County builders like Hansen Homes — means we're comfortable reading plans, holding schedules, and working as one trade among many on an active job site.\n\nRestaurants are a core specialty. Cape Coral's food service operators rely on us for grease trap and interceptor installation and maintenance, three-compartment sink setups, floor drain systems, and the commercial water heaters that keep a kitchen in service. Grease trap compliance is not optional — pretreatment ordinances require traps to be serviced before they reach capacity — and we build maintenance schedules around each operation's actual volume so compliance never becomes a scramble. When a kitchen drain backs up mid-service on a Friday night, our emergency crews respond with the goal of keeping your doors open, not sending you home early.\n\nMedical and dental offices bring a different set of requirements. We plumb exam rooms, sterilization areas, and lab sinks to spec, coordinate our rough-in around med-gas and specialty contractors so trades never collide in the wall cavity, and install the ADA-compliant fixtures and clearances that healthcare build-outs demand. Retail build-outs get the same treatment: we work from the architect's drawings, coordinate with the GC and other trades, and deliver plumbing that passes City of Cape Coral inspection the first time.\n\nBackflow prevention rounds out our commercial services. Commercial properties on municipal water must have their backflow preventers tested annually by a licensed tester, and we handle testing, repair, and replacement of RPZ and double-check assemblies, filing the certification paperwork on your behalf. For businesses that want plumbing off their worry list entirely, our maintenance contracts bundle scheduled inspections, preventive drain cleaning, and priority emergency response. When a drain backs up during business hours, being the customer who gets the next truck matters. Call 833-PLUMB-IT to talk through your Cape Coral commercial project or service needs.`,
+    features: [
+      {
+        title: "Restaurant & Food Service Plumbing",
+        description:
+          "Grease trap installation and scheduled maintenance, three-compartment sinks, floor drains, and commercial water heaters for Cape Coral kitchens.",
+      },
+      {
+        title: "Medical & Dental Office Build-Outs",
+        description:
+          "Exam room, sterilization, and lab plumbing coordinated with med-gas contractors, plus ADA-compliant fixture installation.",
+      },
+      {
+        title: "Retail Tenant Improvements",
+        description:
+          "Complete plumbing for new commercial spaces along Pine Island Road and 47th Terrace — permit through final inspection.",
+      },
+      {
+        title: "Backflow Testing & Certification",
+        description:
+          "Annual testing, repair, and replacement of RPZ and double-check assemblies, with certification paperwork filed for you.",
+      },
+      {
+        title: "Commercial Maintenance Contracts",
+        description:
+          "Scheduled inspections, preventive drain cleaning, and priority emergency response that keeps your business open.",
+      },
+    ],
+    city: "Cape Coral",
+    state: "FL",
+    neighborhoods: CAPE_CORAL_NEIGHBORHOODS,
+    faqs: [
+      {
+        question: "How fast do you respond to commercial plumbing emergencies in Cape Coral?",
+        answer:
+          "Commercial calls get priority dispatch because downtime costs revenue. Our trucks reach most Cape Coral commercial corridors — Pine Island Road, Del Prado, downtown 47th Terrace — within 30–45 minutes, and maintenance contract customers move to the front of the queue. Call 833-PLUMB-IT and tell the dispatcher you're a business; we'll give you a real ETA on the spot.",
+      },
+      {
+        question: "How is commercial plumbing work priced?",
+        answer:
+          "Service and repair work is quoted in writing before we start, the same as our residential calls. Build-outs and tenant improvements are bid from your architect's drawings with a detailed scope, so your GC can slot our number straight into the budget. Maintenance contracts are priced flat per year based on your facility and fixture count. No hourly meters running while you wonder.",
+      },
+      {
+        question: "Why is commercial plumbing demand growing so fast in Cape Coral?",
+        answer:
+          "Cape Coral spent decades as a residential city that exported its commerce to Fort Myers. That's reversing — the Pine Island Road corridor is filling with restaurants, medical plazas, and retail, and the city is actively redeveloping downtown around 47th Terrace. New commercial square footage means build-outs, and every new restaurant or medical office adds ongoing compliance work like grease trap service and backflow testing.",
+      },
+      {
+        question: "Are you licensed for commercial plumbing in Cape Coral?",
+        answer:
+          "Yes. C&S Plumbing of Lee holds two active Florida state plumbing contractor licenses, CFC057076 and CFC1432485, which cover commercial work of any scale statewide. Both are verifiable on the Florida DBPR website. We're fully insured, we've operated in Lee County since 1997, and we carry the commercial project experience of a company that has built over 8,500 homes with area builders.",
+      },
+      {
+        question: "How does a commercial build-out project work with C&S?",
+        answer:
+          "We bid from your plans, then execute in phases with your GC: underground rough-in before the slab pours, top-out in the walls, inspections at each milestone with the City of Cape Coral, and fixture trim at the end. We coordinate directly with the other trades — electrical, HVAC, med-gas where applicable — so the schedule holds. You get one point of contact from bid to certificate of occupancy.",
+      },
+      {
+        question: "Do you handle annual backflow testing for Cape Coral businesses?",
+        answer:
+          "Yes. Commercial properties on municipal water are required to have backflow prevention assemblies tested annually by a licensed tester. We test RPZ and double-check assemblies, make any repairs on the spot when possible, and file the certification documentation on your behalf so you never miss a compliance deadline. We can put your property on an automatic annual schedule.",
+      },
+    ],
+    relatedPages: [
+      { label: "Commercial Plumbing in Fort Myers", href: "/commercial-plumbing-fort-myers" },
+      { label: "New Construction Plumbing in Cape Coral", href: "/new-construction-plumbing-cape-coral" },
+      { label: "Cape Coral Service Area", href: "/areas/cape-coral" },
+    ],
+  },
+
+  // ============================================
+  // 55. REPIPING - NORTH FORT MYERS
+  // ============================================
+  {
+    slug: "repiping-north-fort-myers",
+    serviceSlug: "repiping",
+    metaTitle: "Repiping North Fort Myers | Pipe Replacement",
+    metaDescription:
+      "Whole-home repiping in North Fort Myers, FL from your neighbors on Pondella Rd. Galvanized & polybutylene replacement. Licensed CFC1432485. Call 833-PLUMB-IT.",
+    keywords: [
+      "repiping North Fort Myers",
+      "whole house repiping North Fort Myers FL",
+      "polybutylene pipe replacement North Fort Myers",
+      "galvanized pipe replacement North Fort Myers",
+      "mobile home repiping North Fort Myers",
+      "North Fort Myers repipe cost",
+      "pipe replacement North Fort Myers Florida",
+      "repipe specialist North Fort Myers",
+      "manufactured home plumbing North Fort Myers",
+      "North Fort Myers plumber repiping",
+    ],
+    h1: "Whole-Home Repiping in North Fort Myers, FL",
+    sectionHeading: "Repiping our own North Fort Myers neighborhood",
+    heroSubtext:
+      "Our headquarters is on Pondella Road — North Fort Myers repipes are jobs in our own neighborhood. Replace failing galvanized or polybutylene pipes with modern PEX, done by the plumbers next door.",
+    trustBadges: TRUST_BADGES,
+    serviceDescription:
+      `North Fort Myers is home turf for C&S Plumbing — literally. Our headquarters sits at 951 Pondella Road, which means when we repipe a North Fort Myers home, we're working blocks from our own shop, for people who are genuinely our neighbors. No other service area gets a shorter drive, a faster response, or more accumulated local knowledge than this one.\n\nAnd North Fort Myers needs repiping expertise more than most communities. The housing stock here skews older than the county average, with a large share of homes built in the 1970s and 1980s — the peak era for two piping materials that have not aged well. Galvanized steel supply lines corrode from the inside, gradually choking flow until a shower turns to a trickle, while shedding rust that discolors your water. Polybutylene, installed widely from the late 1970s through the mid 1990s, becomes brittle from chlorinated water and fails suddenly, without the courtesy of warning signs. If your North Fort Myers home still runs on either material, the question isn't whether it will fail — it's when, and how much water damage it causes on the way out. The telltale signs — rusty or discolored water, weak pressure at multiple fixtures, recurring pinhole leaks — are your pipes telling you the clock is running.\n\nNorth Fort Myers also has one of Lee County's largest concentrations of manufactured and mobile homes, and repiping them is a different craft than repiping site-built houses. Supply lines typically run in the belly board beneath the floor rather than through walls and attic, connections and materials differ, and the work has to respect the home's vapor barrier and insulation. Our crews repipe manufactured homes regularly and carry the right fittings and materials for the job — many plumbers simply won't touch this work; for us it's routine, because it's what our own neighborhood is built from. Done properly, a manufactured home repipe often costs less than a site-built repipe, since belly-board access spares the drywall work entirely.\n\nAnother North Fort Myers specialty: well-to-city-water transitions. As county water lines extend through the area, homeowners connecting to municipal service often discover their aging pipes can't handle the change — city water pressure is typically higher than a well pump delivered, and chlorinated water accelerates the failure of already-marginal polybutylene. We handle the connection, the pressure regulation, and, when needed, the repipe that lets your plumbing thrive on city water.\n\nOur repipes use PEX-A supply lines with a 25-year manufacturer warranty, and most standard homes are completed in one to two days, with wall access points patched before we leave. Family-owned since 1997, licensed under CFC057076 and CFC1432485, rated 5.0 on Google by 46+ homeowners — and headquartered right here. Call 833-PLUMB-IT for a free repipe inspection from the plumbers down the street.`,
+    features: [
+      {
+        title: "Headquartered on Pondella Road",
+        description:
+          "Our shop is at 951 Pondella Rd — North Fort Myers repipes get our shortest drive times and our deepest local knowledge.",
+      },
+      {
+        title: "Galvanized & Polybutylene Replacement",
+        description:
+          "Full replacement of the corroding galvanized and failure-prone poly-B piping common in 1970s–80s North Fort Myers homes.",
+      },
+      {
+        title: "Manufactured & Mobile Home Repipes",
+        description:
+          "Belly-board supply line replacement done right, with the materials and methods manufactured homes actually require.",
+      },
+      {
+        title: "Well-to-City-Water Transitions",
+        description:
+          "Connection, pressure regulation, and pipe upgrades for North Fort Myers homes switching from well water to county service.",
+      },
+      {
+        title: "1–2 Day PEX-A Repipes",
+        description:
+          "Corrosion-proof PEX-A supply lines with a 25-year warranty, installed in one to two days for most standard homes.",
+      },
+    ],
+    city: "North Fort Myers",
+    state: "FL",
+    neighborhoods: NORTH_FORT_MYERS_NEIGHBORHOODS,
+    faqs: [
+      {
+        question: "How quickly can you start a repipe in North Fort Myers?",
+        answer:
+          "Faster than anywhere else we serve — our headquarters is at 951 Pondella Road, in the middle of North Fort Myers. Free inspections are usually scheduled within a day or two of your call, and once you approve the written quote, most repipes begin within the week. If an active leak is forcing the decision, tell our dispatcher at 833-PLUMB-IT and we'll prioritize you.",
+      },
+      {
+        question: "How much does repiping cost in North Fort Myers?",
+        answer:
+          "Whole-home repipes in North Fort Myers typically run $4,000–$12,000 depending on home size, fixture count, and whether drain lines are included with the supply lines. Manufactured homes often land toward the lower end because belly-board access simplifies the work. Every job starts with a free inspection and a written quote — the price you approve is the price you pay.",
+      },
+      {
+        question: "Why do so many North Fort Myers homes need repiping?",
+        answer:
+          "The housing stock is older here — much of it built in the 1970s and 1980s, when galvanized steel and later polybutylene were the standard materials. Galvanized corrodes shut from the inside over decades, and poly-B grows brittle from chlorinated water and fails suddenly. Add the area's well-to-city-water transitions, which raise pressure and add chlorine to pipes that were already marginal, and North Fort Myers has one of the highest repipe rates in Lee County.",
+      },
+      {
+        question: "Are you licensed for repiping work in North Fort Myers?",
+        answer:
+          "Yes. C&S Plumbing of Lee holds two active Florida state plumbing contractor licenses, CFC057076 and CFC1432485, both verifiable on the Florida DBPR website. We're fully insured, family-owned since 1997, and we've built over 8,500 homes across Lee County. North Fort Myers isn't just in our service area — it's where we live and work.",
+      },
+      {
+        question: "What does the repipe process look like?",
+        answer:
+          "We start with a free inspection to identify your pipe materials and layout, then deliver a written quote. On installation days, we protect your floors, open the minimum access points needed, run new PEX-A supply lines, and connect every fixture. The system is pressure-tested before your water comes back on, and access points are patched before we call the job done. Most homes take one to two days.",
+      },
+      {
+        question: "Can you repipe a mobile or manufactured home in North Fort Myers?",
+        answer:
+          "Yes — it's a regular part of our North Fort Myers work, given the area's many manufactured home communities. These repipes route new lines through the belly board beneath the floor rather than through walls, and they require resealing the vapor barrier and insulation correctly afterward. Done wrong, that causes moisture problems under the home. Our crews carry manufactured-home-specific fittings and do this work properly, start to finish.",
+      },
+    ],
+    relatedPages: [
+      { label: "Emergency Plumber in North Fort Myers", href: "/emergency-plumber-north-fort-myers" },
+      { label: "Septic to Sewer in North Fort Myers", href: "/septic-to-sewer-north-fort-myers" },
+      { label: "North Fort Myers Service Area", href: "/areas/north-fort-myers" },
     ],
     priceRange: "$4,000–$12,000",
   },
