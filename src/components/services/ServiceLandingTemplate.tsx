@@ -286,8 +286,8 @@ export default function ServiceLandingTemplate({
 
       {/* Internal Cross-Linking */}
       {(() => {
-        const cityPages = SERVICE_CITY_LANDINGS.filter((p) =>
-          p.slug.includes(landing.slug)
+        const cityPages = SERVICE_CITY_LANDINGS.filter(
+          (p) => p.serviceSlug === landing.slug
         );
         const hasRelatedServices = landing.relatedServices && landing.relatedServices.length > 0;
         const hasRelatedAreas = landing.relatedAreas && landing.relatedAreas.length > 0;

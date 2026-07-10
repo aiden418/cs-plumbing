@@ -143,6 +143,12 @@ export interface ServiceCityLanding {
   relatedPages: { label: string; href: string }[];
   priceRange?: string;
   image?: string;
+  /**
+   * Slug of the parent service hub (see SERVICE_HUBS). Drives the hub page's
+   * city cross-links and the 3-level breadcrumb. Omit for generic
+   * "plumber-<city>" pages that have no single parent service.
+   */
+  serviceSlug?: string;
 }
 
 export interface BlogPost {

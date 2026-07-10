@@ -8,6 +8,7 @@ import FaqJsonLd from "@/components/seo/FaqJsonLd";
 import CTASection from "@/components/home/CTASection";
 import GoogleReviews from "@/components/home/GoogleReviews";
 import { SERVICE_CITY_LANDINGS } from "@/lib/service-city-landings";
+import { getServiceHub } from "@/lib/service-hubs";
 
 export function generateStaticParams() {
   return SERVICE_CITY_LANDINGS.map((l) => ({ slug: l.slug }));
@@ -44,6 +45,8 @@ export default async function Page({
   const landing = SERVICE_CITY_LANDINGS.find((l) => l.slug === slug);
   if (!landing) notFound();
 
+  const hub = getServiceHub(landing.serviceSlug);
+
   return (
     <PageTransition>
       <ServiceCityJsonLd landing={landing} />
@@ -51,6 +54,7 @@ export default async function Page({
       <BreadcrumbJsonLd
         items={[
           { name: "Home", href: "/" },
+          ...(hub ? [{ name: hub.title, href: hub.href }] : []),
           { name: landing.h1, href: `/${landing.slug}` },
         ]}
       />
