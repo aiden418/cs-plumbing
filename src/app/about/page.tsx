@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/about" },
   title: "About Us",
   description:
-    "Three generations of the Pellechio family, family-owned since 1997 and 8,500+ homes plumbed. Meet the team behind C&S Plumbing of Lee — Southwest Florida's most trusted plumber. Best of Cape Coral 2025.",
+    "Three generations of the Pellechio family, family-owned since 1998 and 8,500+ homes plumbed. Meet the team behind C&S Plumbing of Lee — Southwest Florida's most trusted plumber. Best of Cape Coral 2025.",
   keywords: [
     "C&S Plumbing about",
     "Pellechio family plumbing",
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "About C&S Plumbing of Lee",
     description:
-      "Three generations. One name on every job. Family-owned since 1997, 8,500+ homes built. Meet the Pellechio family behind Southwest Florida's most trusted plumbing company.",
+      "Three generations. One name on every job. Family-owned since 1998, 8,500+ homes built. Meet the Pellechio family behind Southwest Florida's most trusted plumbing company.",
     url: "https://www.csplumbinglee.com/about",
   },
 };
@@ -57,7 +57,7 @@ export default function AboutPage() {
                 </span>
               </h1>
               <p className="mt-5 max-w-xl text-base sm:text-lg leading-relaxed text-white/70">
-                Family-owned since 1997. From a Philadelphia builder&apos;s job sites to 8,500+
+                Family-owned since 1998. From a Philadelphia builder&apos;s job sites to 8,500+
                 homes plumbed across Southwest Florida, the Pellechio family has been doing it
                 the right way for over 28 years.
               </p>

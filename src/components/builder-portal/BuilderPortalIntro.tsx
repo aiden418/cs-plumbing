@@ -113,7 +113,7 @@ export default function BuilderPortalIntro() {
             </h1>
             <p className="text-base sm:text-lg text-gray-500 leading-relaxed mb-3">
               C&amp;S Plumbing has been the underground-to-trim partner for Lee
-              County builders since 1997. <strong className="text-gray-900">8,500+ homes built</strong>,
+              County builders since 1998. <strong className="text-gray-900">8,500+ homes built</strong>,
               two active state licenses, and a 5.0 rating from the GCs and custom
               home builders we work with every week.
             </p>
@@ -136,7 +136,7 @@ export default function BuilderPortalIntro() {
               </Button>
             </div>
             <p className="mt-5 text-xs text-gray-400">
-              License #CFC1432485 · #CFC057076 · Family-owned since 1997
+              License #CFC1432485 · #CFC057076 · Family-owned since 1998
             </p>
           </div>
         </Container>

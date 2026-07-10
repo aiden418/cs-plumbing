@@ -11,7 +11,7 @@ export default function AboutPersonJsonLd() {
       url: `${BASE}/about`,
       image: `${BASE}/images/team/samuel.jpeg`,
       description:
-        "First-generation licensed plumber and second-generation contractor leading C&S Plumbing of Lee since 1997. Licensed Florida Certified Plumbing Contractor (CFC1432485 / CFC057076) with decades of experience in residential, commercial, and new construction plumbing across Southwest Florida.",
+        "First-generation licensed plumber and second-generation contractor leading C&S Plumbing of Lee since 1998. Licensed Florida Certified Plumbing Contractor (CFC1432485 / CFC057076) with decades of experience in residential, commercial, and new construction plumbing across Southwest Florida.",
       worksFor: {
         "@type": "Plumber",
         "@id": `${BASE}/#organization`,

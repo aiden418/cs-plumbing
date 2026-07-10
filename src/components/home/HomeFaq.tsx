@@ -31,7 +31,7 @@ export const HOME_FAQS: FAQ[] = [
   {
     question: "Do you handle new construction plumbing for builders?",
     answer:
-      "Yes. C&S is one of Southwest Florida's most experienced new-construction plumbers, with 8,500+ homes completed since 1997 for residential and commercial builders across Lee, Charlotte, and Collier counties.",
+      "Yes. C&S is one of Southwest Florida's most experienced new-construction plumbers, with 8,500+ homes completed since 1998 for residential and commercial builders across Lee, Charlotte, and Collier counties.",
   },
 ];
 

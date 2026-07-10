@@ -160,7 +160,7 @@ export default function Hero() {
               }}
               className="mt-6 sm:mt-8 text-base sm:text-lg text-white/70 max-w-lg leading-relaxed"
             >
-              Family-owned since 1997. 8,500+ homes built. The plumber Cape
+              Family-owned since 1998. 8,500+ homes built. The plumber Cape
               Coral, Fort Myers, North Fort Myers, and Punta Gorda homeowners
               and builders trust for repairs, repipes, remodels, and new
               construction — with 24/7 emergency service when you need it.

@@ -10,6 +10,6 @@ export default function OgImage() {
     variant: "area",
     eyebrow: "Punta Gorda · FL",
     title: "Plumbing in Punta Gorda",
-    subtitle: "Water heaters, emergency repairs & repiping across Charlotte County — family-owned since 1997.",
+    subtitle: "Water heaters, emergency repairs & repiping across Charlotte County — family-owned since 1998.",
   });
 }
