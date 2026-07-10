@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Contact C&S Plumbing | Cape Coral & Fort Myers",
     description:
-      "Get a free plumbing estimate. Serving Cape Coral, Fort Myers, North Fort Myers & all of SWFL since 1997.",
+      "Get a free plumbing estimate. Serving Cape Coral, Fort Myers, North Fort Myers & all of SWFL since 1998.",
     url: "https://www.csplumbinglee.com/contact",
   },
 };

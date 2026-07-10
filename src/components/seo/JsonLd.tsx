@@ -30,7 +30,7 @@ export default async function JsonLd() {
     image: `${BASE}/images/team/samuel.jpeg`,
     worksFor: { "@id": `${BASE}/#organization` },
     description:
-      "First-generation licensed plumber and second-generation contractor leading C&S Plumbing since 1997. Licensed Florida plumbing contractor (CFC1432485 / CFC057076).",
+      "First-generation licensed plumber and second-generation contractor leading C&S Plumbing since 1998. Licensed Florida plumbing contractor (CFC1432485 / CFC057076).",
     hasCredential: {
       "@type": "EducationalOccupationalCredential",
       credentialCategory: "Professional License",
@@ -76,10 +76,10 @@ export default async function JsonLd() {
     image: `${BASE}/images/hero/drone-construction.jpg`,
     telephone: `+1${BUSINESS.phoneRaw}`,
     email: "office@csplumbinglee.com",
-    foundingDate: "1997",
+    foundingDate: "1998",
     numberOfEmployees: { "@type": "QuantitativeValue", minValue: 5, maxValue: 10 },
     description:
-      "Family-owned plumbing company serving Southwest Florida since 1997. 8,500+ homes built. 24/7 emergency service. Residential, commercial & new construction plumbing across Cape Coral, Fort Myers, Naples & all of SWFL.",
+      "Family-owned plumbing company serving Southwest Florida since 1998. 8,500+ homes built. 24/7 emergency service. Residential, commercial & new construction plumbing across Cape Coral, Fort Myers, Naples & all of SWFL.",
     slogan: "Southwest Florida's Most Trusted Plumbing Team",
     address: {
       "@type": "PostalAddress",
@@ -322,7 +322,7 @@ export default async function JsonLd() {
     name: "C&S Plumbing of Lee",
     url: BASE,
     description:
-      "Official website of C&S Plumbing of Lee — family-owned plumbing contractor serving Cape Coral, Fort Myers, Naples, and all of Southwest Florida since 1997.",
+      "Official website of C&S Plumbing of Lee — family-owned plumbing contractor serving Cape Coral, Fort Myers, Naples, and all of Southwest Florida since 1998.",
     publisher: { "@id": `${BASE}/#organization` },
     inLanguage: "en-US",
   };

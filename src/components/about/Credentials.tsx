@@ -36,7 +36,7 @@ const credentials = [
   {
     icon: <Users className="w-5 h-5" />,
     title: "Family-Owned, Locally Owned",
-    body: "Founded in 1997, second-generation owner-operated, third-generation working in the field. We live in the same neighborhoods we work in — every job is an introduction to your neighbor.",
+    body: "Founded in 1998, second-generation owner-operated, third-generation working in the field. We live in the same neighborhoods we work in — every job is an introduction to your neighbor.",
   },
 ];
 

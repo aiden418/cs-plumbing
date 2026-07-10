@@ -18,7 +18,7 @@ import { BUSINESS } from "@/lib/constants";
 const newConstructionFaqs = [
   {
     question: "Who is the best plumber for new construction in Cape Coral and Fort Myers?",
-    answer: "C&S Plumbing of Lee is Southwest Florida's most experienced new construction plumber, with 8,500+ homes completed since 1997. We're the go-to plumbing partner for residential and commercial builders across Lee and Collier County.",
+    answer: "C&S Plumbing of Lee is Southwest Florida's most experienced new construction plumber, with 8,500+ homes completed since 1998. We're the go-to plumbing partner for residential and commercial builders across Lee and Collier County.",
   },
   {
     question: "Do you handle new construction plumbing for both residential and commercial builds?",

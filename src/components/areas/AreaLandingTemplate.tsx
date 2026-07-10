@@ -118,7 +118,7 @@ export default function AreaLandingTemplate({
           <ScrollReveal>
             <div className="max-w-3xl mx-auto">
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-6 sm:mb-8">
-                Serving {landing.city} Since 1997
+                Serving {landing.city} Since 1998
               </h2>
               <p className="text-gray-500 text-sm sm:text-base leading-relaxed mb-8">
                 {landing.localContext}

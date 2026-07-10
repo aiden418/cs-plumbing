@@ -71,7 +71,7 @@ export default function BuildersPage() {
             </h1>
             <p className="mt-4 sm:mt-6 text-base sm:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed">
               8,500+ homes completed across Lee, Collier, and Charlotte counties
-              since 1997. Two active CFC licenses. 5.0 stars across 46 Google
+              since 1998. Two active CFC licenses. 5.0 stars across 46 Google
               reviews. The plumber builders call back.
             </p>
             <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
