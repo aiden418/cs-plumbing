@@ -653,6 +653,14 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
     ],
     relatedServices: ["leak-repair", "water-heaters", "plumbing-remodel"],
     relatedAreas: ["cape-coral", "fort-myers", "north-fort-myers", "naples"],
+    gallery: [
+      { src: "/images/gallery/attic-pex-repipe.jpg", caption: "Attic PEX repipe" },
+      { src: "/images/gallery/laundry-room-repipe.jpg", caption: "Laundry room repipe" },
+      { src: "/images/gallery/copper-water-service.jpg", caption: "New copper water service" },
+      { src: "/images/gallery/new-construction-overhead-roughin.jpg", caption: "Overhead supply lines" },
+      { src: "/images/gallery/underground-pipe-work.jpg", caption: "Underground water line" },
+      { src: "/images/gallery/water-meter-connection.jpg", caption: "New meter connection" },
+    ],
     answerBlocks: [
       {
         question: "How much does whole-home repiping cost in Southwest Florida?",
@@ -802,6 +810,14 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
     ],
     relatedServices: ["repiping", "leak-repair", "water-softeners"],
     relatedAreas: ["cape-coral", "fort-myers", "naples", "bonita-springs"],
+    gallery: [
+      { src: "/images/gallery/tankless-water-heater.jpg", caption: "Tankless water heater install" },
+      { src: "/images/gallery/rheem-water-heater.jpg", caption: "Rheem tank water heater" },
+      { src: "/images/gallery/tank-water-heater-replacement.jpg", caption: "Tank water heater replacement" },
+      { src: "/images/gallery/electric-water-heater-closet.jpg", caption: "Electric heater closet install" },
+      { src: "/images/gallery/dual-shower-system.jpg", caption: "Hot water for dual showers" },
+      { src: "/images/gallery/rain-shower-handheld.jpg", caption: "Endless hot water upgrade" },
+    ],
     answerBlocks: [
       {
         question: "How much does a water heater cost installed in Cape Coral?",
@@ -951,6 +967,14 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
     ],
     relatedServices: ["leak-repair", "repiping", "uep-utilities"],
     relatedAreas: ["cape-coral", "fort-myers", "lehigh-acres", "north-fort-myers"],
+    gallery: [
+      { src: "/images/gallery/drain-line-trenching.jpg", caption: "Drain line trenching" },
+      { src: "/images/gallery/residential-sewer-excavation.jpg", caption: "Sewer line excavation" },
+      { src: "/images/gallery/sewer-tap-connection.jpg", caption: "Sewer tap connection" },
+      { src: "/images/gallery/underground-sewer-roughin.jpg", caption: "Underground sewer rough-in" },
+      { src: "/images/gallery/grinder-pump-install.jpg", caption: "Grinder pump install" },
+      { src: "/images/gallery/under-sink-plumbing-disposal.jpg", caption: "Under-sink drain & disposal" },
+    ],
     answerBlocks: [
       {
         question: "How much does drain cleaning cost?",
@@ -1095,6 +1119,14 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
     ],
     relatedServices: ["repiping", "drain-cleaning", "water-heaters"],
     relatedAreas: ["cape-coral", "fort-myers", "naples", "bonita-springs"],
+    gallery: [
+      { src: "/images/gallery/commercial-slab-excavation.jpg", caption: "Slab leak access" },
+      { src: "/images/gallery/residential-excavation.jpg", caption: "Underground leak repair" },
+      { src: "/images/gallery/copper-water-service.jpg", caption: "Repaired copper water line" },
+      { src: "/images/gallery/water-meter-connection.jpg", caption: "Water meter & service line" },
+      { src: "/images/gallery/exterior-hose-bib.jpg", caption: "Hose bib replacement" },
+      { src: "/images/gallery/backflow-preventer-meter.jpg", caption: "Backflow preventer at meter" },
+    ],
     answerBlocks: [
       {
         question: "How much does leak detection cost?",
@@ -1201,6 +1233,14 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
     ],
     relatedServices: ["repiping", "water-heaters", "leak-repair"],
     relatedAreas: ["cape-coral", "fort-myers", "naples", "estero"],
+    gallery: [
+      { src: "/images/gallery/water-filtration-system.jpg", caption: "Whole-home water filtration" },
+      { src: "/images/gallery/underground-water-tank.jpg", caption: "Underground water tank install" },
+      { src: "/images/gallery/kitchen-faucet-sink.jpg", caption: "Better water at the kitchen tap" },
+      { src: "/images/gallery/waterfront-kitchen-sink.jpg", caption: "Waterfront kitchen sink" },
+      { src: "/images/gallery/widespread-bathroom-faucet.jpg", caption: "Spot-free bathroom fixtures" },
+      { src: "/images/gallery/tankless-water-heater.jpg", caption: "Scale protection for tankless heaters" },
+    ],
   },
   {
     slug: "plumbing-remodel",
