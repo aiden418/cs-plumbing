@@ -5,12 +5,12 @@ import Container from "@/components/ui/Container";
 import ScrollReveal from "@/components/animations/ScrollReveal";
 
 const DEFAULT_PHOTOS: { src: string; caption?: string }[] = [
-  { src: "/images/gallery/IMG_1666.jpeg", caption: "Recent install" },
-  { src: "/images/gallery/IMG_0695.jpeg", caption: "Lee County build" },
-  { src: "/images/gallery/IMG_2106.jpeg", caption: "On-site finish" },
-  { src: "/images/gallery/IMG_0508.jpeg", caption: "Custom rough-in" },
-  { src: "/images/gallery/IMG_1452.jpeg", caption: "Final inspection" },
-  { src: "/images/gallery/IMG_0072.jpg", caption: "Field work" },
+  { src: "/images/gallery/cs-plumbing-crew.jpg", caption: "Our crew on site" },
+  { src: "/images/gallery/new-construction-roughin.jpg", caption: "New construction rough-in" },
+  { src: "/images/gallery/kitchen-faucet-sink.jpg", caption: "Kitchen faucet install" },
+  { src: "/images/gallery/tank-water-heater-replacement.jpg", caption: "Water heater replacement" },
+  { src: "/images/gallery/underground-pipe-work.jpg", caption: "Underground pipe work" },
+  { src: "/images/gallery/freestanding-soaking-tub.jpg", caption: "Freestanding tub install" },
 ];
 
 interface Props {

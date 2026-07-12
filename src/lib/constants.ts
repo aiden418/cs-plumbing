@@ -1290,6 +1290,14 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
     ],
     relatedServices: ["repiping", "water-heaters", "drain-cleaning"],
     relatedAreas: ["cape-coral", "fort-myers", "naples", "bonita-springs"],
+    gallery: [
+      { src: "/images/gallery/freestanding-soaking-tub.jpg", caption: "Freestanding tub install" },
+      { src: "/images/gallery/double-vanity-bathroom.jpg", caption: "Double vanity bathroom" },
+      { src: "/images/gallery/kitchen-faucet-sink.jpg", caption: "Kitchen faucet & sink" },
+      { src: "/images/gallery/rain-shower-handheld-marble.jpg", caption: "Rain shower remodel" },
+      { src: "/images/gallery/pot-filler-faucet.jpg", caption: "Pot filler install" },
+      { src: "/images/gallery/toilet-install-tilework.jpg", caption: "Toilet & tile finish" },
+    ],
   },
   {
     slug: "uep-utilities",
