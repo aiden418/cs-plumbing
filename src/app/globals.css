@@ -128,6 +128,13 @@
   background-clip: text;
 }
 
+@utility text-gold-gradient {
+  background: linear-gradient(90deg, #E8A427 0%, #F6C453 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
 @utility glass {
   background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(20px);
@@ -219,6 +226,27 @@
 
 @utility logo-aura {
   animation: logo-aura 10s ease-in-out infinite;
+}
+
+/* ========================================
+   PAGE HERO ENTRANCE (CSS-only fade-up)
+   ======================================== */
+
+/* Server-safe entrance for PageHero rows — stagger with inline
+   animation-delay. The reduced-motion block collapses it to instant. */
+@keyframes hero-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@utility animate-hero-in {
+  animation: hero-in 0.9s var(--ease-out-expo) both;
 }
 
 /* ========================================
