@@ -6,6 +6,7 @@ import Image from "next/image";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import Container from "@/components/ui/Container";
 import PageTransition from "@/components/layout/PageTransition";
+import PageHero from "@/components/ui/PageHero";
 import ScrollReveal from "@/components/animations/ScrollReveal";
 import { GALLERY_CATEGORIES } from "@/lib/constants";
 import type { GalleryItem } from "@/lib/types";
@@ -114,22 +115,13 @@ export default function GalleryPage() {
   return (
     <PageTransition>
       {/* Hero */}
-      <section className="pt-24 sm:pt-28 lg:pt-32 pb-12 sm:pb-16 bg-[#F5F5F7]">
-        <Container>
-          <div className="text-center max-w-3xl mx-auto">
-            <span className="inline-block text-primary text-xs sm:text-sm font-semibold tracking-widest uppercase mb-3 sm:mb-4">
-              Our Work
-            </span>
-            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-black text-gray-900 leading-tight">
-              Project <span className="text-gradient">Gallery</span>
-            </h1>
-            <p className="mt-4 sm:mt-6 text-base sm:text-lg text-gray-500">
-              Browse our portfolio of residential, commercial, and new
-              construction plumbing projects across Southwest Florida.
-            </p>
-          </div>
-        </Container>
-      </section>
+      <PageHero
+        align="center"
+        overline="Our Work"
+        title="Project"
+        accent="Gallery"
+        description="Browse our portfolio of residential, commercial, and new construction plumbing projects across Southwest Florida."
+      />
 
       {/* Filter + Grid */}
       <section className="py-16 sm:py-24 lg:py-32">
@@ -143,7 +135,7 @@ export default function GalleryPage() {
                   onClick={() => setActiveFilter(cat.id)}
                   className={`px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 ${
                     activeFilter === cat.id
-                      ? "bg-primary text-white"
+                      ? "bg-gold text-navy font-bold"
                       : "bg-gray-100 border border-gray-200 text-gray-500 hover:text-gray-900 hover:border-gray-300"
                   }`}
                 >

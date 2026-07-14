@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Phone, ExternalLink, Building2 } from "lucide-react";
 import Container from "@/components/ui/Container";
+import PageHero from "@/components/ui/PageHero";
 import ScrollReveal from "@/components/animations/ScrollReveal";
 import { PARTNERS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
@@ -23,22 +24,13 @@ export default function PartnersPage() {
   return (
     <>
       {/* Hero */}
-      <section className="pt-24 sm:pt-28 lg:pt-32 pb-12 sm:pb-16 bg-[#F5F5F7]">
-        <Container>
-          <div className="text-center max-w-3xl mx-auto">
-            <span className="inline-block text-primary text-xs sm:text-sm font-semibold tracking-widest uppercase mb-3 sm:mb-4">
-              Recommended Companies
-            </span>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 leading-tight">
-              Local Businesses <span className="text-gradient">We Trust</span>
-            </h1>
-            <p className="mt-3 sm:mt-4 text-sm sm:text-base text-gray-500 max-w-2xl mx-auto">
-              We believe in supporting our community. These are local, family-owned companies
-              we&apos;ve worked alongside and trust to deliver quality work for our customers.
-            </p>
-          </div>
-        </Container>
-      </section>
+      <PageHero
+        align="center"
+        overline="Recommended Companies"
+        title="Local Businesses"
+        accent="We Trust"
+        description="We believe in supporting our community. These are local, family-owned companies we've worked alongside and trust to deliver quality work for our customers."
+      />
 
       {/* SEO Content + Filter + Grid */}
       <section className="py-12 sm:py-16 lg:py-20">
@@ -96,7 +88,7 @@ export default function PartnersPage() {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.3 }}
-                  className="bg-white rounded-2xl border border-gray-200 p-5 sm:p-6 hover:shadow-lg transition-shadow duration-300 flex flex-col"
+                  className="bg-white rounded-2xl border border-gray-200 p-5 sm:p-6 card-lift card-lift-hover-subtle hover:border-primary/30 flex flex-col"
                 >
                   {/* Category Badge */}
                   <span className="inline-block self-start text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-primary bg-primary/10 px-2.5 py-1 rounded-full mb-4">
