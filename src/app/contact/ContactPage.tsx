@@ -8,6 +8,7 @@ import { Phone, Mail, MapPin, Clock, Send, CheckCircle } from "lucide-react";
 import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
 import PageTransition from "@/components/layout/PageTransition";
+import PageHero from "@/components/ui/PageHero";
 import ScrollReveal from "@/components/animations/ScrollReveal";
 import WhatHappensNext from "@/components/ui/WhatHappensNext";
 import { BUSINESS } from "@/lib/constants";
@@ -102,22 +103,13 @@ export default function ContactPage() {
   return (
     <PageTransition>
       {/* Hero */}
-      <section className="pt-24 sm:pt-28 lg:pt-32 pb-12 sm:pb-16 bg-[#F5F5F7]">
-        <Container>
-          <div className="text-center max-w-3xl mx-auto">
-            <span className="inline-block text-primary text-xs sm:text-sm font-semibold tracking-widest uppercase mb-3 sm:mb-4">
-              Contact Us
-            </span>
-            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-black text-gray-900 leading-tight">
-              Let&apos;s Talk <span className="text-gradient">Plumbing</span>
-            </h1>
-            <p className="mt-4 sm:mt-6 text-base sm:text-lg text-gray-500">
-              Have a question, need a quote, or facing an emergency? We&apos;re
-              here to help.
-            </p>
-          </div>
-        </Container>
-      </section>
+      <PageHero
+        align="center"
+        overline="Contact Us"
+        title="Let's Talk"
+        accent="Plumbing"
+        description="Have a question, need a quote, or facing an emergency? We're here to help."
+      />
 
       <section className="py-16 sm:py-24 lg:py-32">
         <Container>

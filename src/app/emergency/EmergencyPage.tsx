@@ -30,9 +30,9 @@ export default function EmergencyPage() {
   return (
     <PageTransition>
       {/* Hero */}
-      <section className="relative pt-24 sm:pt-28 lg:pt-32 pb-16 sm:pb-20 lg:pb-24 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-emergency/5 to-white" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,59,48,0.08)_0%,transparent_60%)]" />
+      <section className="relative pt-24 sm:pt-28 lg:pt-32 pb-16 sm:pb-20 lg:pb-24 overflow-hidden bg-navy">
+        <div className="pointer-events-none absolute -top-32 left-1/3 h-[480px] w-[480px] -translate-x-1/2 rounded-full bg-primary/25 blur-[120px]" />
+        <div className="pointer-events-none absolute bottom-0 right-0 h-72 w-72 rounded-full bg-emergency/15 blur-[100px]" />
 
         <Container className="relative z-10">
           <div className="text-center max-w-3xl mx-auto">
@@ -51,13 +51,13 @@ export default function EmergencyPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
             >
-              <span className="inline-block text-emergency text-xs sm:text-sm font-semibold tracking-widest uppercase mb-3 sm:mb-4">
+              <span className="inline-block text-emergency text-xs sm:text-sm font-bold tracking-[0.2em] uppercase mb-3 sm:mb-4">
                 Plumbing Emergency?
               </span>
-              <h1 className="text-3xl sm:text-5xl lg:text-7xl font-black text-gray-900 leading-tight mb-4 sm:mb-6">
+              <h1 className="text-3xl sm:text-5xl lg:text-7xl font-black text-white leading-tight mb-4 sm:mb-6">
                 We&apos;re Here <span className="text-emergency">24/7</span>
               </h1>
-              <p className="text-base sm:text-lg text-gray-500 mb-6 sm:mb-8 px-2">
+              <p className="text-base sm:text-lg text-white/70 mb-6 sm:mb-8 px-2">
                 Don&apos;t wait. Every minute counts in a plumbing emergency.
                 Call us now and we&apos;ll be on our way.
               </p>
@@ -79,7 +79,7 @@ export default function EmergencyPage() {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5 }}
               href={BUSINESS.smsHref}
-              className="mt-3 sm:mt-4 flex items-center justify-center gap-2 text-sm sm:text-base font-semibold text-gray-600 hover:text-gray-900 transition-colors"
+              className="mt-3 sm:mt-4 flex items-center justify-center gap-2 text-sm sm:text-base font-semibold text-white/70 hover:text-white transition-colors"
             >
               <MessageSquareText className="w-4 h-4" />
               Can&apos;t talk? Text us instead
@@ -89,7 +89,7 @@ export default function EmergencyPage() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6 }}
-              className="mt-4 sm:mt-6 flex items-center justify-center gap-2 text-xs sm:text-sm text-gray-500"
+              className="mt-4 sm:mt-6 flex items-center justify-center gap-2 text-xs sm:text-sm text-white/60"
             >
               <Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               Average response time: under 60 minutes
@@ -110,7 +110,7 @@ export default function EmergencyPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {emergencyTypes.map((type, i) => (
               <ScrollReveal key={type.title} delay={i * 0.08}>
-                <div className="p-5 sm:p-6 rounded-2xl border border-gray-200 hover:border-emergency/20 transition-all duration-500">
+                <div className="p-5 sm:p-6 rounded-2xl bg-white border border-gray-200 card-lift card-lift-hover-subtle hover:border-emergency/30">
                   <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-emergency/10 flex items-center justify-center text-emergency mb-3 sm:mb-4">
                     {type.icon}
                   </div>
