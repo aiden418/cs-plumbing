@@ -115,7 +115,7 @@ export default function ProjectsIndexPage() {
 
                 <div className="absolute inset-0 flex flex-col justify-end p-6 sm:max-w-2xl sm:justify-center sm:p-12">
                   <div className="mb-3 flex items-center gap-2">
-                    <span className="rounded-full bg-gold px-3 py-1 text-[11px] font-extrabold uppercase tracking-wider text-navy">
+                    <span className="rounded-full bg-gold px-3 py-1 text-[11px] font-black uppercase tracking-wider text-navy">
                       Featured
                     </span>
                     <span className="rounded-full bg-white/15 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-white backdrop-blur">

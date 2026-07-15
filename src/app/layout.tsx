@@ -18,7 +18,8 @@ const inter = Inter({
 const montserrat = Montserrat({
   variable: "--font-montserrat",
   subsets: ["latin"],
-  weight: ["700", "800", "900"],
+  // 800 dropped — nothing uses extrabold; one fewer font file on first load
+  weight: ["700", "900"],
   display: "swap",
 });
 

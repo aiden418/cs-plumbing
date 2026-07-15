@@ -87,7 +87,7 @@ export default function ProjectDetail({ project }: { project: CompletedProject }
 
         <Container className="relative flex min-h-[78vh] flex-col justify-end pb-12 pt-32 sm:pb-16">
           <div className="max-w-3xl">
-            <span className="mb-4 inline-block rounded-full bg-gold px-3 py-1 text-[11px] font-extrabold uppercase tracking-wider text-navy">
+            <span className="mb-4 inline-block rounded-full bg-gold px-3 py-1 text-[11px] font-black uppercase tracking-wider text-navy">
               {project.category}
             </span>
             <h1 className="text-4xl font-black leading-[1.05] text-white sm:text-5xl lg:text-7xl">

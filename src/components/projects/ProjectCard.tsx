@@ -49,7 +49,7 @@ export default function ProjectCard({ project }: { project: CompletedProject }) 
             {project.category}
           </span>
           {live ? (
-            <span className="flex items-center gap-1.5 rounded-full bg-gold/95 px-2.5 py-1 text-[11px] font-extrabold uppercase tracking-wider text-navy">
+            <span className="flex items-center gap-1.5 rounded-full bg-gold/95 px-2.5 py-1 text-[11px] font-black uppercase tracking-wider text-navy">
               <span className="relative flex h-1.5 w-1.5">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-navy/70" />
                 <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-navy" />
@@ -57,7 +57,7 @@ export default function ProjectCard({ project }: { project: CompletedProject }) 
               Live
             </span>
           ) : (
-            <span className="flex items-center gap-1 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-extrabold uppercase tracking-wider text-navy backdrop-blur">
+            <span className="flex items-center gap-1 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-black uppercase tracking-wider text-navy backdrop-blur">
               <Check className="h-3 w-3 text-[#34C759]" strokeWidth={3} />
               Completed
             </span>
@@ -66,7 +66,7 @@ export default function ProjectCard({ project }: { project: CompletedProject }) 
 
         {/* Bottom overlay: title + chips */}
         <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5">
-          <h2 className="font-extrabold leading-tight text-white text-lg sm:text-xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)]">
+          <h2 className="font-black leading-tight text-white text-lg sm:text-xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)]">
             {project.name}
           </h2>
           <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] font-semibold text-white/90">
