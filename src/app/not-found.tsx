@@ -11,28 +11,30 @@ export const metadata: Metadata = {
 
 export default function NotFound() {
   return (
-    <main className="min-h-screen flex items-center justify-center bg-surface px-6">
-      <div className="max-w-md text-center">
-        <p className="text-primary text-sm font-semibold tracking-widest uppercase mb-4">
+    <main className="relative min-h-screen flex items-center justify-center overflow-hidden bg-navy px-6">
+      <div className="pointer-events-none absolute -top-32 left-1/3 h-[480px] w-[480px] -translate-x-1/2 rounded-full bg-primary/25 blur-[120px]" />
+      <div className="pointer-events-none absolute bottom-0 right-0 h-72 w-72 rounded-full bg-gold/15 blur-[100px]" />
+      <div className="relative max-w-md text-center">
+        <p className="text-gold text-sm font-bold tracking-[0.2em] uppercase mb-4">
           404 — Page Not Found
         </p>
-        <h1 className="text-4xl sm:text-5xl font-black text-gray-900 mb-4">
-          Oops, wrong pipe.
+        <h1 className="text-4xl sm:text-5xl font-black text-white mb-4">
+          Oops, <span className="text-gold-gradient">wrong pipe.</span>
         </h1>
-        <p className="text-gray-500 text-lg mb-8">
+        <p className="text-white/70 text-lg mb-8">
           The page you&apos;re looking for doesn&apos;t exist or has been moved.
           Let us help you find what you need.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
           <Link
             href="/booking"
-            className="inline-flex items-center justify-center px-6 py-3 bg-primary text-white font-semibold rounded-xl hover:bg-primary/90 transition-colors w-full sm:w-auto"
+            className="inline-flex items-center justify-center px-6 py-3 bg-gold text-navy font-bold rounded-full hover:bg-gold-dark transition-colors active:scale-[0.98] w-full sm:w-auto"
           >
             Book a Service
           </Link>
           <Link
             href="/services"
-            className="inline-flex items-center justify-center px-6 py-3 border-2 border-primary text-primary font-semibold rounded-xl hover:bg-primary/5 transition-colors w-full sm:w-auto"
+            className="inline-flex items-center justify-center px-6 py-3 border border-white/30 text-white font-bold rounded-full hover:bg-white/10 transition-colors active:scale-[0.98] w-full sm:w-auto"
           >
             View Services
           </Link>
@@ -40,21 +42,21 @@ export default function NotFound() {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 mt-4 text-sm">
           <Link
             href="/"
-            className="text-gray-600 hover:text-primary transition-colors"
+            className="text-white/60 hover:text-white transition-colors"
           >
             Go Home
           </Link>
-          <span className="hidden sm:inline text-gray-300">·</span>
+          <span className="hidden sm:inline text-white/30">·</span>
           <a
             href={`tel:${BUSINESS.phoneRaw}`}
-            className="text-gray-600 hover:text-primary transition-colors"
+            className="text-white/60 hover:text-white transition-colors"
           >
             Call {BUSINESS.phone}
           </a>
-          <span className="hidden sm:inline text-gray-300">·</span>
+          <span className="hidden sm:inline text-white/30">·</span>
           <Link
             href="/contact"
-            className="text-gray-600 hover:text-primary transition-colors"
+            className="text-white/60 hover:text-white transition-colors"
           >
             Contact Us
           </Link>

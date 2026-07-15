@@ -10,25 +10,27 @@ export default function BlogContent({ post }: { post: BlogPost }) {
   return (
     <>
       {/* Hero */}
-      <section className="pt-24 sm:pt-28 lg:pt-32 pb-8 sm:pb-12 bg-[#F5F5F7]">
-        <Container>
+      <section className="relative overflow-hidden bg-navy pt-24 sm:pt-28 lg:pt-32 pb-8 sm:pb-12">
+        <div className="pointer-events-none absolute -top-32 left-1/3 h-[480px] w-[480px] -translate-x-1/2 rounded-full bg-primary/25 blur-[120px]" />
+        <div className="pointer-events-none absolute bottom-0 right-0 h-72 w-72 rounded-full bg-gold/15 blur-[100px]" />
+        <Container className="relative">
           <div className="max-w-3xl">
             <a
               href="/blog"
-              className="inline-flex items-center gap-1.5 text-primary text-sm mb-4 hover:gap-2.5 transition-all"
+              className="inline-flex items-center gap-1.5 text-gold text-sm mb-4 hover:gap-2.5 transition-all"
             >
               <ArrowLeft className="w-4 h-4" />
               Back to Blog
             </a>
             <div className="flex items-center gap-3 mb-4">
-              <span className="text-xs font-semibold text-primary uppercase tracking-wider">
+              <span className="text-xs font-bold text-gold uppercase tracking-[0.2em]">
                 {post.category}
               </span>
-              <span className="flex items-center gap-1 text-xs text-gray-500">
+              <span className="flex items-center gap-1 text-xs text-white/60">
                 <Clock className="w-3 h-3" />
                 {post.readTime}
               </span>
-              <span className="text-xs text-gray-500">
+              <span className="text-xs text-white/60">
                 {new Date(post.publishDate).toLocaleDateString("en-US", {
                   year: "numeric",
                   month: "long",
@@ -36,7 +38,7 @@ export default function BlogContent({ post }: { post: BlogPost }) {
                 })}
               </span>
             </div>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 leading-tight">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white leading-tight">
               {post.title}
             </h1>
           </div>
