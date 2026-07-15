@@ -23,6 +23,7 @@ import {
 import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
 import PageTransition from "@/components/layout/PageTransition";
+import PageHero from "@/components/ui/PageHero";
 import WhatHappensNext from "@/components/ui/WhatHappensNext";
 import { BUSINESS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
@@ -237,26 +238,20 @@ export default function BookingPage() {
 
   return (
     <PageTransition>
-      <section className="pt-24 sm:pt-28 lg:pt-32 pb-12 sm:pb-16 bg-[#F5F5F7]">
+      <PageHero
+        size="sm"
+        align="center"
+        overline={isEstimate ? "Request an Estimate" : "Book a Service"}
+        title={isEstimate ? "Get a Free" : "Schedule Your"}
+        accent={isEstimate ? "Estimate" : "Appointment"}
+        description={
+          isEstimate
+            ? "Tell us about your project and we\u2019ll get back to you with a quote."
+            : "Book online in under 2 minutes. We\u2019ll confirm your appointment within the hour."
+        }
+      />
+      <section className="pt-8 sm:pt-10 pb-12 sm:pb-16 bg-[#F5F5F7]">
         <Container size="narrow">
-          <div className="text-center mb-8 sm:mb-12">
-            <span className="inline-block text-primary text-xs sm:text-sm font-semibold tracking-widest uppercase mb-3 sm:mb-4">
-              {isEstimate ? "Request an Estimate" : "Book a Service"}
-            </span>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 leading-tight">
-              {isEstimate ? (
-                <>Get a Free <span className="text-gradient">Estimate</span></>
-              ) : (
-                <>Schedule Your <span className="text-gradient">Appointment</span></>
-              )}
-            </h1>
-            <p className="mt-3 sm:mt-4 text-sm sm:text-base text-gray-500">
-              {isEstimate
-                ? "Tell us about your project and we\u2019ll get back to you with a quote."
-                : "Book online in under 2 minutes. We\u2019ll confirm your appointment within the hour."}
-            </p>
-          </div>
-
           {/* Request Type Toggle */}
           <div className="flex justify-center mb-8 sm:mb-10">
             <div className="inline-flex bg-white rounded-xl border border-gray-200 p-1">
