@@ -159,8 +159,10 @@ export default function PageHero({
       {actions && (
         <div
           className={cn(
-            "animate-hero-in mt-7 flex flex-wrap items-center gap-3",
-            centered && "justify-center"
+            // Phones get full-width stacked CTAs (easier thumb targets);
+            // sm+ returns to the inline pill row
+            "animate-hero-in mt-7 flex flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center",
+            centered && "sm:justify-center"
           )}
           style={{ animationDelay: "240ms" }}
         >

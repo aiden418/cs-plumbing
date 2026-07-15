@@ -26,7 +26,7 @@ export default function StickyMobileCTA() {
       <div
         // data-drawer-hide: hidden while the Navbar mobile drawer is open (see globals.css)
         data-drawer-hide
-        className="fixed bottom-0 inset-x-0 z-40 lg:hidden border-t border-gray-200 bg-white/95 backdrop-blur-md pb-[env(safe-area-inset-bottom)]"
+        className="fixed bottom-0 inset-x-0 z-40 lg:hidden border-t border-gray-200 bg-white/95 backdrop-blur-md pb-[env(safe-area-inset-bottom)] shadow-[0_-4px_16px_rgba(0,0,0,0.06)]"
         role="region"
         aria-label="Quick contact"
       >
@@ -34,16 +34,16 @@ export default function StickyMobileCTA() {
         <a
           href={`tel:${BUSINESS.phoneRaw}`}
           onClick={trackPhoneClick}
-          className="flex items-center justify-center gap-1.5 h-12 rounded-xl bg-primary text-white text-sm font-bold shadow-sm active:bg-primary-dark"
+          className="flex items-center justify-center gap-1.5 h-12 rounded-xl bg-primary text-white text-sm font-bold shadow-sm active:bg-primary-dark active:scale-[0.97] transition-transform"
           aria-label={`Call ${BUSINESS.phone}`}
         >
           <Phone className="w-4 h-4" />
-          Call
+          Call Now
         </a>
         <a
           href={BUSINESS.smsHref}
           onClick={trackTextClick}
-          className="flex items-center justify-center gap-1.5 h-12 rounded-xl border border-primary text-primary text-sm font-bold bg-white active:bg-primary/5"
+          className="flex items-center justify-center gap-1.5 h-12 rounded-xl border border-primary text-primary text-sm font-bold bg-white active:bg-primary/5 active:scale-[0.97] transition-transform"
           aria-label="Text us"
         >
           <MessageSquareText className="w-4 h-4" />
@@ -51,7 +51,7 @@ export default function StickyMobileCTA() {
         </a>
         <Link
           href="/booking"
-          className="flex items-center justify-center gap-1.5 h-12 rounded-xl border border-primary text-primary text-sm font-bold bg-white active:bg-primary/5"
+          className="flex items-center justify-center gap-1.5 h-12 rounded-xl border border-primary text-primary text-sm font-bold bg-white active:bg-primary/5 active:scale-[0.97] transition-transform"
         >
           <Calendar className="w-4 h-4" />
           Book

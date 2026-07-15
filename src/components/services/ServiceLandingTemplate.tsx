@@ -15,6 +15,7 @@ import { motion } from "framer-motion";
 import JobGallery from "@/components/services/JobGallery";
 import AnswerBlocks from "@/components/seo/AnswerBlocks";
 import { BUSINESS, SERVICE_LANDINGS, AREA_LANDINGS } from "@/lib/constants";
+import { trackPhoneClick } from "@/lib/pixel";
 import { SERVICE_CITY_LANDINGS } from "@/lib/service-city-landings";
 import type { ServiceLanding } from "@/lib/types";
 
@@ -58,6 +59,7 @@ export default function ServiceLandingTemplate({
             </Button>
             <Button
               href={`tel:${BUSINESS.phoneRaw}`}
+              onClick={trackPhoneClick}
               variant="outline-light"
               size="lg"
               icon={<Phone className="w-5 h-5" />}
