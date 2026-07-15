@@ -93,49 +93,50 @@ export default function BuilderPortalIntro() {
   return (
     <>
       {/* Hero */}
-      <section className="relative pt-24 sm:pt-28 lg:pt-32 pb-16 sm:pb-20 bg-[#F5F5F7] overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(0,119,204,0.08)_0%,transparent_60%)]" />
+      <section className="relative pt-24 sm:pt-28 lg:pt-32 pb-16 sm:pb-20 bg-navy overflow-hidden">
+        <div className="pointer-events-none absolute -top-32 left-1/3 h-[480px] w-[480px] -translate-x-1/2 rounded-full bg-primary/25 blur-[120px]" />
+        <div className="pointer-events-none absolute bottom-0 right-0 h-72 w-72 rounded-full bg-gold/15 blur-[100px]" />
         <Container className="relative z-10">
           <div className="max-w-3xl">
             <Link
               href="/builders"
-              className="inline-flex items-center gap-1.5 text-primary text-xs sm:text-sm font-semibold tracking-widest uppercase mb-3 sm:mb-4 hover:underline"
+              className="inline-flex items-center gap-1.5 text-gold text-xs sm:text-sm font-bold tracking-[0.2em] uppercase mb-3 sm:mb-4 hover:underline"
             >
               <span>Builder Portal</span>
-              <span className="text-gray-400 normal-case tracking-normal font-normal">
+              <span className="text-white/50 normal-case tracking-normal font-normal">
                 · See our full builder story
               </span>
               <ArrowRight className="w-3 h-3" />
             </Link>
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-gray-900 leading-[1.05] tracking-tight mb-5 sm:mb-6">
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white leading-[1.05] tracking-tight mb-5 sm:mb-6">
               Plans in. Quote out.{" "}
-              <span className="text-gradient">Crews ready.</span>
+              <span className="text-gold-gradient">Crews ready.</span>
             </h1>
-            <p className="text-base sm:text-lg text-gray-500 leading-relaxed mb-3">
+            <p className="text-base sm:text-lg text-white/70 leading-relaxed mb-3">
               C&amp;S Plumbing has been the underground-to-trim partner for Lee
-              County builders since 1998. <strong className="text-gray-900">8,500+ homes built</strong>,
+              County builders since 1998. <strong className="text-white">8,500+ homes built</strong>,
               two active state licenses, and a 5.0 rating from the GCs and custom
               home builders we work with every week.
             </p>
-            <p className="text-base sm:text-lg text-gray-500 leading-relaxed mb-8 sm:mb-10">
+            <p className="text-base sm:text-lg text-white/70 leading-relaxed mb-8 sm:mb-10">
               Upload your plans below. We&apos;ll come back with a detailed takeoff
               and proposal within 3–5 business days — no upfront cost, no commitment.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-              <Button href="#upload-plans" size="lg">
+              <Button href="#upload-plans" variant="gold" size="lg">
                 Submit Plans
                 <ArrowRight className="w-4 h-4" />
               </Button>
               <Button
                 href={`tel:${BUSINESS.phoneRaw}`}
-                variant="secondary"
+                variant="outline-light"
                 size="lg"
                 icon={<Phone className="w-5 h-5" />}
               >
                 Call {BUSINESS.phone}
               </Button>
             </div>
-            <p className="mt-5 text-xs text-gray-400">
+            <p className="mt-5 text-xs text-white/40">
               License #CFC1432485 · #CFC057076 · Family-owned since 1998
             </p>
           </div>

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import PageTransition from "@/components/layout/PageTransition";
 import Container from "@/components/ui/Container";
+import PageHero from "@/components/ui/PageHero";
 import ScrollReveal from "@/components/animations/ScrollReveal";
 import CountUp from "@/components/animations/CountUp";
 import Button from "@/components/ui/Button";
@@ -110,54 +111,46 @@ export default function NewConstructionPage() {
   return (
     <PageTransition>
       {/* Hero */}
-      <section className="relative pt-24 sm:pt-28 lg:pt-32 pb-12 sm:pb-16 bg-surface overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none">
-          <Image
-            src="/images/services/cards/new-construction.jpg"
-            alt="C&S Plumbing new construction site in Southwest Florida"
-            fill
-            sizes="100vw"
-            className="object-cover object-center"
-            priority
-            quality={85}
-          />
-          <div className="absolute inset-0 bg-white/50" />
-          <div className="absolute inset-0 bg-gradient-to-r from-white via-white/70 to-white/20" />
-        </div>
-        <Container className="relative">
-          <div className="max-w-3xl">
-            <span className="inline-block text-primary text-xs sm:text-sm font-semibold tracking-widest uppercase mb-3 sm:mb-4">
-              New Construction
-            </span>
-            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-black text-gray-900 leading-tight mb-4 sm:mb-6">
-              The Builder&apos;s Choice for{" "}
-              <span className="text-gradient">New Construction</span> Plumbing
-            </h1>
-            <p className="text-base sm:text-lg text-gray-500 leading-relaxed mb-6 sm:mb-8">
-              With over 8,500 new homes completed across Southwest Florida, C&S
-              Plumbing is the go-to partner for builders who demand reliability,
-              code-compliance, and timeline precision.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-              <Button
-                href="/builders"
-                size="lg"
-                icon={<Calendar className="w-5 h-5" />}
-              >
-                Partner With Us
-              </Button>
-              <Button
-                href={`tel:${BUSINESS.phoneRaw}`}
-                variant="secondary"
-                size="lg"
-                icon={<Phone className="w-5 h-5" />}
-              >
-                Call {BUSINESS.phone}
-              </Button>
-            </div>
+      <PageHero
+        overline="New Construction"
+        title="The Builder's Choice for"
+        accent="New Construction Plumbing"
+        description="With over 8,500 new homes completed across Southwest Florida, C&S Plumbing is the go-to partner for builders who demand reliability, code-compliance, and timeline precision."
+        media={
+          <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-white/10">
+            <Image
+              src="/images/services/cards/new-construction.jpg"
+              alt="C&S Plumbing new construction site in Southwest Florida"
+              fill
+              priority
+              quality={85}
+              className="object-cover"
+              sizes="(max-width: 1024px) 100vw, 50vw"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-navy/40 to-transparent" />
           </div>
-        </Container>
-      </section>
+        }
+        actions={
+          <>
+            <Button
+              href="/builders"
+              variant="gold"
+              size="lg"
+              icon={<Calendar className="w-5 h-5" />}
+            >
+              Partner With Us
+            </Button>
+            <Button
+              href={`tel:${BUSINESS.phoneRaw}`}
+              variant="outline-light"
+              size="lg"
+              icon={<Phone className="w-5 h-5" />}
+            >
+              Call {BUSINESS.phone}
+            </Button>
+          </>
+        }
+      />
 
       {/* Stats */}
       <section className="py-10 sm:py-16 border-y border-gray-200">

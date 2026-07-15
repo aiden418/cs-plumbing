@@ -1,14 +1,15 @@
 "use client";
 
-import { useState } from "react";
-import { Check, Phone, Calendar, ChevronDown, MapPin, Shield, Star, Award, ArrowRight } from "lucide-react";
+import { Check, Phone, Calendar, MapPin, Shield, Star, Award, ArrowRight } from "lucide-react";
 import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
+import PageHero from "@/components/ui/PageHero";
+import FaqAccordion from "@/components/ui/FaqAccordion";
 import ScrollReveal from "@/components/animations/ScrollReveal";
 import StaggerChildren, {
   staggerItem,
 } from "@/components/animations/StaggerChildren";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { BUSINESS } from "@/lib/constants";
 import type { ServiceCityLanding } from "@/lib/types";
 
@@ -19,55 +20,48 @@ export default function ServiceCityLandingTemplate({
 }: {
   landing: ServiceCityLanding;
 }) {
-  const [openFaq, setOpenFaq] = useState<number | null>(null);
-
   return (
     <>
       {/* Hero — Above the Fold */}
-      <section className="pt-24 sm:pt-28 lg:pt-32 pb-12 sm:pb-16 bg-[#F5F5F7]">
-        <Container>
-          <div className="max-w-3xl">
-            <span className="inline-flex items-center gap-1.5 text-primary text-xs sm:text-sm font-semibold tracking-widest uppercase mb-3 sm:mb-4">
-              <MapPin className="w-3.5 h-3.5" />
-              {landing.city}, {landing.state}
+      <PageHero
+        size="sm"
+        overline={`${landing.city}, ${landing.state}`}
+        overlineIcon={<MapPin className="w-3.5 h-3.5" />}
+        title={landing.h1}
+        description={landing.heroSubtext}
+        actions={
+          <>
+            <Button
+              href={`tel:${BUSINESS.phoneRaw}`}
+              variant="gold"
+              size="lg"
+              icon={<Phone className="w-5 h-5" />}
+            >
+              Call Now — {BUSINESS.phone}
+            </Button>
+            <Button
+              href="/booking"
+              variant="outline-light"
+              size="lg"
+              icon={<Calendar className="w-5 h-5" />}
+            >
+              Book Online
+            </Button>
+          </>
+        }
+      >
+        {landing.priceRange && (
+          <p className="mt-5 text-sm text-white/60">
+            Typical price range:{" "}
+            <span className="text-white font-semibold">
+              {landing.priceRange}
             </span>
-            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-black text-gray-900 leading-tight mb-4 sm:mb-6">
-              {landing.h1}
-            </h1>
-            <p className="text-base sm:text-lg text-gray-500 leading-relaxed mb-6 sm:mb-8">
-              {landing.heroSubtext}
-            </p>
-            {landing.priceRange && (
-              <p className="text-sm text-gray-500 mb-6">
-                Typical price range:{" "}
-                <span className="text-gray-900 font-semibold">
-                  {landing.priceRange}
-                </span>
-              </p>
-            )}
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-              <Button
-                href={`tel:${BUSINESS.phoneRaw}`}
-                size="lg"
-                icon={<Phone className="w-5 h-5" />}
-              >
-                Call Now — {BUSINESS.phone}
-              </Button>
-              <Button
-                href="/booking"
-                variant="secondary"
-                size="lg"
-                icon={<Calendar className="w-5 h-5" />}
-              >
-                Book Online
-              </Button>
-            </div>
-            <p className="mt-4 text-xs text-gray-400">
-              Serving {landing.city} since 1998 · License #CFC057076 · #CFC1432485
-            </p>
-          </div>
-        </Container>
-      </section>
+          </p>
+        )}
+        <p className="mt-4 text-xs text-white/40">
+          Serving {landing.city} since 1998 · License #CFC057076 · #CFC1432485
+        </p>
+      </PageHero>
 
       {/* Trust Block */}
       <section className="py-6 sm:py-8 border-b border-gray-100">
@@ -127,7 +121,7 @@ export default function ServiceCityLandingTemplate({
               <motion.div
                 key={feature.title}
                 variants={staggerItem}
-                className="bg-white rounded-2xl border border-gray-200 p-5 sm:p-6 lg:p-8 hover:border-primary/30 transition-all duration-500"
+                className="bg-white rounded-2xl border border-gray-200 p-5 sm:p-6 lg:p-8 card-lift card-lift-hover-subtle hover:border-primary/30"
               >
                 <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">
                   {feature.title}
@@ -183,44 +177,7 @@ export default function ServiceCityLandingTemplate({
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-8 sm:mb-12 text-center">
                 Frequently Asked Questions
               </h2>
-              <div className="space-y-3">
-                {landing.faqs.map((faq, index) => (
-                  <div
-                    key={index}
-                    className="bg-white rounded-xl border border-gray-200 overflow-hidden"
-                  >
-                    <button
-                      onClick={() =>
-                        setOpenFaq(openFaq === index ? null : index)
-                      }
-                      className="w-full flex items-center justify-between p-4 sm:p-5 text-left"
-                    >
-                      <span className="text-sm sm:text-base font-medium text-gray-900 pr-4">
-                        {faq.question}
-                      </span>
-                      <ChevronDown
-                        className={`w-4 h-4 sm:w-5 sm:h-5 text-primary flex-shrink-0 transition-transform duration-300 ${
-                          openFaq === index ? "rotate-180" : ""
-                        }`}
-                      />
-                    </button>
-                    <AnimatePresence>
-                      {openFaq === index && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.3 }}
-                        >
-                          <p className="px-4 sm:px-5 pb-4 sm:pb-5 text-gray-500 text-xs sm:text-sm leading-relaxed">
-                            {faq.answer}
-                          </p>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                ))}
-              </div>
+              <FaqAccordion faqs={landing.faqs} />
             </div>
           </ScrollReveal>
         </Container>

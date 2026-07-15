@@ -15,6 +15,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import Container from "@/components/ui/Container";
+import PageHero from "@/components/ui/PageHero";
 import SectionHeading from "@/components/ui/SectionHeading";
 import ScrollReveal from "@/components/animations/ScrollReveal";
 import StaggerChildren, {
@@ -59,41 +60,33 @@ export default function BuildersPage() {
   return (
     <>
       {/* Hero */}
-      <section className="pt-24 sm:pt-28 lg:pt-32 pb-12 sm:pb-16 bg-[#F5F5F7]">
-        <Container>
-          <div className="text-center max-w-3xl mx-auto">
-            <span className="inline-block text-primary text-xs sm:text-sm font-semibold tracking-widest uppercase mb-3 sm:mb-4">
-              For Builders &amp; General Contractors
-            </span>
-            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-black text-gray-900 leading-tight">
-              Your Plumbing Partner for{" "}
-              <span className="text-gradient">New Construction</span>
-            </h1>
-            <p className="mt-4 sm:mt-6 text-base sm:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed">
-              8,500+ homes completed across Lee, Collier, and Charlotte counties
-              since 1998. Two active CFC licenses. 5.0 stars across 46 Google
-              reviews. The plumber builders call back.
-            </p>
-            <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-              <Button
-                href="/builder-portal"
-                size="lg"
-                icon={<ArrowRight className="w-5 h-5" />}
-              >
-                Request Prequalification
-              </Button>
-              <Button
-                href={`tel:${AIDEN_CONTACT.phoneRaw}`}
-                variant="secondary"
-                size="lg"
-                icon={<Phone className="w-5 h-5" />}
-              >
-                Call {AIDEN_CONTACT.phone}
-              </Button>
-            </div>
-          </div>
-        </Container>
-      </section>
+      <PageHero
+        align="center"
+        overline="For Builders & General Contractors"
+        title="Your Plumbing Partner for"
+        accent="New Construction"
+        description="8,500+ homes completed across Lee, Collier, and Charlotte counties since 1998. Two active CFC licenses. 5.0 stars across 46 Google reviews. The plumber builders call back."
+        actions={
+          <>
+            <Button
+              href="/builder-portal"
+              variant="gold"
+              size="lg"
+              icon={<ArrowRight className="w-5 h-5" />}
+            >
+              Request Prequalification
+            </Button>
+            <Button
+              href={`tel:${AIDEN_CONTACT.phoneRaw}`}
+              variant="outline-light"
+              size="lg"
+              icon={<Phone className="w-5 h-5" />}
+            >
+              Call {AIDEN_CONTACT.phone}
+            </Button>
+          </>
+        }
+      />
 
       {/* Stats Bar */}
       <section className="py-10 sm:py-16 border-y border-gray-200">

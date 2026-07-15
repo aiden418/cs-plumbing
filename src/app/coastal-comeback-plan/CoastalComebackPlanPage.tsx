@@ -15,6 +15,7 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
+import PageHero from "@/components/ui/PageHero";
 import SectionHeading from "@/components/ui/SectionHeading";
 import ScrollReveal from "@/components/animations/ScrollReveal";
 import { BUSINESS, COASTAL_COMEBACK_FAQS } from "@/lib/constants";
@@ -129,54 +130,47 @@ export default function CoastalComebackPlanPage() {
   return (
     <>
       {/* HERO */}
-      <section className="pt-24 sm:pt-28 lg:pt-32 pb-12 sm:pb-16 bg-[#F5F5F7]">
-        <Container>
-          <div className="max-w-3xl">
-            <span className="inline-block text-primary text-xs sm:text-sm font-semibold tracking-widest uppercase mb-3 sm:mb-4">
-              For SWFL Snowbirds
-            </span>
-            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-black text-gray-900 leading-tight mb-4 sm:mb-6">
-              Leaving for the Summer? Your Pipes Aren&apos;t.
-            </h1>
-            <p className="text-base sm:text-lg text-gray-500 leading-relaxed mb-6 sm:mb-8">
-              The Coastal Comeback Plan keeps your vacant Florida home dry,
-              protected, and ready to live in the day you fly back. Licensed
-              plumbers — not a home watch service — checking your pipes,
-              valves, and water heater while you&apos;re gone.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-6 sm:mb-8">
-              <Button
-                href="#plans"
-                size="lg"
-                icon={<ShieldCheck className="w-5 h-5" />}
-              >
-                See the Plans
-              </Button>
-              <Button
-                href={`tel:${BUSINESS.phoneRaw}`}
-                variant="secondary"
-                size="lg"
-                icon={<Phone className="w-5 h-5" />}
-              >
-                Call {BUSINESS.phone}
-              </Button>
-            </div>
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs sm:text-sm text-gray-500">
-              <span className="flex items-center gap-1.5">
-                <ShieldCheck className="w-4 h-4 text-primary" />
-                Licensed CFC1432485
-              </span>
-              <span>·</span>
-              <span>Family-owned since 1998</span>
-              <span>·</span>
-              <span className="flex items-center gap-1.5">
-                <Star className="w-4 h-4 text-primary fill-primary" />
-                5★ on Google
-              </span>
-            </div>
-          </div>
-        </Container>
-      </section>
+      <PageHero
+        overline="For SWFL Snowbirds"
+        title="Leaving for the Summer?"
+        accent="Your Pipes Aren't."
+        accentPosition="block"
+        description="The Coastal Comeback Plan keeps your vacant Florida home dry, protected, and ready to live in the day you fly back. Licensed plumbers — not a home watch service — checking your pipes, valves, and water heater while you're gone."
+        actions={
+          <>
+            <Button
+              href="#plans"
+              variant="gold"
+              size="lg"
+              icon={<ShieldCheck className="w-5 h-5" />}
+            >
+              See the Plans
+            </Button>
+            <Button
+              href={`tel:${BUSINESS.phoneRaw}`}
+              variant="outline-light"
+              size="lg"
+              icon={<Phone className="w-5 h-5" />}
+            >
+              Call {BUSINESS.phone}
+            </Button>
+          </>
+        }
+      >
+        <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs sm:text-sm text-white/60">
+          <span className="flex items-center gap-1.5">
+            <ShieldCheck className="w-4 h-4 text-gold" />
+            Licensed CFC1432485
+          </span>
+          <span>·</span>
+          <span>Family-owned since 1998</span>
+          <span>·</span>
+          <span className="flex items-center gap-1.5">
+            <Star className="w-4 h-4 text-gold fill-gold" />
+            5★ on Google
+          </span>
+        </div>
+      </PageHero>
 
       {/* PROBLEM / AGITATION */}
       <section className="py-16 sm:py-24 lg:py-28">

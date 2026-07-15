@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import PageTransition from "@/components/layout/PageTransition";
 import Container from "@/components/ui/Container";
+import PageHero from "@/components/ui/PageHero";
 import { BUSINESS } from "@/lib/constants";
 
 export const metadata: Metadata = {
@@ -12,12 +13,10 @@ export const metadata: Metadata = {
 export default function TermsOfServicePage() {
   return (
     <PageTransition>
-      <section className="pt-24 sm:pt-28 lg:pt-32 pb-16 sm:pb-24">
+      <PageHero size="sm" overline="Legal" title="Terms of Service" />
+      <section className="pt-10 sm:pt-14 pb-16 sm:pb-24">
         <Container>
           <div className="max-w-3xl mx-auto">
-            <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-8">
-              Terms of Service
-            </h1>
             <div className="prose prose-gray max-w-none text-sm sm:text-base text-gray-600 space-y-6">
               <p>
                 <strong>Last updated:</strong> March 10, 2026

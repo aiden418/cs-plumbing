@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import PageTransition from "@/components/layout/PageTransition";
+import PageHero from "@/components/ui/PageHero";
 import Container from "@/components/ui/Container";
 import ServiceCard from "@/components/services/ServiceCard";
 import CostEstimator from "@/components/estimator/CostEstimator";
@@ -35,24 +36,15 @@ export default function ServicesPage() {
   return (
     <PageTransition>
       {/* Hero */}
-      <section className="pt-24 sm:pt-28 lg:pt-32 pb-12 sm:pb-16 bg-surface">
-        <Container>
-          <div className="text-center max-w-3xl mx-auto">
-            <span className="inline-block text-primary text-xs sm:text-sm font-semibold tracking-widest uppercase mb-3 sm:mb-4">
-              Our Services
-            </span>
-            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-black text-gray-900 leading-tight">
-              Every Plumbing Solution
-              <br />
-              <span className="text-gradient">Under One Roof</span>
-            </h1>
-            <p className="mt-4 sm:mt-6 text-base sm:text-lg text-gray-500">
-              From a dripping faucet to a 500-unit development, C&S Plumbing has
-              the expertise, equipment, and team to handle it all.
-            </p>
-          </div>
-        </Container>
-      </section>
+      <PageHero
+        align="center"
+        size="lg"
+        overline="Our Services"
+        title="Every Plumbing Solution"
+        accent="Under One Roof"
+        accentPosition="block"
+        description="From a dripping faucet to a 500-unit development, C&S Plumbing has the expertise, equipment, and team to handle it all."
+      />
 
       {/* Services Grid */}
       <section className="py-16 sm:py-24 lg:py-32">

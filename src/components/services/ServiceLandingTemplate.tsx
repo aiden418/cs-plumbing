@@ -1,16 +1,17 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Check, Phone, Calendar, ChevronDown, ArrowRight, MapPin } from "lucide-react";
+import { Check, Phone, Calendar, ArrowRight, MapPin } from "lucide-react";
 import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
+import PageHero from "@/components/ui/PageHero";
+import FaqAccordion from "@/components/ui/FaqAccordion";
 import ScrollReveal from "@/components/animations/ScrollReveal";
 import StaggerChildren, {
   staggerItem,
 } from "@/components/animations/StaggerChildren";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import JobGallery from "@/components/services/JobGallery";
 import AnswerBlocks from "@/components/seo/AnswerBlocks";
 import { BUSINESS, SERVICE_LANDINGS, AREA_LANDINGS } from "@/lib/constants";
@@ -22,72 +23,65 @@ export default function ServiceLandingTemplate({
 }: {
   landing: ServiceLanding;
 }) {
-  const [openFaq, setOpenFaq] = useState<number | null>(null);
-
   return (
     <>
       {/* Hero */}
-      <section className="relative pt-24 sm:pt-28 lg:pt-32 pb-12 sm:pb-16 bg-[#F5F5F7] overflow-hidden">
-        {landing.image && (
-          <div className="absolute inset-0 pointer-events-none">
-            <Image
-              src={landing.image}
-              alt=""
-              fill
-              sizes="100vw"
-              className="object-cover object-center"
-              priority
-              quality={85}
-            />
-            <div className="absolute inset-0 bg-white/50" />
-            <div className="absolute inset-0 bg-gradient-to-r from-white via-white/70 to-white/20" />
+      <PageHero
+        overline={landing.title}
+        title={landing.heroText}
+        description={landing.description}
+        media={
+          landing.image ? (
+            <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-white/10">
+              <Image
+                src={landing.image}
+                alt={landing.title}
+                fill
+                priority
+                quality={85}
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-navy/40 to-transparent" />
+            </div>
+          ) : undefined
+        }
+        actions={
+          <>
+            <Button
+              href={`/booking?service=${encodeURIComponent(landing.slug)}`}
+              variant="gold"
+              size="lg"
+              icon={<Calendar className="w-5 h-5" />}
+            >
+              Book a Service
+            </Button>
+            <Button
+              href={`tel:${BUSINESS.phoneRaw}`}
+              variant="outline-light"
+              size="lg"
+              icon={<Phone className="w-5 h-5" />}
+            >
+              Call {BUSINESS.phone}
+            </Button>
+          </>
+        }
+      >
+        {landing.priceRange && (
+          <div className="mt-6 inline-flex flex-wrap items-center gap-3 sm:gap-4 px-4 py-3 rounded-2xl border border-white/15 bg-white/5 backdrop-blur">
+            <span className="text-xs sm:text-sm text-white/60">Typical range:</span>
+            <span className="text-base sm:text-lg text-white font-bold">
+              {landing.priceRange}
+            </span>
+            <Link
+              href={`/booking?service=${encodeURIComponent(landing.slug)}`}
+              className="inline-flex items-center gap-1 text-xs sm:text-sm font-semibold text-gold hover:underline"
+            >
+              Get a Quote <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
           </div>
         )}
-        <Container className="relative">
-          <div className="max-w-3xl">
-            <span className="inline-block text-primary text-xs sm:text-sm font-semibold tracking-widest uppercase mb-3 sm:mb-4">
-              {landing.title}
-            </span>
-            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-black text-gray-900 leading-tight mb-4 sm:mb-6">
-              {landing.heroText}
-            </h1>
-            <p className="text-base sm:text-lg text-gray-500 leading-relaxed mb-6 sm:mb-8">
-              {landing.description}
-            </p>
-            {landing.priceRange && (
-              <div className="inline-flex flex-wrap items-center gap-3 sm:gap-4 mb-6 px-4 py-3 rounded-xl bg-white/70 border border-gray-200">
-                <span className="text-xs sm:text-sm text-gray-500">Typical range:</span>
-                <span className="text-base sm:text-lg text-gray-900 font-bold">
-                  {landing.priceRange}
-                </span>
-                <Link
-                  href={`/booking?service=${encodeURIComponent(landing.slug)}`}
-                  className="inline-flex items-center gap-1 text-xs sm:text-sm font-semibold text-primary hover:underline"
-                >
-                  Get a Quote <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
-              </div>
-            )}
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-              <Button
-                href={`/booking?service=${encodeURIComponent(landing.slug)}`}
-                size="lg"
-                icon={<Calendar className="w-5 h-5" />}
-              >
-                Book a Service
-              </Button>
-              <Button
-                href={`tel:${BUSINESS.phoneRaw}`}
-                variant="secondary"
-                size="lg"
-                icon={<Phone className="w-5 h-5" />}
-              >
-                Call {BUSINESS.phone}
-              </Button>
-            </div>
-          </div>
-        </Container>
-      </section>
+      </PageHero>
 
       {/* Quick Answers (AI-citation friendly, FAQ schema) */}
       {landing.answerBlocks && landing.answerBlocks.length > 0 && (
@@ -108,7 +102,7 @@ export default function ServiceLandingTemplate({
               <motion.div
                 key={feature.title}
                 variants={staggerItem}
-                className="bg-[#F5F5F7] rounded-2xl border border-gray-200 p-5 sm:p-6 lg:p-8 hover:border-primary/30 transition-all duration-500"
+                className="bg-[#F5F5F7] rounded-2xl border border-gray-200 p-5 sm:p-6 lg:p-8 card-lift card-lift-hover-subtle hover:border-primary/30"
               >
                 <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">
                   {feature.title}
@@ -240,45 +234,7 @@ export default function ServiceLandingTemplate({
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-8 sm:mb-12 text-center">
                 Frequently Asked Questions
               </h2>
-              <div className="space-y-3">
-                {landing.faqs.map((faq, index) => (
-                  <div
-                    key={index}
-                    className="bg-white rounded-xl border border-gray-200 overflow-hidden"
-                  >
-                    <button
-                      onClick={() =>
-                        setOpenFaq(openFaq === index ? null : index)
-                      }
-                      className="w-full flex items-center justify-between p-4 sm:p-5 text-left hover:bg-gray-50 transition-colors"
-                      aria-expanded={openFaq === index}
-                    >
-                      <span className="text-sm sm:text-base font-semibold text-gray-900 pr-4">
-                        {faq.question}
-                      </span>
-                      <ChevronDown
-                        className={`w-4 h-4 sm:w-5 sm:h-5 text-primary flex-shrink-0 transition-transform duration-300 ${
-                          openFaq === index ? "rotate-180" : ""
-                        }`}
-                      />
-                    </button>
-                    <AnimatePresence>
-                      {openFaq === index && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.3 }}
-                        >
-                          <p className="px-4 sm:px-5 pb-4 sm:pb-5 text-gray-600 text-sm leading-relaxed">
-                            {faq.answer}
-                          </p>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                ))}
-              </div>
+              <FaqAccordion faqs={landing.faqs} />
             </div>
           </ScrollReveal>
         </Container>

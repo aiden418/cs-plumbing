@@ -2,7 +2,14 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { type ReactNode } from "react";
 
-type ButtonVariant = "primary" | "secondary" | "ghost" | "emergency";
+type ButtonVariant =
+  | "primary"
+  | "secondary"
+  | "ghost"
+  | "emergency"
+  | "gold"
+  | "inverse"
+  | "outline-light";
 
 interface ButtonBaseProps {
   variant?: ButtonVariant;
@@ -35,6 +42,11 @@ const variants: Record<ButtonVariant, string> = {
     "bg-transparent text-gray-500 hover:text-gray-900 hover:bg-gray-100 active:scale-[0.98]",
   emergency:
     "bg-emergency hover:bg-red-600 text-white shadow-sm hover:shadow-md active:scale-[0.98]",
+  /* Dark-surface variants — for use on bg-navy sections */
+  gold: "bg-gold hover:bg-gold-dark text-navy font-bold shadow-sm hover:shadow-md active:scale-[0.98]",
+  inverse: "bg-white hover:bg-white/90 text-navy font-bold active:scale-[0.98]",
+  "outline-light":
+    "bg-transparent border border-white/30 text-white hover:bg-white/10 active:scale-[0.98]",
 };
 
 const sizes: Record<string, string> = {

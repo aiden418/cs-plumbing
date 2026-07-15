@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Droplets, Flame } from "lucide-react";
 import Container from "@/components/ui/Container";
+import PageHero from "@/components/ui/PageHero";
 import WaterHeaterQuiz from "@/components/quote-builder/WaterHeaterQuiz";
 import RepipeQuiz from "@/components/quote-builder/RepipeQuiz";
 import QuoteResult from "@/components/quote-builder/QuoteResult";
@@ -51,42 +52,30 @@ export default function QuoteBuilderPage() {
 
   return (
     <>
-      <section className="pt-24 sm:pt-28 lg:pt-32 pb-10 sm:pb-14 bg-[#F5F5F7]">
-        <Container size="narrow">
-          <div className="text-center mb-8 sm:mb-10">
-            <span className="inline-block text-primary text-xs sm:text-sm font-semibold tracking-widest uppercase mb-3 sm:mb-4">
-              Instant Quote Builder
-            </span>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 leading-tight">
-              Instant Plumbing Quote for{" "}
-              <span className="text-gradient">Water Heaters &amp; Repiping</span>{" "}
-              in Lee County
-            </h1>
-            <p className="mt-3 sm:mt-4 text-sm sm:text-base text-gray-500 max-w-xl mx-auto leading-relaxed">
-              Answer a few questions and get an instant price range for water heater
-              installation or whole-home repiping anywhere in Cape Coral, Fort Myers,
-              and Lee County. Final price set after a free on-site inspection — no
-              obligation, no pressure.
-            </p>
-
-            {/* What happens next */}
-            <div className="mt-6 sm:mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs sm:text-sm text-gray-500">
-              <span className="inline-flex items-center gap-1.5">
-                <span className="flex items-center justify-center w-5 h-5 rounded-full bg-primary text-white text-[10px] font-bold">1</span>
-                Answer a few questions
-              </span>
-              <span className="inline-flex items-center gap-1.5">
-                <span className="flex items-center justify-center w-5 h-5 rounded-full bg-primary text-white text-[10px] font-bold">2</span>
-                Get your instant range
-              </span>
-              <span className="inline-flex items-center gap-1.5">
-                <span className="flex items-center justify-center w-5 h-5 rounded-full bg-primary text-white text-[10px] font-bold">3</span>
-                C&amp;S confirms within 1 business day
-              </span>
-            </div>
-          </div>
-        </Container>
-      </section>
+      <PageHero
+        size="sm"
+        align="center"
+        overline="Instant Quote Builder"
+        title="Instant Plumbing Quote for"
+        accent="Water Heaters & Repiping in Lee County"
+        description="Answer a few questions and get an instant price range for water heater installation or whole-home repiping anywhere in Cape Coral, Fort Myers, and Lee County. Final price set after a free on-site inspection — no obligation, no pressure."
+      >
+        {/* What happens next */}
+        <div className="mt-6 sm:mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs sm:text-sm text-white/60">
+          <span className="inline-flex items-center gap-1.5">
+            <span className="flex items-center justify-center w-5 h-5 rounded-full bg-gold text-navy text-[10px] font-bold">1</span>
+            Answer a few questions
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            <span className="flex items-center justify-center w-5 h-5 rounded-full bg-gold text-navy text-[10px] font-bold">2</span>
+            Get your instant range
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            <span className="flex items-center justify-center w-5 h-5 rounded-full bg-gold text-navy text-[10px] font-bold">3</span>
+            C&amp;S confirms within 1 business day
+          </span>
+        </div>
+      </PageHero>
 
       <section className="pb-16 sm:pb-24 lg:pb-32 -mt-4 sm:-mt-6">
         <div className="max-w-5xl mx-auto px-6 lg:px-8">
