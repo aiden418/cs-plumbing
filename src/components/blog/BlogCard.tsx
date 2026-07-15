@@ -10,7 +10,7 @@ export default function BlogCard({ post }: { post: BlogPost }) {
     <motion.a
       href={`/blog/${post.slug}`}
       variants={staggerItem}
-      className="bg-white rounded-2xl border border-gray-200 p-5 sm:p-6 lg:p-8 hover:border-primary/30 transition-all duration-500 block group"
+      className="bg-white rounded-2xl border border-gray-200 p-5 sm:p-6 lg:p-8 hover:border-primary/30 transition-all duration-500 active:scale-[0.98] block group"
     >
       <div className="flex items-center gap-3 mb-3">
         <span className="text-xs font-semibold text-primary uppercase tracking-wider">

@@ -163,7 +163,7 @@ export default function GalleryPage() {
                     onClick={() => openLightbox(i)}
                     className="group cursor-pointer"
                   >
-                    <div className="relative aspect-[4/3] rounded-xl sm:rounded-2xl overflow-hidden bg-gray-100 border border-gray-200 group-hover:border-primary/30 transition-all duration-500">
+                    <div className="pressable relative aspect-[4/3] rounded-xl sm:rounded-2xl overflow-hidden bg-gray-100 border border-gray-200 group-hover:border-primary/30">
                       <Image
                         src={item.src}
                         alt={item.alt}

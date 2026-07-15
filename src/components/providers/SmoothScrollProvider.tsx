@@ -3,14 +3,18 @@
 import { useEffect, useRef } from "react";
 import Lenis from "lenis";
 import { gsap, ScrollTrigger, registerGSAP } from "@/lib/gsap";
+import { breakpoints } from "@/hooks/useMediaQuery";
 
 /**
  * Lenis smooth-scroll provider for the entire app.
  *
  * Bails out under `prefers-reduced-motion: reduce` so native scroll handles
- * accessibility. Shares one RAF with GSAP so ScrollTrigger pinning/parallax
- * stays glassy. Exposes `window.__lenis` so the Navbar mobile menu can
- * stop/start scrolling without poking internal state.
+ * accessibility, and on coarse pointers: Lenis is smoothWheel-only, so on
+ * touch it adds no smoothing yet still burns a permanent rAF and a
+ * ScrollTrigger.update per scroll frame — native momentum IS the app feel.
+ * Shares one RAF with GSAP so ScrollTrigger pinning/parallax stays glassy.
+ * Exposes `window.__lenis` so the Navbar mobile menu can stop/start
+ * scrolling without poking internal state (callers optional-chain it).
  */
 export default function SmoothScrollProvider({
   children,
@@ -24,6 +28,7 @@ export default function SmoothScrollProvider({
       typeof window !== "undefined" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReducedMotion) return;
+    if (window.matchMedia(breakpoints.coarse).matches) return;
 
     registerGSAP();
 
