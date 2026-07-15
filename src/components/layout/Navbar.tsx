@@ -42,13 +42,18 @@ export default function Navbar() {
     ).__lenis;
     if (isMobileOpen) {
       document.body.style.overflow = "hidden";
+      // Hides fixed chrome marked data-drawer-hide (sticky CTA bar, chat
+      // bubble) so it can't paint over the drawer — rule in globals.css
+      document.body.dataset.drawerOpen = "";
       lenis?.stop();
     } else {
       document.body.style.overflow = "";
+      delete document.body.dataset.drawerOpen;
       lenis?.start();
     }
     return () => {
       document.body.style.overflow = "";
+      delete document.body.dataset.drawerOpen;
       lenis?.start();
     };
   }, [isMobileOpen]);

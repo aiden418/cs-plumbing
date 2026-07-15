@@ -94,8 +94,8 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Services — hidden on tiny mobile */}
-          <div className="hidden sm:block">
+          {/* Services */}
+          <div>
             <h3 className="text-gray-900 font-semibold text-base sm:text-lg mb-4 sm:mb-6">
               Our Services
             </h3>

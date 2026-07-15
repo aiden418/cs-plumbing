@@ -46,4 +46,7 @@ export const breakpoints = {
   tablet: "(min-width: 640px) and (max-width: 1023px)",
   desktop: "(min-width: 1024px)",
   reducedMotion: "(prefers-reduced-motion: reduce)",
+  /* Primary pointer is a touch surface (phones/tablets). Deliberately not
+     any-pointer: touchscreen laptops should keep desktop behavior. */
+  coarse: "(pointer: coarse)",
 } as const;

@@ -57,7 +57,11 @@ export default function ChatWidget() {
   }
 
   return (
-    <div className="fixed bottom-20 right-4 sm:right-6 lg:bottom-6 z-40">
+    // data-drawer-hide: hidden while the Navbar mobile drawer is open (see globals.css)
+    <div
+      data-drawer-hide
+      className="fixed bottom-20 right-4 sm:right-6 lg:bottom-6 z-40"
+    >
       <AnimatePresence>
         {isOpen && (
           <motion.div

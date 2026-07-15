@@ -75,7 +75,8 @@ export default function ServiceHighlights() {
                     <p className="text-gray-700 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4">
                       {service.description}
                     </p>
-                    <div className="flex items-center gap-1 text-primary text-sm font-medium opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-[-8px] group-hover:translate-x-0">
+                    {/* Visible by default (touch has no hover); hover-reveal only on fine pointers */}
+                    <div className="flex items-center gap-1 text-primary text-sm font-medium transition-all duration-300 pointer-fine:opacity-0 pointer-fine:translate-x-[-8px] pointer-fine:group-hover:opacity-100 pointer-fine:group-hover:translate-x-0">
                       Learn more <ArrowRight className="w-4 h-4" />
                     </div>
                   </div>

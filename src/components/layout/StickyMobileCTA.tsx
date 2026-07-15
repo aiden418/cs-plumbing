@@ -15,11 +15,21 @@ export default function StickyMobileCTA() {
   }
 
   return (
-    <div
-      className="fixed bottom-0 inset-x-0 z-40 lg:hidden border-t border-gray-200 bg-white/95 backdrop-blur-md pb-[env(safe-area-inset-bottom)]"
-      role="region"
-      aria-label="Quick contact"
-    >
+    <>
+      {/* Reserves the bar's height at the page bottom (this component renders
+          after Footer in layout.tsx) so the fixed bar never covers content.
+          The HIDDEN_PATHS early-return removes bar and spacer together. */}
+      <div
+        aria-hidden
+        className="lg:hidden h-16 pb-[env(safe-area-inset-bottom)]"
+      />
+      <div
+        // data-drawer-hide: hidden while the Navbar mobile drawer is open (see globals.css)
+        data-drawer-hide
+        className="fixed bottom-0 inset-x-0 z-40 lg:hidden border-t border-gray-200 bg-white/95 backdrop-blur-md pb-[env(safe-area-inset-bottom)]"
+        role="region"
+        aria-label="Quick contact"
+      >
       <div className="grid grid-cols-3 gap-2 p-2">
         <a
           href={`tel:${BUSINESS.phoneRaw}`}
@@ -47,6 +57,7 @@ export default function StickyMobileCTA() {
           Book
         </Link>
       </div>
-    </div>
+      </div>
+    </>
   );
 }

@@ -115,6 +115,21 @@
     color: inherit;
     text-decoration: none;
   }
+
+  /* Kill the gray iOS tap flash and the 300ms double-tap-zoom delay.
+     Safe because primary tap targets carry explicit :active states
+     (Button active:scale, the pressable utility below). */
+  a, button {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  /* Contract with Navbar's mobile drawer: while the drawer is open it sets
+     body[data-drawer-open], and fixed chrome marked data-drawer-hide
+     (StickyMobileCTA, ChatWidget) gets out of the way. */
+  body[data-drawer-open] [data-drawer-hide] {
+    display: none;
+  }
 }
 
 /* ========================================
@@ -170,6 +185,14 @@
     box-shadow:
       0 16px 48px -8px rgba(0, 119, 204, 0.18),
       0 4px 12px rgba(0, 0, 0, 0.04);
+  }
+}
+
+/* Press feedback for card-like tap targets (buttons already have active:scale) */
+@utility pressable {
+  transition: transform 150ms var(--ease-out-expo);
+  &:active {
+    transform: scale(0.98);
   }
 }
 
