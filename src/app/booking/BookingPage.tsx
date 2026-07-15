@@ -27,7 +27,7 @@ import PageHero from "@/components/ui/PageHero";
 import WhatHappensNext from "@/components/ui/WhatHappensNext";
 import { BUSINESS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
-import { trackBooking } from "@/lib/pixel";
+import { trackBooking, trackPhoneClick } from "@/lib/pixel";
 
 const serviceCategories = [
   { id: "residential", label: "Residential", icon: <Home className="w-6 h-6" /> },
@@ -249,7 +249,20 @@ export default function BookingPage() {
             ? "Tell us about your project and we\u2019ll get back to you with a quote."
             : "Book online in under 2 minutes. We\u2019ll confirm your appointment within the hour."
         }
-      />
+      >
+        {/* Sticky CTA bar is hidden on /booking, so keep a call path above the fold */}
+        <p className="mt-4 text-sm text-white/60">
+          Prefer to talk?{" "}
+          <a
+            href={`tel:${BUSINESS.phoneRaw}`}
+            onClick={trackPhoneClick}
+            className="inline-flex items-center gap-1.5 font-bold text-gold hover:underline"
+          >
+            <Phone className="w-3.5 h-3.5" />
+            Call {BUSINESS.phone}
+          </a>
+        </p>
+      </PageHero>
       <section className="pt-8 sm:pt-10 pb-12 sm:pb-16 bg-[#F5F5F7]">
         <Container size="narrow">
           {/* Request Type Toggle */}

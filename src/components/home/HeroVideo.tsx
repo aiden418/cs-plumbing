@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { breakpoints } from "@/hooks/useMediaQuery";
 
 /**
  * Ambient drone-footage layer for the homepage hero. The static hero JPG
@@ -8,7 +9,9 @@ import { useEffect, useRef, useState } from "react";
  * every condition is met:
  *  - /videos/hero-loop.mp4 exists (404/decode error keeps the image)
  *  - user doesn't prefer reduced motion
- *  - connection isn't save-data / 2g
+ *  - device has a fine pointer (phones/tablets keep the JPG and skip the
+ *    2.2MB download; a small mobile encode can lift this later)
+ *  - connection isn't save-data / 2g / 3g
  *  - hero is on screen (IntersectionObserver defers the network hit)
  * Ships dark until the video asset is added to public/videos/.
  */
@@ -22,12 +25,13 @@ export default function HeroVideo() {
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (window.matchMedia(breakpoints.coarse).matches) return;
     const conn = (
       navigator as Navigator & {
         connection?: { saveData?: boolean; effectiveType?: string };
       }
     ).connection;
-    if (conn?.saveData || conn?.effectiveType === "2g") return;
+    if (conn?.saveData || ["2g", "3g"].includes(conn?.effectiveType ?? "")) return;
 
     const el = videoRef.current;
     if (!el) return;

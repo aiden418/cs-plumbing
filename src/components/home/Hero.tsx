@@ -9,6 +9,7 @@ import Container from "@/components/ui/Container";
 import HeroVideo from "@/components/home/HeroVideo";
 import { BUSINESS } from "@/lib/constants";
 import { registerGSAP, gsap } from "@/lib/gsap";
+import { breakpoints } from "@/hooks/useMediaQuery";
 
 // Three lines, kept as semantic arrays so the per-word clip-path reveal
 // stays readable. Real DOM text remains literal — SEO/screen-readers see
@@ -33,6 +34,8 @@ export default function Hero() {
       "(prefers-reduced-motion: reduce)",
     ).matches;
     if (prefersReducedMotion) return;
+    // Scrubbed parallax is per-frame scroll work — skip it on touch devices
+    if (window.matchMedia(breakpoints.coarse).matches) return;
 
     const ctx = gsap.context(() => {
       const bg = heroRef.current!.querySelector(".hero-bg");
@@ -67,7 +70,7 @@ export default function Hero() {
       className="relative min-h-screen overflow-hidden flex flex-col"
     >
       {/* Background — single dim + radial vignette */}
-      <div className="hero-bg absolute inset-0 will-change-transform">
+      <div className="hero-bg absolute inset-0 lg:will-change-transform">
         <Image
           src="/images/hero/drone-construction.jpg"
           alt="C&S Plumbing new construction site aerial view"

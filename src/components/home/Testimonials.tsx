@@ -132,13 +132,21 @@ export default function Testimonials() {
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
-              <div className="flex gap-2.5 sm:gap-2">
+              {/* 15 dots can't be usable tap targets in a 375px row — phones
+                  get a counter, the dots return at sm: */}
+              <span
+                className="sm:hidden min-w-14 text-center text-sm text-gray-500 tabular-nums"
+                aria-live="polite"
+              >
+                {selectedIndex + 1} / {TESTIMONIALS.length}
+              </span>
+              <div className="hidden sm:flex gap-2">
                 {TESTIMONIALS.map((_, i) => (
                   <button
                     key={i}
                     onClick={() => emblaApi?.scrollTo(i)}
-                    className={`h-2.5 sm:h-2 rounded-full transition-all duration-300 ${
-                      i === selectedIndex ? "bg-primary w-7 sm:w-6" : "bg-gray-300 w-2.5 sm:w-2"
+                    className={`h-2 rounded-full transition-all duration-300 ${
+                      i === selectedIndex ? "bg-primary w-6" : "bg-gray-300 w-2"
                     }`}
                     aria-label={`Go to testimonial ${i + 1}`}
                   />

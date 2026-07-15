@@ -11,6 +11,7 @@ import StaggerChildren, {
 } from "@/components/animations/StaggerChildren";
 import { motion } from "framer-motion";
 import { BUSINESS } from "@/lib/constants";
+import { trackPhoneClick } from "@/lib/pixel";
 import type { ServiceCityLanding } from "@/lib/types";
 
 const TRUST_ICONS = [Shield, Award, Star, Check];
@@ -33,6 +34,7 @@ export default function ServiceCityLandingTemplate({
           <>
             <Button
               href={`tel:${BUSINESS.phoneRaw}`}
+              onClick={trackPhoneClick}
               variant="gold"
               size="lg"
               icon={<Phone className="w-5 h-5" />}

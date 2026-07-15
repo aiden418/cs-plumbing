@@ -27,7 +27,8 @@ interface ButtonAsButton extends ButtonBaseProps {
 
 interface ButtonAsLink extends ButtonBaseProps {
   href: string;
-  onClick?: never;
+  /* e.g. analytics on tel:/booking links */
+  onClick?: () => void;
   type?: never;
 }
 
@@ -62,6 +63,7 @@ export default function Button({
   className,
   icon,
   href,
+  onClick,
   ...rest
 }: ButtonProps) {
   const classes = cn(
@@ -73,7 +75,7 @@ export default function Button({
 
   if (href) {
     return (
-      <Link href={href} className={classes}>
+      <Link href={href} onClick={onClick} className={classes}>
         {icon}
         {children}
       </Link>
@@ -81,7 +83,7 @@ export default function Button({
   }
 
   return (
-    <button className={classes} {...rest}>
+    <button className={classes} onClick={onClick} {...rest}>
       {icon}
       {children}
     </button>

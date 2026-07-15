@@ -46,7 +46,7 @@ export default function ServiceCard({ service, index }: ServiceCardProps) {
       }}
     >
       <Link href={service.href} className="group block h-full">
-        <div className="h-full bg-white rounded-2xl border border-gray-200 p-5 sm:p-6 lg:p-8 card-lift card-lift-hover hover:border-primary/30 relative overflow-hidden">
+        <div className="h-full bg-white rounded-2xl border border-gray-200 p-5 sm:p-6 lg:p-8 card-lift card-lift-hover hover:border-primary/30 active:scale-[0.98] relative overflow-hidden">
           <div className="absolute top-0 right-0 w-40 h-40 bg-primary/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
           <div className="relative z-10">

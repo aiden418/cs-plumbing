@@ -133,7 +133,7 @@ export default function GalleryPage() {
                 <button
                   key={cat.id}
                   onClick={() => setActiveFilter(cat.id)}
-                  className={`px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 ${
+                  className={`min-h-11 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 ${
                     activeFilter === cat.id
                       ? "bg-gold text-navy font-bold"
                       : "bg-gray-100 border border-gray-200 text-gray-500 hover:text-gray-900 hover:border-gray-300"
@@ -163,7 +163,7 @@ export default function GalleryPage() {
                     onClick={() => openLightbox(i)}
                     className="group cursor-pointer"
                   >
-                    <div className="relative aspect-[4/3] rounded-xl sm:rounded-2xl overflow-hidden bg-gray-100 border border-gray-200 group-hover:border-primary/30 transition-all duration-500">
+                    <div className="pressable relative aspect-[4/3] rounded-xl sm:rounded-2xl overflow-hidden bg-gray-100 border border-gray-200 group-hover:border-primary/30">
                       <Image
                         src={item.src}
                         alt={item.alt}
@@ -204,7 +204,7 @@ export default function GalleryPage() {
           >
             <button
               onClick={closeLightbox}
-              className="absolute top-4 right-4 sm:top-6 sm:right-6 p-2 text-gray-500 hover:text-white transition-colors z-10"
+              className="absolute top-[max(1rem,env(safe-area-inset-top))] right-4 sm:top-6 sm:right-6 p-3 rounded-full bg-white/10 text-white/80 hover:text-white active:text-white transition-colors z-10"
               aria-label="Close lightbox"
             >
               <X className="w-6 h-6 sm:w-8 sm:h-8" />
@@ -215,7 +215,7 @@ export default function GalleryPage() {
                 e.stopPropagation();
                 lightboxPrev();
               }}
-              className="absolute left-2 sm:left-6 p-2 text-gray-500 hover:text-white transition-colors z-10"
+              className="absolute left-2 sm:left-6 p-3 rounded-full bg-white/10 text-white/80 hover:text-white active:text-white transition-colors z-10"
               aria-label="Previous image"
             >
               <ChevronLeft className="w-6 h-6 sm:w-8 sm:h-8" />
@@ -244,7 +244,7 @@ export default function GalleryPage() {
                 e.stopPropagation();
                 lightboxNext();
               }}
-              className="absolute right-2 sm:right-6 p-2 text-gray-500 hover:text-white transition-colors z-10"
+              className="absolute right-2 sm:right-6 p-3 rounded-full bg-white/10 text-white/80 hover:text-white active:text-white transition-colors z-10"
               aria-label="Next image"
             >
               <ChevronRight className="w-6 h-6 sm:w-8 sm:h-8" />

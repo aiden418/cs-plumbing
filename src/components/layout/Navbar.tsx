@@ -42,13 +42,18 @@ export default function Navbar() {
     ).__lenis;
     if (isMobileOpen) {
       document.body.style.overflow = "hidden";
+      // Hides fixed chrome marked data-drawer-hide (sticky CTA bar, chat
+      // bubble) so it can't paint over the drawer — rule in globals.css
+      document.body.dataset.drawerOpen = "";
       lenis?.stop();
     } else {
       document.body.style.overflow = "";
+      delete document.body.dataset.drawerOpen;
       lenis?.start();
     }
     return () => {
       document.body.style.overflow = "";
+      delete document.body.dataset.drawerOpen;
       lenis?.start();
     };
   }, [isMobileOpen]);
@@ -270,7 +275,7 @@ export default function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className="absolute inset-0 pt-24 px-6 flex flex-col overflow-y-auto"
+              className="absolute inset-0 pt-24 px-6 flex flex-col overflow-y-auto overscroll-contain"
             >
               <div className="flex flex-col gap-1">
                 {NAV_LINKS.map((link, i) => (

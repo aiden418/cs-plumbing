@@ -157,7 +157,7 @@ export default function BuildersPage() {
                   key={cat.value}
                   onClick={() => setActiveCategory(cat.value)}
                   className={cn(
-                    "px-4 py-2 rounded-full text-sm font-medium transition-all duration-300",
+                    "min-h-11 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300",
                     activeCategory === cat.value
                       ? "bg-primary text-white shadow-sm"
                       : "bg-white text-gray-500 border border-gray-200 hover:border-gray-300 hover:text-gray-900"

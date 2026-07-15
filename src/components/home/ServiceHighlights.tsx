@@ -45,7 +45,7 @@ export default function ServiceHighlights() {
           {highlighted.map((service) => (
             <motion.div key={service.id} variants={staggerItem}>
               <Link href={service.href} className="group block h-full">
-                <div className="relative h-full bg-white rounded-2xl border border-gray-200 p-5 sm:p-6 lg:p-8 hover:border-primary/30 overflow-hidden card-lift card-lift-hover">
+                <div className="relative h-full bg-white rounded-2xl border border-gray-200 p-5 sm:p-6 lg:p-8 hover:border-primary/30 overflow-hidden card-lift card-lift-hover active:scale-[0.98]">
                   {/* Background photo layer */}
                   {service.image && (
                     <div className="absolute inset-0 pointer-events-none">
@@ -75,7 +75,8 @@ export default function ServiceHighlights() {
                     <p className="text-gray-700 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4">
                       {service.description}
                     </p>
-                    <div className="flex items-center gap-1 text-primary text-sm font-medium opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-[-8px] group-hover:translate-x-0">
+                    {/* Visible by default (touch has no hover); hover-reveal only on fine pointers */}
+                    <div className="flex items-center gap-1 text-primary text-sm font-medium transition-all duration-300 pointer-fine:opacity-0 pointer-fine:translate-x-[-8px] pointer-fine:group-hover:opacity-100 pointer-fine:group-hover:translate-x-0">
                       Learn more <ArrowRight className="w-4 h-4" />
                     </div>
                   </div>
