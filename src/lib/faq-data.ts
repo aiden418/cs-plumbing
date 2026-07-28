@@ -87,7 +87,7 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
       {
         question: "How much does a water heater cost in Cape Coral?",
         answer:
-          "Water heater costs in Cape Coral start at $195 for a basic repair. Traditional tank replacements typically run $995–$2,000 installed, and tankless installations start at $1,200. C&S Plumbing provides free estimates.",
+          "Repairs run $195–$475. Traditional tank replacements run $1,650–$2,500 installed with haul-away included, tankless installations run $3,500–$5,200, and heat-pump hybrids run $3,200–$4,800. C&S Plumbing provides free estimates with upfront pricing.",
       },
       {
         question: "Should I get a tankless or traditional water heater?",
