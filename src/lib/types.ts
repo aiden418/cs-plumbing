@@ -164,6 +164,8 @@ export interface BlogPost {
   updatedDate?: string;
   category: string;
   readTime: string;
+  /** Optional Q&A block — rendered under the article and emitted as FAQPage schema. */
+  faqs?: FAQ[];
 }
 
 export interface Partner {

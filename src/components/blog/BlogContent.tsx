@@ -3,6 +3,7 @@
 import { Clock, ArrowLeft, Phone, Calendar } from "lucide-react";
 import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
+import FaqAccordion from "@/components/ui/FaqAccordion";
 import { BUSINESS } from "@/lib/constants";
 import type { BlogPost } from "@/lib/types";
 
@@ -50,18 +51,28 @@ export default function BlogContent({ post }: { post: BlogPost }) {
         <Container>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
             {/* Article */}
-            <article
-              className="lg:col-span-2 prose prose-sm sm:prose-base max-w-none
-                prose-headings:text-gray-900 prose-headings:font-bold
-                prose-h2:text-xl sm:prose-h2:text-2xl prose-h2:mt-8 prose-h2:mb-4
-                prose-h3:text-lg prose-h3:mt-6 prose-h3:mb-3
-                prose-p:text-gray-600 prose-p:leading-relaxed
-                prose-a:text-primary prose-a:no-underline hover:prose-a:underline
-                prose-li:text-gray-600
-                prose-strong:text-gray-900
-                prose-ul:space-y-1"
-              dangerouslySetInnerHTML={{ __html: post.content }}
-            />
+            <div className="lg:col-span-2">
+              <article
+                className="prose prose-sm sm:prose-base max-w-none
+                  prose-headings:text-gray-900 prose-headings:font-bold
+                  prose-h2:text-xl sm:prose-h2:text-2xl prose-h2:mt-8 prose-h2:mb-4
+                  prose-h3:text-lg prose-h3:mt-6 prose-h3:mb-3
+                  prose-p:text-gray-600 prose-p:leading-relaxed
+                  prose-a:text-primary prose-a:no-underline hover:prose-a:underline
+                  prose-li:text-gray-600
+                  prose-strong:text-gray-900
+                  prose-ul:space-y-1"
+                dangerouslySetInnerHTML={{ __html: post.content }}
+              />
+              {post.faqs && post.faqs.length > 0 && (
+                <div className="mt-10">
+                  <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4">
+                    Frequently Asked Questions
+                  </h2>
+                  <FaqAccordion faqs={post.faqs} />
+                </div>
+              )}
+            </div>
 
             {/* Sidebar */}
             <aside className="lg:col-span-1">

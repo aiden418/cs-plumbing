@@ -4,6 +4,7 @@ import PageTransition from "@/components/layout/PageTransition";
 import BlogContent from "@/components/blog/BlogContent";
 import ArticleJsonLd from "@/components/seo/ArticleJsonLd";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
+import FaqJsonLd from "@/components/seo/FaqJsonLd";
 import CTASection from "@/components/home/CTASection";
 import { BLOG_POSTS } from "@/lib/constants";
 
@@ -48,6 +49,7 @@ export default async function Page({
   return (
     <PageTransition>
       <ArticleJsonLd post={post} />
+      {post.faqs && post.faqs.length > 0 && <FaqJsonLd faqs={post.faqs} />}
       <BreadcrumbJsonLd
         items={[
           { name: "Home", href: "/" },
