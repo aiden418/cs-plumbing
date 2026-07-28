@@ -212,6 +212,19 @@ export default function PipelineFlow() {
       const segAngle = (a: Pt, b: Pt) => (Math.atan2(b.y - a.y, b.x - a.x) * 180) / Math.PI;
       const frac = (i: number, t: number) => fractions[i] + (fractions[i + 1] - fractions[i]) * t;
 
+      // Position + segment rotation live on the OUTER wrapper group as a raw
+      // SVG attribute. GSAP only ever animates the inner group (scale pop) —
+      // rebuilds and origin changes can no longer drop the rotation, which is
+      // exactly what left the vertical-run valves rendering sideways.
+      const placeFitting = (g: SVGGElement, s: { i: number; t: number }) => {
+        const p = lerpPt(points[s.i], points[s.i + 1], s.t);
+        const angle = segAngle(points[s.i], points[s.i + 1]);
+        (g.parentNode as SVGGElement).setAttribute(
+          "transform",
+          `translate(${p.x} ${p.y}) rotate(${angle})`
+        );
+      };
+
       const valveSpecs = [
         { i: 1, t: 0.5 },  // horizontal run toward center
         { i: 3, t: 0.25 }, // vertical run entering the stats band
@@ -219,9 +232,7 @@ export default function PipelineFlow() {
       ];
       valves.forEach((g, k) => {
         const s = valveSpecs[k];
-        if (!s) return;
-        const p = lerpPt(points[s.i], points[s.i + 1], s.t);
-        gsap.set(g, { x: p.x, y: p.y, rotation: segAngle(points[s.i], points[s.i + 1]) });
+        if (s) placeFitting(g, s);
       });
       valveFractions = valveSpecs.map((s) => frac(s.i, s.t));
 
@@ -231,9 +242,7 @@ export default function PipelineFlow() {
       ];
       couplings.forEach((g, k) => {
         const s = couplingSpecs[k];
-        if (!s) return;
-        const p = lerpPt(points[s.i], points[s.i + 1], s.t);
-        gsap.set(g, { x: p.x, y: p.y, rotation: segAngle(points[s.i], points[s.i + 1]) });
+        if (s) placeFitting(g, s);
       });
       couplingFractions = couplingSpecs.map((s) => frac(s.i, s.t));
 
@@ -331,11 +340,13 @@ export default function PipelineFlow() {
           style={{ filter: "drop-shadow(0 0 5px rgba(184,115,51,0.35))" }}
         />
         <path className="pipe-draw pipe-draw-hi" stroke={COPPER_HI} strokeWidth="2.5" strokeLinecap="round" />
-        <Coupling className="pipe-coupling" />
-        <Coupling className="pipe-coupling" />
-        <BallValve className="pipe-ball-valve" />
-        <BallValve className="pipe-ball-valve" />
-        <BallValve className="pipe-ball-valve" />
+        {/* Outer g = position/rotation (attribute, set in measure);
+            inner g = GSAP scale pop only. Keep them separate. */}
+        <g><Coupling className="pipe-coupling" /></g>
+        <g><Coupling className="pipe-coupling" /></g>
+        <g><BallValve className="pipe-ball-valve" /></g>
+        <g><BallValve className="pipe-ball-valve" /></g>
+        <g><BallValve className="pipe-ball-valve" /></g>
         {/* Terminal fixture — brass gate-valve handwheel on the pipe mouth */}
         <g className="pipe-terminal">
           <g className="terminal-wheel">
