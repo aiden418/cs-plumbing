@@ -190,7 +190,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       {
         question: "Do you charge extra for nights and weekends in Cape Coral?",
         answer:
-          "We provide a flat diagnostic fee for emergency calls regardless of the time or day. All repair costs are quoted upfront before we begin any work. There are no hidden overtime surcharges — the price we quote is the price you pay.",
+          "After-hours calls (nights, weekends, and holidays) carry a $95–$150 surcharge, and it's included in the written price you approve before we begin any work. The repair price itself is the same day or night — the price we quote is the price you pay.",
       },
       {
         question: "Why do Cape Coral homes have so many pipe emergencies?",
@@ -1564,7 +1564,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       {
         title: "Quote Before Work Begins",
         description:
-          "Written pricing before we start, even on after-hours calls. No surprise overtime surcharges.",
+          "Written pricing before we start, even on after-hours calls. The $95–$150 after-hours surcharge is always in the quote — never a surprise.",
       },
       {
         title: "Stocked Emergency Trucks",
@@ -1594,7 +1594,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       {
         question: "Do you charge extra for night and weekend calls in Punta Gorda?",
         answer:
-          "We charge a flat diagnostic fee for emergency calls regardless of the hour, and every repair is quoted in writing before work begins. The price we quote is the price you pay — no hidden overtime multipliers.",
+          "After-hours calls carry a $95–$150 surcharge, stated in the written quote before work begins. The repair price itself is the same day or night — no hidden overtime multipliers.",
       },
       {
         question: "Do you handle emergencies in Punta Gorda Isles canal homes?",
@@ -2517,7 +2517,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       {
         title: "Upfront Emergency Pricing",
         description:
-          "Written quotes before work begins, even on nights and weekends. No hidden overtime or after-hours surcharges.",
+          "Written quotes before work begins, even on nights and weekends. The $95–$150 after-hours surcharge is always stated upfront — never buried.",
       },
     ],
     city: "Bonita Springs",
@@ -2542,7 +2542,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       {
         question: "Do you charge extra for emergency calls on nights and weekends?",
         answer:
-          "We provide a flat diagnostic fee for all emergency calls regardless of the time or day. All repair costs are quoted in writing before we begin work, and the quoted price is the price you pay. There are no hidden overtime surcharges, holiday fees, or after-hours markups. You'll know exactly what the repair will cost before we turn a wrench.",
+          "Night, weekend, and holiday calls carry a $95–$150 after-hours surcharge — that's the only difference, and it's in the written quote you approve before we begin work. The repair price itself carries no overtime multipliers or holiday markups. You'll know exactly what the job will cost before we turn a wrench.",
       },
       {
         question: "Can you help with my seasonal home's plumbing when I return to Bonita Springs?",
@@ -3254,7 +3254,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       {
         question: "Do you charge more for nights and weekends in Naples?",
         answer:
-          "We charge a flat emergency diagnostic fee regardless of the hour, and every repair is quoted in writing before work begins. No hidden overtime multipliers. The price we quote at 2 AM is the same price we'd quote at 2 PM.",
+          "After-hours calls carry a $95–$150 surcharge, quoted in writing before work begins. Beyond that, the repair price at 2 AM is the same as at 2 PM — no hidden overtime multipliers.",
       },
       {
         question: "Are you licensed to work in Collier County?",

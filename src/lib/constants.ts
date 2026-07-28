@@ -36,6 +36,19 @@ export const BUSINESS = {
   reviewCount: 46,
   googleProfileUrl:
     "https://www.google.com/maps/search/?api=1&query=C%26S+Plumbing+of+Lee+County+North+Fort+Myers",
+  facebookUrl: "https://www.facebook.com/csplumbingoflc",
+  instagramUrl: "https://www.instagram.com/cs_plumbing_of_lee/",
+} as const;
+
+// Single source of truth for emergency-service claims. Every surface that
+// states a response time or after-hours price (emergency page, FAQs,
+// llms.txt, landing pages) must read these — AI engines cross-check pages
+// and inconsistent claims cost citations.
+export const EMERGENCY_CLAIMS = {
+  responseTime: "typically 30–60 minutes",
+  afterHoursSurcharge: "$95–$150",
+  afterHoursPricing:
+    "After-hours calls (nights, weekends, and holidays) carry a $95–$150 surcharge — always included in the written price you approve before any work begins.",
 } as const;
 
 // ============================================
@@ -735,7 +748,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       {
         question: "How much does a water heater cost in Cape Coral?",
         answer:
-          "Water heater costs in Cape Coral start at $195 for a basic repair. Traditional tank replacements typically run $995-$2,000 installed, and tankless installations start at $1,200. C&S Plumbing provides free estimates.",
+          "Repairs run $195–$475. Traditional tank replacements run $1,650–$2,500 installed with haul-away included, tankless installations run $3,500–$5,200, and heat-pump hybrids run $3,200–$4,800. C&S Plumbing provides free estimates with upfront pricing.",
       },
       {
         question: "Should I get a tankless or traditional water heater?",
@@ -821,8 +834,8 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
     answerBlocks: [
       {
         question: "How much does a water heater cost installed in Cape Coral?",
-        answer: "Tank replacements run $995–$2,000; tankless installs start at $1,200.",
-        detail: "Standard 40–50 gallon electric or gas tank replacement is typically $995–$1,800 installed with old unit haul-away. Tankless installs start at $1,200 and go up to $4,500 depending on gas line work and unit size. Hybrid heat-pump units are $2,500–$3,950 and often qualify for FPL rebates.",
+        answer: "Tank replacements run $1,650–$2,500 installed; tankless runs $3,500–$5,200.",
+        detail: "A standard 40-gallon electric tank is $1,650–$2,200 installed and a 50-gallon is $1,850–$2,500 — including haul-away of the old unit, code-compliant pan, and fittings. Gas tankless (Rinnai/Navien) runs $3,500–$5,200 including gas line and venting. Heat-pump hybrids are $3,200–$4,800 and often qualify for Florida utility rebates of up to ~$2,000.",
       },
       {
         question: "Tankless vs traditional — which is right for my home?",
@@ -1241,6 +1254,23 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       { src: "/images/gallery/widespread-bathroom-faucet.jpg", caption: "Spot-free bathroom fixtures" },
       { src: "/images/gallery/tankless-water-heater.jpg", caption: "Scale protection for tankless heaters" },
     ],
+    answerBlocks: [
+      {
+        question: "How much does a water softener cost in Southwest Florida?",
+        answer: "Most installations run $1,500–$4,000.",
+        detail: "Basic salt-based softeners start around $1,500 installed. Premium whole-home systems with reverse osmosis run $3,000–$4,000. We test your water free first, so you only pay for the capacity your home actually needs.",
+      },
+      {
+        question: "Do Cape Coral homes really need a water softener?",
+        answer: "Almost certainly — SWFL water runs 15–25 grains per gallon, firmly in the \"very hard\" range.",
+        detail: "That hardness scales up pipes, water heaters, and tankless heat exchangers, shortens appliance life, and leaves spots on everything. A softener protects the whole system — including the repipe or tankless unit you may have just invested in.",
+      },
+      {
+        question: "How long does a water softener last?",
+        answer: "10–15 years with basic maintenance.",
+        detail: "Regular salt refills and occasional resin replacement keep a quality unit running efficiently. We service all major brands and offer maintenance plans that extend system life.",
+      },
+    ],
   },
   {
     slug: "plumbing-remodel",
@@ -1337,6 +1367,23 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       { src: "/images/gallery/rain-shower-handheld-marble.jpg", caption: "Rain shower remodel" },
       { src: "/images/gallery/pot-filler-faucet.jpg", caption: "Pot filler install" },
       { src: "/images/gallery/toilet-install-tilework.jpg", caption: "Toilet & tile finish" },
+    ],
+    answerBlocks: [
+      {
+        question: "How much does remodel plumbing cost in Cape Coral?",
+        answer: "Most kitchen and bathroom remodel plumbing runs $2,000–$8,000+.",
+        detail: "Basic fixture swaps sit at the low end; full layout changes with supply and drain relocation push toward $8,000+. Every quote is written and upfront, and permits are included.",
+      },
+      {
+        question: "How long does the plumbing phase of a remodel take?",
+        answer: "Usually 2–4 days total, split into rough-in and trim.",
+        detail: "Rough-in (moving pipes, new connections) takes 1–2 days, then finish plumbing (fixtures, appliances) another 1–2 days after the walls and counters go in. We coordinate directly with your GC to hit the schedule.",
+      },
+      {
+        question: "Do I need permits to move plumbing in a remodel?",
+        answer: "Yes — and we pull them for you.",
+        detail: "Relocating supply or drain lines in Lee County requires a permit and inspection. C&S handles the permit, the inspection, and code compliance (licensed CFC1432485), so your remodel never stalls on paperwork.",
+      },
     ],
   },
   {
@@ -2112,7 +2159,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h3>Pros</h3>
 <ul>
-<li><strong>Lower upfront cost:</strong> $1,200-$2,000 installed in Southwest Florida</li>
+<li><strong>Lower upfront cost:</strong> $1,650-$2,500 installed in Southwest Florida</li>
 <li><strong>Simple installation:</strong> Straightforward replacement of existing units</li>
 <li><strong>Reliable technology:</strong> Proven and well-understood by all plumbers</li>
 <li><strong>Works during power outages:</strong> Gas models continue heating without electricity</li>
@@ -2140,7 +2187,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h3>Cons</h3>
 <ul>
-<li><strong>Higher upfront cost:</strong> $2,500-$3,500+ installed</li>
+<li><strong>Higher upfront cost:</strong> $3,500-$5,200 installed</li>
 <li><strong>May need gas line upgrades:</strong> Some homes need larger gas lines</li>
 <li><strong>Flow rate limits:</strong> Very high simultaneous usage can overwhelm smaller units</li>
 </ul>
@@ -2875,6 +2922,162 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>Need It Assessed?</h2>
 <p>Whether it's pre-season peace of mind or a post-storm evaluation, C&S Plumbing services every make of gas, electric, and tankless water heater across Southwest Florida. Call <a href="tel:8337586248">833-PLUMB-IT</a> or <a href="/booking">book online</a> — and stay safe out there this season.</p>`,
+  },
+  {
+    slug: "whole-home-repipe-cost-cape-coral",
+    title: "How Much Does Whole-Home Repiping Cost in Cape Coral?",
+    metaTitle: "Whole-Home Repipe Cost in Cape Coral — Real 2026 Prices",
+    metaDescription:
+      "Whole-home repiping in Cape Coral runs $4,000–$15,000, with most 3-bed homes landing between $6,800–$9,500 in PEX. Real price breakdowns by home size, PEX vs copper, and what's included — from the crew that's repiped SWFL homes since 1998.",
+    keywords: ["repipe cost Cape Coral", "whole home repipe cost Florida", "how much does repiping cost", "PEX repipe price Cape Coral", "polybutylene replacement cost"],
+    excerpt:
+      "Straight answer: most Cape Coral repipes cost $4,000–$15,000, and a typical 3-bed, 2-bath home lands between $6,800–$9,500 in PEX. Here's the full price breakdown by home size and pipe material, and exactly what that money buys.",
+    category: "Repiping",
+    publishDate: "2026-07-21",
+    readTime: "7 min read",
+    faqs: [
+      {
+        question: "How much does it cost to repipe a 3-bedroom house in Cape Coral?",
+        answer: "A PEX repipe on a typical 3-bed, 2-bath Cape Coral home (1,800–2,400 sq ft) runs $6,800–$9,500 with C&S Plumbing, including the Lee County permit, final inspection, and drywall patching. Smaller 2-bed homes and condos run $4,200–$6,500.",
+      },
+      {
+        question: "How much more does a copper repipe cost than PEX?",
+        answer: "Plan on $2,000–$4,000 over the equivalent PEX price for Type-L copper. Most Cape Coral homeowners choose PEX — it's corrosion-proof in Florida water, quieter, and carries a manufacturer warranty — but we install both.",
+      },
+      {
+        question: "How long does a whole-home repipe take?",
+        answer: "Most homes are finished in 1–2 days. Water is typically only off for a few hours while we switch over, and you can stay in the home during the job.",
+      },
+      {
+        question: "Does the price include permits and drywall repair?",
+        answer: "Yes. Every C&S repipe quote includes the Lee County permit, the final inspection, and patching every access cut to paint-ready condition before we leave. There are no add-on surprises at the end.",
+      },
+    ],
+    content: `<p><strong>The straight answer: whole-home repiping in Cape Coral costs $4,000–$15,000, and the large majority of homes land between $4,200 and $9,500 with PEX.</strong> Where you fall in that range comes down to three things — the size of your home, the pipe material you choose, and whether we're removing polybutylene. Below are the actual price brackets we quote every week, so you can ballpark your own home before anyone steps through your door.</p>
+
+<h2>Repipe Cost by Home Size (PEX)</h2>
+<p>These are C&S Plumbing's real working ranges for a complete hot-and-cold repipe in PEX, including materials, labor, the Lee County permit, final inspection, and drywall patching:</p>
+<p><strong>2-bed / 2-bath, up to 1,500 sq ft — $4,200–$6,500.</strong> Most condos and smaller slab homes. A North Fort Myers condo we repiped recently came in at $4,950, done in a single day so the unit could be re-rented that weekend.</p>
+<p><strong>3-bed / 2-bath, 1,800–2,400 sq ft — $6,800–$9,500.</strong> The typical Cape Coral and Fort Myers single-family home. A 1990 Cape Coral SE home with failing polybutylene ran $7,200, finished in a day and a half with nine access cuts, all patched.</p>
+<p><strong>4-bed or larger, 2,500+ sq ft — $9,500–$13,000.</strong> Two-story layouts and bigger floor plans take more pipe, more openings, and more time.</p>
+
+<h2>PEX or Copper?</h2>
+<p>PEX is what we recommend for most Southwest Florida homes, and it's what the price brackets above assume. It doesn't corrode in our aggressive water, it tolerates minor slab movement, installs faster with fewer wall openings, and carries a manufacturer warranty on the pipe itself.</p>
+<p>Type-L copper is still the right call for some owners — often ahead of an appraisal or for personal preference — and adds <strong>$2,000–$4,000 over the PEX price</strong> plus roughly an extra day of install time. A 2,650 sq ft Fort Myers home we repiped in copper for resale came to $11,800 and passed the county final on the first inspection.</p>
+
+<h2>The Polybutylene Factor</h2>
+<p>If your Cape Coral home was built between 1978 and 1995, there's a good chance it still has gray <a href="/blog/polybutylene-pipe-problems-cape-coral">polybutylene supply lines</a> — the pipe material that failed so widely it triggered a class-action settlement. Removing poly adds <strong>$500–$1,200</strong> to the job, and it's the single most common reason Cape Coral homes get repiped. Some Florida insurers now require poly replacement as a condition of coverage, which means the repipe often pays for itself in premiums and insurability.</p>
+
+<h2>What's Included (Ask Any Plumber This)</h2>
+<p>When you compare repipe quotes, make sure you're comparing the same job. Every C&S repipe includes the <strong>Lee County permit and final inspection</strong> — required by code, and a red flag if a bidder wants to skip it — plus <strong>drywall patching to paint-ready condition</strong> on every access cut. Those two items are where lowball quotes quietly make their money back.</p>
+
+<h2>How Long It Takes</h2>
+<p>Most repipes are done in <strong>1–2 days</strong>. We run the new PEX first, then switch your home over — so water is typically only off for a few hours, and you don't need to move out. See <a href="/blog/signs-you-need-a-repipe">the warning signs that it's time</a> if you're still deciding.</p>
+
+<h2>Get Your Home's Actual Number</h2>
+<p>Our <a href="/quote-builder?service=repipe">instant repipe quote builder</a> gives you a real range for your home's size and pipe choice in about a minute, no phone call required. Prefer eyes on the job? <a href="/booking">Book a free estimate</a> or call <a href="tel:8337586248">833-PLUMB-IT</a> — C&S Plumbing has repiped <a href="/repiping-cape-coral">Cape Coral</a> homes since 1998, with 5.0 stars across our Google reviews.</p>`,
+  },
+  {
+    slug: "water-heater-replacement-signs-cost-swfl",
+    title: "Signs Your Water Heater Needs Replacing (And What It Costs in SWFL)",
+    metaTitle: "Water Heater Replacement Signs & Costs — SWFL 2026 Guide",
+    metaDescription:
+      "Rusty water, popping sounds, water around the base — the signs a water heater is done, and real Southwest Florida replacement costs: $1,650–$2,500 for tank units, $3,200–$5,200 for hybrid and tankless.",
+    keywords: ["water heater replacement cost Florida", "signs water heater needs replacing", "water heater lifespan Florida", "water heater leaking replace or repair", "tankless water heater cost SWFL"],
+    excerpt:
+      "A water heater rarely dies without warning. Here are the five signs ours techs look for, the repair-or-replace rule we use on every call, and real installed prices for Southwest Florida — from $195 repairs to $5,200 tankless conversions.",
+    category: "Water Heaters",
+    publishDate: "2026-07-24",
+    readTime: "6 min read",
+    faqs: [
+      {
+        question: "How long do water heaters last in Southwest Florida?",
+        answer: "Plan on 8–12 years for a tank unit here — a few years less than the national average, because SWFL's hard, mineral-heavy water builds sediment faster. Tankless units can last 20+ years with proper annual maintenance.",
+      },
+      {
+        question: "How much does it cost to replace a water heater in SWFL?",
+        answer: "With C&S Plumbing: a 40-gallon electric tank installed runs $1,650–$2,200, a 50-gallon runs $1,850–$2,500, heat-pump hybrids run $3,200–$4,800, and gas tankless systems run $3,500–$5,200. Every install includes haul-away, code-compliant pan and fittings, and the Lee County permit.",
+      },
+      {
+        question: "My water heater is leaking — can it be repaired?",
+        answer: "It depends where. Leaks at a valve or fitting are usually repairable ($195–$475). Water weeping from the tank itself means the tank has corroded through, and no repair fixes that — it's a replacement, ideally before it lets go completely.",
+      },
+      {
+        question: "Should I repair or replace a 10-year-old water heater?",
+        answer: "At 10+ years we usually advise replacement. A repair might buy a year or two, but you'd be putting a few hundred dollars into a unit at the end of its design life — and an old tank that fails wet can flood the garage or house.",
+      },
+    ],
+    content: `<p><strong>The short answer: if your water heater is 10+ years old, is leaking from the tank itself, or is producing rusty water — replace it. If it's under 8 years old with a specific failed part, repair it ($195–$475).</strong> Replacement in Southwest Florida runs $1,650–$2,500 installed for a standard tank, or $3,200–$5,200 for hybrid and tankless upgrades. Here's how to tell which side of the line your unit is on.</p>
+
+<h2>The Five Signs It's Done</h2>
+<p><strong>1. Water around the base.</strong> Moisture or rust streaks at the bottom of the tank mean the tank wall itself has corroded through. There is no repair for a weeping tank — only a countdown to the day it fails completely, usually 40–80 gallons at a time.</p>
+<p><strong>2. Rusty or brown hot water.</strong> If only the hot side runs discolored, the anode rod is spent and the tank interior is rusting. In SWFL's mineral-heavy water this happens years earlier than the national average.</p>
+<p><strong>3. Popping and rumbling.</strong> That sound is sediment baked onto the bottom of the tank flexing under heat. It insulates the burner or elements, drives up your electric bill, and accelerates tank failure.</p>
+<p><strong>4. Lukewarm or short-lived hot water.</strong> A failed element or thermostat is a cheap fix on a young unit — but on an old one it's usually the first domino.</p>
+<p><strong>5. It's simply old.</strong> Tank units in Southwest Florida realistically last <strong>8–12 years</strong>. Check the manufacture date on the data plate; if it starts with 201, you're on borrowed time.</p>
+
+<h2>Repair vs. Replace: The Rule We Use</h2>
+<p>Our techs apply a simple test on every call. <strong>Under 8 years old with a specific failed part</strong> — thermostat, element, T&P valve — repair it: <strong>$195–$475, usually same-day</strong>. <strong>Over 10 years old, or any tank leak</strong> — replace it. Between 8 and 10 is a judgment call we'll make honestly based on the unit's condition, because putting $400 into a 9-year-old tank only sometimes makes sense.</p>
+
+<h2>What Replacement Actually Costs in SWFL</h2>
+<p>Real installed prices from our current price book — including haul-away of the old unit, code-compliant pan and fittings, and the Lee County permit:</p>
+<p><strong>40-gallon electric tank — $1,650–$2,200.</strong> The right size for 1–2 people.</p>
+<p><strong>50-gallon electric tank — $1,850–$2,500.</strong> The most common size for an SWFL family of four. When an 11-year-old tank in Fort Myers failed on a Friday at 5pm, this is what got installed by 7pm Saturday — $2,150, old unit hauled away same trip.</p>
+<p><strong>Heat-pump hybrid (50–80 gal) — $3,200–$4,800.</strong> Cuts water-heating energy use dramatically — one Naples retrofit is running about 70% less than the old unit on the owner's FPL bill — and Florida utility rebates of up to ~$2,000 are often available.</p>
+<p><strong>Gas tankless (Rinnai/Navien) — $3,500–$5,200</strong> including gas line and venting. Endless hot water and a 20+ year service life with annual flushing; see our <a href="/blog/tankless-vs-traditional-water-heaters">tankless vs. tank comparison</a> for whether it fits your home.</p>
+
+<h2>Don't Wait for the Flood</h2>
+<p>Most water heaters sit in the garage or an interior closet, and a tank that fails wet dumps its entire capacity onto the floor. If your unit is showing two or more of the signs above, replacing it on your schedule beats replacing it at 2am — and if a storm is coming, read our guide on <a href="/blog/water-heater-hurricane-prep-florida">water heaters and hurricanes</a> first.</p>
+<p>Get a real number in about a minute with the <a href="/quote-builder?service=water-heater">instant water heater quote builder</a>, <a href="/booking">book same-day service</a>, or call <a href="tel:8337586248">833-PLUMB-IT</a>. C&S Plumbing installs and services <a href="/water-heater-repair-cape-coral">every brand across Cape Coral</a>, Fort Myers, and all of Southwest Florida.</p>`,
+  },
+  {
+    slug: "how-long-does-drain-cleaning-take",
+    title: "How Long Does Drain Cleaning Take? A Plumber's Honest Answer",
+    metaTitle: "How Long Does Drain Cleaning Take? Honest Times & Prices",
+    metaDescription:
+      "Most single-drain clogs are cleared in about an hour; main sewer lines take 1–2 hours, and hydro-jetting 2–3. A SWFL plumber's honest answer on drain cleaning time, cost ($150–$800), and why some clogs keep coming back.",
+    keywords: ["how long does drain cleaning take", "drain cleaning cost Cape Coral", "main sewer line clog cost", "hydro jetting cost Florida", "why does my drain keep clogging"],
+    excerpt:
+      "Honest answer: about an hour for a single clogged fixture, 1–2 hours for a main sewer line, 2–3 hours for hydro-jetting with a camera. Here's what changes those numbers, what each job costs, and when cabling alone won't fix it.",
+    category: "Drain Cleaning",
+    publishDate: "2026-07-28",
+    readTime: "6 min read",
+    faqs: [
+      {
+        question: "How long does it take a plumber to unclog a drain?",
+        answer: "A single clogged fixture — kitchen sink, tub, or toilet — typically takes about an hour on site and costs $150–$250. A blocked main sewer line takes 1–2 hours and runs $295–$475 with cable equipment.",
+      },
+      {
+        question: "How much does drain cleaning cost in the Cape Coral area?",
+        answer: "With C&S Plumbing: single-fixture clogs run $150–$250, main-line cabling $295–$475, hydro-jetting $450–$800, and a sewer camera inspection $245–$395 (free when done with jetting). Root removal with jetting and camera runs $650–$1,100.",
+      },
+      {
+        question: "Is hydro-jetting worth the extra cost over cabling?",
+        answer: "If the same line keeps clogging — yes. A cable punches a hole through the blockage; jetting scours the pipe wall clean at 4,000 PSI, removing the grease and roots the clog will otherwise re-form around. One jetting often outlasts years of repeat cabling.",
+      },
+      {
+        question: "Why does my drain keep clogging after it's been snaked?",
+        answer: "Because cabling clears the blockage, not the cause. Recurring clogs usually mean grease buildup, root intrusion, or a bellied/damaged section of pipe — which is why we camera-inspect repeat offenders instead of just cabling them again.",
+      },
+    ],
+    content: `<p><strong>The honest answer: about an hour for a single clogged fixture, 1–2 hours for a blocked main sewer line, and 2–3 hours for hydro-jetting with a camera inspection.</strong> Any plumber who quotes you a time without asking what's clogged and where is guessing. Here's how the real numbers break down — in time and in dollars — and the situations that make a "quick snake job" take all afternoon.</p>
+
+<h2>Typical Times and Prices, Job by Job</h2>
+<p><strong>Single-fixture clog (sink, tub, toilet) — about an hour, $150–$250.</strong> We cable from the nearest accessible cleanout or the fixture itself. If the clog is in the fixture's own trap arm, it can be done in 30 minutes; hair-and-soap tub clogs and grease-packed kitchen lines sit at the longer end.</p>
+<p><strong>Main sewer line cabling — 1–2 hours, $295–$475.</strong> This is the "every drain in the house is backing up" call. Time depends heavily on cleanout access (more on that below) and how far down the line the blockage sits.</p>
+<p><strong>Hydro-jetting the main line — 2–3 hours, $450–$800.</strong> A 4,000 PSI jet scours the full pipe diameter clean instead of punching a hole through the clog. We camera the line on the same trip — <strong>the $245–$395 camera inspection is free with jetting</strong> — so you see exactly what condition your pipe is in.</p>
+<p><strong>Roots in the line — 2–4 hours, $650–$1,100</strong> for cutting, jetting, and camera. Common in older Cape Coral and Fort Myers neighborhoods with big oaks and ficus. One 1976 Fort Myers home had a 60-foot cast iron run with two oak roots grown in; jetting plus a root cutter cleared it, and the camera flagged one cracked joint to watch.</p>
+
+<h2>What Makes It Take Longer</h2>
+<p><strong>No accessible cleanout.</strong> If your home doesn't have one (or it's buried under landscaping), we may need to pull a toilet or go through a roof vent — add an hour. Many older SWFL homes are missing them; installing one during the visit saves money on every future call.</p>
+<p><strong>The clog that isn't a clog.</strong> If the cable keeps finding "soft" blockages that return within weeks, the real problem is usually grease buildup, root intrusion, or a bellied section of pipe holding water. That's a camera diagnosis, not a guess — and it's why we scope repeat offenders instead of charging you for a third cabling.</p>
+<p><strong>Collapsed or separated pipe.</strong> No amount of cabling fixes a structural failure. The camera tells us in minutes, and you get an honest conversation about repair options instead of an open-ended "cleaning."</p>
+
+<h2>When to Stop Snaking and Start Jetting</h2>
+<p>Our rule: <strong>the second time the same line clogs within a year, it's a jetting-and-camera conversation.</strong> One Lehigh Acres customer had been paying another plumber three times a year to cable the same kitchen line. We jetted it, scoped it, found a low spot trapping grease — it hasn't backed up in 14 months. Cheaper than the fourth cabling would have been. More on causes and prevention in our <a href="/blog/clogged-drains-causes-fixes-swfl">clogged drains guide</a>.</p>
+
+<h2>Same-Day Service, Honest Clock</h2>
+<p>Most drain calls across <a href="/drain-cleaning-cape-coral">Cape Coral</a>, Fort Myers, and Lehigh Acres get same-day service in regular hours, and we handle 24/7 emergencies when every drain in the house is backing up. After-hours work carries a $95–$150 surcharge — which we aim to never charge, because most jobs fit in business hours. Call <a href="tel:8337586248">833-PLUMB-IT</a> or <a href="/booking">book online</a>, and see full pricing on our <a href="/services/drain-cleaning">drain cleaning page</a>.</p>`,
   },
 ];
 

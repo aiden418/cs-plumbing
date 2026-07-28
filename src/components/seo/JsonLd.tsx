@@ -107,14 +107,21 @@ export default async function JsonLd() {
         opens: "09:00",
         closes: "15:00",
       },
-      {
+    ],
+    // Office is closed Sundays — 24/7 availability is the emergency line,
+    // modeled honestly as a ContactPoint instead of fake Sunday office hours.
+    contactPoint: {
+      "@type": "ContactPoint",
+      contactType: "emergency",
+      telephone: `+1${BUSINESS.phoneRaw}`,
+      availableLanguage: "English",
+      hoursAvailable: {
         "@type": "OpeningHoursSpecification",
-        dayOfWeek: "Sunday",
+        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
         opens: "00:00",
         closes: "23:59",
-        description: "Emergency service only",
       },
-    ],
+    },
     priceRange: "$$",
     currenciesAccepted: "USD",
     paymentAccepted: "Cash, Credit Card, Check, Financing",
@@ -309,8 +316,8 @@ export default async function JsonLd() {
     /* ── Social / Profiles ── */
     sameAs: [
       "https://www.google.com/maps/place/C%26S+Plumbing+of+Lee",
-      "https://www.facebook.com/csplumbingoflc",
-      "https://www.instagram.com/cs_plumbing_of_lee/",
+      BUSINESS.facebookUrl,
+      BUSINESS.instagramUrl,
     ],
   };
 

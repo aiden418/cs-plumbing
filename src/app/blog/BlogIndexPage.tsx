@@ -24,9 +24,11 @@ export default function BlogIndexPage() {
         <Container>
           <ScrollReveal>
             <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-              {BLOG_POSTS.map((post) => (
-                <BlogCard key={post.slug} post={post} />
-              ))}
+              {[...BLOG_POSTS]
+                .sort((a, b) => b.publishDate.localeCompare(a.publishDate))
+                .map((post) => (
+                  <BlogCard key={post.slug} post={post} />
+                ))}
             </StaggerChildren>
           </ScrollReveal>
         </Container>

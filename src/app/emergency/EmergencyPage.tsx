@@ -1,12 +1,15 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
-import { Phone, AlertTriangle, Clock, Droplets, Flame, Bug, ShowerHead, MessageSquareText } from "lucide-react";
+import { Phone, AlertTriangle, Clock, Droplets, Flame, Bug, ShowerHead, MessageSquareText, MapPin } from "lucide-react";
 import Container from "@/components/ui/Container";
 import PageTransition from "@/components/layout/PageTransition";
 import ScrollReveal from "@/components/animations/ScrollReveal";
 import WhatHappensNext from "@/components/ui/WhatHappensNext";
-import { BUSINESS } from "@/lib/constants";
+import FaqAccordion from "@/components/ui/FaqAccordion";
+import { BUSINESS, EMERGENCY_CLAIMS } from "@/lib/constants";
+import { EMERGENCY_FAQS } from "./emergency-faqs";
 
 const emergencyTypes = [
   { icon: <Droplets className="w-5 h-5 sm:w-6 sm:h-6" />, title: "Burst Pipes", description: "Water spraying? Shut off your main water valve and call us immediately." },
@@ -26,7 +29,11 @@ const tips = [
   "Don't use electrical appliances near standing water",
 ];
 
-export default function EmergencyPage() {
+export default function EmergencyPage({
+  emergencyCities,
+}: {
+  emergencyCities: { slug: string; city: string; state: string }[];
+}) {
   return (
     <PageTransition>
       {/* Hero */}
@@ -92,7 +99,7 @@ export default function EmergencyPage() {
               className="mt-4 sm:mt-6 flex items-center justify-center gap-2 text-xs sm:text-sm text-white/60"
             >
               <Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-              Average response time: under 60 minutes
+              Response time: {EMERGENCY_CLAIMS.responseTime}
             </motion.div>
           </div>
         </Container>
@@ -172,6 +179,56 @@ export default function EmergencyPage() {
         </Container>
       </section>
 
+      {/* Emergency FAQ */}
+      <section className="py-16 sm:py-24 lg:py-32 bg-[#F5F5F7]">
+        <Container size="narrow">
+          <ScrollReveal>
+            <div className="text-center mb-8 sm:mb-12">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
+                Emergency Plumbing FAQs
+              </h2>
+              <p className="text-sm sm:text-base text-gray-500">
+                Straight answers on response times, after-hours pricing, and
+                what to do right now.
+              </p>
+            </div>
+          </ScrollReveal>
+          <ScrollReveal>
+            <FaqAccordion faqs={EMERGENCY_FAQS} />
+          </ScrollReveal>
+        </Container>
+      </section>
+
+      {/* 24/7 Coverage Areas */}
+      <section className="py-16 sm:py-24 lg:py-32">
+        <Container>
+          <ScrollReveal>
+            <div className="text-center mb-8 sm:mb-12">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
+                Areas We Cover 24/7
+              </h2>
+              <p className="text-sm sm:text-base text-gray-500 max-w-2xl mx-auto">
+                Night or day, these Southwest Florida communities get the same
+                emergency response. Tap your city for local details.
+              </p>
+            </div>
+          </ScrollReveal>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 max-w-3xl mx-auto">
+            {emergencyCities.map((c, i) => (
+              <ScrollReveal key={c.slug} delay={i * 0.04}>
+                <Link
+                  href={`/${c.slug}`}
+                  className="flex items-center gap-2 p-3.5 sm:p-4 rounded-xl bg-white border border-gray-200 card-lift card-lift-hover-subtle hover:border-emergency/30 text-sm sm:text-base font-semibold text-gray-900"
+                >
+                  <MapPin className="w-4 h-4 text-emergency flex-shrink-0" />
+                  {c.city}
+                </Link>
+              </ScrollReveal>
+            ))}
+          </div>
+        </Container>
+      </section>
+
       <WhatHappensNext
         title="What happens when you call us"
         steps={[
@@ -182,13 +239,11 @@ export default function EmergencyPage() {
           },
           {
             title: "Tech dispatched fast",
-            description:
-              "Lee County trucks are staged across the service area. Most arrivals within 30–45 minutes.",
+            description: `Lee County trucks are staged across the service area. Arrival is ${EMERGENCY_CLAIMS.responseTime}.`,
           },
           {
             title: "Quote before we work",
-            description:
-              "Written price for the repair before anything starts. Same rate day, night, or weekend.",
+            description: `Written price for the repair before anything starts. After-hours calls carry a ${EMERGENCY_CLAIMS.afterHoursSurcharge} surcharge — it's in the quote, never a surprise.`,
           },
           {
             title: "Same-visit repair",

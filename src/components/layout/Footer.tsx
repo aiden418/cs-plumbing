@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Phone, Mail, MapPin, Clock, ChevronRight, MessageSquareText } from "lucide-react";
+import { Phone, Mail, MapPin, Clock, ChevronRight, MessageSquareText, Facebook, Instagram } from "lucide-react";
 import { BUSINESS, SERVICES, SERVICE_AREAS, AREA_LANDINGS } from "@/lib/constants";
 
 const quickLinks = [
@@ -71,6 +71,26 @@ export default function Footer() {
                   {BUSINESS.city}, {BUSINESS.state} {BUSINESS.zip}
                 </span>
               </div>
+            </div>
+            <div className="flex items-center gap-3 mt-4 sm:mt-6">
+              <a
+                href={BUSINESS.facebookUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="C&S Plumbing on Facebook"
+                className="w-9 h-9 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-600 hover:text-primary hover:border-primary/40 transition-colors"
+              >
+                <Facebook className="w-4 h-4" />
+              </a>
+              <a
+                href={BUSINESS.instagramUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="C&S Plumbing on Instagram"
+                className="w-9 h-9 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-600 hover:text-primary hover:border-primary/40 transition-colors"
+              >
+                <Instagram className="w-4 h-4" />
+              </a>
             </div>
           </div>
 
