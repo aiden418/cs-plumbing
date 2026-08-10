@@ -7,6 +7,7 @@ import StickyMobileCTA from "@/components/layout/StickyMobileCTA";
 import DeferredWidgets from "@/components/layout/DeferredWidgets";
 import JsonLd from "@/components/seo/JsonLd";
 import MetaPixel from "@/components/analytics/MetaPixel";
+import OpenAIPixel from "@/components/analytics/OpenAIPixel";
 import SmoothScrollProvider from "@/components/providers/SmoothScrollProvider";
 
 const inter = Inter({
@@ -118,6 +119,7 @@ export default function RootLayout({
         <StickyMobileCTA />
         <DeferredWidgets />
         <MetaPixel />
+        <OpenAIPixel />
       </body>
     </html>
   );

@@ -3,10 +3,10 @@
   "configurations": [
     {
       "name": "cs-plumbing-dev",
-      "runtimeExecutable": "npm",
+      "runtimeExecutable": "/Users/aidenpellechio/.nvm/versions/node/v24.18.1/bin/npm",
       "runtimeArgs": ["run", "dev"],
       "port": 3000,
-      "cwd": "/Users/aidenpellechio/Desktop/C&S Plumbing/C&S Website /cs-plumbing"
+      "cwd": "/Users/aidenpellechio/dev/cs-plumbing"
     }
   ]
 }

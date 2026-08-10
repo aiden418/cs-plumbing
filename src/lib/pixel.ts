@@ -1,8 +1,22 @@
 export const META_PIXEL_ID = '1372903383968668';
+export const OPENAI_PIXEL_ID = 'DMBS1D5TFZstmLgAtY2XcW';
+
+// Meta event name -> OpenAI (ChatGPT ads) standard event. Only genuine
+// conversion actions are mapped; unmapped events stay Meta-only.
+const OAIQ_EVENT_MAP: Record<string, string> = {
+  Contact: 'lead_created',
+  Lead: 'lead_created',
+  Schedule: 'appointment_scheduled',
+};
 
 export function trackEvent(event: string, params?: Record<string, string>) {
-  if (typeof window !== 'undefined' && window.fbq) {
+  if (typeof window === 'undefined') return;
+  if (window.fbq) {
     window.fbq('track', event, params);
+  }
+  const oaiqEvent = OAIQ_EVENT_MAP[event];
+  if (oaiqEvent && window.oaiq) {
+    window.oaiq('measure', oaiqEvent, { type: 'customer_action' });
   }
 }
 
