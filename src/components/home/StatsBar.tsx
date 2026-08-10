@@ -20,7 +20,7 @@ export default function StatsBar() {
       {/* Background image */}
       <div className="absolute inset-0 pointer-events-none">
         <Image
-          src="/images/gallery/dji_fly_20241003_120708_83_1727971638528_photo.jpg"
+          src="/images/gallery/aerial-underground-layout.jpg"
           alt="Drone view of a C&S Plumbing new construction jobsite in Lee County"
           fill
           className="object-cover object-center"
