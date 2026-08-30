@@ -232,7 +232,7 @@ export default function ServiceAreasSection() {
                     fill
                     sizes="(max-width: 640px) 90vw, (max-width: 1024px) 488px, 534px"
                     className="object-cover object-center scale-105 group-hover:scale-110 transition-transform duration-[1200ms] ease-[var(--ease-out-expo)]"
-                    quality={80}
+                    quality={70}
                     loading="eager"
                   />
                 </div>

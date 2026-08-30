@@ -58,11 +58,15 @@ export default function Navbar() {
     };
   }, [isMobileOpen]);
 
-  useEffect(() => {
+  // Close every menu on navigation. Adjusted during render rather than in an
+  // effect so the new route never paints with the old route's menu still open.
+  const [lastPathname, setLastPathname] = useState(pathname);
+  if (pathname !== lastPathname) {
+    setLastPathname(pathname);
     setIsMobileOpen(false);
     setOpenDropdown(null);
     setMobileDropdown(null);
-  }, [pathname]);
+  }
 
   return (
     <>
@@ -128,6 +132,7 @@ export default function Navbar() {
                 alt="C&S Plumbing of Lee"
                 width={200}
                 height={200}
+                sizes="(max-width: 640px) 48px, 56px"
                 className="h-12 sm:h-14 w-auto object-contain group-hover:scale-105 transition-transform duration-300"
                 priority
               />

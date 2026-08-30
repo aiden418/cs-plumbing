@@ -90,7 +90,6 @@ interface FormData {
 export default function BookingPage() {
   const [requestType, setRequestType] = useState<"booking" | "estimate">("booking");
   const [step, setStep] = useState(0);
-  const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [confirmationId, setConfirmationId] = useState<string | null>(null);
   const [form, setForm] = useState<FormData>({
@@ -148,7 +147,6 @@ export default function BookingPage() {
   const switchRequestType = (type: "booking" | "estimate") => {
     setRequestType(type);
     setStep(0);
-    setSubmitted(false);
     setForm((prev) => ({ ...prev, requestType: type }));
   };
 
@@ -199,8 +197,11 @@ export default function BookingPage() {
       }
       if (data.confirmationId) setConfirmationId(data.confirmationId);
       trackBooking();
-      setSubmitted(true);
     } catch {
+      // next() optimistically advances to the confirmation screen before this
+      // resolves, so a failure has to walk it back — otherwise the booking
+      // reads as confirmed when nothing was ever submitted.
+      setStep(totalSteps - 1);
       alert("Something went wrong. Please call us directly.");
     } finally {
       setSubmitting(false);

@@ -9,11 +9,7 @@ import Button from "@/components/ui/Button";
 import CTASection from "@/components/home/CTASection";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import FaqJsonLd from "@/components/seo/FaqJsonLd";
-import StaggerChildren, {
-  staggerItem,
-} from "@/components/animations/StaggerChildren";
-import { motion } from "framer-motion";
-import { Check, Calendar, Phone, HardHat, Shield, Clock, Award } from "lucide-react";
+import { Calendar, Phone, HardHat, Shield, Clock, Award } from "lucide-react";
 import { BUSINESS } from "@/lib/constants";
 
 const newConstructionFaqs = [

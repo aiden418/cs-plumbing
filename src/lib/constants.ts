@@ -546,9 +546,9 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
     heroText: "Whole-Home Repiping in Cape Coral, Fort Myers & SWFL",
     description:
       "Aging pipes cause low water pressure, discolored water, and costly leaks. C&S Plumbing replaces your entire plumbing system with modern copper or PEX piping — backed by 8,500+ homes completed and a full warranty.",
-    metaTitle: "Whole-Home Repiping | Cape Coral & Fort Myers Repipe Specialists",
+    metaTitle: "Whole-Home Repiping | Cape Coral & Fort Myers",
     metaDescription:
-      "Expert whole-home repiping in Cape Coral, Fort Myers & Southwest Florida. Copper & PEX options, minimal wall damage, full warranty. 8,500+ homes completed. Call 833-PLUMB-IT.",
+      "Whole-home repiping in Cape Coral, Fort Myers & SWFL. Copper & PEX, minimal wall damage, full warranty. 8,500+ homes completed. Call 833-PLUMB-IT.",
     keywords: [
       "repiping Cape Coral",
       "repipe Fort Myers",
@@ -704,7 +704,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
     heroText: "Water Heater Installation & Repair in Cape Coral & Fort Myers",
     description:
       "No hot water? Whether you need a quick repair or a full replacement, C&S Plumbing installs and services all types of water heaters — traditional tank, tankless, and hybrid systems.",
-    metaTitle: "Water Heater Installation & Repair | Cape Coral & Fort Myers",
+    metaTitle: "Water Heater Install & Repair | Cape Coral",
     metaDescription:
       "Water heater installation, repair & replacement in Cape Coral, Fort Myers & SWFL. Tankless, traditional & hybrid options. Same-day service. Call 833-PLUMB-IT.",
     keywords: [
@@ -1013,7 +1013,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
     heroText: "Leak Detection & Emergency Repair in Cape Coral & Fort Myers",
     description:
       "Water leaks waste money and cause serious damage. C&S Plumbing finds and fixes leaks fast — from dripping faucets to hidden slab leaks — protecting your home and your wallet.",
-    metaTitle: "Leak Detection & Repair | Cape Coral & Fort Myers Emergency Plumber",
+    metaTitle: "Leak Detection & Repair | Cape Coral & Fort Myers",
     metaDescription:
       "Expert leak detection & repair in Cape Coral, Fort Myers & SWFL. Slab leaks, pipe leaks, faucet repair. 24/7 emergency service. Call 833-PLUMB-IT.",
     keywords: [
@@ -1279,7 +1279,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
     heroText: "Kitchen & Bathroom Plumbing Remodels in Cape Coral & Fort Myers",
     description:
       "Remodeling your kitchen or bathroom? C&S Plumbing handles everything from pipe relocation to premium fixture installation — ensuring your remodel is done right the first time.",
-    metaTitle: "Kitchen & Bathroom Plumbing Remodels | Cape Coral & Fort Myers",
+    metaTitle: "Kitchen & Bath Plumbing Remodels | Cape Coral",
     metaDescription:
       "Expert plumbing remodel services in Cape Coral, Fort Myers & SWFL. Kitchen & bathroom renovations, fixture upgrades, pipe relocation. Call 833-PLUMB-IT.",
     keywords: [
@@ -1394,7 +1394,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
     description:
       "Cape Coral's Utilities Extension Program (UEP) requires homeowners to connect to city water and sewer. C&S Plumbing handles the entire process — from pulling permits to final inspection. We install water service lines, irrigation lines, sewer laterals, and perform septic pump-out and abandonment so you can get connected fast.",
     metaTitle:
-      "UEP Utilities Hookup Cape Coral | Water, Sewer & Septic Abandonment",
+      "UEP Hookup Cape Coral | Water, Sewer & Septic",
     metaDescription:
       "Full-service UEP utilities hookup in Cape Coral. Water service $13-15/ft, irrigation $9-10/ft, sewer $25-33/ft, septic abandonment $2,500. All permits included. Call 833-PLUMB-IT.",
     keywords: [

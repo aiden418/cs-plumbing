@@ -56,6 +56,12 @@
        The reduced-motion block below sets scroll-behavior: auto !important. */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* ScrollReveal parks left/right children 60px outside the viewport until
+       they animate in, which widened the layout on narrow screens. Clipping on
+       <body> alone didn't stop it — <html> still scrolled. `clip` rather than
+       `hidden` so neither element becomes a scroll container, which would
+       break position: sticky descendants and fight Lenis. */
+    overflow-x: clip;
   }
 
   body {
@@ -64,7 +70,7 @@
     font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
     font-size: 1.125rem;
     line-height: 1.7;
-    overflow-x: hidden;
+    overflow-x: clip;
   }
 }
 

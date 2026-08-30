@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/services" },
   title: "Plumbing Services",
   description:
-    "Full-service plumbing in Cape Coral & Fort Myers — emergency repairs, drain cleaning, water heaters, repiping, new construction, commercial plumbing & more. Free estimates.",
+    "Full-service plumbing in Cape Coral & Fort Myers — emergency repairs, drain cleaning, water heaters, repiping and new construction. Free estimates.",
   keywords: [
     "plumbing services Cape Coral",
     "plumbing services Fort Myers",
@@ -49,6 +49,9 @@ export default function ServicesPage() {
       {/* Services Grid */}
       <section className="py-16 sm:py-24 lg:py-32">
         <Container>
+          {/* The hero <h1> carries this visually; the grid still needs a
+              section heading so the outline doesn't jump h1 -> h3. */}
+          <h2 className="sr-only">All plumbing services</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {SERVICES.map((service, i) => (
               <ServiceCard key={service.id} service={service} index={i} />

@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/gallery" },
   title: "Our Work",
   description:
-    "Browse C&S Plumbing's portfolio of residential, commercial & new construction plumbing projects across Cape Coral, Fort Myers & Southwest Florida. 8,500+ homes completed.",
+    "Browse our residential, commercial and new construction plumbing projects across Cape Coral, Fort Myers & Southwest Florida. 8,500+ homes completed.",
   keywords: [
     "plumbing projects Cape Coral",
     "plumber portfolio Fort Myers",

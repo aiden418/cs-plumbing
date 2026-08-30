@@ -31,6 +31,9 @@ export default function MetaPixel() {
         `}
       </Script>
       <noscript>
+        {/* A 1x1 tracking beacon, not content — routing it through next/image
+            would defeat the point. */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           height="1"
           width="1"

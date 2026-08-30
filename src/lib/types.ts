@@ -181,6 +181,11 @@ export interface Partner {
 export interface Builder {
   name: string;
   logo: string;
+  /** Intrinsic pixel dimensions of `logo`. Required so next/image can reserve
+   *  the right box and pick a small srcset entry instead of shipping the
+   *  full-size source (these render 24–32px tall). */
+  logoWidth: number;
+  logoHeight: number;
   website?: string;
 }
 

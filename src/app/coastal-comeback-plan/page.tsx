@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/coastal-comeback-plan" },
   title: "Snowbird Plumbing Protection Plan",
   description:
-    "Leaving Southwest Florida for the summer? The Coastal Comeback Plan from C&S Plumbing protects your vacant home from leaks, water heater failures, and mold. Annual plans from $349. Cape Coral, Fort Myers, Naples & beyond.",
+    "Leaving SWFL for the summer? The Coastal Comeback Plan protects your vacant home from leaks, water heater failures and mold. Annual plans from $349.",
   keywords: [
     "snowbird plumbing Cape Coral",
     "vacant home plumbing inspection Fort Myers",

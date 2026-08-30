@@ -1,10 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Droplets, Flame } from "lucide-react";
-import Container from "@/components/ui/Container";
 import PageHero from "@/components/ui/PageHero";
 import WaterHeaterQuiz from "@/components/quote-builder/WaterHeaterQuiz";
 import RepipeQuiz from "@/components/quote-builder/RepipeQuiz";
@@ -19,16 +18,25 @@ import type {
 
 export default function QuoteBuilderPage() {
   const searchParams = useSearchParams();
-  const [service, setService] = useState<ServiceType | null>(null);
+  const param = searchParams.get("service");
+  const paramService: ServiceType | null =
+    param === "water-heater" || param === "repipe" ? param : null;
+
+  // Seeded straight from ?service= instead of via an effect. The parent wraps
+  // this in <Suspense>, so it never renders during prerender and there's no
+  // server HTML to mismatch.
+  const [service, setService] = useState<ServiceType | null>(paramService);
   const [result, setResult] = useState<QuoteResultType | null>(null);
   const [selections, setSelections] = useState<WaterHeaterSelections | RepipeSelections | null>(null);
 
-  useEffect(() => {
-    const param = searchParams.get("service");
-    if (param === "water-heater" || param === "repipe") {
-      setService(param);
-    }
-  }, [searchParams]);
+  // Re-sync when the URL changes under us (a client-side nav into the other
+  // quiz). Like the effect it replaces, a missing param leaves the choice alone
+  // rather than clearing it.
+  const [lastParamService, setLastParamService] = useState(paramService);
+  if (paramService !== lastParamService) {
+    setLastParamService(paramService);
+    if (paramService) setService(paramService);
+  }
 
   const handleComplete = (
     sel: WaterHeaterSelections | RepipeSelections,

@@ -126,6 +126,9 @@ export default function GalleryPage() {
       {/* Filter + Grid */}
       <section className="py-16 sm:py-24 lg:py-32">
         <Container>
+          {/* The hero <h1> carries this visually; the grid still needs a
+              section heading so the outline doesn't jump h1 -> h3. */}
+          <h2 className="sr-only">Project gallery</h2>
           {/* Filter Buttons */}
           <ScrollReveal>
             <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8 sm:mb-12">

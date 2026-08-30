@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/partners" },
   title: "Recommended Companies",
   description:
-    "Trusted local contractors and family-owned businesses recommended by C&S Plumbing of Lee. HVAC, roofing, general contractors, screen enclosures, concrete & more in Cape Coral and Southwest Florida.",
+    "Trusted local contractors recommended by C&S Plumbing of Lee — HVAC, roofing, general contractors, screen enclosures and concrete across Cape Coral & SWFL.",
   keywords: [
     "recommended contractors Lee County",
     "trusted local businesses Cape Coral",

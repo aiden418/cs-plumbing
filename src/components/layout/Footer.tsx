@@ -35,6 +35,7 @@ export default function Footer() {
                 alt="C&S Plumbing of Lee"
                 width={200}
                 height={200}
+                sizes="80px"
                 className="h-20 w-auto object-contain"
               />
             </div>

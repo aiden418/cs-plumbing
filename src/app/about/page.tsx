@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/about" },
   title: "About Us",
   description:
-    "Three generations of the Pellechio family, family-owned since 1998 and 8,500+ homes plumbed. Meet the team behind C&S Plumbing of Lee — Southwest Florida's most trusted plumber. Best of Cape Coral 2025.",
+    "Three generations of the Pellechio family, family-owned since 1998, 8,500+ homes plumbed. Meet the team behind C&S Plumbing of Lee. Best of Cape Coral 2025.",
   keywords: [
     "C&S Plumbing about",
     "Pellechio family plumbing",

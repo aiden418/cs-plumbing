@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/faq" },
   title: "Frequently Asked Questions",
   description:
-    "Get answers to the most common plumbing questions from C&S Plumbing of Lee. Repiping, water heaters, drain cleaning, leak repair, costs, and more. Serving Cape Coral, Fort Myers & SWFL.",
+    "Answers to the most common plumbing questions — repiping, water heaters, drain cleaning, leak repair and costs. Serving Cape Coral, Fort Myers & SWFL.",
   keywords: [
     "plumbing FAQ",
     "plumbing questions Cape Coral",

@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/builder-portal" },
   title: "Builder Portal — Submit Plans for a Quote",
   description:
-    "Builders and general contractors: upload your blueprints and project details to request a plumbing quote from C&S Plumbing of Lee. New construction, commercial, and remodel projects across Southwest Florida.",
+    "Builders and GCs: upload your blueprints to request a plumbing quote. New construction, commercial and remodel projects across Southwest Florida.",
   keywords: [
     "builder portal plumber",
     "submit plans plumbing quote",

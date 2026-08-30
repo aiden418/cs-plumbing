@@ -40,7 +40,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/services/commercial" },
   title: "Commercial Plumbing Services",
   description:
-    "Commercial plumbing for businesses in Cape Coral, Fort Myers & Lee County — preventive maintenance, emergency repairs, grease traps, backflow prevention & tenant improvements.",
+    "Commercial plumbing in Cape Coral, Fort Myers & Lee County — preventive maintenance, emergency repairs, grease traps and backflow prevention.",
   keywords: [
     "commercial plumber Cape Coral",
     "commercial plumbing Fort Myers",

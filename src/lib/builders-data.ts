@@ -1,16 +1,16 @@
 import type { Builder, BuilderStat, BuilderGalleryItem, BuilderCaseStudy, BuilderSpecSheet } from "./types";
 
 export const BUILDERS: Builder[] = [
-  { name: "Alair Homes", logo: "/images/builders/alair-homes.svg" },
-  { name: "Poseidon Homes", logo: "/images/builders/poseidon-homes.webp" },
-  { name: "McDowell Construction", logo: "/images/builders/mcdowell.png" },
-  { name: "Red Key Builders", logo: "/images/builders/red-key-builders.png" },
-  { name: "Draft Construction LLC", logo: "/images/builders/draft-construction.png" },
-  { name: "Heather Wood Construction", logo: "/images/builders/heather-wood.webp" },
-  { name: "Stellar Development", logo: "/images/builders/stellar-development.jpg" },
-  { name: "Engelke Construction Solutions", logo: "/images/builders/engelke.png" },
-  { name: "Itasca Construction Associates", logo: "/images/builders/itasca.png" },
-  { name: "Decker Homes", logo: "/images/builders/decker-homes.png" },
+  { name: "Alair Homes", logo: "/images/builders/alair-homes.svg", logoWidth: 2007, logoHeight: 342 },
+  { name: "Poseidon Homes", logo: "/images/builders/poseidon-homes.webp", logoWidth: 194, logoHeight: 80 },
+  { name: "McDowell Construction", logo: "/images/builders/mcdowell.png", logoWidth: 604, logoHeight: 210 },
+  { name: "Red Key Builders", logo: "/images/builders/red-key-builders.png", logoWidth: 2560, logoHeight: 637 },
+  { name: "Draft Construction LLC", logo: "/images/builders/draft-construction.png", logoWidth: 1502, logoHeight: 756 },
+  { name: "Heather Wood Construction", logo: "/images/builders/heather-wood.webp", logoWidth: 1393, logoHeight: 287 },
+  { name: "Stellar Development", logo: "/images/builders/stellar-development.jpg", logoWidth: 2400, logoHeight: 1800 },
+  { name: "Engelke Construction Solutions", logo: "/images/builders/engelke.png", logoWidth: 800, logoHeight: 208 },
+  { name: "Itasca Construction Associates", logo: "/images/builders/itasca.png", logoWidth: 684, logoHeight: 44 },
+  { name: "Decker Homes", logo: "/images/builders/decker-homes.png", logoWidth: 2500, logoHeight: 1200 },
 ];
 
 export const BUILDER_STATS: BuilderStat[] = [

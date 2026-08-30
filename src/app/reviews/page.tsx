@@ -11,7 +11,7 @@ import { BUSINESS, TESTIMONIALS } from "@/lib/constants";
 import { fetchPlaceData, getWriteReviewUrl } from "@/lib/google-reviews";
 
 export const metadata: Metadata = {
-  title: "Reviews | C&S Plumbing of Lee — 5.0-Star Rated SWFL Plumber",
+  title: "Reviews — 5.0-Star Rated SWFL Plumber",
   description:
     "Read real Google reviews from Cape Coral, Fort Myers, and Southwest Florida homeowners. C&S Plumbing of Lee is 5.0-star rated — family-owned since 1998.",
   keywords: [

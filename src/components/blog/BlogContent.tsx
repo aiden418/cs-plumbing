@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Clock, ArrowLeft, Phone, Calendar } from "lucide-react";
 import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
@@ -16,13 +17,13 @@ export default function BlogContent({ post }: { post: BlogPost }) {
         <div className="pointer-events-none absolute bottom-0 right-0 h-72 w-72 rounded-full bg-gold/15 blur-[100px]" />
         <Container className="relative">
           <div className="max-w-3xl">
-            <a
+            <Link
               href="/blog"
               className="inline-flex items-center gap-1.5 text-gold text-sm mb-4 hover:gap-2.5 transition-all"
             >
               <ArrowLeft className="w-4 h-4" />
               Back to Blog
-            </a>
+            </Link>
             <div className="flex items-center gap-3 mb-4">
               <span className="text-xs font-bold text-gold uppercase tracking-[0.2em]">
                 {post.category}
