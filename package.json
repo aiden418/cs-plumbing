@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "photos:ingest": "node scripts/ingest-project-photos.mjs",
+    "photos:check": "node scripts/check-project-images.mjs"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
