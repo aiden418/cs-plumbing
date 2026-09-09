@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "photos:ingest": "node scripts/ingest-project-photos.mjs",
-    "photos:check": "node scripts/check-project-images.mjs"
+    "photos:check": "node scripts/check-project-images.mjs",
+    "gallery:ingest": "node scripts/ingest-gallery-photos.mjs"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",

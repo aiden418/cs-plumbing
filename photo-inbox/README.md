@@ -1,8 +1,8 @@
 # Photo inbox
 
-Staging area for job photos on their way to a project page. Drop originals in,
-run one command, and they come out resized, converted, stripped of location
-data, and named to match the paths `src/lib/constants.ts` expects.
+Staging area for job photos on their way to a project page or the `/gallery`
+grid. Drop originals in, run one command, and they come out resized, converted,
+stripped of location data, and named to match the paths the site expects.
 
 Raw drops are gitignored — only this file and the empty folder structure are
 committed. The finished WebP files land in `public/images/projects/` and those
@@ -58,6 +58,48 @@ committed. The finished WebP files land in `public/images/projects/` and those
 
 Re-running against a phase that already has photos **appends** — a second batch
 continues at `photo-<next>` instead of overwriting the first.
+
+## Gallery photos
+
+`/gallery` is a flat filterable grid, not a project broken into phases, so it
+has its own inbox and its own command. Same treatment of the pixels — rotate,
+strip GPS, downscale, WebP.
+
+1. **Drop photos** into the folder for the category:
+
+   ```
+   photo-inbox/_gallery/<category>/
+   ```
+
+   Only four categories exist, because `GalleryItem` in `src/lib/types.ts` is a
+   union and the filter chips are built from it:
+
+   `residential` · `commercial` · `new-construction` · `remodel`
+
+2. **Run the ingest:**
+
+   ```bash
+   npm run gallery:ingest                 # every category
+   npm run gallery:ingest -- commercial   # just one
+   npm run gallery:ingest -- --dry-run    # report only, writes nothing
+   ```
+
+3. **Paste the generated block** from `photo-inbox/_generated/_gallery.ts.txt`
+   into `galleryItems` in `src/app/gallery/GalleryPage.tsx`. Ids continue from
+   the highest one already in that array, so they never collide.
+
+4. **Fill in the two TODOs on each entry.** The script leaves `alt` and `title`
+   blank on purpose — a filename like `IMG_4864.jpeg` says nothing about what
+   the photo shows, and both fields are read by humans and by search engines.
+   `title` is the caption on the tile; `alt` describes the image for a screen
+   reader.
+
+Files land as `<category>-<n>.webp`. Renaming them to something descriptive
+(`commercial-prerinse-faucet.webp`) matches the convention of the 64 photos
+already in `public/images/gallery/` — just update the `src` to match.
+
+A gallery photo has to stand on its own with no project page around it, so it
+wants to be the strongest single frame of a job rather than one of a sequence.
 
 ## Phase slugs
 
