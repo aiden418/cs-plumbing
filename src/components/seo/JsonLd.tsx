@@ -1,4 +1,4 @@
-import { BUSINESS } from "@/lib/constants";
+import { BUSINESS, AWARDS, LATEST_AWARD } from "@/lib/constants";
 import { fetchPlaceData } from "@/lib/google-reviews";
 
 export default async function JsonLd() {
@@ -278,11 +278,18 @@ export default async function JsonLd() {
       },
     ],
 
-    /* ── Awards ── */
-    award: ["Best of Cape Coral 2025 — Plumbing"],
+    /* ── Awards (single-sourced from AWARDS) ── */
+    award: AWARDS.map((a) => `${a.title} — ${a.category}`),
 
     /* ── Citations to Authoritative Sources ── */
     citation: [
+      {
+        "@type": "CreativeWork",
+        name: `${LATEST_AWARD.program} — ${LATEST_AWARD.issuer}`,
+        // Falls back to the issuer's site until the winners listing is live.
+        url: LATEST_AWARD.citationUrl ?? LATEST_AWARD.issuerUrl,
+        description: `${LATEST_AWARD.issuer} readers voted C&S Plumbing of Lee ${LATEST_AWARD.category} in the ${LATEST_AWARD.year} ${LATEST_AWARD.program}.`,
+      },
       {
         "@type": "CreativeWork",
         name: "Florida Building Code 8th Edition (2023) — Plumbing",

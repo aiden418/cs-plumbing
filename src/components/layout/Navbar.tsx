@@ -6,7 +6,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ChevronDown, Phone, Calculator, Clock, Award, ShieldCheck, MessageSquareText } from "lucide-react";
-import { NAV_LINKS, BUSINESS } from "@/lib/constants";
+import { NAV_LINKS, BUSINESS, LATEST_AWARD } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
 export default function Navbar() {
@@ -107,10 +107,13 @@ export default function Navbar() {
                 </span>
               </div>
               <div className="flex items-center gap-5">
-                <span className="hidden xl:flex items-center gap-1.5">
+                <Link
+                  href="/awards"
+                  className="hidden xl:flex items-center gap-1.5 hover:underline"
+                >
                   <Award className="w-3.5 h-3.5" />
-                  Best of Cape Coral 2025
-                </span>
+                  {LATEST_AWARD.title}
+                </Link>
                 <a
                   href={`tel:${BUSINESS.phoneRaw}`}
                   className="flex items-center gap-1.5 font-bold hover:underline"

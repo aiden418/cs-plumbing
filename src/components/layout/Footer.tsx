@@ -8,6 +8,7 @@ import { BUSINESS, SERVICES, SERVICE_AREAS, AREA_LANDINGS } from "@/lib/constant
 const quickLinks = [
   { label: "Home", href: "/" },
   { label: "About Us", href: "/about" },
+  { label: "Awards", href: "/awards" },
   { label: "Services", href: "/services" },
   { label: "Gallery", href: "/gallery" },
   { label: "Reviews", href: "/reviews" },

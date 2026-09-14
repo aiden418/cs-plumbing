@@ -13,18 +13,20 @@ import Credentials from "@/components/about/Credentials";
 import TrainingTrade from "@/components/about/TrainingTrade";
 import CTASection from "@/components/home/CTASection";
 import AboutPersonJsonLd from "@/components/seo/AboutPersonJsonLd";
+import { LATEST_AWARD } from "@/lib/constants";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/about" },
   title: "About Us",
   description:
-    "Three generations of the Pellechio family, family-owned since 1998, 8,500+ homes plumbed. Meet the team behind C&S Plumbing of Lee. Best of Cape Coral 2025.",
+    "Three generations of the Pellechio family, family-owned since 1998, 8,500+ homes plumbed. Voted Best Plumbing Contractor, Best of Cape Coral 2026.",
   keywords: [
     "C&S Plumbing about",
     "Pellechio family plumbing",
     "family-owned plumber Cape Coral",
     "plumbing company Lee County history",
-    "best plumber Cape Coral 2025",
+    "best plumbing contractor Cape Coral 2026",
+    "best of cape coral plumbing",
     "trusted plumber Southwest Florida",
     "licensed plumber Fort Myers",
   ],
@@ -78,22 +80,27 @@ export default function AboutPage() {
               </div>
 
               {/* Award chip */}
-              <div className="mt-7 inline-flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-2.5 backdrop-blur">
+              <Link
+                href="/awards"
+                className="mt-7 inline-flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-2.5 backdrop-blur hover:bg-white/10 transition-colors"
+              >
                 <Image
-                  src="/images/awards/best-of-cape-coral-2025.png"
-                  alt="Best of Cape Coral 2025 Award"
-                  width={48}
-                  height={36}
+                  src={LATEST_AWARD.badge}
+                  alt={`${LATEST_AWARD.title} — ${LATEST_AWARD.category}`}
+                  width={LATEST_AWARD.badgeWidth}
+                  height={LATEST_AWARD.badgeHeight}
+                  sizes="48px"
+                  className="h-9 w-auto"
                 />
                 <div className="text-left">
                   <p className="text-xs sm:text-sm font-bold text-white leading-tight">
-                    Best of Cape Coral 2025
+                    {LATEST_AWARD.title}
                   </p>
                   <p className="text-[10px] sm:text-xs text-white/50">
-                    Award-Winning Plumbing Company
+                    Voted {LATEST_AWARD.category}
                   </p>
                 </div>
-              </div>
+              </Link>
             </div>
 
             {/* Photo */}

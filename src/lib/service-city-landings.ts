@@ -1,8 +1,9 @@
 import type { ServiceCityLanding } from "./types";
+import { AWARD_TRUST_LINE } from "./constants";
 
 const TRUST_BADGES = [
   "Licensed & Insured (CFC1432485)",
-  "Best of Cape Coral 2025",
+  AWARD_TRUST_LINE,
   "8,500+ Homes Built",
   "5-Star Rated",
 ];
