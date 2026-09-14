@@ -7,6 +7,8 @@ import {
   getClientIp,
   isHoneypotTripped,
   rateLimit,
+  sendEmailBestEffort,
+  sendEmailOrThrow,
   SMS_TO,
   tooManyRequests,
 } from "@/lib/api/secure";
@@ -58,7 +60,7 @@ export async function POST(request: Request) {
       message: escapeHtml(message),
     };
 
-    await resend.emails.send({
+    const emailId = await sendEmailOrThrow(resend, {
       from: "C&S Plumbing Website <contact@csplumbinglee.com>",
       to: [ADMIN_EMAIL],
       ...(email ? { replyTo: email } : {}),
@@ -81,18 +83,20 @@ export async function POST(request: Request) {
           </div>
         </div>
       `,
-    });
+    }, "contact admin email");
 
     if (SMS_TO) {
-      await resend.emails.send({
+      await sendEmailBestEffort(resend, {
         from: "C&S Plumbing Website <contact@csplumbinglee.com>",
         to: [SMS_TO],
         subject: `New Lead`,
         text: `New contact from ${name} for ${service}. Phone: ${phone}`,
-      });
+      }, "contact SMS notification");
     }
 
-    return NextResponse.json({ success: true });
+    // No PII in logs; the Resend id is enough to trace a lead in the Resend dashboard.
+    console.log(`Contact lead accepted (source=${source ?? "form"}, resend id ${emailId})`);
+    return NextResponse.json({ success: true, id: emailId });
   } catch (error) {
     console.error("Contact email error:", error);
     return NextResponse.json(

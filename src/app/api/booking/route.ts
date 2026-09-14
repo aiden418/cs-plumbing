@@ -7,6 +7,8 @@ import {
   getClientIp,
   isHoneypotTripped,
   rateLimit,
+  sendEmailBestEffort,
+  sendEmailOrThrow,
   SMS_TO,
   tooManyRequests,
 } from "@/lib/api/secure";
@@ -86,7 +88,7 @@ export async function POST(request: Request) {
       );
     }
     const resend = new Resend(process.env.RESEND_API_KEY);
-    await resend.emails.send({
+    await sendEmailOrThrow(resend, {
       from: "C&S Plumbing Website <bookings@csplumbinglee.com>",
       to: [ADMIN_EMAIL],
       subject: `New ${typeLabel}: ${data.service} — ${data.name} [${confirmationId}]`,
@@ -115,18 +117,18 @@ export async function POST(request: Request) {
           </div>
         </div>
       `,
-    });
+    }, "booking admin email");
 
     if (SMS_TO) {
       const smsText = isEstimate
         ? `New estimate from ${data.name} for ${data.service}. Budget: ${data.budgetRange || "N/A"}. Phone: ${data.phone}. #${confirmationId}`
         : `New booking from ${data.name} for ${data.service} (${data.urgency}). Phone: ${data.phone}. Date: ${data.date}. #${confirmationId}`;
-      await resend.emails.send({
+      await sendEmailBestEffort(resend, {
         from: "C&S Plumbing Website <bookings@csplumbinglee.com>",
         to: [SMS_TO],
         subject: `New ${typeLabel}`,
         text: smsText,
-      });
+      }, "booking SMS notification");
     }
 
     return NextResponse.json({ success: true, confirmationId });

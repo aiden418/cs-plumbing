@@ -27,7 +27,7 @@ import PageHero from "@/components/ui/PageHero";
 import WhatHappensNext from "@/components/ui/WhatHappensNext";
 import { BUSINESS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
-import { trackBooking, trackPhoneClick } from "@/lib/pixel";
+import { trackBooking } from "@/lib/pixel";
 
 const serviceCategories = [
   { id: "residential", label: "Residential", icon: <Home className="w-6 h-6" /> },
@@ -255,7 +255,6 @@ export default function BookingPage() {
           Prefer to talk?{" "}
           <a
             href={`tel:${BUSINESS.phoneRaw}`}
-            onClick={trackPhoneClick}
             className="inline-flex items-center gap-1.5 font-bold text-gold hover:underline"
           >
             <Phone className="w-3.5 h-3.5" />
