@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import type { Resend } from "resend";
 
 const ESCAPE_MAP: Record<string, string> = {
   "&": "&amp;",
@@ -45,6 +46,46 @@ export function tooManyRequests(retryAfter?: number) {
 
 export function isHoneypotTripped(value: unknown): boolean {
   return typeof value === "string" && value.trim().length > 0;
+}
+
+type EmailPayload = Parameters<Resend["emails"]["send"]>[0];
+
+/**
+ * The Resend SDK does not throw when the API rejects a send (bad/revoked key,
+ * unverified sending domain, suppressed recipient, 5xx). It resolves with
+ * `{ data: null, error }`. Awaiting `send()` without reading `error` reports
+ * a lost lead as a success, so every required email goes through here.
+ * Returns the Resend email id so the caller can log/return it for tracing.
+ */
+export async function sendEmailOrThrow(
+  resend: Resend,
+  payload: EmailPayload,
+  label: string
+): Promise<string> {
+  const { data, error } = await resend.emails.send(payload);
+  if (error || !data) {
+    throw new Error(
+      `Resend rejected ${label}: ${error?.name ?? "unknown_error"} — ${error?.message ?? "no message"}`
+    );
+  }
+  return data.id;
+}
+
+/**
+ * Secondary notifications (SMS gateway, customer copy) must never turn an
+ * already-delivered lead into a user-facing failure and a retry. Log and move on.
+ */
+export async function sendEmailBestEffort(
+  resend: Resend,
+  payload: EmailPayload,
+  label: string
+): Promise<string | null> {
+  try {
+    return await sendEmailOrThrow(resend, payload, label);
+  } catch (err) {
+    console.error(`${label} failed (non-fatal):`, err);
+    return null;
+  }
 }
 
 export const SMS_TO = process.env.SMS_GATEWAY_TO ?? "";

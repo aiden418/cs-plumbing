@@ -7,6 +7,8 @@ import {
   getClientIp,
   isHoneypotTripped,
   rateLimit,
+  sendEmailBestEffort,
+  sendEmailOrThrow,
   SMS_TO,
   tooManyRequests,
 } from "@/lib/api/secure";
@@ -99,7 +101,7 @@ export async function POST(request: Request) {
       phone: escapeHtml(lead.phone),
     };
 
-    await resend.emails.send({
+    await sendEmailOrThrow(resend, {
       from: "C&S Plumbing Website <bookings@csplumbinglee.com>",
       to: [ADMIN_EMAIL],
       subject: `New Quote: ${serviceLabel} $${result.total.min.toLocaleString()}–$${result.total.max.toLocaleString()} — ${lead.name}`,
@@ -135,9 +137,9 @@ export async function POST(request: Request) {
           </div>
         </div>
       `,
-    });
+    }, "quote admin email");
 
-    await resend.emails.send({
+    await sendEmailBestEffort(resend, {
       from: "C&S Plumbing of Lee <bookings@csplumbinglee.com>",
       to: [lead.email],
       subject: `Your ${serviceLabel} Estimate — C&S Plumbing`,
@@ -183,15 +185,15 @@ export async function POST(request: Request) {
           </div>
         </div>
       `,
-    });
+    }, "quote customer copy");
 
     if (SMS_TO) {
-      await resend.emails.send({
+      await sendEmailBestEffort(resend, {
         from: "C&S Plumbing Website <bookings@csplumbinglee.com>",
         to: [SMS_TO],
         subject: "New Quote",
         text: `New quote: ${serviceLabel} $${result.total.min.toLocaleString()}-$${result.total.max.toLocaleString()} from ${lead.name}. Phone: ${lead.phone}`,
-      });
+      }, "quote SMS notification");
     }
 
     return NextResponse.json({ success: true });

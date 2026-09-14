@@ -90,8 +90,11 @@ export default function ContactPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
-      if (!res.ok) throw new Error("Submission failed");
-      trackContactForm();
+      const result: { success?: boolean } = await res.json().catch(() => ({}));
+      if (!res.ok || !result.success) throw new Error("Submission failed");
+      // Only after the server confirmed delivery. Hashed email lets the
+      // OpenAI pixel match this conversion to the ad click.
+      void trackContactForm({ email: data.email });
       setSubmitted(true);
     } catch {
       alert("Something went wrong. Please call us directly.");

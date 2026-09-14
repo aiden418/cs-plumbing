@@ -12,7 +12,7 @@ import {
   Loader2,
 } from "lucide-react";
 import { BUSINESS } from "@/lib/constants";
-import { trackPhoneClick, trackTextClick, trackContactForm } from "@/lib/pixel";
+import { trackTextClick, trackContactForm } from "@/lib/pixel";
 
 type FormState = "idle" | "sending" | "sent" | "error";
 
@@ -50,7 +50,7 @@ export default function ChatWidget() {
       });
       if (!res.ok) throw new Error(String(res.status));
       setFormState("sent");
-      trackContactForm();
+      void trackContactForm();
     } catch {
       setFormState("error");
     }
@@ -196,7 +196,6 @@ export default function ChatWidget() {
                   <div className="mt-3 grid grid-cols-2 gap-1.5 sm:gap-2">
                     <a
                       href={`tel:${BUSINESS.phoneRaw}`}
-                      onClick={trackPhoneClick}
                       className="flex items-center justify-center gap-1.5 p-2.5 rounded-xl bg-primary/10 text-primary text-xs font-medium hover:bg-primary/20 transition-colors"
                     >
                       <Phone className="w-3.5 h-3.5" />
