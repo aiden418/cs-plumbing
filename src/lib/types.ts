@@ -77,6 +77,34 @@ export interface FAQ {
   answer: string;
 }
 
+/**
+ * A recognition C&S can point to. Single-sourced in AWARDS (constants.ts) and
+ * read by every surface that names an award — hero chips, nav strip, About,
+ * Credentials, trust-badge arrays, the sitewide JSON-LD and llms.txt — so the
+ * claim can never drift between pages.
+ */
+export interface Award {
+  slug: string;
+  year: number;
+  /** "Best of Cape Coral 2026" */
+  title: string;
+  /** The category as the issuer published it: "Best Plumbing Contractor" */
+  category: string;
+  program: string;
+  issuer: string;
+  issuerUrl: string;
+  /** The issuer's own winners listing, once live — what turns a claim into a citation. */
+  citationUrl?: string;
+  /** ISO date or year-month; feeds schema datePublished. */
+  awardedOn: string;
+  badge: string;
+  /** Intrinsic px of `badge`, so next/image can size a 50px chip from a large PNG. */
+  badgeWidth: number;
+  badgeHeight: number;
+  /** One sentence, reused verbatim on cards and in llms.txt. */
+  summary: string;
+}
+
 export interface AnswerBlock {
   question: string;
   answer: string;
@@ -181,6 +209,11 @@ export interface Partner {
 export interface Builder {
   name: string;
   logo: string;
+  /** Intrinsic pixel dimensions of `logo`. Required so next/image can reserve
+   *  the right box and pick a small srcset entry instead of shipping the
+   *  full-size source (these render 24–32px tall). */
+  logoWidth: number;
+  logoHeight: number;
   website?: string;
 }
 

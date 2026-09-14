@@ -8,6 +8,7 @@ import { BUSINESS, SERVICES, SERVICE_AREAS, AREA_LANDINGS } from "@/lib/constant
 const quickLinks = [
   { label: "Home", href: "/" },
   { label: "About Us", href: "/about" },
+  { label: "Awards", href: "/awards" },
   { label: "Services", href: "/services" },
   { label: "Gallery", href: "/gallery" },
   { label: "Reviews", href: "/reviews" },
@@ -35,6 +36,7 @@ export default function Footer() {
                 alt="C&S Plumbing of Lee"
                 width={200}
                 height={200}
+                sizes="80px"
                 className="h-20 w-auto object-contain"
               />
             </div>

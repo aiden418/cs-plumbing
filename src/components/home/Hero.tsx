@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 import { ChevronDown, Phone, Calendar, Star } from "lucide-react";
 import Container from "@/components/ui/Container";
 import HeroVideo from "@/components/home/HeroVideo";
-import { BUSINESS } from "@/lib/constants";
+import { BUSINESS, LATEST_AWARD } from "@/lib/constants";
 import { registerGSAP, gsap } from "@/lib/gsap";
 import { breakpoints } from "@/hooks/useMediaQuery";
 
@@ -245,22 +245,27 @@ export default function Hero() {
                 priority
               />
             </div>
-            <div className="mt-6 flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-2xl px-5 py-3 border border-white/15">
+            <Link
+              href="/awards"
+              className="mt-6 flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-2xl px-5 py-3 border border-white/15 hover:bg-white/15 transition-colors"
+            >
               <Image
-                src="/images/awards/best-of-cape-coral-2025.png"
-                alt="Best of Cape Coral 2025 Award"
-                width={50}
-                height={38}
+                src={LATEST_AWARD.badge}
+                alt={`${LATEST_AWARD.title} — ${LATEST_AWARD.category}`}
+                width={LATEST_AWARD.badgeWidth}
+                height={LATEST_AWARD.badgeHeight}
+                sizes="50px"
+                className="h-[38px] w-auto"
               />
               <div className="text-left">
                 <p className="text-sm font-bold text-white leading-tight">
-                  Best of Cape Coral 2025
+                  {LATEST_AWARD.title}
                 </p>
                 <p className="text-xs text-white/60">
-                  Award-Winning Plumbing
+                  Voted {LATEST_AWARD.category}
                 </p>
               </div>
-            </div>
+            </Link>
           </motion.div>
         </div>
 
@@ -271,23 +276,28 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="mt-10 flex justify-center lg:hidden"
         >
-          <div className="flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-2xl px-5 py-3 border border-white/15">
+          <Link
+            href="/awards"
+            className="flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-2xl px-5 py-3 border border-white/15"
+          >
             <Image
-              src="/images/awards/best-of-cape-coral-2025.png"
-              alt="Best of Cape Coral 2025 Award"
-              width={50}
-              height={38}
+              src={LATEST_AWARD.badge}
+              alt={`${LATEST_AWARD.title} — ${LATEST_AWARD.category}`}
+              width={LATEST_AWARD.badgeWidth}
+              height={LATEST_AWARD.badgeHeight}
+              sizes="50px"
+              className="h-[38px] w-auto"
               priority
             />
             <div className="text-left">
               <p className="text-sm font-bold text-white leading-tight">
-                Best of Cape Coral 2025
+                {LATEST_AWARD.title}
               </p>
               <p className="text-xs text-white/60">
-                Award-Winning Plumbing
+                Voted {LATEST_AWARD.category}
               </p>
             </div>
-          </div>
+          </Link>
         </motion.div>
       </Container>
 

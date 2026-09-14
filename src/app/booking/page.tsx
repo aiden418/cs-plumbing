@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/booking" },
   title: "Book a Service",
   description:
-    "Schedule your plumbing appointment online with C&S Plumbing of Lee. Emergency, residential, commercial & new construction plumbing across Cape Coral, Fort Myers & SWFL.",
+    "Book your plumbing appointment online. Emergency, residential, commercial and new construction plumbing across Cape Coral, Fort Myers & SWFL.",
   keywords: [
     "book plumber Cape Coral",
     "schedule plumbing Fort Myers",

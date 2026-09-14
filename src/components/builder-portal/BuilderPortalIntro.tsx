@@ -11,21 +11,10 @@ import {
 import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
 import SectionHeading from "@/components/ui/SectionHeading";
+import BuilderLogoImage from "@/components/ui/BuilderLogoImage";
 import ScrollReveal from "@/components/animations/ScrollReveal";
 import { BUSINESS } from "@/lib/constants";
-
-// Builder roster mirrors src/components/home/BuilderShowcase.tsx
-const BUILDERS = [
-  { name: "Draft Construction LLC", logo: "/images/builders/draft-construction.png" },
-  { name: "Poseidon Homes", logo: "/images/builders/poseidon-homes.webp" },
-  { name: "Alair Homes", logo: "/images/builders/alair-homes.svg" },
-  { name: "Red Key Builders", logo: "/images/builders/red-key-builders.png" },
-  { name: "Heather Wood Construction", logo: "/images/builders/heather-wood.webp" },
-  { name: "Stellar Development", logo: "/images/builders/stellar-development.jpg" },
-  { name: "Engelke Construction Solutions", logo: "/images/builders/engelke.png" },
-  { name: "Itasca Construction Associates", logo: "/images/builders/itasca.png" },
-  { name: "McDowell Construction", logo: "/images/builders/mcdowell.png" },
-];
+import { BUILDERS } from "@/lib/builders-data";
 
 const WHY_CS = [
   {
@@ -216,10 +205,10 @@ export default function BuilderPortalIntro() {
                 key={b.name}
                 className="flex-shrink-0 px-5 sm:px-6 py-2.5 sm:py-3 bg-[#F5F5F7] border border-gray-200 rounded-full flex items-center justify-center hover:border-primary/30 transition-all duration-300"
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={b.logo}
+                <BuilderLogoImage
+                  builder={b}
                   alt={`${b.name} — C&S Plumbing builder partner`}
+                  sizes="(max-width: 640px) 100px, 120px"
                   className="h-6 sm:h-8 w-auto max-w-[100px] sm:max-w-[120px] object-contain"
                 />
               </div>

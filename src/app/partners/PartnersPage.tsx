@@ -35,6 +35,9 @@ export default function PartnersPage() {
       {/* SEO Content + Filter + Grid */}
       <section className="py-12 sm:py-16 lg:py-20">
         <Container>
+          {/* The hero <h1> carries this visually; the grid still needs a
+              section heading so the outline doesn't jump h1 -> h3. */}
+          <h2 className="sr-only">Trusted contractor partners</h2>
           {/* SEO-rich intro paragraph */}
           <ScrollReveal>
             <div className="max-w-3xl mx-auto text-center mb-10 sm:mb-14">

@@ -2,16 +2,21 @@
 
 import Container from "@/components/ui/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
+import BuilderLogoImage from "@/components/ui/BuilderLogoImage";
 import ScrollReveal from "@/components/animations/ScrollReveal";
 import { BUILDERS } from "@/lib/builders-data";
+import type { Builder } from "@/lib/types";
 
-function BuilderLogo({ name, logo }: { name: string; logo: string }) {
+function BuilderLogo({ builder }: { builder: Builder }) {
   return (
     <div className="flex-shrink-0 px-5 sm:px-6 py-2.5 sm:py-3 bg-white border border-gray-200 rounded-full flex items-center justify-center group hover:border-primary/30 card-lift card-lift-hover-subtle">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={logo}
-        alt={name}
+      <BuilderLogoImage
+        builder={builder}
+        sizes="(max-width: 640px) 100px, 120px"
+        // The marquee translates pills outside their clipping ancestor, where
+        // an IntersectionObserver never fires — lazy logos would pop in blank
+        // mid-scroll. They're a few KB each once optimized, so load eagerly.
+        loading="eager"
         className="h-6 sm:h-8 w-auto max-w-[100px] sm:max-w-[120px] object-contain transition-all duration-300"
       />
     </div>
@@ -45,14 +50,14 @@ export default function BuilderShowcase() {
           <ul className="flex shrink-0 gap-4 sm:gap-6 pr-4 sm:pr-6">
             {BUILDERS.map((builder) => (
               <li key={builder.name} className={PILL_INTERACT}>
-                <BuilderLogo name={builder.name} logo={builder.logo} />
+                <BuilderLogo builder={builder} />
               </li>
             ))}
           </ul>
           <ul className="flex shrink-0 gap-4 sm:gap-6 pr-4 sm:pr-6" aria-hidden="true">
             {BUILDERS.map((builder) => (
               <li key={`dup-${builder.name}`} className={PILL_INTERACT}>
-                <BuilderLogo name={builder.name} logo={builder.logo} />
+                <BuilderLogo builder={builder} />
               </li>
             ))}
           </ul>

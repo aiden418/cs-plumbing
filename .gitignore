@@ -40,3 +40,20 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 public/images/projects/mangos-bathroom-remodel/final/*.MOV
+
+# photo-inbox: raw uploads and generated snippets are staging only.
+# The folder structure + README stay; finished WebP goes to public/images/projects.
+photo-inbox/**/*.jpg
+photo-inbox/**/*.jpeg
+photo-inbox/**/*.png
+photo-inbox/**/*.webp
+photo-inbox/**/*.avif
+photo-inbox/**/*.heic
+photo-inbox/**/*.heif
+photo-inbox/**/*.tif
+photo-inbox/**/*.tiff
+photo-inbox/**/*.JPG
+photo-inbox/**/*.JPEG
+photo-inbox/**/*.PNG
+photo-inbox/**/*.HEIC
+photo-inbox/_generated/

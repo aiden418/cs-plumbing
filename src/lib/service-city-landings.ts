@@ -1,8 +1,9 @@
 import type { ServiceCityLanding } from "./types";
+import { AWARD_TRUST_LINE } from "./constants";
 
 const TRUST_BADGES = [
   "Licensed & Insured (CFC1432485)",
-  "Best of Cape Coral 2025",
+  AWARD_TRUST_LINE,
   "8,500+ Homes Built",
   "5-Star Rated",
 ];
@@ -1801,7 +1802,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
   {
     slug: "septic-to-sewer-north-fort-myers",
     serviceSlug: "uep-utilities",
-    metaTitle: "Septic to Sewer Conversion North Fort Myers | C&S Plumbing",
+    metaTitle: "Septic to Sewer Conversion North Fort Myers",
     metaDescription:
       "Septic-to-sewer conversion in North Fort Myers, FL by your hometown plumber. Permits, connection & septic decommissioning handled. Call 833-PLUMB-IT.",
     keywords: [

@@ -7,7 +7,7 @@ import { BUSINESS } from "@/lib/constants";
 import { SERVICE_CITY_LANDINGS } from "@/lib/service-city-landings";
 
 const DESCRIPTION =
-  "24/7 emergency plumbing service in Cape Coral, Fort Myers, North Fort Myers & Southwest Florida. Burst pipes, sewage backups, gas leaks, flooding — call C&S Plumbing now at 833-PLUMB-IT.";
+  "24/7 emergency plumbing in Cape Coral, Fort Myers & SWFL. Burst pipes, sewage backups, gas leaks, flooding — call C&S Plumbing at 833-PLUMB-IT.";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/emergency" },

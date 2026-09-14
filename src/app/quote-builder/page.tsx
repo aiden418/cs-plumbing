@@ -8,7 +8,7 @@ import QuoteBuilderPage from "./QuoteBuilderPage";
 export const metadata: Metadata = {
   title: "Instant Water Heater & Repipe Quote",
   description:
-    "Get an instant price estimate for water heater installation or whole-home repiping in Lee County. Answer a few questions and see your custom quote — no obligation.",
+    "Instant price estimate for water heater installation or whole-home repiping in Lee County. Answer a few questions, see your quote — no obligation.",
   alternates: { canonical: "/quote-builder" },
   openGraph: {
     title: "Instant Quote Builder — Water Heater & Repipe Estimates",
