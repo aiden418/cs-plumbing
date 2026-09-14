@@ -27,7 +27,7 @@ import PageHero from "@/components/ui/PageHero";
 import WhatHappensNext from "@/components/ui/WhatHappensNext";
 import { BUSINESS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
-import { trackBooking } from "@/lib/pixel";
+import { trackBooking, trackEstimateRequest } from "@/lib/pixel";
 
 const serviceCategories = [
   { id: "residential", label: "Residential", icon: <Home className="w-6 h-6" /> },
@@ -203,7 +203,8 @@ export default function BookingPage() {
         throw new Error(data.error ?? "Submission failed");
       }
       if (data.confirmationId) setConfirmationId(data.confirmationId);
-      void trackBooking({ email: form.email, eventId: data.eventId });
+      const track = form.requestType === "estimate" ? trackEstimateRequest : trackBooking;
+      void track({ email: form.email, eventId: data.eventId });
       setSubmitted(true);
     } catch {
       alert("Something went wrong. Please call us directly.");
