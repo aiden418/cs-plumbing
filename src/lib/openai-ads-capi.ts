@@ -93,10 +93,18 @@ function sha256Hex(value: string): string {
   return createHash("sha256").update(value).digest("hex");
 }
 
+/** CAPI user-matching fields. Note the plural, array-valued email hash: the
+ * server contract differs from the browser pixel's singular `email_sha256`. */
+export interface CapiUser {
+  emails_sha256?: string[];
+  user_agent?: string;
+  ip_address?: string;
+}
+
 export function buildEvent(ev: ServerConversion) {
-  const user: Record<string, string> = {};
+  const user: CapiUser = {};
   const email = ev.email?.trim().toLowerCase();
-  if (email) user.email_sha256 = sha256Hex(email);
+  if (email) user.emails_sha256 = [sha256Hex(email)];
   if (ev.context.userAgent) user.user_agent = ev.context.userAgent.slice(0, 512);
   if (ev.context.ip && ev.context.ip !== "unknown") user.ip_address = ev.context.ip;
 
@@ -112,17 +120,6 @@ export function buildEvent(ev: ServerConversion) {
     ...(Object.keys(user).length ? { user } : {}),
     data: { type: "customer_action" as const },
   };
-}
-
-/** Log-only summary of an API error body. Never echoes request data. */
-function describeError(body: string): string {
-  try {
-    const json = JSON.parse(body) as Record<string, unknown>;
-    const msg = json.message ?? json.error ?? json.detail;
-    return typeof msg === "string" ? msg.slice(0, 200) : JSON.stringify(msg ?? json).slice(0, 200);
-  } catch {
-    return body.slice(0, 200);
-  }
 }
 
 export async function reportConversion(ev: ServerConversion): Promise<void> {
@@ -143,16 +140,19 @@ export async function reportConversion(ev: ServerConversion): Promise<void> {
       signal: AbortSignal.timeout(TIMEOUT_MS),
     });
 
+    // Diagnostics are fixed-shape on purpose: event id, type, HTTP status,
+    // validation mode, oppref presence. Response bodies are never logged
+    // (they can echo request fields) and neither are hashes or cookie values.
     const tag = `OpenAI CAPI ${ev.type} (id=${ev.id}, oppref=${"oppref" in event ? "present" : "absent"}${validateOnly ? ", validate_only" : ""})`;
     if (res.ok) {
       console.log(`${tag} accepted, HTTP ${res.status}`);
     } else {
-      console.error(`${tag} rejected, HTTP ${res.status}: ${describeError(await res.text())}`);
+      console.error(`${tag} rejected, HTTP ${res.status}`);
     }
   } catch (err) {
-    console.error(
-      `OpenAI CAPI ${ev.type} failed (id=${ev.id}):`,
-      err instanceof Error ? err.message : String(err)
-    );
+    // Only the error class (TimeoutError, AbortError, TypeError...), never its
+    // message, which for fetch failures can include the request URL.
+    const kind = err instanceof Error ? err.name : "unknown";
+    console.error(`OpenAI CAPI ${ev.type} failed (id=${ev.id}, error=${kind})`);
   }
 }
