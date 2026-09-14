@@ -27,7 +27,7 @@ import PageHero from "@/components/ui/PageHero";
 import WhatHappensNext from "@/components/ui/WhatHappensNext";
 import { BUSINESS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
-import { trackBooking, trackPhoneClick } from "@/lib/pixel";
+import { trackBooking } from "@/lib/pixel";
 
 const serviceCategories = [
   { id: "residential", label: "Residential", icon: <Home className="w-6 h-6" /> },
@@ -187,16 +187,21 @@ export default function BookingPage() {
       const res = await fetch("/api/booking", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, sourcePath: window.location.pathname }),
       });
-      const data: { success?: boolean; confirmationId?: string; error?: string } = await res
+      const data: {
+        success?: boolean;
+        confirmationId?: string;
+        eventId?: string;
+        error?: string;
+      } = await res
         .json()
         .catch(() => ({}));
       if (!res.ok || !data.success) {
         throw new Error(data.error ?? "Submission failed");
       }
       if (data.confirmationId) setConfirmationId(data.confirmationId);
-      trackBooking();
+      void trackBooking({ email: form.email, eventId: data.eventId });
     } catch {
       // next() optimistically advances to the confirmation screen before this
       // resolves, so a failure has to walk it back — otherwise the booking
@@ -256,7 +261,6 @@ export default function BookingPage() {
           Prefer to talk?{" "}
           <a
             href={`tel:${BUSINESS.phoneRaw}`}
-            onClick={trackPhoneClick}
             className="inline-flex items-center gap-1.5 font-bold text-gold hover:underline"
           >
             <Phone className="w-3.5 h-3.5" />

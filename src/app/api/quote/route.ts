@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextResponse, after } from "next/server";
 import { Resend } from "resend";
 import { z } from "zod";
 import {
@@ -7,9 +7,16 @@ import {
   getClientIp,
   isHoneypotTripped,
   rateLimit,
+  sendEmailBestEffort,
+  sendEmailOrThrow,
   SMS_TO,
   tooManyRequests,
 } from "@/lib/api/secure";
+import {
+  captureRequestContext,
+  newConversionId,
+  reportConversion,
+} from "@/lib/openai-ads-capi";
 
 const RangeSchema = z.object({ min: z.number(), max: z.number() });
 
@@ -33,6 +40,7 @@ const QuoteSchema = z.object({
     email: z.string().email().max(200),
     phone: z.string().min(7).max(30),
   }),
+  sourcePath: z.string().max(200).optional(),
   website: z.string().optional(),
 });
 
@@ -50,7 +58,7 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
-    const { service, selections, result, lead, website } = parsed.data;
+    const { service, selections, result, lead, sourcePath, website } = parsed.data;
 
     if (isHoneypotTripped(website)) {
       return NextResponse.json({ success: true });
@@ -99,7 +107,7 @@ export async function POST(request: Request) {
       phone: escapeHtml(lead.phone),
     };
 
-    await resend.emails.send({
+    await sendEmailOrThrow(resend, {
       from: "C&S Plumbing Website <bookings@csplumbinglee.com>",
       to: [ADMIN_EMAIL],
       subject: `New Quote: ${serviceLabel} $${result.total.min.toLocaleString()}–$${result.total.max.toLocaleString()} — ${lead.name}`,
@@ -135,9 +143,9 @@ export async function POST(request: Request) {
           </div>
         </div>
       `,
-    });
+    }, "quote admin email");
 
-    await resend.emails.send({
+    await sendEmailBestEffort(resend, {
       from: "C&S Plumbing of Lee <bookings@csplumbinglee.com>",
       to: [lead.email],
       subject: `Your ${serviceLabel} Estimate — C&S Plumbing`,
@@ -183,18 +191,24 @@ export async function POST(request: Request) {
           </div>
         </div>
       `,
-    });
+    }, "quote customer copy");
 
     if (SMS_TO) {
-      await resend.emails.send({
+      await sendEmailBestEffort(resend, {
         from: "C&S Plumbing Website <bookings@csplumbinglee.com>",
         to: [SMS_TO],
         subject: "New Quote",
         text: `New quote: ${serviceLabel} $${result.total.min.toLocaleString()}-$${result.total.max.toLocaleString()} from ${lead.name}. Phone: ${lead.phone}`,
-      });
+      }, "quote SMS notification");
     }
 
-    return NextResponse.json({ success: true });
+    const eventId = newConversionId();
+    const context = captureRequestContext(request);
+    after(() =>
+      reportConversion({ type: "lead_created", id: eventId, context, sourcePath, email: lead.email })
+    );
+
+    return NextResponse.json({ success: true, eventId });
   } catch (error) {
     console.error("Quote email error:", error);
     return NextResponse.json(

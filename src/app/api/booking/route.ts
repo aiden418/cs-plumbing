@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextResponse, after } from "next/server";
 import { Resend } from "resend";
 import { z } from "zod";
 import {
@@ -7,9 +7,16 @@ import {
   getClientIp,
   isHoneypotTripped,
   rateLimit,
+  sendEmailBestEffort,
+  sendEmailOrThrow,
   SMS_TO,
   tooManyRequests,
 } from "@/lib/api/secure";
+import {
+  captureRequestContext,
+  newConversionId,
+  reportConversion,
+} from "@/lib/openai-ads-capi";
 
 const BookingSchema = z.object({
   requestType: z.enum(["booking", "estimate"]).default("booking"),
@@ -23,6 +30,7 @@ const BookingSchema = z.object({
   email: z.string().email().max(200),
   phone: z.string().min(7).max(30),
   address: z.string().min(5).max(300),
+  sourcePath: z.string().max(200).optional(),
   website: z.string().optional(),
 });
 
@@ -86,7 +94,7 @@ export async function POST(request: Request) {
       );
     }
     const resend = new Resend(process.env.RESEND_API_KEY);
-    await resend.emails.send({
+    await sendEmailOrThrow(resend, {
       from: "C&S Plumbing Website <bookings@csplumbinglee.com>",
       to: [ADMIN_EMAIL],
       subject: `New ${typeLabel}: ${data.service} — ${data.name} [${confirmationId}]`,
@@ -115,21 +123,35 @@ export async function POST(request: Request) {
           </div>
         </div>
       `,
-    });
+    }, "booking admin email");
 
     if (SMS_TO) {
       const smsText = isEstimate
         ? `New estimate from ${data.name} for ${data.service}. Budget: ${data.budgetRange || "N/A"}. Phone: ${data.phone}. #${confirmationId}`
         : `New booking from ${data.name} for ${data.service} (${data.urgency}). Phone: ${data.phone}. Date: ${data.date}. #${confirmationId}`;
-      await resend.emails.send({
+      await sendEmailBestEffort(resend, {
         from: "C&S Plumbing Website <bookings@csplumbinglee.com>",
         to: [SMS_TO],
         subject: `New ${typeLabel}`,
         text: smsText,
-      });
+      }, "booking SMS notification");
     }
 
-    return NextResponse.json({ success: true, confirmationId });
+    // Mirrors the browser pixel (Schedule -> appointment_scheduled) for both
+    // bookings and estimate requests so the two copies dedupe on eventId.
+    const eventId = newConversionId();
+    const context = captureRequestContext(request);
+    after(() =>
+      reportConversion({
+        type: "appointment_scheduled",
+        id: eventId,
+        context,
+        sourcePath: data.sourcePath,
+        email: data.email,
+      })
+    );
+
+    return NextResponse.json({ success: true, confirmationId, eventId });
   } catch (error) {
     console.error("Booking email error:", error);
     return NextResponse.json(

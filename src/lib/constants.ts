@@ -68,10 +68,8 @@ export const AWARDS: Award[] = [
     // Winners Platform entry is live — it becomes the schema citation.
     awardedOn: "2026-09-09",
     badge: "/images/awards/best-of-cape-coral-2026.png",
-    // Placeholder until the 2026 PNG lands — the Breeze reuses one ribbon
-    // template, and 2025's is 793x593. Re-read with sharp when the file exists.
-    badgeWidth: 793,
-    badgeHeight: 593,
+    badgeWidth: 2215,
+    badgeHeight: 1561,
     summary:
       "Voted Best Plumbing Contractor by Cape Coral Breeze readers in the 2026 Best of Cape Coral awards.",
   },

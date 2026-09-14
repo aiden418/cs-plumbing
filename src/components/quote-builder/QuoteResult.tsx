@@ -69,10 +69,14 @@ export default function QuoteResult({
           selections,
           result,
           lead,
+          sourcePath: window.location.pathname,
         }),
       });
-      if (!res.ok) throw new Error("Submission failed");
-      trackQuoteBuilder();
+      const data: { success?: boolean; eventId?: string } = await res
+        .json()
+        .catch(() => ({}));
+      if (!res.ok || !data.success) throw new Error("Submission failed");
+      void trackQuoteBuilder({ email: lead.email, eventId: data.eventId });
       setSubmitted(true);
     } catch {
       alert("Something went wrong. Please call us directly.");
