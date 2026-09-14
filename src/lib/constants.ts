@@ -1,4 +1,4 @@
-import type { Service, TeamMember, Testimonial, TimelineEvent, NavLink, Stat, ServiceLanding, AreaLanding, BlogPost, CompletedProject, Partner } from "./types";
+import type { Service, TeamMember, Testimonial, TimelineEvent, NavLink, Stat, ServiceLanding, AreaLanding, BlogPost, CompletedProject, Partner, Award } from "./types";
 
 // ============================================
 // BUSINESS INFO
@@ -51,6 +51,53 @@ export const EMERGENCY_CLAIMS = {
     "After-hours calls (nights, weekends, and holidays) carry a $95–$150 surcharge — always included in the written price you approve before any work begins.",
 } as const;
 
+// Single source of truth for awards, newest first. Every surface that names
+// an award — hero chips, nav strip, About, Credentials, WhyChooseUs, the
+// trust-badge arrays, JsonLd and llms.txt — reads from here for the same
+// reason EMERGENCY_CLAIMS exists: one consistent, verifiable story.
+export const AWARDS: Award[] = [
+  {
+    slug: "best-of-cape-coral-2026",
+    year: 2026,
+    title: "Best of Cape Coral 2026",
+    category: "Best Plumbing Contractor",
+    program: "Best of Cape Coral Readership Awards",
+    issuer: "Cape Coral Breeze",
+    issuerUrl: "https://www.capecoralbreeze.com",
+    // TODO: swap in the Breeze's 2026 winners listing URL once the Digital
+    // Winners Platform entry is live — it becomes the schema citation.
+    awardedOn: "2026-09-09",
+    badge: "/images/awards/best-of-cape-coral-2026.png",
+    badgeWidth: 2215,
+    badgeHeight: 1561,
+    summary:
+      "Voted Best Plumbing Contractor by Cape Coral Breeze readers in the 2026 Best of Cape Coral awards.",
+  },
+  {
+    slug: "best-of-cape-coral-2025",
+    year: 2025,
+    title: "Best of Cape Coral 2025",
+    category: "Plumbing",
+    program: "Best of Cape Coral Readership Awards",
+    issuer: "Cape Coral Breeze",
+    issuerUrl: "https://www.capecoralbreeze.com",
+    awardedOn: "2025-09",
+    badge: "/images/awards/best-of-cape-coral-2025.png",
+    badgeWidth: 793,
+    badgeHeight: 593,
+    summary:
+      "Voted Best of Cape Coral in the Plumbing category by Cape Coral Breeze readers in 2025.",
+  },
+];
+
+export const LATEST_AWARD = AWARDS[0];
+
+/** Flat line for the trust-badge string arrays on area and service-city pages. */
+export const AWARD_TRUST_LINE = `Best of Cape Coral ${[...AWARDS]
+  .map((a) => a.year)
+  .sort()
+  .join(" & ")}`;
+
 // ============================================
 // NAVIGATION
 // ============================================
@@ -101,6 +148,7 @@ export const NAV_LINKS: NavLink[] = [
       { label: "Blog", href: "/blog" },
       { label: "Builders", href: "/builders" },
       { label: "Builder Portal", href: "/builder-portal" },
+      { label: "Awards", href: "/awards" },
       { label: "Recommended", href: "/partners" },
     ],
   },
@@ -123,7 +171,7 @@ export const TRUST_PROOF_POINTS = [
   "Family-owned since 1998",
   "8,500+ homes completed",
   "5.0 stars across 46 Google reviews",
-  "Best of Cape Coral 2025",
+  AWARD_TRUST_LINE,
   "24/7 emergency service",
   "Licensed & insured (CFC057076 / CFC1432485)",
   "5.0-star Google rating",
@@ -546,9 +594,9 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
     heroText: "Whole-Home Repiping in Cape Coral, Fort Myers & SWFL",
     description:
       "Aging pipes cause low water pressure, discolored water, and costly leaks. C&S Plumbing replaces your entire plumbing system with modern copper or PEX piping — backed by 8,500+ homes completed and a full warranty.",
-    metaTitle: "Whole-Home Repiping | Cape Coral & Fort Myers Repipe Specialists",
+    metaTitle: "Whole-Home Repiping | Cape Coral & Fort Myers",
     metaDescription:
-      "Expert whole-home repiping in Cape Coral, Fort Myers & Southwest Florida. Copper & PEX options, minimal wall damage, full warranty. 8,500+ homes completed. Call 833-PLUMB-IT.",
+      "Whole-home repiping in Cape Coral, Fort Myers & SWFL. Copper & PEX, minimal wall damage, full warranty. 8,500+ homes completed. Call 833-PLUMB-IT.",
     keywords: [
       "repiping Cape Coral",
       "repipe Fort Myers",
@@ -704,7 +752,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
     heroText: "Water Heater Installation & Repair in Cape Coral & Fort Myers",
     description:
       "No hot water? Whether you need a quick repair or a full replacement, C&S Plumbing installs and services all types of water heaters — traditional tank, tankless, and hybrid systems.",
-    metaTitle: "Water Heater Installation & Repair | Cape Coral & Fort Myers",
+    metaTitle: "Water Heater Install & Repair | Cape Coral",
     metaDescription:
       "Water heater installation, repair & replacement in Cape Coral, Fort Myers & SWFL. Tankless, traditional & hybrid options. Same-day service. Call 833-PLUMB-IT.",
     keywords: [
@@ -1013,7 +1061,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
     heroText: "Leak Detection & Emergency Repair in Cape Coral & Fort Myers",
     description:
       "Water leaks waste money and cause serious damage. C&S Plumbing finds and fixes leaks fast — from dripping faucets to hidden slab leaks — protecting your home and your wallet.",
-    metaTitle: "Leak Detection & Repair | Cape Coral & Fort Myers Emergency Plumber",
+    metaTitle: "Leak Detection & Repair | Cape Coral & Fort Myers",
     metaDescription:
       "Expert leak detection & repair in Cape Coral, Fort Myers & SWFL. Slab leaks, pipe leaks, faucet repair. 24/7 emergency service. Call 833-PLUMB-IT.",
     keywords: [
@@ -1279,7 +1327,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
     heroText: "Kitchen & Bathroom Plumbing Remodels in Cape Coral & Fort Myers",
     description:
       "Remodeling your kitchen or bathroom? C&S Plumbing handles everything from pipe relocation to premium fixture installation — ensuring your remodel is done right the first time.",
-    metaTitle: "Kitchen & Bathroom Plumbing Remodels | Cape Coral & Fort Myers",
+    metaTitle: "Kitchen & Bath Plumbing Remodels | Cape Coral",
     metaDescription:
       "Expert plumbing remodel services in Cape Coral, Fort Myers & SWFL. Kitchen & bathroom renovations, fixture upgrades, pipe relocation. Call 833-PLUMB-IT.",
     keywords: [
@@ -1394,7 +1442,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
     description:
       "Cape Coral's Utilities Extension Program (UEP) requires homeowners to connect to city water and sewer. C&S Plumbing handles the entire process — from pulling permits to final inspection. We install water service lines, irrigation lines, sewer laterals, and perform septic pump-out and abandonment so you can get connected fast.",
     metaTitle:
-      "UEP Utilities Hookup Cape Coral | Water, Sewer & Septic Abandonment",
+      "UEP Hookup Cape Coral | Water, Sewer & Septic",
     metaDescription:
       "Full-service UEP utilities hookup in Cape Coral. Water service $13-15/ft, irrigation $9-10/ft, sewer $25-33/ft, septic abandonment $2,500. All permits included. Call 833-PLUMB-IT.",
     keywords: [
@@ -2106,6 +2154,55 @@ export const AREA_LANDINGS: AreaLanding[] = [
 // ============================================
 
 export const BLOG_POSTS: BlogPost[] = [
+  {
+    slug: "voted-best-plumbing-contractor-cape-coral-2026",
+    title: "C&S Plumbing Voted Best Plumbing Contractor in Cape Coral for 2026",
+    metaTitle: "Voted Best Plumbing Contractor — Best of Cape Coral 2026",
+    metaDescription:
+      "Cape Coral Breeze readers voted C&S Plumbing of Lee Best Plumbing Contractor in the 2026 Best of Cape Coral awards — our second year on the winners list.",
+    keywords: [
+      "best plumbing contractor Cape Coral",
+      "Best of Cape Coral 2026",
+      "Cape Coral Breeze best of",
+      "best plumber Cape Coral 2026",
+      "award winning plumber Cape Coral",
+      "C&S Plumbing award",
+    ],
+    excerpt:
+      "Cape Coral Breeze readers have voted C&S Plumbing of Lee the Best Plumbing Contractor in the 2026 Best of Cape Coral awards. Here's what the award is, who decides it, and why it matters to us.",
+    category: "News",
+    publishDate: "2026-09-14",
+    readTime: "3 min read",
+    content: `<p>On September 9, 2026, the Cape Coral Breeze let us know that its readers had voted C&S Plumbing of Lee <strong>Best Plumbing Contractor</strong> in the 2026 Best of Cape Coral awards. It's our second year on the winners list — in 2025 the community voted us Best of Cape Coral in the Plumbing category.</p>
+
+<h2>What Best of Cape Coral is</h2>
+<p>Best of Cape Coral is the Cape Coral Breeze's annual readership voting contest. Each summer, readers nominate and vote for the local businesses they trust, category by category, and the Breeze publishes the winners each fall in its Best of Cape Coral Winners Book. It isn't a panel, a paid ranking, or a national list that no one in town has heard of — it's the people of Cape Coral saying who they actually call.</p>
+<p>That's why this one means something to us. Most of the votes came from people whose homes we've been in.</p>
+
+<h2>Why it matters for your plumbing</h2>
+<p>A community vote is a lagging indicator. It reflects the work that was already done — the <a href="/services/water-heaters">water heaters</a> that got replaced the same day, the <a href="/services/repiping">repipes</a> that came in on the written price, the 2 a.m. <a href="/emergency">emergency calls</a> that got answered. If you're comparing plumbers in Cape Coral, an award like this is worth reading alongside the things you can check yourself:</p>
+<ul>
+<li>Both of our Florida Certified Plumbing Contractor licenses (CFC1432485 and CFC057076) are verifiable on the DBPR's MyFloridaLicense.com.</li>
+<li>Our Google rating and reviews are public — see the <a href="/reviews">reviews page</a>.</li>
+<li>Our work is on the site, phase by phase, on the <a href="/projects">projects pages</a>.</li>
+</ul>
+
+<h2>Thank you, Cape Coral</h2>
+<p>Three generations of the Pellechio family have plumbed in Lee County since 1998, and Cape Coral has been the center of that from the start. To everyone who voted, and to everyone who called us in the first place: thank you. We'll see you at the Winners Luncheon on October 13.</p>
+<p>See both awards and how the program works on our <a href="/awards">Awards &amp; Recognition</a> page, or read more <a href="/about">about the family behind C&S</a>.</p>`,
+    faqs: [
+      {
+        question: "Who voted C&S Plumbing Best Plumbing Contractor in Cape Coral?",
+        answer:
+          "Readers of the Cape Coral Breeze, through its annual Best of Cape Coral readership voting contest. Winners for 2026 were announced in September 2026.",
+      },
+      {
+        question: "Has C&S Plumbing won Best of Cape Coral before?",
+        answer:
+          "Yes. In 2025, Cape Coral Breeze readers voted C&S Plumbing of Lee Best of Cape Coral in the Plumbing category. 2026's win is in the Best Plumbing Contractor category.",
+      },
+    ],
+  },
   {
     slug: "signs-you-need-a-repipe",
     title: "5 Signs You Need a Whole-Home Repipe",

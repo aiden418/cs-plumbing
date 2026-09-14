@@ -6,7 +6,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ChevronDown, Phone, Calculator, Clock, Award, ShieldCheck, MessageSquareText } from "lucide-react";
-import { NAV_LINKS, BUSINESS } from "@/lib/constants";
+import { NAV_LINKS, BUSINESS, LATEST_AWARD } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
 export default function Navbar() {
@@ -58,11 +58,15 @@ export default function Navbar() {
     };
   }, [isMobileOpen]);
 
-  useEffect(() => {
+  // Close every menu on navigation. Adjusted during render rather than in an
+  // effect so the new route never paints with the old route's menu still open.
+  const [lastPathname, setLastPathname] = useState(pathname);
+  if (pathname !== lastPathname) {
+    setLastPathname(pathname);
     setIsMobileOpen(false);
     setOpenDropdown(null);
     setMobileDropdown(null);
-  }, [pathname]);
+  }
 
   return (
     <>
@@ -103,10 +107,13 @@ export default function Navbar() {
                 </span>
               </div>
               <div className="flex items-center gap-5">
-                <span className="hidden xl:flex items-center gap-1.5">
+                <Link
+                  href="/awards"
+                  className="hidden xl:flex items-center gap-1.5 hover:underline"
+                >
                   <Award className="w-3.5 h-3.5" />
-                  Best of Cape Coral 2025
-                </span>
+                  {LATEST_AWARD.title}
+                </Link>
                 <a
                   href={`tel:${BUSINESS.phoneRaw}`}
                   className="flex items-center gap-1.5 font-bold hover:underline"
@@ -128,6 +135,7 @@ export default function Navbar() {
                 alt="C&S Plumbing of Lee"
                 width={200}
                 height={200}
+                sizes="(max-width: 640px) 48px, 56px"
                 className="h-12 sm:h-14 w-auto object-contain group-hover:scale-105 transition-transform duration-300"
                 priority
               />

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Calculator, ChevronRight, RotateCcw } from "lucide-react";
@@ -142,12 +143,12 @@ export default function CostEstimator() {
               >
                 <RotateCcw className="w-3 h-3" /> Try another service
               </button>
-              <a
+              <Link
                 href="/quote-builder"
                 className="text-xs text-primary hover:text-primary-dark flex items-center justify-center gap-1 transition-colors"
               >
                 Want a detailed estimate? Build your custom quote →
-              </a>
+              </Link>
             </div>
           </motion.div>
         )}

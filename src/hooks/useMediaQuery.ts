@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useCallback, useSyncExternalStore } from "react";
 
 /**
  * Hook that returns whether a CSS media query matches.
@@ -15,24 +15,26 @@ import { useState, useEffect } from "react";
  * const prefersReducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
  */
 export default function useMediaQuery(query: string): boolean {
-  const [matches, setMatches] = useState(false);
+  // matchMedia is an external store, so subscribing to it directly avoids the
+  // extra render (and the setState-in-effect cascade) of the useState/useEffect
+  // version this replaced.
+  const subscribe = useCallback(
+    (onStoreChange: () => void) => {
+      const media = window.matchMedia(query);
+      media.addEventListener("change", onStoreChange);
+      return () => media.removeEventListener("change", onStoreChange);
+    },
+    [query]
+  );
 
-  useEffect(() => {
-    const media = window.matchMedia(query);
+  const getSnapshot = useCallback(
+    () => window.matchMedia(query).matches,
+    [query]
+  );
 
-    // Set initial value
-    setMatches(media.matches);
-
-    // Listen for changes
-    const handler = (event: MediaQueryListEvent) => {
-      setMatches(event.matches);
-    };
-
-    media.addEventListener("change", handler);
-    return () => media.removeEventListener("change", handler);
-  }, [query]);
-
-  return matches;
+  // No viewport on the server. `false` matches the old hook's initial state, so
+  // the server HTML is unchanged.
+  return useSyncExternalStore(subscribe, getSnapshot, () => false);
 }
 
 // Preset breakpoints matching Tailwind defaults

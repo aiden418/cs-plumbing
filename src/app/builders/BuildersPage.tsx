@@ -17,6 +17,7 @@ import {
 import Container from "@/components/ui/Container";
 import PageHero from "@/components/ui/PageHero";
 import SectionHeading from "@/components/ui/SectionHeading";
+import BuilderLogoImage from "@/components/ui/BuilderLogoImage";
 import ScrollReveal from "@/components/animations/ScrollReveal";
 import StaggerChildren, {
   staggerItem,
@@ -124,10 +125,9 @@ export default function BuildersPage() {
                 className="flex flex-col items-center justify-center gap-3 p-5 sm:p-6 bg-white border border-gray-200 rounded-2xl hover:border-primary/30 hover:shadow-sm transition-all duration-300"
               >
                 <div className="h-10 sm:h-12 flex items-center justify-center">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={builder.logo}
-                    alt={builder.name}
+                  <BuilderLogoImage
+                    builder={builder}
+                    sizes="(max-width: 640px) 120px, 140px"
                     className="h-8 sm:h-10 w-auto max-w-[120px] sm:max-w-[140px] object-contain"
                   />
                 </div>

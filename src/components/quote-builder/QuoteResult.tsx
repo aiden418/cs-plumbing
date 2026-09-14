@@ -16,7 +16,6 @@ import { cn } from "@/lib/utils";
 import { trackQuoteBuilder } from "@/lib/pixel";
 import type {
   QuoteResult as QuoteResultType,
-  ServiceType,
   WaterHeaterSelections,
   RepipeSelections,
   LeadCaptureData,

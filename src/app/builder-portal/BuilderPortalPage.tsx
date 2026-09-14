@@ -199,6 +199,10 @@ export default function BuilderPortalPage() {
                   <button
                     onClick={() => i < step && setStep(i)}
                     disabled={i > step}
+                    // The label is `hidden sm:inline`, so on mobile the button
+                    // is icon-only and has no accessible name without this.
+                    aria-label={s.label}
+                    aria-current={i === step ? "step" : undefined}
                     className={cn(
                       "flex items-center gap-1.5 px-2 sm:px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-colors w-full justify-center",
                       i === step

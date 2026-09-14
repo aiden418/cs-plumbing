@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/contact" },
   title: "Contact Us",
   description:
-    "Contact C&S Plumbing of Lee for a free estimate. Serving Cape Coral, Fort Myers, North Fort Myers, Naples & all of Southwest Florida. Call 833-PLUMB-IT or fill out our online form.",
+    "Contact C&S Plumbing of Lee for a free estimate. Serving Cape Coral, Fort Myers, North Fort Myers & Naples. Call 833-PLUMB-IT or use our online form.",
   keywords: [
     "contact plumber Cape Coral",
     "plumbing estimate Fort Myers",

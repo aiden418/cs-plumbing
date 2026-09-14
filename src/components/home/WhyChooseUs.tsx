@@ -7,6 +7,7 @@ import StaggerChildren, {
   staggerItem,
 } from "@/components/animations/StaggerChildren";
 import { motion } from "framer-motion";
+import { LATEST_AWARD } from "@/lib/constants";
 
 const reasons = [
   {
@@ -17,9 +18,8 @@ const reasons = [
   },
   {
     icon: <Award className="w-5 h-5 sm:w-6 sm:h-6" />,
-    title: "Best of Cape Coral 2025",
-    description:
-      "Voted Cape Coral's best plumbing company — and rated 5.0 stars across 46 Google reviews by the homeowners we serve.",
+    title: LATEST_AWARD.title,
+    description: `Voted ${LATEST_AWARD.category} by ${LATEST_AWARD.issuer} readers — and rated 5.0 stars across 46 Google reviews by the homeowners we serve.`,
   },
   {
     icon: <Clock className="w-5 h-5 sm:w-6 sm:h-6" />,

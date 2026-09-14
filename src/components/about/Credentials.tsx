@@ -3,13 +3,14 @@
 import { ShieldCheck, Award, FileCheck, Users, Building2 } from "lucide-react";
 import Container from "@/components/ui/Container";
 import ScrollReveal from "@/components/animations/ScrollReveal";
-import { BUSINESS } from "@/lib/constants";
+import Link from "next/link";
+import { BUSINESS, AWARDS } from "@/lib/constants";
 
 const STATS = [
   { value: "28+", label: "Years in business" },
   { value: "8,500+", label: "Homes plumbed" },
   { value: "5.0★", label: "46 Google reviews" },
-  { value: "2025", label: "Best of Cape Coral" },
+  { value: `${AWARDS.length}×`, label: "Best of Cape Coral" },
 ];
 
 const credentials = [
@@ -25,8 +26,10 @@ const credentials = [
   },
   {
     icon: <Award className="w-5 h-5" />,
-    title: "Best of Cape Coral 2025",
-    body: "Voted Best Plumbing Company in Cape Coral by the local community — backed by 8,500+ homes plumbed and a 5.0-star rating across 46 Google reviews.",
+    title: `Best of Cape Coral — ${[...AWARDS].map((a) => a.year).sort().join(" & ")}`,
+    body: `${AWARDS.map((a) => a.summary).join(" ")} Backed by 8,500+ homes plumbed and a 5.0-star Google rating.`,
+    href: "/awards",
+    hrefLabel: "See our awards",
   },
   {
     icon: <Building2 className="w-5 h-5" />,
@@ -88,6 +91,14 @@ export default function Credentials() {
                 {c.title}
               </h3>
               <p className="text-sm text-gray-600 leading-relaxed">{c.body}</p>
+              {"href" in c && c.href && (
+                <Link
+                  href={c.href}
+                  className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-primary hover:underline"
+                >
+                  {c.hrefLabel} →
+                </Link>
+              )}
             </article>
           ))}
         </div>

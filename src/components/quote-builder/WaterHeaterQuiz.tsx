@@ -18,7 +18,6 @@ import { calculateWaterHeater } from "@/lib/quote-pricing";
 import WizardShell from "./WizardShell";
 import ProductCard from "./ProductCard";
 import type { ProductOption } from "./ProductCard";
-import OptionGrid from "./OptionGrid";
 import CheckboxGrid from "./CheckboxGrid";
 
 interface WaterHeaterQuizProps {

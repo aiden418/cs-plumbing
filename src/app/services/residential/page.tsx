@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/services/residential" },
   title: "Residential Plumbing Services",
   description:
-    "Expert residential plumbing in Cape Coral & Fort Myers — emergency repairs, drain cleaning, water heaters, repiping, water quality & fixture installation. Same-day service available.",
+    "Residential plumbing in Cape Coral & Fort Myers — emergency repairs, drain cleaning, water heaters, repiping and fixtures. Same-day service available.",
   keywords: [
     "residential plumber Cape Coral",
     "home plumbing Fort Myers",
