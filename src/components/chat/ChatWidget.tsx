@@ -46,11 +46,15 @@ export default function ChatWidget() {
           service: "Chat Widget Lead",
           message: `${issue}\n\nPreferred reply: ${textBack ? "text message" : "phone call"}`,
           source: "chat",
+          sourcePath: window.location.pathname,
         }),
       });
-      if (!res.ok) throw new Error(String(res.status));
+      const result: { success?: boolean; eventId?: string } = await res
+        .json()
+        .catch(() => ({}));
+      if (!res.ok || !result.success) throw new Error(String(res.status));
       setFormState("sent");
-      void trackContactForm();
+      void trackContactForm({ eventId: result.eventId });
     } catch {
       setFormState("error");
     }

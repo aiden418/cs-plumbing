@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextResponse, after } from "next/server";
 import { Resend } from "resend";
 import { z } from "zod";
 import {
@@ -12,6 +12,11 @@ import {
   SMS_TO,
   tooManyRequests,
 } from "@/lib/api/secure";
+import {
+  captureRequestContext,
+  newConversionId,
+  reportConversion,
+} from "@/lib/openai-ads-capi";
 
 const ContactSchema = z.object({
   name: z.string().min(2).max(100),
@@ -21,6 +26,8 @@ const ContactSchema = z.object({
   service: z.string().min(2).max(120),
   message: z.string().min(5).max(5000),
   source: z.string().max(40).optional(),
+  /** Pathname of the page the form was on; validated server-side before use. */
+  sourcePath: z.string().max(200).optional(),
   website: z.string().optional(),
 });
 
@@ -38,7 +45,7 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
-    const { name, email, phone, service, message, source, website } = parsed.data;
+    const { name, email, phone, service, message, source, sourcePath, website } = parsed.data;
 
     if (isHoneypotTripped(website)) {
       return NextResponse.json({ success: true });
@@ -96,7 +103,16 @@ export async function POST(request: Request) {
 
     // No PII in logs; the Resend id is enough to trace a lead in the Resend dashboard.
     console.log(`Contact lead accepted (source=${source ?? "form"}, resend id ${emailId})`);
-    return NextResponse.json({ success: true, id: emailId });
+
+    // Server-side copy of the conversion, sent after the response so it can
+    // never delay or fail the lead. The browser pixel reuses eventId.
+    const eventId = newConversionId();
+    const context = captureRequestContext(request);
+    after(() =>
+      reportConversion({ type: "lead_created", id: eventId, context, sourcePath, email })
+    );
+
+    return NextResponse.json({ success: true, id: emailId, eventId });
   } catch (error) {
     console.error("Contact email error:", error);
     return NextResponse.json(
