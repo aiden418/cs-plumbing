@@ -88,13 +88,15 @@ export default function ContactPage() {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...data, sourcePath: window.location.pathname }),
       });
-      const result: { success?: boolean } = await res.json().catch(() => ({}));
+      const result: { success?: boolean; eventId?: string } = await res
+        .json()
+        .catch(() => ({}));
       if (!res.ok || !result.success) throw new Error("Submission failed");
       // Only after the server confirmed delivery. Hashed email lets the
       // OpenAI pixel match this conversion to the ad click.
-      void trackContactForm({ email: data.email });
+      void trackContactForm({ email: data.email, eventId: result.eventId });
       setSubmitted(true);
     } catch {
       alert("Something went wrong. Please call us directly.");

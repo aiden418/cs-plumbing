@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextResponse, after } from "next/server";
 import { Resend } from "resend";
 import { z } from "zod";
 import {
@@ -12,6 +12,11 @@ import {
   SMS_TO,
   tooManyRequests,
 } from "@/lib/api/secure";
+import {
+  captureRequestContext,
+  newConversionId,
+  reportConversion,
+} from "@/lib/openai-ads-capi";
 
 const BookingSchema = z.object({
   requestType: z.enum(["booking", "estimate"]).default("booking"),
@@ -25,6 +30,7 @@ const BookingSchema = z.object({
   email: z.string().email().max(200),
   phone: z.string().min(7).max(30),
   address: z.string().min(5).max(300),
+  sourcePath: z.string().max(200).optional(),
   website: z.string().optional(),
 });
 
@@ -131,7 +137,21 @@ export async function POST(request: Request) {
       }, "booking SMS notification");
     }
 
-    return NextResponse.json({ success: true, confirmationId });
+    // Mirrors the browser pixel (Schedule -> appointment_scheduled) for both
+    // bookings and estimate requests so the two copies dedupe on eventId.
+    const eventId = newConversionId();
+    const context = captureRequestContext(request);
+    after(() =>
+      reportConversion({
+        type: "appointment_scheduled",
+        id: eventId,
+        context,
+        sourcePath: data.sourcePath,
+        email: data.email,
+      })
+    );
+
+    return NextResponse.json({ success: true, confirmationId, eventId });
   } catch (error) {
     console.error("Booking email error:", error);
     return NextResponse.json(

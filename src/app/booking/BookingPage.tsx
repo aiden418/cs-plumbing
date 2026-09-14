@@ -189,16 +189,21 @@ export default function BookingPage() {
       const res = await fetch("/api/booking", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, sourcePath: window.location.pathname }),
       });
-      const data: { success?: boolean; confirmationId?: string; error?: string } = await res
+      const data: {
+        success?: boolean;
+        confirmationId?: string;
+        eventId?: string;
+        error?: string;
+      } = await res
         .json()
         .catch(() => ({}));
       if (!res.ok || !data.success) {
         throw new Error(data.error ?? "Submission failed");
       }
       if (data.confirmationId) setConfirmationId(data.confirmationId);
-      trackBooking();
+      void trackBooking({ email: form.email, eventId: data.eventId });
       setSubmitted(true);
     } catch {
       alert("Something went wrong. Please call us directly.");

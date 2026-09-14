@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextResponse, after } from "next/server";
 import { Resend } from "resend";
 import { z } from "zod";
 import {
@@ -12,6 +12,11 @@ import {
   SMS_TO,
   tooManyRequests,
 } from "@/lib/api/secure";
+import {
+  captureRequestContext,
+  newConversionId,
+  reportConversion,
+} from "@/lib/openai-ads-capi";
 
 const RangeSchema = z.object({ min: z.number(), max: z.number() });
 
@@ -35,6 +40,7 @@ const QuoteSchema = z.object({
     email: z.string().email().max(200),
     phone: z.string().min(7).max(30),
   }),
+  sourcePath: z.string().max(200).optional(),
   website: z.string().optional(),
 });
 
@@ -52,7 +58,7 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
-    const { service, selections, result, lead, website } = parsed.data;
+    const { service, selections, result, lead, sourcePath, website } = parsed.data;
 
     if (isHoneypotTripped(website)) {
       return NextResponse.json({ success: true });
@@ -196,7 +202,13 @@ export async function POST(request: Request) {
       }, "quote SMS notification");
     }
 
-    return NextResponse.json({ success: true });
+    const eventId = newConversionId();
+    const context = captureRequestContext(request);
+    after(() =>
+      reportConversion({ type: "lead_created", id: eventId, context, sourcePath, email: lead.email })
+    );
+
+    return NextResponse.json({ success: true, eventId });
   } catch (error) {
     console.error("Quote email error:", error);
     return NextResponse.json(

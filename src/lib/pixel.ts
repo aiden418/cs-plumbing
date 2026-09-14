@@ -51,12 +51,28 @@ export async function identifyOaiqUser(user: { email?: string }) {
   }
 }
 
-export function trackEvent(event: string, params?: Record<string, string>) {
+export interface ConversionOptions {
+  /** Submitter email; hashed client-side and sent on init, never on measure. */
+  email?: string;
+  /**
+   * Id the server used for its Conversions API copy of this conversion.
+   * Passed as the pixel's `event_id` so OpenAI dedupes browser + server.
+   */
+  eventId?: string;
+}
+
+export function trackEvent(
+  event: string,
+  params?: Record<string, string>,
+  options?: { eventId?: string }
+) {
   if (typeof window === 'undefined') return;
   safeFbq('track', event, params);
   const oaiqEvent = OAIQ_EVENT_MAP[event];
   if (oaiqEvent) {
-    safeOaiq('measure', oaiqEvent, { type: 'customer_action' });
+    const args: unknown[] = ['measure', oaiqEvent, { type: 'customer_action' }];
+    if (options?.eventId) args.push({ event_id: options.eventId });
+    safeOaiq(...args);
   }
 }
 
@@ -76,15 +92,17 @@ export function trackTextClick() {
  * Pass the submitter's email (when the form collects one) so the OpenAI
  * pixel can match the conversion; it is hashed before leaving the browser.
  */
-export async function trackContactForm(user?: { email?: string }) {
-  if (user) await identifyOaiqUser(user);
-  trackEvent('Lead', { content_name: 'Contact Form', content_category: 'Service Request' });
+export async function trackContactForm(opts?: ConversionOptions) {
+  if (opts?.email) await identifyOaiqUser({ email: opts.email });
+  trackEvent('Lead', { content_name: 'Contact Form', content_category: 'Service Request' }, opts);
 }
 
-export function trackQuoteBuilder() {
-  trackEvent('Lead', { content_name: 'Quote Builder', content_category: 'Quote Request' });
+export async function trackQuoteBuilder(opts?: ConversionOptions) {
+  if (opts?.email) await identifyOaiqUser({ email: opts.email });
+  trackEvent('Lead', { content_name: 'Quote Builder', content_category: 'Quote Request' }, opts);
 }
 
-export function trackBooking() {
-  trackEvent('Schedule', { content_name: 'Booking Form', content_category: 'Service Booking' });
+export async function trackBooking(opts?: ConversionOptions) {
+  if (opts?.email) await identifyOaiqUser({ email: opts.email });
+  trackEvent('Schedule', { content_name: 'Booking Form', content_category: 'Service Booking' }, opts);
 }
