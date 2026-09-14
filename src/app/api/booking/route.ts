@@ -137,13 +137,13 @@ export async function POST(request: Request) {
       }, "booking SMS notification");
     }
 
-    // Mirrors the browser pixel (Schedule -> appointment_scheduled) for both
-    // bookings and estimate requests so the two copies dedupe on eventId.
+    // Mirrors the browser pixel so the two copies dedupe on eventId:
+    // a booking is appointment_scheduled, an estimate request is a lead.
     const eventId = newConversionId();
     const context = captureRequestContext(request);
     after(() =>
       reportConversion({
-        type: "appointment_scheduled",
+        type: isEstimate ? "lead_created" : "appointment_scheduled",
         id: eventId,
         context,
         sourcePath: data.sourcePath,

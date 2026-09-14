@@ -88,21 +88,38 @@ export function trackTextClick() {
 }
 
 /**
+ * Shared path for form conversions. The server issues `eventId` only when it
+ * actually delivered the inquiry; a honeypot-tripped submission returns
+ * success without one. No id, no conversion event, on either platform.
+ */
+async function trackFormConversion(
+  metaEvent: string,
+  params: Record<string, string>,
+  opts?: ConversionOptions
+) {
+  if (!opts?.eventId) return;
+  if (opts.email) await identifyOaiqUser({ email: opts.email });
+  trackEvent(metaEvent, params, opts);
+}
+
+/**
  * Call only after the server has confirmed the inquiry was delivered.
  * Pass the submitter's email (when the form collects one) so the OpenAI
  * pixel can match the conversion; it is hashed before leaving the browser.
  */
-export async function trackContactForm(opts?: ConversionOptions) {
-  if (opts?.email) await identifyOaiqUser({ email: opts.email });
-  trackEvent('Lead', { content_name: 'Contact Form', content_category: 'Service Request' }, opts);
+export function trackContactForm(opts?: ConversionOptions) {
+  return trackFormConversion('Lead', { content_name: 'Contact Form', content_category: 'Service Request' }, opts);
 }
 
-export async function trackQuoteBuilder(opts?: ConversionOptions) {
-  if (opts?.email) await identifyOaiqUser({ email: opts.email });
-  trackEvent('Lead', { content_name: 'Quote Builder', content_category: 'Quote Request' }, opts);
+export function trackQuoteBuilder(opts?: ConversionOptions) {
+  return trackFormConversion('Lead', { content_name: 'Quote Builder', content_category: 'Quote Request' }, opts);
 }
 
-export async function trackBooking(opts?: ConversionOptions) {
-  if (opts?.email) await identifyOaiqUser({ email: opts.email });
-  trackEvent('Schedule', { content_name: 'Booking Form', content_category: 'Service Booking' }, opts);
+/** Booking-page "estimate request": a lead, not a scheduled appointment. */
+export function trackEstimateRequest(opts?: ConversionOptions) {
+  return trackFormConversion('Lead', { content_name: 'Estimate Request', content_category: 'Quote Request' }, opts);
+}
+
+export function trackBooking(opts?: ConversionOptions) {
+  return trackFormConversion('Schedule', { content_name: 'Booking Form', content_category: 'Service Booking' }, opts);
 }
