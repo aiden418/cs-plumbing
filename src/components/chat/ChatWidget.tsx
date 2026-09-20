@@ -12,7 +12,7 @@ import {
   Loader2,
 } from "lucide-react";
 import { BUSINESS } from "@/lib/constants";
-import { trackTextClick, trackContactForm } from "@/lib/pixel";
+import { trackChatLead } from "@/lib/analytics";
 
 type FormState = "idle" | "sending" | "sent" | "error";
 
@@ -54,7 +54,7 @@ export default function ChatWidget() {
         .catch(() => ({}));
       if (!res.ok || !result.success) throw new Error(String(res.status));
       setFormState("sent");
-      void trackContactForm({ eventId: result.eventId });
+      void trackChatLead({ eventId: result.eventId });
     } catch {
       setFormState("error");
     }
@@ -207,7 +207,6 @@ export default function ChatWidget() {
                     </a>
                     <a
                       href={BUSINESS.smsHref}
-                      onClick={trackTextClick}
                       className="flex items-center justify-center gap-1.5 p-2.5 rounded-xl border border-gray-200 text-gray-600 text-xs font-medium hover:border-primary/30 hover:text-gray-900 transition-all"
                     >
                       <MessageSquareText className="w-3.5 h-3.5" />

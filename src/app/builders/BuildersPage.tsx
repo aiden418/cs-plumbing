@@ -66,7 +66,7 @@ export default function BuildersPage() {
         overline="For Builders & General Contractors"
         title="Your Plumbing Partner for"
         accent="New Construction"
-        description="8,500+ homes completed across Lee, Collier, and Charlotte counties since 1998. Two active CFC licenses. 5.0 stars across 46 Google reviews. The plumber builders call back."
+        description="8,500+ homes completed across Lee, Collier, and Charlotte counties since 1998. Two active CFC licenses. a 5.0-star Google rating. The plumber builders call back."
         actions={
           <>
             <Button

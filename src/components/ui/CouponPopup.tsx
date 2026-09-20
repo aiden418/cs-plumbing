@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Tag } from "lucide-react";
 import Link from "next/link";
-import { trackEvent } from "@/lib/pixel";
+import { trackEngagement } from "@/lib/analytics";
 
 const STORAGE_KEY = "cs-coupon-seen";
 const REARM_DAYS = 30;
@@ -31,7 +31,7 @@ export default function CouponPopup() {
 
   const open = useCallback(() => {
     setShow((prev) => {
-      if (!prev) trackEvent("ViewContent", { content_name: "Coupon Popup" });
+      if (!prev) trackEngagement("coupon_view");
       return true;
     });
   }, []);
@@ -146,7 +146,7 @@ export default function CouponPopup() {
               <Link
                 href="/booking"
                 onClick={() => {
-                  trackEvent("Lead", { content_name: "Coupon Popup CTA" });
+                  trackEngagement("coupon_cta_click");
                   dismiss();
                 }}
                 className="inline-flex items-center justify-center w-full gap-2 font-semibold rounded-xl bg-primary hover:bg-primary-dark text-white shadow-sm hover:shadow-md active:scale-[0.98] transition-all duration-300 px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 text-sm sm:text-base lg:text-lg"

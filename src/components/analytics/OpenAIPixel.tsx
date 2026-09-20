@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import Script from "next/script";
-import { OPENAI_PIXEL_ID } from "@/lib/pixel";
+import { OPENAI_PIXEL_ID } from "@/lib/analytics";
 
 const OAIQ_DEBUG = process.env.NODE_ENV !== "production";
 

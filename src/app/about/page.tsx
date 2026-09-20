@@ -14,6 +14,7 @@ import TrainingTrade from "@/components/about/TrainingTrade";
 import CTASection from "@/components/home/CTASection";
 import AboutPersonJsonLd from "@/components/seo/AboutPersonJsonLd";
 import { LATEST_AWARD } from "@/lib/constants";
+import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/about" },
@@ -41,6 +42,12 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <PageTransition>
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", href: "/" },
+          { name: "About", href: "/about" },
+        ]}
+      />
       {/* ===== Hero ===== */}
       <section className="relative overflow-hidden bg-navy pt-28 pb-16 sm:pt-32 sm:pb-20">
         <div className="pointer-events-none absolute -top-32 left-1/3 h-[480px] w-[480px] -translate-x-1/2 rounded-full bg-primary/25 blur-[120px]" />

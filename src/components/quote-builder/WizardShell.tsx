@@ -1,8 +1,10 @@
 "use client";
 
+import { useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, CheckCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { trackQuoteStart, trackQuoteStep } from "@/lib/analytics";
 
 interface WizardStep {
   label: string;
@@ -16,6 +18,11 @@ interface WizardShellProps {
   canProceed: boolean;
   children: React.ReactNode;
   nextLabel?: string;
+  /**
+   * Service slug ("water-heater" | "repipe"). When set, advancing the wizard
+   * fires quote_start (once) and quote_step so funnel drop-off is visible.
+   */
+  trackingService?: string;
 }
 
 export default function WizardShell({
@@ -26,7 +33,21 @@ export default function WizardShell({
   canProceed,
   children,
   nextLabel,
+  trackingService,
 }: WizardShellProps) {
+  const startedRef = useRef(false);
+
+  const handleNext = () => {
+    if (trackingService) {
+      if (!startedRef.current) {
+        startedRef.current = true;
+        trackQuoteStart(trackingService);
+      }
+      trackQuoteStep(currentStep + 1, trackingService);
+    }
+    onNext();
+  };
+
   return (
     <div className="bg-white rounded-2xl border border-gray-200 p-4 sm:p-6 lg:p-8">
       {/* Progress bar */}
@@ -101,7 +122,7 @@ export default function WizardShell({
           <ChevronLeft className="w-4 h-4" /> Back
         </button>
         <button
-          onClick={onNext}
+          onClick={handleNext}
           disabled={!canProceed}
           className={cn(
             "flex items-center gap-1 px-6 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300",

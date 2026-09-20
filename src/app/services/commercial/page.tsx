@@ -3,6 +3,7 @@ import PageTransition from "@/components/layout/PageTransition";
 import ServiceDetail from "@/components/services/ServiceDetail";
 import CTASection from "@/components/home/CTASection";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
+import SimpleServiceJsonLd from "@/components/seo/SimpleServiceJsonLd";
 import FaqJsonLd from "@/components/seo/FaqJsonLd";
 
 const commercialFaqs = [
@@ -216,6 +217,19 @@ export default function CommercialPage() {
 
       <BreadcrumbJsonLd items={[{ name: "Home", href: "/" }, { name: "Services", href: "/services" }, { name: "Commercial", href: "/services/commercial" }]} />
       <FaqJsonLd faqs={commercialFaqs} />
+      <SimpleServiceJsonLd
+        slug="commercial"
+        name="Commercial Plumbing"
+        description="Commercial plumbing for businesses across Lee, Collier, and Charlotte counties — preventive maintenance, emergency repairs, grease traps, backflow prevention, and tenant improvements."
+        offers={[
+          "Preventive Maintenance Programs",
+          "Commercial Emergency Repairs",
+          "Grease Trap Installation & Service",
+          "Backflow Prevention & Testing",
+          "Tenant Improvement Plumbing",
+          "Commercial Water Heaters",
+        ]}
+      />
       <CTASection />
     </PageTransition>
   );

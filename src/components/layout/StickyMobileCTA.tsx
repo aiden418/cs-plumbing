@@ -4,7 +4,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Phone, Calendar, MessageSquareText } from "lucide-react";
 import { BUSINESS } from "@/lib/constants";
-import { trackTextClick } from "@/lib/pixel";
 
 const HIDDEN_PATHS = ["/booking", "/contact", "/quote-builder"];
 
@@ -41,7 +40,6 @@ export default function StickyMobileCTA() {
         </a>
         <a
           href={BUSINESS.smsHref}
-          onClick={trackTextClick}
           className="flex items-center justify-center gap-1.5 h-12 rounded-xl border border-primary text-primary text-sm font-bold bg-white active:bg-primary/5 active:scale-[0.97] transition-transform"
           aria-label="Text us"
         >

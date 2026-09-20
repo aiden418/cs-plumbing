@@ -7,6 +7,7 @@ import { Calculator, ChevronRight, RotateCcw } from "lucide-react";
 import Button from "@/components/ui/Button";
 import { ESTIMATOR_SERVICES } from "@/lib/constants";
 import { cn } from "@/lib/utils";
+import { trackEstimatorUse } from "@/lib/analytics";
 
 export default function CostEstimator() {
   const [selectedService, setSelectedService] = useState<string | null>(null);
@@ -92,6 +93,7 @@ export default function CostEstimator() {
                   onClick={() => {
                     setSelectedFactor(factor);
                     setShowResult(true);
+                    trackEstimatorUse(service.id);
                   }}
                   className={cn(
                     "w-full p-2.5 sm:p-3 rounded-xl border text-left text-xs sm:text-sm transition-all duration-300",

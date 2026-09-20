@@ -319,6 +319,7 @@ export default function WaterHeaterQuiz({ onComplete }: WaterHeaterQuizProps) {
       onNext={handleNext}
       onPrev={handlePrev}
       canProceed={canProceed()}
+      trackingService="water-heater"
       nextLabel={step === totalSteps - 1 ? "See My Estimate" : undefined}
     >
       <div className="mb-4 sm:mb-6">

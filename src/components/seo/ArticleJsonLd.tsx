@@ -15,7 +15,7 @@ export default function ArticleJsonLd({ post }: { post: BlogPost }) {
 
   const articleSchema = {
     "@context": "https://schema.org",
-    "@type": "Article",
+    "@type": "BlogPosting",
     headline: post.title,
     description: post.metaDescription,
     datePublished: post.publishDate,

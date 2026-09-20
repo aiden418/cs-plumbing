@@ -47,8 +47,8 @@ export default function FamilyStory() {
               <p>
                 Both boys grew up in the trades and graduated from Cape Coral High.{" "}
                 <strong className="text-gray-900">Sam</strong> earned his plumbing license in
-                December 1997 and — with his brother <strong className="text-gray-900">Chris</strong>{" "}
-                and their father behind them — founded{" "}
+                December 1997, and the following year — with his brother{" "}
+                <strong className="text-gray-900">Chris</strong> and their father behind them — founded{" "}
                 <strong className="text-gray-900">C&S Plumbing of Lee</strong>. The name says it
                 plainly: <strong className="text-gray-900">C&S — for Chris and Sam.</strong>{" "}
                 Samuel Jr. has led it ever since, on one promise: honest work, fair pricing, and
@@ -75,7 +75,7 @@ export default function FamilyStory() {
               </div>
               <div className="border-l border-gray-200 pl-4 sm:pl-6">
                 <div className="text-2xl sm:text-3xl font-black text-gray-900">5.0★</div>
-                <div className="text-xs sm:text-sm text-gray-500">46 Google Reviews</div>
+                <div className="text-xs sm:text-sm text-gray-500">Google Rating</div>
               </div>
             </div>
           </ScrollReveal>

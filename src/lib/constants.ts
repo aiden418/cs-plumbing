@@ -35,7 +35,7 @@ export const BUSINESS = {
   rating: 5.0,
   reviewCount: 46,
   googleProfileUrl:
-    "https://www.google.com/maps/search/?api=1&query=C%26S+Plumbing+of+Lee+County+North+Fort+Myers",
+    "https://www.google.com/maps/place/C%26S+Plumbing+of+Lee",
   facebookUrl: "https://www.facebook.com/csplumbingoflc",
   instagramUrl: "https://www.instagram.com/cs_plumbing_of_lee/",
 } as const;
@@ -77,7 +77,9 @@ export const AWARDS: Award[] = [
     slug: "best-of-cape-coral-2025",
     year: 2025,
     title: "Best of Cape Coral 2025",
-    category: "Plumbing",
+    // The published 2025 winners book lists C&S under Leak Detection Service —
+    // NOT the general "Plumbing Company" category, which went to another shop.
+    category: "Leak Detection Service",
     program: "Best of Cape Coral Readership Awards",
     issuer: "Cape Coral Breeze",
     issuerUrl: "https://www.capecoralbreeze.com",
@@ -86,7 +88,7 @@ export const AWARDS: Award[] = [
     badgeWidth: 793,
     badgeHeight: 593,
     summary:
-      "Voted Best of Cape Coral in the Plumbing category by Cape Coral Breeze readers in 2025.",
+      "Voted Best of Cape Coral for Leak Detection Service by Cape Coral Breeze readers in 2025.",
   },
 ];
 
@@ -97,6 +99,24 @@ export const AWARD_TRUST_LINE = `Best of Cape Coral ${[...AWARDS]
   .map((a) => a.year)
   .sort()
   .join(" & ")}`;
+
+// Single source of truth for how fast C&S responds to each inbound path.
+// The booking page previously promised "within the hour" in two places and
+// "within 1 business day" in a third — on the same screen. Every surface that
+// states a response or turnaround time must read from here.
+export const RESPONSE_CLAIMS = {
+  // Booking requests: fast during office hours, next morning after close.
+  bookingConfirm: "within the hour during business hours, next business day otherwise",
+  bookingConfirmShort: "within the hour during business hours",
+  // Written estimates for homeowners.
+  estimateTurnaround: "within 1 business day",
+  // General contact-form / chat replies.
+  contactReply: "within 1 business day",
+  // Builder / GC plan takeoffs — split by project type.
+  builderResidential: "24–48 hours",
+  builderCommercial: "3–5 business days",
+  builderAcknowledge: "the next business day",
+} as const;
 
 // ============================================
 // NAVIGATION
@@ -161,7 +181,7 @@ export const NAV_LINKS: NavLink[] = [
 export const STATS: Stat[] = [
   { value: 8500, suffix: "+", label: "Homes Built" },
   { value: 28, suffix: "+", label: "Years of Service" },
-  { value: 4, suffix: "%", label: "Top FL Contractors" },
+  { value: 2, suffix: "", label: "Active FL Licenses" },
   { value: 24, suffix: "/7", label: "Emergency Service" },
 ];
 
@@ -174,7 +194,6 @@ export const TRUST_PROOF_POINTS = [
   AWARD_TRUST_LINE,
   "24/7 emergency service",
   "Licensed & insured (CFC057076 / CFC1432485)",
-  "5.0-star Google rating",
   "Upfront, transparent pricing",
   "Same-day service available",
   "All work permitted & inspected",
@@ -345,7 +364,7 @@ export const TEAM_MEMBERS: TeamMember[] = [
     name: "Samuel Pellechio Jr.",
     role: "Owner & President",
     image: "/images/team/samuel.jpeg",
-    bio: "Second-generation plumber and co-founder — the “S” in C&S. A Cape Coral High grad who earned his plumbing license in 1997 and has led the company ever since with the values his father instilled: honest work, fair pricing, and treating every customer like family.",
+    bio: "Second-generation plumber and co-founder — the “S” in C&S. A Cape Coral High grad who earned his plumbing license in 1997, founded the company in 1998, and has led it ever since with the values his father instilled: honest work, fair pricing, and treating every customer like family.",
   },
   {
     name: "Aiden Pellechio",
@@ -671,7 +690,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
           "Yes. A whole-home repipe is one of the best investments you can make. It eliminates the risk of pipe failure, can improve water pressure, and is often required by insurance companies and home inspectors during a sale.",
       },
     ],
-    priceRange: "$4,000 – $15,000",
+    priceRange: "$4,000–$15,000",
     highlights: [
       "8,500+ homes repiped & plumbed",
       "1-2 day completion for most homes",

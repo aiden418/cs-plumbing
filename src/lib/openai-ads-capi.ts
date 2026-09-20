@@ -1,6 +1,6 @@
 /**
  * OpenAI Ads Conversions API (server-side). Pairs with the browser pixel in
- * src/lib/pixel.ts: both report the same conversion with the same id, so
+ * src/lib/analytics.ts: both report the same conversion with the same id, so
  * OpenAI dedupes them, and the server copy still lands when the browser
  * pixel is blocked (ad blockers, in-app browsers, cleared cookies).
  *
@@ -12,7 +12,7 @@
  * events[] with id/type/timestamp_ms/oppref/source_url/action_source/user/data.
  */
 import { createHash, randomUUID } from "node:crypto";
-import { OPENAI_PIXEL_ID } from "@/lib/pixel";
+import { OPENAI_PIXEL_ID } from "@/lib/analytics";
 import { getClientIp } from "@/lib/api/secure";
 
 const DEFAULT_ENDPOINT = "https://bzr.openai.com/v1/events";

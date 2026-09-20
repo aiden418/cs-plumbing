@@ -236,6 +236,7 @@ export default function RepipeQuiz({ onComplete }: RepipeQuizProps) {
       onNext={handleNext}
       onPrev={handlePrev}
       canProceed={canProceed()}
+      trackingService="repipe"
       nextLabel={step === 7 ? "See My Estimate" : undefined}
     >
       <div className="mb-4 sm:mb-6">

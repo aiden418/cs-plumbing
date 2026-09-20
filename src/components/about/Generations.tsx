@@ -31,7 +31,7 @@ const GENERATIONS: Generation[] = [
     name: "Chris & Sam — Founders",
     label: "Owner & President: Samuel Pellechio Jr.",
     image: "/images/team/chris-and-sam.jpg",
-    body: "Both Cape Coral High grads. Sam earned his plumbing license in December 1997 and, with his brother Chris and their father's backing, founded C&S Plumbing of Lee — C&S, for Chris and Sam. Sam has led it ever since: honest work, fair pricing, and treating every customer like family, growing C&S into one of Southwest Florida's most trusted plumbing companies.",
+    body: "Both Cape Coral High grads. Sam earned his plumbing license in December 1997 and, the following year, founded C&S Plumbing of Lee with his brother Chris and their father's backing — C&S, for Chris and Sam. Sam has led it ever since: honest work, fair pricing, and treating every customer like family, growing C&S into one of Southwest Florida's most trusted plumbing companies.",
   },
   {
     gen: "Third Generation",
