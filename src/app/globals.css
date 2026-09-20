@@ -229,15 +229,56 @@
   margin-bottom: -0.12em;
 }
 
-@utility word-mask-inner {
-  display: inline-block;
-  transform: translateY(110%);
-  transition: transform 0.9s var(--ease-out-expo);
-  will-change: transform;
+/* A CSS animation, not a JS-toggled class: the headline must reveal from
+   the server HTML alone, before (or without) hydration. */
+@keyframes word-up {
+  from {
+    transform: translateY(110%);
+  }
+  to {
+    transform: translateY(0);
+  }
 }
 
-@utility word-mask-on {
-  transform: translateY(0);
+@utility word-mask-inner {
+  display: inline-block;
+  animation: word-up 0.9s var(--ease-out-expo) both;
+}
+
+@keyframes underline-in {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@utility animate-underline-in {
+  animation: underline-in 0.8s var(--ease-out-expo) 1s both;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@utility animate-fade-in {
+  animation: fade-in 1s ease-out both;
+}
+
+@keyframes bob {
+  50% {
+    transform: translateY(8px);
+  }
+}
+
+@utility animate-bob {
+  animation: bob 2s ease-in-out infinite;
 }
 
 /* ========================================
@@ -325,6 +366,36 @@
   &:hover .animate-marquee-reverse {
     animation-play-state: paused;
   }
+}
+
+/* ========================================
+   SCROLL REVEAL (ScrollReveal / StaggerChildren)
+   ======================================== */
+
+/* Nothing is hidden until useReveal adds data-reveal="hidden" after
+   hydration, and only to elements below the fold — so server HTML, no-JS
+   visitors and crawlers always get visible content. */
+[data-reveal-kind="self"][data-reveal="hidden"] {
+  opacity: 0;
+  transform: translate(var(--reveal-x, 0), var(--reveal-y, 0)) scale(var(--reveal-scale, 1));
+}
+
+[data-reveal-kind="self"][data-reveal="visible"] {
+  transition:
+    opacity var(--reveal-duration, 0.7s) var(--ease-out-expo) var(--reveal-delay, 0s),
+    transform var(--reveal-duration, 0.7s) var(--ease-out-expo) var(--reveal-delay, 0s);
+}
+
+[data-reveal-kind="children"][data-reveal="hidden"] > * {
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+[data-reveal-kind="children"][data-reveal="visible"] > * {
+  transition:
+    opacity 0.6s var(--ease-out-expo),
+    transform 0.6s var(--ease-out-expo);
+  transition-delay: calc(var(--reveal-delay, 0s) + var(--reveal-stagger, 0.1s) * var(--reveal-i, 0));
 }
 
 /* ========================================

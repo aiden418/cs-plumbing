@@ -7,9 +7,12 @@ import {
   getClientIp,
   isHoneypotTripped,
   rateLimit,
+  sendEmailBestEffort,
+  sendEmailOrThrow,
   SMS_TO,
   tooManyRequests,
 } from "@/lib/api/secure";
+import { parseAttributionJson, renderAttributionHtml } from "@/lib/api/attribution";
 
 const MAX_ATTACHMENT_BYTES = 25 * 1024 * 1024;
 
@@ -25,6 +28,7 @@ const BuilderPortalSchema = z.object({
   startDate: z.string().max(40).optional().default(""),
   budget: z.string().max(60).optional().default(""),
   description: z.string().min(10).max(5000),
+  sourcePath: z.string().max(200).optional(),
   website: z.string().optional(),
 });
 
@@ -43,8 +47,9 @@ export async function POST(request: Request) {
     if (!parsed.success) {
       return NextResponse.json({ error: "Invalid submission" }, { status: 400 });
     }
-    const { name, company, email, phone, address, projectType, units, sqft, startDate, budget, description, website } =
+    const { name, company, email, phone, address, projectType, units, sqft, startDate, budget, description, sourcePath, website } =
       parsed.data;
+    const attribution = parseAttributionJson(raw.attribution);
 
     if (isHoneypotTripped(website)) {
       return NextResponse.json({ success: true });
@@ -147,28 +152,29 @@ export async function POST(request: Request) {
             ${fileCount > 0 ? `${fileCount} file${fileCount !== 1 ? "s" : ""} attached to this email` : "No files uploaded"}
           </p>
         </div>
+        ${renderAttributionHtml(attribution, sourcePath)}
       </div>
     `;
 
     // Send to business
-    await resend.emails.send({
+    await sendEmailOrThrow(resend, {
       from: "C&S Plumbing Website <bookings@csplumbinglee.com>",
       to: [ADMIN_EMAIL],
       replyTo: email,
       subject: `Builder Quote Request: ${company} — ${projectType} at ${address}`,
       html,
       ...(attachments.length > 0 && { attachments }),
-    });
+    }, "builder portal admin email");
 
     // SMS notification
     if (SMS_TO) {
       const smsText = `New builder quote: ${company} - ${projectType} at ${address}. ${fileCount} files. Phone: ${phone}`;
-      await resend.emails.send({
+      await sendEmailBestEffort(resend, {
         from: "C&S Plumbing Website <bookings@csplumbinglee.com>",
         to: [SMS_TO],
         subject: "Builder Quote Request",
         text: smsText.slice(0, 160),
-      });
+      }, "builder portal SMS notification");
     }
 
     return NextResponse.json({ success: true });

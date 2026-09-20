@@ -1,7 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { type ReactNode } from "react";
+import { useRef, type CSSProperties, type ReactNode } from "react";
+import { useReveal } from "./useReveal";
 
 interface StaggerChildrenProps {
   children: ReactNode;
@@ -11,28 +11,11 @@ interface StaggerChildrenProps {
   once?: boolean;
 }
 
-const container = (staggerDelay: number, delay: number) => ({
-  hidden: { opacity: 1 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: staggerDelay,
-      delayChildren: delay,
-    },
-  },
-});
-
-export const staggerItem = {
-  hidden: { opacity: 0, y: 40 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.6,
-      ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
-    },
-  },
-};
+// The stagger is now pure CSS on the container's direct children (see
+// useReveal + globals.css). Kept as an empty variants object so existing
+// `<motion.div variants={staggerItem}>` children keep compiling and render
+// as plain, visible elements.
+export const staggerItem = {};
 
 export default function StaggerChildren({
   children,
@@ -41,15 +24,17 @@ export default function StaggerChildren({
   className,
   once = true,
 }: StaggerChildrenProps) {
+  const ref = useRef<HTMLDivElement>(null);
+  useReveal(ref, { once, margin: 50 });
+
+  const style = {
+    "--reveal-stagger": `${staggerDelay}s`,
+    "--reveal-delay": `${delay}s`,
+  } as CSSProperties;
+
   return (
-    <motion.div
-      variants={container(staggerDelay, delay)}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once, margin: "-50px" }}
-      className={className}
-    >
+    <div ref={ref} data-reveal-kind="children" className={className} style={style}>
       {children}
-    </motion.div>
+    </div>
   );
 }

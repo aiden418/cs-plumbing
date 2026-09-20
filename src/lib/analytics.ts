@@ -133,6 +133,12 @@ export function trackTextClick() {
   );
 }
 
+// Email clicks are softer intent than a call or text: GA4/GTM + a Meta custom
+// event only, so they don't count as leads on the ad platforms.
+export function trackEmailClick() {
+  trackEngagement("email_click", { method: "mailto_link" });
+}
+
 /* ── Form conversions ───────────────────────────────────────────────── */
 
 export interface ConversionOptions {
@@ -156,11 +162,10 @@ async function trackFormConversion(
   meta: { event: string; params: Params },
   leadSource: string,
   opts?: ConversionOptions,
-  extra?: Params,
 ) {
   if (!opts?.eventId) return;
   if (opts.email) await identifyOaiqUser({ email: opts.email });
-  fire(meta, { name: "generate_lead", params: { lead_source: leadSource, ...extra } }, opts);
+  fire(meta, { name: "generate_lead", params: { lead_source: leadSource } }, opts);
 }
 
 /**

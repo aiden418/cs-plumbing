@@ -12,6 +12,7 @@ import {
   SMS_TO,
   tooManyRequests,
 } from "@/lib/api/secure";
+import { AttributionSchema, renderAttributionHtml } from "@/lib/api/attribution";
 import {
   captureRequestContext,
   newConversionId,
@@ -28,6 +29,7 @@ const ContactSchema = z.object({
   source: z.string().max(40).optional(),
   /** Pathname of the page the form was on; validated server-side before use. */
   sourcePath: z.string().max(200).optional(),
+  attribution: AttributionSchema,
   website: z.string().optional(),
 });
 
@@ -45,7 +47,7 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
-    const { name, email, phone, service, message, source, sourcePath, website } = parsed.data;
+    const { name, email, phone, service, message, source, sourcePath, attribution, website } = parsed.data;
 
     if (isHoneypotTripped(website)) {
       return NextResponse.json({ success: true });
@@ -85,6 +87,7 @@ export async function POST(request: Request) {
             <h3 style="color: #333; border-bottom: 2px solid #0099FF; padding-bottom: 8px; margin-top: 16px;">Message</h3>
             <p style="white-space: pre-wrap;">${safe.message}</p>
           </div>
+          ${renderAttributionHtml(attribution, sourcePath)}
           <div style="background: #0A0A0F; padding: 12px; text-align: center;">
             <p style="color: #666; margin: 0; font-size: 12px;">Sent from csplumbinglee.com</p>
           </div>

@@ -8,6 +8,7 @@ import DeferredWidgets from "@/components/layout/DeferredWidgets";
 import JsonLd from "@/components/seo/JsonLd";
 import MetaPixel from "@/components/analytics/MetaPixel";
 import OpenAIPixel from "@/components/analytics/OpenAIPixel";
+import AttributionCapture from "@/components/analytics/AttributionCapture";
 import GoogleAnalytics, { GoogleTagManagerNoScript } from "@/components/analytics/GoogleAnalytics";
 import SmoothScrollProvider from "@/components/providers/SmoothScrollProvider";
 
@@ -120,6 +121,7 @@ export default function RootLayout({
         </SmoothScrollProvider>
         <StickyMobileCTA />
         <DeferredWidgets />
+        <AttributionCapture />
         <MetaPixel />
         <OpenAIPixel />
         <GoogleAnalytics />

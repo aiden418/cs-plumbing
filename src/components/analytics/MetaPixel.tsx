@@ -2,12 +2,13 @@
 
 import { useEffect } from "react";
 import Script from "next/script";
-import { META_PIXEL_ID, trackPhoneClick, trackTextClick } from "@/lib/analytics";
+import { META_PIXEL_ID, trackEmailClick, trackPhoneClick, trackTextClick } from "@/lib/analytics";
 
 export default function MetaPixel() {
-  // Single sitewide source for tel: click conversions (Meta "Contact" and
-  // OpenAI "lead_created"). Components must not add their own onClick
-  // tracking to tel: links or every call tap is reported twice.
+  // Single sitewide source for tel:/sms:/mailto: click tracking (Meta
+  // "Contact", OpenAI "lead_created", GA4 phone_click/text_click/email_click).
+  // Components must not add their own onClick tracking to these links or
+  // every tap is reported twice.
   useEffect(() => {
     function handleClick(e: MouseEvent) {
       const target = e.target as HTMLElement;
@@ -15,6 +16,8 @@ export default function MetaPixel() {
         trackPhoneClick();
       } else if (target.closest('a[href^="sms:"]')) {
         trackTextClick();
+      } else if (target.closest('a[href^="mailto:"]')) {
+        trackEmailClick();
       }
     }
     document.addEventListener("click", handleClick);

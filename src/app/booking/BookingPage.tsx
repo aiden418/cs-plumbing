@@ -33,6 +33,7 @@ import {
   trackBookingStep,
   trackEstimateRequest,
 } from "@/lib/analytics";
+import { getAttribution } from "@/lib/attribution";
 
 const serviceCategories = [
   { id: "residential", label: "Residential", icon: <Home className="w-6 h-6" /> },
@@ -193,7 +194,11 @@ export default function BookingPage() {
       const res = await fetch("/api/booking", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, sourcePath: window.location.pathname }),
+        body: JSON.stringify({
+          ...form,
+          sourcePath: window.location.pathname,
+          attribution: getAttribution(),
+        }),
       });
       const data: {
         success?: boolean;

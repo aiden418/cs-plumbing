@@ -1,7 +1,7 @@
 "use client";
 
-import { motion, type Variants } from "framer-motion";
-import { type ReactNode } from "react";
+import { useRef, type CSSProperties, type ReactNode } from "react";
+import { useReveal } from "./useReveal";
 
 type Direction = "up" | "down" | "left" | "right" | "none";
 
@@ -16,35 +16,12 @@ interface ScrollRevealProps {
   scale?: number;
 }
 
-const getVariants = (
-  direction: Direction,
-  distance: number,
-  scale: number
-): Variants => {
-  const directionMap: Record<Direction, { x: number; y: number }> = {
-    up: { x: 0, y: distance },
-    down: { x: 0, y: -distance },
-    left: { x: distance, y: 0 },
-    right: { x: -distance, y: 0 },
-    none: { x: 0, y: 0 },
-  };
-
-  const { x, y } = directionMap[direction];
-
-  return {
-    hidden: {
-      opacity: 0,
-      x,
-      y,
-      scale,
-    },
-    visible: {
-      opacity: 1,
-      x: 0,
-      y: 0,
-      scale: 1,
-    },
-  };
+const OFFSETS: Record<Direction, [x: number, y: number]> = {
+  up: [0, 1],
+  down: [0, -1],
+  left: [1, 0],
+  right: [-1, 0],
+  none: [0, 0],
 };
 
 export default function ScrollReveal({
@@ -57,20 +34,21 @@ export default function ScrollReveal({
   className,
   scale = 1,
 }: ScrollRevealProps) {
+  const ref = useRef<HTMLDivElement>(null);
+  useReveal(ref, { once, margin: 80 });
+
+  const [x, y] = OFFSETS[direction];
+  const style = {
+    "--reveal-x": `${x * distance}px`,
+    "--reveal-y": `${y * distance}px`,
+    "--reveal-scale": scale,
+    "--reveal-duration": `${duration}s`,
+    "--reveal-delay": `${delay}s`,
+  } as CSSProperties;
+
   return (
-    <motion.div
-      variants={getVariants(direction, distance, scale)}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once, margin: "-80px" }}
-      transition={{
-        duration,
-        delay,
-        ease: [0.16, 1, 0.3, 1],
-      }}
-      className={className}
-    >
+    <div ref={ref} data-reveal-kind="self" className={className} style={style}>
       {children}
-    </motion.div>
+    </div>
   );
 }

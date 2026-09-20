@@ -70,10 +70,9 @@ export default function Navbar() {
 
   return (
     <>
-      <motion.nav
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      {/* No entrance animation: a nav that slides in from JS is off-screen in
+          the server HTML and invisible until hydration. */}
+      <nav
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-[background-color,border-color,box-shadow,translate] duration-300",
           isScrolled && "lg:-translate-y-9",
@@ -146,7 +145,7 @@ export default function Navbar() {
               {NAV_LINKS.map((link) => (
                 <div
                   key={link.href}
-                  className="relative"
+                  className="group relative"
                   onMouseEnter={() =>
                     link.children && setOpenDropdown(link.label)
                   }
@@ -179,22 +178,31 @@ export default function Navbar() {
                     )}
                   </Link>
 
-                  {/* Dropdown */}
-                  <AnimatePresence>
-                    {link.children && openDropdown === link.label && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 8 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 8 }}
-                        transition={{ duration: 0.2 }}
+                  {/* Dropdown — always in the DOM (hidden with CSS) so every
+                      service/area link is in the server HTML for crawlers,
+                      and it opens on keyboard focus as well as hover. */}
+                  {link.children && (
+                      <div
                         onMouseEnter={() => setOpenDropdown(link.label)}
-                        className="absolute top-full left-0 pt-2 w-56 z-50"
+                        className={cn(
+                          "absolute top-full left-0 pt-2 w-56 z-50 transition-[opacity,translate,visibility] duration-200",
+                          "group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-0",
+                          openDropdown === link.label
+                            ? "visible opacity-100 translate-y-0"
+                            : "invisible opacity-0 translate-y-2",
+                        )}
                       >
                         <div className="py-2 rounded-xl glass shadow-lg">
                           {link.children.map((child) => (
                             <Link
                               key={child.href}
                               href={child.href}
+                              onClick={(e) => {
+                                // Drop focus so :focus-within releases the menu
+                                // after a client-side navigation.
+                                e.currentTarget.blur();
+                                setOpenDropdown(null);
+                              }}
                               className={cn(
                                 "block px-4 py-2.5 text-sm transition-colors duration-200",
                                 pathname === child.href
@@ -206,9 +214,8 @@ export default function Navbar() {
                             </Link>
                           ))}
                         </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+                      </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -266,7 +273,7 @@ export default function Navbar() {
             </button>
           </div>
         </div>
-      </motion.nav>
+      </nav>
 
       {/* Mobile Menu Overlay */}
       <AnimatePresence>

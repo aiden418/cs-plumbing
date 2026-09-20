@@ -21,6 +21,7 @@ import BuilderPortalIntro from "@/components/builder-portal/BuilderPortalIntro";
 import WhatHappensNext from "@/components/ui/WhatHappensNext";
 import { BUSINESS } from "@/lib/constants";
 import { trackPlanUpload } from "@/lib/analytics";
+import { getAttribution } from "@/lib/attribution";
 import { cn } from "@/lib/utils";
 
 const steps = [
@@ -108,17 +109,31 @@ export default function BuilderPortalPage() {
       Object.entries(form).forEach(([key, val]) => body.append(key, val));
       // Files
       files.forEach((file) => body.append("files", file));
+      body.append("sourcePath", window.location.pathname);
+      const attribution = getAttribution();
+      if (attribution) body.append("attribution", JSON.stringify(attribution));
 
       const res = await fetch("/api/builder-portal", {
         method: "POST",
         body,
       });
 
-      if (!res.ok) throw new Error("Failed");
+      if (!res.ok) {
+        // 413: the host rejected the upload before our route ran, so there is
+        // no JSON body to read. Every other failure carries the server's own
+        // message (e.g. the attachment-size limit).
+        const data: { error?: string } = await res.json().catch(() => ({}));
+        throw new Error(
+          res.status === 413
+            ? `Those files are too large to upload here. Please email your plans to ${BUSINESS.email} or call ${BUSINESS.phone}.`
+            : data.error ?? "",
+        );
+      }
       trackPlanUpload(files.length);
       setSubmitted(true);
-    } catch {
-      alert("Something went wrong. Please call us directly at 833-PLUMB-IT.");
+    } catch (err) {
+      const message = err instanceof Error && err.message ? err.message : "";
+      alert(message || `Something went wrong. Please call us directly at ${BUSINESS.phone}.`);
     } finally {
       setSubmitting(false);
     }

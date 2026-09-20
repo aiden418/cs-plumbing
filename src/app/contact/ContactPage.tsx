@@ -14,6 +14,7 @@ import WhatHappensNext from "@/components/ui/WhatHappensNext";
 import { BUSINESS, RESPONSE_CLAIMS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { trackContactForm } from "@/lib/analytics";
+import { getAttribution } from "@/lib/attribution";
 
 const contactSchema = z.object({
   name: z.string().min(2, "Name is required"),
@@ -88,7 +89,11 @@ export default function ContactPage() {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, sourcePath: window.location.pathname }),
+        body: JSON.stringify({
+          ...data,
+          sourcePath: window.location.pathname,
+          attribution: getAttribution(),
+        }),
       });
       const result: { success?: boolean; eventId?: string } = await res
         .json()

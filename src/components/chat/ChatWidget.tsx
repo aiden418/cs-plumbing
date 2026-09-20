@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { BUSINESS } from "@/lib/constants";
 import { trackChatLead } from "@/lib/analytics";
+import { getAttribution } from "@/lib/attribution";
 
 type FormState = "idle" | "sending" | "sent" | "error";
 
@@ -47,6 +48,7 @@ export default function ChatWidget() {
           message: `${issue}\n\nPreferred reply: ${textBack ? "text message" : "phone call"}`,
           source: "chat",
           sourcePath: window.location.pathname,
+          attribution: getAttribution(),
         }),
       });
       const result: { success?: boolean; eventId?: string } = await res

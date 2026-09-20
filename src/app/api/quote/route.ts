@@ -12,6 +12,7 @@ import {
   SMS_TO,
   tooManyRequests,
 } from "@/lib/api/secure";
+import { AttributionSchema, renderAttributionHtml } from "@/lib/api/attribution";
 import {
   captureRequestContext,
   newConversionId,
@@ -41,6 +42,7 @@ const QuoteSchema = z.object({
     phone: z.string().min(7).max(30),
   }),
   sourcePath: z.string().max(200).optional(),
+  attribution: AttributionSchema,
   website: z.string().optional(),
 });
 
@@ -58,7 +60,7 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
-    const { service, selections, result, lead, sourcePath, website } = parsed.data;
+    const { service, selections, result, lead, sourcePath, attribution, website } = parsed.data;
 
     if (isHoneypotTripped(website)) {
       return NextResponse.json({ success: true });
@@ -138,6 +140,7 @@ export async function POST(request: Request) {
             <h3 style="color: #333; border-bottom: 2px solid #0099FF; padding-bottom: 8px; margin-top: 20px;">Notes</h3>
             <ul style="padding-left: 20px; font-size: 14px;">${notesHtml}</ul>
           </div>
+          ${renderAttributionHtml(attribution, sourcePath)}
           <div style="background: #0A0A0F; padding: 12px; text-align: center;">
             <p style="color: #666; margin: 0; font-size: 12px;">Sent from csplumbinglee.com quote builder</p>
           </div>

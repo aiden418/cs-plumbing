@@ -12,6 +12,7 @@ import {
   SMS_TO,
   tooManyRequests,
 } from "@/lib/api/secure";
+import { AttributionSchema, renderAttributionHtml } from "@/lib/api/attribution";
 import {
   captureRequestContext,
   newConversionId,
@@ -31,6 +32,7 @@ const BookingSchema = z.object({
   phone: z.string().min(7).max(30),
   address: z.string().min(5).max(300),
   sourcePath: z.string().max(200).optional(),
+  attribution: AttributionSchema,
   website: z.string().optional(),
 });
 
@@ -118,6 +120,7 @@ export async function POST(request: Request) {
             <p><strong>Phone:</strong> <a href="tel:${safe.phone}">${safe.phone}</a></p>
             <p><strong>Address:</strong> ${safe.address}</p>
           </div>
+          ${renderAttributionHtml(data.attribution, data.sourcePath)}
           <div style="background: #0A0A0F; padding: 12px; text-align: center;">
             <p style="color: #666; margin: 0; font-size: 12px;">Sent from csplumbinglee.com</p>
           </div>

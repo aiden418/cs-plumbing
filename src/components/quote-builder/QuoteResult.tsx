@@ -14,6 +14,7 @@ import Button from "@/components/ui/Button";
 import { BUSINESS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { trackQuoteBuilder } from "@/lib/analytics";
+import { getAttribution } from "@/lib/attribution";
 import type {
   QuoteResult as QuoteResultType,
   WaterHeaterSelections,
@@ -70,6 +71,7 @@ export default function QuoteResult({
           result,
           lead,
           sourcePath: window.location.pathname,
+          attribution: getAttribution(),
         }),
       });
       const data: { success?: boolean; eventId?: string } = await res
