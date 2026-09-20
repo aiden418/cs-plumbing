@@ -3,6 +3,7 @@ import PageTransition from "@/components/layout/PageTransition";
 import ServiceDetail from "@/components/services/ServiceDetail";
 import CTASection from "@/components/home/CTASection";
 import FaqJsonLd from "@/components/seo/FaqJsonLd";
+import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import FaqAccordion from "@/components/ui/FaqAccordion";
 import Container from "@/components/ui/Container";
 import { BUSINESS, SERVICES } from "@/lib/constants";
@@ -95,6 +96,13 @@ export default function ResidentialPage() {
   return (
     <PageTransition>
       <FaqJsonLd faqs={RESIDENTIAL_FAQS} />
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", href: "/" },
+          { name: "Services", href: "/services" },
+          { name: "Residential Plumbing", href: "/services/residential" },
+        ]}
+      />
       <ResidentialServiceJsonLd />
       <ServiceDetail
         title="Residential Services"

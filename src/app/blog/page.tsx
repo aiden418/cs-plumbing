@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import PageTransition from "@/components/layout/PageTransition";
 import BlogIndexPage from "./BlogIndexPage";
+import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
+import ItemListJsonLd from "@/components/seo/ItemListJsonLd";
+import { BLOG_POSTS } from "@/lib/constants";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/blog" },
@@ -25,6 +28,25 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <PageTransition>
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", href: "/" },
+          { name: "Blog", href: "/blog" },
+        ]}
+      />
+      <ItemListJsonLd
+        itemListType="Blog"
+        name="Plumbing Tips & Blog"
+        description="Expert plumbing guides for Southwest Florida homeowners."
+        url="/blog"
+        items={[...BLOG_POSTS]
+          .sort((a, b) => b.publishDate.localeCompare(a.publishDate))
+          .map((post) => ({
+            name: post.title,
+            href: `/blog/${post.slug}`,
+            description: post.excerpt,
+          }))}
+      />
       <BlogIndexPage />
     </PageTransition>
   );

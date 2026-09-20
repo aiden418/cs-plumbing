@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Wrench,
@@ -25,9 +25,9 @@ import Button from "@/components/ui/Button";
 import PageTransition from "@/components/layout/PageTransition";
 import PageHero from "@/components/ui/PageHero";
 import WhatHappensNext from "@/components/ui/WhatHappensNext";
-import { BUSINESS } from "@/lib/constants";
+import { BUSINESS, RESPONSE_CLAIMS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
-import { trackBooking, trackPhoneClick } from "@/lib/pixel";
+import { trackBooking, trackBookingStart, trackBookingStep } from "@/lib/analytics";
 
 const serviceCategories = [
   { id: "residential", label: "Residential", icon: <Home className="w-6 h-6" /> },
@@ -90,6 +90,7 @@ interface FormData {
 export default function BookingPage() {
   const [requestType, setRequestType] = useState<"booking" | "estimate">("booking");
   const [step, setStep] = useState(0);
+  const startedRef = useRef(false);
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [confirmationId, setConfirmationId] = useState<string | null>(null);
@@ -198,7 +199,7 @@ export default function BookingPage() {
         throw new Error(data.error ?? "Submission failed");
       }
       if (data.confirmationId) setConfirmationId(data.confirmationId);
-      trackBooking();
+      trackBooking(requestType);
       setSubmitted(true);
     } catch {
       alert("Something went wrong. Please call us directly.");
@@ -208,6 +209,13 @@ export default function BookingPage() {
   };
 
   const next = () => {
+    // One booking_start per visit, on the first advance out of step 0.
+    if (step === 0 && !startedRef.current) {
+      startedRef.current = true;
+      trackBookingStart(requestType);
+    }
+    trackBookingStep(step + 1, steps[step]?.label ?? `Step ${step + 1}`, requestType);
+
     if (step === totalSteps - 1) {
       handleSubmit();
       setStep(totalSteps);
@@ -247,7 +255,7 @@ export default function BookingPage() {
         description={
           isEstimate
             ? "Tell us about your project and we\u2019ll get back to you with a quote."
-            : "Book online in under 2 minutes. We\u2019ll confirm your appointment within the hour."
+            : `Book online in under 2 minutes. We\u2019ll confirm your appointment ${RESPONSE_CLAIMS.bookingConfirm}.`
         }
       >
         {/* Sticky CTA bar is hidden on /booking, so keep a call path above the fold */}
@@ -255,7 +263,6 @@ export default function BookingPage() {
           Prefer to talk?{" "}
           <a
             href={`tel:${BUSINESS.phoneRaw}`}
-            onClick={trackPhoneClick}
             className="inline-flex items-center gap-1.5 font-bold text-gold hover:underline"
           >
             <Phone className="w-3.5 h-3.5" />
@@ -570,8 +577,8 @@ export default function BookingPage() {
                   )}
                   <p className="text-sm sm:text-base text-gray-500 mb-6 sm:mb-8 max-w-md mx-auto">
                     {isEstimate
-                      ? "We\u2019ll review your project details and get back to you with a quote within 24 hours. For urgent needs, call us directly."
-                      : "We\u2019ll call to confirm your appointment within the hour. A copy was sent to "}
+                      ? `We\u2019ll review your project details and get back to you with a quote ${RESPONSE_CLAIMS.estimateTurnaround}. For urgent needs, call us directly.`
+                      : `We\u2019ll call to confirm your appointment ${RESPONSE_CLAIMS.bookingConfirm}. A copy was sent to `}
                     {!isEstimate && <span className="font-semibold text-gray-900">{form.email}</span>}
                     {!isEstimate && "."}
                   </p>
@@ -636,7 +643,7 @@ export default function BookingPage() {
           {
             title: "We call to confirm",
             description:
-              "Expect a call within 1 business day. We confirm the appointment window and answer any quick questions.",
+              `Expect a call ${RESPONSE_CLAIMS.bookingConfirm}. We confirm the appointment window and answer any quick questions.`,
           },
           {
             title: "Tech arrives on time",

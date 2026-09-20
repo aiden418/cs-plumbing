@@ -19,7 +19,7 @@ const reasons = [
     icon: <Award className="w-5 h-5 sm:w-6 sm:h-6" />,
     title: "Best of Cape Coral 2025",
     description:
-      "Voted Cape Coral's best plumbing company — and rated 5.0 stars across 46 Google reviews by the homeowners we serve.",
+      "Winner in the Leak Detection Service category — and rated 5.0 stars on Google by the homeowners we serve.",
   },
   {
     icon: <Clock className="w-5 h-5 sm:w-6 sm:h-6" />,

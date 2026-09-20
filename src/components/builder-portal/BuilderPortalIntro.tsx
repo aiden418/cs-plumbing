@@ -63,7 +63,7 @@ const PROCESS_STEPS = [
   {
     title: "Takeoff & proposal",
     description:
-      "Detailed plumbing takeoff and written proposal back to you within 3–5 business days.",
+      "Detailed plumbing takeoff and written proposal — 24–48 hours for residential, 3–5 business days for commercial.",
   },
   {
     title: "Kickoff scheduled",
@@ -120,7 +120,8 @@ export default function BuilderPortalIntro() {
             </p>
             <p className="text-base sm:text-lg text-white/70 leading-relaxed mb-8 sm:mb-10">
               Upload your plans below. We&apos;ll come back with a detailed takeoff
-              and proposal within 3–5 business days — no upfront cost, no commitment.
+              and proposal — 24–48 hours for residential, 3–5 business days for
+              commercial — no upfront cost, no commitment.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
               <Button href="#upload-plans" variant="gold" size="lg">

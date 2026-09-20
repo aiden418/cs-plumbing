@@ -62,7 +62,7 @@ function HowToJsonLd() {
               "@type": "HowToStep",
               position: 4,
               name: "Receive Your Detailed Quote",
-              text: "C&S Plumbing reviews your plans and delivers a detailed plumbing quote within 24-48 hours, including scope breakdown and scheduling.",
+              text: "C&S Plumbing reviews your plans and delivers a detailed plumbing quote — typically 24–48 hours for residential, 3–5 business days for commercial — including scope breakdown and scheduling.",
             },
           ],
         }),

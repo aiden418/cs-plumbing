@@ -7,6 +7,7 @@ import StickyMobileCTA from "@/components/layout/StickyMobileCTA";
 import DeferredWidgets from "@/components/layout/DeferredWidgets";
 import JsonLd from "@/components/seo/JsonLd";
 import MetaPixel from "@/components/analytics/MetaPixel";
+import GoogleAnalytics, { GoogleTagManagerNoScript } from "@/components/analytics/GoogleAnalytics";
 import SmoothScrollProvider from "@/components/providers/SmoothScrollProvider";
 
 const inter = Inter({
@@ -104,6 +105,7 @@ export default function RootLayout({
         <JsonLd />
       </head>
       <body className={`${inter.variable} ${montserrat.variable} antialiased`}>
+        <GoogleTagManagerNoScript />
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:bg-primary focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:font-semibold"
@@ -118,6 +120,7 @@ export default function RootLayout({
         <StickyMobileCTA />
         <DeferredWidgets />
         <MetaPixel />
+        <GoogleAnalytics />
       </body>
     </html>
   );

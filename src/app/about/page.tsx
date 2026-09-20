@@ -13,18 +13,18 @@ import Credentials from "@/components/about/Credentials";
 import TrainingTrade from "@/components/about/TrainingTrade";
 import CTASection from "@/components/home/CTASection";
 import AboutPersonJsonLd from "@/components/seo/AboutPersonJsonLd";
+import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/about" },
   title: "About Us",
   description:
-    "Three generations of the Pellechio family, family-owned since 1998 and 8,500+ homes plumbed. Meet the team behind C&S Plumbing of Lee — Southwest Florida's most trusted plumber. Best of Cape Coral 2025.",
+    "Three generations of the Pellechio family, family-owned since 1998 and 8,500+ homes plumbed. Meet the team behind C&S Plumbing of Lee — Southwest Florida's most trusted plumber. Best of Cape Coral 2025 for Leak Detection.",
   keywords: [
     "C&S Plumbing about",
     "Pellechio family plumbing",
     "family-owned plumber Cape Coral",
     "plumbing company Lee County history",
-    "best plumber Cape Coral 2025",
     "trusted plumber Southwest Florida",
     "licensed plumber Fort Myers",
   ],
@@ -39,6 +39,12 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <PageTransition>
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", href: "/" },
+          { name: "About", href: "/about" },
+        ]}
+      />
       {/* ===== Hero ===== */}
       <section className="relative overflow-hidden bg-navy pt-28 pb-16 sm:pt-32 sm:pb-20">
         <div className="pointer-events-none absolute -top-32 left-1/3 h-[480px] w-[480px] -translate-x-1/2 rounded-full bg-primary/25 blur-[120px]" />
@@ -90,7 +96,7 @@ export default function AboutPage() {
                     Best of Cape Coral 2025
                   </p>
                   <p className="text-[10px] sm:text-xs text-white/50">
-                    Award-Winning Plumbing Company
+                    Leak Detection Service
                   </p>
                 </div>
               </div>

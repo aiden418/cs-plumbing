@@ -157,7 +157,7 @@ export default function PartnersPage() {
           <ScrollReveal>
             <div className="max-w-3xl mx-auto text-center mt-12 sm:mt-16">
               <p className="text-sm text-gray-400 leading-relaxed">
-                Looking for a plumber instead? C&amp;S Plumbing of Lee County offers{" "}
+                Looking for a plumber instead? C&amp;S Plumbing of Lee offers{" "}
                 <Link href="/services" className="text-primary hover:underline">
                   full-service plumbing
                 </Link>

@@ -2,13 +2,17 @@
 
 import { useEffect } from "react";
 import Script from "next/script";
-import { META_PIXEL_ID, trackPhoneClick } from "@/lib/pixel";
+import { META_PIXEL_ID, trackPhoneClick, trackTextClick } from "@/lib/analytics";
 
 export default function MetaPixel() {
   useEffect(() => {
     function handleClick(e: MouseEvent) {
-      const link = (e.target as HTMLElement).closest('a[href^="tel:"]');
-      if (link) trackPhoneClick();
+      const target = e.target as HTMLElement;
+      if (target.closest('a[href^="tel:"]')) {
+        trackPhoneClick();
+      } else if (target.closest('a[href^="sms:"]')) {
+        trackTextClick();
+      }
     }
     document.addEventListener("click", handleClick);
     return () => document.removeEventListener("click", handleClick);

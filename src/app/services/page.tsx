@@ -7,6 +7,8 @@ import CostEstimator from "@/components/estimator/CostEstimator";
 import SectionHeading from "@/components/ui/SectionHeading";
 import CTASection from "@/components/home/CTASection";
 import { SERVICES } from "@/lib/constants";
+import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
+import ItemListJsonLd from "@/components/seo/ItemListJsonLd";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/services" },
@@ -35,6 +37,22 @@ export const metadata: Metadata = {
 export default function ServicesPage() {
   return (
     <PageTransition>
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", href: "/" },
+          { name: "Services", href: "/services" },
+        ]}
+      />
+      <ItemListJsonLd
+        name="Plumbing Services"
+        description="Every plumbing service C&S Plumbing of Lee offers across Southwest Florida."
+        url="/services"
+        items={SERVICES.map((service) => ({
+          name: service.title,
+          href: service.href,
+          description: service.description,
+        }))}
+      />
       {/* Hero */}
       <PageHero
         align="center"

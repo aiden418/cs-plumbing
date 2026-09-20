@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { AREA_LANDINGS, BLOG_POSTS, COMPLETED_PROJECTS } from "@/lib/constants";
+import { blogCategories } from "@/lib/blog";
 import { SERVICE_CITY_LANDINGS } from "@/lib/service-city-landings";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -14,6 +15,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: new Date(post.updatedDate ?? post.publishDate),
     changeFrequency: "monthly" as const,
     priority: 0.7,
+  }));
+
+  const blogCategoryPages = blogCategories().map((c) => ({
+    url: `${baseUrl}/blog/category/${c.slug}`,
+    lastModified: LAST_CONTENT_PASS,
+    changeFrequency: "monthly" as const,
+    priority: 0.6,
   }));
 
   return [
@@ -217,6 +225,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     },
     ...blogPages,
+    ...blogCategoryPages,
     // Service + City landing pages
     ...SERVICE_CITY_LANDINGS.map((page) => ({
       url: `${baseUrl}/${page.slug}`,

@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Tag } from "lucide-react";
 import Link from "next/link";
-import { trackEvent } from "@/lib/pixel";
+import { trackEvent } from "@/lib/analytics";
 
 const STORAGE_KEY = "cs-coupon-seen";
 const REARM_DAYS = 30;

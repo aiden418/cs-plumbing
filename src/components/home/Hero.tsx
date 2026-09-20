@@ -257,7 +257,7 @@ export default function Hero() {
                   Best of Cape Coral 2025
                 </p>
                 <p className="text-xs text-white/60">
-                  Award-Winning Plumbing
+                  Leak Detection Service
                 </p>
               </div>
             </div>
@@ -284,7 +284,7 @@ export default function Hero() {
                 Best of Cape Coral 2025
               </p>
               <p className="text-xs text-white/60">
-                Award-Winning Plumbing
+                Leak Detection Service
               </p>
             </div>
           </div>

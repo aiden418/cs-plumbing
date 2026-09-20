@@ -10,6 +10,7 @@ import WaterHeaterQuiz from "@/components/quote-builder/WaterHeaterQuiz";
 import RepipeQuiz from "@/components/quote-builder/RepipeQuiz";
 import QuoteResult from "@/components/quote-builder/QuoteResult";
 import { cn } from "@/lib/utils";
+import { RESPONSE_CLAIMS } from "@/lib/constants";
 import type {
   ServiceType,
   WaterHeaterSelections,
@@ -72,7 +73,7 @@ export default function QuoteBuilderPage() {
           </span>
           <span className="inline-flex items-center gap-1.5">
             <span className="flex items-center justify-center w-5 h-5 rounded-full bg-gold text-navy text-[10px] font-bold">3</span>
-            C&amp;S confirms within 1 business day
+            C&amp;S confirms {RESPONSE_CLAIMS.estimateTurnaround}
           </span>
         </div>
       </PageHero>

@@ -20,6 +20,7 @@ import FileUpload from "@/components/builder-portal/FileUpload";
 import BuilderPortalIntro from "@/components/builder-portal/BuilderPortalIntro";
 import WhatHappensNext from "@/components/ui/WhatHappensNext";
 import { BUSINESS } from "@/lib/constants";
+import { trackPlanUpload } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 
 const steps = [
@@ -114,6 +115,7 @@ export default function BuilderPortalPage() {
       });
 
       if (!res.ok) throw new Error("Failed");
+      trackPlanUpload(files.length);
       setSubmitted(true);
     } catch {
       alert("Something went wrong. Please call us directly at 833-PLUMB-IT.");
@@ -149,8 +151,9 @@ export default function BuilderPortalPage() {
                 {files.length > 0 && ` and ${files.length} file${files.length !== 1 ? "s" : ""}`}.
               </p>
               <p className="text-gray-500 mb-8">
-                Our team will review your plans and get back to you within 1 business day
-                with a detailed scope and quote.
+                A project manager picks up your plans the next business day. Detailed
+                scope and quote follow in 24–48 hours for residential, 3–5 business
+                days for commercial.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Button href="/" variant="secondary">
@@ -187,8 +190,8 @@ export default function BuilderPortalPage() {
               </h2>
               <p className="text-gray-500 text-sm sm:text-base max-w-lg mx-auto">
                 Four short steps — contact info, project details, plans, then
-                review. We&apos;ll get back to you with a detailed scope and
-                quote within 3–5 business days.
+                review. Detailed scope and quote back in 24–48 hours for
+                residential, 3–5 business days for commercial.
               </p>
             </div>
 
@@ -597,7 +600,7 @@ export default function BuilderPortalPage() {
           {
             title: "Written proposal",
             description:
-              "Detailed proposal back to you within 3–5 business days — scope, materials, schedule, price, and warranty terms.",
+              "Detailed proposal back to you in 24–48 hours for residential, 3–5 business days for commercial — scope, materials, schedule, price, and warranty terms.",
           },
           {
             title: "Kickoff scheduled",

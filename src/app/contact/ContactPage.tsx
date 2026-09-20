@@ -11,9 +11,9 @@ import PageTransition from "@/components/layout/PageTransition";
 import PageHero from "@/components/ui/PageHero";
 import ScrollReveal from "@/components/animations/ScrollReveal";
 import WhatHappensNext from "@/components/ui/WhatHappensNext";
-import { BUSINESS } from "@/lib/constants";
+import { BUSINESS, RESPONSE_CLAIMS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
-import { trackContactForm } from "@/lib/pixel";
+import { trackContactForm } from "@/lib/analytics";
 
 const contactSchema = z.object({
   name: z.string().min(2, "Name is required"),
@@ -333,7 +333,7 @@ export default function ContactPage() {
               "Use the form, email, or call. Tell us what you need — we route it to the right person on our team.",
           },
           {
-            title: "Reply within 1 business day",
+            title: `Reply ${RESPONSE_CLAIMS.contactReply}`,
             description:
               "Most messages get a response within a few hours during business hours. Urgent? Call 833-PLUMB-IT.",
           },

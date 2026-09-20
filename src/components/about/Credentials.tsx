@@ -8,7 +8,7 @@ import { BUSINESS } from "@/lib/constants";
 const STATS = [
   { value: "28+", label: "Years in business" },
   { value: "8,500+", label: "Homes plumbed" },
-  { value: "5.0★", label: "46 Google reviews" },
+  { value: "5.0★", label: "Google rating" },
   { value: "2025", label: "Best of Cape Coral" },
 ];
 
@@ -25,8 +25,8 @@ const credentials = [
   },
   {
     icon: <Award className="w-5 h-5" />,
-    title: "Best of Cape Coral 2025",
-    body: "Voted Best Plumbing Company in Cape Coral by the local community — backed by 8,500+ homes plumbed and a 5.0-star rating across 46 Google reviews.",
+    title: "Best of Cape Coral 2025 — Leak Detection Service",
+    body: "Winner in the Leak Detection Service category, awarded by the Cape Coral Breeze — backed by 8,500+ homes plumbed and a 5.0-star Google rating.",
   },
   {
     icon: <Building2 className="w-5 h-5" />,

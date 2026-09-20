@@ -8,6 +8,7 @@ import CountUp from "@/components/animations/CountUp";
 import Button from "@/components/ui/Button";
 import CTASection from "@/components/home/CTASection";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
+import SimpleServiceJsonLd from "@/components/seo/SimpleServiceJsonLd";
 import FaqJsonLd from "@/components/seo/FaqJsonLd";
 import StaggerChildren, {
   staggerItem,
@@ -263,6 +264,19 @@ export default function NewConstructionPage() {
 
       <BreadcrumbJsonLd items={[{ name: "Home", href: "/" }, { name: "Services", href: "/services" }, { name: "New Construction", href: "/services/new-construction" }]} />
       <FaqJsonLd faqs={newConstructionFaqs} />
+      <SimpleServiceJsonLd
+        slug="new-construction"
+        name="New Construction Plumbing"
+        description="Complete new-construction plumbing for builders and general contractors across Southwest Florida — underground, rough-in, top-out, and trim, with permit and inspection coordination."
+        offers={[
+          "Underground Plumbing & Slab Rough-In",
+          "Top-Out & Trim Plumbing",
+          "Permit Coordination",
+          "Inspection Scheduling",
+          "Plumbing Takeoffs & Estimating",
+          "Production & Custom Home Plumbing",
+        ]}
+      />
       <CTASection />
     </PageTransition>
   );

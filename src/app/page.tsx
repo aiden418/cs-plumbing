@@ -34,7 +34,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
   title: "Plumber in Cape Coral & Fort Myers | 24/7 Emergency Service",
   description:
-    "Southwest Florida's trusted new construction, remodel, repipe, and service plumber. 8,500+ homes built since 1998. Best of Cape Coral 2025. Serving Cape Coral, Fort Myers, North Fort Myers, Punta Gorda, Port Charlotte & Naples — Lee, Charlotte & Collier counties. 24/7 emergency available.",
+    "Southwest Florida's trusted new construction, remodel, repipe, and service plumber. 8,500+ homes built since 1998. Best of Cape Coral 2025 for Leak Detection. Serving Cape Coral, Fort Myers, North Fort Myers, Punta Gorda, Port Charlotte & Naples — Lee, Charlotte & Collier counties. 24/7 emergency available.",
   keywords: [
     "new construction plumber SWFL",
     "new construction plumbing Cape Coral",

@@ -1,14 +1,7 @@
-import { BUSINESS } from "@/lib/constants";
-import { fetchPlaceData } from "@/lib/google-reviews";
+import { AWARD, BUSINESS } from "@/lib/constants";
 
 export default async function JsonLd() {
   const BASE = "https://www.csplumbinglee.com";
-
-  // Live Google rating when configured (24h-cached, deduped with the
-  // homepage reviews strip); falls back to the static constants.
-  const live = await fetchPlaceData(0);
-  const ratingValue = (live?.rating ?? BUSINESS.rating).toFixed(1);
-  const reviewCount = String(live?.total ?? BUSINESS.reviewCount);
 
   /* ── Person entities (reusable via @id) ── */
   const founder = {
@@ -243,43 +236,8 @@ export default async function JsonLd() {
       ],
     },
 
-    /* ── Ratings & Reviews ── */
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue,
-      reviewCount,
-      bestRating: "5",
-      worstRating: "1",
-    },
-    review: [
-      {
-        "@type": "Review",
-        author: { "@type": "Person", name: "Dennis Shy" },
-        datePublished: "2025-01-15",
-        reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
-        reviewBody:
-          "Reasonable price. Great Company 100% Responsive and quick to show up and get the work done. I will use this company any time I have a plumbing need and would definitely recommend them to anyone.",
-      },
-      {
-        "@type": "Review",
-        author: { "@type": "Person", name: "Richard Pace" },
-        datePublished: "2025-02-10",
-        reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
-        reviewBody:
-          "Great service! Friendly people! They answered all my questions and made suggestions that were helpful. They only know how to do things one way, and that's the right way!",
-      },
-      {
-        "@type": "Review",
-        author: { "@type": "Person", name: "Linda" },
-        datePublished: "2024-11-20",
-        reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
-        reviewBody:
-          "Could not be happier with Sam and his team. They did a fabulous job, efficient, prompt and cleaned up beautifully. I highly recommend them. And this is a family business which we all should support.",
-      },
-    ],
-
     /* ── Awards ── */
-    award: ["Best of Cape Coral 2025 — Plumbing"],
+    award: [AWARD.full],
 
     /* ── Citations to Authoritative Sources ── */
     citation: [
