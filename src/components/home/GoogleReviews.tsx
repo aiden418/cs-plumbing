@@ -7,7 +7,7 @@ import { fetchPlaceData } from "@/lib/google-reviews";
 function Stars({ rating, className = "w-4 h-4" }: { rating: number; className?: string }) {
   const filled = Math.round(rating);
   return (
-    <span className="inline-flex gap-0.5" aria-label={`${rating} out of 5 stars`}>
+    <span className="inline-flex gap-0.5" role="img" aria-label={`${rating} out of 5 stars`}>
       {Array.from({ length: 5 }).map((_, i) => (
         <Star
           key={i}

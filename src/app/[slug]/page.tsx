@@ -26,7 +26,9 @@ export async function generateMetadata({
   if (!landing) return {};
 
   return {
-    title: landing.metaTitle,
+    // Absolute: these titles already carry service + city + a hook; the
+    // brand template made them 70–85 characters and truncated in results.
+    title: { absolute: landing.metaTitle },
     description: landing.metaDescription,
     keywords: landing.keywords,
     alternates: { canonical: `/${landing.slug}` },

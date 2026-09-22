@@ -16,7 +16,10 @@
   --color-white: #FFFFFF;
   --color-gray-100: #F3F4F6;
   --color-gray-300: #D2D2D7;
-  --color-gray-500: #86868B;
+  /* #6E6E73 (Apple secondary label) clears WCAG AA on white (5.1:1) and on
+     the #F5F5F7 surface (4.6:1). The previous #86868B was 3.6:1 and failed
+     the contrast audit on every page. */
+  --color-gray-500: #6E6E73;
   --color-gray-700: #1D1D1F;
   --color-emergency: #FF3B30;
   --color-success: #34C759;
@@ -227,15 +230,37 @@
   margin-bottom: -0.12em;
 }
 
+/* Keyframe-driven so the headline reveals from first paint without waiting
+   for hydration. Per-word stagger comes from an inline animation-delay. */
 @utility word-mask-inner {
   display: inline-block;
   transform: translateY(110%);
-  transition: transform 0.9s var(--ease-out-expo);
+  animation: word-in 0.9s var(--ease-out-expo) both;
   will-change: transform;
 }
 
-@utility word-mask-on {
-  transform: translateY(0);
+@keyframes word-in {
+  from {
+    transform: translateY(110%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* Gold underline under the accent line, drawn after the words land. */
+@utility animate-underline-in {
+  transform: scaleX(0);
+  animation: underline-in 0.8s var(--ease-out-expo) 1s both;
+}
+
+@keyframes underline-in {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
 }
 
 /* ========================================
@@ -338,7 +363,9 @@
   }
 
   /* Headline must be readable even if the reveal transition never runs */
-  .word-mask-inner {
+  .word-mask-inner,
+  .animate-underline-in {
+    animation: none !important;
     transform: none !important;
   }
 }

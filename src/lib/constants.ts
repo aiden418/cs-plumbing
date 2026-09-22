@@ -134,6 +134,7 @@ export const NAV_LINKS: NavLink[] = [
       { label: "Lehigh Acres", href: "/areas/lehigh-acres" },
       { label: "Estero", href: "/areas/estero" },
       { label: "Sanibel Island", href: "/areas/sanibel" },
+      { label: "Fort Myers Beach", href: "/areas/fort-myers-beach" },
       { label: "Punta Gorda", href: "/areas/punta-gorda" },
       { label: "Port Charlotte", href: "/areas/port-charlotte" },
     ],
@@ -141,7 +142,9 @@ export const NAV_LINKS: NavLink[] = [
   { label: "Coastal Comeback", href: "/coastal-comeback-plan" },
   { label: "Contact", href: "/contact" },
   {
-    label: "More",
+    // "Explore" rather than "More": the top-level item is a real link and
+    // "More" is on the generic-link-text list search engines discount.
+    label: "Explore",
     href: "/gallery",
     children: [
       { label: "Gallery", href: "/gallery" },
@@ -1444,7 +1447,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
     metaTitle:
       "UEP Hookup Cape Coral | Water, Sewer & Septic",
     metaDescription:
-      "Full-service UEP utilities hookup in Cape Coral. Water service $13-15/ft, irrigation $9-10/ft, sewer $25-33/ft, septic abandonment $2,500. All permits included. Call 833-PLUMB-IT.",
+      "Cape Coral UEP hookup: water $13-15/ft, irrigation $9-10/ft, sewer $25-33/ft, septic abandonment $2,500. All permits included. Call 833-PLUMB-IT.",
     keywords: [
       "UEP Cape Coral",
       "UEP utilities hookup",
@@ -1664,9 +1667,9 @@ export const AREA_LANDINGS: AreaLanding[] = [
     slug: "north-fort-myers",
     city: "North Fort Myers",
     state: "FL",
-    metaTitle: "Plumber in North Fort Myers, FL — Our Hometown",
+    metaTitle: "North Fort Myers Plumber — Our Hometown",
     metaDescription:
-      "North Fort Myers' hometown plumber since 1998. C&S Plumbing is headquartered right here on Pondella Rd. Emergency service, repiping, drains & more. Call 833-PLUMB-IT.",
+      "North Fort Myers' hometown plumber since 1998, headquartered on Pondella Rd. Emergency service, repiping, drains & more. Call 833-PLUMB-IT.",
     keywords: [
       "plumber North Fort Myers",
       "plumber North Fort Myers FL",
@@ -1847,7 +1850,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     state: "FL",
     metaTitle: "Plumber in Lehigh Acres, FL",
     metaDescription:
-      "Trusted plumber in Lehigh Acres, FL. Emergency plumbing, repiping, drain cleaning, water heaters & more. Family-owned since 1998. 8,500+ homes. Call 833-PLUMB-IT.",
+      "Trusted plumber in Lehigh Acres, FL. Emergency plumbing, repiping, drain cleaning and water heaters. Family-owned since 1998, 8,500+ homes. Call 833-PLUMB-IT.",
     keywords: [
       "plumber Lehigh Acres",
       "plumber Lehigh Acres FL",
@@ -2024,12 +2027,78 @@ export const AREA_LANDINGS: AreaLanding[] = [
       "Sanibel Island's unique barrier island environment presents specific plumbing challenges that mainland homes don't face. Salt air accelerates pipe corrosion, hurricane damage can compromise entire plumbing systems, and the island's building codes require contractors who understand the local requirements. C&S Plumbing has been helping Sanibel and Captiva Island homeowners rebuild and maintain their plumbing systems for years, including extensive work following recent hurricane seasons. Our team is experienced with the logistics of island work, including coordinating with the causeway schedule and island-specific permitting requirements.",
   },
   {
+    slug: "fort-myers-beach",
+    city: "Fort Myers Beach",
+    state: "FL",
+    metaTitle: "Plumber in Fort Myers Beach, FL",
+    metaDescription:
+      "Plumber on Fort Myers Beach, FL. Post-Ian rebuilds, elevated homes, repipes, water heaters & 24/7 emergencies. Family-owned since 1998. Call 833-PLUMB-IT.",
+    keywords: [
+      "plumber Fort Myers Beach",
+      "Fort Myers Beach plumbing",
+      "Estero Island plumber",
+      "emergency plumber Fort Myers Beach",
+      "repiping Fort Myers Beach",
+      "water heater Fort Myers Beach",
+      "hurricane rebuild plumbing Fort Myers Beach",
+      "elevated home plumbing Fort Myers Beach",
+      "plumber near me Fort Myers Beach",
+      "plumber 33931",
+    ],
+    heroText: "Plumbing for Fort Myers Beach, Built for the Rebuild",
+    description:
+      "C&S Plumbing serves Fort Myers Beach and Estero Island with the plumbing experience the post-Ian rebuild demands: elevated homes, flood-zone rules, salt air, and a Town permit process that runs on its own clock. Family-owned since 1998, with a completed new-construction build on the island in our portfolio.",
+    neighborhoods: [
+      "Times Square",
+      "North Estero Island",
+      "Mid-Island",
+      "South Estero Island",
+      "Bay Beach",
+      "San Carlos Island",
+      "Estero Boulevard corridor",
+    ],
+    faqs: [
+      {
+        question: "Do you work on Fort Myers Beach?",
+        answer:
+          "Yes. We handle residential plumbing across Estero Island and San Carlos Island — new construction, rebuilds, repipes, water heaters, fixture work, and emergency repairs. Our 306 Seminal Way new-construction build on the island is documented phase by phase on our projects page.",
+      },
+      {
+        question: "How does the FEMA 50% rule affect plumbing work on Fort Myers Beach?",
+        answer:
+          "When repairs or improvements to a home in the flood zone are valued at 50% or more of the building's value, the Town requires the whole home to meet current flood standards, which can mean elevating it. That is why the Town asks for a Repair/Improvement Cost Form with most permit applications. We break out plumbing scope and cost clearly so you and your contractor know where the project stands before work starts.",
+      },
+      {
+        question: "Do water heaters and plumbing have to be elevated on Fort Myers Beach?",
+        answer:
+          "Below the base flood elevation, equipment like water heaters has to be elevated or flood-rated, and piping has to use flood-resistant materials. On elevated and stilt homes we plan water heater placement, supply routing, and the supports and anchorage the Town's wind-exposure rules require from the start, so the install passes inspection the first time.",
+      },
+      {
+        question: "How long do plumbing permits take on Fort Myers Beach?",
+        answer:
+          "The Town of Fort Myers Beach is a small building department that contracts out plan review and inspections, so timelines are less predictable than Lee County or Cape Coral. We submit complete applications through the Town's iWorQ portal, respond to corrections quickly, and build float into the schedule rather than promise a date the Town controls.",
+      },
+      {
+        question: "Do you handle hurricane and flood plumbing repairs on Fort Myers Beach?",
+        answer:
+          "Yes. We handle repipes, water heater and fixture replacement, and complete plumbing for rebuilt and elevated homes on the island, and our documented Fort Myers Beach new-construction build shows the work. Seasonal owners can ask about our Coastal Comeback Plan for shutdown, monitoring, and reactivation.",
+      },
+      {
+        question: "Are you licensed and insured?",
+        answer:
+          "Yes — Florida Certified Plumbing Contractors (CFC1432485 / CFC057076), fully insured, family-owned since 1998.",
+      },
+    ],
+    localContext:
+      "Fort Myers Beach is still rebuilding from Hurricane Ian, and plumbing on Estero Island is governed by that reality. The Town of Fort Myers Beach handles its own permitting through the iWorQ portal, with plan review and inspections contracted out, so schedules need float. Most permits carry a Repair/Improvement Cost Form that feeds the FEMA 50% substantial-improvement determination, elevation certificates are checked at stages of construction, and the whole island sits in a wind-borne debris region with strict flood-resistant material rules below base flood elevation. Water and sewer conditions also vary block to block as infrastructure is rebuilt, so we verify the serving utility before we price a job. C&S Plumbing brings 28 years of Southwest Florida experience and a completed Fort Myers Beach new-construction build to work on the island, from elevated-home rough-in to salt-air-resistant fixture selection.",
+  },
+  {
     slug: "punta-gorda",
     city: "Punta Gorda",
     state: "FL",
     metaTitle: "Plumber in Punta Gorda, FL",
     metaDescription:
-      "Trusted plumber in Punta Gorda, FL. Water heaters, emergency plumbing, repiping & drain service across Charlotte County. Family-owned since 1998. Call 833-PLUMB-IT.",
+      "Plumber in Punta Gorda, FL. Water heaters, emergency plumbing, repiping & drain service across Charlotte County. Family-owned since 1998. Call 833-PLUMB-IT.",
     keywords: [
       "plumber Punta Gorda",
       "plumber Punta Gorda FL",
@@ -2242,7 +2311,7 @@ export const BLOG_POSTS: BlogPost[] = [
   {
     slug: "tankless-vs-traditional-water-heaters",
     title: "Tankless vs Traditional Water Heaters: Which Is Right for Your Home?",
-    metaTitle: "Tankless vs Traditional Water Heaters — Which Is Right for You?",
+    metaTitle: "Tankless vs Traditional Water Heaters: Which Is Right?",
     metaDescription:
       "Tankless or traditional water heater? Compare costs, efficiency, lifespan & performance for Southwest Florida homes. Expert advice from C&S Plumbing.",
     keywords: ["tankless vs traditional water heater", "tankless water heater Florida", "water heater comparison", "best water heater Cape Coral", "water heater cost Fort Myers"],
@@ -2300,7 +2369,7 @@ export const BLOG_POSTS: BlogPost[] = [
   {
     slug: "plumbing-emergency-what-to-do",
     title: "What to Do in a Plumbing Emergency (Before the Plumber Arrives)",
-    metaTitle: "What to Do in a Plumbing Emergency Before the Plumber Arrives",
+    metaTitle: "What to Do in a Plumbing Emergency Before Help Arrives",
     metaDescription:
       "Plumbing emergency? Learn what to do immediately to minimize damage before your plumber arrives. 24/7 emergency tips from C&S Plumbing in SWFL.",
     keywords: ["plumbing emergency what to do", "burst pipe what to do", "plumbing emergency tips", "emergency plumber Cape Coral", "water leak emergency"],
@@ -2506,7 +2575,7 @@ export const BLOG_POSTS: BlogPost[] = [
   {
     slug: "polybutylene-pipe-problems-cape-coral",
     title: "Why Cape Coral Homes Need Repiping: The Polybutylene Pipe Problem",
-    metaTitle: "Polybutylene Pipe Problems in Cape Coral — Why You Need to Repipe",
+    metaTitle: "Polybutylene Pipes in Cape Coral: Why You Need to Repipe",
     metaDescription:
       "Cape Coral homes built 1978-1995 likely have polybutylene pipes that are failing. Learn why repiping is urgent and how C&S Plumbing can help. Call 833-PLUMB-IT.",
     keywords: ["polybutylene pipes Cape Coral", "poly-b pipe replacement", "repiping Cape Coral", "polybutylene pipe failure", "Cape Coral plumbing problems", "PEX repiping Cape Coral"],
@@ -2566,7 +2635,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "Slab Leaks in Southwest Florida: Warning Signs and What to Do",
     metaTitle: "Slab Leak Detection in Southwest Florida — Signs & Solutions",
     metaDescription:
-      "Slab leaks are common in SWFL homes and can cause major structural damage if ignored. Learn the warning signs, detection methods, and repair options from C&S Plumbing.",
+      "Slab leaks are common in SWFL homes and cause major damage if ignored. The warning signs, detection methods, and repair options from C&S Plumbing.",
     keywords: ["slab leak detection", "slab leak Cape Coral", "slab leak Fort Myers", "slab leak repair SWFL", "underground leak detection", "slab leak signs", "slab leak repair cost Florida"],
     excerpt:
       "A slab leak — a water line break beneath your home's concrete foundation — is one of the most damaging and expensive plumbing problems a homeowner can face. Here's how to spot one early before it destroys your home.",
@@ -2692,7 +2761,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "Why Your Drains Keep Clogging (and How to Fix It for Good)",
     metaTitle: "Why Your Drains Keep Clogging — Causes and Fixes in SWFL",
     metaDescription:
-      "Dealing with slow or clogged drains in Cape Coral or Fort Myers? Learn the real causes, when to DIY, and when to call a pro. Expert drain advice from C&S Plumbing.",
+      "Slow or clogged drains in Cape Coral or Fort Myers? The real causes, when to DIY, and when to call a pro. Expert drain advice from C&S Plumbing.",
     keywords: ["clogged drain Cape Coral", "slow drain Fort Myers", "drain cleaning SWFL", "clogged drain causes", "drain cleaning plumber Lee County", "drain cleaning near me"],
     excerpt:
       "A slow drain is easy to ignore — until it backs up completely at the worst possible moment. Here's why Southwest Florida drains clog more often than you might expect, and what it takes to actually fix the problem for good.",
@@ -2751,7 +2820,7 @@ export const BLOG_POSTS: BlogPost[] = [
   {
     slug: "septic-to-sewer-conversion-swfl",
     title: "Septic to Sewer: What Southwest Florida Homeowners Need to Know",
-    metaTitle: "Septic to Sewer Conversion — What SWFL Homeowners Need to Know",
+    metaTitle: "Septic to Sewer Conversion: What SWFL Homeowners Should Know",
     metaDescription:
       "Switching from septic to sewer in Cape Coral or SWFL? Learn about the process, costs, and requirements. C&S Plumbing handles UEP connections. Call 833-PLUMB-IT.",
     keywords: ["septic to sewer conversion", "septic to sewer Cape Coral", "UEP connection Cape Coral", "septic abandonment Florida", "sewer hookup cost SWFL", "septic to sewer cost"],
@@ -2809,9 +2878,9 @@ export const BLOG_POSTS: BlogPost[] = [
   {
     slug: "spring-plumbing-maintenance-checklist-swfl",
     title: "Spring Plumbing Maintenance Checklist for Southwest Florida Homeowners",
-    metaTitle: "Spring Plumbing Maintenance Checklist for Southwest Florida Homeowners",
+    metaTitle: "Spring Plumbing Maintenance Checklist for SWFL Homeowners",
     metaDescription:
-      "Get your plumbing ready for SWFL's hot summer and rainy season with this complete spring maintenance checklist. Expert tips from C&S Plumbing in Cape Coral & Fort Myers.",
+      "Get your plumbing ready for SWFL's hot summer and rainy season with this spring maintenance checklist from C&S Plumbing in Cape Coral and Fort Myers.",
     keywords: [
       "spring plumbing maintenance",
       "plumbing maintenance checklist Florida",
@@ -2885,7 +2954,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "After the Storm: A Plumbing Damage Checklist for Southwest Florida Homeowners",
     metaTitle: "Post-Hurricane Plumbing Checklist for SWFL Homes",
     metaDescription:
-      "Just rode out a storm in Lee County? Walk through this post-hurricane plumbing checklist before turning your water back on. From C&S Plumbing, SWFL's storm-response veterans.",
+      "Just rode out a storm in Lee County? Walk this post-hurricane plumbing checklist before turning your water back on. From SWFL's storm-response veterans.",
     keywords: ["plumbing after hurricane", "post storm plumbing checklist", "hurricane plumbing damage Florida", "when to turn water back on after hurricane", "plumber after storm Cape Coral"],
     excerpt:
       "You've prepped, you've ridden it out, the wind has died down. Before you turn the water back on and flush that first toilet, walk through this checklist — the hours after a storm are when hidden plumbing damage does its worst.",
@@ -2924,7 +2993,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "What Storm Surge Does to Canal-Home Plumbing in Cape Coral",
     metaTitle: "Storm Surge & Canal-Home Plumbing — Cape Coral Guide",
     metaDescription:
-      "Cape Coral's 400 miles of canals put waterfront homes at unique plumbing risk during storm surge. What saltwater flooding does to pipes, and what to check after the water recedes.",
+      "Cape Coral's 400 miles of canals put waterfront homes at risk in a storm surge. What saltwater does to your pipes and what to check after the water recedes.",
     keywords: ["storm surge plumbing damage", "canal home plumbing Cape Coral", "saltwater flooding pipes", "plumbing after storm surge Florida", "waterfront home plumber Cape Coral"],
     excerpt:
       "Four hundred miles of canals make Cape Coral a boater's paradise — and put thousands of homes within feet of storm surge. Here's what saltwater flooding actually does to a home's plumbing, from the water heater to the pipes under the slab.",
@@ -2957,7 +3026,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "Does Homeowners Insurance Cover Slab Leaks in Florida?",
     metaTitle: "Slab Leaks & Florida Homeowners Insurance — What's Covered",
     metaDescription:
-      "Does Florida homeowners insurance pay for slab leak repairs? What's typically covered, what's excluded, and how to document a claim — from SWFL's slab leak specialists.",
+      "Does Florida homeowners insurance pay for slab leak repairs? What's covered, what's excluded, and how to document a claim, from SWFL's slab leak specialists.",
     keywords: ["slab leak insurance Florida", "does insurance cover slab leak", "water damage claim Florida", "slab leak coverage homeowners policy", "plumbing leak insurance claim"],
     excerpt:
       "The repair bill for a slab leak has two parts — fixing the pipe and fixing the damage — and Florida insurance policies usually treat them very differently. Here's how coverage typically works and how to protect your claim.",
@@ -2992,7 +3061,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "Should You Turn Off Your Water Heater Before a Hurricane?",
     metaTitle: "Water Heater Hurricane Prep — Before & After the Storm",
     metaDescription:
-      "Should you shut down your water heater before a hurricane? When to turn it off, how to do it safely for gas and electric units, and when a flooded water heater must be replaced.",
+      "Should you shut off your water heater before a hurricane? How to do it safely for gas and electric units, and when a flooded water heater must be replaced.",
     keywords: ["turn off water heater hurricane", "water heater flood damage", "water heater after hurricane", "hurricane prep water heater Florida", "flooded water heater replace"],
     excerpt:
       "It's one of the most common questions we get every June: should the water heater be shut down before a storm? Short answer — it depends on whether you're evacuating and whether flooding is possible. Here's the full answer.",
@@ -3025,7 +3094,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "How Much Does Whole-Home Repiping Cost in Cape Coral?",
     metaTitle: "Whole-Home Repipe Cost in Cape Coral — Real 2026 Prices",
     metaDescription:
-      "Whole-home repiping in Cape Coral runs $4,000–$15,000, with most 3-bed homes landing between $6,800–$9,500 in PEX. Real price breakdowns by home size, PEX vs copper, and what's included — from the crew that's repiped SWFL homes since 1998.",
+      "Cape Coral whole-home repipe costs $4,000–$15,000; most 3-bed homes run $6,800–$9,500 in PEX. Price by home size, PEX vs copper, and what's included.",
     keywords: ["repipe cost Cape Coral", "whole home repipe cost Florida", "how much does repiping cost", "PEX repipe price Cape Coral", "polybutylene replacement cost"],
     excerpt:
       "Straight answer: most Cape Coral repipes cost $4,000–$15,000, and a typical 3-bed, 2-bath home lands between $6,800–$9,500 in PEX. Here's the full price breakdown by home size and pipe material, and exactly what that money buys.",
@@ -3079,7 +3148,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "Signs Your Water Heater Needs Replacing (And What It Costs in SWFL)",
     metaTitle: "Water Heater Replacement Signs & Costs — SWFL 2026 Guide",
     metaDescription:
-      "Rusty water, popping sounds, water around the base — the signs a water heater is done, and real Southwest Florida replacement costs: $1,650–$2,500 for tank units, $3,200–$5,200 for hybrid and tankless.",
+      "Rusty water, popping sounds, water at the base: the signs a water heater is done, and real SWFL replacement costs, $1,650 for tanks to $5,200 for tankless.",
     keywords: ["water heater replacement cost Florida", "signs water heater needs replacing", "water heater lifespan Florida", "water heater leaking replace or repair", "tankless water heater cost SWFL"],
     excerpt:
       "A water heater rarely dies without warning. Here are the five signs ours techs look for, the repair-or-replace rule we use on every call, and real installed prices for Southwest Florida — from $195 repairs to $5,200 tankless conversions.",
@@ -3132,7 +3201,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "How Long Does Drain Cleaning Take? A Plumber's Honest Answer",
     metaTitle: "How Long Does Drain Cleaning Take? Honest Times & Prices",
     metaDescription:
-      "Most single-drain clogs are cleared in about an hour; main sewer lines take 1–2 hours, and hydro-jetting 2–3. A SWFL plumber's honest answer on drain cleaning time, cost ($150–$800), and why some clogs keep coming back.",
+      "Single-drain clogs clear in about an hour; main lines take 1–2 hours, hydro-jetting 2–3. Honest drain cleaning times, costs ($150–$800), and why clogs return.",
     keywords: ["how long does drain cleaning take", "drain cleaning cost Cape Coral", "main sewer line clog cost", "hydro jetting cost Florida", "why does my drain keep clogging"],
     excerpt:
       "Honest answer: about an hour for a single clogged fixture, 1–2 hours for a main sewer line, 2–3 hours for hydro-jetting with a camera. Here's what changes those numbers, what each job costs, and when cabling alone won't fix it.",
@@ -3226,7 +3295,7 @@ export const COMPLETED_PROJECTS: CompletedProject[] = [
         ],
       },
     ],
-    metaTitle: "Hansen Homes Cape Coral New Construction | Underground Plumbing",
+    metaTitle: "Hansen Homes Cape Coral — New Construction Plumbing",
     metaDescription: "C&S Plumbing partners with Hansen Homes on a Cape Coral new construction build. Underground rough-in complete; trim and finish phases coming soon.",
   },
   {
@@ -3509,8 +3578,8 @@ export const COMPLETED_PROJECTS: CompletedProject[] = [
       },
     ],
     scopeDetails: ["Underground DWV and supply rough-in","Second rough-in","Commercial new construction"],
-    metaTitle: "Hangar 97 Punta Gorda Airport — Commercial New Construction Plumbing",
-    metaDescription: "C&S Plumbing of Lee handles commercial plumbing for Hangar 97 at Punta Gorda Airport — underground rough-in through second rough for builder Stellar Development.",
+    metaTitle: "Hangar 97 Punta Gorda Airport — Commercial Plumbing",
+    metaDescription: "C&S Plumbing handles commercial plumbing for Hangar 97 at Punta Gorda Airport — underground rough-in through second rough for builder Stellar Development.",
   },
   {
     slug: "usps-cape-coral-remodel",
@@ -3629,7 +3698,7 @@ export const COMPLETED_PROJECTS: CompletedProject[] = [
     ],
     scopeDetails: ["Underground rough-in","Second rough-in","Residential new construction"],
     metaTitle: "1119 Harvest Ave Lehigh Acres New Construction Plumbing",
-    metaDescription: "C&S Plumbing of Lee handles new-construction plumbing at 1119 Harvest Ave in Lehigh Acres — underground rough-in through second rough for builder Douglas Brookes.",
+    metaDescription: "C&S Plumbing handles new-construction plumbing at 1119 Harvest Ave in Lehigh Acres — underground through second rough for builder Douglas Brookes.",
   },
   {
     slug: "1026-halby-ave-lehigh-acres",

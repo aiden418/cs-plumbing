@@ -224,7 +224,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     serviceSlug: "emergency",
     metaTitle: "Emergency Plumber Fort Myers | 24/7 Repairs",
     metaDescription:
-      "24/7 emergency plumber in Fort Myers, FL. Fast response for burst pipes, sewer backups & slab leaks. Licensed, 5-star rated. Call 833-PLUMB-IT for immediate help.",
+      "24/7 emergency plumber in Fort Myers, FL. Fast response for burst pipes, sewer backups & slab leaks. Licensed, 5-star rated. Call 833-PLUMB-IT now.",
     keywords: [
       "emergency plumber Fort Myers",
       "24 hour plumber Fort Myers FL",
@@ -321,7 +321,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     serviceSlug: "repiping",
     metaTitle: "Repiping Cape Coral | Whole-Home Pipe Replacement",
     metaDescription:
-      "Cape Coral whole-home repiping from $4,000. Replace polybutylene & corroded copper pipes. 8,500+ homes completed. Licensed CFC1432485. Free estimates — call today.",
+      "Cape Coral whole-home repiping from $4,000. Replace polybutylene & corroded copper pipes. 8,500+ homes completed. Licensed CFC1432485. Free estimates.",
     keywords: [
       "repiping Cape Coral",
       "whole house repiping Cape Coral FL",
@@ -428,7 +428,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     slug: "north-fort-myers-plumber",
     metaTitle: "North Fort Myers Plumber | Local & Licensed",
     metaDescription:
-      "Trusted plumber in North Fort Myers, FL. Well water systems, septic-to-sewer, repiping & repairs. Family-owned since 1998. Call 833-PLUMB-IT for a free estimate.",
+      "Plumber in North Fort Myers, FL. Well water systems, septic-to-sewer, repiping & repairs. Family-owned since 1998. Call 833-PLUMB-IT for a free estimate.",
     keywords: [
       "plumber North Fort Myers",
       "North Fort Myers plumber",
@@ -630,7 +630,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     serviceSlug: "repiping",
     metaTitle: "Repiping Fort Myers | Pipe Replacement Experts",
     metaDescription:
-      "Fort Myers whole-home repiping from $4,000. Galvanized, cast iron & poly-B replacement. 28 years experience, 5-star rated. Call 833-PLUMB-IT for a free estimate.",
+      "Fort Myers whole-home repiping from $4,000. Galvanized, cast iron & poly-B replacement. 28 years experience, 5-star rated. Call 833-PLUMB-IT.",
     keywords: [
       "repiping Fort Myers",
       "whole house repiping Fort Myers FL",
@@ -733,7 +733,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     serviceSlug: "drain-cleaning",
     metaTitle: "Drain Cleaning Cape Coral | Fast & Affordable",
     metaDescription:
-      "Professional drain cleaning in Cape Coral, FL. Root removal, hydro jetting & camera inspections. Same-day service available. Call 833-PLUMB-IT — licensed & insured.",
+      "Drain cleaning in Cape Coral, FL. Root removal, hydro jetting & camera inspections. Same-day service available. Call 833-PLUMB-IT — licensed & insured.",
     keywords: [
       "drain cleaning Cape Coral",
       "Cape Coral drain cleaning service",
@@ -830,7 +830,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     serviceSlug: "water-heaters",
     metaTitle: "Water Heater Repair Cape Coral | Same-Day Service",
     metaDescription:
-      "Water heater repair & replacement in Cape Coral, FL from $1,200. Tank & tankless options. Same-day service, licensed CFC1432485. Call 833-PLUMB-IT for fast help.",
+      "Water heater repair & replacement in Cape Coral, FL from $1,200. Tank & tankless options. Same-day service, licensed CFC1432485. Call 833-PLUMB-IT.",
     keywords: [
       "water heater repair Cape Coral",
       "water heater replacement Cape Coral FL",
@@ -1033,7 +1033,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     serviceSlug: "commercial",
     metaTitle: "Commercial Plumber Fort Myers | Licensed Contractor",
     metaDescription:
-      "Commercial plumbing in Fort Myers, FL. Restaurants, retail, offices & multi-story. Backflow testing, grease traps, buildouts. Licensed CFC1432485. Call 833-PLUMB-IT.",
+      "Commercial plumbing in Fort Myers, FL. Restaurants, retail & offices. Backflow testing, grease traps, buildouts. Licensed CFC1432485. Call 833-PLUMB-IT.",
     keywords: [
       "commercial plumber Fort Myers",
       "commercial plumbing Fort Myers FL",
@@ -1142,7 +1142,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     serviceSlug: "new-construction",
     metaTitle: "New Construction Plumber Cape Coral | 8,500+ Homes",
     metaDescription:
-      "Cape Coral new construction plumbing by the team that's built 8,500+ homes. Canal-lot experts, builder partnerships. Licensed CFC1432485. Call 833-PLUMB-IT today.",
+      "Cape Coral new construction plumbing by the team that's built 8,500+ homes. Canal-lot experts, builder partnerships. Licensed CFC1432485. Call 833-PLUMB-IT.",
     keywords: [
       "new construction plumbing Cape Coral",
       "Cape Coral new construction plumber",
@@ -1249,7 +1249,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     serviceSlug: "leak-repair",
     metaTitle: "Water Damage Repair Fort Myers | Plumbing Experts",
     metaDescription:
-      "Plumbing-caused water damage repair in Fort Myers, FL. Slab leaks, pipe bursts & cast iron failures fixed at the source. Licensed CFC1432485. Call 833-PLUMB-IT now.",
+      "Water damage repair in Fort Myers, FL. Slab leaks, pipe bursts & cast iron failures fixed at the source. Licensed CFC1432485. Call 833-PLUMB-IT now.",
     keywords: [
       "water damage repair Fort Myers",
       "plumbing water damage Fort Myers FL",
@@ -1346,7 +1346,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     serviceSlug: "water-heaters",
     metaTitle: "Water Heater Repair Fort Myers | Same-Day Service",
     metaDescription:
-      "Water heater repair in Fort Myers, FL. Tank, tankless & hybrid units fixed fast — often same day. Licensed CFC1432485, family-owned since 1998. Call 833-PLUMB-IT.",
+      "Water heater repair in Fort Myers, FL. Tank, tankless & hybrid units fixed fast — often same day. Licensed CFC1432485. Call 833-PLUMB-IT.",
     keywords: [
       "water heater repair Fort Myers",
       "water heater repair Fort Myers FL",
@@ -2188,7 +2188,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     serviceSlug: "plumbing-remodel",
     metaTitle: "Plumbing Remodel Cape Coral | Kitchen & Bath",
     metaDescription:
-      "Kitchen & bathroom remodel plumbing in Cape Coral, FL. Fixture upgrades, rough-in relocation, code compliance. Licensed CFC1432485. Call 833-PLUMB-IT for a quote.",
+      "Kitchen & bathroom remodel plumbing in Cape Coral, FL. Fixture upgrades, rough-in relocation, code compliance. Licensed CFC1432485. Call 833-PLUMB-IT.",
     keywords: [
       "plumbing remodel Cape Coral",
       "bathroom remodel plumber Cape Coral",
@@ -2376,7 +2376,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     serviceSlug: "repiping",
     metaTitle: "Repiping Naples FL | Luxury Home Specialists",
     metaDescription:
-      "Whole-home repiping in Naples, FL. Luxury home pipe replacement, $5,000-$15,000. Waterfront corrosion experts. Licensed CFC1432485. Call 833-PLUMB-IT for a quote.",
+      "Whole-home repiping in Naples, FL. Luxury home pipe replacement, $5,000-$15,000. Waterfront corrosion experts. Licensed CFC1432485. Call 833-PLUMB-IT.",
     keywords: [
       "repiping Naples FL",
       "whole house repipe Naples",

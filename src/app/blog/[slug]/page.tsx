@@ -22,7 +22,10 @@ export async function generateMetadata({
   if (!post) return {};
 
   return {
-    title: post.metaTitle,
+    // Absolute: the "| C&S Plumbing of Lee" template pushed every post title
+    // past 80 characters and Google rewrote them. Site name still shows in
+    // results via the WebSite schema.
+    title: { absolute: post.metaTitle },
     description: post.metaDescription,
     keywords: post.keywords,
     alternates: { canonical: `/blog/${post.slug}` },

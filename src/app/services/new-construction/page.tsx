@@ -47,9 +47,9 @@ const newConstructionFaqs = [
 
 export const metadata: Metadata = {
   alternates: { canonical: "/services/new-construction" },
-  title: "New Construction Plumbing in Cape Coral & Fort Myers",
+  title: { absolute: "New Construction Plumber | Cape Coral & Fort Myers" },
   description:
-    "8,500+ new construction homes plumbed in Cape Coral, Fort Myers & SWFL. C&S Plumbing is the trusted builder's partner for reliability, code-compliance & precision.",
+    "8,500+ new construction homes plumbed in Cape Coral, Fort Myers & SWFL. The builder's partner for reliability, code compliance & precision.",
   keywords: [
     "new construction plumber Cape Coral",
     "new construction plumbing Fort Myers",

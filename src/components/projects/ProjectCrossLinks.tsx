@@ -67,7 +67,7 @@ export default function ProjectCrossLinks({ project }: { project: CompletedProje
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="group flex h-full flex-col rounded-2xl border border-gray-200 bg-[#F5F5F7] p-5 transition-all hover:border-primary/30 hover:bg-white hover:shadow-md sm:p-6"
+                    className="group flex h-full flex-col rounded-2xl border border-gray-200 bg-white p-5 transition-all hover:border-primary/30 hover:shadow-md sm:p-6"
                   >
                     <span className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
                       {link.icon}

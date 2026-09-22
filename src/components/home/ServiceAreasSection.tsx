@@ -21,6 +21,7 @@ const RESPONSE_TIMES: Record<string, string> = {
   "bonita-springs": "60 min response",
   "naples": "60 min response",
   "sanibel": "60 min response",
+  "fort-myers-beach": "45 min response",
   "punta-gorda": "45 min response",
   "port-charlotte": "60 min response",
 };
@@ -37,6 +38,8 @@ const AREA_IMAGES: Record<string, string> = {
   "lehigh-acres": "/images/areas/lehigh-acres.jpg",
   "estero": "/images/areas/estero.jpg",
   "sanibel": "/images/areas/sanibel.jpg",
+  // Our own Fort Myers Beach build (306 Seminal Way) until a dedicated aerial exists.
+  "fort-myers-beach": "/images/projects/306-seminal-way-fort-myers-beach/build/hero-1.webp",
   "punta-gorda": "/images/areas/punta-gorda.jpg",
   "port-charlotte": "/images/areas/port-charlotte.jpg",
 };
@@ -220,7 +223,6 @@ export default function ServiceAreasSection() {
                   bg-gradient-to-br from-primary/20 via-primary/10 to-surface
                   card-lift card-lift-hover
                 "
-                aria-label={`Plumber in ${area.city}, ${area.state}`}
               >
                 {/* City image — eager so all 8 are decoded before pin-scroll
                     starts. The inner wrapper is 16% wider than the card and

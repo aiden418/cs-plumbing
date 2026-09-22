@@ -22,7 +22,7 @@ export async function generateMetadata({
   if (!project) return {};
 
   return {
-    title: project.metaTitle,
+    title: { absolute: project.metaTitle },
     description: project.metaDescription,
     keywords: [
       project.name,

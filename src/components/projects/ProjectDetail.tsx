@@ -155,7 +155,7 @@ export default function ProjectDetail({ project }: { project: CompletedProject }
                 className="shrink-0 rounded-full border border-gray-300 px-4 py-1.5 text-sm font-semibold text-gray-700 transition-all hover:border-navy hover:bg-navy hover:text-white"
               >
                 {phase.name}
-                <span className="ml-1.5 text-xs text-gray-400">{phase.images.length}</span>
+                <span className="ml-1.5 text-xs text-gray-500">{phase.images.length}</span>
               </a>
             ))}
           </Container>

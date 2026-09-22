@@ -53,9 +53,11 @@ export default function ServiceHighlights() {
                         src={service.image}
                         alt={`${service.title} by C&S Plumbing`}
                         fill
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 30vw"
+                        // Sits under a white/55 wash + gradient: it is texture, not
+                        // detail, so the lowest allowed quality is invisible here.
+                        quality={60}
                         className="object-cover object-center scale-105 group-hover:scale-110 transition-transform duration-700"
-                        quality={75}
                       />
                       <div className="absolute inset-0 bg-white/55 group-hover:bg-white/40 transition-colors duration-500" />
                       <div className="absolute inset-0 bg-gradient-to-t from-white via-white/70 to-white/20" />
