@@ -13,9 +13,11 @@ import {
   MapPin,
   Camera,
   ArrowDown,
+  Check,
 } from "lucide-react";
 import Container from "@/components/ui/Container";
 import ScrollReveal from "@/components/animations/ScrollReveal";
+import { formatCompletedOn } from "@/lib/projects";
 import type { CompletedProject, ProjectImage } from "@/lib/types";
 
 export default function ProjectDetail({ project }: { project: CompletedProject }) {
@@ -116,6 +118,11 @@ export default function ProjectDetail({ project }: { project: CompletedProject }
               <StatChip icon={<Clock className="h-4 w-4 text-gold" />} label="Timeline">
                 {project.timeline}
               </StatChip>
+              {project.completedOn && (
+                <StatChip icon={<Check className="h-4 w-4 text-gold" />} label="Completed">
+                  {formatCompletedOn(project.completedOn)}
+                </StatChip>
+              )}
               <StatChip icon={<DollarSign className="h-4 w-4 text-gold" />} label="Cost">
                 {project.cost}
               </StatChip>

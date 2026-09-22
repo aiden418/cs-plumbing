@@ -5,7 +5,9 @@ import ServiceJsonLd from "@/components/seo/ServiceJsonLd";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import FaqJsonLd from "@/components/seo/FaqJsonLd";
 import CTASection from "@/components/home/CTASection";
+import RelatedProjects from "@/components/projects/RelatedProjects";
 import { SERVICE_LANDINGS } from "@/lib/constants";
+import { projectsForHub } from "@/lib/projects";
 
 const landing = SERVICE_LANDINGS.find((s) => s.slug === "plumbing-remodel")!;
 
@@ -34,6 +36,12 @@ export default function Page() {
         ]}
       />
       <ServiceLandingTemplate landing={landing} />
+      <RelatedProjects
+        projects={projectsForHub("plumbing-remodel", 3)}
+        overline="Documented remodels"
+        heading="Remodel plumbing we've documented, demo to trim"
+        description="Commercial restroom and kitchen remodels photographed at every phase — demolition, repipe, rough-in and finished fixtures."
+      />
       <CTASection />
     </PageTransition>
   );

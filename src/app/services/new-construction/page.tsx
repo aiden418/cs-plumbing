@@ -9,8 +9,10 @@ import Button from "@/components/ui/Button";
 import CTASection from "@/components/home/CTASection";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import FaqJsonLd from "@/components/seo/FaqJsonLd";
+import RelatedProjects from "@/components/projects/RelatedProjects";
 import { Calendar, Phone, HardHat, Shield, Clock, Award } from "lucide-react";
 import { BUSINESS } from "@/lib/constants";
+import { projectsForHub } from "@/lib/projects";
 
 const newConstructionFaqs = [
   {
@@ -216,6 +218,14 @@ export default function NewConstructionPage() {
           </div>
         </Container>
       </section>
+
+      {/* Documented builds — proof for the builder reading this page */}
+      <RelatedProjects
+        projects={projectsForHub("new-construction", 6)}
+        overline="Documented builds"
+        heading="New construction plumbing, photographed phase by phase"
+        description="Underground, second rough and trim on real Southwest Florida builds, with the builder named on each one. Judge the work, not the pitch."
+      />
 
       {/* FAQ */}
       <section className="py-16 sm:py-24 lg:py-32">

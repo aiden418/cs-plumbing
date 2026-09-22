@@ -7,8 +7,10 @@ import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import FaqJsonLd from "@/components/seo/FaqJsonLd";
 import CTASection from "@/components/home/CTASection";
 import GoogleReviews from "@/components/home/GoogleReviews";
+import RelatedProjects from "@/components/projects/RelatedProjects";
 import { SERVICE_CITY_LANDINGS } from "@/lib/service-city-landings";
 import { getServiceHub } from "@/lib/service-hubs";
+import { projectsForCity } from "@/lib/projects";
 
 export function generateStaticParams() {
   return SERVICE_CITY_LANDINGS.map((l) => ({ slug: l.slug }));
@@ -59,6 +61,13 @@ export default async function Page({
         ]}
       />
       <ServiceCityLandingTemplate landing={landing} />
+      {/* Local proof: documented jobs in this city, service-matched first.
+          Renders nothing for cities with no project page yet. */}
+      <RelatedProjects
+        projects={projectsForCity(landing.city, { hub: landing.serviceSlug, limit: 3 })}
+        heading={`Recent projects in ${landing.city}`}
+        description={`Real jobs we've documented in ${landing.city}, photographed phase by phase with the builder or GC named.`}
+      />
       <GoogleReviews />
       <CTASection />
     </PageTransition>

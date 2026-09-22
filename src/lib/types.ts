@@ -290,6 +290,18 @@ export interface CompletedProject {
   permits?: string[];
   /** Bullet list — materials / brands installed. */
   materials?: string[];
+  /**
+   * ISO date (YYYY-MM-DD) the job was closed out. Marks the project complete
+   * regardless of `timeline`, prints as "Completed May 2025" on the page,
+   * and feeds sitemap lastmod + JSON-LD dateCreated. Omit while in progress.
+   */
+  completedOn?: string;
+  /**
+   * ISO date of the last substantive page update — a new phase of photos, a
+   * case study, rewritten captions. Feeds sitemap lastmod + JSON-LD
+   * dateModified so crawlers recrawl the page instead of ignoring it.
+   */
+  updatedOn?: string;
   metaTitle: string;
   metaDescription: string;
 }
