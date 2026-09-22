@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import PageTransition from "@/components/layout/PageTransition";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import ProjectDetail from "@/components/projects/ProjectDetail";
+import ProjectCrossLinks from "@/components/projects/ProjectCrossLinks";
 import ProjectJsonLd from "@/components/seo/ProjectJsonLd";
 import CTASection from "@/components/home/CTASection";
 import { COMPLETED_PROJECTS } from "@/lib/constants";
@@ -21,7 +22,7 @@ export async function generateMetadata({
   if (!project) return {};
 
   return {
-    title: project.metaTitle,
+    title: { absolute: project.metaTitle },
     description: project.metaDescription,
     keywords: [
       project.name,
@@ -35,6 +36,10 @@ export async function generateMetadata({
       title: project.metaTitle,
       description: project.metaDescription,
       url: `https://www.csplumbinglee.com/projects/${project.slug}`,
+      ...(project.completedOn ? { publishedTime: project.completedOn } : {}),
+      ...(project.updatedOn ?? project.completedOn
+        ? { modifiedTime: project.updatedOn ?? project.completedOn }
+        : {}),
       images: project.coverImage
         ? [{ url: project.coverImage, alt: project.name }]
         : [],
@@ -68,6 +73,7 @@ export default async function Page({
       />
       <ProjectJsonLd project={project} />
       <ProjectDetail project={project} />
+      <ProjectCrossLinks project={project} />
       <CTASection />
     </PageTransition>
   );

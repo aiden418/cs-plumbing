@@ -34,7 +34,7 @@ export default function StickyMobileCTA() {
         <a
           href={`tel:${BUSINESS.phoneRaw}`}
           className="flex items-center justify-center gap-1.5 h-12 rounded-xl bg-primary text-white text-sm font-bold shadow-sm active:bg-primary-dark active:scale-[0.97] transition-transform"
-          aria-label={`Call ${BUSINESS.phone}`}
+          aria-label={`Call Now: ${BUSINESS.phone}`}
         >
           <Phone className="w-4 h-4" />
           Call Now

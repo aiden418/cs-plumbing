@@ -12,7 +12,7 @@ const BASE = "https://www.csplumbinglee.com";
 export const metadata: Metadata = {
   alternates: { canonical: "/awards" },
   title: "Awards & Recognition",
-  description: `Voted ${LATEST_AWARD.category} in the ${LATEST_AWARD.year} Best of Cape Coral awards by ${LATEST_AWARD.issuer} readers. See every award C&S Plumbing of Lee has earned and how it's decided.`,
+  description: `Voted ${LATEST_AWARD.category} in the ${LATEST_AWARD.year} Best of Cape Coral awards by ${LATEST_AWARD.issuer} readers. Every award C&S Plumbing has earned and how it's decided.`,
   keywords: [
     "best plumbing contractor Cape Coral",
     "Best of Cape Coral 2026 plumbing",

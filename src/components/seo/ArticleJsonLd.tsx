@@ -29,14 +29,17 @@ export default function ArticleJsonLd({ post }: { post: BlogPost }) {
       "@id": `${BASE}/#operations-manager`,
       name: "Aiden Pellechio",
       url: `${BASE}/about`,
-      jobTitle: "Operations Manager",
+      image: `${BASE}/images/team/aiden.jpg`,
+      // Must match the sitewide Person node in JsonLd.tsx (same @id) — AI
+      // engines cross-check entities and a title that disagrees costs trust.
+      jobTitle: "Project Manager & Estimator",
       worksFor: {
         "@type": "Organization",
         "@id": `${BASE}/#organization`,
         name: "C&S Plumbing of Lee",
       },
       description:
-        "Operations Manager at C&S Plumbing of Lee, currently studying construction management at Florida Gulf Coast University. Third-generation family member in the plumbing trade.",
+        "Third-generation Pellechio working full-time as project manager and estimator at C&S Plumbing of Lee — also handling permitting and marketing — while earning a construction management degree at Florida Gulf Coast University (FGCU), Class of 2028.",
     },
     publisher: {
       "@type": "Organization",

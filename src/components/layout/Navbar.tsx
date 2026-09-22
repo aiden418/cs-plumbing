@@ -70,10 +70,12 @@ export default function Navbar() {
 
   return (
     <>
+      {/* initial={false}: the nav (and the logo in it) used to sit at
+          translateY(-100px) until framer hydrated, which made the logo the
+          LCP element and tied LCP to JS execution time on every page. */}
       <motion.nav
-        initial={{ y: -100 }}
+        initial={false}
         animate={{ y: 0 }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-[background-color,border-color,box-shadow,translate] duration-300",
           isScrolled && "lg:-translate-y-9",
@@ -337,7 +339,7 @@ export default function Navbar() {
                                       : "text-gray-700 active:text-primary"
                                   )}
                                 >
-                                  {link.label === "More" ? "All Pages" : `All ${link.label}`}
+                                  {link.label === "Explore" ? "All Pages" : `All ${link.label}`}
                                 </Link>
                                 {link.children.map((child) => (
                                   <Link

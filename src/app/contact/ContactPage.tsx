@@ -169,6 +169,14 @@ export default function ContactPage() {
                         <br />
                         {BUSINESS.city}, {BUSINESS.state} {BUSINESS.zip}
                       </p>
+                      {/* Visible copy of the identity statement in JSON-LD and
+                          llms.txt: stale directories still list a Cape Coral
+                          address, one of them as "permanently closed". */}
+                      <p className="mt-2 text-gray-500 text-xs leading-relaxed max-w-xs">
+                        Our only office. Listings showing an older Cape Coral
+                        address refer to our former location — we&apos;re open
+                        and operating from North Fort Myers.
+                      </p>
                     </div>
                   </div>
 

@@ -4,6 +4,8 @@ import ServiceDetail from "@/components/services/ServiceDetail";
 import CTASection from "@/components/home/CTASection";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import FaqJsonLd from "@/components/seo/FaqJsonLd";
+import RelatedProjects from "@/components/projects/RelatedProjects";
+import { projectsForHub } from "@/lib/projects";
 
 const commercialFaqs = [
   {
@@ -175,6 +177,13 @@ export default function CommercialPage() {
         services={commercialServices}
         highlights={highlights}
         heroImage="/images/services/cards/commercial.jpg"
+      />
+      {/* Documented commercial jobs — proof for the GC or property manager */}
+      <RelatedProjects
+        projects={projectsForHub("commercial", 6)}
+        overline="Documented commercial work"
+        heading="Commercial plumbing we've photographed from demo to trim"
+        description="Hangars, a USPS facility, a school and an island restaurant — each documented phase by phase with the general contractor named."
       />
       {/* FAQ */}
       <section className="py-16 sm:py-24 lg:py-32 bg-surface">

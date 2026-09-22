@@ -9,7 +9,7 @@ import { BUSINESS, SERVICE_LANDINGS } from "@/lib/constants";
 const landing = SERVICE_LANDINGS.find((s) => s.slug === "uep-utilities")!;
 
 export const metadata: Metadata = {
-  title: landing.metaTitle,
+  title: { absolute: landing.metaTitle },
   description: landing.metaDescription,
   keywords: landing.keywords,
   alternates: { canonical: "/services/uep-utilities" },

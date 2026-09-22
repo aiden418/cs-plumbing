@@ -1,4 +1,5 @@
 import type { CompletedProject } from "@/lib/types";
+import { isProjectComplete } from "@/lib/projects";
 
 const BASE = "https://www.csplumbinglee.com";
 
@@ -33,6 +34,13 @@ export default function ProjectJsonLd({ project }: { project: CompletedProject }
     url,
     inLanguage: "en-US",
     isAccessibleForFree: true,
+    isPartOf: { "@id": `${BASE}/projects#collection` },
+    // Completed vs in-progress is a fact a GC checks; say it in the data too.
+    creativeWorkStatus: isProjectComplete(project) ? "Completed" : "In Progress",
+    ...(project.completedOn ? { dateCreated: project.completedOn } : {}),
+    ...(project.updatedOn ?? project.completedOn
+      ? { dateModified: project.updatedOn ?? project.completedOn }
+      : {}),
     keywords: [
       project.name,
       `${project.category} plumbing`,

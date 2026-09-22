@@ -1,5 +1,7 @@
 import type { MetadataRoute } from "next";
 import { AREA_LANDINGS, BLOG_POSTS, COMPLETED_PROJECTS } from "@/lib/constants";
+import { GALLERY_ITEMS } from "@/lib/gallery-data";
+import { isProjectComplete, projectImages, projectLastModified } from "@/lib/projects";
 import { SERVICE_CITY_LANDINGS } from "@/lib/service-city-landings";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -64,6 +66,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: LAST_CONTENT_PASS,
       changeFrequency: "weekly",
       priority: 0.7,
+      // Image sitemap entries: the grid is client-rendered, so without this
+      // Google Images only finds these photos by crawling the page's JS.
+      images: GALLERY_ITEMS.map((item) => `${baseUrl}${item.src}`),
     },
     {
       url: `${baseUrl}/reviews`,
@@ -209,11 +214,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 0.7,
     },
+    // Each project carries its own lastmod (completedOn / updatedOn) and every
+    // jobsite photo, so a close-out with new trim photos gets recrawled and
+    // the photos are discoverable in image search with the project's URL.
     ...COMPLETED_PROJECTS.map((project) => ({
       url: `${baseUrl}/projects/${project.slug}`,
-      lastModified: LAST_CONTENT_PASS,
-      changeFrequency: "monthly" as const,
+      lastModified: projectLastModified(project, LAST_CONTENT_PASS),
+      changeFrequency: (isProjectComplete(project) ? "yearly" : "monthly") as "yearly" | "monthly",
       priority: 0.7,
+      images: projectImages(project).map((src) => `${baseUrl}${src}`),
     })),
     // Blog
     {

@@ -43,6 +43,25 @@ export default function BlogContent({ post }: { post: BlogPost }) {
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white leading-tight">
               {post.title}
             </h1>
+            {/* Visible byline: the Article schema names the author, and a
+                reader (or an AI engine) should see the same person on the page. */}
+            <p className="mt-4 text-sm text-white/70">
+              By{" "}
+              <Link href="/about" className="font-semibold text-white hover:text-gold transition-colors">
+                Aiden Pellechio
+              </Link>
+              , Project Manager &amp; Estimator at C&amp;S Plumbing of Lee
+              {post.updatedDate && (
+                <>
+                  {" "}· Updated{" "}
+                  {new Date(post.updatedDate).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                </>
+              )}
+            </p>
           </div>
         </Container>
       </section>

@@ -148,7 +148,7 @@ export default function Footer() {
               </div>
               <div className="ml-6">{BUSINESS.hours.saturday}</div>
               <div className="ml-6">{BUSINESS.hours.sunday}</div>
-              <div className="mt-2 text-primary font-semibold">
+              <div className="mt-2 text-primary-dark font-semibold">
                 {BUSINESS.hours.emergency}
               </div>
             </div>
@@ -209,7 +209,7 @@ export default function Footer() {
                 >
                   #{BUSINESS.license2}
                 </a>
-                <span className="ml-1.5 text-[10px] text-gray-400">(verify)</span>
+                <span className="ml-1.5 text-[10px] text-gray-500">(verify)</span>
               </span>
             </p>
             <div className="flex items-center gap-4 sm:gap-6 text-xs sm:text-sm text-gray-500">
@@ -221,7 +221,7 @@ export default function Footer() {
               </Link>
             </div>
           </div>
-          <p className="text-xs text-gray-400">
+          <p className="text-xs text-gray-500">
             <a href="https://draftconstructionswfl.com" target="_blank" rel="noopener noreferrer" className="hover:text-gray-500 transition-colors">
               A Division of Draft Construction
             </a>{" · "}Designed &amp; managed by ASP LLC

@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Droplets, Flame } from "lucide-react";
-import PageHero from "@/components/ui/PageHero";
 import WaterHeaterQuiz from "@/components/quote-builder/WaterHeaterQuiz";
 import RepipeQuiz from "@/components/quote-builder/RepipeQuiz";
 import QuoteResult from "@/components/quote-builder/QuoteResult";
@@ -58,33 +57,11 @@ export default function QuoteBuilderPage() {
     setSelections(null);
   };
 
+  // The page hero is rendered by the server page (page.tsx) above this
+  // Suspense boundary so the H1 and copy reach crawlers; this component is
+  // only the interactive quiz.
   return (
     <>
-      <PageHero
-        size="sm"
-        align="center"
-        overline="Instant Quote Builder"
-        title="Instant Plumbing Quote for"
-        accent="Water Heaters & Repiping in Lee County"
-        description="Answer a few questions and get an instant price range for water heater installation or whole-home repiping anywhere in Cape Coral, Fort Myers, and Lee County. Final price set after a free on-site inspection — no obligation, no pressure."
-      >
-        {/* What happens next */}
-        <div className="mt-6 sm:mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs sm:text-sm text-white/60">
-          <span className="inline-flex items-center gap-1.5">
-            <span className="flex items-center justify-center w-5 h-5 rounded-full bg-gold text-navy text-[10px] font-bold">1</span>
-            Answer a few questions
-          </span>
-          <span className="inline-flex items-center gap-1.5">
-            <span className="flex items-center justify-center w-5 h-5 rounded-full bg-gold text-navy text-[10px] font-bold">2</span>
-            Get your instant range
-          </span>
-          <span className="inline-flex items-center gap-1.5">
-            <span className="flex items-center justify-center w-5 h-5 rounded-full bg-gold text-navy text-[10px] font-bold">3</span>
-            C&amp;S confirms within 1 business day
-          </span>
-        </div>
-      </PageHero>
-
       <section className="pb-16 sm:pb-24 lg:pb-32 -mt-4 sm:-mt-6">
         <div className="max-w-5xl mx-auto px-6 lg:px-8">
           <AnimatePresence mode="wait">

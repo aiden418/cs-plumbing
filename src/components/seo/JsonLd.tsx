@@ -70,7 +70,15 @@ export default async function JsonLd() {
     "@type": "Plumber",
     "@id": `${BASE}/#organization`,
     name: "C&S Plumbing of Lee",
-    alternateName: "C&S Plumbing",
+    // Every spelling directories use for the same company, so an engine
+    // matching "C S Plumbing of Lee Inc" resolves to this entity, not to a
+    // stale listing or a same-named company in another state.
+    alternateName: [
+      "C&S Plumbing",
+      "C&S Plumbing of Lee, Inc.",
+      "C S Plumbing of Lee Inc",
+      "C&S Plumbing of Lee County",
+    ],
     url: BASE,
     logo: `${BASE}/images/logos/logo-512.png`,
     image: `${BASE}/images/hero/drone-construction.jpg`,
@@ -79,7 +87,7 @@ export default async function JsonLd() {
     foundingDate: "1998",
     numberOfEmployees: { "@type": "QuantitativeValue", minValue: 5, maxValue: 10 },
     description:
-      "Family-owned plumbing company serving Southwest Florida since 1998. 8,500+ homes built. 24/7 emergency service. Residential, commercial & new construction plumbing across Cape Coral, Fort Myers, Naples & all of SWFL.",
+      "Family-owned plumbing company serving Southwest Florida since 1998. 8,500+ homes built. 24/7 emergency service. Residential, commercial & new construction plumbing across Cape Coral, Fort Myers, Naples & all of SWFL. One office, open and operating, at 951 Pondella Rd in North Fort Myers; directory listings showing an older Cape Coral street address refer to the company's former office.",
     slogan: "Southwest Florida's Most Trusted Plumbing Team",
     address: {
       "@type": "PostalAddress",
@@ -325,6 +333,9 @@ export default async function JsonLd() {
       "https://www.google.com/maps/place/C%26S+Plumbing+of+Lee",
       BUSINESS.facebookUrl,
       BUSINESS.instagramUrl,
+      // The current (North Fort Myers) review profile — the older Cape Coral
+      // one is a stale duplicate and is deliberately not listed.
+      BUSINESS.birdeyeUrl,
     ],
   };
 
