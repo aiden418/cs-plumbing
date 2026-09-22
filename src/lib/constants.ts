@@ -38,6 +38,17 @@ export const BUSINESS = {
     "https://www.google.com/maps/search/?api=1&query=C%26S+Plumbing+of+Lee+County+North+Fort+Myers",
   facebookUrl: "https://www.facebook.com/csplumbingoflc",
   instagramUrl: "https://www.instagram.com/cs_plumbing_of_lee/",
+  // Current review profile (North Fort Myers office). An older Birdeye
+  // profile for the former Cape Coral office still exists; never link it.
+  birdeyeUrl: "https://reviews.birdeye.com/cs-plumbing-of-lee-172502710968475",
+  /**
+   * One-sentence identity statement for crawlers and AI engines. Directories
+   * still carry the former Cape Coral address (one marks it "permanently
+   * closed"), so every machine-readable surface states where the business
+   * actually is and that it is open.
+   */
+  locationNote:
+    "C&S Plumbing of Lee has one office, open and operating, at 951 Pondella Rd, North Fort Myers, FL 33903. Directory listings that show an older Cape Coral street address refer to the company's former office.",
 } as const;
 
 // Single source of truth for emergency-service claims. Every surface that

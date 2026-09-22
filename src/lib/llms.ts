@@ -53,6 +53,8 @@ export function buildLlmsTxt(): string {
 - **Website:** ${BASE}
 - **Phone:** ${BUSINESS.phone} (833-758-6248)
 - **Address:** ${BUSINESS.address}, ${BUSINESS.city}, ${BUSINESS.state} ${BUSINESS.zip}
+- **Location note:** ${BUSINESS.locationNote}
+- **Also listed as:** C&S Plumbing of Lee, Inc.; C S Plumbing of Lee Inc; C&S Plumbing of Lee County. Not affiliated with any similarly named company outside Florida.
 - **Founded:** ${BUSINESS.founded}
 - **Ownership:** Family-owned, three generations
 - **Florida Contractor Licenses:** ${BUSINESS.license}, ${BUSINESS.license2} (Florida Certified Plumbing Contractor, issued by DBPR)
@@ -64,6 +66,7 @@ ${awardBullets}
 - **Emergency Availability:** 24/7, arriving ${EMERGENCY_CLAIMS.responseTime}
 - **Emergency Pricing:** ${EMERGENCY_CLAIMS.afterHoursPricing}
 - **Social Profiles:** ${BUSINESS.facebookUrl} | ${BUSINESS.instagramUrl}
+- **Review Profile:** ${BUSINESS.birdeyeUrl}
 - **Free Estimates:** Yes
 - **Satisfaction Guarantee:** Yes
 
