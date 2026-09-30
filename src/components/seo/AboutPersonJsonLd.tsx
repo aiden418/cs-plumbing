@@ -7,7 +7,7 @@ export default function AboutPersonJsonLd() {
       "@type": "Person",
       "@id": `${BASE}/#owner`,
       name: "Samuel Pellechio Jr.",
-      jobTitle: "Owner & President",
+      jobTitle: "Owner & Co-Founder",
       url: `${BASE}/about`,
       image: `${BASE}/images/team/samuel.jpeg`,
       description:
@@ -43,11 +43,11 @@ export default function AboutPersonJsonLd() {
       "@type": "Person",
       "@id": `${BASE}/#operations-manager`,
       name: "Aiden Pellechio",
-      jobTitle: "Project Manager & Estimator",
+      jobTitle: "Office Manager, Estimating & Project Management",
       url: `${BASE}/about`,
       image: `${BASE}/images/team/aiden.jpg`,
       description:
-        "Third-generation Pellechio working full-time as project manager and estimator at C&S Plumbing of Lee — also handling permitting and marketing — while earning a construction management degree at Florida Gulf Coast University (FGCU), Class of 2028, with plans to pursue his GC and plumbing licenses.",
+        "Third-generation Pellechio. Office manager at C&S Plumbing of Lee, running estimating, project management and permitting, while currently working toward a construction management degree at Florida Gulf Coast University (FGCU), with plans to pursue his GC and plumbing licenses.",
       worksFor: {
         "@type": "Plumber",
         "@id": `${BASE}/#organization`,

@@ -4,7 +4,7 @@ import { useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ChevronDown, Phone, Calendar, Star } from "lucide-react";
+import { ArrowRight, ChevronDown, HardHat, Home, Phone, Star } from "lucide-react";
 import Container from "@/components/ui/Container";
 import HeroVideo from "@/components/home/HeroVideo";
 import { BUSINESS, LATEST_AWARD } from "@/lib/constants";
@@ -69,7 +69,9 @@ export default function Hero() {
           fill
           className="object-cover object-center"
           priority
-          quality={85}
+          // 75 is visually identical on a drone photo and ~30% smaller at the
+          // mobile widths where this is the LCP image.
+          quality={75}
         />
         <HeroVideo />
         <div className="absolute inset-0 bg-gray-900/40" />
@@ -143,32 +145,71 @@ export default function Hero() {
               className="animate-hero-in mt-6 sm:mt-8 text-base sm:text-lg text-white/70 max-w-lg leading-relaxed"
               style={{ animationDelay: "320ms" }}
             >
-              Family-owned since 1998. 8,500+ homes built. The plumber Cape
-              Coral, Fort Myers, North Fort Myers, and Punta Gorda homeowners
-              and builders trust for repairs, repipes, remodels, and new
-              construction — with 24/7 emergency service when you need it.
+              Family owned and operated since 1998, with 9,500+ homes plumbed. New
+              construction for builders, and repairs, repipes and remodels
+              for homeowners across Cape Coral, Fort Myers and Southwest
+              Florida.
             </p>
 
+            {/* Two doors: builders/GCs and homeowners/service. Emergency is a
+                line under them, not the headline identity. */}
             <div
               data-pipe-node="hero-cta"
-              className="animate-hero-in mt-8 sm:mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4"
+              className="animate-hero-in mt-8 sm:mt-10 grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 max-w-2xl"
               style={{ animationDelay: "440ms" }}
             >
               <Link
-                href="/booking"
-                className="inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-dark active:scale-[0.98] text-white font-semibold px-7 py-4 rounded-full transition-all duration-300"
+                href="/builders"
+                className="group rounded-2xl border border-white/20 bg-white/10 backdrop-blur-sm p-5 transition-all duration-300 hover:bg-white/15 hover:border-gold/60"
               >
-                <Calendar className="w-5 h-5" />
-                Book a Service
+                <span className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-gold">
+                  <HardHat className="w-4 h-4" /> Builders &amp; GCs
+                </span>
+                <span className="mt-2 block text-lg font-bold text-white leading-snug">
+                  New construction, slab to final
+                </span>
+                <span className="mt-1 block text-sm text-white/65">
+                  Scope by phase, prequal packet, submit plans for a bid.
+                </span>
+                <span className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-white">
+                  Builder services
+                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                </span>
               </Link>
+              <Link
+                href="/booking"
+                className="group rounded-2xl border border-white/20 bg-primary/90 p-5 transition-all duration-300 hover:bg-primary"
+              >
+                <span className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-white/80">
+                  <Home className="w-4 h-4" /> Homeowners / Service
+                </span>
+                <span className="mt-2 block text-lg font-bold text-white leading-snug">
+                  Repairs, repipes &amp; remodels
+                </span>
+                <span className="mt-1 block text-sm text-white/75">
+                  Water heaters, leaks, drains, fixtures, whole-home repipes.
+                </span>
+                <span className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-white">
+                  Book a service
+                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                </span>
+              </Link>
+            </div>
+
+            <p
+              className="animate-hero-in mt-4 text-sm text-white/60"
+              style={{ animationDelay: "520ms" }}
+            >
+              Plumbing emergency?{" "}
               <a
                 href={`tel:${BUSINESS.phoneRaw}`}
-                className="inline-flex items-center justify-center gap-2 border border-white/40 hover:bg-white/10 active:scale-[0.98] text-white font-semibold px-7 py-4 rounded-full transition-all duration-300"
+                className="inline-flex items-center gap-1 font-semibold text-white hover:text-gold"
               >
-                <Phone className="w-5 h-5" />
-                Call {BUSINESS.phone}
-              </a>
-            </div>
+                <Phone className="w-3.5 h-3.5" />
+                {BUSINESS.phone}
+              </a>{" "}
+              · <Link href="/emergency" className="underline-offset-2 hover:underline">24/7 service</Link>
+            </p>
 
             {/* Trust indicators */}
             <div
@@ -177,15 +218,15 @@ export default function Hero() {
             >
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-green-400" />
-                24/7 Emergency Service
+                Licensed & Insured
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-blue-400" />
+                9,500+ Homes Plumbed
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-blue-400" />
                 Free Estimates
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-blue-400" />
-                Licensed & Insured
               </div>
             </div>
           </div>
@@ -225,8 +266,10 @@ export default function Hero() {
               <Image
                 src={LATEST_AWARD.badge}
                 alt={`${LATEST_AWARD.title} — ${LATEST_AWARD.category}`}
-                width={LATEST_AWARD.badgeWidth}
-                height={LATEST_AWARD.badgeHeight}
+                // Display size, not the file's 2215x1561: the attribute ratio then
+                // matches the rendered box (the hidden twin is measured by attributes).
+                width={54}
+                height={38}
                 sizes="54px"
                 className="h-[38px] w-[54px]"
               />
@@ -254,8 +297,8 @@ export default function Hero() {
             <Image
               src={LATEST_AWARD.badge}
               alt={`${LATEST_AWARD.title} — ${LATEST_AWARD.category}`}
-              width={LATEST_AWARD.badgeWidth}
-              height={LATEST_AWARD.badgeHeight}
+              width={54}
+              height={38}
               sizes="54px"
               className="h-[38px] w-[54px]"
               priority

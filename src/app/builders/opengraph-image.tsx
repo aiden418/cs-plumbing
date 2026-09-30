@@ -9,7 +9,7 @@ export default function OgImage() {
   return createOgImage({
     variant: "service",
     eyebrow: "For Builders & GCs",
-    title: "Your Plumbing Sub for the Next 8,500",
-    subtitle: "Dual CFC licenses, prequal package in 24 hours, AIA pay apps, crews across Lee, Collier & Charlotte.",
+    title: "9,500+ New Construction Homes Since 1998",
+    subtitle: "Family owned and operated. Two Florida plumbing contractor licenses. Slab layout to final across Lee & Charlotte counties.",
   });
 }

@@ -3,6 +3,7 @@ import { AREA_LANDINGS, BLOG_POSTS, COMPLETED_PROJECTS } from "@/lib/constants";
 import { GALLERY_ITEMS } from "@/lib/gallery-data";
 import { isProjectComplete, projectImages, projectLastModified } from "@/lib/projects";
 import { SERVICE_CITY_LANDINGS } from "@/lib/service-city-landings";
+import { NEW_CONSTRUCTION_CITIES } from "@/lib/builder-program";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://www.csplumbinglee.com";
@@ -10,6 +11,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // Bump when a real content pass ships. A blanket `new Date()` told Google
   // the whole site changed on every deploy, which trains it to ignore lastmod.
   const LAST_CONTENT_PASS = new Date("2026-09-14");
+  // Builder-door launch: /builders rebuild + new-construction city pages.
+  const BUILDER_PASS = new Date("2026-09-29");
 
   const blogPages = BLOG_POSTS.map((post) => ({
     url: `${baseUrl}/blog/${post.slug}`,
@@ -176,10 +179,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // Builder funnel page (SEO-targeted for builder/GC traffic)
     {
       url: `${baseUrl}/builders`,
-      lastModified: LAST_CONTENT_PASS,
+      lastModified: BUILDER_PASS,
       changeFrequency: "monthly",
       priority: 0.9,
     },
+    // New construction plumbing by city (builder door)
+    ...NEW_CONSTRUCTION_CITIES.map((c) => ({
+      url: `${baseUrl}/new-construction-plumbing/${c.slug}`,
+      lastModified: BUILDER_PASS,
+      changeFrequency: "monthly" as const,
+      priority: 0.9,
+    })),
     // Builder Portal (plan upload form)
     {
       url: `${baseUrl}/builder-portal`,

@@ -8,8 +8,10 @@
     "start": "next start",
     "lint": "eslint",
     "photos:ingest": "node scripts/ingest-project-photos.mjs",
-    "photos:check": "node scripts/check-project-images.mjs",
-    "gallery:ingest": "node scripts/ingest-gallery-photos.mjs"
+    "photos:check": "node scripts/check-project-images.mjs && node scripts/strip-image-metadata.mjs --check",
+    "gallery:ingest": "node scripts/ingest-gallery-photos.mjs",
+    "photos:strip": "node scripts/strip-image-metadata.mjs",
+    "builders:pdf": "node scripts/build-builder-pdfs.mjs"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",

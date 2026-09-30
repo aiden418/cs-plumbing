@@ -18,22 +18,29 @@ import {
   reportConversion,
 } from "@/lib/openai-ads-capi";
 
-const RangeSchema = z.object({ min: z.number(), max: z.number() });
+// Bounds are sized to what the quote engine can legitimately produce (see
+// src/lib/quote-pricing.ts). This public endpoint renders caller-supplied text
+// into a C&S-branded email sent to the caller-supplied address — anything
+// larger than these caps is abuse, not a real quote.
+const MoneySchema = z.number().finite().min(-100_000).max(1_000_000);
+const RangeSchema = z.object({ min: MoneySchema, max: MoneySchema });
 
 const QuoteSchema = z.object({
   service: z.enum(["water-heater", "repipe"]),
-  selections: z.record(z.string(), z.unknown()),
+  selections: z
+    .record(z.string().max(64), z.unknown())
+    .refine((obj) => Object.keys(obj).length <= 24, "Too many selections"),
   result: z.object({
     total: RangeSchema,
     lineItems: z
       .array(
         z.object({
-          label: z.string().max(200),
+          label: z.string().max(120),
           range: RangeSchema,
         })
       )
-      .max(50),
-    notes: z.array(z.string().max(500)).max(50),
+      .max(24),
+    notes: z.array(z.string().max(500)).max(12),
   }),
   lead: z.object({
     name: z.string().min(2).max(100),
@@ -92,7 +99,9 @@ export async function POST(request: Request) {
       .filter(([, v]) => v !== null && v !== "" && !(Array.isArray(v) && v.length === 0))
       .map(([k, v]) => {
         const safeKey = escapeHtml(k.replace(/([A-Z])/g, " $1").replace(/^./, (s) => s.toUpperCase()));
-        const safeVal = escapeHtml(Array.isArray(v) ? v.join(", ") : String(v));
+        const safeVal = escapeHtml(
+          (Array.isArray(v) ? v.join(", ") : String(v)).slice(0, 200)
+        );
         return `<p style="margin: 4px 0;"><strong>${safeKey}:</strong> ${safeVal}</p>`;
       })
       .join("");

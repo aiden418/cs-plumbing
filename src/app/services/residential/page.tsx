@@ -5,6 +5,7 @@ import CTASection from "@/components/home/CTASection";
 import FaqJsonLd from "@/components/seo/FaqJsonLd";
 import FaqAccordion from "@/components/ui/FaqAccordion";
 import Container from "@/components/ui/Container";
+import NewConstructionBenefits from "@/components/builders/NewConstructionBenefits";
 import { BUSINESS, SERVICES } from "@/lib/constants";
 import { RESIDENTIAL_FAQS } from "./residential-faqs";
 
@@ -104,6 +105,8 @@ export default function ResidentialPage() {
         highlights={highlights}
         heroImage="/images/team/team-work-1.jpg"
       />
+      {/* Owners of homes C&S plumbed as new construction */}
+      <NewConstructionBenefits overline="Did C&S plumb your new home?" />
       <section className="py-16 sm:py-24 bg-[#F5F5F7]">
         <Container size="narrow">
           <div className="text-center mb-8 sm:mb-12">

@@ -32,9 +32,10 @@ const EmergencyBand = dynamic(() => import("@/components/home/EmergencyBand"));
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
-  title: "Plumber in Cape Coral & Fort Myers | 24/7 Emergency Service",
+  // Identity is builders + homeowners; emergency lives on /emergency.
+  title: "New Construction & Service Plumber | Cape Coral & Fort Myers",
   description:
-    "New construction, remodel, repipe and service plumber in Cape Coral, Fort Myers & Naples. 8,500+ homes built since 1998. 24/7 emergency service.",
+    "New construction plumbing for builders and GCs; repairs, repipes and remodels for homeowners in Cape Coral, Fort Myers & SWFL. 9,500+ homes plumbed since 1998.",
   keywords: [
     "new construction plumber SWFL",
     "new construction plumbing Cape Coral",
@@ -69,7 +70,7 @@ export const metadata: Metadata = {
     title:
       "C&S Plumbing of Lee — New Construction, Remodel & Service Plumber in SWFL",
     description:
-      "Family-owned since 1998. 8,500+ homes built. The new construction, remodel, and repipe partner Cape Coral and Fort Myers builders and homeowners trust. 24/7 emergency available.",
+      "Family owned and operated since 1998, 9,500+ homes plumbed. New construction for builders and GCs; repairs, repipes and remodels for homeowners across Cape Coral, Fort Myers & SWFL.",
     url: "https://www.csplumbinglee.com",
   },
 };

@@ -94,10 +94,10 @@ export default function CityProofBlock({ cityName }: CityProofBlockProps) {
                 <div>
                   <Award className="w-7 h-7 mb-4 opacity-90" />
                   <p className="text-3xl sm:text-4xl font-black leading-none mb-2">
-                    8,500+
+                    9,500+
                   </p>
                   <p className="text-sm sm:text-base font-medium text-white/90">
-                    homes built across Lee County since 1998
+                    homes plumbed across Lee County since 1998
                   </p>
                 </div>
                 <Link
@@ -120,7 +120,7 @@ export default function CityProofBlock({ cityName }: CityProofBlockProps) {
                 </h3>
                 <p className="text-sm sm:text-base text-gray-500 leading-relaxed mb-4">
                   Cape Coral, Fort Myers, North Fort Myers, Bonita Springs,
-                  Estero, Naples, Lehigh Acres, and Sanibel — over 8,500 homes
+                  Estero, Naples, Lehigh Acres, and Sanibel — over 9,500 homes
                   served by the same family-owned crew. New construction,
                   repipes, remodels, and commercial.
                 </p>
@@ -136,10 +136,10 @@ export default function CityProofBlock({ cityName }: CityProofBlockProps) {
                 <div>
                   <Award className="w-7 h-7 mb-4 opacity-90" />
                   <p className="text-3xl sm:text-4xl font-black leading-none mb-2">
-                    8,500+
+                    9,500+
                   </p>
                   <p className="text-sm sm:text-base font-medium text-white/90">
-                    homes built across Lee County
+                    homes plumbed across Lee County
                   </p>
                 </div>
                 <p className="text-xs text-white/80 mt-6">

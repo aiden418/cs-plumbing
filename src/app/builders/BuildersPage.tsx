@@ -4,16 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  Phone,
-  Mail,
-  Hammer,
-  ArrowUpFromLine,
-  Wrench,
-  Building2,
-  Check,
-  ArrowRight,
-} from "lucide-react";
+import { ArrowRight, Download, MapPin } from "lucide-react";
 import Container from "@/components/ui/Container";
 import PageHero from "@/components/ui/PageHero";
 import SectionHeading from "@/components/ui/SectionHeading";
@@ -30,17 +21,24 @@ import {
   BUILDER_STATS,
   BUILDER_GALLERY,
   BUILDER_CASE_STUDIES,
-  BUILDER_SPEC_SHEETS,
-  AIDEN_CONTACT,
 } from "@/lib/builders-data";
+import {
+  BUILDER_PROOF,
+  CAPABILITY_STATEMENT_PDF,
+  NEW_CONSTRUCTION_CITIES,
+} from "@/lib/builder-program";
+import BuilderBidForm from "@/components/builders/BuilderBidForm";
+import NewConstructionBenefits from "@/components/builders/NewConstructionBenefits";
+import {
+  BuilderDesk,
+  BuilderProofStory,
+  ConstructionPhases,
+  PrequalDocs,
+  Qualifications,
+  SchedulingPanel,
+  SwflExpertise,
+} from "@/components/builders/BuilderSections";
 import { BUILDER_FAQS } from "./builder-faqs";
-
-const ICON_MAP: Record<string, React.ReactNode> = {
-  Hammer: <Hammer className="w-6 h-6" />,
-  ArrowUpFromLine: <ArrowUpFromLine className="w-6 h-6" />,
-  Wrench: <Wrench className="w-6 h-6" />,
-  Building2: <Building2 className="w-6 h-6" />,
-};
 
 const GALLERY_CATEGORIES = [
   { label: "All", value: "all" },
@@ -64,27 +62,28 @@ export default function BuildersPage() {
       <PageHero
         align="center"
         overline="For Builders & General Contractors"
-        title="Your Plumbing Partner for"
-        accent="New Construction"
-        description="8,500+ homes completed across Lee, Collier, and Charlotte counties since 1998. Two active CFC licenses. 5.0 stars across 46 Google reviews. The plumber builders call back."
+        title={BUILDER_PROOF.headline.replace(/ since \d{4}$/, "")}
+        accent="Since 1998"
+        description={`New construction plumbing for builders and GCs across Lee and Charlotte counties, from slab layout to final. ${BUILDER_PROOF.subline}`}
         actions={
           <>
             <Button
-              href="/builder-portal"
+              href="#bid"
               variant="gold"
               size="lg"
               icon={<ArrowRight className="w-5 h-5" />}
             >
-              Request Prequalification
+              Submit Plans for a Bid
             </Button>
-            <Button
-              href={`tel:${AIDEN_CONTACT.phoneRaw}`}
-              variant="outline-light"
-              size="lg"
-              icon={<Phone className="w-5 h-5" />}
+            {/* Plain <a>: a PDF isn't a route, so next/link would try a client navigation first. */}
+            <a
+              href={CAPABILITY_STATEMENT_PDF}
+              download
+              className="inline-flex items-center justify-center gap-2 font-semibold rounded-xl transition-all duration-300 border border-white/40 text-white hover:bg-white/10 px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 text-sm sm:text-base lg:text-lg"
             >
-              Call {AIDEN_CONTACT.phone}
-            </Button>
+              <Download className="w-5 h-5" />
+              Capability Statement
+            </a>
           </>
         }
       />
@@ -108,6 +107,8 @@ export default function BuildersPage() {
           </ScrollReveal>
         </Container>
       </section>
+
+      <BuilderProofStory />
 
       {/* Builder Logo Grid */}
       <section className="py-16 sm:py-24 lg:py-32">
@@ -139,6 +140,12 @@ export default function BuildersPage() {
           </StaggerChildren>
         </Container>
       </section>
+
+      <ConstructionPhases />
+      <SwflExpertise />
+      <Qualifications />
+      <NewConstructionBenefits overline="What your buyers get" />
+      <SchedulingPanel />
 
       {/* Project Gallery */}
       <section className="py-16 sm:py-24 lg:py-32 bg-[#F5F5F7]">
@@ -228,7 +235,8 @@ export default function BuildersPage() {
         </Container>
       </section>
 
-      {/* Case Studies */}
+      {/* Case Studies — entries flagged placeholder: true are unverified and must not render */}
+      {BUILDER_CASE_STUDIES.some((study) => !study.placeholder) && (
       <section className="py-16 sm:py-24 lg:py-32">
         <Container>
           <SectionHeading
@@ -237,7 +245,7 @@ export default function BuildersPage() {
             subtitle="Real challenges, real solutions. Here's what it looks like when your plumber is a partner, not just a sub."
           />
           <StaggerChildren className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
-            {BUILDER_CASE_STUDIES.map((study) => (
+            {BUILDER_CASE_STUDIES.filter((study) => !study.placeholder).map((study) => (
               <motion.div
                 key={study.id}
                 variants={staggerItem}
@@ -280,56 +288,41 @@ export default function BuildersPage() {
           </StaggerChildren>
         </Container>
       </section>
+      )}
 
-      {/* Capabilities / Spec Sheets */}
-      <section className="py-16 sm:py-24 lg:py-32 bg-[#F5F5F7]">
+      <PrequalDocs />
+
+      {/* New construction by city */}
+      <section className="py-16 sm:py-24 bg-[#F5F5F7]">
         <Container>
           <SectionHeading
-            overline="Capabilities"
-            title="Full-Scope New Construction Plumbing"
-            subtitle="From underground to final inspection — every phase, every trade, every time."
+            overline="Where we build"
+            title="New construction plumbing by city"
+            subtitle="Local permitting and site conditions for each market we plumb."
           />
-          <StaggerChildren className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
-            {BUILDER_SPEC_SHEETS.map((spec) => (
-              <motion.div
-                key={spec.id}
-                variants={staggerItem}
-                className="bg-white rounded-2xl border border-gray-200 p-6 sm:p-8 hover:shadow-lg transition-shadow duration-300"
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+            {NEW_CONSTRUCTION_CITIES.map((c) => (
+              <Link
+                key={c.slug}
+                href={`/new-construction-plumbing/${c.slug}`}
+                className="flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-3.5 text-sm font-semibold text-gray-900 hover:border-primary hover:text-primary transition-colors"
               >
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
-                    {ICON_MAP[spec.icon]}
-                  </div>
-                  <div>
-                    <h3 className="text-lg sm:text-xl font-bold text-gray-900">
-                      {spec.title}
-                    </h3>
-                    <p className="text-sm text-gray-500">{spec.description}</p>
-                  </div>
-                </div>
-                <ul className="space-y-2.5">
-                  {spec.items.map((item) => (
-                    <li
-                      key={item}
-                      className="flex items-start gap-2.5 text-sm text-gray-600"
-                    >
-                      <Check className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-                {spec.href && (
-                  <Link
-                    href={spec.href}
-                    className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:text-primary-dark mt-5 transition-colors"
-                  >
-                    Learn More
-                    <ArrowRight className="w-4 h-4" />
-                  </Link>
-                )}
-              </motion.div>
+                <MapPin className="w-4 h-4 text-primary shrink-0" />
+                {c.city}
+              </Link>
             ))}
-          </StaggerChildren>
+          </div>
+        </Container>
+      </section>
+
+      <BuilderDesk />
+
+      {/* Submit plans for a bid */}
+      <section id="bid" className="py-16 sm:py-24 lg:py-32 scroll-mt-24">
+        <Container>
+          <div className="max-w-3xl mx-auto">
+            <BuilderBidForm source="builders-hub" />
+          </div>
         </Container>
       </section>
 
@@ -373,128 +366,6 @@ export default function BuildersPage() {
         </Container>
       </section>
 
-      {/* Prequalification CTA */}
-      <section className="py-16 sm:py-24 lg:py-32 bg-primary">
-        <Container>
-          <div className="text-center max-w-2xl mx-auto">
-            <ScrollReveal>
-              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white/10 flex items-center justify-center mx-auto mb-6">
-                <ArrowRight className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
-              </div>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight">
-                Ready to Get Prequalified?
-              </h2>
-              <p className="mt-4 text-base sm:text-lg text-white/70 leading-relaxed">
-                Submit your project details through our Builder Portal and
-                we&apos;ll send you everything you need — CFC licenses,
-                insurance certificates, W-9, EMR letter, safety program,
-                and bonding capacity. Fast turnaround, no runaround.
-              </p>
-              <Link
-                href="/builder-portal"
-                className="inline-flex items-center justify-center gap-2 font-semibold rounded-xl transition-all duration-300 cursor-pointer bg-white text-primary hover:bg-gray-100 shadow-sm hover:shadow-md active:scale-[0.98] px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 text-sm sm:text-base lg:text-lg mt-8"
-              >
-                <ArrowRight className="w-5 h-5" />
-                Request Prequalification
-              </Link>
-            </ScrollReveal>
-          </div>
-        </Container>
-      </section>
-
-      {/* Direct Contact — Aiden CTA */}
-      <section className="py-16 sm:py-24 lg:py-32">
-        <Container>
-          <div className="max-w-4xl mx-auto">
-            <ScrollReveal>
-              <div className="bg-[#F5F5F7] rounded-3xl p-8 sm:p-12 lg:p-16">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-                  <div>
-                    <span className="inline-block text-primary text-xs sm:text-sm font-semibold tracking-widest uppercase mb-3 sm:mb-4">
-                      Direct Line to Our Team
-                    </span>
-                    <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 leading-tight">
-                      One call to get started.
-                    </h2>
-                    <p className="mt-4 text-sm sm:text-base text-gray-500 leading-relaxed">
-                      No call centers, no dispatchers, no runaround. When you
-                      partner with C&S, you work directly with our operations
-                      and estimating team on every bid, every schedule, and
-                      every punch list. That&apos;s how we&apos;ve kept builder
-                      relationships for 25+ years.
-                    </p>
-                  </div>
-
-                  <div className="space-y-4">
-                    <div>
-                      <p className="text-xl sm:text-2xl font-bold text-gray-900">
-                        {AIDEN_CONTACT.name}
-                      </p>
-                      <p className="text-sm text-gray-500 font-medium">
-                        {AIDEN_CONTACT.title}
-                      </p>
-                    </div>
-
-                    <div className="space-y-3">
-                      <a
-                        href={`tel:${AIDEN_CONTACT.phoneRaw}`}
-                        className="flex items-center gap-3 text-base sm:text-lg font-semibold text-gray-900 hover:text-primary transition-colors"
-                      >
-                        <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary flex-shrink-0">
-                          <Phone className="w-5 h-5" />
-                        </div>
-                        {AIDEN_CONTACT.phone}
-                      </a>
-                      <a
-                        href={`mailto:${AIDEN_CONTACT.email}`}
-                        className="flex items-center gap-3 text-base sm:text-lg font-semibold text-gray-900 hover:text-primary transition-colors"
-                      >
-                        <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary flex-shrink-0">
-                          <Mail className="w-5 h-5" />
-                        </div>
-                        {AIDEN_CONTACT.email}
-                      </a>
-                    </div>
-
-                    <div className="flex flex-col sm:flex-row gap-3 pt-2">
-                      <Button
-                        href={`tel:${AIDEN_CONTACT.phoneRaw}`}
-                        size="md"
-                        icon={<Phone className="w-4 h-4" />}
-                      >
-                        Call {AIDEN_CONTACT.phone}
-                      </Button>
-                      <Button
-                        href={`mailto:${AIDEN_CONTACT.email}`}
-                        variant="secondary"
-                        size="md"
-                        icon={<Mail className="w-4 h-4" />}
-                      >
-                        Email Aiden
-                      </Button>
-
-                    </div>
-                  </div>
-                </div>
-
-                {/* Builder Portal Link */}
-                <div className="mt-8 pt-8 border-t border-gray-200 text-center">
-                  <p className="text-sm text-gray-500">
-                    Have blueprints ready?{" "}
-                    <Link
-                      href="/builder-portal"
-                      className="text-primary font-medium hover:underline"
-                    >
-                      Upload plans directly through our Builder Portal
-                    </Link>{" "}
-                    for a faster quote.
-                  </p>
-                </div>
-              </div>
-            </ScrollReveal>
-          </div>
-        </Container>
-      </section>
     </>
   );
 }

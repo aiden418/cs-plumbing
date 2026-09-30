@@ -123,3 +123,32 @@ export function trackEstimateRequest(opts?: ConversionOptions) {
 export function trackBooking(opts?: ConversionOptions) {
   return trackFormConversion('Schedule', { content_name: 'Booking Form', content_category: 'Service Booking' }, opts);
 }
+
+/**
+ * Builder / GC bid request. Deliberately NOT a Meta "Lead" or an OpenAI
+ * "lead_created": builder leads are a different funnel with different value,
+ * and folding them into homeowner lead counts would poison both audiences.
+ * Fires a Meta custom event plus a dataLayer event (for GTM / GA4 if added)
+ * under the same name. Same eventId rule as trackFormConversion: no id from
+ * the server means nothing was delivered, so nothing is reported.
+ */
+export function trackBuilderLead(
+  params: { units?: string; community?: string; source?: string },
+  opts?: ConversionOptions
+) {
+  if (typeof window === 'undefined' || !opts?.eventId) return;
+  const data: Record<string, string> = {
+    content_name: 'Builder Bid Request',
+    content_category: 'Builder Lead',
+    ...(params.units ? { units: params.units } : {}),
+    ...(params.community ? { community: params.community } : {}),
+    ...(params.source ? { source: params.source } : {}),
+  };
+  safeFbq('trackCustom', 'builder_lead', data, { eventID: opts.eventId });
+  try {
+    const w = window as unknown as { dataLayer?: unknown[] };
+    (w.dataLayer ??= []).push({ event: 'builder_lead', event_id: opts.eventId, ...data });
+  } catch {
+    // never throw into a form's success path
+  }
+}

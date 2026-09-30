@@ -8,7 +8,7 @@ import { BUSINESS, AWARDS } from "@/lib/constants";
 
 const STATS = [
   { value: "28+", label: "Years in business" },
-  { value: "8,500+", label: "Homes plumbed" },
+  { value: "9,500+", label: "Homes plumbed" },
   { value: "5.0★", label: "46 Google reviews" },
   { value: `${AWARDS.length}×`, label: "Best of Cape Coral" },
 ];
@@ -27,7 +27,7 @@ const credentials = [
   {
     icon: <Award className="w-5 h-5" />,
     title: `Best of Cape Coral — ${[...AWARDS].map((a) => a.year).sort().join(" & ")}`,
-    body: `${AWARDS.map((a) => a.summary).join(" ")} Backed by 8,500+ homes plumbed and a 5.0-star Google rating.`,
+    body: `${AWARDS.map((a) => a.summary).join(" ")} Backed by 9,500+ homes plumbed and a 5.0-star Google rating.`,
     href: "/awards",
     hrefLabel: "See our awards",
   },

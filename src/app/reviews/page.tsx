@@ -13,7 +13,7 @@ import { fetchPlaceData, getWriteReviewUrl } from "@/lib/google-reviews";
 export const metadata: Metadata = {
   title: "Reviews — 5.0-Star Rated SWFL Plumber",
   description:
-    "Read real Google reviews from Cape Coral, Fort Myers, and Southwest Florida homeowners. C&S Plumbing of Lee is 5.0-star rated — family-owned since 1998.",
+    "Real Google reviews from Cape Coral, Fort Myers and Southwest Florida homeowners. C&S Plumbing of Lee: 5.0-star rated, family owned and operated since 1998.",
   keywords: [
     "C&S Plumbing reviews",
     "plumber reviews Cape Coral",
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Reviews | C&S Plumbing of Lee",
     description:
-      "Real Google reviews from Southwest Florida homeowners. 5.0-star rated, family-owned since 1998.",
+      "Real Google reviews from Southwest Florida homeowners. 5.0-star rated, family owned and operated since 1998.",
     url: "https://www.csplumbinglee.com/reviews",
   },
   alternates: { canonical: "https://www.csplumbinglee.com/reviews" },

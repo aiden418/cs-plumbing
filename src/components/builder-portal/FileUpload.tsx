@@ -116,7 +116,7 @@ export default function FileUpload({ files, onChange }: FileUploadProps) {
           Drag &amp; drop files here, or{" "}
           <span className="text-primary font-semibold">browse</span>
         </p>
-        <p className="text-xs sm:text-sm text-gray-400 mt-1">
+        <p className="text-xs sm:text-sm text-gray-500 mt-1">
           PDF, JPG, PNG &middot; Up to {MAX_FILES} files &middot; {MAX_SIZE_MB}MB max each
         </p>
       </div>
@@ -144,7 +144,7 @@ export default function FileUpload({ files, onChange }: FileUploadProps) {
                 <p className="text-sm font-medium text-gray-900 truncate">
                   {file.name}
                 </p>
-                <p className="text-xs text-gray-400">{formatSize(file.size)}</p>
+                <p className="text-xs text-gray-500">{formatSize(file.size)}</p>
               </div>
               <button
                 type="button"

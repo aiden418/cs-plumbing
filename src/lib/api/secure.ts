@@ -90,4 +90,5 @@ export async function sendEmailBestEffort(
 
 export const SMS_TO = process.env.SMS_GATEWAY_TO ?? "";
 
-export const ADMIN_EMAIL = process.env.ADMIN_EMAIL ?? "aiden@csplumbinglee.com";
+// Inquiries land in the office inbox unless ADMIN_EMAIL overrides it.
+export const ADMIN_EMAIL = process.env.ADMIN_EMAIL ?? "office@csplumbinglee.com";

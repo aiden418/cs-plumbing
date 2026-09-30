@@ -8,6 +8,18 @@ const nextConfig: NextConfig = {
     qualities: [60, 70, 75, 80, 85],
   },
   compress: true,
+  async redirects() {
+    return [
+      // Flat service-city page folded into the builder city hub.
+      {
+        source: "/new-construction-plumbing-cape-coral",
+        destination: "/new-construction-plumbing/cape-coral",
+        permanent: true,
+      },
+      // No index page for the city hub — /builders lists every city.
+      { source: "/new-construction-plumbing", destination: "/builders", permanent: false },
+    ];
+  },
   poweredByHeader: false,
 };
 

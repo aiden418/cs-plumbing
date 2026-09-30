@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import Container from "@/components/ui/Container";
 import ScrollReveal from "@/components/animations/ScrollReveal";
+import CaseStudyFacts from "@/components/projects/CaseStudyFacts";
 import { formatCompletedOn } from "@/lib/projects";
 import type { CompletedProject, ProjectImage } from "@/lib/types";
 
@@ -161,6 +162,9 @@ export default function ProjectDetail({ project }: { project: CompletedProject }
           </Container>
         </div>
       )}
+
+      {/* ===== Builder case-study facts (renders only when project.caseStudy is set) ===== */}
+      <CaseStudyFacts project={project} />
 
       {/* ===== Case study ===== */}
       {hasCaseStudy && (

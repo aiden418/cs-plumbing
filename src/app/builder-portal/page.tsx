@@ -62,7 +62,7 @@ function HowToJsonLd() {
               "@type": "HowToStep",
               position: 4,
               name: "Receive Your Detailed Quote",
-              text: "C&S Plumbing reviews your plans and delivers a detailed plumbing quote within 24-48 hours, including scope breakdown and scheduling.",
+              text: "C&S Plumbing reviews your plans and returns a written plumbing quote with scope breakdown and scheduling.",
             },
           ],
         }),

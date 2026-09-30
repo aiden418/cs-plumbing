@@ -7,18 +7,30 @@ import type { Service, TeamMember, Testimonial, TimelineEvent, NavLink, Stat, Se
 export const BUSINESS = {
   name: "C&S Plumbing",
   fullName: "C&S Plumbing of Lee",
+  /** As recorded with the Florida Division of Corporations (Sunbiz). Public
+   *  brand stays "C&S Plumbing of Lee"; the legal name goes on vendor
+   *  paperwork. Exact match to the W-9 still to be checked. */
+  legalName: "C & S PLUMBING OF LEE, INC.",
   phone: "833-PLUMB-IT",
   phoneRaw: "8337586248",
   // "?&body=" works on both iOS and Android
   smsHref:
     "sms:+18337586248?&body=Hi%20C%26S%20Plumbing%2C%20I%20need%20help%20with%20",
   email: "office@csplumbinglee.com",
+  /** Builder inquiries and prequal document requests. */
+  builderPhone: "833-PLUMB-IT ext. 0",
+  ownerPhone: "239-628-9355",
+  ownerPhoneRaw: "2396289355",
   address: "951 Pondella Rd",
   city: "North Fort Myers",
   state: "FL",
   zip: "33903",
   founded: 1998,
-  homesCompleted: 8500,
+  // Owner-supplied counts (Sep 2026). New construction homes completed, and
+  // residential whole-home repipes completed — keep them separate: a repipe
+  // claim must never borrow the new-construction number.
+  homesCompleted: 9500,
+  repipesCompleted: 3500,
   hours: {
     weekday: "Mon–Fri: 7:30 AM – 4:30 PM",
     saturday: "Sat: 9:00 AM – 3:00 PM",
@@ -27,11 +39,13 @@ export const BUSINESS = {
   },
   tagline: "Southwest Florida's Most Trusted Plumbing Team",
   description:
-    "Family-owned since 1998. From emergency repairs to new construction, C&S Plumbing delivers excellence across Southwest Florida.",
+    "Family owned and operated since 1998. From emergency repairs to new construction, C&S Plumbing delivers excellence across Southwest Florida.",
   license: "CFC1432485",
   license2: "CFC057076",
+  // DBPR "Search by License Number" form (search=LicNbr). Direct per-license
+  // detail links aren't possible — the DBPR site is session-coupled.
   licenseLookupUrl:
-    "https://www.myfloridalicense.com/wl11.asp?mode=2&search=License&SID=&brd=&typ=",
+    "https://www.myfloridalicense.com/wl11.asp?mode=2&search=LicNbr&SID=&brd=&typ=",
   rating: 5.0,
   reviewCount: 46,
   googleProfileUrl:
@@ -49,6 +63,57 @@ export const BUSINESS = {
    */
   locationNote:
     "C&S Plumbing of Lee has one office, open and operating, at 951 Pondella Rd, North Fort Myers, FL 33903. Directory listings that show an older Cape Coral street address refer to the company's former office.",
+} as const;
+
+// Third-party contractor ranking. This is BuildZoom's score, not a state or
+// DBPR ranking, and every surface that cites it must say so and link the
+// profile. Re-check the profile before bumping `checkedOn`.
+export const CONTRACTOR_RANKING = {
+  claim: "Top 5% of Florida licensed contractors",
+  /** Same claim, for mid-sentence use. */
+  claimInline: "top 5% of Florida licensed contractors",
+  source: "BuildZoom",
+  sourceUrl: "https://www.buildzoom.com/contractor/c-s-plumbing-of-lee-inc",
+  checkedOn: "2026-09-29",
+  /** What the profile says, verbatim, on `checkedOn`. */
+  quote: "Their BuildZoom score of 109 ranks in the top 5% of 191,428 Florida licensed contractors.",
+} as const;
+
+// Warranty wording confirmed by the owner (Sep 2026). Materials supplied by
+// C&S only — do not extend to labor, manufacturer coverage, or customer-
+// supplied fixtures without confirmation. Written project terms govern.
+export const WARRANTY = {
+  summary: "One-year warranty on materials supplied by C&S Plumbing",
+  detail:
+    "One-year warranty on materials supplied by C&S Plumbing, as set out in the written project terms for each job.",
+} as const;
+
+// C&S New Construction Customer Benefits — owner-confirmed wording (Sep
+// 2026). These are separate from WARRANTY and must never be merged into it.
+// No discount percentage, transferability rule or extra term has been
+// confirmed; do not add any. The first-year visit is homes only and is
+// requested by the homeowner — it is not scheduled automatically.
+export const NEW_CONSTRUCTION_BENEFITS = {
+  heading: "We’re here long after construction is complete.",
+  contact: "833-PLUMB-IT ext. 0",
+  contactRaw: "8337586248",
+  items: [
+    {
+      id: "lifetime-discount",
+      title: "Lifetime service discount",
+      appliesTo: "Homes and commercial properties",
+      body: "Homes and commercial properties with new-construction plumbing completed by C&S qualify for a lifetime discount on future plumbing service.",
+    },
+    {
+      id: "first-year-visit",
+      title: "Complimentary first-year visit",
+      appliesTo: "New homes",
+      body: "New homeowners also receive one complimentary water heater flush and whole-home plumbing inspection during their home’s first year. Call 833-PLUMB-IT ext. 0 within 12 months of home completion to request and schedule your complimentary visit.",
+    },
+  ],
+  /** One-paragraph version for llms.txt and print. */
+  summary:
+    "Homes and commercial properties with new-construction plumbing completed by C&S qualify for a lifetime discount on future plumbing service. New homeowners also receive one complimentary water heater flush and whole-home plumbing inspection during their home’s first year; the homeowner calls 833-PLUMB-IT ext. 0 within 12 months of home completion to request and schedule it.",
 } as const;
 
 // Single source of truth for emergency-service claims. Every surface that
@@ -132,6 +197,20 @@ export const NAV_LINKS: NavLink[] = [
       { label: "UEP Utilities", href: "/services/uep-utilities" },
     ],
   },
+  {
+    // Second front door (builders & GCs), alongside Services for homeowners.
+    label: "Builders",
+    href: "/builders",
+    children: [
+      { label: "Builder Services", href: "/builders" },
+      { label: "Submit Plans for a Bid", href: "/builders#bid" },
+      { label: "Prequal Packet", href: "/builders#prequal" },
+      { label: "Builder Portal", href: "/builder-portal" },
+      { label: "Cape Coral New Construction", href: "/new-construction-plumbing/cape-coral" },
+      { label: "Fort Myers New Construction", href: "/new-construction-plumbing/fort-myers" },
+      { label: "Lehigh Acres New Construction", href: "/new-construction-plumbing/lehigh-acres" },
+    ],
+  },
   { label: "Projects", href: "/projects" },
   {
     label: "Service Areas",
@@ -150,7 +229,6 @@ export const NAV_LINKS: NavLink[] = [
       { label: "Port Charlotte", href: "/areas/port-charlotte" },
     ],
   },
-  { label: "Coastal Comeback", href: "/coastal-comeback-plan" },
   { label: "Contact", href: "/contact" },
   {
     // "Explore" rather than "More": the top-level item is a real link and
@@ -158,10 +236,10 @@ export const NAV_LINKS: NavLink[] = [
     label: "Explore",
     href: "/gallery",
     children: [
+      // Moved from the top bar to make room for the Builders door.
+      { label: "Coastal Comeback Plan", href: "/coastal-comeback-plan" },
       { label: "Gallery", href: "/gallery" },
       { label: "Blog", href: "/blog" },
-      { label: "Builders", href: "/builders" },
-      { label: "Builder Portal", href: "/builder-portal" },
       { label: "Awards", href: "/awards" },
       { label: "Recommended", href: "/partners" },
     ],
@@ -173,17 +251,18 @@ export const NAV_LINKS: NavLink[] = [
 // ============================================
 
 export const STATS: Stat[] = [
-  { value: 8500, suffix: "+", label: "Homes Built" },
+  { value: 9500, suffix: "+", label: "Homes Plumbed" },
   { value: 28, suffix: "+", label: "Years of Service" },
-  { value: 4, suffix: "%", label: "Top FL Contractors" },
+  { value: 5, suffix: "%", label: "Top FL Contractors (BuildZoom)" },
   { value: 24, suffix: "/7", label: "Emergency Service" },
 ];
 
 // Shared proof bullets — keep these identical everywhere they appear so
 // search engines and AI assistants extract one consistent story.
 export const TRUST_PROOF_POINTS = [
-  "Family-owned since 1998",
-  "8,500+ homes completed",
+  "Family owned and operated since 1998",
+  "9,500+ new construction homes plumbed",
+  "3,500+ homes repiped",
   "5.0 stars across 46 Google reviews",
   AWARD_TRUST_LINE,
   "24/7 emergency service",
@@ -208,16 +287,16 @@ export const SERVICES: Service[] = [
     id: "new-construction",
     title: "New Construction",
     description:
-      "With 8,500+ new construction homes completed, we're the go-to plumbing partner for builders who demand reliability and code compliance.",
+      "With 9,500+ new construction homes plumbed, we're the go-to plumbing partner for builders who demand reliability and code compliance.",
     icon: "HardHat",
     href: "/services/new-construction",
     image: "/images/services/cards/new-construction.jpg",
     features: [
-      "8,500+ homes completed",
+      "9,500+ homes plumbed",
       "Builder partnerships",
       "Timeline precision",
       "Full permit management",
-      "Warranty coverage",
+      "1-year warranty on C&S-supplied materials",
     ],
   },
   {
@@ -233,7 +312,7 @@ export const SERVICES: Service[] = [
       "Minimal wall damage",
       "Code-compliant installation",
       "Permit handling",
-      "Full system warranty",
+      "1-year labor warranty + manufacturer warranty on PEX",
     ],
   },
   {
@@ -357,15 +436,15 @@ export const SERVICES: Service[] = [
 export const TEAM_MEMBERS: TeamMember[] = [
   {
     name: "Samuel Pellechio Jr.",
-    role: "Owner & President",
+    role: "Owner & Co-Founder",
     image: "/images/team/samuel.jpeg",
-    bio: "Second-generation plumber and co-founder — the “S” in C&S. A Cape Coral High grad who earned his plumbing license in 1997 and has led the company ever since with the values his father instilled: honest work, fair pricing, and treating every customer like family.",
+    bio: "Second-generation plumber and co-founder — the “S” in C&S. A Cape Coral High grad who earned his plumbing license in December 1997 and, with his brother Chris and their father, founded C&S Plumbing of Lee in Cape Coral in 1998. He has led the company ever since: honest work, fair pricing, and treating every customer like family.",
   },
   {
     name: "Aiden Pellechio",
-    role: "Project Manager & Estimator",
+    role: "Office Manager, Estimating & Project Management",
     image: "/images/team/aiden.jpg",
-    bio: "Third-generation Pellechio. Runs projects, estimating, permitting, and marketing at C&S while earning his construction-management degree at FGCU (Class of 2028), with plans to pursue his GC and plumbing licenses.",
+    bio: "Third-generation Pellechio. Runs the office, estimating, project management and permitting at C&S while working toward his construction-management degree at FGCU, with plans to pursue his GC and plumbing licenses.",
   },
   {
     name: "Dylan Redecker",
@@ -481,7 +560,7 @@ export const TIMELINE_EVENTS: TimelineEvent[] = [
     year: "1998",
     title: "The Beginning",
     description:
-      "Brothers Chris and Sam — with the support of their father — founded C&S Plumbing of Lee with a single truck and a commitment to quality. The name says it plainly: C&S, for Chris and Sam.",
+      "Brothers Chris and Sam — with their father — founded C&S Plumbing of Lee in Cape Coral with a single truck and a commitment to quality. The name says it plainly: C&S, for Chris and Sam.",
     image: "/images/history/first-shop.jpg",
     imageAlt: "The original C&S Plumbing of Lee shop in the early days",
   },
@@ -492,14 +571,6 @@ export const TIMELINE_EVENTS: TimelineEvent[] = [
       "Completed plumbing for our 1,000th new construction home, solidifying our reputation as a premier builder partner in Southwest Florida's growth boom.",
     image: "/images/history/sam-working-2002.jpg",
     imageAlt: "Sam Pellechio Jr. running underground plumbing on a job site in the early 2000s",
-  },
-  {
-    year: "2010",
-    title: "8,000 Homes & Growing",
-    description:
-      "Surpassed 8,000 new construction homes plumbed across Southwest Florida, becoming one of the region's most trusted plumbing contractors.",
-    image: "/images/history/og-truck.jpg",
-    imageAlt: "An early C&S Plumbing of Lee box truck",
   },
   {
     year: "2018",
@@ -518,10 +589,10 @@ export const TIMELINE_EVENTS: TimelineEvent[] = [
     imageAlt: "Hurricane Ian storm damage during cleanup and restoration work",
   },
   {
-    year: "2024",
-    title: "8,500+ Homes & Counting",
+    year: "2026",
+    title: "9,500+ Homes & Counting",
     description:
-      "Surpassed 8,500 new construction homes — among Lee County's most experienced new-construction plumbers.",
+      "More than 9,500 new construction homes plumbed and 3,500+ homes repiped across Southwest Florida — among the region's most experienced plumbing contractors.",
     image: "/images/history/truck-new-home.jpg",
     imageAlt: "A C&S Plumbing of Lee truck at a new-construction home in Southwest Florida",
   },
@@ -607,10 +678,10 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
     title: "Whole-Home Repiping",
     heroText: "Whole-Home Repiping in Cape Coral, Fort Myers & SWFL",
     description:
-      "Aging pipes cause low water pressure, discolored water, and costly leaks. C&S Plumbing replaces your entire plumbing system with modern copper or PEX piping — backed by 8,500+ homes completed and a full warranty.",
+      "Aging pipes cause low water pressure, discolored water, and costly leaks. C&S Plumbing replaces your entire plumbing system with modern copper or PEX piping — backed by 3,500+ homes repiped and a 1-year labor warranty.",
     metaTitle: "Whole-Home Repiping | Cape Coral & Fort Myers",
     metaDescription:
-      "Whole-home repiping in Cape Coral, Fort Myers & SWFL. Copper & PEX, minimal wall damage, full warranty. 8,500+ homes completed. Call 833-PLUMB-IT.",
+      "Whole-home repiping in Cape Coral, Fort Myers & SWFL. Copper & PEX, minimal wall damage, 1-year labor warranty. 3,500+ homes repiped. Call 833-PLUMB-IT.",
     keywords: [
       "repiping Cape Coral",
       "repipe Fort Myers",
@@ -687,7 +758,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
     ],
     priceRange: "$4,000 – $15,000",
     highlights: [
-      "8,500+ homes repiped & plumbed",
+      "3,500+ residential repipes completed",
       "1-2 day completion for most homes",
       "Copper & PEX options available",
       "Full permit & inspection included",
@@ -768,7 +839,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       "No hot water? Whether you need a quick repair or a full replacement, C&S Plumbing installs and services all types of water heaters — traditional tank, tankless, and hybrid systems.",
     metaTitle: "Water Heater Install & Repair | Cape Coral",
     metaDescription:
-      "Water heater installation, repair & replacement in Cape Coral, Fort Myers & SWFL. Tankless, traditional & hybrid options. Same-day service. Call 833-PLUMB-IT.",
+      "Water heater installation, repair & replacement in Cape Coral, Fort Myers & SWFL. Tankless, tank & hybrid options. Same-day service. Call 833-PLUMB-IT.",
     keywords: [
       "water heater Cape Coral",
       "water heater installation Fort Myers",
@@ -1554,7 +1625,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     state: "FL",
     metaTitle: "Plumber in Cape Coral, FL",
     metaDescription:
-      "Trusted plumber in Cape Coral, FL. Emergency plumbing, repiping, drain cleaning, water heaters & more. Family-owned since 1998. 8,500+ homes. Call 833-PLUMB-IT.",
+      "Trusted plumber in Cape Coral, FL. Emergency plumbing, repiping, drain cleaning & water heaters. Family owned and operated since 1998. Call 833-PLUMB-IT.",
     keywords: [
       "plumber Cape Coral",
       "plumber Cape Coral FL",
@@ -1568,7 +1639,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     ],
     heroText: "Your Trusted Plumber in Cape Coral, FL",
     description:
-      "C&S Plumbing has been serving Cape Coral homeowners and businesses since 1998. From emergency repairs to whole-home repiping, we deliver fast, reliable plumbing backed by 8,500+ completed homes.",
+      "C&S Plumbing has been serving Cape Coral homeowners and businesses since 1998. From emergency repairs to whole-home repiping, we deliver fast, reliable plumbing backed by 9,500+ homes plumbed.",
     neighborhoods: [
       "SW Cape Coral",
       "NW Cape Coral",
@@ -1631,7 +1702,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     ],
     heroText: "Expert Plumbing Services in Fort Myers, FL",
     description:
-      "From downtown Fort Myers to the surrounding communities, C&S Plumbing provides full-service residential and commercial plumbing. 24/7 emergency service, competitive pricing, and the experience of 8,500+ completed projects.",
+      "From downtown Fort Myers to the surrounding communities, C&S Plumbing provides full-service residential and commercial plumbing. 24/7 emergency service, competitive pricing, and the experience of 9,500+ completed projects.",
     neighborhoods: [
       "Downtown Fort Myers",
       "McGregor",
@@ -1663,7 +1734,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
       {
         question: "Are you a new construction plumber in Fort Myers?",
         answer:
-          "Yes. C&S is one of Southwest Florida's most experienced new-construction plumbers, with 8,500+ homes completed since 1998 for residential and commercial builders across Lee County.",
+          "Yes. C&S is one of Southwest Florida's most experienced new-construction plumbers, with 9,500+ homes plumbed since 1998 for residential and commercial builders across Lee County.",
       },
       {
         question: "Are you licensed and insured in Fort Myers?",
@@ -1728,7 +1799,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
       {
         question: "Are you licensed and insured?",
         answer:
-          "Yes — Florida Certified Plumbing Contractors (CFC1432485 / CFC057076), fully insured, and family-owned since 1998.",
+          "Yes — Florida Certified Plumbing Contractors (CFC1432485 / CFC057076), fully insured, and family owned and operated since 1998.",
       },
     ],
     localContext:
@@ -1740,7 +1811,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     state: "FL",
     metaTitle: "Plumber in Naples, FL",
     metaDescription:
-      "Professional plumber in Naples, FL. Luxury home plumbing, repiping, water heaters, emergency service. Family-owned, 8,500+ homes completed. Call 833-PLUMB-IT.",
+      "Professional plumber in Naples, FL. Luxury home plumbing, repiping, water heaters, emergency service. Family-owned, 9,500+ homes plumbedd. Call 833-PLUMB-IT.",
     keywords: [
       "plumber Naples",
       "plumber Naples FL",
@@ -1814,7 +1885,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     ],
     heroText: "Reliable Plumbing Services in Bonita Springs, FL",
     description:
-      "C&S Plumbing serves Bonita Springs with the same commitment to quality that's earned us 8,500+ completed projects across Southwest Florida. Fast response, fair pricing, and workmanship you can trust.",
+      "C&S Plumbing serves Bonita Springs with the same commitment to quality that's earned us 9,500+ completed projects across Southwest Florida. Fast response, fair pricing, and workmanship you can trust.",
     neighborhoods: [
       "Bonita Bay",
       "Pelican Landing",
@@ -1849,7 +1920,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
       {
         question: "Are you licensed and insured?",
         answer:
-          "Yes — Florida Certified Plumbing Contractors (CFC1432485 / CFC057076), fully insured, family-owned since 1998.",
+          "Yes — Florida Certified Plumbing Contractors (CFC1432485 / CFC057076), fully insured, family owned and operated since 1998.",
       },
     ],
     localContext:
@@ -1861,7 +1932,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     state: "FL",
     metaTitle: "Plumber in Lehigh Acres, FL",
     metaDescription:
-      "Trusted plumber in Lehigh Acres, FL. Emergency plumbing, repiping, drain cleaning and water heaters. Family-owned since 1998, 8,500+ homes. Call 833-PLUMB-IT.",
+      "Trusted plumber in Lehigh Acres, FL. Emergency plumbing, repiping, drain cleaning and water heaters. Family owned and operated since 1998. Call 833-PLUMB-IT.",
     keywords: [
       "plumber Lehigh Acres",
       "plumber Lehigh Acres FL",
@@ -1875,7 +1946,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     ],
     heroText: "Your Trusted Plumber in Lehigh Acres, FL",
     description:
-      "C&S Plumbing provides fast, reliable plumbing services to Lehigh Acres homeowners and businesses. From emergency repairs to whole-home repiping, we bring 28+ years of experience and 8,500+ completed projects to every job.",
+      "C&S Plumbing provides fast, reliable plumbing services to Lehigh Acres homeowners and businesses. From emergency repairs to whole-home repiping, we bring 28+ years of experience and 9,500+ completed projects to every job.",
     neighborhoods: [
       "Lehigh Acres",
       "Mirror Lakes",
@@ -1936,7 +2007,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     ],
     heroText: "Professional Plumbing Services in Estero, FL",
     description:
-      "C&S Plumbing serves Estero with the same quality and reliability that has earned us 8,500+ completed projects across Southwest Florida. Fast response, fair pricing, and expert workmanship for every home and business.",
+      "C&S Plumbing serves Estero with the same quality and reliability that has earned us 9,500+ completed projects across Southwest Florida. Fast response, fair pricing, and expert workmanship for every home and business.",
     neighborhoods: [
       "Estero",
       "Coconut Point",
@@ -1971,7 +2042,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
       {
         question: "Are you licensed and insured?",
         answer:
-          "Yes — Florida Certified Plumbing Contractors (CFC1432485 / CFC057076), fully insured, family-owned since 1998.",
+          "Yes — Florida Certified Plumbing Contractors (CFC1432485 / CFC057076), fully insured, family owned and operated since 1998.",
       },
     ],
     localContext:
@@ -2031,7 +2102,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
       {
         question: "Are you licensed and insured?",
         answer:
-          "Yes — Florida Certified Plumbing Contractors (CFC1432485 / CFC057076), fully insured, family-owned since 1998.",
+          "Yes — Florida Certified Plumbing Contractors (CFC1432485 / CFC057076), fully insured, family owned and operated since 1998.",
       },
     ],
     localContext:
@@ -2043,7 +2114,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     state: "FL",
     metaTitle: "Plumber in Fort Myers Beach, FL",
     metaDescription:
-      "Plumber on Fort Myers Beach, FL. Post-Ian rebuilds, elevated homes, repipes, water heaters & 24/7 emergencies. Family-owned since 1998. Call 833-PLUMB-IT.",
+      "Plumber on Fort Myers Beach, FL. Post-Ian rebuilds, elevated homes, repipes, water heaters & 24/7 emergencies. Family owned since 1998. Call 833-PLUMB-IT.",
     keywords: [
       "plumber Fort Myers Beach",
       "Fort Myers Beach plumbing",
@@ -2058,7 +2129,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     ],
     heroText: "Plumbing for Fort Myers Beach, Built for the Rebuild",
     description:
-      "C&S Plumbing serves Fort Myers Beach and Estero Island with the plumbing experience the post-Ian rebuild demands: elevated homes, flood-zone rules, salt air, and a Town permit process that runs on its own clock. Family-owned since 1998, with a completed new-construction build on the island in our portfolio.",
+      "C&S Plumbing serves Fort Myers Beach and Estero Island with the plumbing experience the post-Ian rebuild demands: elevated homes, flood-zone rules, salt air, and a Town permit process that runs on its own clock. Family owned and operated since 1998, with a completed new-construction build on the island in our portfolio.",
     neighborhoods: [
       "Times Square",
       "North Estero Island",
@@ -2097,7 +2168,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
       {
         question: "Are you licensed and insured?",
         answer:
-          "Yes — Florida Certified Plumbing Contractors (CFC1432485 / CFC057076), fully insured, family-owned since 1998.",
+          "Yes — Florida Certified Plumbing Contractors (CFC1432485 / CFC057076), fully insured, family owned and operated since 1998.",
       },
     ],
     localContext:
@@ -2109,7 +2180,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     state: "FL",
     metaTitle: "Plumber in Punta Gorda, FL",
     metaDescription:
-      "Plumber in Punta Gorda, FL. Water heaters, emergency plumbing, repiping & drain service across Charlotte County. Family-owned since 1998. Call 833-PLUMB-IT.",
+      "Plumber in Punta Gorda, FL. Water heaters, emergency plumbing, repiping & drains across Charlotte County. Family owned since 1998. Call 833-PLUMB-IT.",
     keywords: [
       "plumber Punta Gorda",
       "plumber Punta Gorda FL",
@@ -2124,7 +2195,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     ],
     heroText: "Your Trusted Plumber in Punta Gorda, FL",
     description:
-      "C&S Plumbing brings 28+ years of Southwest Florida experience to Punta Gorda and Charlotte County. Water heater replacements, emergency repairs, repiping, and drain service — backed by 8,500+ completed homes and two active state licenses.",
+      "C&S Plumbing brings 28+ years of Southwest Florida experience to Punta Gorda and Charlotte County. Water heater replacements, emergency repairs, repiping, and drain service — backed by 9,500+ homes plumbed and two active state licenses.",
     neighborhoods: [
       "Punta Gorda Isles",
       "Burnt Store Isles",
@@ -2171,7 +2242,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     state: "FL",
     metaTitle: "Plumber in Port Charlotte, FL",
     metaDescription:
-      "Reliable plumber in Port Charlotte, FL. Drain cleaning, water treatment, water heaters & emergency plumbing. Family-owned since 1998. Call 833-PLUMB-IT.",
+      "Plumber in Port Charlotte, FL. Drain cleaning, water treatment, water heaters & emergency plumbing. Family owned and operated since 1998. Call 833-PLUMB-IT.",
     keywords: [
       "plumber Port Charlotte",
       "plumber Port Charlotte FL",
@@ -2186,7 +2257,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     ],
     heroText: "Reliable Plumbing Services in Port Charlotte, FL",
     description:
-      "C&S Plumbing serves Port Charlotte homeowners with drain cleaning, water treatment, water heaters, and 24/7 emergency repairs. Family-owned since 1998, with 8,500+ completed homes across Southwest Florida.",
+      "C&S Plumbing serves Port Charlotte homeowners with drain cleaning, water treatment, water heaters, and 24/7 emergency repairs. Family owned and operated since 1998, with 9,500+ homes plumbed across Southwest Florida.",
     neighborhoods: [
       "Murdock",
       "Parkside",
@@ -2288,7 +2359,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "5 Signs You Need a Whole-Home Repipe",
     metaTitle: "5 Signs You Need a Whole-Home Repipe",
     metaDescription:
-      "How do you know if your home needs repiping? Learn the 5 warning signs from Southwest Florida's repiping experts. C&S Plumbing has repiped 8,500+ homes.",
+      "How do you know if your home needs repiping? Learn the 5 warning signs from Southwest Florida's repiping experts. C&S Plumbing has repiped 9,500+ homes.",
     keywords: ["signs you need repiping", "when to repipe house", "repiping Cape Coral", "old pipes replacement", "polybutylene pipe replacement"],
     excerpt:
       "Aging pipes don't always announce themselves with a dramatic burst. Often, the signs are subtle — until they're not. Here are 5 warning signs that your home may need a whole-home repipe.",
@@ -2313,7 +2384,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>5. Your Home Is Over 25 Years Old with Original Plumbing</h2>
 <p>Even well-maintained plumbing systems have a lifespan. Copper pipes typically last 50-70 years, but galvanized steel and polybutylene have much shorter lifespans. If your home was built before 2000 and hasn't been repiped, it's worth having a professional inspection.</p>
-<p>At C&S Plumbing, we offer free repipe consultations where we inspect your current pipes and provide an honest assessment of their condition. We've completed repiping on over 8,500 homes across Southwest Florida, including <a href="/areas/cape-coral">Cape Coral</a>, <a href="/areas/fort-myers">Fort Myers</a>, and <a href="/areas/bonita-springs">Bonita Springs</a> — we know exactly what to look for.</p>
+<p>At C&S Plumbing, we offer free repipe consultations where we inspect your current pipes and provide an honest assessment of their condition. We've completed over 3,500 residential repipes across Southwest Florida, including <a href="/areas/cape-coral">Cape Coral</a>, <a href="/areas/fort-myers">Fort Myers</a>, and <a href="/areas/bonita-springs">Bonita Springs</a> — we know exactly what to look for.</p>
 
 <h2>What to Do Next</h2>
 <p>If you're experiencing any of these signs, don't wait for a catastrophic pipe failure. <a href="/services/repiping">Contact C&S Plumbing for a free repipe evaluation</a>. We offer both copper and PEX repiping options, complete most homes in 1-2 days, and handle all permits and inspections.</p>
@@ -2484,7 +2555,7 @@ export const BLOG_POSTS: BlogPost[] = [
 <p>C&S Plumbing has been family-owned and operated in Southwest Florida since 1998. We live here, we work here, and our reputation is everything to us.</p>
 
 <h2>Ready to Experience the C&S Difference?</h2>
-<p>We've built our reputation on honest work, fair pricing, and treating every home like our own. With 8,500+ completed projects and a 5.0-star Google rating, we let our track record speak for itself.</p>
+<p>We've built our reputation on honest work, fair pricing, and treating every home like our own. With 9,500+ completed projects and a 5.0-star Google rating, we let our track record speak for itself.</p>
 <p>Call <a href="tel:8337586248">833-PLUMB-IT</a> or <a href="/booking">book online</a> to experience the difference a trusted, local plumber makes.</p>`,
   },
   {
@@ -2492,7 +2563,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "How to Prepare Your Plumbing for Hurricane Season in Southwest Florida",
     metaTitle: "How to Prepare Your Plumbing for Hurricane Season in SWFL",
     metaDescription:
-      "Protect your home's plumbing during hurricane season. Learn essential steps to prevent water damage, pipe breaks, and flooding. Tips from C&S Plumbing in SWFL.",
+      "Protect your home's plumbing during hurricane season: steps to prevent water damage, pipe breaks and flooding, from C&S Plumbing in SWFL.",
     keywords: ["hurricane plumbing preparation", "hurricane plumbing tips Florida", "protect plumbing hurricane", "storm plumbing damage", "hurricane season Cape Coral", "plumbing hurricane checklist"],
     excerpt:
       "Hurricane season in Southwest Florida runs from June through November. Taking a few proactive steps to protect your plumbing system can save you thousands in repairs and help your home recover faster after a storm.",
@@ -3037,7 +3108,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "Does Homeowners Insurance Cover Slab Leaks in Florida?",
     metaTitle: "Slab Leaks & Florida Homeowners Insurance — What's Covered",
     metaDescription:
-      "Does Florida homeowners insurance pay for slab leak repairs? What's covered, what's excluded, and how to document a claim, from SWFL's slab leak specialists.",
+      "Does Florida homeowners insurance pay for slab leak repairs? What's covered, what's excluded and how to document a claim, from SWFL slab leak specialists.",
     keywords: ["slab leak insurance Florida", "does insurance cover slab leak", "water damage claim Florida", "slab leak coverage homeowners policy", "plumbing leak insurance claim"],
     excerpt:
       "The repair bill for a slab leak has two parts — fixing the pipe and fixing the damage — and Florida insurance policies usually treat them very differently. Here's how coverage typically works and how to protect your claim.",
@@ -3274,6 +3345,20 @@ export const GALLERY_CATEGORIES = [
 // COMPLETED PROJECTS
 // ============================================
 
+// Builder case-study template — add `caseStudy` to a project to render the
+// "job at a glance" block. Fill only what you can back up; omit the rest.
+//
+//   caseStudy: {
+//     builder: { name: "<builder>", permission: true }, // true only with the builder's written OK
+//     homeType: "<e.g. Single-family, slab-on-grade>",
+//     fixtureCount: <count from the plans>,
+//     phasesPerformed: ["<phases actually performed>"],
+//     schedule: { planned: "<from the builder's schedule>", actual: "<actual>" },
+//     inspections: [{ phase: "<phase>", result: "<result from the inspection record>" }],
+//     fieldProblem: { problem: "<what happened>", solution: "<what we did>" },
+//   },
+//
+// Photos: `npm run photos:ingest` strips EXIF/GPS; `npm run photos:strip -- --check` verifies.
 export const COMPLETED_PROJECTS: CompletedProject[] = [
   {
     slug: "hansen-homes-cape-coral",
@@ -3506,10 +3591,13 @@ export const COMPLETED_PROJECTS: CompletedProject[] = [
     name: "Hangar 97 — Punta Gorda Airport (Commercial New Construction)",
     client: "Stellar Development",
     category: "Commercial New Construction",
-    timeline: "In Progress",
+    // Owner confirmed complete (Sep 2026); completion date not yet supplied,
+    // so `completedOn` stays unset. Only underground and second rough are
+    // photographed.
+    timeline: "Completed",
     cost: "On Request",
     description:
-      "C&S Plumbing is the commercial plumbing contractor for Hangar 97, a new-construction aviation hangar at Punta Gorda Airport (PGD) built by Stellar Development. Below-slab underground rough-in is complete — supply, drain, waste, and vent piping set and inspected before the pour — and the building is now through second rough. Trim and finish phases will follow as the build progresses.",
+      "C&S Plumbing was the commercial plumbing contractor for Hangar 97, a new-construction aviation hangar at Punta Gorda Airport (PGD) built by Stellar Development. Below-slab underground rough-in — supply, drain, waste, and vent piping set and inspected before the pour — and the second rough-in through the commercial structure are documented below. Estimated and project-managed in-house by the C&S office.",
     location: "Punta Gorda, FL",
     coverImage: "/images/projects/hangar-97-punta-gorda-airport/2nd-rough/photo-10.jpg",
     phases: [
@@ -3589,8 +3677,16 @@ export const COMPLETED_PROJECTS: CompletedProject[] = [
       },
     ],
     scopeDetails: ["Underground DWV and supply rough-in","Second rough-in","Commercial new construction"],
+    // Draft case study — documented phases only; trim/final, dates and
+    // inspection results to be confirmed. Builder permission not yet given.
+    caseStudy: {
+      builder: { name: "Stellar Development", permission: false },
+      projectType: "Commercial aviation hangar, new construction",
+      phasesPerformed: ["Underground", "Second rough"],
+      projectManagement: "Estimated and project-managed in-house by the C&S office",
+    },
     metaTitle: "Hangar 97 Punta Gorda Airport — Commercial Plumbing",
-    metaDescription: "C&S Plumbing handles commercial plumbing for Hangar 97 at Punta Gorda Airport — underground rough-in through second rough for builder Stellar Development.",
+    metaDescription: "Commercial plumbing for Hangar 97 at Punta Gorda Airport — underground and second rough-in documented by C&S Plumbing of Lee, estimated and managed in-house.",
   },
   {
     slug: "usps-cape-coral-remodel",
@@ -3891,8 +3987,16 @@ export const COMPLETED_PROJECTS: CompletedProject[] = [
       },
     ],
     scopeDetails: ["Fixture trim-out","Water heater set","Residential new construction"],
+    // Draft case study — only what the photos and description support. No
+    // fixture count, schedule or inspection results until supplied. Builder
+    // permission to be named in the case-study block not yet given.
+    caseStudy: {
+      builder: { name: "Hansen Homes", permission: false },
+      homeType: "Single-family new construction",
+      phasesPerformed: ["Trim-out"],
+    },
     metaTitle: "Hansen Homes 1210 Cape Coral New Construction Plumbing",
-    metaDescription: "C&S Plumbing of Lee handled trim-out on a Hansen Homes new-construction build in Cape Coral — finish fixtures and final connections.",
+    metaDescription: "Trim-out on Hansen Homes build 1210 in Cape Coral by C&S Plumbing of Lee — finish fixtures, water heater set and final connections on a new home.",
   },
   {
     slug: "hansen-homes-2210-cape-coral",
@@ -3924,7 +4028,7 @@ export const COMPLETED_PROJECTS: CompletedProject[] = [
     ],
     scopeDetails: ["Fixture trim-out","Residential new construction"],
     metaTitle: "Hansen Homes 2210 Cape Coral New Construction Plumbing",
-    metaDescription: "C&S Plumbing of Lee handled trim-out on a Hansen Homes new-construction build in Cape Coral — finish fixtures and final connections.",
+    metaDescription: "Trim-out on Hansen Homes build 2210 in Cape Coral by C&S Plumbing of Lee — finish fixtures and final connections on a new-construction home.",
   },
 ];
 

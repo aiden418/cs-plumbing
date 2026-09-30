@@ -91,6 +91,7 @@ export default function BookingPage() {
   const [requestType, setRequestType] = useState<"booking" | "estimate">("booking");
   const [step, setStep] = useState(0);
   const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [confirmationId, setConfirmationId] = useState<string | null>(null);
   const [form, setForm] = useState<FormData>({
     requestType: "booking",
@@ -203,12 +204,12 @@ export default function BookingPage() {
       if (data.confirmationId) setConfirmationId(data.confirmationId);
       const track = form.requestType === "estimate" ? trackEstimateRequest : trackBooking;
       void track({ email: form.email, eventId: data.eventId });
+      // Only show the confirmation screen once the server has accepted the request.
+      setStep(totalSteps);
     } catch {
-      // next() optimistically advances to the confirmation screen before this
-      // resolves, so a failure has to walk it back — otherwise the booking
-      // reads as confirmed when nothing was ever submitted.
-      setStep(totalSteps - 1);
-      alert("Something went wrong. Please call us directly.");
+      setSubmitError(
+        `Something went wrong and your request was not submitted. Please try again, or call us at ${BUSINESS.phone}.`
+      );
     } finally {
       setSubmitting(false);
     }
@@ -216,8 +217,8 @@ export default function BookingPage() {
 
   const next = () => {
     if (step === totalSteps - 1) {
-      handleSubmit();
-      setStep(totalSteps);
+      setSubmitError(null);
+      void handleSubmit();
     } else {
       setStep((s) => Math.min(s + 1, totalSteps));
     }
@@ -594,7 +595,16 @@ export default function BookingPage() {
 
             {/* Navigation */}
             {!isConfirmStep && (
-              <div className="flex items-center justify-between mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-gray-200">
+              <>
+                {submitError && (
+                  <p
+                    role="alert"
+                    className="mt-6 rounded-xl bg-red-50 border border-red-100 px-4 py-3 text-sm text-red-700"
+                  >
+                    {submitError}
+                  </p>
+                )}
+                <div className="flex items-center justify-between mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-gray-200">
                 <button
                   onClick={prev}
                   disabled={step === 0}
@@ -625,7 +635,8 @@ export default function BookingPage() {
                   }{" "}
                   {!submitting && <ChevronRight className="w-4 h-4" />}
                 </button>
-              </div>
+                </div>
+              </>
             )}
           </div>
         </Container>

@@ -1,5 +1,13 @@
-import { BUSINESS, AWARDS, LATEST_AWARD } from "@/lib/constants";
+import { BUSINESS, AWARDS, CONTRACTOR_RANKING, LATEST_AWARD } from "@/lib/constants";
 import { fetchPlaceData } from "@/lib/google-reviews";
+import { BUILDER_DESK, CONSTRUCTION_PHASES } from "@/lib/builder-program";
+
+// Cities we list as served, grouped by county so areaServed says both.
+const AREA_BY_COUNTY: Record<string, string[]> = {
+  Lee: ["Cape Coral", "Fort Myers", "North Fort Myers", "Bonita Springs", "Estero", "Lehigh Acres", "Sanibel Island", "Fort Myers Beach"],
+  Charlotte: ["Punta Gorda", "Port Charlotte"],
+  Collier: ["Naples", "Marco Island"],
+};
 
 export default async function JsonLd() {
   const BASE = "https://www.csplumbinglee.com";
@@ -25,12 +33,12 @@ export default async function JsonLd() {
     "@type": "Person",
     "@id": `${BASE}/#owner`,
     name: "Samuel Pellechio Jr.",
-    jobTitle: "Owner & President",
+    jobTitle: "Owner & Co-Founder",
     url: `${BASE}/about`,
     image: `${BASE}/images/team/samuel.jpeg`,
     worksFor: { "@id": `${BASE}/#organization` },
     description:
-      "First-generation licensed plumber and second-generation contractor leading C&S Plumbing since 1998. Licensed Florida plumbing contractor (CFC1432485 / CFC057076).",
+      "Second-generation Pellechio and the first licensed plumber in the family. Earned his Florida plumbing license in December 1997 and, with his brother Chris and their father, founded C&S Plumbing of Lee in Cape Coral in 1998; has led the company since. Licensed Florida plumbing contractor (CFC1432485 / CFC057076).",
     hasCredential: {
       "@type": "EducationalOccupationalCredential",
       credentialCategory: "Professional License",
@@ -45,6 +53,7 @@ export default async function JsonLd() {
       "Residential Plumbing",
       "Commercial Plumbing",
       "New Construction Plumbing",
+      "Builder and General Contractor Relationships",
       "Whole-Home Repiping",
       "Water Heater Installation",
       "Florida Building Code Compliance",
@@ -56,12 +65,25 @@ export default async function JsonLd() {
     "@type": "Person",
     "@id": `${BASE}/#operations-manager`,
     name: "Aiden Pellechio",
-    jobTitle: "Project Manager & Estimator",
-    url: `${BASE}/about`,
+    jobTitle: BUILDER_DESK.contactRole,
+    url: `${BASE}/builders`,
     image: `${BASE}/images/team/aiden.jpg`,
+    email: BUILDER_DESK.email,
     worksFor: { "@id": `${BASE}/#organization` },
     description:
-      "Third-generation Pellechio working full-time as project manager and estimator at C&S Plumbing of Lee — also handling permitting and marketing — while earning a construction management degree at Florida Gulf Coast University (FGCU), Class of 2028.",
+      "Third-generation Pellechio. Office manager at C&S Plumbing of Lee, running estimating and project management for builders — plan takeoffs, bid scopes, phase scheduling and trade sequencing — plus permitting. Currently working toward a construction management degree at Florida Gulf Coast University (FGCU).",
+    // Enrolled, not yet a graduate — affiliation, not alumniOf.
+    affiliation: {
+      "@type": "CollegeOrUniversity",
+      name: "Florida Gulf Coast University",
+      url: "https://www.fgcu.edu",
+    },
+    knowsAbout: [
+      "Construction management",
+      "Plumbing takeoffs and estimating",
+      "Construction scheduling and trade sequencing",
+      "New construction plumbing",
+    ],
   };
 
   /* ── LocalBusiness / Plumber ── */
@@ -73,6 +95,7 @@ export default async function JsonLd() {
     // Every spelling directories use for the same company, so an engine
     // matching "C S Plumbing of Lee Inc" resolves to this entity, not to a
     // stale listing or a same-named company in another state.
+    legalName: BUSINESS.legalName,
     alternateName: [
       "C&S Plumbing",
       "C&S Plumbing of Lee, Inc.",
@@ -87,7 +110,7 @@ export default async function JsonLd() {
     foundingDate: "1998",
     numberOfEmployees: { "@type": "QuantitativeValue", minValue: 5, maxValue: 10 },
     description:
-      "Family-owned plumbing company serving Southwest Florida since 1998. 8,500+ homes built. 24/7 emergency service. Residential, commercial & new construction plumbing across Cape Coral, Fort Myers, Naples & all of SWFL. One office, open and operating, at 951 Pondella Rd in North Fort Myers; directory listings showing an older Cape Coral street address refer to the company's former office.",
+      "Family owned and operated plumbing company serving Southwest Florida since 1998. 9,500+ new construction homes plumbed and 3,500+ homes repiped. 24/7 emergency service. Residential, commercial & new construction plumbing across Cape Coral, Fort Myers, Naples & all of SWFL. One office, open and operating, at 951 Pondella Rd in North Fort Myers; directory listings showing an older Cape Coral street address refer to the company's former office.",
     slogan: "Southwest Florida's Most Trusted Plumbing Team",
     address: {
       "@type": "PostalAddress",
@@ -136,7 +159,10 @@ export default async function JsonLd() {
     isAccessibleForFree: false,
 
     /* ── People ── */
-    founder,
+    // Sam Jr. co-founded C&S (with his brother Chris); Sam Sr. is the family
+    // patriarch whose trade it grew from. Both are modeled; Sam Jr. by @id so
+    // the full entity isn't duplicated from `employee`.
+    founder: [{ "@id": `${BASE}/#owner` }, founder],
     employee: [owner, operationsManager],
 
     /* ── Credentials & Licensing ── */
@@ -167,12 +193,19 @@ export default async function JsonLd() {
     knowsAbout: [
       "Residential plumbing repair and installation",
       "Commercial plumbing systems",
-      "New construction plumbing — rough-in and trim",
+      "New construction plumbing",
+      "Underground and slab plumbing layout",
+      "Plumbing rough-in",
+      "Plumbing top-out (second rough)",
+      "Plumbing trim-out",
+      "Builder and general contractor plumbing subcontracting",
+      "Slab-on-grade plumbing in high water table conditions",
+      "Flood-zone and elevated home plumbing",
       "Whole-home repiping with PEX and CPVC",
       "Tankless and hybrid water heater installation",
       "Drain cleaning and hydro-jetting",
       "Water softener and filtration systems",
-      "UEP utility connections in Cape Coral",
+      "Cape Coral UEP (Utilities Extension Program) water and sewer hookups",
       "Florida Building Code 8th Edition (2023) compliance",
       "Lee County and Cape Coral permitting requirements",
       "Backflow prevention installation (inspections subcontracted)",
@@ -181,18 +214,17 @@ export default async function JsonLd() {
 
     /* ── Service Areas ── */
     areaServed: [
-      { "@type": "City", name: "Cape Coral", containedInPlace: { "@type": "State", name: "Florida" } },
-      { "@type": "City", name: "Fort Myers", containedInPlace: { "@type": "State", name: "Florida" } },
-      { "@type": "City", name: "North Fort Myers", containedInPlace: { "@type": "State", name: "Florida" } },
-      { "@type": "City", name: "Naples", containedInPlace: { "@type": "State", name: "Florida" } },
-      { "@type": "City", name: "Bonita Springs", containedInPlace: { "@type": "State", name: "Florida" } },
-      { "@type": "City", name: "Estero", containedInPlace: { "@type": "State", name: "Florida" } },
-      { "@type": "City", name: "Lehigh Acres", containedInPlace: { "@type": "State", name: "Florida" } },
-      { "@type": "City", name: "Sanibel Island", containedInPlace: { "@type": "State", name: "Florida" } },
-      { "@type": "City", name: "Fort Myers Beach", containedInPlace: { "@type": "State", name: "Florida" } },
-      { "@type": "City", name: "Punta Gorda", containedInPlace: { "@type": "State", name: "Florida" } },
-      { "@type": "City", name: "Port Charlotte", containedInPlace: { "@type": "State", name: "Florida" } },
-      { "@type": "City", name: "Marco Island", containedInPlace: { "@type": "State", name: "Florida" } },
+      ...Object.entries(AREA_BY_COUNTY).map(([county]) => ({
+        "@type": "AdministrativeArea",
+        name: `${county} County, Florida`,
+      })),
+      ...Object.entries(AREA_BY_COUNTY).flatMap(([county, cities]) =>
+        cities.map((name) => ({
+          "@type": "City",
+          name,
+          containedInPlace: { "@type": "AdministrativeArea", name: `${county} County, Florida` },
+        })),
+      ),
     ],
 
     /* ── Service Catalog ── */
@@ -231,11 +263,15 @@ export default async function JsonLd() {
         },
         {
           "@type": "OfferCatalog",
-          name: "New Construction Plumbing",
+          name: "Builder & GC Services — New Construction Plumbing",
+          url: `${BASE}/builders`,
           itemListElement: [
-            { "@type": "Offer", itemOffered: { "@type": "Service", name: "New Construction Plumbing" } },
-            { "@type": "Offer", itemOffered: { "@type": "Service", name: "Underground Rough-In" } },
-            { "@type": "Offer", itemOffered: { "@type": "Service", name: "Trim & Finish Plumbing" } },
+            ...CONSTRUCTION_PHASES.map((p) => ({
+              "@type": "Offer",
+              itemOffered: { "@type": "Service", name: p.name, description: p.summary },
+            })),
+            { "@type": "Offer", itemOffered: { "@type": "Service", name: "Plan Takeoffs & Bid Scopes" } },
+            { "@type": "Offer", itemOffered: { "@type": "Service", name: "Plumbing Permit & Inspection Coordination" } },
           ],
         },
         {
@@ -293,6 +329,12 @@ export default async function JsonLd() {
     citation: [
       {
         "@type": "CreativeWork",
+        name: `${CONTRACTOR_RANKING.source} contractor profile — C&S Plumbing of Lee`,
+        url: CONTRACTOR_RANKING.sourceUrl,
+        description: `${CONTRACTOR_RANKING.quote} A third-party ranking by ${CONTRACTOR_RANKING.source}, not a state-issued rating. Checked ${CONTRACTOR_RANKING.checkedOn}.`,
+      },
+      {
+        "@type": "CreativeWork",
         name: `${LATEST_AWARD.program} — ${LATEST_AWARD.issuer}`,
         // Falls back to the issuer's site until the winners listing is live.
         url: LATEST_AWARD.citationUrl ?? LATEST_AWARD.issuerUrl,
@@ -322,7 +364,7 @@ export default async function JsonLd() {
       {
         "@type": "CreativeWork",
         name: "Florida DBPR — Verify a Contractor License",
-        url: "https://www.myfloridalicense.com/wl11.asp?mode=0&SID=&bession_id=vbSessionId",
+        url: BUSINESS.licenseLookupUrl,
         description:
           "C&S Plumbing's Certified Plumbing Contractor license (CFC1432485) can be verified through the Florida DBPR.",
       },

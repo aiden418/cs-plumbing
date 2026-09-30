@@ -32,14 +32,14 @@ export default function ArticleJsonLd({ post }: { post: BlogPost }) {
       image: `${BASE}/images/team/aiden.jpg`,
       // Must match the sitewide Person node in JsonLd.tsx (same @id) — AI
       // engines cross-check entities and a title that disagrees costs trust.
-      jobTitle: "Project Manager & Estimator",
+      jobTitle: "Office Manager, Estimating & Project Management",
       worksFor: {
         "@type": "Organization",
         "@id": `${BASE}/#organization`,
         name: "C&S Plumbing of Lee",
       },
       description:
-        "Third-generation Pellechio working full-time as project manager and estimator at C&S Plumbing of Lee — also handling permitting and marketing — while earning a construction management degree at Florida Gulf Coast University (FGCU), Class of 2028.",
+        "Third-generation Pellechio. Office manager at C&S Plumbing of Lee, running estimating, project management and permitting, while currently working toward a construction management degree at Florida Gulf Coast University (FGCU).",
     },
     publisher: {
       "@type": "Organization",

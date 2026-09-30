@@ -1,13 +1,15 @@
+// Keep answers in line with src/lib/builder-program.ts — no document, number
+// or turnaround goes here until it's confirmed there.
 export const BUILDER_FAQS = [
   {
     question: "How do I get C&S Plumbing on my next project?",
     answer:
-      "Contact our operations team directly at 833-PLUMB-IT (833-758-6248) or through the Builder Portal on our website. Send us your blueprints and project timeline, and we'll return a detailed scope and quote — typically within 24-48 hours for residential and 3-5 business days for commercial.",
+      "Send plans through the bid form on the Builders page or the Builder Portal, with your community, number of units and target start date, or call 833-PLUMB-IT ext. 0 (833-758-6248). Our estimating team returns a written scope and price with inclusions and exclusions spelled out.",
   },
   {
     question: "What's in your prequalification package?",
     answer:
-      "Our prequalification package includes both active CFC licenses (CFC1432485 and CFC057076), current certificates of insurance (general liability and workers' comp), W-9, EMR letter, safety program documentation, and bonding capacity verification. We can deliver the full package within 24 hours of request.",
+      "Our capability statement and prequal packet are downloadable from the Builders page. Both Florida Certified Plumbing Contractor licenses (CFC1432485 and CFC057076) can be verified on the DBPR license lookup. Our office sends the W-9, certificate of insurance, workers' compensation certificate, bonding information and warranty terms on request: email office@csplumbinglee.com or call 833-PLUMB-IT ext. 0.",
   },
   {
     question: "Do you handle AIA pay applications?",
@@ -22,7 +24,12 @@ export const BUILDER_FAQS = [
   {
     question: "Can you handle both residential and commercial projects?",
     answer:
-      "Yes. Our team handles single-family production homes, custom residential, multi-family, light commercial, tenant improvements, and full commercial new construction. We carry dual CFC licenses and have completed 8,500+ homes plus commercial projects including restaurants, medical offices, and retail spaces.",
+      "Yes. Our team handles single-family production homes, custom residential, multi-family, light commercial, tenant improvements, and full commercial new construction. We carry dual CFC licenses and have completed 9,500+ homes plus commercial projects including restaurants, medical offices, and retail spaces.",
+  },
+  {
+    question: "What do the homeowners get after the build?",
+    answer:
+      "Homes and commercial properties with new-construction plumbing completed by C&S qualify for a lifetime discount on future plumbing service. New homeowners also receive one complimentary water heater flush and whole-home plumbing inspection during their home's first year — they call 833-PLUMB-IT ext. 0 within 12 months of home completion to request and schedule it. These benefits are separate from warranty terms.",
   },
   {
     question: "How far in advance should I engage a plumbing sub?",

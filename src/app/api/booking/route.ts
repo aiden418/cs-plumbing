@@ -1,6 +1,7 @@
 import { NextResponse, after } from "next/server";
 import { Resend } from "resend";
 import { z } from "zod";
+import { BUSINESS } from "@/lib/constants";
 import {
   ADMIN_EMAIL,
   escapeHtml,
@@ -135,6 +136,47 @@ export async function POST(request: Request) {
         subject: `New ${typeLabel}`,
         text: smsText,
       }, "booking SMS notification");
+    }
+
+    // Customer confirmation — the confirmation screen tells the customer a copy
+    // was sent to their email, so this must actually happen. A failure here must
+    // not fail the whole submission (the admin lead email already went through).
+    const scheduleConfirmHtml = isEstimate
+      ? ""
+      : `
+              <p style="margin: 4px 0;"><strong>Preferred date:</strong> ${safe.date}</p>
+              <p style="margin: 4px 0;"><strong>Preferred time:</strong> ${safe.time}</p>`;
+    try {
+      await resend.emails.send({
+        from: "C&S Plumbing of Lee <bookings@csplumbinglee.com>",
+        to: [data.email],
+        subject: isEstimate
+          ? `Your Estimate Request — C&S Plumbing [${confirmationId}]`
+          : `Your Booking Request — C&S Plumbing [${confirmationId}]`,
+        html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <div style="background: #0A0A0F; padding: 20px; text-align: center;">
+            <h1 style="color: #0099FF; margin: 0;">Request Received</h1>
+            <p style="color: #999; margin: 8px 0 0; font-size: 13px;">Confirmation #${confirmationId}</p>
+          </div>
+          <div style="padding: 20px; background: #f9f9f9;">
+            <p>Hi ${safe.name},</p>
+            <p>Thanks for choosing C&S Plumbing. We&rsquo;ve received your ${isEstimate ? "estimate request" : "booking request"} and our team will call you to confirm the details.</p>
+            <div style="background: #fff; padding: 16px; border-radius: 8px; margin: 16px 0;">
+              <p style="margin: 4px 0;"><strong>Service:</strong> ${safe.service}</p>${scheduleConfirmHtml}
+              <p style="margin: 4px 0;"><strong>Address:</strong> ${safe.address}</p>
+            </div>
+            <p style="color: #666; font-size: 14px;">
+              Need anything in the meantime? Call us at <a href="tel:${BUSINESS.phoneRaw}" style="color: #0099FF;">${BUSINESS.phone}</a>.
+            </p>
+            <p style="color: #999; font-size: 12px; margin-top: 20px;">
+              ${BUSINESS.fullName} &middot; ${BUSINESS.address}, ${BUSINESS.city}, ${BUSINESS.state} ${BUSINESS.zip}
+            </p>
+          </div>
+        </div>`,
+      });
+    } catch (confirmError) {
+      console.error("Booking customer confirmation email error:", confirmError);
     }
 
     // Mirrors the browser pixel so the two copies dedupe on eventId:

@@ -57,6 +57,7 @@ export default function QuoteResult({
   });
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [website, setWebsite] = useState(""); // honeypot
 
   const handleSubmit = async () => {
     setSubmitting(true);
@@ -70,6 +71,7 @@ export default function QuoteResult({
           result,
           lead,
           sourcePath: window.location.pathname,
+          website,
         }),
       });
       const data: { success?: boolean; eventId?: string } = await res
@@ -196,6 +198,16 @@ export default function QuoteResult({
               <p className="text-sm font-semibold text-gray-900">
                 We&apos;ll email you this quote — no spam, ever.
               </p>
+              {/* Honeypot — hidden from real users */}
+              <input
+                type="text"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                value={website}
+                onChange={(e) => setWebsite(e.target.value)}
+                className="absolute -left-[9999px] w-px h-px opacity-0"
+              />
               <input
                 value={lead.name}
                 onChange={(e) => setLead((p) => ({ ...p, name: e.target.value }))}

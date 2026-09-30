@@ -196,6 +196,7 @@ export default function Footer() {
                   rel="noopener noreferrer"
                   className="font-semibold text-gray-700 hover:text-primary underline-offset-2 hover:underline transition-colors"
                   title="Verify on MyFloridaLicense.com"
+                  aria-label={`Verify license ${BUSINESS.license} on MyFloridaLicense.com`}
                 >
                   #{BUSINESS.license}
                 </a>
@@ -206,6 +207,7 @@ export default function Footer() {
                   rel="noopener noreferrer"
                   className="font-semibold text-gray-700 hover:text-primary underline-offset-2 hover:underline transition-colors"
                   title="Verify on MyFloridaLicense.com"
+                  aria-label={`Verify license ${BUSINESS.license2} on MyFloridaLicense.com`}
                 >
                   #{BUSINESS.license2}
                 </a>

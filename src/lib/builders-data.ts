@@ -14,9 +14,11 @@ export const BUILDERS: Builder[] = [
 ];
 
 export const BUILDER_STATS: BuilderStat[] = [
-  { value: 8500, suffix: "+", label: "Homes Since 1998" },
-  { value: 3, suffix: "", label: "Counties: Lee, Collier, Charlotte" },
-  { value: 20, suffix: "+", label: "Builder Partnerships" },
+  { value: 9500, suffix: "+", label: "New Construction Homes Since 1998" },
+  { value: 3, suffix: "", label: "Generations of Pellechios" },
+  // Was "20+ Builder Partnerships" — unverified, so replaced with a fact
+  // anyone can check on DBPR. Restore a partnership count once confirmed.
+  { value: 2, suffix: "", label: "Active FL Plumbing Contractor Licenses" },
 ];
 
 export const BUILDER_GALLERY: BuilderGalleryItem[] = [
@@ -176,8 +178,8 @@ export const BUILDER_SPEC_SHEETS: BuilderSpecSheet[] = [
 
 export const AIDEN_CONTACT = {
   name: "Aiden Pellechio",
-  title: "Operations & Estimating",
-  phone: "833-PLUMB-IT",
+  title: "Office Manager, Estimating & Project Management",
+  phone: "833-PLUMB-IT ext. 0",
   phoneRaw: "8337586248",
-  email: "aiden@csplumbinglee.com",
+  email: "office@csplumbinglee.com",
 } as const;

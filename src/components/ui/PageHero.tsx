@@ -81,7 +81,7 @@ export default function PageHero({
           className={cn(
             "animate-hero-in mb-5 flex flex-wrap items-center gap-1.5 text-xs sm:text-sm",
             centered && "justify-center",
-            navy ? "text-white/50" : "text-gray-500"
+            navy ? "text-white/70" : "text-gray-500"
           )}
         >
           {breadcrumb.map((crumb, i) => {

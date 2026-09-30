@@ -21,6 +21,7 @@ import BuilderPortalIntro from "@/components/builder-portal/BuilderPortalIntro";
 import WhatHappensNext from "@/components/ui/WhatHappensNext";
 import { BUSINESS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
+import { trackBuilderLead } from "@/lib/pixel";
 
 const steps = [
   { label: "Contact", icon: <User className="w-4 h-4" /> },
@@ -37,8 +38,6 @@ const projectTypes = [
   "Other",
 ];
 
-const unitRanges = ["1", "2–10", "11–50", "50+"];
-
 const budgetRanges = [
   "Under $25K",
   "$25K – $50K",
@@ -54,6 +53,7 @@ interface FormData {
   email: string;
   phone: string;
   address: string;
+  community: string;
   projectType: string;
   units: string;
   sqft: string;
@@ -73,6 +73,7 @@ export default function BuilderPortalPage() {
     email: "",
     phone: "",
     address: "",
+    community: "",
     projectType: "",
     units: "",
     sqft: "",
@@ -114,6 +115,11 @@ export default function BuilderPortalPage() {
       });
 
       if (!res.ok) throw new Error("Failed");
+      const data: { eventId?: string } = await res.json().catch(() => ({}));
+      trackBuilderLead(
+        { units: form.units, community: form.community, source: "builder-portal" },
+        { eventId: data.eventId, email: form.email }
+      );
       setSubmitted(true);
     } catch {
       alert("Something went wrong. Please call us directly at 833-PLUMB-IT.");
@@ -149,8 +155,7 @@ export default function BuilderPortalPage() {
                 {files.length > 0 && ` and ${files.length} file${files.length !== 1 ? "s" : ""}`}.
               </p>
               <p className="text-gray-500 mb-8">
-                Our team will review your plans and get back to you within 1 business day
-                with a detailed scope and quote.
+                Our team will review your plans and follow up with a detailed scope and quote.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Button href="/" variant="secondary">
@@ -188,7 +193,7 @@ export default function BuilderPortalPage() {
               <p className="text-gray-500 text-sm sm:text-base max-w-lg mx-auto">
                 Four short steps — contact info, project details, plans, then
                 review. We&apos;ll get back to you with a detailed scope and
-                quote within 3–5 business days.
+                quote.
               </p>
             </div>
 
@@ -301,6 +306,16 @@ export default function BuilderPortalPage() {
                       />
                     </div>
                     <div>
+                      <label className={labelClass}>Community / Subdivision</label>
+                      <input
+                        type="text"
+                        value={form.community}
+                        onChange={(e) => update("community", e.target.value)}
+                        placeholder="e.g. Cape Coral Unit 42, or scattered lots"
+                        className={inputClass}
+                      />
+                    </div>
+                    <div>
                       <label className={labelClass}>Project Type *</label>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         {projectTypes.map((type) => (
@@ -323,23 +338,15 @@ export default function BuilderPortalPage() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                       <div>
                         <label className={labelClass}>Number of Units</label>
-                        <div className="grid grid-cols-4 gap-2">
-                          {unitRanges.map((u) => (
-                            <button
-                              key={u}
-                              type="button"
-                              onClick={() => update("units", u)}
-                              className={cn(
-                                "px-3 py-2 border rounded-lg text-sm font-medium transition-all",
-                                form.units === u
-                                  ? "border-primary bg-primary/5 text-primary"
-                                  : "border-gray-200 text-gray-700 hover:border-gray-300"
-                              )}
-                            >
-                              {u}
-                            </button>
-                          ))}
-                        </div>
+                        <input
+                          type="number"
+                          inputMode="numeric"
+                          min={1}
+                          value={form.units}
+                          onChange={(e) => update("units", e.target.value)}
+                          placeholder="e.g. 12"
+                          className={inputClass}
+                        />
                       </div>
                       <div>
                         <label className={labelClass}>Approx. Square Footage</label>
@@ -354,7 +361,7 @@ export default function BuilderPortalPage() {
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                       <div>
-                        <label className={labelClass}>Desired Start Date</label>
+                        <label className={labelClass}>Target Start Date</label>
                         <input
                           type="date"
                           value={form.startDate}
@@ -458,6 +465,12 @@ export default function BuilderPortalPage() {
                       <div className="grid grid-cols-2 gap-y-2 text-sm">
                         <span className="text-gray-500">Address</span>
                         <span className="text-gray-900 font-medium">{form.address}</span>
+                        {form.community && (
+                          <>
+                            <span className="text-gray-500">Community</span>
+                            <span className="text-gray-900 font-medium">{form.community}</span>
+                          </>
+                        )}
                         <span className="text-gray-500">Type</span>
                         <span className="text-gray-900 font-medium">{form.projectType}</span>
                         {form.units && (
@@ -591,7 +604,7 @@ export default function BuilderPortalPage() {
           {
             title: "Plans received",
             description:
-              "You'll get a confirmation email immediately. The right project manager picks it up next business day.",
+              "You'll get a confirmation email immediately, and our office picks it up from there.",
           },
           {
             title: "Takeoff & questions",
@@ -601,7 +614,7 @@ export default function BuilderPortalPage() {
           {
             title: "Written proposal",
             description:
-              "Detailed proposal back to you within 3–5 business days — scope, materials, schedule, price, and warranty terms.",
+              "Detailed written proposal — scope, materials, schedule, price, and warranty terms.",
           },
           {
             title: "Kickoff scheduled",
