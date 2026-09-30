@@ -163,7 +163,7 @@ export default function CoastalComebackPlanPage() {
             Licensed CFC1432485
           </span>
           <span>·</span>
-          <span>Family-owned since 1998</span>
+          <span>Family owned and operated since 1998</span>
           <span>·</span>
           <span className="flex items-center gap-1.5">
             <Star className="w-4 h-4 text-gold fill-gold" />

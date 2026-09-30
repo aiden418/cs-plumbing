@@ -65,7 +65,7 @@ export default function ProjectsIndexPage() {
 
           <div className="mt-10 grid max-w-xl grid-cols-3 gap-4 sm:gap-6">
             {[
-              { value: 8500, label: "Projects" },
+              { value: 9500, label: "Homes Plumbed" },
               { value: totalPhotos, label: "Site photos" },
               { value: cityCount, label: "Cities" },
             ].map((s) => (

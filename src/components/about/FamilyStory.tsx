@@ -47,26 +47,26 @@ export default function FamilyStory() {
               <p>
                 Both boys grew up in the trades and graduated from Cape Coral High.{" "}
                 <strong className="text-gray-900">Sam</strong> earned his plumbing license in
-                December 1997 and — with his brother <strong className="text-gray-900">Chris</strong>{" "}
-                and their father behind them — founded{" "}
-                <strong className="text-gray-900">C&S Plumbing of Lee</strong>. The name says it
+                December 1997 and in 1998 — with his brother <strong className="text-gray-900">Chris</strong>{" "}
+                and their father — founded{" "}
+                <strong className="text-gray-900">C&S Plumbing of Lee</strong> in Cape Coral. The name says it
                 plainly: <strong className="text-gray-900">C&S — for Chris and Sam.</strong>{" "}
                 Samuel Jr. has led it ever since, on one promise: honest work, fair pricing, and
-                treating every customer like family. Nearly three decades and 8,500+ homes later,
+                treating every customer like family. Nearly three decades and 9,500+ homes later,
                 that promise became our legacy.
               </p>
               <p>
                 Today the third generation is on the job.{" "}
                 <strong className="text-gray-900">Aiden Pellechio</strong> grew up around these
                 job sites and learned the trade the way his dad did — by working it. He runs
-                projects and estimating for C&S while finishing his construction management degree
-                at FGCU, with plans to earn his GC and plumbing licenses down the road. Same name
+                the office, estimating and project management for C&S while working toward his
+                construction management degree at FGCU, with plans to earn his GC and plumbing licenses down the road. Same name
                 on the truck. Same standard on every pipe.
               </p>
             </div>
             <div className="mt-7 sm:mt-8 grid grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
               <div>
-                <div className="text-2xl sm:text-3xl font-black text-gray-900">8,500+</div>
+                <div className="text-2xl sm:text-3xl font-black text-gray-900">9,500+</div>
                 <div className="text-xs sm:text-sm text-gray-500">Homes Plumbed</div>
               </div>
               <div className="border-l border-gray-200 pl-4 sm:pl-6">

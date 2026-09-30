@@ -29,16 +29,16 @@ const GENERATIONS: Generation[] = [
   {
     gen: "Second Generation",
     name: "Chris & Sam — Founders",
-    label: "Owner & President: Samuel Pellechio Jr.",
+    label: "Owner & Co-Founder: Samuel Pellechio Jr.",
     image: "/images/team/chris-and-sam.jpg",
-    body: "Both Cape Coral High grads. Sam earned his plumbing license in December 1997 and, with his brother Chris and their father's backing, founded C&S Plumbing of Lee — C&S, for Chris and Sam. Sam has led it ever since: honest work, fair pricing, and treating every customer like family, growing C&S into one of Southwest Florida's most trusted plumbing companies.",
+    body: "Both Cape Coral High grads. Sam earned his plumbing license in December 1997 and, with his brother Chris and their father's backing, founded C&S Plumbing of Lee in Cape Coral in 1998 — C&S, for Chris and Sam. Sam has led it ever since: honest work, fair pricing, and treating every customer like family, growing C&S into one of Southwest Florida's most trusted plumbing companies.",
   },
   {
     gen: "Third Generation",
     name: "Aiden Pellechio",
-    label: "Project Manager & Estimator",
+    label: "Office Manager, Estimating & Project Management",
     image: "/images/team/aiden.jpg",
-    body: "Aiden grew up around C&S job sites and never really left. These days he runs projects and estimating — and a little of everything else — while finishing his construction management degree at FGCU. The plan from there is to earn his GC license, then his plumbing license, and keep the name on the truck right where it's always been.",
+    body: "Aiden grew up around C&S job sites and never really left. These days he runs the office, estimating and project management — and a little of everything else — while working toward his construction management degree at FGCU. The plan from there is to earn his GC license, then his plumbing license, and keep the name on the truck right where it's always been.",
   },
 ];
 

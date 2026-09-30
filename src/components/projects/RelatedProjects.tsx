@@ -34,7 +34,7 @@ export default function RelatedProjects({
       <Container>
         <div className="mb-8 flex flex-col gap-4 sm:mb-10 sm:flex-row sm:items-end sm:justify-between">
           <div className="max-w-2xl">
-            <span className="mb-3 inline-block text-xs font-semibold uppercase tracking-widest text-primary sm:text-sm">
+            <span className="mb-3 inline-block text-xs font-semibold uppercase tracking-widest text-primary-dark sm:text-sm">
               {overline}
             </span>
             <h2
@@ -51,7 +51,7 @@ export default function RelatedProjects({
           </div>
           <Link
             href="/projects"
-            className="inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
+            className="inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-primary-dark hover:underline"
           >
             All projects <ArrowRight className="h-4 w-4" />
           </Link>
@@ -89,22 +89,22 @@ export default function RelatedProjects({
                     </div>
                   </div>
                   <div className="p-5 sm:p-6">
-                    <h3 className="mb-1 text-base font-bold leading-snug text-gray-900 transition-colors group-hover:text-primary sm:text-lg">
+                    <h3 className="mb-1 text-base font-bold leading-snug text-gray-900 transition-colors group-hover:text-primary-dark sm:text-lg">
                       {project.name}
                     </h3>
                     <p className="mb-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-gray-500">
                       {project.location && (
                         <span className="inline-flex items-center gap-1">
-                          <MapPin className="h-3 w-3 text-primary" />
+                          <MapPin className="h-3 w-3 text-primary-dark" />
                           {project.location}
                         </span>
                       )}
                       <span className="inline-flex items-center gap-1">
-                        <Camera className="h-3 w-3 text-primary" />
+                        <Camera className="h-3 w-3 text-primary-dark" />
                         {projectPhotoCount(project)} photos
                       </span>
                     </p>
-                    <span className="inline-flex items-center gap-1 text-xs font-semibold text-primary sm:text-sm">
+                    <span className="inline-flex items-center gap-1 text-xs font-semibold text-primary-dark sm:text-sm">
                       See the project <ArrowRight className="h-3.5 w-3.5" />
                     </span>
                   </div>

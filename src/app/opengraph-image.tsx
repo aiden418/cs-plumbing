@@ -9,6 +9,6 @@ export default function OgImage() {
   return createOgImage({
     eyebrow: "Southwest Florida's Most Trusted",
     title: "Plumbing Built on Trust, Backed by Results",
-    subtitle: "Cape Coral, Fort Myers, Naples & all of SWFL · 8,500+ homes built · 24/7 emergency",
+    subtitle: "New construction for builders · Service for homeowners · 9,500+ homes plumbed across SWFL",
   });
 }

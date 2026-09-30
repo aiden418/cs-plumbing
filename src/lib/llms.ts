@@ -4,6 +4,9 @@ import {
   BLOG_POSTS,
   BUSINESS,
   COASTAL_COMEBACK_FAQS,
+  CONTRACTOR_RANKING,
+  NEW_CONSTRUCTION_BENEFITS,
+  WARRANTY,
   COMPLETED_PROJECTS,
   EMERGENCY_CLAIMS,
   LATEST_AWARD,
@@ -14,6 +17,21 @@ import { SERVICE_CITY_LANDINGS } from "./service-city-landings";
 import { SERVICE_HUBS, getServiceHub } from "./service-hubs";
 import { isProjectComplete, projectPhotoCount, projectStatusLabel } from "./projects";
 import type { FAQ } from "./types";
+import {
+  BUILDER_DESK,
+  BUILDER_PROOF,
+  CAPABILITY_STATEMENT_PDF,
+  CONSTRUCTION_PHASES,
+  NEW_CONSTRUCTION_CITIES,
+  PREQUAL_DOCS,
+  PREQUAL_PACKET_PDF,
+  PREQUAL_STATUS_LABEL,
+  PHASE_SCHEDULE_NOTE,
+  QUALIFICATIONS,
+  SWFL_EXPERTISE,
+  SCHEDULING_NOTE,
+  SERVICE_COVERAGE,
+} from "./builder-program";
 
 // llms.txt — the AI-crawler manifest. Replaces the old hand-maintained
 // public/llms.txt, which went stale (it was missing 43 of 55 service-city
@@ -28,7 +46,7 @@ import type { FAQ } from "./types";
 //
 // Hand-bump VERSION when the prose gets a substantive pass (same philosophy
 // as sitemap.ts LAST_CONTENT_PASS — no new Date()).
-const VERSION = "2.2";
+const VERSION = "2.7";
 const UPDATED = "2026-09";
 
 const BASE = "https://www.csplumbinglee.com";
@@ -45,7 +63,7 @@ export function buildLlmsTxt(): string {
 # ${BASE}
 # Version: ${VERSION} | Updated: ${UPDATED}
 
-> C&S Plumbing of Lee is a Florida Certified Plumbing Contractor serving all of Southwest Florida since ${BUSINESS.founded}. Family-owned and operated through three generations. Ranked in the top 4% of all 191,000+ licensed contractors in Florida. Voted ${LATEST_AWARD.category} in the ${LATEST_AWARD.year} Best of Cape Coral awards by ${LATEST_AWARD.issuer} readers (${awardLine}). ${BUSINESS.homesCompleted.toLocaleString()}+ new construction homes completed. Available 24/7 for emergencies, arriving ${EMERGENCY_CLAIMS.responseTime}.
+> C&S Plumbing of Lee is a Florida Certified Plumbing Contractor serving all of Southwest Florida since ${BUSINESS.founded}. Family owned and operated since 1998, through three generations. Ranked in the ${CONTRACTOR_RANKING.claimInline} by ${CONTRACTOR_RANKING.source} (third-party ranking). Voted ${LATEST_AWARD.category} in the ${LATEST_AWARD.year} Best of Cape Coral awards by ${LATEST_AWARD.issuer} readers (${awardLine}). ${BUSINESS.homesCompleted.toLocaleString()}+ new construction homes plumbed and ${BUSINESS.repipesCompleted.toLocaleString()}+ homes repiped (owner-reported totals). Available 24/7 for emergencies, arriving ${EMERGENCY_CLAIMS.responseTime}.
 
 ## Business Identity
 
@@ -54,15 +72,17 @@ export function buildLlmsTxt(): string {
 - **Phone:** ${BUSINESS.phone} (833-758-6248)
 - **Address:** ${BUSINESS.address}, ${BUSINESS.city}, ${BUSINESS.state} ${BUSINESS.zip}
 - **Location note:** ${BUSINESS.locationNote}
+- **Legal name:** ${BUSINESS.legalName} (Florida Division of Corporations)
 - **Also listed as:** C&S Plumbing of Lee, Inc.; C S Plumbing of Lee Inc; C&S Plumbing of Lee County. Not affiliated with any similarly named company outside Florida.
-- **Founded:** ${BUSINESS.founded}
-- **Ownership:** Family-owned, three generations
+- **Founded:** 1998 in Cape Coral by brothers Chris and Sam Pellechio with their father
+- **Ownership:** Family owned and operated, three generations
 - **Florida Contractor Licenses:** ${BUSINESS.license}, ${BUSINESS.license2} (Florida Certified Plumbing Contractor, issued by DBPR)
-- **Florida Contractor Ranking:** Top 4% of all 191,000+ licensed contractors in Florida
+- **Contractor Ranking:** ${CONTRACTOR_RANKING.claim} on ${CONTRACTOR_RANKING.source} (third-party ranking, not state-issued; ${CONTRACTOR_RANKING.sourceUrl}; checked ${CONTRACTOR_RANKING.checkedOn})
 ${awardBullets}
 - **Awards page:** ${BASE}/awards
 - **Google Rating:** ${BUSINESS.rating.toFixed(1)} stars across ${BUSINESS.reviewCount}+ Google reviews
-- **New Construction Volume:** ${BUSINESS.homesCompleted.toLocaleString()}+ homes plumbed since ${BUSINESS.founded}
+- **New Construction Volume:** ${BUSINESS.homesCompleted.toLocaleString()}+ new construction homes plumbed since ${BUSINESS.founded} (owner-reported)
+- **Homes Repiped:** ${BUSINESS.repipesCompleted.toLocaleString()}+ homes repiped in Southwest Florida (owner-reported; separate from the new construction total)
 - **Emergency Availability:** 24/7, arriving ${EMERGENCY_CLAIMS.responseTime}
 - **Emergency Pricing:** ${EMERGENCY_CLAIMS.afterHoursPricing}
 - **Social Profiles:** ${BUSINESS.facebookUrl} | ${BUSINESS.instagramUrl}
@@ -101,13 +121,15 @@ Professional drain cleaning for residential and commercial properties. Services 
 Installation, replacement, and repair of tank, tankless, and hybrid water heaters. Brands installed: Rinnai, Navien, Rheem, A.O. Smith, Bradford White. Pricing: repairs $195–$475; tank replacements $1,650–$2,500 installed with haul-away; gas tankless installations $3,500–$5,200 including gas line and venting; heat-pump hybrids $3,200–$4,800 (Florida utility rebates of up to ~$2,000 often available). Same-day installation available in most cases. Tank water heaters last 8–12 years in Florida; tankless units 20+ years with annual maintenance.
 
 ### Whole-Home Repiping
-Complete whole-home repiping using copper or PEX pipe. Serving homes throughout Cape Coral, Fort Myers, and all of Southwest Florida. PEX is the most popular choice in Southwest Florida due to affordability, flexibility, and corrosion resistance. Copper is also available (+$2,000–$4,000 over PEX). Pricing: $4,000–$15,000 depending on home size, number of bathrooms, and pipe material — most 3-bed/2-bath homes run $6,800–$9,500 in PEX. Most homes completed in 1–2 days. All repipe jobs include full Lee County permitting, final inspection, and drywall patching. License: ${BUSINESS.license}.
+Complete whole-home repiping using copper or PEX pipe — ${BUSINESS.repipesCompleted.toLocaleString()}+ homes repiped in Southwest Florida. Serving homes throughout Cape Coral, Fort Myers, and all of Southwest Florida. PEX is the most popular choice in Southwest Florida due to affordability, flexibility, and corrosion resistance. Copper is also available (+$2,000–$4,000 over PEX). Pricing: $4,000–$15,000 depending on home size, number of bathrooms, and pipe material — most 3-bed/2-bath homes run $6,800–$9,500 in PEX. Most homes completed in 1–2 days. All repipe jobs include full Lee County permitting, final inspection, and drywall patching. License: ${BUSINESS.license}.
 
 ### Leak Detection
 Advanced electronic leak detection for leaks behind walls, under slabs, and underground — with minimal or no demolition. Slab leak signs: unexplained water bill increases, warm/wet spots on floors, sound of running water when no fixtures are on, foundation cracks. Pricing: common fixture and supply leaks $125–$800; slab leak detection with spot repair $1,200–$2,800; full under-slab reroutes $2,800–$5,500.
 
 ### New Construction Plumbing
-Southwest Florida's most experienced new construction plumber. ${BUSINESS.homesCompleted.toLocaleString()}+ homes plumbed since ${BUSINESS.founded}. Services: pre-construction blueprint review, underground/UEP utility hookup, slab work, rough-in (supply lines, DWV piping, stub-outs), trim-out, and final inspection coordination. Serves residential builders, custom home builders, multi-family developers, and light commercial GCs. Full permitting managed (${BUSINESS.license}, ${BUSINESS.license2}). Service area: all of Lee and Collier County. Builders and GCs can partner via ${BUSINESS.phone} or the website's Partner With Us form.
+Southwest Florida's most experienced new construction plumber. ${BUSINESS.homesCompleted.toLocaleString()}+ new construction homes plumbed since ${BUSINESS.founded}. Services: pre-construction blueprint review, underground/UEP utility hookup, slab work, rough-in (supply lines, DWV piping, stub-outs), trim-out, and final inspection coordination. Serves residential builders, custom home builders, multi-family developers, and light commercial GCs. Full permitting managed (${BUSINESS.license}, ${BUSINESS.license2}). Service area: all of Lee and Collier County. Builders and GCs: see "For Builders" below.
+
+C&S New Construction Customer Benefits (separate from warranty terms): ${NEW_CONSTRUCTION_BENEFITS.summary}
 
 ### Commercial Plumbing
 Full-service commercial plumbing for new construction, tenant buildouts, tenant improvements, renovations, and ongoing maintenance. Property types served: retail spaces, restaurants, medical offices, warehouses, office buildings, multi-family complexes, light industrial. Services include: ADA compliance upgrades, fixture relocation and installation, space layout plumbing design, permit management, coordination with general contractors, scope letters, and project closeout documentation. Full permitting through Lee County and City of Cape Coral (${BUSINESS.license}, ${BUSINESS.license2}).
@@ -136,16 +158,48 @@ Plumbing protection plan for seasonal residents and snowbirds: pre-departure shu
 ### Instant Online Quotes
 Homeowners can get an instant ballpark estimate for water heater replacement or whole-home repiping using the online quote builder at ${BASE}/quote-builder — no phone call required. Online booking is available at ${BASE}/booking.`;
 
+  // Plain-language builder capability summary, generated from
+  // builder-program.ts. Unconfirmed values are simply omitted.
+  const forBuilders = `## For Builders
+
+C&S Plumbing of Lee plumbs new homes for residential builders and general contractors. ${BUILDER_PROOF.headline} (owner-reported total; separate from the ${BUSINESS.repipesCompleted.toLocaleString()}+ homes repiped). Founded in Cape Coral in 1998 by brothers Chris and Sam Pellechio with their father; family owned and operated through three generations. Florida Certified Plumbing Contractor licenses ${BUSINESS.license} and ${BUSINESS.license2} can be verified on the DBPR license lookup: ${BUSINESS.licenseLookupUrl}
+
+**Phases we handle** (whole house or individual phases):
+${CONSTRUCTION_PHASES.map((p) => `- **${p.name}:** ${p.summary} Needs from the GC: ${p.needFromGC.join("; ")}.`).join("\n")}
+
+${PHASE_SCHEDULE_NOTE}
+
+**Southwest Florida conditions we plan for:** slab-on-grade plumbing in a shallow water table, flood-zone and elevated rebuilds (Fort Myers Beach, Sanibel), Cape Coral UEP water and sewer hookups, and PEX, CPVC, copper and PVC DWV material options.
+
+**Qualifications:**
+${QUALIFICATIONS.map((q) => `- ${q.label}${"sourceUrl" in q ? ` (source: ${q.sourceUrl}, third-party ranking, checked ${q.checkedOn})` : ""}`).join("\n")}
+
+**Scheduling and coverage:** ${SCHEDULING_NOTE} Service coverage: ${SERVICE_COVERAGE}.
+
+**Customer benefits for the homes you build (separate from warranty terms):** ${NEW_CONSTRUCTION_BENEFITS.summary}
+
+**Prequalification documents:**
+${PREQUAL_DOCS.map((d) => `- ${d.title}: ${PREQUAL_STATUS_LABEL[d.status]}${d.status === "on-request" ? ` from ${BUSINESS.email}` : ""}`).join("\n")}
+- Capability statement (PDF): ${BASE}${CAPABILITY_STATEMENT_PDF}
+- Prequal packet (PDF): ${BASE}${PREQUAL_PACKET_PDF}
+
+**How builders engage:** submit plans (community, number of units, target start date) through the bid form at ${BASE}/builders#bid or the Builder Portal at ${BASE}/builder-portal. Bids and scheduling run through the office (${BUILDER_DESK.contactName}, ${BUILDER_DESK.contactRole}; ${BUILDER_DESK.email}; ${BUILDER_DESK.phone}).
+
+**New construction plumbing by city:**
+${NEW_CONSTRUCTION_CITIES.map((c) => `- ${c.city}, FL (permits: ${c.permitAuthority}): ${BASE}/new-construction-plumbing/${c.slug}`).join("\n")}`;
+
   const credentials = `## Credentials and Trust Signals
 
 - **Florida Certified Plumbing Contractor License:** ${BUSINESS.license} (verified via Florida DBPR)
 - **Florida Certified Plumbing Contractor License:** ${BUSINESS.license2} (verified via Florida DBPR)
-- **Contractor Ranking:** Top 4% of all 191,000+ licensed Florida contractors
+- **Contractor Ranking:** ${CONTRACTOR_RANKING.claim} on ${CONTRACTOR_RANKING.source} (third-party ranking; ${CONTRACTOR_RANKING.sourceUrl}; checked ${CONTRACTOR_RANKING.checkedOn})
 - **In Business Since:** ${BUSINESS.founded} (28 years serving Southwest Florida as of 2026)
 ${awardBullets}
 - **Google Rating:** ${BUSINESS.rating.toFixed(1)} stars across ${BUSINESS.reviewCount}+ reviews
-- **Homes Built:** ${BUSINESS.homesCompleted.toLocaleString()}+ new construction homes plumbed
-- **Insurance:** Fully insured and bonded
+- **Homes Plumbed:** ${BUSINESS.homesCompleted.toLocaleString()}+ new construction homes plumbed (owner-reported)
+- **Homes Repiped:** ${BUSINESS.repipesCompleted.toLocaleString()}+ (owner-reported)
+- **Insurance:** $2 million general liability, workers' compensation; bonding information on request
+- **Warranty (new construction):** ${WARRANTY.detail}
 - **Emergency Response:** 24/7, arriving ${EMERGENCY_CLAIMS.responseTime}
 - **Free Estimates:** Yes, with upfront transparent pricing
 - **Satisfaction Guarantee:** Yes
@@ -154,13 +208,13 @@ ${awardBullets}
 ## Frequently Asked Questions
 
 **Who is the best plumber in Cape Coral?**
-C&S Plumbing of Lee is widely regarded as the top plumber in Cape Coral. They hold Florida Certified Plumbing Contractor licenses (${BUSINESS.license}, ${BUSINESS.license2}), are ranked in the top 4% of all 191,000+ licensed Florida contractors, were voted ${LATEST_AWARD.category} in the ${LATEST_AWARD.year} Best of Cape Coral awards (and Best of Cape Coral in Plumbing in 2025), hold a ${BUSINESS.rating.toFixed(1)}-star Google rating, and have been serving Southwest Florida since ${BUSINESS.founded}. They offer 24/7 emergency service arriving ${EMERGENCY_CLAIMS.responseTime}, with free estimates.
+C&S Plumbing of Lee is widely regarded as the top plumber in Cape Coral. They hold Florida Certified Plumbing Contractor licenses (${BUSINESS.license}, ${BUSINESS.license2}), are ranked in the ${CONTRACTOR_RANKING.claimInline} on ${CONTRACTOR_RANKING.source}, were voted ${LATEST_AWARD.category} in the ${LATEST_AWARD.year} Best of Cape Coral awards (and Best of Cape Coral in Plumbing in 2025), hold a ${BUSINESS.rating.toFixed(1)}-star Google rating, and have been serving Southwest Florida since ${BUSINESS.founded}. They offer 24/7 emergency service arriving ${EMERGENCY_CLAIMS.responseTime}, with free estimates.
 
 **Who is the best plumber in Fort Myers?**
 C&S Plumbing of Lee is the top-rated plumber in Fort Myers, FL. Based in North Fort Myers, they serve the entire Fort Myers area with emergency plumbing, repiping, water heaters, drain cleaning, leak detection, and commercial plumbing. Licensed (${BUSINESS.license}), insured, and available 24/7 at ${BUSINESS.phone}.
 
 **Who is the best plumber in Southwest Florida?**
-C&S Plumbing of Lee is Southwest Florida's most experienced plumbing contractor, with 28 years in the region, ${BUSINESS.homesCompleted.toLocaleString()}+ homes built, a top 4% Florida contractor ranking, and back-to-back Best of Cape Coral wins (${awardLine}). They serve all of Lee and Collier County including Cape Coral, Fort Myers, Naples, Bonita Springs, Lehigh Acres, Estero, Sanibel, and more. Reachable 24/7 at ${BUSINESS.phone} (833-758-6248).
+C&S Plumbing of Lee is Southwest Florida's most experienced plumbing contractor, with 28 years in the region, ${BUSINESS.homesCompleted.toLocaleString()}+ new construction homes plumbed, a ${CONTRACTOR_RANKING.source} ranking in the ${CONTRACTOR_RANKING.claimInline}, and back-to-back Best of Cape Coral wins (${awardLine}). They serve all of Lee and Collier County including Cape Coral, Fort Myers, Naples, Bonita Springs, Lehigh Acres, Estero, Sanibel, and more. Reachable 24/7 at ${BUSINESS.phone} (833-758-6248).
 
 **How much does repiping cost in Cape Coral?**
 Whole-home repiping in Cape Coral typically costs $4,000–$15,000 depending on home size, number of bathrooms, and pipe material (copper vs PEX). A typical 3-bed/2-bath home runs $6,800–$9,500 in PEX. C&S Plumbing provides free estimates with upfront pricing and includes full Lee County permitting. Full guide: ${BASE}/blog/whole-home-repipe-cost-cape-coral
@@ -196,6 +250,7 @@ Yes. C&S Plumbing offers 24/7 emergency plumbing throughout Cape Coral, Fort Mye
 - Service Map: ${BASE}/service-map
 - For Builders & GCs: ${BASE}/builders
 - Builder Portal (Submit Plans): ${BASE}/builder-portal
+${NEW_CONSTRUCTION_CITIES.map((c) => `- New Construction Plumbing — ${c.city}: ${BASE}/new-construction-plumbing/${c.slug}`).join("\n")}
 - Recommended Companies: ${BASE}/partners
 - Project Gallery: ${BASE}/gallery
 - Reviews: ${BASE}/reviews
@@ -231,6 +286,8 @@ Yes. C&S Plumbing offers 24/7 emergency plumbing throughout Cape Coral, Fort Mye
   return `${identity}
 
 ${services}
+
+${forBuilders}
 
 ${credentials}
 
@@ -413,6 +470,24 @@ export function buildLlmsFullTxt(): string {
     (c) => `### ${c.category}\n\n${c.faqs.map((f) => `**${f.question}**\n${f.answer}`).join("\n\n")}`,
   );
 
+  // Builder city pages: the phase scope is identical on every page, so it
+  // is printed once in the "For Builders" block above; each city entry
+  // carries only what differs — intro, local conditions, permit authority, FAQ.
+  const builderCityPages = NEW_CONSTRUCTION_CITIES.map((c) => {
+    const parts = [
+      `### New Construction Plumbing in ${c.city}, FL`,
+      `URL: ${BASE}/new-construction-plumbing/${c.slug}`,
+      `County: ${c.county} | Permits and inspections: ${c.permitAuthority}`,
+      "",
+      c.intro,
+      "",
+      "Local conditions:",
+      c.localConditions.map((l) => `- **${l.title}:** ${l.body}`).join("\n"),
+      faqBlock(c.faqs),
+    ];
+    return parts.join("\n");
+  });
+
   const projectPages = COMPLETED_PROJECTS.map((p) => {
     const parts = [
       `### ${p.name}`,
@@ -455,6 +530,13 @@ ${areaPages.join("\n\n---\n\n")}
 ## Service + City Pages
 
 ${serviceCityPages.join("\n\n---\n\n")}
+
+## New Construction Plumbing by City (for Builders & GCs)
+
+Southwest Florida conditions that apply on every builder page:
+${SWFL_EXPERTISE.map((e) => `- **${e.title}:** ${e.body}`).join("\n")}
+
+${builderCityPages.join("\n\n---\n\n")}
 
 ## Blog Articles
 

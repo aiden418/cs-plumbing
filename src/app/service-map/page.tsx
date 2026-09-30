@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/service-map" },
   title: "Service Map",
   description:
-    "Explore C&S Plumbing's service area across Southwest Florida. View our past, present, and future job locations in Cape Coral, Fort Myers, Naples & beyond.",
+    "Explore C&S Plumbing's service area across Southwest Florida — past, present and upcoming job locations in Cape Coral, Fort Myers, Naples & beyond.",
   keywords: [
     "plumber service area Cape Coral",
     "plumber near me SWFL",
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Service Map | C&S Plumbing of Lee",
     description:
-      "8,500+ jobs completed across Southwest Florida. See our service area and job locations.",
+      "9,500+ jobs completed across Southwest Florida. See our service area and job locations.",
     url: "https://www.csplumbinglee.com/service-map",
   },
 };

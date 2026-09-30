@@ -263,6 +263,36 @@ export interface ProjectPhase {
 }
 
 /**
+ * Builder case-study facts for a project page. Every field is optional and
+ * only renders when filled — leave a field out rather than estimate it.
+ * Phase photos come from `phases`; run `npm run photos:strip -- --check`
+ * before publishing so none of them carry EXIF/GPS.
+ */
+export interface ProjectCaseStudy {
+  /** Named only when `permission` is true (written OK from the builder). */
+  builder?: { name: string; permission: boolean };
+  /** e.g. "Single-family, 3 bed / 2 bath, slab-on-grade". */
+  homeType?: string;
+  /** Commercial jobs: e.g. "Aviation hangar, new construction". */
+  projectType?: string;
+  /** Who estimated / ran the job — phrased as the office, not a person. */
+  projectManagement?: string;
+  fixtureCount?: number;
+  /** Phase names as the builder knows them, e.g. "Underground", "Top-out". */
+  phasesPerformed?: string[];
+  schedule?: {
+    /** Planned duration or date range from the builder's schedule. */
+    planned?: string;
+    actual?: string;
+    note?: string;
+  };
+  /** One row per inspection, e.g. { phase: "Underground", result: "Passed first inspection" }. */
+  inspections?: { phase: string; result: string }[];
+  /** One field problem and how it was solved. */
+  fieldProblem?: { problem: string; solution: string };
+}
+
+/**
  * Optional case-study fields. When populated, ProjectDetail renders a
  * "Case study" block (challenge + solution + scope + permits + materials)
  * between the project hero and the phase galleries. Leave undefined for
@@ -302,6 +332,8 @@ export interface CompletedProject {
    * dateModified so crawlers recrawl the page instead of ignoring it.
    */
   updatedOn?: string;
+  /** Builder case-study facts (see ProjectCaseStudy). */
+  caseStudy?: ProjectCaseStudy;
   metaTitle: string;
   metaDescription: string;
 }

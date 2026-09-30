@@ -4,115 +4,66 @@ import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import FaqJsonLd from "@/components/seo/FaqJsonLd";
 import BuildersPage from "./BuildersPage";
 import { BUILDER_FAQS } from "./builder-faqs";
-import { BUSINESS } from "@/lib/constants";
+import { BUILDER_PROOF, CONSTRUCTION_PHASES, NEW_CONSTRUCTION_CITIES } from "@/lib/builder-program";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/builders" },
+  // Keep under ~60 chars with the " | C&S Plumbing of Lee" template.
   title: "New Construction Plumbing for Builders",
   description:
-    "8,500+ homes since 1998. C&S Plumbing partners with builders across Lee, Collier and Charlotte counties for new construction rough-in, top-out and trim.",
+    "9,500+ new construction homes plumbed since 1998. Slab layout to final for builders in Lee and Charlotte counties. Capability statement and bid form.",
   keywords: [
     "new construction plumber SWFL",
     "builder plumbing partner Cape Coral",
     "rough-in plumber Lee County",
+    "top-out plumber Fort Myers",
     "production home plumber Southwest Florida",
-    "commercial plumbing contractor Fort Myers",
     "new construction plumbing sub",
     "plumber for builders Fort Myers",
-    "new home plumbing contractor",
     "GC plumbing subcontractor Lee County",
-    "custom home plumber Cape Coral",
     "plumbing subcontractor SWFL",
+    "plumbing capability statement",
     "prequalified plumbing contractor",
-    "bonded plumber Lee County",
-    "AIA pay app plumber",
-    "tenant improvement plumber Fort Myers",
+    "UEP hookup new construction Cape Coral",
   ],
   openGraph: {
-    title: "Builders — New Construction Plumbing Partner | C&S Plumbing of Lee",
-    description:
-      "8,500+ homes built. The builder's choice for new construction plumbing in Cape Coral, Fort Myers & all of Southwest Florida.",
+    title: "For Builders & GCs — New Construction Plumbing | C&S Plumbing of Lee",
+    description: `${BUILDER_PROOF.headline}. Three generations, two Florida plumbing contractor licenses, slab to final.`,
     url: "https://www.csplumbinglee.com/builders",
   },
 };
 
+const BASE = "https://www.csplumbinglee.com";
+
 function BuildersJsonLd() {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": `${BASE}/builders#service`,
+    name: "New Construction Plumbing for Builders",
+    description:
+      "Phase-by-phase new construction plumbing for residential builders and general contractors: underground / slab layout, 2nd rough (top-out), trim, water and sewer hookup, and final inspection.",
+    serviceType: "New Construction Plumbing",
+    audience: { "@type": "BusinessAudience", audienceType: "Home builders and general contractors" },
+    provider: { "@id": `${BASE}/#organization` },
+    areaServed: [
+      { "@type": "AdministrativeArea", name: "Lee County, Florida" },
+      { "@type": "AdministrativeArea", name: "Charlotte County, Florida" },
+      ...NEW_CONSTRUCTION_CITIES.map((c) => ({ "@type": "City", name: `${c.city}, FL` })),
+    ],
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: "New Construction Plumbing Phases",
+      itemListElement: CONSTRUCTION_PHASES.map((p) => ({
+        "@type": "Offer",
+        itemOffered: { "@type": "Service", name: p.name, description: p.summary },
+      })),
+    },
+  };
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{
-        __html: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "Service",
-          name: "New Construction Plumbing",
-          description:
-            "Full-scope new construction plumbing services for residential and commercial builders — rough-in, top-out, trim, and commercial plumbing with AIA pay application capability.",
-          provider: {
-            "@type": "LocalBusiness",
-            name: BUSINESS.fullName,
-            telephone: BUSINESS.phone,
-            url: "https://www.csplumbinglee.com",
-            address: {
-              "@type": "PostalAddress",
-              streetAddress: BUSINESS.address,
-              addressLocality: BUSINESS.city,
-              addressRegion: BUSINESS.state,
-              postalCode: BUSINESS.zip,
-            },
-          },
-          serviceType: "New Construction Plumbing",
-          areaServed: [
-            { "@type": "AdministrativeArea", name: "Lee County, Florida" },
-            { "@type": "AdministrativeArea", name: "Collier County, Florida" },
-            {
-              "@type": "AdministrativeArea",
-              name: "Charlotte County, Florida",
-            },
-          ],
-          hasOfferCatalog: {
-            "@type": "OfferCatalog",
-            name: "New Construction Plumbing Services",
-            itemListElement: [
-              {
-                "@type": "Offer",
-                itemOffered: {
-                  "@type": "Service",
-                  name: "Rough-In Plumbing",
-                  description:
-                    "Underground DWV piping, water supply rough-in, stub-outs, pressure testing, and permit coordination.",
-                },
-              },
-              {
-                "@type": "Offer",
-                itemOffered: {
-                  "@type": "Service",
-                  name: "Top-Out Plumbing",
-                  description:
-                    "Vent stack extensions, above-ceiling DWV connections, water heater rough-in, and hose bib installation.",
-                },
-              },
-              {
-                "@type": "Offer",
-                itemOffered: {
-                  "@type": "Service",
-                  name: "Trim & Finish Plumbing",
-                  description:
-                    "Fixture installation, appliance connections, system testing, and final inspection coordination.",
-                },
-              },
-              {
-                "@type": "Offer",
-                itemOffered: {
-                  "@type": "Service",
-                  name: "Commercial Plumbing",
-                  description:
-                    "Full-scope commercial plumbing with AIA G702/G703 pay applications, backflow prevention, and medical gas capability.",
-                },
-              },
-            ],
-          },
-        }),
-      }}
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
     />
   );
 }

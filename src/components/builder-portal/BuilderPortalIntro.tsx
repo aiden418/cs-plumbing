@@ -52,7 +52,7 @@ const PROCESS_STEPS = [
   {
     title: "Takeoff & proposal",
     description:
-      "Detailed plumbing takeoff and written proposal back to you within 3–5 business days.",
+      "Detailed plumbing takeoff and written proposal back to you.",
   },
   {
     title: "Kickoff scheduled",
@@ -92,7 +92,7 @@ export default function BuilderPortalIntro() {
               className="inline-flex items-center gap-1.5 text-gold text-xs sm:text-sm font-bold tracking-[0.2em] uppercase mb-3 sm:mb-4 hover:underline"
             >
               <span>Builder Portal</span>
-              <span className="text-white/50 normal-case tracking-normal font-normal">
+              <span className="text-white/70 normal-case tracking-normal font-normal">
                 · See our full builder story
               </span>
               <ArrowRight className="w-3 h-3" />
@@ -103,13 +103,13 @@ export default function BuilderPortalIntro() {
             </h1>
             <p className="text-base sm:text-lg text-white/70 leading-relaxed mb-3">
               C&amp;S Plumbing has been the underground-to-trim partner for Lee
-              County builders since 1998. <strong className="text-white">8,500+ homes built</strong>,
+              County builders since 1998. <strong className="text-white">9,500+ homes plumbed</strong>,
               two active state licenses, and a 5.0 rating from the GCs and custom
               home builders we work with every week.
             </p>
             <p className="text-base sm:text-lg text-white/70 leading-relaxed mb-8 sm:mb-10">
               Upload your plans below. We&apos;ll come back with a detailed takeoff
-              and proposal within 3–5 business days — no upfront cost, no commitment.
+              and proposal — no upfront cost, no commitment.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
               <Button href="#upload-plans" variant="gold" size="lg">
@@ -126,7 +126,7 @@ export default function BuilderPortalIntro() {
               </Button>
             </div>
             <p className="mt-5 text-xs text-white/40">
-              License #CFC1432485 · #CFC057076 · Family-owned since 1998
+              License #CFC1432485 · #CFC057076 · Family owned and operated since 1998
             </p>
           </div>
         </Container>
@@ -166,12 +166,12 @@ export default function BuilderPortalIntro() {
           <SectionHeading
             overline="Our process"
             title="Plan to inspection — no surprises"
-            subtitle="The same playbook we've run on 8,500+ homes."
+            subtitle="The same playbook we've run on 9,500+ homes."
           />
           <ol className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-5">
             {PROCESS_STEPS.map((step, i) => (
-              <ScrollReveal key={step.title} delay={i * 0.06}>
-                <li className="relative bg-white rounded-2xl border border-gray-200 p-5 sm:p-6 h-full">
+              <li key={step.title} className="h-full">
+                <ScrollReveal delay={i * 0.06} className="relative bg-white rounded-2xl border border-gray-200 p-5 sm:p-6 h-full">
                   <span
                     aria-hidden="true"
                     className="flex items-center justify-center w-10 h-10 rounded-full bg-primary text-white font-bold text-sm shadow-[0_0_30px_rgba(0,119,204,0.25)] mb-4"
@@ -184,8 +184,8 @@ export default function BuilderPortalIntro() {
                   <p className="text-xs sm:text-sm text-gray-500 leading-relaxed">
                     {step.description}
                   </p>
-                </li>
-              </ScrollReveal>
+                </ScrollReveal>
+              </li>
             ))}
           </ol>
         </Container>
@@ -233,14 +233,14 @@ export default function BuilderPortalIntro() {
 
           <ul className="space-y-3 sm:space-y-4 max-w-2xl mx-auto">
             {WHAT_WE_NEED.map((item, i) => (
-              <ScrollReveal key={item} delay={i * 0.05}>
-                <li className="flex items-start gap-3 sm:gap-4 p-4 sm:p-5 rounded-xl bg-white border border-gray-200">
+              <li key={item}>
+                <ScrollReveal delay={i * 0.05} className="flex items-start gap-3 sm:gap-4 p-4 sm:p-5 rounded-xl bg-white border border-gray-200">
                   <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
                   <span className="text-sm sm:text-base text-gray-700 leading-relaxed">
                     {item}
                   </span>
-                </li>
-              </ScrollReveal>
+                </ScrollReveal>
+              </li>
             ))}
           </ul>
 

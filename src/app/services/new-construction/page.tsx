@@ -10,6 +10,7 @@ import CTASection from "@/components/home/CTASection";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import FaqJsonLd from "@/components/seo/FaqJsonLd";
 import RelatedProjects from "@/components/projects/RelatedProjects";
+import NewConstructionBenefits from "@/components/builders/NewConstructionBenefits";
 import { Calendar, Phone, HardHat, Shield, Clock, Award } from "lucide-react";
 import { BUSINESS } from "@/lib/constants";
 import { projectsForHub } from "@/lib/projects";
@@ -17,7 +18,7 @@ import { projectsForHub } from "@/lib/projects";
 const newConstructionFaqs = [
   {
     question: "Who is the best plumber for new construction in Cape Coral and Fort Myers?",
-    answer: "C&S Plumbing of Lee is Southwest Florida's most experienced new construction plumber, with 8,500+ homes completed since 1998. We're the go-to plumbing partner for residential and commercial builders across Lee and Collier County.",
+    answer: "C&S Plumbing of Lee is Southwest Florida's most experienced new construction plumber, with 9,500+ homes plumbed since 1998. We're the go-to plumbing partner for residential and commercial builders across Lee and Collier County.",
   },
   {
     question: "Do you handle new construction plumbing for both residential and commercial builds?",
@@ -49,7 +50,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/services/new-construction" },
   title: { absolute: "New Construction Plumber | Cape Coral & Fort Myers" },
   description:
-    "8,500+ new construction homes plumbed in Cape Coral, Fort Myers & SWFL. The builder's partner for reliability, code compliance & precision.",
+    "9,500+ new construction homes plumbed in Cape Coral, Fort Myers & SWFL. The builder's partner for reliability, code compliance & precision.",
   keywords: [
     "new construction plumber Cape Coral",
     "new construction plumbing Fort Myers",
@@ -66,7 +67,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "New Construction Plumbing | C&S Plumbing of Lee",
     description:
-      "8,500+ homes built. The builder's choice for new construction plumbing in Cape Coral, Fort Myers & all of Southwest Florida.",
+      "9,500+ homes plumbed. The builder's choice for new construction plumbing in Cape Coral, Fort Myers & all of Southwest Florida.",
     url: "https://www.csplumbinglee.com/services/new-construction",
   },
 };
@@ -99,7 +100,7 @@ const process = [
 ];
 
 const advantages = [
-  { icon: <HardHat className="w-4 h-4 sm:w-5 sm:h-5" />, text: "8,500+ homes completed" },
+  { icon: <HardHat className="w-4 h-4 sm:w-5 sm:h-5" />, text: "9,500+ homes plumbed" },
   { icon: <Clock className="w-4 h-4 sm:w-5 sm:h-5" />, text: "On-time, every time" },
   { icon: <Shield className="w-4 h-4 sm:w-5 sm:h-5" />, text: "Full code compliance" },
   { icon: <Award className="w-4 h-4 sm:w-5 sm:h-5" />, text: "5.0-Star Rated" },
@@ -113,7 +114,7 @@ export default function NewConstructionPage() {
         overline="New Construction"
         title="The Builder's Choice for"
         accent="New Construction Plumbing"
-        description="With over 8,500 new homes completed across Southwest Florida, C&S Plumbing is the go-to partner for builders who demand reliability, code-compliance, and timeline precision."
+        description="With over 9,500 new construction homes plumbed across Southwest Florida, C&S Plumbing is the go-to partner for builders who demand reliability, code-compliance, and timeline precision."
         media={
           <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-white/10">
             <Image
@@ -175,7 +176,7 @@ export default function NewConstructionPage() {
           <ScrollReveal>
             <div className="text-center">
               <div className="text-5xl sm:text-7xl lg:text-9xl font-black text-gray-900">
-                <CountUp end={8500} suffix="+" duration={2.5} />
+                <CountUp end={9500} suffix="+" duration={2.5} />
               </div>
               <p className="text-base sm:text-xl text-gray-500 mt-3 sm:mt-4">
                 New Construction Homes Plumbed Across SWFL
@@ -218,6 +219,8 @@ export default function NewConstructionPage() {
           </div>
         </Container>
       </section>
+
+      <NewConstructionBenefits />
 
       {/* Documented builds — proof for the builder reading this page */}
       <RelatedProjects
