@@ -11,6 +11,12 @@ export const BUILDERS: Builder[] = [
   { name: "Engelke Construction Solutions", logo: "/images/builders/engelke.png", logoWidth: 800, logoHeight: 208 },
   { name: "Itasca Construction Associates", logo: "/images/builders/itasca.png", logoWidth: 684, logoHeight: 44 },
   { name: "Decker Homes", logo: "/images/builders/decker-homes.png", logoWidth: 2500, logoHeight: 1200 },
+  { name: "Douglas Brooke Homes", logo: "/images/builders/douglas-brooke-homes.png", logoWidth: 918, logoHeight: 328, website: "https://douglasbrookehomes.com" },
+  { name: "Hansen Homes", logo: "/images/builders/hansen-homes.png", logoWidth: 222, logoHeight: 108, website: "https://www.hansenhomes.net" },
+  { name: "Sposen Signature Homes", logo: "/images/builders/sposen-signature-homes.png", logoWidth: 978, logoHeight: 400, website: "https://sposenhomes.com" },
+  { name: "T.D. Farrell Construction", logo: "/images/builders/td-farrell.png", logoWidth: 270, logoHeight: 85, website: "https://www.tdfarrell.com" },
+  { name: "Prestige Development Group", logo: "/images/builders/prestige-development-group.png", logoWidth: 579, logoHeight: 600, website: "https://www.mypdg.com" },
+  { name: "McDaniel Construction", logo: "/images/builders/mcdaniel-construction.png", logoWidth: 322, logoHeight: 86, website: "https://www.wmcdanielinc.com" },
 ];
 
 export const BUILDER_STATS: BuilderStat[] = [
