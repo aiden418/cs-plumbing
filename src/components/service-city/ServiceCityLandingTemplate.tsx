@@ -4,6 +4,7 @@ import { Check, Phone, Calendar, MapPin, Shield, Star, Award, ArrowRight } from 
 import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
 import PageHero from "@/components/ui/PageHero";
+import { serviceHeroImage } from "@/lib/hero-images";
 import FaqAccordion from "@/components/ui/FaqAccordion";
 import ScrollReveal from "@/components/animations/ScrollReveal";
 import StaggerChildren, {
@@ -29,6 +30,7 @@ export default function ServiceCityLandingTemplate({
       {/* Hero — Above the Fold */}
       <PageHero
         size="sm"
+        image={serviceHeroImage(landing.serviceSlug, landing.image)}
         overline={`${landing.city}, ${landing.state}`}
         overlineIcon={<MapPin className="w-3.5 h-3.5" />}
         title={landing.h1}
