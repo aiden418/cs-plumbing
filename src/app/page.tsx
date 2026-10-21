@@ -7,6 +7,8 @@ import PipelineSection from "@/components/home/PipelineSection";
 import PageTransition from "@/components/layout/PageTransition";
 import HomeFaq, { HOME_FAQS } from "@/components/home/HomeFaq";
 import FaqJsonLd from "@/components/seo/FaqJsonLd";
+import RelatedPosts from "@/components/blog/RelatedPosts";
+import { latestPosts } from "@/lib/internal-links";
 
 // Below-the-fold sections — server-rendered for SEO, JS deferred for performance
 const CoastalComebackTeaser = dynamic(
@@ -92,6 +94,13 @@ export default function Home() {
       <GoogleReviews />
       <ServiceMapTeaser />
       <BrandsCarousel />
+      {/* Server-rendered: /blog had no inbound link in the HTML before this. */}
+      <RelatedPosts
+        posts={latestPosts(3)}
+        heading="Plumbing guides for Southwest Florida homeowners"
+        description="Costs, warning signs and storm prep, written for Cape Coral, Fort Myers and the rest of SWFL."
+        tone="white"
+      />
       <FaqJsonLd faqs={HOME_FAQS} />
       <HomeFaq />
       <CTASection />

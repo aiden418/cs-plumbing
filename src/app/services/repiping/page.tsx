@@ -5,6 +5,8 @@ import ServiceJsonLd from "@/components/seo/ServiceJsonLd";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import FaqJsonLd from "@/components/seo/FaqJsonLd";
 import CTASection from "@/components/home/CTASection";
+import RelatedPosts from "@/components/blog/RelatedPosts";
+import { postsForHub } from "@/lib/internal-links";
 import { SERVICE_LANDINGS } from "@/lib/constants";
 
 const landing = SERVICE_LANDINGS.find((s) => s.slug === "repiping")!;
@@ -34,6 +36,11 @@ export default function Page() {
         ]}
       />
       <ServiceLandingTemplate landing={landing} />
+      <RelatedPosts
+        posts={postsForHub("repiping")}
+        heading="Repiping guides & costs"
+        description="What a Cape Coral repipe costs, how to spot failing pipes, and why polybutylene homes get repiped."
+      />
       <CTASection />
     </PageTransition>
   );

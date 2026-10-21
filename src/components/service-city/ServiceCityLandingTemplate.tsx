@@ -10,6 +10,7 @@ import StaggerChildren, {
   staggerItem,
 } from "@/components/animations/StaggerChildren";
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { BUSINESS } from "@/lib/constants";
 import type { ServiceCityLanding } from "@/lib/types";
 
@@ -17,8 +18,11 @@ const TRUST_ICONS = [Shield, Award, Star, Check];
 
 export default function ServiceCityLandingTemplate({
   landing,
+  areaHubHref,
 }: {
   landing: ServiceCityLanding;
+  /** /areas/<slug> for this landing's city, when a hub exists. */
+  areaHubHref?: string;
 }) {
   return (
     <>
@@ -143,8 +147,23 @@ export default function ServiceCityLandingTemplate({
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-6 sm:mb-8">
                 Serving All of {landing.city}, {landing.state}
               </h2>
+              {/* One sentence instead of the same two-line boilerplate on all
+                  54 landings, plus a real link up to the city hub. */}
               <p className="text-gray-500 text-sm sm:text-base leading-relaxed mb-8">
-                C&S Plumbing proudly serves {landing.city} and the surrounding areas. Whether you&apos;re in the heart of the city or a nearby neighborhood, our licensed plumbers are just a call away.
+                Licensed plumbers covering all of {landing.city}, {landing.state},
+                including every neighborhood listed below.
+                {areaHubHref && (
+                  <>
+                    {" "}
+                    <Link
+                      href={areaHubHref}
+                      className="font-semibold text-primary hover:underline"
+                    >
+                      See everything we do in {landing.city}
+                    </Link>
+                    .
+                  </>
+                )}
               </p>
 
               {landing.neighborhoods.length > 0 && (

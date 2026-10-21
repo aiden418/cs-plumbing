@@ -5,6 +5,8 @@ import ServiceJsonLd from "@/components/seo/ServiceJsonLd";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import FaqJsonLd from "@/components/seo/FaqJsonLd";
 import CTASection from "@/components/home/CTASection";
+import RelatedPosts from "@/components/blog/RelatedPosts";
+import { postsForHub } from "@/lib/internal-links";
 import { SERVICE_LANDINGS } from "@/lib/constants";
 
 const landing = SERVICE_LANDINGS.find((s) => s.slug === "drain-cleaning")!;
@@ -34,6 +36,11 @@ export default function Page() {
         ]}
       />
       <ServiceLandingTemplate landing={landing} />
+      <RelatedPosts
+        posts={postsForHub("drain-cleaning")}
+        heading="Drain cleaning guides"
+        description="Why SWFL drains clog, what hydrojetting fixes, and how long a cleaning takes."
+      />
       <CTASection />
     </PageTransition>
   );

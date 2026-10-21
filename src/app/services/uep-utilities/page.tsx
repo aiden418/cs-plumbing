@@ -4,6 +4,8 @@ import UEPServicePage from "./UEPServicePage";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import FaqJsonLd from "@/components/seo/FaqJsonLd";
 import CTASection from "@/components/home/CTASection";
+import RelatedPosts from "@/components/blog/RelatedPosts";
+import { postsForHub } from "@/lib/internal-links";
 import { BUSINESS, SERVICE_LANDINGS } from "@/lib/constants";
 
 const landing = SERVICE_LANDINGS.find((s) => s.slug === "uep-utilities")!;
@@ -141,6 +143,11 @@ export default function Page() {
         ]}
       />
       <UEPServicePage landing={landing} />
+      <RelatedPosts
+        posts={postsForHub("uep-utilities")}
+        heading="Septic-to-sewer & UEP guides"
+        description="What a Cape Coral UEP conversion involves, step by step, and what it costs."
+      />
       <CTASection />
     </PageTransition>
   );

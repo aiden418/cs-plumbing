@@ -194,6 +194,12 @@ export interface BlogPost {
   readTime: string;
   /** Optional Q&A block — rendered under the article and emitted as FAQPage schema. */
   faqs?: FAQ[];
+  /**
+   * Slugs of service-city landings this post should send readers to.
+   * Rendered under the article (BlogRelatedLandings) and used by the area
+   * hubs' "guides" links. Validated at build time: an unknown slug throws.
+   */
+  relatedLandings?: string[];
 }
 
 export interface Partner {

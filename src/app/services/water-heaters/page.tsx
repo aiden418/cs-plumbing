@@ -5,6 +5,8 @@ import ServiceJsonLd from "@/components/seo/ServiceJsonLd";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import FaqJsonLd from "@/components/seo/FaqJsonLd";
 import CTASection from "@/components/home/CTASection";
+import RelatedPosts from "@/components/blog/RelatedPosts";
+import { postsForHub } from "@/lib/internal-links";
 import { SERVICE_LANDINGS } from "@/lib/constants";
 
 const landing = SERVICE_LANDINGS.find((s) => s.slug === "water-heaters")!;
@@ -34,6 +36,11 @@ export default function Page() {
         ]}
       />
       <ServiceLandingTemplate landing={landing} />
+      <RelatedPosts
+        posts={postsForHub("water-heaters")}
+        heading="Water heater guides & costs"
+        description="Tankless vs. tank, replacement signs and costs, and storm prep for your heater."
+      />
       <CTASection />
     </PageTransition>
   );
