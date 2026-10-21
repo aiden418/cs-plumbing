@@ -479,6 +479,8 @@ export const TEAM_MEMBERS: TeamMember[] = [
     name: "Samuel Pellechio Jr.",
     role: "Owner & Co-Founder",
     image: "/images/team/samuel.jpeg",
+    // Face sits at 33–58% of this 3:4 portrait; anchor crops a little above center.
+    imagePosition: "50% 35%",
     bio: "Second-generation plumber and co-founder — the “S” in C&S. A Cape Coral High grad who earned his plumbing license in December 1997 and, with his brother Chris and their father, founded C&S Plumbing of Lee in Cape Coral in 1998. He has led the company ever since: honest work, fair pricing, and treating every customer like family.",
   },
   {
@@ -490,7 +492,10 @@ export const TEAM_MEMBERS: TeamMember[] = [
   {
     name: "Dylan Redecker",
     role: "Lead Plumber",
-    image: "/images/team/dylan.jpeg",
+    // Head-and-shoulders crop of dylan.jpeg (the full frame is a wide
+    // excavator shot where the face is 5% of the width).
+    image: "/images/team/dylan-portrait.jpg",
+    imagePosition: "50% 30%",
     bio: "Hands-on expertise and dedication on every job site across Southwest Florida.",
   },
 ];

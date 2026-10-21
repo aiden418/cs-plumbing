@@ -67,7 +67,7 @@ export default function AboutPersonJsonLd() {
       name: "Dylan Redecker",
       jobTitle: "Lead Plumber",
       url: `${BASE}/about`,
-      image: `${BASE}/images/team/dylan.jpeg`,
+      image: `${BASE}/images/team/dylan-portrait.jpg`,
       description:
         "Experienced lead plumber at C&S Plumbing of Lee, bringing hands-on expertise and dedication to every job site across Southwest Florida.",
       worksFor: {

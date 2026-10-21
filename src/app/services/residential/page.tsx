@@ -104,6 +104,7 @@ export default function ResidentialPage() {
         services={residentialServices}
         highlights={highlights}
         heroImage="/images/team/team-work-1.jpg"
+        heroImagePosition="center top"
       />
       {/* Owners of homes C&S plumbed as new construction */}
       <NewConstructionBenefits overline="Did C&S plumb your new home?" />

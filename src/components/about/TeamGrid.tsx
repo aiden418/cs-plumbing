@@ -33,6 +33,7 @@ export default function TeamGrid() {
                     alt={member.name}
                     fill
                     className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                    style={member.imagePosition ? { objectPosition: member.imagePosition } : undefined}
                     sizes="(max-width: 640px) 144px, (max-width: 768px) 160px, 192px"
                   />
                 ) : (
