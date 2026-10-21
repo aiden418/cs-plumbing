@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { gsap, registerGSAP } from "@/lib/gsap";
 
 const GOLD = "#E8A427";
 
@@ -16,10 +15,17 @@ export default function RadarPulse() {
   useEffect(() => {
     if (!hostRef.current) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    registerGSAP();
-    const rings = hostRef.current.querySelectorAll(".radar-ring");
 
-    const ctx = gsap.context(() => {
+    // gsap on demand: keeps it out of the first-load bundle (this band is
+    // well below the fold and only animates on scroll).
+    let cancelled = false;
+    let revert: (() => void) | undefined;
+    import("@/lib/gsap").then(({ gsap, registerGSAP }) => {
+      if (cancelled || !hostRef.current) return;
+      registerGSAP();
+      const rings = hostRef.current.querySelectorAll(".radar-ring");
+
+      const ctx = gsap.context(() => {
       const tl = gsap.timeline({
         defaults: { ease: "none" },
         scrollTrigger: {
@@ -42,9 +48,14 @@ export default function RadarPulse() {
           at + 0.45,
         );
       });
-    }, hostRef);
+      }, hostRef);
+      revert = () => ctx.revert();
+    });
 
-    return () => ctx.revert();
+    return () => {
+      cancelled = true;
+      revert?.();
+    };
   }, []);
 
   return (

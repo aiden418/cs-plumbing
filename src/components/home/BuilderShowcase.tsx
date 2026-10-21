@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import Container from "@/components/ui/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
 import BuilderLogoImage from "@/components/ui/BuilderLogoImage";
@@ -7,16 +8,19 @@ import ScrollReveal from "@/components/animations/ScrollReveal";
 import { BUILDERS } from "@/lib/builders-data";
 import type { Builder } from "@/lib/types";
 
-function BuilderLogo({ builder }: { builder: Builder }) {
+function BuilderLogo({
+  builder,
+  loading,
+}: {
+  builder: Builder;
+  loading: "eager" | "lazy";
+}) {
   return (
     <div className="flex-shrink-0 px-5 sm:px-6 py-2.5 sm:py-3 bg-white border border-gray-200 rounded-full flex items-center justify-center group hover:border-primary/30 card-lift card-lift-hover-subtle">
       <BuilderLogoImage
         builder={builder}
         sizes="(max-width: 640px) 100px, 120px"
-        // The marquee translates pills outside their clipping ancestor, where
-        // an IntersectionObserver never fires — lazy logos would pop in blank
-        // mid-scroll. They're a few KB each once optimized, so load eagerly.
-        loading="eager"
+        loading={loading}
         className="h-6 sm:h-8 w-auto max-w-[100px] sm:max-w-[120px] object-contain transition-all duration-300"
       />
     </div>
@@ -27,8 +31,36 @@ const PILL_INTERACT =
   "transition-all duration-400 ease-[var(--ease-out-expo)] group-hover/marquee:opacity-50 hover:!opacity-100 hover:scale-[1.06]";
 
 export default function BuilderShowcase() {
+  const sectionRef = useRef<HTMLElement>(null);
+  // Logo loading: the marquee translates pills outside their clipping
+  // ancestor, where native lazy-loading never fires, so they would pop in
+  // blank mid-scroll if left lazy. But `loading="eager"` made React 19
+  // server-render a <link rel="preload"> for all 20 of them in <head> —
+  // eleven extra requests ahead of the hero on every phone, two screens
+  // below the fold. So: lazy in the HTML, flipped to eager once this
+  // section itself (which is not clipped) comes within ~2 screens.
+  const [near, setNear] = useState(false);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setNear(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: "1600px 0px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  const logoLoading = near ? "eager" : "lazy";
+
   return (
-    <section className="py-16 sm:py-24 lg:py-32">
+    <section ref={sectionRef} className="py-16 sm:py-24 lg:py-32">
       <Container>
         <ScrollReveal>
           <SectionHeading
@@ -50,14 +82,14 @@ export default function BuilderShowcase() {
           <ul className="flex shrink-0 gap-4 sm:gap-6 pr-4 sm:pr-6">
             {BUILDERS.map((builder) => (
               <li key={builder.name} className={PILL_INTERACT}>
-                <BuilderLogo builder={builder} />
+                <BuilderLogo builder={builder} loading={logoLoading} />
               </li>
             ))}
           </ul>
           <ul className="flex shrink-0 gap-4 sm:gap-6 pr-4 sm:pr-6" aria-hidden="true">
             {BUILDERS.map((builder) => (
               <li key={`dup-${builder.name}`} className={PILL_INTERACT}>
-                <BuilderLogo builder={builder} />
+                <BuilderLogo builder={builder} loading={logoLoading} />
               </li>
             ))}
           </ul>

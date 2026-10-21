@@ -53,7 +53,11 @@ export default function ServiceHighlights() {
                         src={service.image}
                         alt={`${service.title} by C&S Plumbing`}
                         fill
-                        sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 30vw"
+                        // Phones: the card is the container minus its 24px
+                        // gutters (364px on a 412px screen). "92vw" rounded
+                        // up to the 750px source; this picks 640px. Tablet
+                        // and desktop columns are unchanged.
+                        sizes="(max-width: 640px) calc(100vw - 48px), (max-width: 1024px) 46vw, 30vw"
                         // Sits under a white/55 wash + gradient: it is texture, not
                         // detail, so the lowest allowed quality is invisible here.
                         quality={60}

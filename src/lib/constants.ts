@@ -331,7 +331,9 @@ export const SERVICES: Service[] = [
       "With 9,500+ new construction homes plumbed, we're the go-to plumbing partner for builders who demand reliability and code compliance.",
     icon: "HardHat",
     href: "/services/new-construction",
-    image: "/images/services/cards/new-construction.jpg",
+    // -wide variants are 3:2 crops for the landscape home cards; the
+    // portrait originals stay for the service pages and structured data.
+    image: "/images/services/cards/new-construction-wide.jpg",
     features: [
       "9,500+ homes plumbed",
       "Builder partnerships",
@@ -395,7 +397,7 @@ export const SERVICES: Service[] = [
       "Full-service Cape Coral UEP utilities connection — water service, irrigation, sewer laterals, and septic abandonment. We handle every permit and inspection from start to finish.",
     icon: "Shovel",
     href: "/services/uep-utilities",
-    image: "/images/services/uep-utilities/photo-1.jpg",
+    image: "/images/services/cards/uep-utilities-wide.jpg",
     features: [
       "Water service line",
       "Irrigation line",
@@ -411,7 +413,7 @@ export const SERVICES: Service[] = [
       "Installation, repair, and replacement of traditional, tankless, and hybrid water heaters to keep your hot water flowing efficiently.",
     icon: "Flame",
     href: "/services/water-heaters",
-    image: "/images/services/cards/water-heaters.jpg",
+    image: "/images/services/cards/water-heaters-wide.jpg",
     features: [
       "Tankless installation",
       "Traditional tank repair",
