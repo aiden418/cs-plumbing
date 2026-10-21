@@ -20,6 +20,8 @@ interface ServiceDetailProps {
   highlights?: string[];
   heroText: string;
   heroImage?: string;
+  /** CSS object-position for the hero photo, e.g. "center top" for portraits of people. */
+  heroImagePosition?: string;
 }
 
 export default function ServiceDetail({
@@ -29,6 +31,7 @@ export default function ServiceDetail({
   highlights,
   heroText,
   heroImage,
+  heroImagePosition,
 }: ServiceDetailProps) {
   return (
     <>
@@ -47,6 +50,7 @@ export default function ServiceDetail({
                 priority
                 quality={85}
                 className="object-cover"
+                style={heroImagePosition ? { objectPosition: heroImagePosition } : undefined}
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-navy/40 to-transparent" />

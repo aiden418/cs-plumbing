@@ -12,6 +12,8 @@ export interface TeamMember {
   name: string;
   role: string;
   image: string;
+  /** CSS object-position that keeps the face in frame when the photo is cropped. */
+  imagePosition?: string;
   bio?: string;
 }
 

@@ -10,9 +10,10 @@ import ScrollReveal from "@/components/animations/ScrollReveal";
 import { TESTIMONIALS } from "@/lib/constants";
 
 const teamMembers = [
-  { name: "Samuel", src: "/images/team/samuel.jpeg" },
-  { name: "Aiden", src: "/images/team/aiden.jpg" },
-  { name: "Dylan", src: "/images/team/dylan.jpeg" },
+  // position = CSS object-position so the 48px circle lands on the face.
+  { name: "Samuel", src: "/images/team/samuel.jpeg", position: "50% 35%" },
+  { name: "Aiden", src: "/images/team/aiden.jpg", position: "50% 45%" },
+  { name: "Dylan", src: "/images/team/dylan-portrait.jpg", position: "50% 30%" },
 ];
 
 export default function Testimonials() {
@@ -71,6 +72,7 @@ export default function Testimonials() {
                   alt={member.name}
                   fill
                   className="object-cover"
+                  style={{ objectPosition: member.position }}
                   sizes="48px"
                 />
               </div>

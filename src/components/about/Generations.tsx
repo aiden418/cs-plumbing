@@ -13,6 +13,8 @@ type Generation = {
   name: string;
   label: string;
   image?: string;
+  /** CSS object-position that keeps the face in frame inside the 4:3 card. */
+  imagePosition?: string;
   note?: string;
   body: string;
 };
@@ -38,6 +40,7 @@ const GENERATIONS: Generation[] = [
     name: "Aiden Pellechio",
     label: "Office Manager, Estimating & Project Management",
     image: "/images/team/aiden.jpg",
+    imagePosition: "50% 30%",
     body: "Aiden grew up around C&S job sites and never really left. These days he runs the office, estimating and project management — and a little of everything else — while working toward his construction management degree at FGCU. The plan from there is to earn his GC license, then his plumbing license, and keep the name on the truck right where it's always been.",
   },
 ];
@@ -66,6 +69,7 @@ export default function Generations() {
                     alt={g.name}
                     fill
                     className="object-cover object-top transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
+                    style={g.imagePosition ? { objectPosition: g.imagePosition } : undefined}
                     sizes="(max-width: 768px) 100vw, 33vw"
                   />
                 ) : (
