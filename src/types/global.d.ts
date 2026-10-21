@@ -8,6 +8,8 @@ declare global {
     /** Internal back-reference set by the Meta snippet. Never read from TS. */
     _fbq?: unknown;
     oaiq?: (...args: unknown[]) => void;
+    gtag?: (...args: unknown[]) => void;
+    dataLayer?: unknown[];
   }
 }
 
