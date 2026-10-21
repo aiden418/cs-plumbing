@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import PageTransition from "@/components/layout/PageTransition";
 import ServiceCityLandingTemplate from "@/components/service-city/ServiceCityLandingTemplate";
+import CityServiceLinks from "@/components/service-city/CityServiceLinks";
 import ServiceCityJsonLd from "@/components/seo/ServiceCityJsonLd";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import FaqJsonLd from "@/components/seo/FaqJsonLd";
@@ -10,6 +11,7 @@ import GoogleReviews from "@/components/home/GoogleReviews";
 import RelatedProjects from "@/components/projects/RelatedProjects";
 import { SERVICE_CITY_LANDINGS } from "@/lib/service-city-landings";
 import { getServiceHub } from "@/lib/service-hubs";
+import { areaForCity } from "@/lib/internal-links";
 import { projectsForCity } from "@/lib/projects";
 
 export function generateStaticParams() {
@@ -50,6 +52,7 @@ export default async function Page({
   if (!landing) notFound();
 
   const hub = getServiceHub(landing.serviceSlug);
+  const area = areaForCity(landing.city);
 
   return (
     <PageTransition>
@@ -62,7 +65,13 @@ export default async function Page({
           { name: landing.h1, href: `/${landing.slug}` },
         ]}
       />
-      <ServiceCityLandingTemplate landing={landing} />
+      <ServiceCityLandingTemplate
+        landing={landing}
+        areaHubHref={area ? `/areas/${area.slug}` : undefined}
+      />
+      {/* Siblings in this city, this service elsewhere, and both parent hubs —
+          server-rendered so the links are in the HTML. */}
+      <CityServiceLinks landing={landing} />
       {/* Local proof: documented jobs in this city, service-matched first.
           Renders nothing for cities with no project page yet. */}
       <RelatedProjects

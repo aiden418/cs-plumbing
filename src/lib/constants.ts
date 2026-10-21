@@ -2372,6 +2372,7 @@ export const BLOG_POSTS: BlogPost[] = [
     category: "News",
     publishDate: "2026-09-14",
     readTime: "3 min read",
+    relatedLandings: ["emergency-plumber-cape-coral", "repiping-cape-coral", "water-heater-repair-cape-coral"],
     content: `<p>On September 9, 2026, the Cape Coral Breeze let us know that its readers had voted C&S Plumbing of Lee <strong>Best Plumbing Contractor</strong> in the 2026 Best of Cape Coral awards. It's our second year on the winners list — in 2025 the community voted us Best of Cape Coral in the Plumbing category.</p>
 
 <h2>What Best of Cape Coral is</h2>
@@ -2414,6 +2415,7 @@ export const BLOG_POSTS: BlogPost[] = [
     category: "Repiping",
     publishDate: "2025-01-15",
     readTime: "5 min read",
+    relatedLandings: ["repiping-cape-coral", "repiping-fort-myers", "repiping-bonita-springs", "repiping-north-fort-myers"],
     content: `<h2>1. Discolored or Rusty Water</h2>
 <p>If your water runs brown, yellow, or has a reddish tint — especially when you first turn on the tap — it's a sign that your pipes are corroding from the inside. This is particularly common in homes with original galvanized steel pipes, which were standard in Southwest Florida homes built before the 1980s.</p>
 <p>While occasional discoloration after water main work is normal, consistent rusty water means your pipes are deteriorating and need attention.</p>
@@ -2450,6 +2452,7 @@ export const BLOG_POSTS: BlogPost[] = [
     category: "Water Heaters",
     publishDate: "2025-02-01",
     readTime: "6 min read",
+    relatedLandings: ["water-heater-repair-cape-coral", "water-heater-repair-fort-myers", "water-heater-repair-naples"],
     content: `<h2>Traditional Tank Water Heaters</h2>
 <p>Traditional water heaters store 40-80 gallons of hot water in an insulated tank, keeping it heated and ready for use. They've been the standard in American homes for decades and remain the most affordable option upfront.</p>
 
@@ -2508,6 +2511,7 @@ export const BLOG_POSTS: BlogPost[] = [
     category: "Emergency",
     publishDate: "2025-02-10",
     readTime: "4 min read",
+    relatedLandings: ["emergency-plumber-cape-coral", "emergency-plumber-fort-myers", "emergency-plumber-north-fort-myers"],
     content: `<h2>Step 1: Shut Off the Water</h2>
 <p>This is the single most important thing you can do. Every second water flows from a burst pipe or major leak, it's causing more damage.</p>
 <ul>
@@ -2563,6 +2567,7 @@ export const BLOG_POSTS: BlogPost[] = [
     category: "Tips",
     publishDate: "2025-03-01",
     readTime: "5 min read",
+    relatedLandings: ["emergency-plumber-cape-coral", "repiping-cape-coral", "plumbing-remodel-cape-coral"],
     content: `<h2>1. Verify Their License</h2>
 <p>Florida law requires plumbers to be licensed. A legitimate plumber will have a Certified Plumbing Contractor (CPC) or Registered Plumbing Contractor (RPC) license. You can verify any plumber's license at the <a href="https://www.myfloridalicense.com" target="_blank" rel="noopener noreferrer">Florida DBPR website</a>.</p>
 <p>At C&S Plumbing, our license number is CFC1432485 — we're happy to have you verify it.</p>
@@ -2618,6 +2623,7 @@ export const BLOG_POSTS: BlogPost[] = [
     category: "Tips",
     publishDate: "2026-03-10",
     readTime: "5 min read",
+    relatedLandings: ["emergency-plumber-cape-coral", "emergency-plumber-fort-myers", "emergency-plumber-sanibel", "water-damage-repair-cape-coral"],
     content: `<h2>Know Your Shutoff Valves</h2>
 <p>The single most important thing you can do before a hurricane is know where your main water shutoff valve is located. In most <a href="/areas/cape-coral">Cape Coral</a> and <a href="/areas/fort-myers">Fort Myers</a> homes, it's near the front of the house by the water meter. Practice turning it off so you can act quickly when a storm approaches.</p>
 <p>You should also know the individual shutoff valves for toilets, sinks, and your water heater. Shutting these off before evacuation prevents flooding if a supply line breaks during the storm.</p>
@@ -2661,6 +2667,7 @@ export const BLOG_POSTS: BlogPost[] = [
     category: "Water Quality",
     publishDate: "2026-03-17",
     readTime: "5 min read",
+    relatedLandings: ["water-softeners-cape-coral", "water-softeners-fort-myers", "plumber-lehigh-acres"],
     content: `<h2>The Hard Water Problem in Southwest Florida</h2>
 <p>If you live in <a href="/areas/cape-coral">Cape Coral</a>, <a href="/areas/fort-myers">Fort Myers</a>, <a href="/areas/lehigh-acres">Lehigh Acres</a>, or anywhere in Lee County, your water is hard. Hard water contains high levels of dissolved calcium and magnesium, which cause white buildup on faucets, dry skin and hair, soap that doesn't lather well, and shortened appliance lifespans.</p>
 <p>The question isn't whether you need water treatment — it's which type.</p>
@@ -2714,6 +2721,7 @@ export const BLOG_POSTS: BlogPost[] = [
     category: "Repiping",
     publishDate: "2026-03-24",
     readTime: "6 min read",
+    relatedLandings: ["repiping-cape-coral", "repiping-fort-myers", "repiping-north-fort-myers"],
     content: `<h2>What Are Polybutylene Pipes?</h2>
 <p>Polybutylene (poly-B or PB) pipes are gray plastic water supply pipes that were widely used in residential construction from the late 1970s through the mid-1990s. They were marketed as a cheaper, easier-to-install alternative to copper. At the time, builders across <a href="/areas/cape-coral">Cape Coral</a>, <a href="/areas/fort-myers">Fort Myers</a>, and <a href="/areas/north-fort-myers">North Fort Myers</a> embraced them for their low cost.</p>
 <p>The problem? Polybutylene reacts with chlorine and other oxidants in treated water, causing the pipes to become brittle, flake, and eventually crack or burst from the inside out.</p>
@@ -2772,6 +2780,7 @@ export const BLOG_POSTS: BlogPost[] = [
     category: "Leak Repair",
     publishDate: "2026-04-07",
     readTime: "6 min read",
+    relatedLandings: ["leak-repair-cape-coral", "leak-repair-fort-myers", "leak-repair-bonita-springs", "water-damage-repair-cape-coral"],
     content: `<h2>What Is a Slab Leak?</h2>
 <p>A slab leak is a break or pinhole leak in the water supply or drain lines that run beneath the concrete slab your home is built on. Because these pipes are buried under several inches of concrete and soil, even a small leak can go undetected for months — silently eroding your foundation, soaking your flooring, and fostering mold growth all the while.</p>
 <p>Slab leaks are especially common in <a href="/areas/cape-coral">Cape Coral</a>, <a href="/areas/fort-myers">Fort Myers</a>, and throughout Southwest Florida for several reasons: our sandy, shifting soil puts stress on buried pipes, our hard water accelerates pipe corrosion, and many homes in the area still have original copper or galvanized pipes from the 1970s–1990s that are nearing the end of their lifespan.</p>
@@ -2844,6 +2853,7 @@ export const BLOG_POSTS: BlogPost[] = [
     category: "Tips",
     publishDate: "2026-03-11",
     readTime: "5 min read",
+    relatedLandings: ["leak-repair-cape-coral", "leak-repair-fort-myers", "water-softeners-cape-coral", "repiping-cape-coral"],
     content: `<h2>Why Low Water Pressure Is Such a Common Problem in Southwest Florida</h2>
 <p>Few things are more frustrating than a trickling shower or a kitchen faucet that takes forever to fill a pot. Low water pressure is one of the most common complaints from homeowners in <a href="/areas/cape-coral">Cape Coral</a>, <a href="/areas/fort-myers">Fort Myers</a>, and across Lee County — and it's rarely something you should ignore. Pressure problems often signal an underlying issue that, left unaddressed, can lead to much bigger repairs down the road.</p>
 <p>Here's a breakdown of the most common causes of low water pressure in Southwest Florida homes and what you can do to fix them.</p>
@@ -2898,6 +2908,7 @@ export const BLOG_POSTS: BlogPost[] = [
     category: "Drain Cleaning",
     publishDate: "2026-04-08",
     readTime: "6 min read",
+    relatedLandings: ["drain-cleaning-cape-coral", "drain-cleaning-fort-myers", "drain-cleaning-north-fort-myers", "drain-cleaning-lehigh-acres"],
     content: `<h2>Why Drain Clogs Are So Common in Southwest Florida</h2>
 <p>Clogged drains are one of the most frequent plumbing calls we receive across <a href="/areas/cape-coral">Cape Coral</a>, <a href="/areas/fort-myers">Fort Myers</a>, and Lee County — and they're more common here than in most parts of the country. Southwest Florida's hard water leaves mineral deposits on pipe walls that gradually narrow the drain opening and trap grease, hair, and soap scum more aggressively than in areas with softer water. Older homes built before the 1990s often have original cast iron or galvanized drain lines that have accumulated decades of scale and buildup inside.</p>
 <p>The result: drains that seem to clog for no obvious reason, clogs that come back weeks after you cleared them, and slow drains that never seem to fully resolve no matter what you pour down them.</p>
@@ -2959,6 +2970,7 @@ export const BLOG_POSTS: BlogPost[] = [
     category: "UEP & Utilities",
     publishDate: "2026-03-31",
     readTime: "6 min read",
+    relatedLandings: ["uep-connection-cape-coral", "septic-to-sewer-north-fort-myers"],
     content: `<h2>Why the Switch from Septic to Sewer?</h2>
 <p>Many <a href="/areas/cape-coral">Cape Coral</a> homes were built on septic systems because city sewer wasn't available at the time. As the city's Utilities Extension Program (UEP) expands sewer infrastructure into more neighborhoods, homeowners are required or choosing to connect to the municipal sewer system.</p>
 <p>Connecting to city sewer offers several advantages over septic:</p>
@@ -3024,6 +3036,7 @@ export const BLOG_POSTS: BlogPost[] = [
     category: "Tips",
     publishDate: "2026-04-15",
     readTime: "6 min read",
+    relatedLandings: ["water-heater-repair-cape-coral", "drain-cleaning-cape-coral", "leak-repair-fort-myers"],
     content: `<h2>Why Spring Plumbing Maintenance Matters in Southwest Florida</h2>
 <p>In most parts of the country, spring plumbing maintenance focuses on thawing pipes after winter. In <a href="/areas/cape-coral">Cape Coral</a>, <a href="/areas/fort-myers">Fort Myers</a>, and across Southwest Florida, the concern is the opposite: preparing for the heat, humidity, and heavy rainfall of summer. From May through October, we see temperatures regularly topping 90°F, daily afternoon thunderstorms, and the ongoing threat of tropical storms and hurricanes.</p>
 <p>A plumbing system that's already stressed from a year of hard water buildup, heat exposure, and normal wear is much more likely to fail when summer demands peak. A few hours of proactive maintenance now can prevent a plumbing emergency at the worst possible time. Here's your complete spring checklist.</p>
@@ -3091,6 +3104,7 @@ export const BLOG_POSTS: BlogPost[] = [
     category: "Emergency",
     publishDate: "2026-06-24",
     readTime: "6 min read",
+    relatedLandings: ["emergency-plumber-cape-coral", "emergency-plumber-fort-myers", "water-damage-repair-cape-coral", "water-damage-repair-fort-myers"],
     content: `<p>Most hurricane guides stop at preparation. But in our experience responding to every major storm in Lee County since Hurricane Charley in 2004, the most expensive plumbing damage usually happens <em>after</em> the storm — when homeowners turn everything back on before checking what the storm did underground. If you haven't prepped yet, start with our <a href="/blog/hurricane-plumbing-preparation-swfl">hurricane plumbing preparation guide</a>. If the storm has already passed, work through this checklist in order.</p>
 
 <h2>1. Don't Turn the Main Water Back On Yet</h2>
@@ -3130,6 +3144,7 @@ export const BLOG_POSTS: BlogPost[] = [
     category: "Leak Repair",
     publishDate: "2026-06-29",
     readTime: "6 min read",
+    relatedLandings: ["leak-repair-cape-coral", "water-heater-repair-cape-coral", "repiping-cape-coral", "water-damage-repair-cape-coral"],
     content: `<p>Cape Coral has more navigable canals than any city on earth — and that same geography means storm surge doesn't have to travel far to reach living rooms. After Hurricane Ian pushed feet of Gulf water into Southwest Florida neighborhoods in 2022, our crews spent months repairing what the saltwater left behind. Most homeowners were surprised by <em>which</em> parts of their plumbing failed. Here's what we learned, and what canal-home owners should know.</p>
 
 <h2>Saltwater Is the Slow Killer</h2>
@@ -3163,6 +3178,7 @@ export const BLOG_POSTS: BlogPost[] = [
     category: "Leak Repair",
     publishDate: "2026-07-01",
     readTime: "7 min read",
+    relatedLandings: ["leak-repair-cape-coral", "leak-repair-fort-myers", "water-damage-repair-cape-coral", "repiping-cape-coral"],
     content: `<p><em>We're plumbers, not insurance agents — every policy is different, and the only answer that counts is in your policy documents. But after helping hundreds of Southwest Florida homeowners through slab leak repairs and the claims that follow, we can tell you how this usually plays out.</em></p>
 
 <h2>The Two-Part Bill</h2>
@@ -3198,6 +3214,7 @@ export const BLOG_POSTS: BlogPost[] = [
     category: "Water Heaters",
     publishDate: "2026-07-02",
     readTime: "5 min read",
+    relatedLandings: ["water-heater-repair-cape-coral", "water-heater-repair-fort-myers", "water-heater-replacement-punta-gorda"],
     content: `<p>Every hurricane season, Southwest Florida homeowners ask us the same question: "Do I need to do anything with the water heater?" It's a smart question — the water heater is the most expensive single plumbing appliance in most homes, and it's usually installed in a garage a few inches off the floor, right where flood water goes first. Here's how we advise our own family and customers.</p>
 
 <h2>If You're Staying and Flooding Isn't Expected</h2>
@@ -3231,6 +3248,7 @@ export const BLOG_POSTS: BlogPost[] = [
     category: "Repiping",
     publishDate: "2026-07-21",
     readTime: "7 min read",
+    relatedLandings: ["repiping-cape-coral", "repiping-fort-myers", "repiping-north-fort-myers"],
     faqs: [
       {
         question: "How much does it cost to repipe a 3-bedroom house in Cape Coral?",
@@ -3285,6 +3303,7 @@ export const BLOG_POSTS: BlogPost[] = [
     category: "Water Heaters",
     publishDate: "2026-07-24",
     readTime: "6 min read",
+    relatedLandings: ["water-heater-repair-cape-coral", "water-heater-repair-fort-myers", "water-heater-replacement-punta-gorda", "water-heater-repair-naples"],
     faqs: [
       {
         question: "How long do water heaters last in Southwest Florida?",
@@ -3338,6 +3357,7 @@ export const BLOG_POSTS: BlogPost[] = [
     category: "Drain Cleaning",
     publishDate: "2026-07-28",
     readTime: "6 min read",
+    relatedLandings: ["drain-cleaning-cape-coral", "drain-cleaning-fort-myers", "drain-cleaning-port-charlotte", "drain-cleaning-punta-gorda"],
     faqs: [
       {
         question: "How long does it take a plumber to unclog a drain?",

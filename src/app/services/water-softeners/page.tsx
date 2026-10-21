@@ -5,6 +5,8 @@ import ServiceJsonLd from "@/components/seo/ServiceJsonLd";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import FaqJsonLd from "@/components/seo/FaqJsonLd";
 import CTASection from "@/components/home/CTASection";
+import RelatedPosts from "@/components/blog/RelatedPosts";
+import { postsForHub } from "@/lib/internal-links";
 import { SERVICE_LANDINGS } from "@/lib/constants";
 
 const landing = SERVICE_LANDINGS.find((s) => s.slug === "water-softeners")!;
@@ -34,6 +36,11 @@ export default function Page() {
         ]}
       />
       <ServiceLandingTemplate landing={landing} />
+      <RelatedPosts
+        posts={postsForHub("water-softeners")}
+        heading="Water quality guides"
+        description="Softener vs. filter for Lee County's hard water, and what it does to your pipes and heater."
+      />
       <CTASection />
     </PageTransition>
   );
