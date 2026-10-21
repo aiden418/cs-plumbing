@@ -1,10 +1,26 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Container from "@/components/ui/Container";
 import { type ReactNode } from "react";
 
 type PageHeroSize = "sm" | "md" | "lg";
+
+export interface PageHeroImage {
+  src: string;
+  /** Decorative by default — the H1 carries the meaning. */
+  alt?: string;
+  /** CSS object-position, e.g. "center 30%" to keep faces/skylines in frame. */
+  position?: string;
+}
+
+/** Jobsite photo used when a page doesn't supply its own. */
+export const DEFAULT_HERO_IMAGE: PageHeroImage = {
+  src: "/images/hero/drone-construction.jpg",
+  alt: "",
+  position: "center 40%",
+};
 
 interface PageHeroProps {
   /** navy = showpiece treatment (default); light = legacy flat surface escape hatch */
@@ -29,6 +45,12 @@ interface PageHeroProps {
   actions?: ReactNode;
   /** Optional right column (image / rating panel) — switches to a 2-col grid */
   media?: ReactNode;
+  /**
+   * Photo behind the navy treatment. Defaults to a jobsite shot; pass a
+   * city or service photo to make the page feel local, or null for the
+   * plain navy surface.
+   */
+  image?: PageHeroImage | null;
   /** Extra rows below the actions: rating blocks, award chips, trust dots */
   children?: ReactNode;
   className?: string;
@@ -67,11 +89,13 @@ export default function PageHero({
   breadcrumb,
   actions,
   media,
+  image = DEFAULT_HERO_IMAGE,
   children,
   className,
 }: PageHeroProps) {
   const navy = variant === "navy";
   const centered = align === "center" && !media;
+  const photo = navy ? image : null;
 
   const rows = (
     <div className={cn(centered && "mx-auto max-w-3xl text-center")}>
@@ -148,7 +172,7 @@ export default function PageHero({
           className={cn(
             "animate-hero-in mt-5 max-w-xl text-base sm:text-lg leading-relaxed",
             centered && "mx-auto",
-            navy ? "text-white/70" : "text-gray-500"
+            navy ? "text-white/80" : "text-gray-500"
           )}
           style={{ animationDelay: "160ms" }}
         >
@@ -187,6 +211,40 @@ export default function PageHero({
         className
       )}
     >
+      {photo && (
+        <div className="pointer-events-none absolute inset-0" aria-hidden={photo.alt ? undefined : true}>
+          <Image
+            src={photo.src}
+            alt={photo.alt ?? ""}
+            fill
+            priority
+            sizes="100vw"
+            quality={60}
+            className="object-cover"
+            style={{ objectPosition: photo.position ?? "center" }}
+          />
+          {/* Scrim. Phones: one even veil, since the copy spans the full
+              width. Desktop, left-aligned: solid navy under the copy with the
+              photo showing through on the far side. Desktop, centered: a
+              lighter veil plus a navy glow behind the headline. */}
+          <div className="absolute inset-0 bg-navy/75 sm:hidden" />
+          <div
+            className={cn(
+              "absolute inset-0 hidden sm:block",
+              centered
+                ? "bg-navy/50"
+                : "bg-gradient-to-r from-navy via-navy/80 to-navy/35"
+            )}
+          />
+          {centered && (
+            <div className="absolute inset-0 hidden sm:block bg-[radial-gradient(ellipse_55%_75%_at_50%_50%,rgba(27,43,75,0.85)_0%,rgba(27,43,75,0.1)_100%)]" />
+          )}
+          {/* Settle the photo under the navbar and melt it into the page. */}
+          <div className="absolute inset-0 bg-gradient-to-b from-navy/60 via-transparent to-navy/90" />
+          {/* Gold hairline where the hero meets the page — the brand's one warm note. */}
+          <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-gold/60 to-transparent" />
+        </div>
+      )}
       {navy && (
         <>
           <div className="pointer-events-none absolute -top-32 left-1/3 h-[480px] w-[480px] -translate-x-1/2 rounded-full bg-primary/25 blur-[120px]" />

@@ -4,6 +4,7 @@ import { Phone, Calendar, MapPin, Check } from "lucide-react";
 import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
 import PageHero from "@/components/ui/PageHero";
+import { areaHeroImage } from "@/lib/hero-images";
 import FaqAccordion from "@/components/ui/FaqAccordion";
 import ScrollReveal from "@/components/animations/ScrollReveal";
 import StaggerChildren, {
@@ -36,6 +37,7 @@ export default function AreaLandingTemplate({
       {/* Hero */}
       <PageHero
         size="sm"
+        image={areaHeroImage(landing.slug)}
         overline={`${landing.city}, ${landing.state}`}
         overlineIcon={<MapPin className="w-3.5 h-3.5" />}
         title={landing.heroText}
