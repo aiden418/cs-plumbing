@@ -8,6 +8,7 @@ import DeferredWidgets from "@/components/layout/DeferredWidgets";
 import JsonLd from "@/components/seo/JsonLd";
 import MetaPixel from "@/components/analytics/MetaPixel";
 import OpenAIPixel from "@/components/analytics/OpenAIPixel";
+import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
 import SmoothScrollProvider from "@/components/providers/SmoothScrollProvider";
 
 const inter = Inter({
@@ -120,6 +121,7 @@ export default function RootLayout({
         <DeferredWidgets />
         <MetaPixel />
         <OpenAIPixel />
+        <GoogleAnalytics />
       </body>
     </html>
   );

@@ -1,5 +1,16 @@
 export const META_PIXEL_ID = '1372903383968668';
 export const OPENAI_PIXEL_ID = 'DMBS1D5TFZstmLgAtY2XcW';
+/**
+ * GA4 Measurement ID for the "csplumbinglee.com" web stream (stream id
+ * 11283145335) in the csplumbingoflee Analytics account, property
+ * 490981318 — read from GA Admin → Data Streams on 2026-10-21. Public, like
+ * the pixel ids above. NEXT_PUBLIC_GA_MEASUREMENT_ID overrides it (inlined
+ * at build time, so a Vercel change needs a redeploy); set it to "off" to
+ * disable the tag without a code change.
+ */
+const GA_DEFAULT_ID = 'G-2V9GN3FQ5B';
+const gaEnv = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+export const GA_MEASUREMENT_ID = gaEnv === 'off' ? '' : gaEnv || GA_DEFAULT_ID;
 
 // Meta event name -> OpenAI (ChatGPT ads) standard event. Only genuine
 // conversion actions are mapped; unmapped events stay Meta-only.
@@ -7,6 +18,15 @@ const OAIQ_EVENT_MAP: Record<string, string> = {
   Contact: 'lead_created',
   Lead: 'lead_created',
   Schedule: 'appointment_scheduled',
+};
+
+// Meta event name -> GA4 event. Same rule as OAIQ_EVENT_MAP: conversions
+// only. `generate_lead` is a GA4 recommended event; the other two are custom
+// names chosen to read clearly in GA4's Events report.
+const GA_EVENT_MAP: Record<string, string> = {
+  Contact: 'contact',
+  Lead: 'generate_lead',
+  Schedule: 'book_appointment',
 };
 
 // Conversion reporting must never throw into a form's success path.
@@ -23,6 +43,14 @@ function safeOaiq(...args: unknown[]) {
     window.oaiq?.(...args);
   } catch (err) {
     if (process.env.NODE_ENV !== 'production') console.warn('oaiq failed', err);
+  }
+}
+
+function safeGtag(...args: unknown[]) {
+  try {
+    window.gtag?.(...args);
+  } catch (err) {
+    if (process.env.NODE_ENV !== 'production') console.warn('gtag failed', err);
   }
 }
 
@@ -73,6 +101,13 @@ export function trackEvent(
     const args: unknown[] = ['measure', oaiqEvent, { type: 'customer_action' }];
     if (options?.eventId) args.push({ event_id: options.eventId });
     safeOaiq(...args);
+  }
+  const gaEvent = GA_EVENT_MAP[event];
+  if (gaEvent) {
+    safeGtag('event', gaEvent, {
+      ...(params ?? {}),
+      ...(options?.eventId ? { event_id: options.eventId } : {}),
+    });
   }
 }
 
@@ -128,8 +163,8 @@ export function trackBooking(opts?: ConversionOptions) {
  * Builder / GC bid request. Deliberately NOT a Meta "Lead" or an OpenAI
  * "lead_created": builder leads are a different funnel with different value,
  * and folding them into homeowner lead counts would poison both audiences.
- * Fires a Meta custom event plus a dataLayer event (for GTM / GA4 if added)
- * under the same name. Same eventId rule as trackFormConversion: no id from
+ * Fires a Meta custom event, a GA4 event and a dataLayer event (for GTM, if
+ * ever added) under the same name. Same eventId rule as trackFormConversion: no id from
  * the server means nothing was delivered, so nothing is reported.
  */
 export function trackBuilderLead(
@@ -145,6 +180,7 @@ export function trackBuilderLead(
     ...(params.source ? { source: params.source } : {}),
   };
   safeFbq('trackCustom', 'builder_lead', data, { eventID: opts.eventId });
+  safeGtag('event', 'builder_lead', { ...data, event_id: opts.eventId });
   try {
     const w = window as unknown as { dataLayer?: unknown[] };
     (w.dataLayer ??= []).push({ event: 'builder_lead', event_id: opts.eventId, ...data });
