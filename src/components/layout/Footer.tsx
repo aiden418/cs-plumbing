@@ -3,15 +3,19 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Phone, Mail, MapPin, Clock, ChevronRight, MessageSquareText, Facebook, Instagram } from "lucide-react";
-import { BUSINESS, SERVICES, SERVICE_AREAS, AREA_LANDINGS } from "@/lib/constants";
+import { BUSINESS, AREA_LANDINGS } from "@/lib/constants";
+import { SERVICE_HUBS } from "@/lib/service-hubs";
 
 const quickLinks = [
   { label: "Home", href: "/" },
   { label: "About Us", href: "/about" },
   { label: "Awards", href: "/awards" },
   { label: "Services", href: "/services" },
+  { label: "Builders", href: "/builders" },
+  { label: "Projects", href: "/projects" },
   { label: "Gallery", href: "/gallery" },
   { label: "Reviews", href: "/reviews" },
+  { label: "Blog", href: "/blog" },
   { label: "Contact", href: "/contact" },
   { label: "Book a Service", href: "/booking" },
   { label: "Emergency", href: "/emergency" },
@@ -20,6 +24,14 @@ const quickLinks = [
   { label: "Service Map", href: "/service-map" },
   { label: "Builder Portal", href: "/builder-portal" },
   { label: "FAQ", href: "/faq" },
+  { label: "Recommended Companies", href: "/partners" },
+];
+
+// Every service hub, not SERVICES.slice(0, 7): the footer is the one set of
+// links in the HTML on every page (the nav dropdowns render on hover only).
+const footerServices = [
+  { title: "Residential Plumbing", href: "/services/residential" },
+  ...SERVICE_HUBS.map((hub) => ({ title: hub.title, href: hub.href })),
 ];
 
 export default function Footer() {
@@ -122,8 +134,8 @@ export default function Footer() {
               Our Services
             </h3>
             <ul className="space-y-2.5 sm:space-y-3">
-              {SERVICES.slice(0, 7).map((service) => (
-                <li key={service.id}>
+              {footerServices.map((service) => (
+                <li key={service.href}>
                   <Link
                     href={service.href}
                     className="flex items-center gap-1 text-sm text-gray-500 hover:text-primary transition-colors group"
@@ -157,24 +169,19 @@ export default function Footer() {
               Service Areas
             </h3>
             <div className="flex flex-wrap gap-x-1.5 gap-y-1 text-xs sm:text-sm text-gray-500">
-              {SERVICE_AREAS.slice(0, 10).map((area, i) => {
-                const areaLanding = AREA_LANDINGS.find((a) => a.city === area);
-                return (
-                  <span key={area}>
-                    {areaLanding ? (
-                      <Link
-                        href={`/areas/${areaLanding.slug}`}
-                        className="hover:text-primary transition-colors"
-                      >
-                        {area}
-                      </Link>
-                    ) : (
-                      area
-                    )}
-                    {i < 9 && " · "}
-                  </span>
-                );
-              })}
+              {/* All 11 area hubs. Matching SERVICE_AREAS by name left Fort Myers
+                  Beach (item 12) with two inbound links site-wide. */}
+              {AREA_LANDINGS.map((area) => (
+                <span key={area.slug}>
+                  <Link
+                    href={`/areas/${area.slug}`}
+                    className="hover:text-primary transition-colors"
+                  >
+                    {area.city}
+                  </Link>
+                  {" · "}
+                </span>
+              ))}
               <span>& more</span>
             </div>
           </div>

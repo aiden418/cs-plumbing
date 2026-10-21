@@ -11,6 +11,7 @@ import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import FaqJsonLd from "@/components/seo/FaqJsonLd";
 import RelatedProjects from "@/components/projects/RelatedProjects";
 import NewConstructionBenefits from "@/components/builders/NewConstructionBenefits";
+import NewConstructionCityLinks from "@/components/builders/NewConstructionCityLinks";
 import { Calendar, Phone, HardHat, Shield, Clock, Award } from "lucide-react";
 import { BUSINESS } from "@/lib/constants";
 import { projectsForHub } from "@/lib/projects";
@@ -272,6 +273,7 @@ export default function NewConstructionPage() {
 
       <BreadcrumbJsonLd items={[{ name: "Home", href: "/" }, { name: "Services", href: "/services" }, { name: "New Construction", href: "/services/new-construction" }]} />
       <FaqJsonLd faqs={newConstructionFaqs} />
+      <NewConstructionCityLinks />
       <CTASection />
     </PageTransition>
   );

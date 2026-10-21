@@ -13,10 +13,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const LAST_CONTENT_PASS = new Date("2026-09-14");
   // Builder-door launch: /builders rebuild + new-construction city pages.
   const BUILDER_PASS = new Date("2026-09-29");
+  // Internal-linking pass: cross-link blocks added to the home page, service
+  // hubs, area hubs, service-city landings and blog posts.
+  const LINKING_PASS = new Date("2026-10-21");
 
   const blogPages = BLOG_POSTS.map((post) => ({
     url: `${baseUrl}/blog/${post.slug}`,
-    lastModified: new Date(post.updatedDate ?? post.publishDate),
+    // Related-landings block added 2026-10-21; the article text is unchanged,
+    // so a post keeps its own date unless that is older than the linking pass.
+    lastModified: new Date(
+      Math.max(
+        new Date(post.updatedDate ?? post.publishDate).getTime(),
+        LINKING_PASS.getTime(),
+      ),
+    ),
     changeFrequency: "monthly" as const,
     priority: 0.7,
   }));
@@ -24,7 +34,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
       url: baseUrl,
-      lastModified: LAST_CONTENT_PASS,
+      lastModified: LINKING_PASS,
       changeFrequency: "weekly",
       priority: 1.0,
     },
@@ -54,13 +64,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${baseUrl}/services/commercial`,
-      lastModified: LAST_CONTENT_PASS,
+      lastModified: LINKING_PASS,
       changeFrequency: "monthly",
       priority: 0.9,
     },
     {
       url: `${baseUrl}/services/new-construction`,
-      lastModified: LAST_CONTENT_PASS,
+      lastModified: LINKING_PASS,
       changeFrequency: "monthly",
       priority: 0.9,
     },
@@ -93,50 +103,50 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${baseUrl}/emergency`,
-      lastModified: LAST_CONTENT_PASS,
+      lastModified: LINKING_PASS,
       changeFrequency: "monthly",
       priority: 0.9,
     },
     // Service-specific landing pages
     {
       url: `${baseUrl}/services/repiping`,
-      lastModified: LAST_CONTENT_PASS,
+      lastModified: LINKING_PASS,
       changeFrequency: "monthly",
       priority: 0.9,
     },
     {
       url: `${baseUrl}/services/water-heaters`,
-      lastModified: LAST_CONTENT_PASS,
+      lastModified: LINKING_PASS,
       changeFrequency: "monthly",
       priority: 0.9,
     },
     {
       url: `${baseUrl}/services/drain-cleaning`,
-      lastModified: LAST_CONTENT_PASS,
+      lastModified: LINKING_PASS,
       changeFrequency: "monthly",
       priority: 0.9,
     },
     {
       url: `${baseUrl}/services/leak-repair`,
-      lastModified: LAST_CONTENT_PASS,
+      lastModified: LINKING_PASS,
       changeFrequency: "monthly",
       priority: 0.9,
     },
     {
       url: `${baseUrl}/services/water-softeners`,
-      lastModified: LAST_CONTENT_PASS,
+      lastModified: LINKING_PASS,
       changeFrequency: "monthly",
       priority: 0.9,
     },
     {
       url: `${baseUrl}/services/plumbing-remodel`,
-      lastModified: LAST_CONTENT_PASS,
+      lastModified: LINKING_PASS,
       changeFrequency: "monthly",
       priority: 0.9,
     },
     {
       url: `${baseUrl}/services/uep-utilities`,
-      lastModified: LAST_CONTENT_PASS,
+      lastModified: LINKING_PASS,
       changeFrequency: "monthly",
       priority: 0.9,
     },
@@ -144,7 +154,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // appear automatically (each still needs its /areas/<slug> route files).
     ...AREA_LANDINGS.map((area) => ({
       url: `${baseUrl}/areas/${area.slug}`,
-      lastModified: LAST_CONTENT_PASS,
+      lastModified: LINKING_PASS,
       changeFrequency: "monthly" as const,
       priority: 0.8,
     })),
@@ -245,7 +255,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // Service + City landing pages
     ...SERVICE_CITY_LANDINGS.map((page) => ({
       url: `${baseUrl}/${page.slug}`,
-      lastModified: LAST_CONTENT_PASS,
+      lastModified: LINKING_PASS,
       changeFrequency: "monthly" as const,
       priority: 0.9,
     })),

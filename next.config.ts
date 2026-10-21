@@ -18,6 +18,8 @@ const nextConfig: NextConfig = {
       },
       // No index page for the city hub — /builders lists every city.
       { source: "/new-construction-plumbing", destination: "/builders", permanent: false },
+      // Old URL Google still requests (Search Console "Not found (404)").
+      { source: "/home", destination: "/", permanent: true },
     ];
   },
   poweredByHeader: false,

@@ -5,6 +5,8 @@ import FaqJsonLd from "@/components/seo/FaqJsonLd";
 import { EMERGENCY_FAQS } from "./emergency-faqs";
 import { BUSINESS } from "@/lib/constants";
 import { SERVICE_CITY_LANDINGS } from "@/lib/service-city-landings";
+import RelatedPosts from "@/components/blog/RelatedPosts";
+import { postsForHub } from "@/lib/internal-links";
 
 const DESCRIPTION =
   "24/7 emergency plumbing in Cape Coral, Fort Myers & SWFL. Burst pipes, sewage backups, gas leaks, flooding — call C&S Plumbing at 833-PLUMB-IT.";
@@ -91,6 +93,11 @@ export default function Page() {
       <FaqJsonLd faqs={EMERGENCY_FAQS} />
       <EmergencyServiceJsonLd />
       <EmergencyPage emergencyCities={EMERGENCY_CITIES} />
+      <RelatedPosts
+        posts={postsForHub("emergency")}
+        heading="Emergency plumbing guides"
+        description="What to do in the first ten minutes, and the after-storm checklist for SWFL homes."
+      />
     </>
   );
 }

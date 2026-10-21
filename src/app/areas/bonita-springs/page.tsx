@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import PageTransition from "@/components/layout/PageTransition";
 import AreaLandingTemplate from "@/components/areas/AreaLandingTemplate";
+import AreaServiceLinks from "@/components/areas/AreaServiceLinks";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import CTASection from "@/components/home/CTASection";
 import { AREA_LANDINGS } from "@/lib/constants";
@@ -29,6 +30,7 @@ export default function Page() {
         ]}
       />
       <AreaLandingTemplate landing={landing} />
+      <AreaServiceLinks landing={landing} />
       <CTASection />
     </PageTransition>
   );
