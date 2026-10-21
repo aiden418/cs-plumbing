@@ -5,6 +5,8 @@ import ServiceJsonLd from "@/components/seo/ServiceJsonLd";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import FaqJsonLd from "@/components/seo/FaqJsonLd";
 import CTASection from "@/components/home/CTASection";
+import RelatedPosts from "@/components/blog/RelatedPosts";
+import { postsForHub } from "@/lib/internal-links";
 import { SERVICE_LANDINGS } from "@/lib/constants";
 
 const landing = SERVICE_LANDINGS.find((s) => s.slug === "leak-repair")!;
@@ -34,6 +36,11 @@ export default function Page() {
         ]}
       />
       <ServiceLandingTemplate landing={landing} />
+      <RelatedPosts
+        posts={postsForHub("leak-repair")}
+        heading="Leak detection guides"
+        description="Slab leak warning signs, canal-home plumbing after storm surge, and what insurance covers."
+      />
       <CTASection />
     </PageTransition>
   );

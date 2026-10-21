@@ -5,6 +5,7 @@ import CTASection from "@/components/home/CTASection";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import FaqJsonLd from "@/components/seo/FaqJsonLd";
 import RelatedProjects from "@/components/projects/RelatedProjects";
+import HubCityLinks from "@/components/service-city/HubCityLinks";
 import { projectsForHub } from "@/lib/projects";
 
 const commercialFaqs = [
@@ -184,6 +185,12 @@ export default function CommercialPage() {
         overline="Documented commercial work"
         heading="Commercial plumbing we've photographed from demo to trim"
         description="Hangars, a USPS facility, a school and an island restaurant — each documented phase by phase with the general contractor named."
+      />
+      {/* City pages — the only parent link these three had was each other */}
+      <HubCityLinks
+        hub="commercial"
+        heading="Commercial plumbing by city"
+        description="City pages for property managers and business owners in Cape Coral, Fort Myers and Naples."
       />
       {/* FAQ */}
       <section className="py-16 sm:py-24 lg:py-32 bg-surface">
