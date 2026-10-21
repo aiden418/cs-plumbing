@@ -1,5 +1,5 @@
 import type { ServiceCityLanding } from "./types";
-import { AWARD_TRUST_LINE } from "./constants";
+import { AWARD_TRUST_LINE, UEP_STATUS } from "./constants";
 
 const TRUST_BADGES = [
   "Licensed & Insured (CFC1432485)",
@@ -2671,6 +2671,8 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       "septic abandonment Cape Coral UEP",
       "North 1 UEP plumber",
       "North 2 UEP connection",
+      "North 3 UEP plumber",
+      "Cape Coral UEP 180 days to connect",
       "Cape Coral utilities hookup contractor",
     ],
     h1: "Cape Coral UEP Connection Specialists",
@@ -2679,7 +2681,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       "Got your UEP notice? C&S Plumbing handles the entire customer-side connection — water service, irrigation, sewer lateral, and septic abandonment — with permits pulled and pricing quoted per foot before we dig.",
     trustBadges: TRUST_BADGES,
     serviceDescription:
-      `Cape Coral's Utilities Extension Project (UEP) is the largest municipal utilities expansion in Southwest Florida, and if you own a home in one of the active expansion areas, the letter from the city eventually lands in your mailbox: city water and sewer have reached your street, and you're required to connect. The city's contractors install the mains, meters, and stubs in the right-of-way — but everything from the property line to your house is on you. That customer-side connection is exactly what C&S Plumbing has specialized in through phase after phase of the UEP.\n\nThe scope is bigger than most homeowners expect. A complete UEP conversion typically means a new water service line from the city meter to your home ($13–15 per foot), an optional separate irrigation line from the irrigation meter ($9–10 per foot) so your sprinklers don't run on metered potable water, a sewer lateral from your house to the city stub ($25–33 per foot depending on distance and depth), and pump-out and code-compliant abandonment of your old septic tank (flat $2,500). Each piece needs its own permit and inspection through the City of Cape Coral, and the water connection requires you to list a licensed plumber with Cape Coral Utilities before the meter goes live. We handle all of it — permits, utility coordination, trenching, connection, testing, and final inspection.\n\nBecause we've connected homes across the completed southwest phases and the northern expansion areas, we know the practical details that make the difference: how to route a trench around mature landscaping and concrete driveways, why capping the well correctly matters if you keep it for irrigation, and how to plan the sewer lateral's grade on Cape Coral's flat lots so it drains properly for the next fifty years. The northern UEP areas — North 1, North 2, and the phases still to come around Gator Circle and the Jacaranda and Diplomat corridors — have some of the longest lot-to-main runs in the city, which makes per-foot pricing and an accurate site measurement essential before you sign anything.\n\nOne thing we tell every UEP customer upfront: the city's assessments and impact fees are billed by the city, not the plumber. Our quote covers the plumbing scope, in writing, before the first shovel hits the ground. The installation itself typically takes 1–3 days once permits are issued and your meter is set.\n\nC&S Plumbing of Lee is family-owned, based just across the river in North Fort Myers, and licensed under CFC057076 and CFC1432485. We've built and connected thousands of homes in Cape Coral's soil since 1998. If your neighborhood is in an active UEP phase — or you want to connect voluntarily before the deadline crunch — call 833-PLUMB-IT for a free on-site estimate.`,
+      `Cape Coral's Utilities Extension Project (UEP) is the largest municipal utilities expansion in Southwest Florida, and if you own a home in one of the active expansion areas, the letter from the city eventually lands in your mailbox: city water and sewer have reached your street, and you have ${UEP_STATUS.connectionWindowDays} days from that Notice of Availability to connect, using a City of Cape Coral licensed plumber. The city's contractors install the mains, meters, and stubs in the right-of-way — but everything from the property line to your house is on you. That customer-side connection is exactly what C&S Plumbing has specialized in through phase after phase of the UEP.\n\nThe scope is bigger than most homeowners expect. A complete UEP conversion typically means a new water service line from the city meter to your home ($13–15 per foot), an optional separate irrigation line from the irrigation meter ($9–10 per foot) so your sprinklers don't run on metered potable water, a sewer lateral from your house to the city stub ($25–33 per foot depending on distance and depth), and pump-out and code-compliant abandonment of your old septic tank (flat $2,500). Each piece needs its own permit and inspection through the City of Cape Coral, and the water connection requires you to list a licensed plumber with Cape Coral Utilities before the meter goes live. We handle all of it — permits, utility coordination, trenching, connection, testing, and final inspection.\n\nBecause we've connected homes across the completed southwest phases and the northern expansion areas, we know the practical details that make the difference: how to route a trench around mature landscaping and concrete driveways, why capping the well correctly matters if you keep it for irrigation, and how to plan the sewer lateral's grade on Cape Coral's flat lots so it drains properly for the next fifty years. The northern UEP areas — North 1, North 2, and the phases still to come around Gator Circle and the Jacaranda and Diplomat corridors — have some of the longest lot-to-main runs in the city, which makes per-foot pricing and an accurate site measurement essential before you sign anything.\n\nWhere the UEP stands as of ${UEP_STATUS.checkedOnLabel}, per the City of Cape Coral: ${UEP_STATUS.summary} If your Notice of Availability has arrived, the clock is already running — calling early in the window, before every plumber in town is booked with your neighbors, is the difference between a scheduled job and a deadline scramble.\n\nOne thing we tell every UEP customer upfront: the city's assessments and impact fees are billed by the city, not the plumber. Our quote covers the plumbing scope, in writing, before the first shovel hits the ground. The installation itself typically takes 1–3 days once permits are issued and your meter is set.\n\nC&S Plumbing of Lee is family-owned, based just across the river in North Fort Myers, and licensed under CFC057076 and CFC1432485. We've built and connected thousands of homes in Cape Coral's soil since 1998. If your neighborhood is in an active UEP phase — or you want to connect voluntarily before the deadline crunch — call 833-PLUMB-IT for a free on-site estimate.`,
     features: [
       {
         title: "Complete Customer-Side Connection",
@@ -2723,7 +2725,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       {
         question: "Do I have to connect when the UEP reaches my Cape Coral street?",
         answer:
-          "Yes. Once city water and sewer are available to your property, Cape Coral requires connection within the timeframe stated in your notice, and septic systems must be properly abandoned once you're on city sewer. Connecting early in your window — before every plumber in town is booked with your neighbors — almost always means better scheduling and less stress than a deadline scramble.",
+          `Yes. Once city water and sewer are available to your property, the city mails a Notice of Availability and you have ${UEP_STATUS.connectionWindowDays} days to connect, using a City of Cape Coral licensed plumber who pulls the permits. Septic systems must be properly abandoned once you're on city sewer. Connecting early in your window — before every plumber in town is booked with your neighbors — almost always means better scheduling and less stress than a deadline scramble.`,
       },
       {
         question: "How much does a UEP connection cost in Cape Coral?",
@@ -2744,6 +2746,11 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
         question: "Can you do other plumbing work while the ground is open?",
         answer:
           "Yes, and it's the cheapest time to do it. While we're trenching we can add or replace shutoff valves, install a pressure regulator, add hose bibs, or address aging supply lines. Homes switching from well water to city water sometimes also want a whole-house filter or softener evaluated — city water chemistry is different from what your well was delivering.",
+      },
+      {
+        question: "Which Cape Coral UEP areas are active right now?",
+        answer:
+          `${UEP_STATUS.summary} That is the City of Cape Coral's published status as of ${UEP_STATUS.checkedOnLabel}; check the city's UEP pages or call us for the latest on your street.`,
       },
       {
         question: "Which UEP areas do you serve?",

@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Container from "@/components/ui/Container";
 import ScrollReveal from "@/components/animations/ScrollReveal";
+import { BUSINESS } from "@/lib/constants";
 
 export default function FamilyStory() {
   return (
@@ -74,8 +75,8 @@ export default function FamilyStory() {
                 <div className="text-xs sm:text-sm text-gray-500">Years of Service</div>
               </div>
               <div className="border-l border-gray-200 pl-4 sm:pl-6">
-                <div className="text-2xl sm:text-3xl font-black text-gray-900">5.0★</div>
-                <div className="text-xs sm:text-sm text-gray-500">46 Google Reviews</div>
+                <div className="text-2xl sm:text-3xl font-black text-gray-900">{BUSINESS.rating.toFixed(1)}★</div>
+                <div className="text-xs sm:text-sm text-gray-500">{BUSINESS.reviewCount} Google Reviews</div>
               </div>
             </div>
           </ScrollReveal>

@@ -9,7 +9,7 @@ import { BUSINESS, AWARDS } from "@/lib/constants";
 const STATS = [
   { value: "28+", label: "Years in business" },
   { value: "9,500+", label: "Homes plumbed" },
-  { value: "5.0★", label: "46 Google reviews" },
+  { value: `${BUSINESS.rating.toFixed(1)}★`, label: `${BUSINESS.reviewCount} Google reviews` },
   { value: `${AWARDS.length}×`, label: "Best of Cape Coral" },
 ];
 

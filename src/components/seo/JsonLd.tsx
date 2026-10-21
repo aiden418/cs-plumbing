@@ -122,8 +122,8 @@ export default async function JsonLd() {
     },
     geo: {
       "@type": "GeoCoordinates",
-      latitude: 26.6695,
-      longitude: -81.8726,
+      latitude: BUSINESS.geo.latitude,
+      longitude: BUSINESS.geo.longitude,
     },
     openingHoursSpecification: [
       {

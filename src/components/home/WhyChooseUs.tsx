@@ -7,7 +7,7 @@ import StaggerChildren, {
   staggerItem,
 } from "@/components/animations/StaggerChildren";
 import { motion } from "framer-motion";
-import { LATEST_AWARD } from "@/lib/constants";
+import { BUSINESS, LATEST_AWARD } from "@/lib/constants";
 
 const reasons = [
   {
@@ -19,7 +19,7 @@ const reasons = [
   {
     icon: <Award className="w-5 h-5 sm:w-6 sm:h-6" />,
     title: LATEST_AWARD.title,
-    description: `Voted ${LATEST_AWARD.category} by ${LATEST_AWARD.issuer} readers — and rated 5.0 stars across 46 Google reviews by the homeowners we serve.`,
+    description: `Voted ${LATEST_AWARD.category} by ${LATEST_AWARD.issuer} readers — and rated ${BUSINESS.rating.toFixed(1)} stars across ${BUSINESS.reviewCount} Google reviews by the homeowners we serve.`,
   },
   {
     icon: <Clock className="w-5 h-5 sm:w-6 sm:h-6" />,

@@ -35,7 +35,7 @@ export async function fetchPlaceData(
   maxReviews = 3
 ): Promise<PlaceData | null> {
   const apiKey = process.env.GOOGLE_PLACES_API_KEY;
-  const placeId = process.env.GOOGLE_PLACE_ID;
+  const placeId = process.env.GOOGLE_PLACE_ID || BUSINESS.googlePlaceId;
   if (!apiKey || !placeId) return null;
   try {
     const url = new URL("https://maps.googleapis.com/maps/api/place/details/json");
@@ -58,9 +58,9 @@ export async function fetchPlaceData(
   }
 }
 
-/** Direct "leave us a review" deep link when the place id is configured. */
+/** Direct "leave us a review" deep link for the Google listing. */
 export function getWriteReviewUrl(): string {
-  const placeId = process.env.GOOGLE_PLACE_ID;
+  const placeId = process.env.GOOGLE_PLACE_ID || BUSINESS.googlePlaceId;
   return placeId
     ? `https://search.google.com/local/writereview?placeid=${placeId}`
     : BUSINESS.googleProfileUrl;
