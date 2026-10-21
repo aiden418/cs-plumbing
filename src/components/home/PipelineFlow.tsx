@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { gsap, ScrollTrigger, registerGSAP } from "@/lib/gsap";
 
 /**
  * "The Pipeline" — a scroll-scrubbed copper pipe that drops out of the Hero
@@ -130,193 +129,207 @@ export default function PipelineFlow() {
 
   useEffect(() => {
     if (!active || !hostRef.current) return;
-    registerGSAP();
+    let cancelled = false;
+    let teardown: (() => void) | undefined;
 
-    const host = hostRef.current;
-    const wrapper = host.parentElement as HTMLElement; // PipelineSection div
-    const svg = host.querySelector("svg") as SVGSVGElement;
-    const casing = svg.querySelector(".pipe-casing") as SVGPathElement;
-    const drawPaths = Array.from(svg.querySelectorAll(".pipe-draw")) as SVGPathElement[];
-    const body = svg.querySelector(".pipe-draw-body") as SVGPathElement;
-    const valves = Array.from(svg.querySelectorAll(".pipe-ball-valve")) as SVGGElement[];
-    const couplings = Array.from(svg.querySelectorAll(".pipe-coupling")) as SVGGElement[];
-    const levers = Array.from(svg.querySelectorAll(".valve-lever")) as SVGLineElement[];
-    const terminal = svg.querySelector(".pipe-terminal") as SVGGElement;
-    const wheel = svg.querySelector(".terminal-wheel") as SVGGElement;
+    // gsap is loaded on demand: this overlay only exists at lg+ with motion
+    // allowed, so phones never pay for it in the first-load bundle.
+    import("@/lib/gsap").then(({ gsap, ScrollTrigger, registerGSAP }) => {
+      if (cancelled || !hostRef.current) return;
+      registerGSAP();
 
-    let valveFractions: number[] = [];
-    let couplingFractions: number[] = [];
+      const host = hostRef.current;
+      const wrapper = host.parentElement as HTMLElement; // PipelineSection div
+      const svg = host.querySelector("svg") as SVGSVGElement;
+      const casing = svg.querySelector(".pipe-casing") as SVGPathElement;
+      const drawPaths = Array.from(svg.querySelectorAll(".pipe-draw")) as SVGPathElement[];
+      const body = svg.querySelector(".pipe-draw-body") as SVGPathElement;
+      const valves = Array.from(svg.querySelectorAll(".pipe-ball-valve")) as SVGGElement[];
+      const couplings = Array.from(svg.querySelectorAll(".pipe-coupling")) as SVGGElement[];
+      const levers = Array.from(svg.querySelectorAll(".valve-lever")) as SVGLineElement[];
+      const terminal = svg.querySelector(".pipe-terminal") as SVGGElement;
+      const wheel = svg.querySelector(".terminal-wheel") as SVGGElement;
 
-    const measure = () => {
-      const wrapRect = wrapper.getBoundingClientRect();
-      const W = wrapper.clientWidth;
-      const H = wrapper.scrollHeight;
+      let valveFractions: number[] = [];
+      let couplingFractions: number[] = [];
 
-      const rel = (el: Element) => {
-        const r = el.getBoundingClientRect();
-        return {
-          left: r.left - wrapRect.left,
-          right: r.right - wrapRect.left,
-          top: r.top - wrapRect.top,
-          bottom: r.bottom - wrapRect.top,
-          midX: r.left - wrapRect.left + r.width / 2,
-          midY: r.top - wrapRect.top + r.height / 2,
+      const measure = () => {
+        const wrapRect = wrapper.getBoundingClientRect();
+        const W = wrapper.clientWidth;
+        const H = wrapper.scrollHeight;
+
+        const rel = (el: Element) => {
+          const r = el.getBoundingClientRect();
+          return {
+            left: r.left - wrapRect.left,
+            right: r.right - wrapRect.left,
+            top: r.top - wrapRect.top,
+            bottom: r.bottom - wrapRect.top,
+            midX: r.left - wrapRect.left + r.width / 2,
+            midY: r.top - wrapRect.top + r.height / 2,
+          };
         };
+
+        const cta = wrapper.querySelector('[data-pipe-node="hero-cta"]');
+        const stats = wrapper.querySelector('[data-pipe-node="stats"]');
+        const services = wrapper.querySelector('[data-pipe-node="services"]');
+        if (!cta || !stats || !services) return null;
+
+        const c = rel(cta);
+        const st = rel(stats);
+        const sv = rel(services);
+
+        const centerX = W / 2;
+        // Left gutter — outside the max-w-7xl content column when there's room
+        const gutterX = Math.max(18, (W - 1280) / 2 - 8);
+
+        const startX = c.left + 36;
+        const startY = c.bottom + 28;
+
+        // Adaptive first drop: deep enough to read as a drop, but never so
+        // deep that the cross-elbow collides with the stats band below.
+        const dropY = startY + Math.min(110, Math.max(36, (st.top - startY) * 0.45));
+
+        const points: Pt[] = [
+          { x: startX, y: startY },
+          { x: startX, y: dropY },                  // drop out of the CTA
+          { x: centerX, y: dropY },                 // elbow toward center
+          { x: centerX, y: st.top },                // down to the stats band
+          { x: centerX, y: sv.top + 56 },           // straight through stats into services
+          { x: gutterX, y: sv.top + 56 },           // elbow into the gutter
+          { x: gutterX, y: H - 64 },                // run the gutter past the cards
+          { x: centerX, y: H - 64 },                // elbow back to center
+          { x: centerX, y: H - 8 },                 // terminal drop
+        ];
+
+        const { d, fractions } = roundedPath(points, ELBOW_RADIUS);
+        svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+        svg.setAttribute("width", String(W));
+        svg.setAttribute("height", String(H));
+        casing.setAttribute("d", d);
+        drawPaths.forEach((p) => p.setAttribute("d", d));
+
+        // Fittings sit mid-segment on the straight runs — never on an elbow.
+        // Each spec: segment index i (points[i] → points[i+1]) and 0–1 lerp t.
+        const lerpPt = (a: Pt, b: Pt, t: number): Pt => ({
+          x: a.x + (b.x - a.x) * t,
+          y: a.y + (b.y - a.y) * t,
+        });
+        const segAngle = (a: Pt, b: Pt) => (Math.atan2(b.y - a.y, b.x - a.x) * 180) / Math.PI;
+        const frac = (i: number, t: number) => fractions[i] + (fractions[i + 1] - fractions[i]) * t;
+
+        // Position + segment rotation live on the OUTER wrapper group as a raw
+        // SVG attribute. GSAP only ever animates the inner group (scale pop) —
+        // rebuilds and origin changes can no longer drop the rotation, which is
+        // exactly what left the vertical-run valves rendering sideways.
+        const placeFitting = (g: SVGGElement, s: { i: number; t: number }) => {
+          const p = lerpPt(points[s.i], points[s.i + 1], s.t);
+          const angle = segAngle(points[s.i], points[s.i + 1]);
+          (g.parentNode as SVGGElement).setAttribute(
+            "transform",
+            `translate(${p.x} ${p.y}) rotate(${angle})`
+          );
+        };
+
+        const valveSpecs = [
+          { i: 1, t: 0.5 },  // horizontal run toward center
+          { i: 3, t: 0.25 }, // vertical run entering the stats band
+          { i: 5, t: 0.5 },  // gutter run past the cards
+        ];
+        valves.forEach((g, k) => {
+          const s = valveSpecs[k];
+          if (s) placeFitting(g, s);
+        });
+        valveFractions = valveSpecs.map((s) => frac(s.i, s.t));
+
+        const couplingSpecs = [
+          { i: 2, t: 0.5 },  // center run between hero and stats
+          { i: 6, t: 0.5 },  // bottom return toward center
+        ];
+        couplings.forEach((g, k) => {
+          const s = couplingSpecs[k];
+          if (s) placeFitting(g, s);
+        });
+        couplingFractions = couplingSpecs.map((s) => frac(s.i, s.t));
+
+        const end = points[points.length - 1];
+        gsap.set(terminal, { x: end.x, y: end.y - 18 });
+
+        return body.getTotalLength();
       };
 
-      const cta = wrapper.querySelector('[data-pipe-node="hero-cta"]');
-      const stats = wrapper.querySelector('[data-pipe-node="stats"]');
-      const services = wrapper.querySelector('[data-pipe-node="services"]');
-      if (!cta || !stats || !services) return null;
+      let tl: ReturnType<typeof gsap.timeline> | null = null;
 
-      const c = rel(cta);
-      const st = rel(stats);
-      const sv = rel(services);
+      const build = () => {
+        tl?.kill();
+        const len = measure();
+        if (!len) return;
 
-      const centerX = W / 2;
-      // Left gutter — outside the max-w-7xl content column when there's room
-      const gutterX = Math.max(18, (W - 1280) / 2 - 8);
+        gsap.set(drawPaths, { strokeDasharray: len });
+        gsap.set([...valves, ...couplings], { scale: 0, transformOrigin: "center center" });
+        gsap.set(levers, { rotation: -90, transformOrigin: "0px 0px" });
+        gsap.set(terminal, { opacity: 0 });
 
-      const startX = c.left + 36;
-      const startY = c.bottom + 28;
-
-      // Adaptive first drop: deep enough to read as a drop, but never so
-      // deep that the cross-elbow collides with the stats band below.
-      const dropY = startY + Math.min(110, Math.max(36, (st.top - startY) * 0.45));
-
-      const points: Pt[] = [
-        { x: startX, y: startY },
-        { x: startX, y: dropY },                  // drop out of the CTA
-        { x: centerX, y: dropY },                 // elbow toward center
-        { x: centerX, y: st.top },                // down to the stats band
-        { x: centerX, y: sv.top + 56 },           // straight through stats into services
-        { x: gutterX, y: sv.top + 56 },           // elbow into the gutter
-        { x: gutterX, y: H - 64 },                // run the gutter past the cards
-        { x: centerX, y: H - 64 },                // elbow back to center
-        { x: centerX, y: H - 8 },                 // terminal drop
-      ];
-
-      const { d, fractions } = roundedPath(points, ELBOW_RADIUS);
-      svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
-      svg.setAttribute("width", String(W));
-      svg.setAttribute("height", String(H));
-      casing.setAttribute("d", d);
-      drawPaths.forEach((p) => p.setAttribute("d", d));
-
-      // Fittings sit mid-segment on the straight runs — never on an elbow.
-      // Each spec: segment index i (points[i] → points[i+1]) and 0–1 lerp t.
-      const lerpPt = (a: Pt, b: Pt, t: number): Pt => ({
-        x: a.x + (b.x - a.x) * t,
-        y: a.y + (b.y - a.y) * t,
-      });
-      const segAngle = (a: Pt, b: Pt) => (Math.atan2(b.y - a.y, b.x - a.x) * 180) / Math.PI;
-      const frac = (i: number, t: number) => fractions[i] + (fractions[i + 1] - fractions[i]) * t;
-
-      // Position + segment rotation live on the OUTER wrapper group as a raw
-      // SVG attribute. GSAP only ever animates the inner group (scale pop) —
-      // rebuilds and origin changes can no longer drop the rotation, which is
-      // exactly what left the vertical-run valves rendering sideways.
-      const placeFitting = (g: SVGGElement, s: { i: number; t: number }) => {
-        const p = lerpPt(points[s.i], points[s.i + 1], s.t);
-        const angle = segAngle(points[s.i], points[s.i + 1]);
-        (g.parentNode as SVGGElement).setAttribute(
-          "transform",
-          `translate(${p.x} ${p.y}) rotate(${angle})`
+        tl = gsap.timeline({
+          defaults: { ease: "none" },
+          scrollTrigger: {
+            trigger: wrapper,
+            start: "top top",
+            end: "bottom 75%",
+            scrub: 0.8,
+            invalidateOnRefresh: true,
+          },
+        });
+        tl.fromTo(
+          drawPaths,
+          { strokeDashoffset: len },
+          { strokeDashoffset: 0, duration: 1 },
+          0
         );
+        valves.forEach((g, i) => {
+          const at = Math.max(0, Math.min(0.96, valveFractions[i] ?? 0));
+          tl!.to(g, { scale: 1, duration: 0.04, ease: "back.out(2)" }, at);
+          // Lever swings from closed (across the pipe) to open (along it)
+          // just as the flow arrives.
+          const lever = g.querySelector(".valve-lever");
+          if (lever) {
+            tl!.to(lever, { rotation: 0, duration: 0.12, ease: "power2.out" }, Math.min(0.96, at + 0.02));
+          }
+        });
+        couplings.forEach((g, i) => {
+          const at = Math.max(0, Math.min(0.96, couplingFractions[i] ?? 0));
+          tl!.to(g, { scale: 1, duration: 0.04, ease: "back.out(2)" }, at);
+        });
+        tl.to(terminal, { opacity: 1, duration: 0.04 }, 0.96);
+        if (wheel) {
+          tl.to(wheel, { rotation: 120, duration: 0.04, transformOrigin: "center center" }, 0.96);
+        }
       };
 
-      const valveSpecs = [
-        { i: 1, t: 0.5 },  // horizontal run toward center
-        { i: 3, t: 0.25 }, // vertical run entering the stats band
-        { i: 5, t: 0.5 },  // gutter run past the cards
-      ];
-      valves.forEach((g, k) => {
-        const s = valveSpecs[k];
-        if (s) placeFitting(g, s);
+      build();
+
+      // Re-measure when the wrapper resizes (fonts, images, viewport).
+      let rafId = 0;
+      const ro = new ResizeObserver(() => {
+        cancelAnimationFrame(rafId);
+        rafId = requestAnimationFrame(() => {
+          build();
+          ScrollTrigger.refresh();
+        });
       });
-      valveFractions = valveSpecs.map((s) => frac(s.i, s.t));
+      ro.observe(wrapper);
 
-      const couplingSpecs = [
-        { i: 2, t: 0.5 },  // center run between hero and stats
-        { i: 6, t: 0.5 },  // bottom return toward center
-      ];
-      couplings.forEach((g, k) => {
-        const s = couplingSpecs[k];
-        if (s) placeFitting(g, s);
-      });
-      couplingFractions = couplingSpecs.map((s) => frac(s.i, s.t));
 
-      const end = points[points.length - 1];
-      gsap.set(terminal, { x: end.x, y: end.y - 18 });
-
-      return body.getTotalLength();
-    };
-
-    let tl: gsap.core.Timeline | null = null;
-
-    const build = () => {
-      tl?.kill();
-      const len = measure();
-      if (!len) return;
-
-      gsap.set(drawPaths, { strokeDasharray: len });
-      gsap.set([...valves, ...couplings], { scale: 0, transformOrigin: "center center" });
-      gsap.set(levers, { rotation: -90, transformOrigin: "0px 0px" });
-      gsap.set(terminal, { opacity: 0 });
-
-      tl = gsap.timeline({
-        defaults: { ease: "none" },
-        scrollTrigger: {
-          trigger: wrapper,
-          start: "top top",
-          end: "bottom 75%",
-          scrub: 0.8,
-          invalidateOnRefresh: true,
-        },
-      });
-      tl.fromTo(
-        drawPaths,
-        { strokeDashoffset: len },
-        { strokeDashoffset: 0, duration: 1 },
-        0
-      );
-      valves.forEach((g, i) => {
-        const at = Math.max(0, Math.min(0.96, valveFractions[i] ?? 0));
-        tl!.to(g, { scale: 1, duration: 0.04, ease: "back.out(2)" }, at);
-        // Lever swings from closed (across the pipe) to open (along it)
-        // just as the flow arrives.
-        const lever = g.querySelector(".valve-lever");
-        if (lever) {
-          tl!.to(lever, { rotation: 0, duration: 0.12, ease: "power2.out" }, Math.min(0.96, at + 0.02));
-        }
-      });
-      couplings.forEach((g, i) => {
-        const at = Math.max(0, Math.min(0.96, couplingFractions[i] ?? 0));
-        tl!.to(g, { scale: 1, duration: 0.04, ease: "back.out(2)" }, at);
-      });
-      tl.to(terminal, { opacity: 1, duration: 0.04 }, 0.96);
-      if (wheel) {
-        tl.to(wheel, { rotation: 120, duration: 0.04, transformOrigin: "center center" }, 0.96);
-      }
-    };
-
-    build();
-
-    // Re-measure when the wrapper resizes (fonts, images, viewport).
-    let rafId = 0;
-    const ro = new ResizeObserver(() => {
-      cancelAnimationFrame(rafId);
-      rafId = requestAnimationFrame(() => {
-        build();
-        ScrollTrigger.refresh();
-      });
+      teardown = () => {
+        ro.disconnect();
+        cancelAnimationFrame(rafId);
+        tl?.kill();
+      };
     });
-    ro.observe(wrapper);
 
     return () => {
-      ro.disconnect();
-      cancelAnimationFrame(rafId);
-      tl?.kill();
+      cancelled = true;
+      teardown?.();
     };
   }, [active]);
 

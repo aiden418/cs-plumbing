@@ -215,36 +215,34 @@
 }
 
 /* ========================================
-   HERO KINETIC HEADLINE — WORD REVEAL
+   HERO KINETIC HEADLINE — WORD RISE
    ======================================== */
 
-/* Overflow mask + translateY keeps the reveal fully on the compositor
-   (the old clip-path transition repainted on the CPU every frame). The
-   padding/negative-margin pair gives descenders room inside the mask
-   without changing layout. */
-@utility word-mask {
+/* Keyframe-driven so the headline animates from first paint without waiting
+   for hydration — and deliberately NOT clipped or faded from zero. Chrome
+   records a text node for Largest Contentful Paint only at its first paint;
+   a word that is masked (overflow:hidden + translate) or at opacity:0 in
+   that frame has zero visible area and is never a candidate again, which
+   left the 48px navbar logo as the homepage LCP element. Each word starts
+   fully painted, a little low and dimmed, and settles up. Compositor-only
+   (transform + opacity). Per-word stagger comes from an inline
+   animation-delay. */
+@utility word-rise {
   display: inline-block;
-  overflow: hidden;
-  vertical-align: top;
-  padding-bottom: 0.12em;
-  margin-bottom: -0.12em;
+  transform: translateY(0.35em);
+  opacity: 0.4;
+  animation: word-rise 0.9s var(--ease-out-expo) both;
+  will-change: transform, opacity;
 }
 
-/* Keyframe-driven so the headline reveals from first paint without waiting
-   for hydration. Per-word stagger comes from an inline animation-delay. */
-@utility word-mask-inner {
-  display: inline-block;
-  transform: translateY(110%);
-  animation: word-in 0.9s var(--ease-out-expo) both;
-  will-change: transform;
-}
-
-@keyframes word-in {
+@keyframes word-rise {
   from {
-    transform: translateY(110%);
+    transform: translateY(0.35em);
+    opacity: 0.4;
   }
   to {
     transform: translateY(0);
+    opacity: 1;
   }
 }
 
@@ -301,6 +299,34 @@
 
 @utility animate-hero-in {
   animation: hero-in 0.9s var(--ease-out-expo) both;
+}
+
+/* Hero scroll cue: fades in after the headline has landed, then bobs.
+   Replaces two framer-motion elements so the hero ships no framer code. */
+@keyframes scroll-cue-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@utility animate-scroll-cue {
+  animation: scroll-cue-in 0.6s ease-out 1.8s both;
+}
+
+@keyframes scroll-bob {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(8px);
+  }
+}
+
+@utility animate-scroll-bob {
+  animation: scroll-bob 2s ease-in-out infinite;
 }
 
 /* ========================================
@@ -363,9 +389,10 @@
   }
 
   /* Headline must be readable even if the reveal transition never runs */
-  .word-mask-inner,
+  .word-rise,
   .animate-underline-in {
     animation: none !important;
     transform: none !important;
+    opacity: 1 !important;
   }
 }

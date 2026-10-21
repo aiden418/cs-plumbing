@@ -7,7 +7,6 @@ import { MapPin, ArrowRight, ArrowUpRight } from "lucide-react";
 import Container from "@/components/ui/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
 import ScrollReveal from "@/components/animations/ScrollReveal";
-import { registerGSAP, gsap, ScrollTrigger } from "@/lib/gsap";
 import { AREA_LANDINGS } from "@/lib/constants";
 
 // Per-city response copy. Falls back to "Same-day service" for any slug
@@ -53,106 +52,114 @@ export default function ServiceAreasSection() {
   const trackRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    registerGSAP();
     if (!sectionRef.current || !trackRef.current || !railRef.current) return;
 
     const section = sectionRef.current;
     const rail = railRef.current;
     const track = trackRef.current;
     let cancelled = false;
+    let revert: (() => void) | undefined;
 
-    // matchMedia (instead of a one-shot matches check) so resizing across
-    // the lg boundary cleanly creates/destroys the pin — the old version
-    // left a stale pin behind.
-    const mm = gsap.matchMedia();
-    mm.add(
-      "(min-width: 1024px) and (prefers-reduced-motion: no-preference)",
-      () => {
-        // While pinned, the rail covers most of the viewport. With
-        // data-lenis-prevent set, wheel events over it escaped Lenis and
-        // raw-scrolled the page against the scrubbed pin — the source of
-        // the "buggy" scroll feel. Desktop hands the wheel back to Lenis.
-        rail.removeAttribute("data-lenis-prevent");
+    // gsap on demand so it stays out of the first-load bundle; the pinned
+    // rail below only exists at lg+ anyway (see the matchMedia query).
+    import("@/lib/gsap").then(({ gsap, ScrollTrigger, registerGSAP }) => {
+      if (cancelled) return;
+      registerGSAP();
 
-        const watermarks = Array.from(
-          section.querySelectorAll<HTMLElement>(".area-watermark"),
-        );
-        const counter = section.querySelector<HTMLElement>(".area-counter");
-        const progressFill =
-          section.querySelector<HTMLElement>(".progress-fill");
-        const cardImages = track.querySelectorAll<HTMLElement>(
-          ".card-img-inner",
-        );
-        const total = watermarks.length;
-        let activeIdx = -1;
+      // matchMedia (instead of a one-shot matches check) so resizing across
+      // the lg boundary cleanly creates/destroys the pin — the old version
+      // left a stale pin behind.
+      const mm = gsap.matchMedia();
+      revert = () => mm.revert();
+      mm.add(
+        "(min-width: 1024px) and (prefers-reduced-motion: no-preference)",
+        () => {
+          // While pinned, the rail covers most of the viewport. With
+          // data-lenis-prevent set, wheel events over it escaped Lenis and
+          // raw-scrolled the page against the scrubbed pin — the source of
+          // the "buggy" scroll feel. Desktop hands the wheel back to Lenis.
+          rail.removeAttribute("data-lenis-prevent");
 
-        const setActive = (idx: number) => {
-          if (idx === activeIdx) return;
-          activeIdx = idx;
-          watermarks.forEach((el, i) => {
-            gsap.to(el, {
-              opacity: i === idx ? 1 : 0,
-              duration: 0.35,
-              ease: "power2.out",
-              overwrite: true,
+          const watermarks = Array.from(
+            section.querySelectorAll<HTMLElement>(".area-watermark"),
+          );
+          const counter = section.querySelector<HTMLElement>(".area-counter");
+          const progressFill =
+            section.querySelector<HTMLElement>(".progress-fill");
+          const cardImages = track.querySelectorAll<HTMLElement>(
+            ".card-img-inner",
+          );
+          const total = watermarks.length;
+          let activeIdx = -1;
+
+          const setActive = (idx: number) => {
+            if (idx === activeIdx) return;
+            activeIdx = idx;
+            watermarks.forEach((el, i) => {
+              gsap.to(el, {
+                opacity: i === idx ? 1 : 0,
+                duration: 0.35,
+                ease: "power2.out",
+                overwrite: true,
+              });
             });
-          });
-          if (counter) {
-            counter.textContent = `${String(idx + 1).padStart(2, "0")} / ${String(total).padStart(2, "0")}`;
-          }
-        };
+            if (counter) {
+              counter.textContent = `${String(idx + 1).padStart(2, "0")} / ${String(total).padStart(2, "0")}`;
+            }
+          };
 
-        // Slide the track until the LAST card's left edge sits at the
-        // parent's left edge (24px nudge). offsetLeft is transform-immune.
-        const getDistance = () => {
-          const lastCard = track.lastElementChild as HTMLElement | null;
-          if (!lastCard) return 0;
-          return Math.max(0, lastCard.offsetLeft - 24);
-        };
+          // Slide the track until the LAST card's left edge sits at the
+          // parent's left edge (24px nudge). offsetLeft is transform-immune.
+          const getDistance = () => {
+            const lastCard = track.lastElementChild as HTMLElement | null;
+            if (!lastCard) return 0;
+            return Math.max(0, lastCard.offsetLeft - 24);
+          };
 
-        const tl = gsap.timeline({
-          defaults: { ease: "none" },
-          scrollTrigger: {
-            trigger: section,
-            start: "top top",
-            end: () => `+=${getDistance()}`,
-            scrub: 0.6,
-            pin: true,
-            anticipatePin: 1,
-            invalidateOnRefresh: true,
-            onUpdate(self) {
-              setActive(
-                Math.min(total - 1, Math.round(self.progress * (total - 1))),
-              );
+          const tl = gsap.timeline({
+            defaults: { ease: "none" },
+            scrollTrigger: {
+              trigger: section,
+              start: "top top",
+              end: () => `+=${getDistance()}`,
+              scrub: 0.6,
+              pin: true,
+              anticipatePin: 1,
+              invalidateOnRefresh: true,
+              onUpdate(self) {
+                setActive(
+                  Math.min(total - 1, Math.round(self.progress * (total - 1))),
+                );
+              },
             },
-          },
-        });
-        tl.to(track, { x: () => -getDistance() }, 0);
-        if (progressFill) tl.to(progressFill, { scaleX: 1 }, 0);
-        if (cardImages.length) tl.fromTo(cardImages, { xPercent: 0 }, { xPercent: -6 }, 0);
+          });
+          tl.to(track, { x: () => -getDistance() }, 0);
+          if (progressFill) tl.to(progressFill, { scaleX: 1 }, 0);
+          if (cardImages.length) tl.fromTo(cardImages, { xPercent: 0 }, { xPercent: -6 }, 0);
 
-        setActive(0);
+          setActive(0);
 
-        return () => {
-          rail.setAttribute("data-lenis-prevent", "");
-          tl.kill();
-        };
-      },
-    );
+          return () => {
+            rail.setAttribute("data-lenis-prevent", "");
+            tl.kill();
+          };
+        },
+      );
 
-    // One refresh after every card image has actually decoded — replaces
-    // the old per-load debounce that could still fire mid-scroll.
-    Promise.all(
-      Array.from(track.querySelectorAll("img")).map((img) =>
-        img.decode().catch(() => {}),
-      ),
-    ).then(() => {
-      if (!cancelled) ScrollTrigger.refresh();
+      // One refresh after every card image has actually decoded — replaces
+      // the old per-load debounce that could still fire mid-scroll.
+      Promise.all(
+        Array.from(track.querySelectorAll("img")).map((img) =>
+          img.decode().catch(() => {}),
+        ),
+      ).then(() => {
+        if (!cancelled) ScrollTrigger.refresh();
+      });
     });
 
     return () => {
       cancelled = true;
-      mm.revert();
+      revert?.();
     };
   }, []);
 

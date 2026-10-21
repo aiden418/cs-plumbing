@@ -1,19 +1,18 @@
 "use client";
 
-import { useRef, useEffect } from "react";
+import { Fragment, useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { ArrowRight, ChevronDown, HardHat, Home, Phone, Star } from "lucide-react";
 import Container from "@/components/ui/Container";
 import HeroVideo from "@/components/home/HeroVideo";
 import { BUSINESS, LATEST_AWARD } from "@/lib/constants";
-import { registerGSAP, gsap } from "@/lib/gsap";
 import { breakpoints } from "@/hooks/useMediaQuery";
 
-// Three lines, kept as semantic arrays so the per-word clip-path reveal
-// stays readable. Real DOM text remains literal — SEO/screen-readers see
-// the full sentence.
+// Three lines, kept as semantic arrays so the per-word reveal stays
+// readable. Words are separated by real spaces (not margins), so the DOM
+// text reads "Southwest Florida's Most Trusted Plumbing Team" to crawlers
+// and screen readers.
 const HEADLINE_LINES: string[][] = [
   ["Southwest", "Florida's"],
   ["Most", "Trusted"],
@@ -23,9 +22,11 @@ const HEADLINE_LINES: string[][] = [
 export default function Hero() {
   const heroRef = useRef<HTMLDivElement>(null);
 
-  // Parallax + scale on background — driven by GSAP ScrollTrigger.
+  // Parallax + scale on background — GSAP ScrollTrigger, desktop only.
+  // gsap is imported on demand *after* the media checks so phones (coarse
+  // pointer), which skip the effect anyway, never download it: gsap +
+  // ScrollTrigger were ~35 KB gzipped of the homepage's first-load JS.
   useEffect(() => {
-    registerGSAP();
     if (!heroRef.current) return;
 
     const prefersReducedMotion = window.matchMedia(
@@ -35,23 +36,34 @@ export default function Hero() {
     // Scrubbed parallax is per-frame scroll work — skip it on touch devices
     if (window.matchMedia(breakpoints.coarse).matches) return;
 
-    const ctx = gsap.context(() => {
-      const bg = heroRef.current!.querySelector(".hero-bg");
-      if (!bg) return;
-      gsap.to(bg, {
-        y: 240,
-        scale: 1.05,
-        ease: "none",
-        scrollTrigger: {
-          trigger: heroRef.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: true,
-        },
-      });
-    }, heroRef);
+    let cancelled = false;
+    let revert: (() => void) | undefined;
 
-    return () => ctx.revert();
+    import("@/lib/gsap").then(({ gsap, registerGSAP }) => {
+      if (cancelled || !heroRef.current) return;
+      registerGSAP();
+      const ctx = gsap.context(() => {
+        const bg = heroRef.current!.querySelector(".hero-bg");
+        if (!bg) return;
+        gsap.to(bg, {
+          y: 240,
+          scale: 1.05,
+          ease: "none",
+          scrollTrigger: {
+            trigger: heroRef.current,
+            start: "top top",
+            end: "bottom top",
+            scrub: true,
+          },
+        });
+      }, heroRef);
+      revert = () => ctx.revert();
+    });
+
+    return () => {
+      cancelled = true;
+      revert?.();
+    };
   }, []);
 
   let wordIndex = 0;
@@ -59,7 +71,9 @@ export default function Hero() {
   return (
     <section
       ref={heroRef}
-      className="relative min-h-screen overflow-hidden flex flex-col"
+      // bg-gray-900: the white headline is readable from the first frame,
+      // before the drone photo (which paints over it) has arrived.
+      className="relative min-h-screen overflow-hidden flex flex-col bg-gray-900"
     >
       {/* Background — single dim + radial vignette */}
       <div className="hero-bg absolute inset-0 lg:will-change-transform">
@@ -69,8 +83,14 @@ export default function Hero() {
           fill
           className="object-cover object-center"
           priority
+          // High fetch priority: next/image's `priority` only preloads; the
+          // request itself was still "Low" and queued behind scripts and
+          // fonts on a phone. (Chrome excludes a full-viewport image from LCP
+          // as background, so the headline below is the LCP element — this
+          // is for how soon the photo paints, not the metric.)
+          fetchPriority="high"
           // 75 is visually identical on a drone photo and ~30% smaller at the
-          // mobile widths where this is the LCP image.
+          // mobile widths this is served at.
           quality={75}
         />
         <HeroVideo />
@@ -111,23 +131,24 @@ export default function Hero() {
                     key={lineIdx}
                     className={isAccentLine ? "relative block" : "block"}
                   >
-                    {line.map((word) => {
+                    {line.map((word, wordIdx) => {
                       const i = wordIndex++;
                       return (
-                        <span
-                          key={`${lineIdx}-${word}-${i}`}
-                          className="word-mask mr-[0.18em]"
-                        >
-                          {/* CSS keyframe reveal (see word-mask-inner in
-                              globals.css): runs from first paint instead of
-                              waiting on a post-hydration state flip. */}
+                        <Fragment key={`${lineIdx}-${word}-${i}`}>
+                          {/* CSS keyframe rise (word-rise in globals.css):
+                              runs from first paint, and the word is never
+                              clipped or at opacity 0, so Chrome counts it as
+                              the LCP element. The old overflow-hidden mask
+                              started each word fully hidden, which made the
+                              48px navbar logo the LCP on every load. */}
                           <span
-                            className="word-mask-inner"
+                            className="word-rise"
                             style={{ animationDelay: `${i * 60}ms` }}
                           >
                             {word}
                           </span>
-                        </span>
+                          {wordIdx < line.length - 1 ? " " : null}
+                        </Fragment>
                       );
                     })}
                     {isAccentLine && (
@@ -136,6 +157,7 @@ export default function Hero() {
                         className="animate-underline-in absolute left-0 -bottom-1 h-[5px] sm:h-[6px] lg:h-[8px] w-full bg-gold origin-left rounded-full"
                       />
                     )}
+                    {lineIdx < HEADLINE_LINES.length - 1 ? " " : null}
                   </span>
                 );
               })}
@@ -301,7 +323,6 @@ export default function Hero() {
               height={38}
               sizes="54px"
               className="h-[38px] w-[54px]"
-              priority
             />
             <div className="text-left">
               <p className="text-sm font-bold text-white leading-tight">
@@ -315,20 +336,13 @@ export default function Hero() {
         </div>
       </Container>
 
-      {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.8 }}
-        className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2"
-      >
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-        >
+      {/* Scroll indicator — CSS only (delayed fade, then a slow bob), so the
+          hero no longer imports framer-motion. */}
+      <div className="animate-scroll-cue absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2">
+        <div className="animate-scroll-bob">
           <ChevronDown className="w-5 h-5 sm:w-6 sm:h-6 text-white/40" />
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
     </section>
   );
 }
