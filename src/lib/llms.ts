@@ -11,6 +11,7 @@ import {
   EMERGENCY_CLAIMS,
   LATEST_AWARD,
   SERVICE_LANDINGS,
+  UEP_STATUS,
 } from "./constants";
 import { FAQ_CATEGORIES } from "./faq-data";
 import { SERVICE_CITY_LANDINGS } from "./service-city-landings";
@@ -46,8 +47,8 @@ import {
 //
 // Hand-bump VERSION when the prose gets a substantive pass (same philosophy
 // as sitemap.ts LAST_CONTENT_PASS — no new Date()).
-const VERSION = "2.7";
-const UPDATED = "2026-09";
+const VERSION = "2.8";
+const UPDATED = "2026-10";
 
 const BASE = "https://www.csplumbinglee.com";
 
@@ -147,7 +148,7 @@ Kitchen and bathroom plumbing remodels including fixture upgrades, pipe reroutin
 Backflow preventer installation, testing, and certification.
 
 ### UEP / Utility Hookup
-Underground utility hookup and Cape Coral UEP (Utilities Extension Program) connections: water, irrigation, and sewer laterals plus septic abandonment. Pricing: water $13–15/ft, irrigation $9–10/ft, sewer $25–33/ft, septic abandonment from $2,500.
+Underground utility hookup and Cape Coral UEP (Utilities Extension Project) connections: water, irrigation, and sewer laterals plus septic abandonment. Pricing: water $13–15/ft, irrigation $9–10/ft, sewer $25–33/ft, septic abandonment from $2,500. Cape Coral homeowners have ${UEP_STATUS.connectionWindowDays} days from the city's Notice of Availability to connect, using a City of Cape Coral licensed plumber. UEP status as of ${UEP_STATUS.checkedOnLabel}, per the City of Cape Coral: ${UEP_STATUS.summary} Details: ${BASE}/uep-connection-cape-coral
 
 ### Preventive Maintenance (Commercial)
 Customized commercial preventive maintenance contracts including scheduled inspections, drain maintenance, water heater servicing, fixture tune-ups, and priority emergency response.

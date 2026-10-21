@@ -47,9 +47,24 @@ export const BUSINESS = {
   licenseLookupUrl:
     "https://www.myfloridalicense.com/wl11.asp?mode=2&search=LicNbr&SID=&brd=&typ=",
   rating: 5.0,
-  reviewCount: 46,
-  googleProfileUrl:
-    "https://www.google.com/maps/search/?api=1&query=C%26S+Plumbing+of+Lee+County+North+Fort+Myers",
+  // Static fallback only. Google Maps showed 5.0 across 60 reviews on
+  // 2026-10-20 while the site was still telling crawlers 46. The live number
+  // comes from the Places API when GOOGLE_PLACES_API_KEY and GOOGLE_PLACE_ID
+  // are set in Vercel — set those so this stops drifting.
+  reviewCount: 60,
+  /** Permanent link to the Google Business Profile listing (by CID), not a
+   *  Maps search. Resolves to the 951 Pondella Rd listing. */
+  googleProfileUrl: "https://maps.google.com/?cid=5498090134012520413",
+  /** Google Place ID for the same listing (public identifier, found with
+   *  Google's Place ID Finder on 2026-10-20). Drives the write-a-review deep
+   *  link and the Places API lookup; only GOOGLE_PLACES_API_KEY is secret. */
+  googlePlaceId: "ChIJjeFQMQ9D24gR3WflxNgjTUw",
+  /**
+   * Where Google Maps pins 951 Pondella Rd (checked 2026-10-20; the Census
+   * geocoder agrees to within 150 ft). The previous value, 26.6695 /
+   * -81.8726, sat 2.8 miles east in a mobile home park off E North Shore Dr.
+   */
+  geo: { latitude: 26.6663678, longitude: -81.9171809 },
   facebookUrl: "https://www.facebook.com/csplumbingoflc",
   instagramUrl: "https://www.instagram.com/cs_plumbing_of_lee/",
   // Current review profile (North Fort Myers office). An older Birdeye
@@ -125,6 +140,32 @@ export const EMERGENCY_CLAIMS = {
   afterHoursSurcharge: "$95–$150",
   afterHoursPricing:
     "After-hours calls (nights, weekends, and holidays) carry a $95–$150 surcharge — always included in the written price you approve before any work begins.",
+} as const;
+
+// City of Cape Coral Utilities Extension Project status, as the city's own
+// UEP pages stated it on `checkedOn`. The 180-day window and the plumber rule
+// come from the city's "How to Connect" page. Re-read capecoral.gov/uep before
+// changing any of this; every UEP surface (service page, Cape Coral landing,
+// llms.txt) reads from here so the story stays identical everywhere.
+const UEP_NORTH_1_WEST =
+  "North 1 West is substantially complete and the city has mailed its Notice of Availability letters, so the 180-day connection window there is already running.";
+const UEP_NORTH_1_EAST =
+  "North 1 East is under construction — contractors received Notice to Proceed in December 2025 and the city expects completion by the end of 2027.";
+const UEP_NORTH_3 =
+  "North 3, about 3 square miles of northwest Cape Coral, is in design; the city expects construction to start by the end of 2026 and run about two years.";
+export const UEP_STATUS = {
+  checkedOn: "2026-10-20",
+  checkedOnLabel: "October 2026",
+  sourceUrl: "https://www.capecoral.gov/uep/how_to_connect.php",
+  /** Days a homeowner has to connect after the city's Notice of Availability. */
+  connectionWindowDays: 180,
+  plumberRule:
+    "The city directs homeowners to a City of Cape Coral licensed plumber for the final connection, and that plumber is responsible for pulling the permits.",
+  north1West: UEP_NORTH_1_WEST,
+  north1East: UEP_NORTH_1_EAST,
+  north3: UEP_NORTH_3,
+  /** One-paragraph version for prose surfaces. */
+  summary: `${UEP_NORTH_1_WEST} ${UEP_NORTH_1_EAST} ${UEP_NORTH_3}`,
 } as const;
 
 // Single source of truth for awards, newest first. Every surface that names
@@ -263,7 +304,7 @@ export const TRUST_PROOF_POINTS = [
   "Family owned and operated since 1998",
   "9,500+ new construction homes plumbed",
   "3,500+ homes repiped",
-  "5.0 stars across 46 Google reviews",
+  `${BUSINESS.rating.toFixed(1)} stars across ${BUSINESS.reviewCount} Google reviews`,
   AWARD_TRUST_LINE,
   "24/7 emergency service",
   "Licensed & insured (CFC057076 / CFC1432485)",
@@ -1573,7 +1614,12 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       {
         question: "What is the UEP program in Cape Coral?",
         answer:
-          "The Utilities Extension Program (UEP) is Cape Coral's initiative to bring city water and sewer to neighborhoods that currently use wells and septic systems. When city lines reach your area, homeowners are required to connect within a set timeframe. C&S Plumbing handles the full connection process.",
+          `The Utilities Extension Project (UEP) is Cape Coral's initiative to bring city water and sewer to neighborhoods that currently use wells and septic systems. When the lines reach your street, the city mails a Notice of Availability and you have ${UEP_STATUS.connectionWindowDays} days to connect, using a City of Cape Coral licensed plumber. C&S Plumbing handles the full connection process.`,
+      },
+      {
+        question: "Which Cape Coral UEP areas are active right now?",
+        answer:
+          `${UEP_STATUS.summary} That is the City of Cape Coral's published status as of ${UEP_STATUS.checkedOnLabel}; if your Notice of Availability has arrived, your ${UEP_STATUS.connectionWindowDays}-day window is already open.`,
       },
       {
         question: "How much does a UEP utilities hookup cost?",

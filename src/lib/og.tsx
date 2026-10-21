@@ -1,3 +1,4 @@
+import { BUSINESS } from "@/lib/constants";
 import { ImageResponse } from "next/og";
 
 export const ogImageSize = { width: 1200, height: 630 };
@@ -172,7 +173,7 @@ export function createOgImage({ title, eyebrow, subtitle, variant = "default" }:
               </span>
               <span style={{ fontSize: 18, color: TEXT_MUTED }}>•</span>
               <span style={{ fontSize: 18, color: TEXT_DARK, fontWeight: 600 }}>
-                {isEmergency ? "24/7 Emergency" : "5.0 stars · 46+ Reviews"}
+                {isEmergency ? "24/7 Emergency" : `${BUSINESS.rating.toFixed(1)} stars · ${BUSINESS.reviewCount}+ Reviews`}
               </span>
             </div>
           </div>
