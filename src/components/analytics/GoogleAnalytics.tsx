@@ -1,7 +1,7 @@
 "use client";
 
 import Script from "next/script";
-import { GA_MEASUREMENT_ID } from "@/lib/pixel";
+import { GA_MEASUREMENT_ID, GOOGLE_ADS_ID } from "@/lib/pixel";
 
 /**
  * Google Analytics 4 via gtag.js. Renders nothing until GA_MEASUREMENT_ID is
@@ -29,6 +29,7 @@ export default function GoogleAnalytics() {
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
           gtag('config', '${GA_MEASUREMENT_ID}');
+          gtag('config', '${GOOGLE_ADS_ID}');
         `}
       </Script>
     </>

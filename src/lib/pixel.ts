@@ -1,3 +1,7 @@
+// Google Ads Search account 518-102-8884; copied from its conversion setup.
+export const GOOGLE_ADS_ID = 'AW-16467696873';
+const GOOGLE_ADS_SERVICE_LEAD = `${GOOGLE_ADS_ID}/wFO8CMD-hKcdEOm5tKw9`;
+
 export const META_PIXEL_ID = '1372903383968668';
 export const OPENAI_PIXEL_ID = 'DMBS1D5TFZstmLgAtY2XcW';
 /**
@@ -135,6 +139,12 @@ async function trackFormConversion(
   if (!opts?.eventId) return;
   if (opts.email) await identifyOaiqUser({ email: opts.email });
   trackEvent(metaEvent, params, opts);
+  // Only confirmed service inquiries reach this path. Deduplicate retries
+  // with the server-issued ID; never send customer contact details to Ads.
+  safeGtag('event', 'conversion', {
+    send_to: GOOGLE_ADS_SERVICE_LEAD,
+    transaction_id: opts.eventId,
+  });
 }
 
 /**
