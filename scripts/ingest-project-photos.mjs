@@ -61,14 +61,17 @@ const titleize = (slug) =>
 /**
  * Pull slug -> project name out of constants.ts so generated alt text matches
  * the project it belongs to. Regex rather than a TS parse: the file is a plain
- * literal array and we only need two adjacent string fields. Falls back to the
- * titleized slug for a project that isn't in constants.ts yet.
+ * literal array and we only need two nearby string fields. Any number of
+ * single-line `key: "value",` fields may sit between them (every project has
+ * `updatedOn` there); a `{`, `[` or a multi-line value breaks the chain, so a
+ * phase's `slug` can never pair with the next project's `name`. Falls back to
+ * the titleized slug for a project that isn't in constants.ts yet.
  */
 async function readProjectNames() {
   const names = new Map();
   if (!existsSync(CONSTANTS)) return names;
   const src = await readFile(CONSTANTS, "utf8");
-  const re = /slug:\s*"([^"]+)",\s*\n\s*name:\s*"([^"]+)"/g;
+  const re = /slug:\s*"([^"]+)",[ \t]*\n(?:[ \t]*\w+:[ \t]*"[^"\n]*",[ \t]*\n)*[ \t]*name:\s*"([^"]+)"/g;
   let m;
   while ((m = re.exec(src)) !== null) names.set(m[1], m[2]);
   return names;

@@ -8,6 +8,34 @@ Raw drops are gitignored — only this file and the empty folder structure are
 committed. The finished WebP files land in `public/images/projects/` and those
 **are** committed.
 
+## Desktop folder
+
+Run once on the laptop that has this repo checked out:
+
+```bash
+npm run photos:desktop
+```
+
+That puts **CS Site Photos** on the Desktop as a link to this folder. Dropping
+a photo there *is* dropping it in the inbox: one copy of each file, raws stay
+gitignored, and `npm run photos:ingest` sees them with no extra step.
+Re-running is safe — it repairs the link if it was moved or deleted.
+
+What's inside:
+
+```
+CS Site Photos/
+├── _new-project-template/      duplicate it, rename the copy to the project slug
+│   ├── PROJECT-INFO.md         the metadata form — fill in, leave it with the photos
+│   └── before/ underground/ rough-in/ trim-out/ final/ after/
+├── _gallery/                   residential/ commercial/ new-construction/ remodel/
+└── <project-slug>/<phase>/     projects already on the site, waiting on photos
+```
+
+Working from a machine without the repo: drop photos into the same layout
+anywhere, then upload the project folder through GitHub's *Add file → Upload
+files* into `photo-inbox/` on a branch (see *Working remotely* below).
+
 ## How to use it
 
 1. **Drop photos** into the folder for the project and phase:
@@ -31,7 +59,8 @@ committed. The finished WebP files land in `public/images/projects/` and those
    `photo-inbox/_generated/<project-slug>.ts.txt`. Paste it into that project's
    `phases: [...]` array in `src/lib/constants.ts` and replace the `TODO`
    description line. For a project that doesn't exist yet, also fill in the
-   metadata (see below).
+   metadata — `PROJECT-INFO.md` in `_new-project-template/` is the form (see
+   below).
 
 4. **Check nothing is broken:**
 
@@ -106,8 +135,18 @@ wants to be the strongest single frame of a job rather than one of a sequence.
 Use these, because they're what the existing 13 projects already use. A new
 phase slug is fine when the job genuinely has one — just keep it kebab-case.
 
-`underground` · `2nd-rough` · `rough-in` · `water-repipe` · `trim-out` ·
-`final` · `demo` · `build` · `new-construction`
+`before` · `underground` · `2nd-rough` · `rough-in` · `water-repipe` ·
+`trim-out` · `final` · `after` · `demo` · `build` · `new-construction`
+
+### Before and after
+
+A remodel or repipe sells on the same angle shot twice. Put the "before"
+frames in `<slug>/before/` and the "after" frames in `<slug>/after/` **in the
+same order** — number them `01.jpg`, `02.jpg` … in both folders if the phone
+names don't line up. The ingest numbers each folder `photo-1 … photo-N` in
+filename order, so `before/photo-3` and `after/photo-3` stay a pair. They land
+on the project page as two phases, *Before* and *After*; put *Before* first
+in `phases: [...]` so the page reads in time order.
 
 ## Closing out a project
 
@@ -147,7 +186,9 @@ on phones.
 
 **New projects** — photos are already in Drive → Job Photos. Slugs below are
 proposed; rename the folder if you'd rather the URL read differently, since the
-folder name becomes `csplumbinglee.com/projects/<slug>`.
+folder name becomes `csplumbinglee.com/projects/<slug>`. For a job not listed
+here, duplicate `_new-project-template/`, rename the copy to the slug, and fill
+in its `PROJECT-INFO.md`.
 
 | Drive folder | Photos there | Drop into |
 |---|---|---|

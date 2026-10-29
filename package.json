@@ -11,7 +11,8 @@
     "photos:check": "node scripts/check-project-images.mjs && node scripts/strip-image-metadata.mjs --check",
     "gallery:ingest": "node scripts/ingest-gallery-photos.mjs",
     "photos:strip": "node scripts/strip-image-metadata.mjs",
-    "builders:pdf": "node scripts/build-builder-pdfs.mjs"
+    "builders:pdf": "node scripts/build-builder-pdfs.mjs",
+    "photos:desktop": "node scripts/setup-desktop-photo-folder.mjs"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
