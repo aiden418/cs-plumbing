@@ -16,6 +16,7 @@ const CATEGORY_HUBS: Record<string, string[]> = {
   "Commercial New Construction": ["commercial", "new-construction"],
   "Commercial Remodel": ["commercial", "plumbing-remodel"],
   Remodel: ["plumbing-remodel"],
+  "Residential Service": ["water-softeners"],
 };
 
 const MONTHS = [

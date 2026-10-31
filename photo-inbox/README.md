@@ -145,17 +145,23 @@ on phones.
 | `fema-home-punta-gorda` | `2nd-rough`, `trim-out` | completion date |
 | `south-florida-christian-academy-bathroom-remodel` | `rough-in`, `final` | completion date |
 
-**New projects** — photos are already in Drive → Job Photos. Slugs below are
-proposed; rename the folder if you'd rather the URL read differently, since the
-folder name becomes `csplumbinglee.com/projects/<slug>`.
+**New projects** — status as of 2026-10-31. Four of the five Drive → Job Photos
+folders are live; the slug is the URL (`csplumbinglee.com/projects/<slug>`).
 
-| Drive folder | Photos there | Drop into |
+| Drive folder | Status | Notes |
 |---|---|---|
-| 39 Southport | 22 JPG, May 2025 (several `copy` duplicates — keep one of each) | `photo-inbox/39-southport/final/` |
-| Macan New Construction | 6 JPEG, Aug 2025 | `photo-inbox/macan-new-construction/final/` |
-| River House | 5 JPEG, Jul 2025 | `photo-inbox/river-house/final/` |
-| 1326 Lafayette St | 12 HEIC, Jun 2025 | `photo-inbox/1326-lafayette-st/final/` |
-| Naples Dock Line | 2 JPG (before / after), Oct 2025 | `photo-inbox/naples-dock-line/final/` |
+| 39 Southport | **Live** — `39-southport` | 17 of 22 used (two phases: `dock-water-line`, `wet-bar`). The five "copy" files were different frames, not duplicates; 5 near-identical trench shots were left out. Location set to Bonita Springs from the dock-builder sign in frame — confirm. |
+| Macan New Construction | **Live** — `macan-new-construction` | 5 of 6. `IMG_4851.jpeg` is 11 MB, over the Drive connector's 10 MB download cap — drop a downsized copy in `trim-out/` to add it. |
+| River House | **Live** — `river-house` | 5 of 5. No GPS in the iPad photos, so no `location` yet — add the city. |
+| 1326 Lafayette St | **Live** — `1326-lafayette-st` | 10 of 12 (two phases: `layout`, `rough-in`). HEIC originals — see the note below. |
+| Naples Dock Line | **Pending** | Both JPGs (7.9 MB and 8.6 MB) are too large for the Drive connector to transfer. Drop copies under ~5 MB into `photo-inbox/naples-dock-line/final/`, or upload them to the branch via GitHub. |
+
+**HEIC caveat.** The prebuilt `sharp` binary that ships with the Next.js install
+reads HEIC headers but cannot decode the HEVC image data (`heif: Support for this
+compression format has not been built in`). Convert iPhone HEIC files to JPEG
+first — `pip install pillow-heif` and a five-line script does it, preserving the
+EXIF orientation and GPS that the ingest then strips — and drop the JPEGs in the
+inbox. The ingest itself is unchanged.
 
 Each new project needs the metadata the generated block can't infer — send it
 with the photos and it goes straight in:

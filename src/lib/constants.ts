@@ -4101,6 +4101,185 @@ export const COMPLETED_PROJECTS: CompletedProject[] = [
     metaTitle: "Hansen Homes 2210 Cape Coral New Construction Plumbing",
     metaDescription: "Trim-out on Hansen Homes build 2210 in Cape Coral by C&S Plumbing of Lee — finish fixtures and final connections on a new-construction home.",
   },
+  {
+    slug: "39-southport",
+    updatedOn: "2026-10-31",
+    name: "39 Southport — Dock Water Line & Wet Bar RO System",
+    client: "Private Homeowner",
+    category: "Residential Service",
+    timeline: "Completed",
+    cost: "On Request",
+    description:
+      "A waterfront homeowner wanted running water at the boat dock and filtered drinking water at the wet bar. C&S Plumbing trenched a new PVC water line from the house across the yard and under the dock to a hose bibb at the boat lift, with shutoff valves at the wall and under the deck boards, then set a hammered nickel bar sink with a Waterdrop 800G tankless reverse osmosis system and its own filtered-water faucet.",
+    location: "Bonita Springs, FL",
+    coverImage: "/images/projects/39-southport/dock-water-line/photo-1.webp",
+    phases: [
+      {
+        name: "Dock Water Line",
+        slug: "dock-water-line",
+        description:
+          "New water line trenched from the house to the dock, run under the deck framing to a hose bibb at the boat lift, with isolation valves at both ends.",
+        images: [
+          { src: "/images/projects/39-southport/dock-water-line/photo-1.webp", alt: "New hose bibb with a brass ball-valve shutoff mounted on a dock piling beside the boat lift, fed by the PVC water line from the house" },
+          { src: "/images/projects/39-southport/dock-water-line/photo-2.webp", alt: "New exterior water line with brass hose bibb and shutoff valve stubbed out of the stucco wall where the dock line leaves the house" },
+          { src: "/images/projects/39-southport/dock-water-line/photo-3.webp", alt: "Open trench for the dock water line running from the back of the house across the lawn toward the dock walkway" },
+          { src: "/images/projects/39-southport/dock-water-line/photo-4.webp", alt: "Trench cut across the lawn to the dock entrance with lengths of PVC pipe laid out ready to be glued and set" },
+          { src: "/images/projects/39-southport/dock-water-line/photo-5.webp", alt: "Dock water line trench starting at the house with pavers lifted and the new PVC riser at the wall" },
+          { src: "/images/projects/39-southport/dock-water-line/photo-6.webp", alt: "PVC water line set in the bottom of the trench before backfill" },
+          { src: "/images/projects/39-southport/dock-water-line/photo-7.webp", alt: "PVC water line strapped along the underside of the dock framing above the water" },
+          { src: "/images/projects/39-southport/dock-water-line/photo-8.webp", alt: "PVC ball valve installed under the deck boards so the dock water line can be isolated and drained" },
+          { src: "/images/projects/39-southport/dock-water-line/photo-9.webp", alt: "PVC water line coming out of the trench and turning up under the edge of the dock walkway" },
+          { src: "/images/projects/39-southport/dock-water-line/photo-10.webp", alt: "PVC stub-out through the stucco at the base of the wall with pavers lifted to trench the dock line" },
+          { src: "/images/projects/39-southport/dock-water-line/photo-11.webp", alt: "Trench backfilled and graded across the yard with the dock walkway and boat lift beyond" },
+        ],
+      },
+      {
+        name: "Wet Bar & Reverse Osmosis",
+        slug: "wet-bar",
+        description:
+          "Hammered nickel bar sink and drain set in the quartzite top, with a Waterdrop 800G tankless reverse osmosis system feeding a dedicated filtered-water faucet.",
+        images: [
+          { src: "/images/projects/39-southport/wet-bar/photo-1.webp", alt: "Wet bar with a hammered nickel bar sink and a brushed stainless gooseneck filtered-water faucet set in a quartzite countertop" },
+          { src: "/images/projects/39-southport/wet-bar/photo-2.webp", alt: "Close-up of the hammered nickel bar sink with its basket strainer drain" },
+          { src: "/images/projects/39-southport/wet-bar/photo-3.webp", alt: "Open wet bar cabinet showing the Waterdrop reverse osmosis unit connected under the bar sink" },
+          { src: "/images/projects/39-southport/wet-bar/photo-4.webp", alt: "Waterdrop 800G tankless reverse osmosis system installed in the wet bar base cabinet" },
+          { src: "/images/projects/39-southport/wet-bar/photo-5.webp", alt: "Reverse osmosis feed, drain and faucet tubing connected to the Waterdrop unit under the sink" },
+          { src: "/images/projects/39-southport/wet-bar/photo-6.webp", alt: "Bar sink P-trap with the reverse osmosis drain connection and braided supply lines under the wet bar" },
+        ],
+      },
+    ],
+    scopeDetails: [
+      "Dock water line trenched from the house to the boat lift",
+      "Hose bibb and ball-valve shutoff at the dock piling",
+      "Under-dock PVC run with isolation valve",
+      "Wet bar sink and drain",
+      "Waterdrop 800G tankless reverse osmosis system with dedicated faucet",
+    ],
+    materials: [
+      "PVC water line and fittings",
+      "Brass hose bibbs with ball-valve shutoffs",
+      "Waterdrop 800G tankless reverse osmosis system",
+      "Hammered nickel bar sink with filtered-water faucet",
+    ],
+    metaTitle: "39 Southport Dock Water Line & Wet Bar RO Install",
+    metaDescription:
+      "C&S Plumbing of Lee ran a new water line from the house to the boat dock and set a wet bar sink with a Waterdrop 800G reverse osmosis system at a Bonita Springs waterfront home.",
+  },
+  {
+    slug: "macan-new-construction",
+    updatedOn: "2026-10-31",
+    name: "Macan New Construction — Trim-Out (Fort Myers)",
+    client: "Private Residence",
+    category: "New Construction",
+    timeline: "Completed",
+    completedOn: "2025-07-24",
+    cost: "On Request",
+    description:
+      "C&S Plumbing set the finish plumbing on this Fort Myers new-construction home: undermount lavatory sinks with chrome single-handle faucets in quartzite vanity tops, an elongated two-piece toilet, and a single-bowl stainless undermount sink, all connected and tested at trim-out.",
+    location: "Fort Myers, FL",
+    coverImage: "/images/projects/macan-new-construction/trim-out/photo-1.webp",
+    phases: [
+      {
+        name: "Trim-Out",
+        slug: "trim-out",
+        description: "Finish fixtures set and connected after rough-in: lavatory sinks and faucets, toilet, and the stainless sink.",
+        images: [
+          { src: "/images/projects/macan-new-construction/trim-out/photo-1.webp", alt: "Undermount rectangular sink with a chrome single-handle faucet set in a quartzite vanity top on a cherry shaker vanity" },
+          { src: "/images/projects/macan-new-construction/trim-out/photo-2.webp", alt: "Chrome single-handle lavatory faucet and pop-up drain on the undermount sink with the quartzite top polished" },
+          { src: "/images/projects/macan-new-construction/trim-out/photo-3.webp", alt: "Oval undermount sink with a chrome single-handle faucet in the second bathroom vanity" },
+          { src: "/images/projects/macan-new-construction/trim-out/photo-4.webp", alt: "Two-piece elongated toilet set in a water closet with wood-look tile floor" },
+          { src: "/images/projects/macan-new-construction/trim-out/photo-5.webp", alt: "Single-bowl stainless undermount sink with a chrome single-handle faucet in a quartzite countertop" },
+        ],
+      },
+    ],
+    scopeDetails: ["Fixture trim-out", "Lavatory sinks and faucets", "Toilet set", "Stainless undermount sink and faucet", "Residential new construction"],
+    caseStudy: {
+      homeType: "Single-family new construction",
+      phasesPerformed: ["Trim-out"],
+    },
+    metaTitle: "Macan New Construction Fort Myers Plumbing Trim-Out",
+    metaDescription:
+      "Finish plumbing on a Fort Myers new-construction home by C&S Plumbing of Lee — undermount sinks, chrome faucets, toilet and stainless sink set at trim-out.",
+  },
+  {
+    slug: "river-house",
+    updatedOn: "2026-10-31",
+    name: "River House — Kitchen Remodel",
+    client: "Private Homeowner",
+    category: "Remodel",
+    timeline: "Completed",
+    completedOn: "2025-07-02",
+    cost: "On Request",
+    description:
+      "C&S Plumbing handled the kitchen plumbing on this remodel: a black undermount main sink with a matte black faucet on the window wall and a black prep sink with a black-and-brass spring-neck faucet at the coffee bar, both set and connected under new white quartz counters beside a marble waterfall island.",
+    coverImage: "/images/projects/river-house/final/photo-1.webp",
+    phases: [
+      {
+        name: "Finished Kitchen",
+        slug: "final",
+        description: "The completed kitchen with both sinks and faucets set and connected to the new cabinet layout.",
+        images: [
+          { src: "/images/projects/river-house/final/photo-1.webp", alt: "Finished kitchen with a marble waterfall island, bar seating, maple shaker cabinets and a black subway tile backsplash" },
+          { src: "/images/projects/river-house/final/photo-2.webp", alt: "Kitchen with white quartz counters and a black undermount sink with a matte black faucet along the window wall" },
+          { src: "/images/projects/river-house/final/photo-3.webp", alt: "Coffee bar with a black undermount prep sink and matte black gooseneck faucet under floating shelves" },
+          { src: "/images/projects/river-house/final/photo-4.webp", alt: "Black undermount prep sink with a matte black and brass spring-neck faucet set in white quartz" },
+          { src: "/images/projects/river-house/final/photo-5.webp", alt: "Wide view of the remodeled kitchen and waterfall island from the living room" },
+        ],
+      },
+    ],
+    scopeDetails: ["Kitchen sink and faucet installation", "Coffee bar prep sink and faucet", "Kitchen remodel plumbing"],
+    metaTitle: "River House Kitchen Remodel Plumbing",
+    metaDescription:
+      "Kitchen remodel plumbing by C&S Plumbing of Lee — black undermount main sink and coffee-bar prep sink with matte black faucets set under new quartz counters.",
+  },
+  {
+    slug: "1326-lafayette-st",
+    updatedOn: "2026-10-31",
+    name: "1326 Lafayette St — Commercial Sanitary Rough-In (Cape Coral)",
+    client: "Commercial Build-Out",
+    category: "Commercial Remodel",
+    timeline: "Completed",
+    cost: "On Request",
+    description:
+      "New under-slab sanitary line for a commercial tenant space on Lafayette St in Cape Coral. C&S Plumbing hung dust containment, laid out and sawcut the slab along the mirrored wall, set the new PVC drain run to the fixture location, and tied it into the existing building sewer outside with a new cleanout.",
+    location: "Cape Coral, FL",
+    coverImage: "/images/projects/1326-lafayette-st/rough-in/photo-1.webp",
+    phases: [
+      {
+        name: "Layout & Containment",
+        slug: "layout",
+        description: "Dust walls hung and the new drain route laid out in paint on the slab before cutting.",
+        images: [
+          { src: "/images/projects/1326-lafayette-st/layout/photo-1.webp", alt: "Commercial tenant space with plastic dust walls hung and the new drain line route marked in orange on the slab" },
+          { src: "/images/projects/1326-lafayette-st/layout/photo-2.webp", alt: "Orange layout line for the under-slab sanitary run across the floor beneath the exposed black ceiling" },
+          { src: "/images/projects/1326-lafayette-st/layout/photo-3.webp", alt: "Layout paint marking the sawcut path along the wall toward the storefront window" },
+          { src: "/images/projects/1326-lafayette-st/layout/photo-4.webp", alt: "Marked slab cut line running the length of the room to the new fixture location" },
+          { src: "/images/projects/1326-lafayette-st/layout/photo-5.webp", alt: "Existing restroom with patterned cement tile and a brass faucet, with the new drain route painted on the floor" },
+          { src: "/images/projects/1326-lafayette-st/layout/photo-6.webp", alt: "Plastic containment sheeting isolating the work area from the rest of the tenant space" },
+        ],
+      },
+      {
+        name: "Slab Cut & Rough-In",
+        slug: "rough-in",
+        description: "Slab sawcut and trenched along the mirror wall, new PVC sanitary line set, and the exterior tie-in made with a cleanout.",
+        images: [
+          { src: "/images/projects/1326-lafayette-st/rough-in/photo-1.webp", alt: "Crew opening the slab trench along the mirrored wall for the new sanitary line" },
+          { src: "/images/projects/1326-lafayette-st/rough-in/photo-2.webp", alt: "Slab trench cut along the mirrored wall with floor protection down over the rest of the room" },
+          { src: "/images/projects/1326-lafayette-st/rough-in/photo-3.webp", alt: "New PVC sanitary line with a cleanout tied into the existing building drain at the exterior wall" },
+          { src: "/images/projects/1326-lafayette-st/rough-in/photo-4.webp", alt: "PVC drain line and cleanout riser in the exterior trench where the new run exits the slab" },
+        ],
+      },
+    ],
+    scopeDetails: [
+      "Dust containment and floor protection",
+      "Slab sawcut and trench inside a finished tenant space",
+      "New PVC under-slab sanitary line",
+      "Exterior tie-in to the existing building sewer with cleanout",
+    ],
+    metaTitle: "1326 Lafayette St Cape Coral Commercial Plumbing Rough-In",
+    metaDescription:
+      "C&S Plumbing of Lee sawcut the slab and set a new under-slab sanitary line with an exterior sewer tie-in for a commercial tenant space on Lafayette St in Cape Coral.",
+  },
 ];
 
 // ============================================
