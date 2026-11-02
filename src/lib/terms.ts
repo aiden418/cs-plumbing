@@ -95,6 +95,8 @@ export const TERMS_PARAMS = {
   lateInterestAnnualPct: 18,
   creditCardSurchargePct: 3,
   cureDays: 30,
+  invoiceDisputeDays: 10,
+  refundBusinessDays: 10,
   commercialNetDays: 30,
   retainageMaxPct: 10,
   retainageReleaseDays: 30,
@@ -129,8 +131,8 @@ const OFFICE = `${BUSINESS.address}, ${BUSINESS.city}, ${BUSINESS.state} ${BUSIN
 export const TERMS_PLAIN_ENGLISH: readonly string[] = [
   "Your written estimate or proposal plus these Terms is the agreement. You accept by signing, paying, scheduling, or telling us to go ahead.",
   "The price covers the scope written on the document. Anything hidden, added, or required by the inspector is priced and approved in writing before we do it.",
-  `Payment is due when the work is done unless your document says otherwise. Credit cards carry a ${TERMS_PARAMS.creditCardSurchargePct}% surcharge; cash, check, ACH, and debit do not.`,
-  "Installations carry a one-year warranty on our labor and the materials we supply. Service repairs carry 30 days on labor. Manufacturer warranties pass to you.",
+  `Payment is due when our work is done unless your document says otherwise. Credit cards carry a ${TERMS_PARAMS.creditCardSurchargePct}% surcharge; cash, check, ACH, debit, and prepaid cards do not.`,
+  "Installations carry a one-year warranty on our labor and the materials we supply. Service repairs carry 30 days on labor and one year on parts we supply. Manufacturer warranties pass to you.",
   "We are not responsible for what was already failing before we arrived, for lines nobody marked, or for finishes we did not quote to restore.",
   "If something goes wrong, call the office first. We fix what we got wrong. If we still disagree, we mediate in Lee County before anyone goes to court.",
 ];
@@ -152,17 +154,22 @@ export const TERMS_SECTIONS: readonly TermsSection[] = [
       {
         id: "scope-acceptance",
         heading: "Acceptance.",
-        text: "You accept the document and these Terms when you sign it, pay any part of it, schedule the work, or tell us to proceed in writing, by text message, by email, or in person. Asking us to start the work has the same effect.",
+        text: "Every estimate and proposal shows the link to these Terms and the revision date before you decide. You accept the document and these Terms when you sign it, approve it in writing by email or text message, pay any part of it, or ask us to start the work described on it. We keep a copy of the document you accepted and of your approval.",
+      },
+      {
+        id: "scope-booking",
+        heading: "Booking a visit is not approving a project.",
+        text: "Booking a service call or diagnostic visit accepts these Terms for that visit and the fee quoted at booking (clause 3.4). Any further work is accepted separately when you approve the written estimate for it.",
       },
       {
         id: "scope-revision",
         heading: "Which revision applies.",
-        text: "Each document cites the revision of these Terms in effect on its date. That revision governs the work described on it, even if we publish a newer revision later.",
+        text: "Each estimate and proposal cites the revision of these Terms in effect on its date. The revision in effect when you accept stays attached to that job, including its change orders and invoices, even if we publish a newer revision later. A later invoice does not substitute a newer revision.",
       },
       {
         id: "scope-precedence",
         heading: "Order of precedence.",
-        text: "If documents conflict, a signed contract or subcontract controls first, then the signed estimate or proposal, then these Terms. A written change order controls over all of them for the change it describes.",
+        text: "If documents conflict, a signed contract or subcontract controls first, then the estimate or proposal you accepted (by signature, written approval, or payment), then these Terms. A written change order controls over all of them for the change it describes.",
       },
       {
         id: "scope-consumer",
@@ -184,7 +191,7 @@ export const TERMS_SECTIONS: readonly TermsSection[] = [
       {
         id: "licensing-insurance",
         heading: "Insurance.",
-        text: `C&S carries ${GL_COVERAGE.replace(/ coverage$/, "")} and ${lowerFirst(WC_COVERAGE)}. A certificate of insurance is available on request. Our insurance responds to damage caused by our work; it is not a substitute for your property insurance for conditions that existed before we arrived.`,
+        text: `C&S carries ${GL_COVERAGE.replace(/ coverage$/, "")} and ${lowerFirst(WC_COVERAGE)}. A certificate of insurance is available on request. What we are responsible for is set out in Section 11.`,
       },
       {
         id: "licensing-people",
@@ -205,12 +212,12 @@ export const TERMS_SECTIONS: readonly TermsSection[] = [
       {
         id: "estimates-validity",
         heading: "Validity.",
-        text: `A written estimate or proposal is valid for ${TERMS_PARAMS.quoteValidityDays} days from its date unless the document states a different period. After that, pricing may be updated for current material and labor costs.`,
+        text: `A written estimate or proposal is open for acceptance for ${TERMS_PARAMS.quoteValidityDays} days from its date unless the document states a different period. If you accept within that period, the price is fixed for the scope described and is not repriced because time passes, except as clause 16.4 provides for commercial material escalation. If you accept after the period, we may update the price for current material and labor costs before starting.`,
       },
       {
         id: "estimates-fixed-price",
         heading: "Fixed price.",
-        text: "The total stated is a firm fixed price for the scope of work described. It is not an estimate and is not subject to adjustment for actual labor or material cost. Changes to scope, quantity, or conditions are billed only by written change order approved before the work.",
+        text: "The total stated is a firm fixed price for the scope of work described. It is not an estimate and is not subject to adjustment for actual labor or material cost, except as clause 16.4 provides for commercial material escalation. Changes to scope, quantity, or conditions are billed only by written change order approved before the work, with the exceptions stated in clauses 4.4 and 6.3.",
       },
       {
         id: "estimates-fees",
@@ -258,9 +265,14 @@ export const TERMS_SECTIONS: readonly TermsSection[] = [
         ],
       },
       {
+        id: "changes-our-corrections",
+        heading: "Correcting our own work.",
+        text: "Correcting work that C&S performed defectively or not to code is never a change order. We correct it at no charge, including any re-inspection fee caused by our error.",
+      },
+      {
         id: "changes-active-leak",
         heading: "Stopping active water loss.",
-        text: "If we find an active leak or failure that will cause damage while we wait for approval, we may take the minimum action needed to stop it, then tell you promptly and price any further work for your approval.",
+        text: "If we find an active leak, a sewage release, or a gas or scald hazard that will cause damage or injury while we wait for approval, we may take the minimum action needed to make it safe. That emergency work is billed at the hourly service rate and material prices stated on your document or quoted at booking, limited to the time and materials actually used to stop the loss. We tell you what we did and what it cost as soon as practical and before we leave the site, and any further work waits for your written approval. This is the only exception to clause 4.1.",
       },
       {
         id: "changes-pricing",
@@ -276,7 +288,7 @@ export const TERMS_SECTIONS: readonly TermsSection[] = [
       {
         id: "permits-who",
         heading: "Permits.",
-        text: "When the document includes a permit, C&S applies for the plumbing permit, schedules inspections, and performs the work to the Florida Building Code and local amendments. Permit, impact, and utility connection fees are listed separately on the document when they apply.",
+        text: "When a plumbing permit is required, C&S applies for it, schedules the inspections, and performs the work to the Florida Building Code and local amendments. Permit, impact, and utility connection fees are listed separately on the document when they apply. If a permit is required and the document did not list it, we still obtain it; you pay only the permit fee at cost, and our time to obtain it is not charged.",
       },
       {
         id: "permits-no-unpermitted",
@@ -312,7 +324,7 @@ export const TERMS_SECTIONS: readonly TermsSection[] = [
       {
         id: "scheduling-access",
         heading: "What you provide.",
-        text: "You provide safe access to the work area and to the water, sewer, gas, and electrical shut-offs; working water and power; a clear path and clear work area; secured pets; and the location of private lines such as irrigation, pool, low-voltage, or septic. Time spent waiting for access or clearing the area is billable.",
+        text: "You provide safe access to the work area and to the water, sewer, gas, and electrical shut-offs; working water and power; a clear path and clear work area; secured pets; and the location of private lines such as irrigation, pool, low-voltage, or septic. Time our crew spends waiting for access or clearing the work area is billed at the hourly rate on your document or quoted at booking; we tell you before we bill it.",
       },
       {
         id: "scheduling-occupied",
@@ -333,7 +345,8 @@ export const TERMS_SECTIONS: readonly TermsSection[] = [
       {
         id: "payment-due",
         heading: "When payment is due.",
-        text: "Payment is due in full when the work is complete, unless your estimate or proposal states a deposit, a pre-payment for special-order materials, or a progress billing schedule. Completion means the work described on the document has been performed; it does not wait for inspections or punch items that belong to other trades.",
+        text: "Payment is due in full when our work is complete, unless your estimate or proposal states a deposit, a pre-payment for special-order materials, or a progress billing schedule. Our work is complete when the scope on the document has been performed and, if we pulled a permit, we have requested the final plumbing inspection. If that inspection fails because of our work, we correct it at no charge and you may hold back the reasonable value of the correction until it passes; inspections or punch items that belong to other trades do not delay payment. If a proposal states a deposit of more than 10% of the price and a permit is required, we apply for the permit within 30 days after receiving the deposit and start the work within 90 days after the permit issues, as section 489.126, Florida Statutes, requires, unless you agree in writing to a longer period.",
+        attorneyReview: "Confirm the section 489.126(2) deposit rule wording (10% threshold, 30 days to apply for permits, 90 days to start after permits issue, written agreement to longer periods).",
       },
       {
         id: "payment-methods",
@@ -343,7 +356,7 @@ export const TERMS_SECTIONS: readonly TermsSection[] = [
       {
         id: "payment-surcharge",
         heading: "Credit card surcharge.",
-        text: `Credit card payments carry a ${TERMS_PARAMS.creditCardSurchargePct}% surcharge to cover processing costs, disclosed on the invoice before you pay. The surcharge does not apply to cash, check, ACH, or debit card payments and does not exceed our cost of acceptance.`,
+        text: `Credit card payments carry a ${TERMS_PARAMS.creditCardSurchargePct}% surcharge to cover processing costs. It is shown as a separate line on the invoice and disclosed before you pay, and it never exceeds our cost of accepting the card or the maximum the card networks allow. The surcharge does not apply to cash, check, ACH, debit card, or prepaid card payments.`,
         attorneyReview:
           "FS 501.0117 (no-surcharge statute) is still on the books but was held unconstitutional in Dana's R.R. Supply v. Attorney General, 807 F.3d 1235 (11th Cir. 2015). Confirm the office is comfortable relying on that, that the processor has been notified, and that invoices show the surcharge as a separate line. Alternative: cash/check discount wording.",
       },
@@ -355,12 +368,12 @@ export const TERMS_SECTIONS: readonly TermsSection[] = [
       {
         id: "payment-returned",
         heading: "Returned payments.",
-        text: "A check or electronic payment returned unpaid is subject to the service charge permitted by section 68.065, Florida Statutes, in addition to any bank fees we incur.",
+        text: "A check or electronic payment returned unpaid is subject to the service charge permitted by section 68.065, Florida Statutes.",
       },
       {
         id: "payment-suspension",
         heading: "Suspension for non-payment.",
-        text: "If a payment is late, we may stop work, decline to schedule further work, and withhold warranty service until the account is current. Materials remain our property until paid for in full.",
+        text: "If a payment is past due, we may stop work and decline to schedule further work until the account is current. Warranty service is suspended while a balance is past due and resumes when the account is paid; the warranty period is not extended, and a claim you made on time is honored once the account is current. Title to materials passes to you when they are paid for. Our remedies for non-payment are payment, interest, collection costs, and lien rights, not removal of installed work.",
       },
       {
         id: "payment-lien",
@@ -370,7 +383,7 @@ export const TERMS_SECTIONS: readonly TermsSection[] = [
       {
         id: "payment-disputed",
         heading: "Disputed invoices.",
-        text: "Tell us in writing before the due date if you dispute any part of an invoice, and pay the undisputed part when due. We review and respond promptly.",
+        text: `If you dispute any part of an invoice, tell us in writing within ${TERMS_PARAMS.invoiceDisputeDays} days after you receive it and pay the undisputed part when due. We review and respond in writing within ${TERMS_PARAMS.invoiceDisputeDays} days. Interest does not accrue on a disputed amount while we are reviewing it.`,
       },
     ],
   },
@@ -381,17 +394,17 @@ export const TERMS_SECTIONS: readonly TermsSection[] = [
       {
         id: "materials-ours",
         heading: "Materials we supply.",
-        text: "Materials we supply are new, approved for the use under the Florida Building Code, and installed to the manufacturer's instructions. Where a specified product is unavailable, we may substitute one of equal or better quality and function. We tell you before installing a substitute that changes the look or brand of a visible fixture.",
+        text: "Materials we supply are new, approved for the use under the Florida Building Code, and installed to the manufacturer's instructions. Where a specified product is unavailable, we may substitute a like-for-like product of equal or better quality and function at no change in price. A substitute that changes the brand, model, finish, size, or performance of a product named on your document needs your approval before we install it.",
       },
       {
         id: "materials-yours",
         heading: "Materials you supply.",
-        text: "If you supply fixtures, equipment, or materials, we install them for the labor price only. We do not warrant them, and you are responsible for their suitability, defects, missing parts, returns, and the cost of return trips if they arrive late, wrong, or damaged. We may decline to install products that do not meet code or the manufacturer's installation requirements.",
+        text: "If you supply fixtures, equipment, or materials, we install them for the labor price only. Our workmanship warranty in Section 9 covers how we installed them, but not the product itself or a failure the product causes. You are responsible for their suitability, defects, missing parts, returns, and the cost of return trips if they arrive late, wrong, or damaged. We may decline to install products that do not meet code or the manufacturer's installation requirements.",
       },
       {
         id: "materials-special-orders",
         heading: "Special orders.",
-        text: "Fixtures, equipment, and materials ordered for your job cannot be cancelled once ordered. If you cancel or change after we order, you pay the cost of the items plus any restocking or freight charges the supplier bills us.",
+        text: "If you cancel or change your order after we have ordered fixtures, equipment, or materials for your job: items the supplier accepts back are returned, and you are charged only the supplier's restocking fee and freight, with any refund the supplier gives us credited to you in full; items the supplier will not accept back (custom, cut-to-length, or special-order products) are charged at our cost, and you may keep them. You are never charged both for an item and for an amount the supplier refunded. Your right to cancel under Section 14 is not affected.",
       },
       {
         id: "materials-removed",
@@ -401,7 +414,7 @@ export const TERMS_SECTIONS: readonly TermsSection[] = [
       {
         id: "materials-delivered",
         heading: "Delivered materials.",
-        text: "Please provide a secure, dry place for materials delivered before installation. Loss or damage to delivered materials caused by others, weather, or theft is not C&S's responsibility, and replacement is a change order.",
+        text: "Materials stay in our care until installed unless you ask us to deliver them to your property early. If you do, you provide a secure, dry place, and they are in your care from delivery; loss or damage not caused by C&S is replaced by change order.",
       },
     ],
   },
@@ -412,15 +425,15 @@ export const TERMS_SECTIONS: readonly TermsSection[] = [
       {
         id: "warranty-periods",
         heading: "What we warrant.",
-        text: "C&S warrants its workmanship and the materials it supplies against defects for the periods below, measured from the date the work is completed:",
+        text: "C&S warrants its workmanship and the materials it supplies against defects for the periods below, measured from the date the work is completed. An installation is new fixtures, equipment, or piping we install; a repair restores an existing component. The labor period covers our workmanship and the labor to correct a covered defect; the materials period covers the part itself. After the labor period ends, a defective part we supplied is still replaced at no charge for the rest of its materials period, but the labor to replace it is billed at our service rates.",
         items: [
           `installations, including water heaters, fixtures, whole-home repipes, remodel rough-in and trim, and new-construction plumbing: ${TERMS_PARAMS.warranty.installationLabor} on our labor and ${TERMS_PARAMS.warranty.installationMaterials} on materials supplied by C&S;`,
           `service and repair work, including leak repairs, valve and fixture repairs, and part replacements: ${TERMS_PARAMS.warranty.serviceLabor} on our labor and ${TERMS_PARAMS.warranty.installationMaterials} on materials supplied by C&S;`,
-          `drain cleaning: ${TERMS_PARAMS.warranty.drainCleaning} against a recurring stoppage in the line we cleared, with no warranty on a line we identify at the time of service as having root intrusion, a belly, a break, or deteriorated cast iron;`,
-          "materials supplied by you: no C&S warranty.",
+          `drain cleaning: ${TERMS_PARAMS.warranty.drainCleaning} against a recurring stoppage in the line we cleared, whatever the cause, except a stoppage caused by an object or material put into the line after our service, and except a line we told you at the time of service has root intrusion, a belly, a break, or deteriorated cast iron, which carries no warranty;`,
+          "products you supplied: our workmanship in installing them is covered for the labor period above; the product itself is not.",
         ],
         attorneyReview:
-          "Tiered labor warranty is broader than the owner-confirmed WARRANTY constant (Sep 2026: one year on C&S-supplied materials only). Chris/Sam must sign off before this revision is merged; then align the residential, repipe and commercial service pages.",
+          "Tiered labor warranty is broader than the owner-confirmed WARRANTY constant (Sep 2026: one year on C&S-supplied materials only). Chris/Sam must sign off before this revision is merged; then align the residential, repipe and commercial service pages. Owner decision also needed on the rule that labor after the labor period is billed at service rates.",
       },
       {
         id: "warranty-manufacturer",
@@ -430,7 +443,8 @@ export const TERMS_SECTIONS: readonly TermsSection[] = [
       {
         id: "warranty-claims",
         heading: "How to make a claim.",
-        text: "Call or email the office within the warranty period and describe the problem. We inspect, and if the problem is a defect in our workmanship or in materials we supplied, we repair or replace it at our option at no charge. Repair or replacement is your exclusive remedy under this warranty. A visit that finds no covered defect is billed at our service rates.",
+        text: "Call or email the office within the warranty period and describe the problem. We inspect, and if the problem is a defect in our workmanship or in materials we supplied, we repair or replace it at our option: at no charge within the labor period, and after the labor period at no charge for the part with labor billed at our service rates, as clause 9.1 describes. Repair or replacement is your exclusive remedy under this warranty. A visit that finds no covered defect is billed at our service rates; we tell you that rate before we dispatch.",
+        attorneyReview: "Exclusive-remedy language on a consumer written warranty: confirm it is permissible and conspicuous enough.",
       },
       {
         id: "warranty-exclusions",
@@ -441,21 +455,23 @@ export const TERMS_SECTIONS: readonly TermsSection[] = [
           "conditions that existed before our work, including the parts of a plumbing system we did not replace;",
           "wear, sediment, scale, corrosion, or failures caused by water quality, water hardness, well water, or water pressure above code limits;",
           "freezing, storms, flooding, lightning, power surges, fire, or other events outside our control;",
-          "stoppages caused by foreign objects, grease, wipes, or roots;",
+          "stoppages caused by foreign objects, grease, wipes, or roots, except as the drain-cleaning warranty in clause 9.1 provides;",
           "materials you supplied, and work by other trades;",
           "cosmetic issues reported after the work was accepted;",
-          "accounts with an unpaid balance.",
+          "claims made while a balance is past due, which are honored once the account is current as clause 7.6 provides.",
         ],
       },
       {
         id: "warranty-transfer",
         heading: "Who is covered.",
         text: "The warranty runs to the original customer at the property where the work was done and is not transferable unless the document says otherwise. The new-construction customer benefits described on our website are separate from this warranty.",
+        attorneyReview: "Non-transferability of a written warranty on consumer products: confirm permissible and whether it must be stated on the document itself.",
       },
       {
         id: "warranty-disclaimer",
-        heading: "No other warranties.",
-        text: "Except as stated in this Section, C&S makes no other warranty, express or implied, including any implied warranty of merchantability or fitness for a particular purpose, to the extent the law allows this disclaimer.",
+        heading: "Implied warranties and your legal rights.",
+        text: "To the extent the law allows, any implied warranty on our work or on products we supply, including an implied warranty of merchantability or fitness for a particular purpose, is limited in duration to the applicable period in clause 9.1. Some states do not allow limits on how long an implied warranty lasts, so this limit may not apply to you. This warranty gives you specific legal rights, and you may also have other rights that vary from state to state.",
+        attorneyReview: "Magnuson-Moss: a written warranty on consumer products may limit implied warranties in duration but may not disclaim them. Confirm this wording and whether the warranty must be designated \"limited\" and provided pre-sale.",
       },
     ],
   },
@@ -485,6 +501,11 @@ export const TERMS_SECTIONS: readonly TermsSection[] = [
     title: "Limitation of liability",
     clauses: [
       {
+        id: "liability-our-damage",
+        heading: "Damage we cause.",
+        text: "If our crew damages your property through our negligence, we repair it or pay the reasonable cost to repair it, subject to clauses 11.5 and 11.6. Report it to the office as soon as you notice it so we can inspect.",
+      },
+      {
         id: "liability-preexisting",
         heading: "Conditions we did not cause.",
         text: "C&S is not responsible for damage or loss caused by conditions that existed before our work, including prior leaks, prior water damage, deteriorated pipe, failing fixtures, improper work by others, or conditions we identified and recommended correcting that you chose not to correct.",
@@ -502,19 +523,19 @@ export const TERMS_SECTIONS: readonly TermsSection[] = [
       {
         id: "liability-consequential",
         heading: "No consequential damages.",
-        text: "To the fullest extent the law allows, C&S is not liable for indirect, incidental, special, or consequential damages, including loss of use, lost rent or profits, business interruption, hotel or relocation costs, or damage to contents, arising from our work or these Terms.",
+        text: "To the fullest extent the law allows, C&S is not liable for indirect, incidental, special, or consequential damages, including loss of use, lost rent or profits, business interruption, hotel or relocation costs, arising from our work or these Terms. Direct physical damage that we cause is covered by clause 11.1 and is not excluded by this clause.",
         attorneyReview: "Confirm consequential-damages waiver wording for residential consumers under FDUTPA.",
       },
       {
         id: "liability-cap",
         heading: "Limit of liability.",
-        text: "To the fullest extent the law allows, C&S's total liability for any claim arising from the work is limited to the amount you paid C&S for the work that gave rise to the claim. This limit does not apply to liability for bodily injury or to any liability that Florida law does not allow to be limited.",
-        attorneyReview: "Cap at contract price. Intentionally does not try to exclude C&S's own negligence outright.",
+        text: "To the fullest extent the law allows, C&S's total liability for any claim arising from the work is limited to the total price of the work on the document that gave rise to the claim. This limit does not apply to liability for bodily injury or death, or to any liability that Florida law does not allow to be limited.",
+        attorneyReview: "Cap is set at the contract price of the work (not the amount paid), chosen so a partly paid job does not shrink the cap. Clause 11.1 affirms responsibility for negligent damage; the cap and the consequential-damages waiver still need consumer-law review.",
       },
       {
         id: "liability-insurance",
         heading: "Your insurance.",
-        text: "Your property insurance remains the primary coverage for water damage to your building and contents. Report water damage to your insurer promptly; we provide invoices and photographs to support your claim.",
+        text: "For water damage from conditions that existed before our work or that we did not cause, your property insurer is the place to file a claim. Report water damage to your insurer promptly; we provide invoices and photographs to support your claim.",
       },
     ],
   },
@@ -568,19 +589,19 @@ export const TERMS_SECTIONS: readonly TermsSection[] = [
       {
         id: "cancellation-three-day",
         heading: "Three-day right to cancel.",
-        text: "If you signed an agreement at your home during a visit we solicited, Florida's Home Solicitation Sale Act (sections 501.021 through 501.055, Florida Statutes) gives you the right to cancel by written notice delivered or postmarked before midnight of the third business day after you signed. The notice printed on the agreement explains how. This right does not apply to a visit you requested for repair or maintenance, or to an emergency repair you asked us to perform right away and waived in a dated, signed statement in your own handwriting.",
+        text: "If you signed an agreement at your home during a visit we solicited, Florida's Home Solicitation Sale Act (sections 501.021 through 501.055, Florida Statutes) gives you the right to cancel by written notice delivered or postmarked before midnight of the third business day after you signed. The notice printed on the agreement explains how. This right does not apply to a visit you requested for repair or maintenance, or to an emergency repair you asked us to perform right away and waived in a dated, signed statement in your own handwriting. Federal law (the Federal Trade Commission's Cooling-Off Rule) gives a similar right, and where both apply you get the broader one. The cancellation form and instructions are printed on the agreement.",
         attorneyReview:
           "Confirm the FS 501.021 exclusions as applied to customer-initiated service calls, and whether a home solicitation sale permit (FS 501.022) is required for anyone who sells at the customer's home.",
       },
       {
         id: "cancellation-after",
         heading: "Cancelling after that.",
-        text: "If you cancel after the cancellation period, or where it does not apply, you pay for work performed, special-order materials, and any restocking or freight charges, and we refund any remaining balance of amounts you paid.",
+        text: `If you cancel within the cancellation period, we refund everything you paid within ${TERMS_PARAMS.refundBusinessDays} business days of receiving your notice. If you cancel after the period, or where it does not apply, you pay for work performed and for ordered materials as clause 8.3 provides, and we refund any remaining balance of amounts you paid within ${TERMS_PARAMS.refundBusinessDays} business days.`,
       },
       {
         id: "cancellation-by-cs",
         heading: "Cancellation by C&S.",
-        text: "We may cancel the agreement if the work cannot lawfully or safely be performed, if required permits or approvals are refused, or if you do not pay when due. We invoice for work performed and materials ordered to that point and refund any excess you have paid.",
+        text: `We may cancel the agreement if the work cannot lawfully or safely be performed, if required permits or approvals are refused, or if you do not pay when due. We invoice for work performed and materials ordered to that point and refund any excess you have paid within ${TERMS_PARAMS.refundBusinessDays} business days.`,
       },
     ],
   },
@@ -596,12 +617,12 @@ export const TERMS_SECTIONS: readonly TermsSection[] = [
       {
         id: "disputes-cure",
         heading: "Notice and cure.",
-        text: `Before starting any legal action, the party with a claim gives the other written notice describing the problem and ${TERMS_PARAMS.cureDays} days to inspect and fix it or otherwise resolve the claim. For a claim that a construction defect exists, Chapter 558, Florida Statutes, requires a specific pre-suit notice and inspection process, described in Section 20.`,
+        text: `Before starting any legal action, the party with a claim gives the other written notice describing the problem and ${TERMS_PARAMS.cureDays} days to inspect and fix it or otherwise resolve the claim. For a claim that a construction defect exists, Chapter 558, Florida Statutes, sets its own pre-suit notice and inspection process, described in Section 20, which applies in place of this clause. Neither this clause nor clause 15.3 delays a filing needed to meet a statutory deadline, including a lien deadline, or a request for urgent relief to stop ongoing damage; the parties still mediate afterward.`,
       },
       {
         id: "disputes-mediation",
         heading: "Mediation.",
-        text: `If the claim is not resolved, the parties submit it to mediation in ${TERMS_PARAMS.venue}, with a Florida certified mediator, before filing suit, and share the mediator's fee equally. A small-claims action, or a lien enforcement action that must be filed to meet a statutory deadline, may be filed without waiting for mediation.`,
+        text: `If the claim is not resolved, the parties submit it to mediation in ${TERMS_PARAMS.venue}, with a Florida certified mediator, before filing suit, and share the mediator's fee equally. A small-claims action may be filed without waiting for mediation, and the deadline and urgent-relief exceptions in clause 15.2 also apply here.`,
       },
       {
         id: "disputes-law-venue",
@@ -647,22 +668,22 @@ export const TERMS_SECTIONS: readonly TermsSection[] = [
       {
         id: "commercial-escalation",
         heading: "Material escalation.",
-        text: "Pricing is based on material costs as of the bid date. Documented manufacturer or supplier increases for copper, brass, PVC, fixtures, or equipment occurring before installation are passed through by change order with supporting documentation.",
+        text: "As an exception to clause 3.3, pricing is based on material costs as of the bid date. Documented manufacturer or supplier increases for copper, brass, PVC, fixtures, or equipment occurring before installation are passed through by change order, in the amount of the documented increase, with supporting documentation.",
       },
       {
         id: "commercial-mobilization",
         heading: "Schedule and mobilization.",
-        text: "Price assumes continuous access by phase and a single mobilization per phase. Delays caused by others, owner or contractor decisions, permit holds, or a site not ready for our work are not C&S's responsibility, and remobilization, standby, and out-of-sequence work may be charged by change order.",
+        text: "Price assumes continuous access by phase and a single mobilization per phase. Delays caused by others, owner or contractor decisions, permit holds, or a site not ready for our work are not C&S's responsibility. Remobilization, standby, and out-of-sequence work are charged by change order at the rates in the subcontract or, if none, at our then-current rates, and we give written notice before the cost is incurred wherever practical.",
       },
       {
         id: "commercial-back-charges",
         heading: "Back-charges.",
-        text: "No back-charge is valid unless C&S receives written notice describing the issue and a reasonable opportunity to correct it before the customer incurs the cost.",
+        text: "No back-charge is valid unless C&S receives written notice describing the issue and a reasonable opportunity to correct it before the customer incurs the cost, except where immediate correction is needed to prevent injury, property damage, or a stop-work order, in which case the customer notifies C&S as soon as practical and documents the cost.",
       },
       {
         id: "commercial-lien-waivers",
         heading: "Lien waivers and Notice to Owner.",
-        text: "C&S provides conditional and unconditional lien waivers in the statutory forms under section 713.20, Florida Statutes, in exchange for payment, and serves a Notice to Owner as standard practice on every project where it is not in direct contract with the owner.",
+        text: "C&S provides lien waivers in the statutory forms under section 713.20, Florida Statutes: a conditional waiver in exchange for a progress or final payment, and an unconditional waiver once that payment has cleared. C&S serves a Notice to Owner as standard practice on every project where it is not in direct contract with the owner.",
       },
       {
         id: "commercial-protection",
@@ -730,12 +751,13 @@ export const TERMS_SECTIONS: readonly TermsSection[] = [
       {
         id: "general-photos",
         heading: "Photographs.",
-        text: "We photograph our work before, during, and after for records, inspections, and warranty purposes. We may use photographs of the plumbing work in our marketing without showing your name, address, or identifiable personal items. Tell us in writing if you prefer we not.",
+        text: "We photograph our work before, during, and after for records, inspections, and warranty purposes. We do not use photographs taken at your property in marketing unless you give us separate written permission, and even then we do not show your name, address, or identifiable personal items.",
       },
       {
         id: "general-electronic",
         heading: "Electronic documents.",
-        text: "Estimates, proposals, change orders, and invoices may be delivered and accepted electronically. Electronic signatures and approvals by email or text message are binding under Florida's Uniform Electronic Transaction Act (Chapter 668, Florida Statutes).",
+        text: "Estimates, proposals, change orders, and invoices may be delivered and accepted electronically. An electronic signature or a written approval by email or text message has the same effect as a signature on paper to the extent section 668.50, Florida Statutes (the Uniform Electronic Transaction Act), gives it that effect. We keep the electronic record of your approval with the job file.",
+        attorneyReview: "Confirm section 668.50 scope for consumer approvals by text message and whether any writing is required to be signed in ink (none known for these documents).",
       },
       {
         id: "general-notices",
@@ -751,12 +773,12 @@ export const TERMS_SECTIONS: readonly TermsSection[] = [
       {
         id: "terms-revisions",
         heading: "Revisions.",
-        text: `We revise these Terms from time to time. Each revision is identified by its date, shown at the top of this page and in the revision history at the end. The current revision is ${TERMS_VERSION}, effective ${formatTermsDate(TERMS_EFFECTIVE_DATE)}, published at ${TERMS_SHORT_URL}.`,
+        text: `We revise these Terms from time to time. Each revision is identified by its date, shown at the top of this page and in the revision history at the end, and we archive a copy of every published revision. The current revision is ${TERMS_VERSION}, effective ${formatTermsDate(TERMS_EFFECTIVE_DATE)}, published at ${TERMS_SHORT_URL}.`,
       },
       {
         id: "terms-which-governs",
         heading: "Which revision governs your job.",
-        text: "The revision cited on your estimate, proposal, or invoice governs that work, even if a newer revision is posted later. Copies of prior revisions are available from the office on request.",
+        text: "The revision in effect when you accepted your estimate or proposal stays attached to that job, as clause 1.4 provides, even if a newer revision is posted later. A copy of that revision and of the document you accepted is available from the office on request.",
       },
     ],
   },
@@ -775,13 +797,13 @@ export const TERMS_SECTIONS: readonly TermsSection[] = [
       {
         id: "notice-lien-law-text",
         notice: true,
-        text: "ACCORDING TO FLORIDA'S CONSTRUCTION LIEN LAW (SECTIONS 713.001-713.37, FLORIDA STATUTES), THOSE WHO WORK ON YOUR PROPERTY OR PROVIDE MATERIALS AND SERVICES AND ARE NOT PAID IN FULL HAVE A RIGHT TO ENFORCE THEIR CLAIM FOR PAYMENT AGAINST YOUR PROPERTY. THIS CLAIM IS KNOWN AS A CONSTRUCTION LIEN. IF YOUR CONTRACTOR OR A SUBCONTRACTOR FAILS TO PAY SUBCONTRACTORS, SUB-SUBCONTRACTORS, OR MATERIAL SUPPLIERS, THOSE PEOPLE WHO ARE OWED MONEY MAY LOOK TO YOUR PROPERTY FOR PAYMENT, EVEN IF YOU HAVE ALREADY PAID YOUR CONTRACTOR IN FULL. IF YOU FAIL TO PAY YOUR CONTRACTOR, YOUR CONTRACTOR ALSO HAS A LIEN ON YOUR PROPERTY. THIS MEANS IF A LIEN IS FILED YOUR PROPERTY COULD BE SOLD AGAINST YOUR WILL TO PAY FOR LABOR, MATERIALS, OR OTHER SERVICES THAT YOUR CONTRACTOR OR A SUBCONTRACTOR MAY HAVE FAILED TO PAY. TO PROTECT YOURSELF, YOU SHOULD STIPULATE IN THIS CONTRACT THAT BEFORE ANY PAYMENT IS MADE, YOUR CONTRACTOR IS REQUIRED TO PROVIDE YOU WITH A WRITTEN RELEASE OF LIEN FROM ANY PERSON OR COMPANY THAT HAS PROVIDED TO YOU A \"NOTICE TO OWNER.\" FLORIDA'S CONSTRUCTION LIEN LAW IS COMPLEX, AND IT IS RECOMMENDED THAT YOU CONSULT AN ATTORNEY.",
+        text: "ACCORDING TO FLORIDA'S CONSTRUCTION LIEN LAW (SECTIONS 713.001-713.37, FLORIDA STATUTES), THOSE WHO WORK ON YOUR PROPERTY OR PROVIDE MATERIALS AND SERVICES AND ARE NOT PAID IN FULL HAVE A RIGHT TO ENFORCE THEIR CLAIM FOR PAYMENT AGAINST YOUR PROPERTY. THIS CLAIM IS KNOWN AS A CONSTRUCTION LIEN. IF YOUR CONTRACTOR OR A SUBCONTRACTOR FAILS TO PAY SUBCONTRACTORS, SUB-SUBCONTRACTORS, OR MATERIAL SUPPLIERS, THOSE PEOPLE WHO ARE OWED MONEY MAY LOOK TO YOUR PROPERTY FOR PAYMENT, EVEN IF YOU HAVE ALREADY PAID YOUR CONTRACTOR IN FULL. IF YOU FAIL TO PAY YOUR CONTRACTOR, YOUR CONTRACTOR MAY ALSO HAVE A LIEN ON YOUR PROPERTY. THIS MEANS IF A LIEN IS FILED YOUR PROPERTY COULD BE SOLD AGAINST YOUR WILL TO PAY FOR LABOR, MATERIALS, OR OTHER SERVICES THAT YOUR CONTRACTOR OR A SUBCONTRACTOR MAY HAVE FAILED TO PAY. TO PROTECT YOURSELF, YOU SHOULD STIPULATE IN THIS CONTRACT THAT BEFORE ANY PAYMENT IS MADE, YOUR CONTRACTOR IS REQUIRED TO PROVIDE YOU WITH A WRITTEN RELEASE OF LIEN FROM ANY PERSON OR COMPANY THAT HAS PROVIDED TO YOU A \"NOTICE TO OWNER.\" FLORIDA'S CONSTRUCTION LIEN LAW IS COMPLEX, AND IT IS RECOMMENDED THAT YOU CONSULT AN ATTORNEY.",
       },
       {
         id: "notice-recovery-fund",
         heading: "Florida Homeowners' Construction Recovery Fund notice (section 489.1425, Florida Statutes).",
         text: "Required in a contract for repair, restoration, improvement, or construction to residential real property where labor and materials exceed $2,500:",
-        attorneyReview: "Verify verbatim and confirm the Construction Industry Licensing Board address and phone number before merge.",
+        attorneyReview: "Verify verbatim and confirm the Construction Industry Licensing Board address and phone number against the current board rule before merge.",
       },
       {
         id: "notice-recovery-fund-text",
@@ -790,19 +812,14 @@ export const TERMS_SECTIONS: readonly TermsSection[] = [
       },
       {
         id: "notice-chapter-558",
-        heading: "Construction defect notice (section 558.005, Florida Statutes).",
-        text: "Included in contracts for the construction or remodeling of a dwelling:",
-        attorneyReview: "Verify verbatim and confirm Chapter 558 applicability to service and repair work.",
-      },
-      {
-        id: "notice-chapter-558-text",
-        notice: true,
-        text: "CHAPTER 558, FLORIDA STATUTES, CONTAINS IMPORTANT REQUIREMENTS YOU MUST FOLLOW BEFORE YOU MAY BRING ANY LEGAL ACTION FOR AN ALLEGED CONSTRUCTION DEFECT. SIXTY DAYS BEFORE YOU BRING ANY LEGAL ACTION, YOU MUST DELIVER TO THE OTHER PARTY TO THIS CONTRACT A WRITTEN NOTICE REFERRING TO CHAPTER 558, OF ANY CONSTRUCTION CONDITIONS YOU ALLEGE ARE DEFECTIVE AND PROVIDE SUCH PERSON THE OPPORTUNITY TO INSPECT THE ALLEGED CONSTRUCTION DEFECTS AND TO CONSIDER MAKING AN OFFER TO REPAIR OR PAY FOR THE ALLEGED CONSTRUCTION DEFECTS. YOU ARE NOT OBLIGATED TO ACCEPT ANY OFFER WHICH MAY BE MADE. THERE ARE STRICT DEADLINES AND PROCEDURES UNDER THIS FLORIDA LAW WHICH MUST BE MET AND FOLLOWED TO PROTECT YOUR INTERESTS.",
+        heading: "Construction defect claims (Chapter 558, Florida Statutes).",
+        text: "Before you can sue over an alleged construction defect, Chapter 558 requires you to give us written notice of the claimed defect, allow us to inspect it, and consider any offer we make to repair or pay for it. There are strict deadlines in that process. The statutory Chapter 558 notice, in the form current when you sign, is printed on your contract; this page does not replace it.",
+        attorneyReview: "Supply the current section 558.005 notice form for the contract template and confirm whether Chapter 558 applies to service and repair work. The verbatim block was removed from the public page pending that.",
       },
       {
         id: "notice-home-solicitation",
         heading: "Home solicitation cancellation notice (section 501.031, Florida Statutes).",
-        text: "Where a sale is a home solicitation sale, the agreement carries this notice next to your signature:",
+        text: "Where a sale is a home solicitation sale, the agreement carries this notice, under the heading BUYER'S RIGHT TO CANCEL, in bold type next to your signature:",
         appliesTo: "residential",
         attorneyReview: "Verify verbatim.",
       },
@@ -810,7 +827,7 @@ export const TERMS_SECTIONS: readonly TermsSection[] = [
         id: "notice-home-solicitation-text",
         notice: true,
         appliesTo: "residential",
-        text: "THIS IS A HOME SOLICITATION SALE, AND IF YOU DO NOT WANT THE GOODS OR SERVICES, YOU MAY CANCEL THIS AGREEMENT BY PROVIDING WRITTEN NOTICE TO THE SELLER IN PERSON, BY TELEGRAM, OR BY MAIL. THIS NOTICE MUST INDICATE THAT YOU DO NOT WANT THE GOODS OR SERVICES AND MUST BE DELIVERED OR POSTMARKED BEFORE MIDNIGHT OF THE THIRD BUSINESS DAY AFTER YOU SIGN THIS AGREEMENT. IF YOU CANCEL THIS AGREEMENT, THE SELLER MAY NOT KEEP ALL OR PART OF ANY CASH DOWN PAYMENT.",
+        text: "BUYER'S RIGHT TO CANCEL. THIS IS A HOME SOLICITATION SALE, AND IF YOU DO NOT WANT THE GOODS OR SERVICES, YOU MAY CANCEL THIS AGREEMENT BY PROVIDING WRITTEN NOTICE TO THE SELLER IN PERSON, BY TELEGRAM, OR BY MAIL. THIS NOTICE MUST INDICATE THAT YOU DO NOT WANT THE GOODS OR SERVICES AND MUST BE DELIVERED OR POSTMARKED BEFORE MIDNIGHT OF THE THIRD BUSINESS DAY AFTER YOU SIGN THIS AGREEMENT. IF YOU CANCEL THIS AGREEMENT, THE SELLER MAY NOT KEEP ALL OR PART OF ANY CASH DOWN PAYMENT.",
       },
     ],
   },
@@ -891,9 +908,11 @@ export function termsToMarkdown(): string {
       const head = clause.heading ? `**${clause.heading}** ` : "";
       lines.push(`${clause.number} ${head}${clause.text}`);
       clause.items?.forEach((item, k) => lines.push(`  ${itemLetter(k)} ${item}`));
-      clause.links?.forEach((l) =>
-        lines.push(`  ${l.label}: ${l.href.startsWith("/") ? `https://www.csplumbinglee.com${l.href}` : l.href}`)
-      );
+      clause.links?.forEach((l) => {
+        if (l.href.startsWith("tel:")) lines.push(`  Phone: ${l.label}`);
+        else if (l.href.startsWith("mailto:")) lines.push(`  Email: ${l.label}`);
+        else lines.push(`  ${l.label}: ${l.href.startsWith("/") ? `https://www.csplumbinglee.com${l.href}` : l.href}`);
+      });
       lines.push("");
     }
   }
