@@ -7,6 +7,7 @@ import FaqAccordion from "@/components/ui/FaqAccordion";
 import Container from "@/components/ui/Container";
 import NewConstructionBenefits from "@/components/builders/NewConstructionBenefits";
 import { BUSINESS, SERVICES } from "@/lib/constants";
+import { TERMS_URL } from "@/lib/terms-meta";
 import { RESIDENTIAL_FAQS } from "./residential-faqs";
 
 export const metadata: Metadata = {
@@ -81,7 +82,7 @@ function ResidentialServiceJsonLd() {
       { "@type": "City", name: "Punta Gorda" },
       { "@type": "City", name: "Port Charlotte" },
     ],
-    termsOfService: `${BASE}/terms-of-service`,
+    termsOfService: TERMS_URL,
   };
 
   return (

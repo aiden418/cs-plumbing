@@ -17,6 +17,7 @@ import {
   newConversionId,
   reportConversion,
 } from "@/lib/openai-ads-capi";
+import { TERMS_URL, TERMS_VERSION } from "@/lib/terms-meta";
 
 // Bounds are sized to what the quote engine can legitimately produce (see
 // src/lib/quote-pricing.ts). This public endpoint renders caller-supplied text
@@ -196,6 +197,10 @@ export async function POST(request: Request) {
 
             <p style="color: #999; font-size: 12px; margin-top: 20px;">
               C&S Plumbing of Lee · License #CFC1432485 · 951 Pondella Rd, North Fort Myers, FL 33903
+            </p>
+            <p style="color: #999; font-size: 12px; margin-top: 8px;">
+              Estimates are subject to our Terms &amp; Conditions (rev. ${TERMS_VERSION}):
+              <a href="${TERMS_URL}" style="color: #0099FF;">${TERMS_URL}</a>
             </p>
           </div>
         </div>

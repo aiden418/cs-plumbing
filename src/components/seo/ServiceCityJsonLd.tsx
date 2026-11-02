@@ -1,5 +1,6 @@
 import type { ServiceCityLanding } from "@/lib/types";
 import { BUSINESS } from "@/lib/constants";
+import { TERMS_URL } from "@/lib/terms-meta";
 
 export default function ServiceCityJsonLd({
   landing,
@@ -50,7 +51,7 @@ export default function ServiceCityJsonLd({
         name: "Florida",
       },
     },
-    termsOfService: `${BASE}/terms-of-service`,
+    termsOfService: TERMS_URL,
   };
 
   return (

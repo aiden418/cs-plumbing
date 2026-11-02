@@ -18,6 +18,7 @@ import { SERVICE_CITY_LANDINGS } from "./service-city-landings";
 import { SERVICE_HUBS, getServiceHub } from "./service-hubs";
 import { isProjectComplete, projectPhotoCount, projectStatusLabel } from "./projects";
 import type { FAQ } from "./types";
+import { TERMS_CITATION, TERMS_VERSION } from "./terms-meta";
 import {
   BUILDER_DESK,
   BUILDER_PROOF,
@@ -47,7 +48,7 @@ import {
 //
 // Hand-bump VERSION when the prose gets a substantive pass (same philosophy
 // as sitemap.ts LAST_CONTENT_PASS — no new Date()).
-const VERSION = "2.8";
+const VERSION = "2.9";
 const UPDATED = "2026-10";
 
 const BASE = "https://www.csplumbinglee.com";
@@ -201,6 +202,7 @@ ${awardBullets}
 - **Homes Repiped:** ${BUSINESS.repipesCompleted.toLocaleString()}+ (owner-reported)
 - **Insurance:** $2 million general liability, workers' compensation; bonding information on request
 - **Warranty (new construction):** ${WARRANTY.detail}
+- **Terms & Conditions:** Every estimate, proposal and invoice is governed by ${TERMS_CITATION} at ${BASE}/terms (pricing basis, change orders, payment, warranty, dispute resolution in Lee County, FL)
 - **Emergency Response:** 24/7, arriving ${EMERGENCY_CLAIMS.responseTime}
 - **Free Estimates:** Yes, with upfront transparent pricing
 - **Satisfaction Guarantee:** Yes
@@ -251,6 +253,8 @@ Yes. C&S Plumbing offers 24/7 emergency plumbing throughout Cape Coral, Fort Mye
 - Service Map: ${BASE}/service-map
 - For Builders & GCs: ${BASE}/builders
 - Builder Portal (Submit Plans): ${BASE}/builder-portal
+- Terms & Conditions (rev. ${TERMS_VERSION}; governs estimates, proposals and invoices): ${BASE}/terms
+- Privacy Policy: ${BASE}/privacy-policy
 ${NEW_CONSTRUCTION_CITIES.map((c) => `- New Construction Plumbing — ${c.city}: ${BASE}/new-construction-plumbing/${c.slug}`).join("\n")}
 - Recommended Companies: ${BASE}/partners
 - Project Gallery: ${BASE}/gallery

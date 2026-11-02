@@ -96,7 +96,10 @@ export const CONTRACTOR_RANKING = {
 
 // Warranty wording confirmed by the owner (Sep 2026). Materials supplied by
 // C&S only — do not extend to labor, manufacturer coverage, or customer-
-// supplied fixtures without confirmation. Written project terms govern.
+// supplied fixtures without confirmation. Written project terms govern —
+// see /terms (src/lib/terms.ts), which states a tiered labor warranty pending
+// owner sign-off (Nov 2026). Align this constant and the service pages once
+// that is confirmed.
 export const WARRANTY = {
   summary: "One-year warranty on materials supplied by C&S Plumbing",
   detail:

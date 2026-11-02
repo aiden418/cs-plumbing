@@ -1,5 +1,6 @@
 import type { AreaLanding } from "@/lib/types";
 import { BUSINESS } from "@/lib/constants";
+import { TERMS_URL } from "@/lib/terms-meta";
 
 export default function AreaServiceJsonLd({
   landing,
@@ -30,7 +31,7 @@ export default function AreaServiceJsonLd({
         name: "Florida",
       },
     },
-    termsOfService: `${BASE}/terms-of-service`,
+    termsOfService: TERMS_URL,
   };
 
   return (

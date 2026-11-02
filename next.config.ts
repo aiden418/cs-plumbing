@@ -20,6 +20,8 @@ const nextConfig: NextConfig = {
       { source: "/new-construction-plumbing", destination: "/builders", permanent: false },
       // Old URL Google still requests (Search Console "Not found (404)").
       { source: "/home", destination: "/", permanent: true },
+      // Legal page consolidated into the versioned Terms & Conditions at /terms.
+      { source: "/terms-of-service", destination: "/terms", permanent: true },
     ];
   },
   poweredByHeader: false,

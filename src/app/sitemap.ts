@@ -4,6 +4,7 @@ import { GALLERY_ITEMS } from "@/lib/gallery-data";
 import { isProjectComplete, projectImages, projectLastModified } from "@/lib/projects";
 import { SERVICE_CITY_LANDINGS } from "@/lib/service-city-landings";
 import { NEW_CONSTRUCTION_CITIES } from "@/lib/builder-program";
+import { TERMS_EFFECTIVE_DATE } from "@/lib/terms-meta";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://www.csplumbinglee.com";
@@ -215,8 +216,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.3,
     },
     {
-      url: `${baseUrl}/terms-of-service`,
-      lastModified: LAST_CONTENT_PASS,
+      url: `${baseUrl}/terms`,
+      lastModified: new Date(TERMS_EFFECTIVE_DATE),
       changeFrequency: "yearly",
       priority: 0.3,
     },

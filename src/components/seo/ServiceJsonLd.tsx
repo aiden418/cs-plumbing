@@ -1,5 +1,6 @@
 import type { ServiceLanding } from "@/lib/types";
 import { BUSINESS } from "@/lib/constants";
+import { TERMS_URL } from "@/lib/terms-meta";
 
 // Parses simple money ranges — "$4,200 – $6,500", "$195 – $4,500+" — into
 // numbers for PriceSpecification. Returns null for non-price rows
@@ -56,7 +57,7 @@ export default function ServiceJsonLd({ landing }: { landing: ServiceLanding }) 
       { "@type": "City", name: "Estero" },
       { "@type": "City", name: "Sanibel Island" },
     ],
-    termsOfService: `${BASE}/terms-of-service`,
+    termsOfService: TERMS_URL,
     ...(range && {
       offers: {
         "@type": "Offer",
