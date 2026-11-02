@@ -12,6 +12,7 @@ import StaggerChildren, {
   staggerItem,
 } from "@/components/animations/StaggerChildren";
 import { motion } from "framer-motion";
+import ServiceRequestForm from "@/components/services/ServiceRequestForm";
 import JobGallery from "@/components/services/JobGallery";
 import AnswerBlocks from "@/components/seo/AnswerBlocks";
 import { BUSINESS, SERVICE_LANDINGS, AREA_LANDINGS } from "@/lib/constants";
@@ -23,6 +24,7 @@ export default function ServiceLandingTemplate({
 }: {
   landing: ServiceLanding;
 }) {
+  const requestService = landing.slug === "water-heaters" ? "water-heater" : landing.slug === "repiping" ? "repipe" : "";
   return (
     <>
       {/* Hero */}
@@ -49,12 +51,12 @@ export default function ServiceLandingTemplate({
         actions={
           <>
             <Button
-              href={`/booking?service=${encodeURIComponent(landing.slug)}`}
+              href={requestService ? "#request-service" : `/booking?service=${encodeURIComponent(landing.slug)}`}
               variant="gold"
               size="lg"
               icon={<Calendar className="w-5 h-5" />}
             >
-              Book a Service
+              {requestService ? "Request Service" : "Book a Service"}
             </Button>
             <Button
               href={`tel:${BUSINESS.phoneRaw}`}
@@ -74,7 +76,7 @@ export default function ServiceLandingTemplate({
               {landing.priceRange}
             </span>
             <Link
-              href={`/booking?service=${encodeURIComponent(landing.slug)}`}
+              href={requestService ? "#request-service" : `/booking?service=${encodeURIComponent(landing.slug)}`}
               className="inline-flex items-center gap-1 text-xs sm:text-sm font-semibold text-gold hover:underline"
             >
               Get a Quote <ArrowRight className="w-3.5 h-3.5" />
@@ -82,6 +84,18 @@ export default function ServiceLandingTemplate({
           </div>
         )}
       </PageHero>
+
+      {requestService && (
+        <section id="request-service" aria-labelledby="request-service-title" className="scroll-mt-28 py-10 sm:py-14">
+          <Container>
+            <div className="mx-auto max-w-2xl">
+              <h2 id="request-service-title" className="mb-3 text-2xl sm:text-3xl font-bold text-gray-900">Request {landing.slug === "repiping" ? "a Repipe Estimate" : "Water Heater Service"}</h2>
+              <p className="mb-6 text-sm text-gray-500">Tell us how to reach you and where you need service. Our office will follow up to discuss the work.</p>
+              <ServiceRequestForm defaultService={requestService} source="service-page" />
+            </div>
+          </Container>
+        </section>
+      )}
 
       {/* Quick Answers (AI-citation friendly, FAQ schema) */}
       {landing.answerBlocks && landing.answerBlocks.length > 0 && (
@@ -180,7 +194,7 @@ export default function ServiceLandingTemplate({
                 </div>
                 <div className="text-center mt-6 sm:mt-8">
                   <Button
-                    href={`/booking?service=${encodeURIComponent(landing.slug)}`}
+                    href={requestService ? "#request-service" : `/booking?service=${encodeURIComponent(landing.slug)}`}
                     size="lg"
                     icon={<Calendar className="w-5 h-5" />}
                   >

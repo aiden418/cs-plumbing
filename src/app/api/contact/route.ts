@@ -1,8 +1,7 @@
 import { NextResponse, after } from "next/server";
 import { Resend } from "resend";
-import { z } from "zod";
+import { serviceRequestSchema, SERVICE_REQUEST_OPTIONS } from "@/lib/service-request";
 import {
-  ADMIN_EMAIL,
   escapeHtml,
   getClientIp,
   isHoneypotTripped,
@@ -18,18 +17,6 @@ import {
   reportConversion,
 } from "@/lib/openai-ads-capi";
 
-const ContactSchema = z.object({
-  name: z.string().min(2).max(100),
-  // Optional so quick-capture sources (chat widget) can submit phone-only leads
-  email: z.string().email().max(200).optional(),
-  phone: z.string().min(7).max(30),
-  service: z.string().min(2).max(120),
-  message: z.string().min(5).max(5000),
-  source: z.string().max(40).optional(),
-  /** Pathname of the page the form was on; validated server-side before use. */
-  sourcePath: z.string().max(200).optional(),
-  website: z.string().optional(),
-});
 
 export async function POST(request: Request) {
   try {
@@ -38,14 +25,14 @@ export async function POST(request: Request) {
     if (!rl.ok) return tooManyRequests(rl.retryAfter);
 
     const json = await request.json();
-    const parsed = ContactSchema.safeParse(json);
+    const parsed = serviceRequestSchema.safeParse(json);
     if (!parsed.success) {
       return NextResponse.json(
         { error: "Invalid submission" },
         { status: 400 }
       );
     }
-    const { name, email, phone, service, message, source, sourcePath, website } = parsed.data;
+    const { name, email, phone, zip, service, message, source, sourcePath, website } = parsed.data;
 
     if (isHoneypotTripped(website)) {
       return NextResponse.json({ success: true });
@@ -59,19 +46,22 @@ export async function POST(request: Request) {
       );
     }
     const resend = new Resend(process.env.RESEND_API_KEY);
+    const serviceLabel = SERVICE_REQUEST_OPTIONS.find(([value]) => value === service)?.[1] ?? service;
     const safe = {
       name: escapeHtml(name),
       email: email ? escapeHtml(email) : "",
       phone: escapeHtml(phone),
-      service: escapeHtml(service),
+      service: escapeHtml(serviceLabel),
+      zip: escapeHtml(zip),
+      sourcePath: escapeHtml(sourcePath?.startsWith("/") ? sourcePath : "/contact"),
       message: escapeHtml(message),
     };
 
     const emailId = await sendEmailOrThrow(resend, {
       from: "C&S Plumbing Website <contact@csplumbinglee.com>",
-      to: [ADMIN_EMAIL],
+      to: ["office@csplumbinglee.com"],
       ...(email ? { replyTo: email } : {}),
-      subject: `New ${source === "chat" ? "Chat Lead" : "Contact"}: ${service} — ${name}`,
+      subject: `New ${source === "chat" ? "Chat Lead" : "Contact"}: ${serviceLabel} — ${name}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background: #0A0A0F; padding: 20px; text-align: center;">
@@ -81,9 +71,11 @@ export async function POST(request: Request) {
             <p><strong>Name:</strong> ${safe.name}</p>
             ${safe.email ? `<p><strong>Email:</strong> <a href="mailto:${safe.email}">${safe.email}</a></p>` : ""}
             <p><strong>Phone:</strong> <a href="tel:${safe.phone}">${safe.phone}</a></p>
+            <p><strong>Service ZIP:</strong> ${safe.zip}</p>
             <p><strong>Service:</strong> ${safe.service}</p>
+            <p><strong>Requested from:</strong> ${safe.sourcePath}</p>
             <h3 style="color: #333; border-bottom: 2px solid #0099FF; padding-bottom: 8px; margin-top: 16px;">Message</h3>
-            <p style="white-space: pre-wrap;">${safe.message}</p>
+            <p style="white-space: pre-wrap;">${safe.message || "No description provided."}</p>
           </div>
           <div style="background: #0A0A0F; padding: 12px; text-align: center;">
             <p style="color: #666; margin: 0; font-size: 12px;">Sent from csplumbinglee.com</p>
@@ -97,7 +89,7 @@ export async function POST(request: Request) {
         from: "C&S Plumbing Website <contact@csplumbinglee.com>",
         to: [SMS_TO],
         subject: `New Lead`,
-        text: `New contact from ${name} for ${service}. Phone: ${phone}`,
+        text: `New contact from ${name} for ${serviceLabel} in ${zip}. Phone: ${phone}`,
       }, "contact SMS notification");
     }
 
