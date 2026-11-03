@@ -16,7 +16,7 @@ or the email / text approval) in the job file.
 
 **Estimate / quote**
 
-> This estimate is subject to C&S Plumbing of Lee's Terms & Conditions rev. 2026-11-02,
+> This estimate is subject to C&S Plumbing of Lee's Terms & Conditions rev. 2026-11-03,
 > available at https://www.csplumbinglee.com/terms and incorporated by reference. Signing,
 > paying, scheduling, or authorizing the work constitutes acceptance.
 
@@ -108,7 +108,10 @@ verbatim text and applicability before the templates are changed.
 - **Marketing photos.** Separate written permission before any job-site photo is used in
   marketing (clause 18.6).
 
-## 6. Open items before the first revision ships
+## 6. Open items
+
+Publication of rev. 2026-11-03 was authorized by Aiden on 2026-11-03 ahead of the sign-offs
+below. They remain outstanding and feed the next revision.
 
 - Chris / Sam written decisions by clause number: warranty periods and the after-labor-period
   rule (9.1, 9.3), surcharge or cash discount (7.3), payment timing (7.1), late charges (7.4),
