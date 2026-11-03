@@ -64,7 +64,7 @@ export default function CommercialClientsStrip() {
           <SectionHeading
             overline="Commercial Service"
             title="Businesses That Trust C&S"
-            subtitle="Restaurants, schools, federal facilities and airport hangars across Southwest Florida count on C&S for commercial plumbing service, repairs and build-outs."
+            subtitle="Restaurants, bars, studios and shops across Cape Coral and Fort Myers keep C&S on call for commercial plumbing service and repairs."
           />
         </ScrollReveal>
       </Container>

@@ -16,14 +16,13 @@ import type { CommercialClient } from "./types";
  * Only list a client whose name C&S has permission to use. A client logo is
  * their trademark; get written OK (an email is fine) before it goes live.
  *
- * The entries below are the commercial end users already named on the site's
- * /projects pages, so the strip ships with real work behind it. Swap in the
- * service accounts and logos as they're cleared.
+ * Commercial service accounts, in display order. Logos drop in per the steps
+ * above; until then each renders as a wordmark.
  */
 export const COMMERCIAL_CLIENTS: CommercialClient[] = [
-  { name: "Mangos Restaurant & Bar" },
-  { name: "South Florida Christian Academy" },
-  { name: "USPS Cape Coral" },
-  { name: "Hangar 97 · Punta Gorda Airport" },
-  { name: "IFHA Community Center" },
+  { name: "Val Ward Cadillac", website: "https://www.valwardautos.com" },
+  { name: "Fuego Pilates", website: "https://fuego-pilates.com" },
+  { name: "FINS Seafood & Dive Bar", website: "https://finsdivebar.com" },
+  { name: "Hurricane Grill & Wings", website: "https://www.hurricanewings.com" },
+  { name: "Scoops on First" },
 ];
