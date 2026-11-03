@@ -2256,7 +2256,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     ],
     heroText: "Your Trusted Plumber in Punta Gorda, FL",
     description:
-      "C&S Plumbing brings 28+ years of Southwest Florida experience to Punta Gorda and Charlotte County. Water heater replacements, emergency repairs, repiping, and drain service — backed by 9,500+ homes plumbed and two active state licenses.",
+      "C&S Plumbing brings 28+ years of Southwest Florida experience to Punta Gorda and Charlotte County. Water heater replacements, emergency repairs, repiping, and drain service — backed by 9,500+ homes plumbed and Florida Certified Plumbing Contractor license CFC1432485.",
     neighborhoods: [
       "Punta Gorda Isles",
       "Burnt Store Isles",
@@ -2288,7 +2288,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
       {
         question: "Do you pull permits with Charlotte County?",
         answer:
-          "Yes. C&S Plumbing holds two active Florida CFC licenses (CFC1432485 and CFC057076) and we pull permits and coordinate inspections with Charlotte County for water heaters, repipes, and remodel work. You never have to handle the paperwork yourself.",
+          "Yes. C&S Plumbing works under Florida Certified Plumbing Contractor license CFC1432485, the company's license since its 2023 reorganization as part of Draft Construction; co-founder Samuel Pellechio also holds license CFC057076, and we pull permits and coordinate inspections with Charlotte County for water heaters, repipes, and remodel work. You never have to handle the paperwork yourself.",
       },
       {
         question: "Is your emergency service available in Punta Gorda?",
@@ -2350,7 +2350,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
       {
         question: "Do you pull permits with Charlotte County?",
         answer:
-          "Yes. We hold two active Florida CFC licenses (CFC1432485 and CFC057076) and handle Charlotte County permitting and inspections for water heaters, repipes, drain line replacements, and remodel plumbing.",
+          "Yes. We work under Florida Certified Plumbing Contractor license CFC1432485 (co-founder Samuel Pellechio also holds CFC057076) and handle Charlotte County permitting and inspections for water heaters, repipes, drain line replacements, and remodel plumbing.",
       },
       {
         question: "Can you replace a water heater in Port Charlotte?",

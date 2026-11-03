@@ -39,7 +39,7 @@ const WHY_CS = [
     icon: <ShieldCheck className="w-6 h-6" />,
     title: "Code-compliant from day one",
     description:
-      "Two active state licenses (CFC1432485 / CFC057076). Every fixture, slope, and vent meets current FL Building Code.",
+      "Florida Certified Plumbing Contractor license CFC1432485; co-founder Samuel Pellechio also holds CFC057076. Every fixture, slope, and vent meets current FL Building Code.",
   },
 ];
 
@@ -104,7 +104,7 @@ export default function BuilderPortalIntro() {
             <p className="text-base sm:text-lg text-white/70 leading-relaxed mb-3">
               C&amp;S Plumbing has been the underground-to-trim partner for Lee
               County builders since 1998. <strong className="text-white">9,500+ homes plumbed</strong>,
-              two active state licenses, and a 5.0 rating from the GCs and custom
+              Florida Certified Plumbing Contractor license CFC1432485, and a 5.0 rating from the GCs and custom
               home builders we work with every week.
             </p>
             <p className="text-base sm:text-lg text-white/70 leading-relaxed mb-8 sm:mb-10">

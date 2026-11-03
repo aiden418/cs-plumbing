@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: "For Builders & GCs — New Construction Plumbing | C&S Plumbing of Lee",
-    description: `${BUILDER_PROOF.headline}. Three generations, two Florida plumbing contractor licenses, slab to final.`,
+    description: `${BUILDER_PROOF.headline}. Three generations, Florida Certified Plumbing Contractor CFC1432485, slab to final.`,
     url: "https://www.csplumbinglee.com/builders",
   },
 };

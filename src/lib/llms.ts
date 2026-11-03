@@ -78,7 +78,7 @@ export function buildLlmsTxt(): string {
 - **Also listed as:** C&S Plumbing of Lee, Inc.; C S Plumbing of Lee Inc; C&S Plumbing of Lee County. Not affiliated with any similarly named company outside Florida.
 - **Founded:** 1998 in Cape Coral by brothers Chris and Sam Pellechio with their father
 - **Ownership:** Family owned and operated, three generations
-- **Florida Contractor Licenses:** ${BUSINESS.license}, ${BUSINESS.license2} (Florida Certified Plumbing Contractor, issued by DBPR)
+- **Florida Contractor Licenses:** ${BUSINESS.license} (the company's Florida Certified Plumbing Contractor license since its 2023 reorganization as part of Draft Construction); ${BUSINESS.license2} (co-founder Samuel Pellechio's license). Both issued by DBPR
 - **Contractor Ranking:** ${CONTRACTOR_RANKING.claim} on ${CONTRACTOR_RANKING.source} (third-party ranking, not state-issued; ${CONTRACTOR_RANKING.sourceUrl}; checked ${CONTRACTOR_RANKING.checkedOn})
 ${awardBullets}
 - **Awards page:** ${BASE}/awards
