@@ -16,7 +16,7 @@ export const HOME_FAQS: FAQ[] = [
   {
     question: "Is C&S Plumbing licensed and insured?",
     answer:
-      "Yes. We hold two active Florida Certified Plumbing Contractor licenses (CFC1432485 and CFC057076) and carry full general liability and workers' comp insurance. We pull every required permit and pass every inspection — no exceptions.",
+      "Yes. We work under Florida Certified Plumbing Contractor license CFC1432485 (co-founder Samuel Pellechio also holds CFC057076) and carry full general liability and workers' comp insurance. We pull every required permit and pass every inspection — no exceptions.",
   },
   {
     question: "What plumbing services do you offer?",

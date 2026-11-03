@@ -21,7 +21,7 @@ import { BUSINESS, CONTRACTOR_RANKING, LATEST_AWARD, WARRANTY } from "./constant
  *  Sam's Dec 1997 license date is a personal milestone, not the company's. */
 export const BUILDER_PROOF = {
   headline: `${BUSINESS.homesCompleted.toLocaleString()}+ new construction homes plumbed since ${BUSINESS.founded}`,
-  subline: `Family owned and operated since ${BUSINESS.founded}. Three generations of the Pellechio family. Two active Florida Certified Plumbing Contractor licenses. ${LATEST_AWARD.title} — ${LATEST_AWARD.category}.`,
+  subline: `Family owned and operated since ${BUSINESS.founded}. Three generations of the Pellechio family. Florida Certified Plumbing Contractor license ${BUSINESS.license}. ${LATEST_AWARD.title} — ${LATEST_AWARD.category}.`,
   generations: [
     {
       generation: "1st",
