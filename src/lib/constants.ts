@@ -42,7 +42,12 @@ export const BUSINESS = {
   tagline: "Southwest Florida's Most Trusted Plumbing Team",
   description:
     "Family owned and operated since 1998. From emergency repairs to new construction, C&S Plumbing delivers excellence across Southwest Florida.",
+  /** The company's current Florida Certified Plumbing Contractor license,
+   *  in place since the 2023 reorganization as part of Draft Construction
+   *  (owner-stated 2026-11-03). Goes on every contract, proposal and invoice. */
   license: "CFC1432485",
+  /** Samuel Pellechio's original license, still active; listed alongside the
+   *  company license on formal documents. */
   license2: "CFC057076",
   // DBPR "Search by License Number" form (search=LicNbr). Direct per-license
   // detail links aren't possible — the DBPR site is session-coupled.

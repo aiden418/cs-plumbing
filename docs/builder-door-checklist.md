@@ -16,6 +16,7 @@ a placeholder in its place.
 | Coverage | "Southwest Florida, from Port Charlotte through Naples" (coverage, not permit jurisdictions) | `SERVICE_COVERAGE` |
 | Warranty | One-year warranty on materials supplied by C&S, per written project terms. Not labor, not manufacturer, not customer-supplied fixtures | `WARRANTY` in constants.ts |
 | Legal name | Draft Plumbing Corp, d/b/a C&S Plumbing of Lee (owner-stated 2026-11-03), on the Terms, prequal packet and schema; brand stays C&S Plumbing of Lee | `BUSINESS.legalName` |
+| Licenses | CFC1432485 is the company's current license since the 2023 reorganization as part of Draft Construction; CFC057076 is Samuel Pellechio's original license (owner-stated 2026-11-03). Both stay on formal documents | `BUSINESS.license`, `BUSINESS.license2` |
 | Qualifications | $2M GL, workers' comp, bonding on request, OSHA-30, 100% self-performed, AIA G702/G703, Procore/Textura | `QUALIFICATIONS` |
 | Removed | EMR (none exists — do not list as outstanding), commercial auto / umbrella, drug testing, all bid-turnaround day counts, OSHA-10 wording | — |
 

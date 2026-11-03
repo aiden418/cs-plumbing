@@ -185,7 +185,7 @@ export const TERMS_SECTIONS: readonly TermsSection[] = [
       {
         id: "licensing-entity",
         heading: "Licensed contractor.",
-        text: `C&S is a Florida Certified Plumbing Contractor holding state licenses ${BUSINESS.license} and ${BUSINESS.license2}. Either license can be verified with the Florida Department of Business and Professional Regulation. Our office is at ${OFFICE}.`,
+        text: `C&S performs plumbing work under Florida Certified Plumbing Contractor license ${BUSINESS.license}, the company's license since its 2023 reorganization as part of Draft Construction. Co-founder Samuel Pellechio also holds license ${BUSINESS.license2}. Either license can be verified with the Florida Department of Business and Professional Regulation. Our office is at ${OFFICE}.`,
         links: [{ label: "Verify our licenses on MyFloridaLicense.com", href: BUSINESS.licenseLookupUrl }],
       },
       {
@@ -856,7 +856,7 @@ export const TERMS_REVISIONS: readonly TermsRevision[] = [
   {
     version: TERMS_VERSION,
     effectiveDate: TERMS_EFFECTIVE_DATE,
-    note: "First published revision. Replaces the Terms of Service page dated March 10, 2026. Same-day correction: the contracting entity is Draft Plumbing Corp, doing business as C&S Plumbing of Lee.",
+    note: "First published revision. Replaces the Terms of Service page dated March 10, 2026. Same-day corrections: the contracting entity is Draft Plumbing Corp, doing business as C&S Plumbing of Lee, and clause 2.1 states which license is the company's current license.",
   },
 ];
 
