@@ -225,6 +225,22 @@ export interface Builder {
   website?: string;
 }
 
+/**
+ * A commercial property or business C&S has plumbed or services. Drives the
+ * home-page client strip. `logo` is optional: an entry without one renders as
+ * a text wordmark pill, so a client can be listed the day the job closes and
+ * the logo dropped in whenever it arrives.
+ */
+export interface CommercialClient {
+  name: string;
+  /** Path under /public. Omit to render the name as a wordmark instead. */
+  logo?: string;
+  /** Intrinsic px of `logo` — required when `logo` is set (see Builder). */
+  logoWidth?: number;
+  logoHeight?: number;
+  website?: string;
+}
+
 export interface BuilderStat {
   value: number;
   suffix: string;

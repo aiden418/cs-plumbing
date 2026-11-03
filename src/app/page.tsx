@@ -23,6 +23,9 @@ const ServiceMapTeaser = dynamic(
 );
 const Testimonials = dynamic(() => import("@/components/home/Testimonials"));
 const GoogleReviews = dynamic(() => import("@/components/home/GoogleReviews"));
+const CommercialClientsStrip = dynamic(
+  () => import("@/components/home/CommercialClientsStrip"),
+);
 const BrandsCarousel = dynamic(
   () => import("@/components/home/BrandsCarousel"),
 );
@@ -93,6 +96,7 @@ export default function Home() {
       <Testimonials />
       <GoogleReviews />
       <ServiceMapTeaser />
+      <CommercialClientsStrip />
       <BrandsCarousel />
       {/* Server-rendered: /blog had no inbound link in the HTML before this. */}
       <RelatedPosts
