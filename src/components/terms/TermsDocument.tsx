@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { BUSINESS } from "@/lib/constants";
 import {
   AUDIENCE_LABEL,
@@ -58,16 +59,24 @@ function ClauseLinks({ clause }: { clause: NumberedClause }) {
       {" "}
       {clause.links.map((link, i) => {
         const external = /^https?:/.test(link.href);
+        const internal = link.href.startsWith("/");
+        const cls = "text-primary font-medium underline-offset-2 hover:underline";
         return (
           <span key={link.href}>
             {i > 0 && <span className="mx-1 text-gray-300">·</span>}
-            <a
-              href={link.href}
-              className="text-primary font-medium underline-offset-2 hover:underline"
-              {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-            >
-              {link.label}
-            </a>
+            {internal ? (
+              <Link href={link.href} className={cls}>
+                {link.label}
+              </Link>
+            ) : (
+              <a
+                href={link.href}
+                className={cls}
+                {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+              >
+                {link.label}
+              </a>
+            )}
           </span>
         );
       })}
