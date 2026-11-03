@@ -1,6 +1,7 @@
 "use client";
 
 import { useId, useRef, useState } from "react";
+import Link from "next/link";
 import { BUSINESS } from "@/lib/constants";
 import { serviceRequestSchema, SERVICE_REQUEST_OPTIONS } from "@/lib/service-request";
 import { trackContactForm } from "@/lib/pixel";
@@ -101,7 +102,7 @@ export default function ServiceRequestForm({
       </fieldset>
       {error && <p role="alert" className="text-sm text-red-700">{error}</p>}
       <button type="submit" disabled={sending} className="w-full rounded-xl bg-primary px-4 py-3 font-semibold text-white hover:bg-primary-dark disabled:opacity-60">{sending ? "Sending…" : "Request Service"}</button>
-      <p className="text-xs text-gray-500">We&apos;ll call or email you about this request. <a className="underline" href="/privacy-policy">Privacy policy</a></p>
+      <p className="text-xs text-gray-500">We&apos;ll call or email you about this request. <Link className="underline" href="/privacy-policy">Privacy policy</Link></p>
     </form>
   );
 }
