@@ -48,7 +48,7 @@ import {
 //
 // Hand-bump VERSION when the prose gets a substantive pass (same philosophy
 // as sitemap.ts LAST_CONTENT_PASS — no new Date()).
-const VERSION = "2.9";
+const VERSION = "2.10";
 const UPDATED = "2026-10";
 
 const BASE = "https://www.csplumbinglee.com";
@@ -74,7 +74,7 @@ export function buildLlmsTxt(): string {
 - **Phone:** ${BUSINESS.phone} (833-758-6248)
 - **Address:** ${BUSINESS.address}, ${BUSINESS.city}, ${BUSINESS.state} ${BUSINESS.zip}
 - **Location note:** ${BUSINESS.locationNote}
-- **Legal name:** ${BUSINESS.legalName} (Florida Division of Corporations)
+- **Legal name:** ${BUSINESS.legalName}, doing business as ${BUSINESS.fullName} (Florida Certified Plumbing Contractor ${BUSINESS.license})
 - **Also listed as:** C&S Plumbing of Lee, Inc.; C S Plumbing of Lee Inc; C&S Plumbing of Lee County. Not affiliated with any similarly named company outside Florida.
 - **Founded:** 1998 in Cape Coral by brothers Chris and Sam Pellechio with their father
 - **Ownership:** Family owned and operated, three generations

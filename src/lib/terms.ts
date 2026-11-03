@@ -838,7 +838,7 @@ export const TERMS_SECTIONS: readonly TermsSection[] = [
       {
         id: "contact-office",
         heading: "Office.",
-        text: `${BUSINESS.legalName}, doing business as ${BUSINESS.fullName}. ${OFFICE}. ${BUSINESS.hours.weekday}; ${BUSINESS.hours.saturday}; ${BUSINESS.hours.emergency.toLowerCase()}.`,
+        text: `${BUSINESS.legalName}, doing business as ${BUSINESS.fullName}, Florida Certified Plumbing Contractor ${BUSINESS.license}. ${OFFICE}. ${BUSINESS.hours.weekday}; ${BUSINESS.hours.saturday}; ${BUSINESS.hours.emergency.toLowerCase()}.`,
         links: [
           { label: BUSINESS.phone, href: `tel:${BUSINESS.phoneRaw}` },
           { label: BUSINESS.email, href: `mailto:${BUSINESS.email}` },
@@ -856,7 +856,7 @@ export const TERMS_REVISIONS: readonly TermsRevision[] = [
   {
     version: TERMS_VERSION,
     effectiveDate: TERMS_EFFECTIVE_DATE,
-    note: "First published revision. Replaces the Terms of Service page dated March 10, 2026.",
+    note: "First published revision. Replaces the Terms of Service page dated March 10, 2026. Same-day correction: the contracting entity is Draft Plumbing Corp, doing business as C&S Plumbing of Lee.",
   },
 ];
 

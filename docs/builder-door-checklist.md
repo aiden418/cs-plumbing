@@ -15,7 +15,7 @@ a placeholder in its place.
 | Capacity | No homes/month or crew count. "Contact our estimating team to discuss upcoming starts…" | `SCHEDULING_NOTE` |
 | Coverage | "Southwest Florida, from Port Charlotte through Naples" (coverage, not permit jurisdictions) | `SERVICE_COVERAGE` |
 | Warranty | One-year warranty on materials supplied by C&S, per written project terms. Not labor, not manufacturer, not customer-supplied fixtures | `WARRANTY` in constants.ts |
-| Legal name | C & S PLUMBING OF LEE, INC. (Sunbiz) in the prequal packet and schema; brand stays C&S Plumbing of Lee | `BUSINESS.legalName` |
+| Legal name | Draft Plumbing Corp, d/b/a C&S Plumbing of Lee (owner-stated 2026-11-03), on the Terms, prequal packet and schema; brand stays C&S Plumbing of Lee | `BUSINESS.legalName` |
 | Qualifications | $2M GL, workers' comp, bonding on request, OSHA-30, 100% self-performed, AIA G702/G703, Procore/Textura | `QUALIFICATIONS` |
 | Removed | EMR (none exists — do not list as outstanding), commercial auto / umbrella, drug testing, all bid-turnaround day counts, OSHA-10 wording | — |
 
@@ -23,7 +23,7 @@ a placeholder in its place.
 
 | Item | Where it goes | Notes |
 |---|---|---|
-| W-9 exact legal-name match | prequal packet "Legal name" row | Sunbiz shows C & S PLUMBING OF LEE, INC.; confirm against the signed W-9 |
+| W-9 exact legal-name match | prequal packet "Legal name" row, Terms clause 1.1 | Owner states Draft Plumbing Corp; an older Sunbiz record reads C & S PLUMBING OF LEE, INC. Confirm the signed W-9 and the DBPR record for CFC1432485 match Draft Plumbing Corp |
 | BuildZoom profile housekeeping | external | Profile still shows the former Cape Coral address (1011 SE 12th Ct) and only CFC057076; claim/update it so the linked source matches the site |
 | Production `ADMIN_EMAIL` | Vercel env | Intended destination is office@csplumbinglee.com (code default). Not verified: `vercel login` then `vercel env ls production` |
 | Production bid-form test | /builders#bid after deploy; /builder-portal today | Owner submits a labeled test; confirm admin email, SMS gateway copy, and submitter confirmation arrive |

@@ -7,10 +7,12 @@ import type { Service, TeamMember, Testimonial, TimelineEvent, NavLink, Stat, Se
 export const BUSINESS = {
   name: "C&S Plumbing",
   fullName: "C&S Plumbing of Lee",
-  /** As recorded with the Florida Division of Corporations (Sunbiz). Public
-   *  brand stays "C&S Plumbing of Lee"; the legal name goes on vendor
-   *  paperwork. Exact match to the W-9 still to be checked. */
-  legalName: "C & S PLUMBING OF LEE, INC.",
+  /** Contracting entity as stated by the owner (Aiden, 2026-11-03): Draft
+   *  Plumbing Corp, d/b/a C&S Plumbing of Lee, under license CFC1432485.
+   *  The public brand stays "C&S Plumbing of Lee"; the legal name goes on
+   *  the Terms, vendor paperwork and schema. An older Sunbiz record reads
+   *  "C & S PLUMBING OF LEE, INC."; confirm the W-9 matches this value. */
+  legalName: "Draft Plumbing Corp",
   phone: "833-PLUMB-IT",
   phoneRaw: "8337586248",
   // "?&body=" works on both iOS and Android
