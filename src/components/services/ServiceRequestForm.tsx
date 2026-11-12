@@ -6,6 +6,9 @@ import { useId, useRef, useState } from "react";
 import { BUSINESS } from "@/lib/constants";
 import { serviceRequestSchema, SERVICE_REQUEST_OPTIONS } from "@/lib/service-request";
 import { trackContactForm } from "@/lib/pixel";
+import FileUpload from "@/components/builder-portal/FileUpload";
+import { PHOTO_UPLOAD, photoTotalError } from "@/lib/photo-upload";
+import { compressAll } from "@/lib/compress-image";
 
 export default function ServiceRequestForm({
   defaultService = "",
@@ -21,6 +24,7 @@ export default function ServiceRequestForm({
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
   const [error, setError] = useState("");
+  const [photos, setPhotos] = useState<File[]>([]);
   const inputClass = "mt-1 w-full rounded-xl border border-gray-300 bg-white px-3 py-2.5 text-sm text-gray-900 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary";
   const labelClass = "block text-sm font-medium text-gray-700";
 
@@ -37,21 +41,45 @@ export default function ServiceRequestForm({
       setError(parsed.error.issues[0].message);
       return;
     }
+    const sizeError = photoTotalError(photos);
+    if (sizeError) {
+      setError(sizeError);
+      return;
+    }
     busy.current = true;
     setSending(true);
     setError("");
     try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(parsed.data),
-      });
+      // Photos ride along as multipart; without them the payload stays JSON.
+      let response: Response;
+      if (photos.length > 0) {
+        const body = new FormData();
+        for (const [key, value] of Object.entries(parsed.data)) {
+          if (value !== undefined && value !== null) body.append(key, String(value));
+        }
+        photos.forEach((file) => body.append(PHOTO_UPLOAD.field, file));
+        response = await fetch("/api/contact", { method: "POST", body });
+      } else {
+        response = await fetch("/api/contact", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(parsed.data),
+        });
+      }
       const result = await response.json();
-      if (!response.ok || !result.success) throw new Error("Submission failed");
+      if (!response.ok || !result.success) {
+        throw Object.assign(new Error(result.error ?? "Submission failed"), { code: result.code });
+      }
       setSent(true);
       void trackContactForm({ email: parsed.data.email, eventId: result.eventId });
-    } catch {
-      setError(`Your request could not be sent. Please try again or call ${BUSINESS.phone}.`);
+    } catch (err) {
+      // Attachment problems are explained by the server in customer-facing words.
+      const attachmentIssue = (err as { code?: string }).code === "attachments" && err instanceof Error;
+      setError(
+        attachmentIssue
+          ? err.message
+          : `Your request could not be sent. Please try again or call ${BUSINESS.phone}.`
+      );
     } finally {
       busy.current = false;
       setSending(false);
@@ -98,6 +126,21 @@ export default function ServiceRequestForm({
         <div className={compact ? "" : "sm:col-span-2"}>
           <label className={labelClass} htmlFor={`${id}-message`}>Brief description (optional)</label>
           <textarea id={`${id}-message`} name="message" rows={2} maxLength={5000} className={inputClass} />
+        </div>
+        <div className={compact ? "" : "sm:col-span-2"}>
+          <span className={labelClass}>Photos of the problem (optional, up to {PHOTO_UPLOAD.maxFiles})</span>
+          <div className="mt-1">
+            <FileUpload
+              files={photos}
+              onChange={(next) => {
+                // Downscale phone photos as they are picked so the upload stays small.
+                void compressAll(next).then(setPhotos);
+              }}
+              maxFiles={PHOTO_UPLOAD.maxFiles}
+              maxSizeMb={PHOTO_UPLOAD.maxBytesEach / 1024 / 1024}
+              compact
+            />
+          </div>
         </div>
         <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="absolute -left-[9999px] w-px h-px opacity-0" />
       </fieldset>

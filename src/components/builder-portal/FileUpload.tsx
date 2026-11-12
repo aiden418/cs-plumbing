@@ -12,14 +12,25 @@ const ACCEPTED_TYPES = [
 const ACCEPTED_EXTENSIONS = ".pdf,.jpg,.jpeg,.png";
 const MAX_FILES = 10;
 const MAX_SIZE_MB = 10;
-const MAX_SIZE_BYTES = MAX_SIZE_MB * 1024 * 1024;
 
 interface FileUploadProps {
   files: File[];
   onChange: (files: File[]) => void;
+  /** Lower cap for the homeowner forms; the builder portal keeps the default. */
+  maxFiles?: number;
+  /** Per-file cap in MB; the builder portal keeps the default. */
+  maxSizeMb?: number;
+  /** Tighter drop zone for use inside a short form. */
+  compact?: boolean;
 }
 
-export default function FileUpload({ files, onChange }: FileUploadProps) {
+export default function FileUpload({
+  files,
+  onChange,
+  maxFiles = MAX_FILES,
+  maxSizeMb = MAX_SIZE_MB,
+  compact = false,
+}: FileUploadProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [dragOver, setDragOver] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -37,22 +48,22 @@ export default function FileUpload({ files, onChange }: FileUploadProps) {
       }
 
       // Validate size
-      const tooLarge = newFiles.filter((f) => f.size > MAX_SIZE_BYTES);
+      const tooLarge = newFiles.filter((f) => f.size > maxSizeMb * 1024 * 1024);
       if (tooLarge.length) {
-        setError(`File too large: ${tooLarge.map((f) => f.name).join(", ")}. Max ${MAX_SIZE_MB}MB per file.`);
+        setError(`File too large: ${tooLarge.map((f) => f.name).join(", ")}. Max ${maxSizeMb}MB per file.`);
         return;
       }
 
       // Validate count
       const combined = [...files, ...newFiles];
-      if (combined.length > MAX_FILES) {
-        setError(`You can upload a maximum of ${MAX_FILES} files.`);
+      if (combined.length > maxFiles) {
+        setError(`You can upload a maximum of ${maxFiles} files.`);
         return;
       }
 
       onChange(combined);
     },
-    [files, onChange]
+    [files, onChange, maxFiles, maxSizeMb]
   );
 
   const removeFile = (index: number) => {
@@ -94,7 +105,8 @@ export default function FileUpload({ files, onChange }: FileUploadProps) {
         onDrop={handleDrop}
         onClick={() => inputRef.current?.click()}
         className={cn(
-          "relative border-2 border-dashed rounded-xl p-8 sm:p-12 text-center cursor-pointer transition-all duration-200",
+          "relative border-2 border-dashed rounded-xl text-center cursor-pointer transition-all duration-200",
+          compact ? "p-4 sm:p-5" : "p-8 sm:p-12",
           dragOver
             ? "border-primary bg-primary/5 scale-[1.01]"
             : "border-gray-300 hover:border-primary/50 hover:bg-gray-50"
@@ -111,13 +123,13 @@ export default function FileUpload({ files, onChange }: FileUploadProps) {
             e.target.value = "";
           }}
         />
-        <Upload className="w-8 h-8 text-gray-400 mx-auto mb-3" />
+        <Upload className={cn("text-gray-400 mx-auto", compact ? "w-6 h-6 mb-2" : "w-8 h-8 mb-3")} />
         <p className="text-sm sm:text-base font-medium text-gray-700">
           Drag &amp; drop files here, or{" "}
           <span className="text-primary font-semibold">browse</span>
         </p>
         <p className="text-xs sm:text-sm text-gray-500 mt-1">
-          PDF, JPG, PNG &middot; Up to {MAX_FILES} files &middot; {MAX_SIZE_MB}MB max each
+          PDF, JPG, PNG &middot; Up to {maxFiles} files &middot; {maxSizeMb}MB max each
         </p>
       </div>
 

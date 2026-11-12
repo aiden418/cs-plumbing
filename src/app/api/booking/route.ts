@@ -1,5 +1,6 @@
 import { NextResponse, after } from "next/server";
 import { CLAIMS } from "@/lib/claims";
+import { readSubmission } from "@/lib/api/attachments";
 import { Resend } from "resend";
 import { z } from "zod";
 import { BUSINESS } from "@/lib/constants";
@@ -46,8 +47,14 @@ export async function POST(request: Request) {
     const rl = rateLimit(ip);
     if (!rl.ok) return tooManyRequests(rl.retryAfter);
 
-    const json = await request.json();
-    const parsed = BookingSchema.safeParse(json);
+    // JSON when no photos were attached; multipart otherwise.
+    const submission = await readSubmission(request);
+    if ("error" in submission) {
+      // code lets the form show this message verbatim (it is written for the customer).
+      return NextResponse.json({ error: submission.error, code: "attachments" }, { status: 400 });
+    }
+    const { attachments } = submission;
+    const parsed = BookingSchema.safeParse(submission.fields);
     if (!parsed.success) {
       return NextResponse.json(
         { error: "Invalid submission", issues: parsed.error.issues.map((i) => i.path.join(".")) },
@@ -111,6 +118,7 @@ export async function POST(request: Request) {
             <p><strong>Type:</strong> ${typeLabel}</p>
             <p><strong>Service:</strong> ${safe.service}</p>
             <p><strong>Description:</strong> ${safe.description}</p>
+            <p><strong>Photos attached:</strong> ${attachments.length}</p>
             ${scheduleHtml}
             ${budgetHtml}
 
@@ -125,6 +133,7 @@ export async function POST(request: Request) {
           </div>
         </div>
       `,
+      ...(attachments.length > 0 && { attachments }),
     }, "booking admin email");
 
     if (SMS_TO) {
@@ -162,7 +171,7 @@ export async function POST(request: Request) {
           </div>
           <div style="padding: 20px; background: #f9f9f9;">
             <p>Hi ${safe.name},</p>
-            <p>Thanks for choosing C&S Plumbing. We&rsquo;ve received your ${isEstimate ? "estimate request" : "booking request"} and our team will call you to confirm the details. ${CLAIMS.bookingConfirmation}</p>
+            <p>Thanks for choosing C&S Plumbing. We&rsquo;ve received your ${isEstimate ? "estimate request" : "booking request"} and our team will call you to confirm the details. ${CLAIMS.bookingConfirmation}</p>${attachments.length > 0 ? `<p>We received ${attachments.length} photo${attachments.length === 1 ? "" : "s"} with your request.</p>` : ""}
             <div style="background: #fff; padding: 16px; border-radius: 8px; margin: 16px 0;">
               <p style="margin: 4px 0;"><strong>Service:</strong> ${safe.service}</p>${scheduleConfirmHtml}
               <p style="margin: 4px 0;"><strong>Address:</strong> ${safe.address}</p>

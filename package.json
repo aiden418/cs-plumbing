@@ -13,7 +13,8 @@
     "photos:check": "node scripts/check-project-images.mjs && node scripts/strip-image-metadata.mjs --check",
     "gallery:ingest": "node scripts/ingest-gallery-photos.mjs",
     "photos:strip": "node scripts/strip-image-metadata.mjs",
-    "builders:pdf": "node scripts/build-builder-pdfs.mjs"
+    "builders:pdf": "node scripts/build-builder-pdfs.mjs",
+    "start:capture": "RESEND_API_KEY=re_local_capture RESEND_CAPTURE=.resend-capture.jsonl NODE_OPTIONS=\"--require ./scripts/resend-capture.cjs\" next start"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",

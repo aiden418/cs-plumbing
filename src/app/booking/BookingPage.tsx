@@ -3,6 +3,9 @@
 import { useState, useEffect } from "react";
 import { CLAIMS } from "@/lib/claims";
 import { perYear } from "@/lib/pricing";
+import FileUpload from "@/components/builder-portal/FileUpload";
+import { PHOTO_UPLOAD, photoTotalError } from "@/lib/photo-upload";
+import { compressAll } from "@/lib/compress-image";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Wrench,
@@ -144,6 +147,9 @@ export default function BookingPage() {
   const steps = isEstimate ? estimateSteps : bookingSteps;
   const totalSteps = steps.length;
 
+  // Optional photos; kept outside `form` because that object is JSON-serialised.
+  const [photos, setPhotos] = useState<File[]>([]);
+
   const update = (field: keyof FormData, value: string) =>
     setForm((prev) => ({ ...prev, [field]: value }));
 
@@ -185,32 +191,54 @@ export default function BookingPage() {
   };
 
   const handleSubmit = async () => {
+    const sizeError = photoTotalError(photos);
+    if (sizeError) {
+      setSubmitError(sizeError);
+      return;
+    }
     setSubmitting(true);
     try {
-      const res = await fetch("/api/booking", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, sourcePath: window.location.pathname }),
-      });
+      const payload = { ...form, sourcePath: window.location.pathname };
+      // Photos ride along as multipart; without them the payload stays JSON.
+      const res = photos.length > 0
+        ? await fetch("/api/booking", {
+            method: "POST",
+            body: (() => {
+              const body = new FormData();
+              for (const [key, value] of Object.entries(payload)) body.append(key, String(value ?? ""));
+              photos.forEach((file) => body.append(PHOTO_UPLOAD.field, file));
+              return body;
+            })(),
+          })
+        : await fetch("/api/booking", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          });
       const data: {
         success?: boolean;
         confirmationId?: string;
         eventId?: string;
         error?: string;
+        code?: string;
       } = await res
         .json()
         .catch(() => ({}));
       if (!res.ok || !data.success) {
-        throw new Error(data.error ?? "Submission failed");
+        throw Object.assign(new Error(data.error ?? "Submission failed"), { code: data.code });
       }
       if (data.confirmationId) setConfirmationId(data.confirmationId);
       const track = form.requestType === "estimate" ? trackEstimateRequest : trackBooking;
       void track({ email: form.email, eventId: data.eventId });
       // Only show the confirmation screen once the server has accepted the request.
       setStep(totalSteps);
-    } catch {
+    } catch (err) {
+      // Attachment problems are explained by the server in customer-facing words.
+      const attachmentIssue = (err as { code?: string }).code === "attachments" && err instanceof Error;
       setSubmitError(
-        `Something went wrong and your request was not submitted. Please try again, or call us at ${BUSINESS.phone}.`
+        attachmentIssue
+          ? err.message
+          : `Something went wrong and your request was not submitted. Please try again, or call us at ${BUSINESS.phone}.`
       );
     } finally {
       setSubmitting(false);
@@ -397,6 +425,21 @@ export default function BookingPage() {
                     rows={4}
                     className="w-full bg-white border border-gray-200 rounded-xl px-3 sm:px-4 py-2.5 sm:py-3 text-gray-900 text-sm outline-none focus:border-primary transition-colors resize-none"
                   />
+                  <div className="mt-4">
+                    <p className="text-sm font-medium text-gray-700 mb-1">
+                      Photos {isEstimate ? "of the space or plans" : "of the problem"} (optional, up to {PHOTO_UPLOAD.maxFiles})
+                    </p>
+                    <FileUpload
+                      files={photos}
+                      onChange={(next) => {
+                        // Downscale phone photos as they are picked so the upload stays small.
+                        void compressAll(next).then(setPhotos);
+                      }}
+                      maxFiles={PHOTO_UPLOAD.maxFiles}
+                      maxSizeMb={PHOTO_UPLOAD.maxBytesEach / 1024 / 1024}
+                      compact
+                    />
+                  </div>
 
                   {isEstimate ? (
                     /* Budget Range for Estimate */
