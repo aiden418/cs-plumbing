@@ -2437,7 +2437,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       {
         question: "How fast can you get to a plumbing emergency in Bonita Springs?",
         answer:
-          "C&S Plumbing responds to Bonita Springs emergency calls with typical arrival times of 30–60 minutes depending on time of day and crew availability. We maintain truck coverage in the southern Lee County area and our dispatch line at 833-PLUMB-IT is staffed 24/7/365. Your dispatcher will give you an accurate ETA when you call.",
+          `Emergency response is ${EMERGENCY_CLAIMS.responseTime}. We maintain truck coverage in the southern Lee County area so Bonita Springs calls are dispatched promptly, and our dispatch line at 833-PLUMB-IT is staffed 24/7/365. Your dispatcher will give you an accurate ETA when you call.`,
       },
       {
         question: "Do you handle condo plumbing emergencies in Bonita Springs?",

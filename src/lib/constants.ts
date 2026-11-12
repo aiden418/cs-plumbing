@@ -2714,7 +2714,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h3>Pros</h3>
 <ul>
-<li><strong>Lower upfront cost:</strong> $1,650-$2,500 installed in Southwest Florida</li>
+<li><strong>Lower upfront cost:</strong> ${spanInline("waterHeater.tank40", "waterHeater.tank50")} installed in Southwest Florida</li>
 <li><strong>Simple installation:</strong> Straightforward replacement of existing units</li>
 <li><strong>Reliable technology:</strong> Proven and well-understood by all plumbers</li>
 <li><strong>Works during power outages:</strong> Gas models continue heating without electricity</li>
@@ -2743,7 +2743,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h3>Cons</h3>
 <ul>
-<li><strong>Higher upfront cost:</strong> $3,500-$5,200 installed</li>
+<li><strong>Higher upfront cost:</strong> ${rangeInline("waterHeater.tankless")} installed</li>
 <li><strong>May need gas line upgrades:</strong> Some homes need larger gas lines</li>
 <li><strong>Flow rate limits:</strong> Very high simultaneous usage can overwhelm smaller units</li>
 </ul>
@@ -2956,10 +2956,10 @@ export const BLOG_POSTS: BlogPost[] = [
 <h2>How Much Does Water Treatment Cost?</h2>
 <p>In Southwest Florida, expect to pay:</p>
 <ul>
-<li><strong>Water softener:</strong> $1,500–$3,500 installed</li>
-<li><strong>Whole-home carbon filter:</strong> $800–$2,000 installed</li>
-<li><strong>Under-sink RO system:</strong> $300–$800 installed</li>
-<li><strong>Softener + RO combo:</strong> $2,000–$4,000 installed</li>
+<li><strong>Water softener:</strong> ${rangeInline("softener.system")} installed</li>
+<li><strong>Whole-home carbon filter:</strong> ${rangeInline("softener.carbon")} installed</li>
+<li><strong>Under-sink RO system:</strong> ${rangeInline("softener.ro")} installed</li>
+<li><strong>Softener + RO combo:</strong> ${rangeInline("softener.combo")} installed</li>
 </ul>
 
 <h2>Get a Free Water Test</h2>
@@ -3087,15 +3087,15 @@ export const BLOG_POSTS: BlogPost[] = [
 <h2>Slab Leak Repair Costs in Southwest Florida</h2>
 <p>Repair costs vary widely based on the leak's location, accessibility, and severity:</p>
 <ul>
-<li><strong>Leak detection service:</strong> $200–$500</li>
-<li><strong>Spot repair (slab access):</strong> $1,500–$4,000</li>
-<li><strong>Pipe re-routing:</strong> $1,500–$3,500</li>
-<li><strong>Whole-home repipe:</strong> $4,500–$10,000+ (eliminates all future slab leak risk)</li>
+<li><strong>Leak detection service:</strong> ${rangeInline("leak.detection")}</li>
+<li><strong>Slab leak detection + spot repair:</strong> ${rangeInline("leak.slabSpot")}</li>
+<li><strong>Pipe re-routing:</strong> ${rangeInline("leak.reroute")}</li>
+<li><strong>Whole-home repipe:</strong> ${rangeInline("repipe.overall")} (eliminates all future slab leak risk)</li>
 </ul>
 <p>Most homeowner's insurance policies in Florida cover slab leak repair, though coverage varies. Document the damage thoroughly before any repairs — photos and video of wet flooring, cracks, and water damage strengthen your claim significantly.</p>
 
 <h2>Don't Wait — Slab Leaks Get Worse Quickly</h2>
-<p>A small slab leak that costs $2,000 to repair today can become a $20,000+ foundation and mold remediation project in six months. The concrete and soil beneath your slab will erode faster than you expect once water starts flowing freely underground.</p>
+<p>A small slab leak that costs $2,000 to repair today can become a $20,000+ foundation and mold remediation project in six months. The concrete and soil beneath your slab will erode faster than you expect once water starts flowing freely underground.</p> // claim-ok: illustrative comparison, not a published price
 <p>If you've noticed any of the warning signs above, call <a href="tel:8337586248">833-PLUMB-IT</a> immediately. C&S Plumbing provides expert <a href="/services/leak-repair">leak detection and repair</a> throughout <a href="/areas/cape-coral">Cape Coral</a>, <a href="/areas/fort-myers">Fort Myers</a>, <a href="/areas/north-fort-myers">North Fort Myers</a>, <a href="/areas/bonita-springs">Bonita Springs</a>, and all of Lee County. <a href="/booking">Book a leak detection appointment</a> today — fast diagnosis is the difference between a minor repair and a major reconstruction.</p>`,
   },
   {
@@ -3243,7 +3243,7 @@ export const BLOG_POSTS: BlogPost[] = [
 <p>The conversion involves several steps, and <a href="/services/uep-utilities">C&S Plumbing handles the entire process</a>:</p>
 
 <h3>1. Sewer Lateral Installation</h3>
-<p>A new sewer line is trenched from your home to the city sewer main in the street. This involves excavation across your yard, installing new PVC sewer pipe at the proper grade, and connecting to the city main. Typical cost is $25-$33 per linear foot depending on depth and distance.</p>
+<p>A new sewer line is trenched from your home to the city sewer main in the street. This involves excavation across your yard, installing new PVC sewer pipe at the proper grade, and connecting to the city main. Typical cost is ${perFoot("uep.sewerPerFt")} depending on depth and distance.</p>
 
 <h3>2. Septic Tank Abandonment</h3>
 <p>Your existing septic tank must be properly abandoned according to Lee County code. This involves pumping out the tank, collapsing or filling it with clean fill material, and obtaining a permit and inspection. We handle the entire abandonment process, including coordination with the county inspector.</p>
@@ -3257,11 +3257,11 @@ export const BLOG_POSTS: BlogPost[] = [
 <h2>How Much Does Septic to Sewer Cost?</h2>
 <p>Total project costs vary based on your property's specific situation, but typical ranges for <a href="/areas/cape-coral">Cape Coral</a> homeowners include:</p>
 <ul>
-<li><strong>Sewer lateral:</strong> $2,500–$5,000 (based on distance to main)</li>
-<li><strong>Septic abandonment:</strong> $2,500–$3,500</li>
-<li><strong>Water service line:</strong> $1,300–$2,500 (if needed)</li>
-<li><strong>Irrigation line:</strong> $900–$1,500 (if needed)</li>
-<li><strong>Total typical range:</strong> $5,000–$12,000</li>
+<li><strong>Sewer lateral:</strong> ${perFoot("uep.sewerPerFt")} (based on distance to main)</li>
+<li><strong>Septic abandonment:</strong> ${money(price("uep.septicAbandon").min)}</li>
+<li><strong>Water service line:</strong> ${perFoot("uep.waterPerFt")} (if needed)</li>
+<li><strong>Irrigation line:</strong> ${perFoot("uep.irrigationPerFt")} (if needed)</li>
+<li><strong>Total typical range (Cape Coral UEP lot):</strong> ${rangeInline("uep.typicalLot")}; North Fort Myers conversions ${rangeInline("septicToSewer.nfm")}</li>
 </ul>
 <p>The city may also charge assessment fees for the sewer infrastructure itself, which are separate from the plumbing connection costs.</p>
 
@@ -3323,7 +3323,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>4. Test Your Toilets for Running or Silent Leaks</h2>
 <p>A running toilet is one of the most common — and wasteful — plumbing problems in residential homes. A toilet that runs continuously can waste 200 gallons per day. The flapper valve is usually the culprit: it's a rubber seal that deteriorates over time, especially in Florida's chlorinated water.</p>
-<p>To check for a silent toilet leak, put a few drops of food coloring or a dye tablet in the tank and wait 15 minutes without flushing. If color appears in the bowl, the flapper is leaking. Replacing a flapper costs about $10 and takes 10 minutes — one of the few plumbing repairs genuinely worth doing yourself before calling a plumber.</p>
+<p>To check for a silent toilet leak, put a few drops of food coloring or a dye tablet in the tank and wait 15 minutes without flushing. If color appears in the bowl, the flapper is leaking. Replacing a flapper costs about $10 and takes 10 minutes — one of the few plumbing repairs genuinely worth doing yourself before calling a plumber.</p> // claim-ok: DIY part cost, not a C&S price
 
 <h2>5. Inspect and Clear All Drains</h2>
 <p>Summer in Southwest Florida brings daily rainfall and heavy use of showers (everyone's sweating constantly). Make sure all drains are flowing freely before summer begins. Pour a bucket of water into floor drains in the garage, laundry room, and any utility areas — these drains sit unused for long periods and their water traps can evaporate, allowing sewer gas odors into the home.</p>
@@ -3498,10 +3498,10 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "How Much Does Whole-Home Repiping Cost in Cape Coral?",
     metaTitle: "Whole-Home Repipe Cost in Cape Coral — Real 2026 Prices",
     metaDescription:
-      "Cape Coral whole-home repipe costs $4,000–$15,000; most 3-bed homes run $6,800–$9,500 in PEX. Price by home size, PEX vs copper, and what's included.",
+      `Cape Coral whole-home repipe costs ${rangeInline("repipe.overall")}; most 3-bed homes run ${rangeInline("repipe.pex3x2")} in PEX. Price by home size, PEX vs copper, and what's included.`,
     keywords: ["repipe cost Cape Coral", "whole home repipe cost Florida", "how much does repiping cost", "PEX repipe price Cape Coral", "polybutylene replacement cost"],
     excerpt:
-      "Straight answer: most Cape Coral repipes cost $4,000–$15,000, and a typical 3-bed, 2-bath home lands between $6,800–$9,500 in PEX. Here's the full price breakdown by home size and pipe material, and exactly what that money buys.",
+      `Straight answer: most Cape Coral repipes cost ${rangeInline("repipe.overall")}, and a typical 3-bed, 2-bath home lands between ${rangeInline("repipe.pex3x2")} in PEX. Here's the full price breakdown by home size and pipe material, and exactly what that money buys.`,
     category: "Repiping",
     publishDate: "2026-07-21",
     readTime: "7 min read",
@@ -3509,11 +3509,11 @@ export const BLOG_POSTS: BlogPost[] = [
     faqs: [
       {
         question: "How much does it cost to repipe a 3-bedroom house in Cape Coral?",
-        answer: "A PEX repipe on a typical 3-bed, 2-bath Cape Coral home (1,800–2,400 sq ft) runs $6,800–$9,500 with C&S Plumbing, including the Lee County permit, final inspection, and drywall patching. Smaller 2-bed homes and condos run $4,200–$6,500.",
+        answer: `A PEX repipe on a typical 3-bed, 2-bath Cape Coral home (1,800–2,400 sq ft) runs ${rangeInline("repipe.pex3x2")} with C&S Plumbing, including the Lee County permit, final inspection, and patching and texturing the access cuts (painting by others). Smaller 2-bed homes and condos run ${rangeInline("repipe.pex2x2")}.`,
       },
       {
         question: "How much more does a copper repipe cost than PEX?",
-        answer: "Plan on $2,000–$4,000 over the equivalent PEX price for Type-L copper. Most Cape Coral homeowners choose PEX — it's corrosion-proof in Florida water, quieter, and carries a manufacturer warranty — but we install both.",
+        answer: `Plan on ${rangeInline("repipe.copperUpcharge")} over the equivalent PEX price for Type-L copper. Most Cape Coral homeowners choose PEX — it's corrosion-proof in Florida water, quieter, and carries a manufacturer warranty — but we install both.`,
       },
       {
         question: "How long does a whole-home repipe take?",
@@ -3524,20 +3524,20 @@ export const BLOG_POSTS: BlogPost[] = [
         answer: "Yes. Every C&S repipe quote includes the Lee County permit, the final inspection, and patching every access cut to paint-ready condition before we leave. There are no add-on surprises at the end.",
       },
     ],
-    content: `<p><strong>The straight answer: whole-home repiping in Cape Coral costs $4,000–$15,000, and the large majority of homes land between $4,200 and $9,500 with PEX.</strong> Where you fall in that range comes down to three things — the size of your home, the pipe material you choose, and whether we're removing polybutylene. Below are the actual price brackets we quote every week, so you can ballpark your own home before anyone steps through your door.</p>
+    content: `<p><strong>The straight answer: whole-home repiping in Cape Coral costs ${rangeInline("repipe.overall")}, and the large majority of homes land between ${money(price("repipe.pex2x2").min)} and ${money(price("repipe.pex3x2").max)} with PEX.</strong> Where you fall in that range comes down to three things — the size of your home, the pipe material you choose, and whether we're removing polybutylene. Below are the actual price brackets we quote every week, so you can ballpark your own home before anyone steps through your door.</p>
 
 <h2>Repipe Cost by Home Size (PEX)</h2>
 <p>These are C&S Plumbing's real working ranges for a complete hot-and-cold repipe in PEX, including materials, labor, the Lee County permit, final inspection, and drywall patching:</p>
-<p><strong>2-bed / 2-bath, up to 1,500 sq ft — $4,200–$6,500.</strong> Most condos and smaller slab homes. A North Fort Myers condo we repiped recently came in at $4,950, done in a single day so the unit could be re-rented that weekend.</p>
-<p><strong>3-bed / 2-bath, 1,800–2,400 sq ft — $6,800–$9,500.</strong> The typical Cape Coral and Fort Myers single-family home. A 1990 Cape Coral SE home with failing polybutylene ran $7,200, finished in a day and a half with nine access cuts, all patched.</p>
-<p><strong>4-bed or larger, 2,500+ sq ft — $9,500–$13,000.</strong> Two-story layouts and bigger floor plans take more pipe, more openings, and more time.</p>
+<p><strong>2-bed / 2-bath, up to 1,500 sq ft — ${rangeInline("repipe.pex2x2")}.</strong> Most condos and smaller slab homes. A North Fort Myers condo we repiped recently came in at $4,950, done in a single day so the unit could be re-rented that weekend.</p> // claim-ok: documented job
+<p><strong>3-bed / 2-bath, 1,800–2,400 sq ft — ${rangeInline("repipe.pex3x2")}.</strong> The typical Cape Coral and Fort Myers single-family home. A 1990 Cape Coral SE home with failing polybutylene ran $7,200, finished in a day and a half with nine access cuts, all patched.</p> // claim-ok: documented job
+<p><strong>4-bed or larger, 2,500+ sq ft — ${rangeInline("repipe.pex4plus")}.</strong> Two-story layouts and bigger floor plans take more pipe, more openings, and more time.</p>
 
 <h2>PEX or Copper?</h2>
 <p>PEX is what we recommend for most Southwest Florida homes, and it's what the price brackets above assume. It doesn't corrode in our aggressive water, it tolerates minor slab movement, installs faster with fewer wall openings, and carries a manufacturer warranty on the pipe itself.</p>
-<p>Type-L copper is still the right call for some owners — often ahead of an appraisal or for personal preference — and adds <strong>$2,000–$4,000 over the PEX price</strong> plus roughly an extra day of install time. A 2,650 sq ft Fort Myers home we repiped in copper for resale came to $11,800 and passed the county final on the first inspection.</p>
+<p>Type-L copper is still the right call for some owners — often ahead of an appraisal or for personal preference — and adds <strong>${rangeInline("repipe.copperUpcharge")} over the PEX price</strong> plus roughly an extra day of install time. A 2,650 sq ft Fort Myers home we repiped in copper for resale came to $11,800 and passed the county final on the first inspection.</p> // claim-ok: documented job
 
 <h2>The Polybutylene Factor</h2>
-<p>If your Cape Coral home was built between 1978 and 1995, there's a good chance it still has gray <a href="/blog/polybutylene-pipe-problems-cape-coral">polybutylene supply lines</a> — the pipe material that failed so widely it triggered a class-action settlement. Removing poly adds <strong>$500–$1,200</strong> to the job, and it's the single most common reason Cape Coral homes get repiped. Some Florida insurers now require poly replacement as a condition of coverage, which means the repipe often pays for itself in premiums and insurability.</p>
+<p>If your Cape Coral home was built between 1978 and 1995, there's a good chance it still has gray <a href="/blog/polybutylene-pipe-problems-cape-coral">polybutylene supply lines</a> — the pipe material that failed so widely it triggered a class-action settlement. Removing poly adds <strong>${rangeInline("repipe.polyRemoval")}</strong> to the job, and it's the single most common reason Cape Coral homes get repiped. Some Florida insurers now require poly replacement as a condition of coverage, which means the repipe often pays for itself in premiums and insurability.</p>
 
 <h2>What's Included (Ask Any Plumber This)</h2>
 <p>When you compare repipe quotes, make sure you're comparing the same job. Every C&S repipe includes the <strong>Lee County permit and final inspection</strong> — required by code, and a red flag if a bidder wants to skip it — plus <strong>drywall patching to paint-ready condition</strong> on every access cut. Those two items are where lowball quotes quietly make their money back.</p>
@@ -3553,10 +3553,10 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "Signs Your Water Heater Needs Replacing (And What It Costs in SWFL)",
     metaTitle: "Water Heater Replacement Signs & Costs — SWFL 2026 Guide",
     metaDescription:
-      "Rusty water, popping sounds, water at the base: the signs a water heater is done, and real SWFL replacement costs, $1,650 for tanks to $5,200 for tankless.",
+      `Rusty water, popping sounds, water at the base: the signs a water heater is done, and real SWFL replacement costs, ${money(price("waterHeater.tank40").min)} for tanks to ${money(price("waterHeater.tankless").max)} for tankless.`,
     keywords: ["water heater replacement cost Florida", "signs water heater needs replacing", "water heater lifespan Florida", "water heater leaking replace or repair", "tankless water heater cost SWFL"],
     excerpt:
-      "A water heater rarely dies without warning. Here are the five signs ours techs look for, the repair-or-replace rule we use on every call, and real installed prices for Southwest Florida — from $195 repairs to $5,200 tankless conversions.",
+      `A water heater rarely dies without warning. Here are the five signs ours techs look for, the repair-or-replace rule we use on every call, and real installed prices for Southwest Florida — from ${money(price("waterHeater.repair").min)} repairs to ${money(price("waterHeater.tankless").max)} tankless conversions.`,
     category: "Water Heaters",
     publishDate: "2026-07-24",
     readTime: "6 min read",
@@ -3568,18 +3568,18 @@ export const BLOG_POSTS: BlogPost[] = [
       },
       {
         question: "How much does it cost to replace a water heater in SWFL?",
-        answer: "With C&S Plumbing: a 40-gallon electric tank installed runs $1,650–$2,200, a 50-gallon runs $1,850–$2,500, heat-pump hybrids run $3,200–$4,800, and gas tankless systems run $3,500–$5,200. Every install includes haul-away, code-compliant pan and fittings, and the Lee County permit.",
+        answer: `With C&S Plumbing: a 40-gallon electric tank installed runs ${rangeInline("waterHeater.tank40")}, a 50-gallon runs ${rangeInline("waterHeater.tank50")}, heat-pump hybrids run ${rangeInline("waterHeater.hybrid")}, and gas tankless systems run ${rangeInline("waterHeater.tankless")}. Every install includes haul-away, code-compliant pan and fittings, and the Lee County permit.`,
       },
       {
         question: "My water heater is leaking — can it be repaired?",
-        answer: "It depends where. Leaks at a valve or fitting are usually repairable ($195–$475). Water weeping from the tank itself means the tank has corroded through, and no repair fixes that — it's a replacement, ideally before it lets go completely.",
+        answer: `It depends where. Leaks at a valve or fitting are usually repairable (${rangeInline("waterHeater.repair")}). Water weeping from the tank itself means the tank has corroded through, and no repair fixes that — it's a replacement, ideally before it lets go completely.`,
       },
       {
         question: "Should I repair or replace a 10-year-old water heater?",
         answer: "At 10+ years we usually advise replacement. A repair might buy a year or two, but you'd be putting a few hundred dollars into a unit at the end of its design life — and an old tank that fails wet can flood the garage or house.",
       },
     ],
-    content: `<p><strong>The short answer: if your water heater is 10+ years old, is leaking from the tank itself, or is producing rusty water — replace it. If it's under 8 years old with a specific failed part, repair it ($195–$475).</strong> Replacement in Southwest Florida runs $1,650–$2,500 installed for a standard tank, or $3,200–$5,200 for hybrid and tankless upgrades. Here's how to tell which side of the line your unit is on.</p>
+    content: `<p><strong>The short answer: if your water heater is 10+ years old, is leaking from the tank itself, or is producing rusty water — replace it. If it's under 8 years old with a specific failed part, repair it (${rangeInline("waterHeater.repair")}).</strong> Replacement in Southwest Florida runs ${spanInline("waterHeater.tank40", "waterHeater.tank50")} installed for a standard tank, or ${spanInline("waterHeater.hybrid", "waterHeater.tankless")} for hybrid and tankless upgrades. Here's how to tell which side of the line your unit is on.</p>
 
 <h2>The Five Signs It's Done</h2>
 <p><strong>1. Water around the base.</strong> Moisture or rust streaks at the bottom of the tank mean the tank wall itself has corroded through. There is no repair for a weeping tank — only a countdown to the day it fails completely, usually 40–80 gallons at a time.</p>
@@ -3589,14 +3589,14 @@ export const BLOG_POSTS: BlogPost[] = [
 <p><strong>5. It's simply old.</strong> Tank units in Southwest Florida realistically last <strong>8–12 years</strong>. Check the manufacture date on the data plate; if it starts with 201, you're on borrowed time.</p>
 
 <h2>Repair vs. Replace: The Rule We Use</h2>
-<p>Our techs apply a simple test on every call. <strong>Under 8 years old with a specific failed part</strong> — thermostat, element, T&P valve — repair it: <strong>$195–$475, usually same-day</strong>. <strong>Over 10 years old, or any tank leak</strong> — replace it. Between 8 and 10 is a judgment call we'll make honestly based on the unit's condition, because putting $400 into a 9-year-old tank only sometimes makes sense.</p>
+<p>Our techs apply a simple test on every call. <strong>Under 8 years old with a specific failed part</strong> — thermostat, element, T&P valve — repair it: <strong>${rangeInline("waterHeater.repair")}, usually same-day</strong>. <strong>Over 10 years old, or any tank leak</strong> — replace it. Between 8 and 10 is a judgment call we'll make honestly based on the unit's condition, because putting $400 into a 9-year-old tank only sometimes makes sense.</p> // claim-ok: illustrative repair, not a published price
 
 <h2>What Replacement Actually Costs in SWFL</h2>
 <p>Real installed prices from our current price book — including haul-away of the old unit, code-compliant pan and fittings, and the Lee County permit:</p>
-<p><strong>40-gallon electric tank — $1,650–$2,200.</strong> The right size for 1–2 people.</p>
-<p><strong>50-gallon electric tank — $1,850–$2,500.</strong> The most common size for an SWFL family of four. When an 11-year-old tank in Fort Myers failed on a Friday at 5pm, this is what got installed by 7pm Saturday — $2,150, old unit hauled away same trip.</p>
-<p><strong>Heat-pump hybrid (50–80 gal) — $3,200–$4,800.</strong> Cuts water-heating energy use dramatically — one Naples retrofit is running about 70% less than the old unit on the owner's FPL bill — and Florida utility rebates of up to ~$2,000 are often available.</p>
-<p><strong>Gas tankless (Rinnai/Navien) — $3,500–$5,200</strong> including gas line and venting. Endless hot water and a 20+ year service life with annual flushing; see our <a href="/blog/tankless-vs-traditional-water-heaters">tankless vs. tank comparison</a> for whether it fits your home.</p>
+<p><strong>40-gallon electric tank — ${rangeInline("waterHeater.tank40")}.</strong> The right size for 1–2 people.</p>
+<p><strong>50-gallon electric tank — ${rangeInline("waterHeater.tank50")}.</strong> The most common size for an SWFL family of four. When an 11-year-old tank in Fort Myers failed on a Friday at 5pm, this is what got installed by 7pm Saturday — $2,150, old unit hauled away same trip.</p> // claim-ok: documented job
+<p><strong>Heat-pump hybrid (50–80 gal) — ${rangeInline("waterHeater.hybrid")}.</strong> Cuts water-heating energy use dramatically — one Naples retrofit is running about 70% less than the old unit on the owner's FPL bill — and Florida utility rebates of up to ~${money(price("waterHeater.hybridRebate").max)} are often available.</p>
+<p><strong>Gas tankless (Rinnai/Navien) — ${rangeInline("waterHeater.tankless")}</strong> including gas line and venting. Endless hot water and a 20+ year service life with annual flushing; see our <a href="/blog/tankless-vs-traditional-water-heaters">tankless vs. tank comparison</a> for whether it fits your home.</p>
 
 <h2>Don't Wait for the Flood</h2>
 <p>Most water heaters sit in the garage or an interior closet, and a tank that fails wet dumps its entire capacity onto the floor. If your unit is showing two or more of the signs above, replacing it on your schedule beats replacing it at 2am — and if a storm is coming, read our guide on <a href="/blog/water-heater-hurricane-prep-florida">water heaters and hurricanes</a> first.</p>
@@ -3607,7 +3607,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "How Long Does Drain Cleaning Take? A Plumber's Honest Answer",
     metaTitle: "How Long Does Drain Cleaning Take? Honest Times & Prices",
     metaDescription:
-      "Single-drain clogs clear in about an hour; main lines take 1–2 hours, hydro-jetting 2–3. Honest drain cleaning times, costs ($150–$800), and why clogs return.",
+      `Single-drain clogs clear in about an hour; main lines take 1–2 hours, hydro-jetting 2–3. Honest drain cleaning times, costs (${spanInline("drain.fixture", "drain.hydroJet")}), and why clogs return.`,
     keywords: ["how long does drain cleaning take", "drain cleaning cost Cape Coral", "main sewer line clog cost", "hydro jetting cost Florida", "why does my drain keep clogging"],
     excerpt:
       "Honest answer: about an hour for a single clogged fixture, 1–2 hours for a main sewer line, 2–3 hours for hydro-jetting with a camera. Here's what changes those numbers, what each job costs, and when cabling alone won't fix it.",
@@ -3618,11 +3618,11 @@ export const BLOG_POSTS: BlogPost[] = [
     faqs: [
       {
         question: "How long does it take a plumber to unclog a drain?",
-        answer: "A single clogged fixture — kitchen sink, tub, or toilet — typically takes about an hour on site and costs $150–$250. A blocked main sewer line takes 1–2 hours and runs $295–$475 with cable equipment.",
+        answer: `A single clogged fixture — kitchen sink, tub, or toilet — typically takes about an hour on site and costs ${rangeInline("drain.fixture")}. A blocked main sewer line takes 1–2 hours and runs ${rangeInline("drain.mainLine")} with cable equipment.`,
       },
       {
         question: "How much does drain cleaning cost in the Cape Coral area?",
-        answer: "With C&S Plumbing: single-fixture clogs run $150–$250, main-line cabling $295–$475, hydro-jetting $450–$800, and a sewer camera inspection $245–$395 (free when done with jetting). Root removal with jetting and camera runs $650–$1,100.",
+        answer: `With C&S Plumbing: single-fixture clogs run ${rangeInline("drain.fixture")}, main-line cabling ${rangeInline("drain.mainLine")}, hydro-jetting ${rangeInline("drain.hydroJet")}, and a sewer camera inspection ${rangeInline("drain.camera")} (free when done with jetting). Root removal with jetting and camera runs ${rangeInline("drain.rootsJetCamera")}.`,
       },
       {
         question: "Is hydro-jetting worth the extra cost over cabling?",
@@ -3636,10 +3636,10 @@ export const BLOG_POSTS: BlogPost[] = [
     content: `<p><strong>The honest answer: about an hour for a single clogged fixture, 1–2 hours for a blocked main sewer line, and 2–3 hours for hydro-jetting with a camera inspection.</strong> Any plumber who quotes you a time without asking what's clogged and where is guessing. Here's how the real numbers break down — in time and in dollars — and the situations that make a "quick snake job" take all afternoon.</p>
 
 <h2>Typical Times and Prices, Job by Job</h2>
-<p><strong>Single-fixture clog (sink, tub, toilet) — about an hour, $150–$250.</strong> We cable from the nearest accessible cleanout or the fixture itself. If the clog is in the fixture's own trap arm, it can be done in 30 minutes; hair-and-soap tub clogs and grease-packed kitchen lines sit at the longer end.</p>
-<p><strong>Main sewer line cabling — 1–2 hours, $295–$475.</strong> This is the "every drain in the house is backing up" call. Time depends heavily on cleanout access (more on that below) and how far down the line the blockage sits.</p>
-<p><strong>Hydro-jetting the main line — 2–3 hours, $450–$800.</strong> A 4,000 PSI jet scours the full pipe diameter clean instead of punching a hole through the clog. We camera the line on the same trip — <strong>the $245–$395 camera inspection is free with jetting</strong> — so you see exactly what condition your pipe is in.</p>
-<p><strong>Roots in the line — 2–4 hours, $650–$1,100</strong> for cutting, jetting, and camera. Common in older Cape Coral and Fort Myers neighborhoods with big oaks and ficus. One 1976 Fort Myers home had a 60-foot cast iron run with two oak roots grown in; jetting plus a root cutter cleared it, and the camera flagged one cracked joint to watch.</p>
+<p><strong>Single-fixture clog (sink, tub, toilet) — about an hour, ${rangeInline("drain.fixture")}.</strong> We cable from the nearest accessible cleanout or the fixture itself. If the clog is in the fixture's own trap arm, it can be done in 30 minutes; hair-and-soap tub clogs and grease-packed kitchen lines sit at the longer end.</p>
+<p><strong>Main sewer line cabling — 1–2 hours, ${rangeInline("drain.mainLine")}.</strong> This is the "every drain in the house is backing up" call. Time depends heavily on cleanout access (more on that below) and how far down the line the blockage sits.</p>
+<p><strong>Hydro-jetting the main line — 2–3 hours, ${rangeInline("drain.hydroJet")}.</strong> A 4,000 PSI jet scours the full pipe diameter clean instead of punching a hole through the clog. We camera the line on the same trip — <strong>the ${rangeInline("drain.camera")} camera inspection is free with jetting</strong> — so you see exactly what condition your pipe is in.</p>
+<p><strong>Roots in the line — 2–4 hours, ${rangeInline("drain.rootsJetCamera")}</strong> for cutting, jetting, and camera. Common in older Cape Coral and Fort Myers neighborhoods with big oaks and ficus. One 1976 Fort Myers home had a 60-foot cast iron run with two oak roots grown in; jetting plus a root cutter cleared it, and the camera flagged one cracked joint to watch.</p>
 
 <h2>What Makes It Take Longer</h2>
 <p><strong>No accessible cleanout.</strong> If your home doesn't have one (or it's buried under landscaping), we may need to pull a toilet or go through a roof vent — add an hour. Many older SWFL homes are missing them; installing one during the visit saves money on every future call.</p>
@@ -3650,7 +3650,7 @@ export const BLOG_POSTS: BlogPost[] = [
 <p>Our rule: <strong>the second time the same line clogs within a year, it's a jetting-and-camera conversation.</strong> One Lehigh Acres customer had been paying another plumber three times a year to cable the same kitchen line. We jetted it, scoped it, found a low spot trapping grease — it hasn't backed up in 14 months. Cheaper than the fourth cabling would have been. More on causes and prevention in our <a href="/blog/clogged-drains-causes-fixes-swfl">clogged drains guide</a>.</p>
 
 <h2>Same-Day Service, Honest Clock</h2>
-<p>Most drain calls across <a href="/drain-cleaning-cape-coral">Cape Coral</a>, Fort Myers, and Lehigh Acres get same-day service in regular hours, and we handle 24/7 emergencies when every drain in the house is backing up. After-hours work carries a $95–$150 surcharge — which we aim to never charge, because most jobs fit in business hours. Call <a href="tel:8337586248">833-PLUMB-IT</a> or <a href="/booking">book online</a>, and see full pricing on our <a href="/services/drain-cleaning">drain cleaning page</a>.</p>`,
+<p>Most drain calls across <a href="/drain-cleaning-cape-coral">Cape Coral</a>, Fort Myers, and Lehigh Acres get same-day service in regular hours, and we handle 24/7 emergencies when every drain in the house is backing up. After-hours work carries a ${EMERGENCY_CLAIMS.afterHoursSurcharge} surcharge — which we aim to never charge, because most jobs fit in business hours. Call <a href="tel:8337586248">833-PLUMB-IT</a> or <a href="/booking">book online</a>, and see full pricing on our <a href="/services/drain-cleaning">drain cleaning page</a>.</p>`,
   },
 ];
 
@@ -3780,7 +3780,7 @@ export const COMPLETED_PROJECTS: CompletedProject[] = [
     clientUrl: "https://heatherwoodconstruction.com",
     category: "New Construction",
     timeline: "7 months",
-    cost: "$55K",
+    cost: "$55K", // claim-ok: documented project
     description:
       "Full plumbing installation for the IFHA Community Center new construction project in Lee County. C&S Plumbing handled all phases from underground rough-in through final trim out, working alongside Heatherwood Construction to deliver a complete commercial plumbing system on schedule and within budget.",
     location: "Lee County, FL",
@@ -3881,7 +3881,7 @@ export const COMPLETED_PROJECTS: CompletedProject[] = [
     client: "Mangos Restaurant & Bar",
     category: "Commercial Remodel",
     timeline: "2 months",
-    cost: "$20K\u2013$25K",
+    cost: "$20K\u2013$25K", // claim-ok: documented project
     description:
       "Complete commercial bathroom remodel for Mangos Restaurant & Bar on North Captiva Island. C&S Plumbing handled the full scope from demolition of the existing restroom facilities through rough-in of all new supply and drain lines to final trim and fixture installation, delivering a modern, code-compliant restroom for this popular island destination.",
     location: "North Captiva Island, FL",
