@@ -36,7 +36,8 @@ a placeholder in its place.
 
 ## Deploying a preview
 
-- Vercel project: `cs-plumbing` (`.vercel/project.json` → `prj_NP9JMTgr8xdJH5d06NIg08Lr0EZl`, team `team_l3HWGOA81xwNQYyszZW9EDEo`). Production domain `www.csplumbinglee.com`; `metadataBase`, canonicals and the sitemap all use it.
+- Vercel project: `cs-plumbing` under the team "aiden418's projects" (`prj_gqGm7unjOGUpRSCVshwcixPShANV`, team `team_TfHhocFdrWW121iFXwR98ePn`) — this is the project that holds the production domains (checked 2026-11-12 through the Vercel API; the `prj_NP9J…` / `team_l3HW…` IDs previously noted here belong to a different account and do not serve the site). Production domain `www.csplumbinglee.com`; `metadataBase`, canonicals and the sitemap all use it.
+- Secondary domains on the same project, all 308 redirects to `www.csplumbinglee.com`: `csplumbinglee.com`, `www.candsplumbingfl.com` (added 2026-11-10) and `candsplumbingfl.com` (added 2026-11-12). A redirect only works once DNS points the host at Vercel: on 2026-11-12 the apex `candsplumbingfl.com` still had GoDaddy forwarding A records (15.197.225.128 / 3.33.251.168), so at GoDaddy either point the apex A record to `76.76.21.21` and remove the forwarding, or keep GoDaddy forwarding and make sure it is a permanent (301) unmasked forward to `https://www.csplumbinglee.com`. Never let either host serve a copy of the site — Google indexed `www.candsplumbingfl.com/contact` as a duplicate.
 - GitHub: `aiden418/cs-plumbing`, production deploys from `main`. Feature branches (`claude/*`) get Vercel preview URLs when the Git integration is connected.
 - The Vercel CLI token on this Mac is expired. To let the assistant deploy previews or read env vars: run `npx vercel login` in a terminal, complete the browser prompt, then `npx vercel env ls production` and `npx vercel deploy` work.
 - `ADMIN_EMAIL` (production) must be `office@csplumbinglee.com`; the code default is the same, so an unset variable is also correct.
