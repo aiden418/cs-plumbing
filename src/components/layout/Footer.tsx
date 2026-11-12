@@ -51,6 +51,9 @@ const PROFILE_ICONS: Record<string, LucideIcon> = {
 const footerServices = [
   { title: "Residential Plumbing", href: "/services/residential" },
   ...SERVICE_HUBS.map((hub) => ({ title: hub.title, href: hub.href })),
+  // Spoke page (not a hub) that still needs a sitewide HTML link; the nav
+  // dropdown that lists it only renders on hover.
+  { title: "Tankless Water Heaters", href: "/services/tankless-water-heaters" },
 ];
 
 export default function Footer() {
