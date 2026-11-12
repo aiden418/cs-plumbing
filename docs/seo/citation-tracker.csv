@@ -43,4 +43,4 @@ Lee County licensed plumbing contractor list,https://www.leefl.gov/dcd/rpts/Docu
 City of Cape Coral UEP licensed-plumber list,https://www.capecoral.gov/uep/how_to_connect.php,check,,,,dofollow if listed,Ask uepnewconst@capecoral.gov how plumbers get listed,P0,Aiden,2026-11-28,most valuable citation for the UEP moat
 Cape Coral Breeze Best of Cape Coral 2026,https://www.capecoralbreeze.com,check,,,,dofollow,Ask for winners page link + send release,P1,Aiden,2026-12-05,
 draftconstructionswfl.com,https://draftconstructionswfl.com,check,,,,dofollow,Add prominent link to csplumbinglee.com,P1,Aiden,2026-11-28,sister company
-candsplumbingfl.com,https://www.candsplumbingfl.com,live-duplicate,,,,n/a,Set as 301 redirect to www.csplumbinglee.com in Vercel; add as GSC property; Change of Address,P0,Aiden,2026-11-21,currently serves a duplicate copy of the site
+candsplumbingfl.com,https://www.candsplumbingfl.com,www redirects (CNAME ok); apex DNS still GoDaddy forwarding,,,,n/a,Fix apex A records at GoDaddy (playbook §2); add GSC domain property; Change of Address,P0,Aiden,2026-11-21,currently serves a duplicate copy of the site
