@@ -29,6 +29,37 @@ What they do show:
 
 Win the map pack for the Lee County core (Cape Coral, Fort Myers, North Fort Myers, Lehigh Acres) with GBP + citations + reviews. Own four moats where intent is high and competition is weak: **Cape Coral UEP connections**, **polybutylene repipes driven by insurance**, **septic-to-sewer conversions**, and **new-construction plumbing for builders**. Keep every other city page indexed but stop expecting it to rank until the domain has links.
 
+## 2b. Search Console baseline (Oct 29 – Nov 11, 2026)
+
+Pulled 2026-11-12 through Supermetrics (free tier: 100 rows per query, data only from 2026-10-29, small daily allowance). Fourteen days, but decisive.
+
+**Totals:** 5,226 impressions · 37 clicks · 0.7 % CTR · average position ≈ 16 · ≈ 370 impressions/day.
+
+| Page | Impr. | Clicks | Avg pos |
+|---|---|---|---|
+| `/` | 2,767 | 28 | 10.8 |
+| `/services/water-heaters` | 1,861 | 0 | 21.3 |
+| `/areas/punta-gorda` | 388 | 0 | 20.4 |
+| `/about` · `/contact` · `/services` · `/builders` · `/reviews` · `/areas/fort-myers` · `/areas/naples` · `/emergency` · `/booking` · `/projects` | 41–174 each | 0–2 | 2.6–21 |
+| `/water-heater-repair-lehigh-acres` | 27 | 0 | 5.2 |
+| `/areas/cape-coral` | 25 | 0 | 3.0 |
+| `/repiping-north-fort-myers` | 6 | 2 | 7.5 |
+| 6 other service-city pages | 2–5 | 0 | — |
+| 65 × `/booking?rwg_token=…` (Reserve with Google links; canonical already set) | 1 each | 1 | — |
+
+What it means:
+
+- **Only 7 of 54 service-city pages registered an impression.** No repiping or UEP page outside North Fort Myers shows at all. Authority (backlinks) is the constraint, not content.
+- **Water heaters are the non-brand story.** "water heater installation fort myers fl" 81 · "water heater repair fort myers" 57 · "water heater installation fort myers" 56 · "water heater replacement" 49 · "water heater repair near me" 41 · "water heater service near me" 35 — all on the hub at positions 10–35 with zero clicks. Queries are phrased *Fort Myers*; the title said only *Cape Coral*. → hub retitled, prices in the description.
+- **Tankless was its own cluster** (≈ 265 impressions across 9 phrasings, positions 17–35, zero clicks) with no page of its own. → `/services/tankless-water-heaters` built.
+- City head terms sit on the home page: "plumber cape coral" 57 (pos 16.8) · "plumber cape coral fl" 52 (12.5) · "certified plumber in cape coral fl" 56 (15.4) · "licensed plumber cape coral" 29 (12). Fort Myers contractor terms rank well: "plumbing contractor in fort myers" 32 (3.8) · "plumbing contractors fort myers" 28 (4.4) · "fort myers commercial plumbing" 15 (2.7). The *licensed / certified* modifier recurs → added to the home description.
+- Brand "c&s plumbing": 40 impressions, 7 clicks, **position 5** — other C&S Plumbing companies outrank the site. The `PROFILES` / `sameAs` work and the citation cleanup are the fix; track monthly.
+- Punta Gorda: the area page draws water-heater and emergency queries (33, 18, 18, 18, 17) while `/water-heater-replacement-punta-gorda` draws none. Leave; the area page already links it.
+- **Artifact — do not optimize for it:** ~10 North Fort Myers phrasings ("plumbers north fort myers fl", "plumbing companies north fort myers", "local plumgers north fort myers", "burst pipe repair cleanup"…) at position 1.0–1.8 with 16–22 impressions each and zero clicks over 14 days. Uniform daily counts, a misspelling and no clicks are the signature of a rank-tracking tool, not customers.
+- Irrelevant queries on the water-heaters page ("furnace replacement cape coral fl" 29, "pool heater installation cape coral" 15): ignore.
+
+Next pull (after the daily allowance resets, or from a full GSC export): branded vs non-branded split; the `www.candsplumbingfl.com` property (how much the duplicate domain captured); pages 101–200; device split; the same tables 14 and 28 days after the tankless page deploys.
+
 ## 3. Clusters → owning page
 
 Rule: **one page owns one primary query.** Secondary pages may mention it but must not carry it in the title. Where two pages collide, GSC decides which keeps the query (the one with impressions) and the other is retitled.
@@ -38,7 +69,7 @@ Rule: **one page owns one primary query.** Secondary pages may mention it but mu
 | 1 | Plumber + city (map pack) | plumber cape coral · plumber fort myers · plumber north fort myers · plumber lehigh acres | `/areas/<city>` + GBP | "Plumber in Cape Coral, FL \| C&S Plumbing of Lee" | Done: 4 duplicate `plumber-<city>` landings now 301 to `/areas/<city>`. Home now owns "plumber in cape coral & fort myers". |
 | 2 | Emergency plumber + city | emergency plumber cape coral · 24 hour plumber fort myers | `/emergency` (core) · `/emergency-plumber-<city>` | "24/7 Emergency Plumber Cape Coral & Fort Myers \| C&S Plumbing" (new) | `/emergency` owns the two core cities; city pages own the rest. |
 | 3 | Repipe / polybutylene / cast iron | repipe cape coral · polybutylene pipe replacement cape coral · whole house repipe cost fort myers · cast iron pipe replacement cape coral | `/services/repiping` (hub) · `/repiping-<city>` · blog `whole-home-repipe-cost-cape-coral`, `polybutylene-pipe-problems-cape-coral` | "Whole-Home Repiping \| Cape Coral & Fort Myers" | **Watch-list:** hub and `/repiping-cape-coral` both target "repiping cape coral". If GSC shows the hub ranking, retitle the city page to the cost angle ("Repipe Cost Cape Coral …"); if the city page ranks, retitle the hub to "Whole-Home Repiping in Southwest Florida". Add a **cast iron drain replacement** page (gap). |
-| 4 | Water heaters | water heater replacement cape coral · tankless water heater installation fort myers · water heater repair near me | `/services/water-heaters` · `/water-heater-repair-<city>` · blog | "Water Heater Install & Repair \| Cape Coral" | Add a **tankless** page or section targeting "tankless water heater installation cape coral / fort myers" (gap; Navien/Rinnai install is a differentiator). |
+| 4 | Water heaters | water heater replacement cape coral · tankless water heater installation fort myers · water heater repair near me | `/services/water-heaters` · `/water-heater-repair-<city>` · blog | "Water Heater Install & Repair \| Cape Coral" | **Built 2026-11-12:** `/services/tankless-water-heaters` (see §2b — ≈265 tankless impressions in 14 days were landing on the hub at positions 17–35). Hub retitled Fort Myers-first with prices in the description. |
 | 5 | UEP / septic-to-sewer (moat) | cape coral uep plumber · uep connection cost cape coral · septic to sewer conversion north fort myers · septic abandonment cape coral | `/services/uep-utilities` · `/uep-connection-cape-coral` · `/septic-to-sewer-north-fort-myers` · blog `septic-to-sewer-conversion-swfl` | "UEP Hookup Cape Coral \| Water, Sewer & Septic" | Strong already. Add the **North 1 East guide** (gap, timely) and keep it updated as Notices of Availability go out (~end 2027). |
 | 6 | New construction (B2B) | new construction plumbing contractor fort myers · plumbing subcontractor cape coral · plumber for builders swfl | `/builders` · `/services/new-construction` · `/new-construction-plumbing/<city>` · `/plumbing-subcontractor-swfl` | "New Construction Plumbing for Builders \| …" | Volume is tiny; value is high. Links from Lee BIA, CCCIA, Levelset, BlueBook matter more than copy. Add a **Lehigh Acres spot-lot builder** angle (gap). |
 | 7 | Slab leak / leak detection | slab leak repair cape coral · leak detection fort myers · slab leak insurance florida | `/services/leak-repair` · `/leak-repair-<city>` · blog `slab-leak-detection-southwest-florida`, `slab-leak-insurance-florida` | "Leak Detection & Repair \| Cape Coral & Fort Myers" | Fine. Promote the insurance post (it is the linkable one). |
@@ -55,7 +86,7 @@ Rule: **one page owns one primary query.** Secondary pages may mention it but mu
 | 1 | **Cape Coral North 1 East UEP homeowner guide** (new page under `/services/uep-utilities/` or blog + landing) | north 1 east uep · cape coral uep assessment 2025 · uep connection deadline · uep plumber cost | Final assessment approved 2025-11-19; CIAC ≈ $25,538 per parcel; developed properties must connect within 180 days of the Notice of Availability (construction completes ~end 2027). Nobody local explains the plumber's side (what $2–3k covers, septic abandonment, irrigation mandatory in the Mid-Hawthorn area). Update as the city mails NOAs. Pitch to Cape Coral Breeze / WGCU. |
 | 2 | **Polybutylene, Citizens and the 4-point inspection** (blog + section on `/services/repiping`) | polybutylene pipes insurance florida · citizens insurance polybutylene · 4 point inspection plumbing fail · repipe for insurance | Citizens will not write poly-B homes; carriers require 4-point inspections at 20–30 years. Realtors and insurance agents link to a clear guide. Existing posts `polybutylene-pipe-problems-cape-coral` and `slab-leak-insurance-florida` are the base. |
 | 3 | **Cast iron drain replacement vs. lining, Cape Coral 1970s–80s homes** | cast iron pipe replacement cape coral · sewer line replacement fort myers · cast iron drain lining cost | Competitors (Zoom Drain) push lining; a plumber that explains when replacement beats lining wins the comparison query. |
-| 4 | **Tankless water heater installation, Cape Coral & Fort Myers** | tankless water heater installation cape coral · navien installer fort myers · rinnai tankless cape coral | Ties to manufacturer locators (Navien, Rinnai) which also give links. |
+| ~~4~~ done | **Tankless water heater installation, Fort Myers & Cape Coral** — built 2026-11-12 at `/services/tankless-water-heaters` | tankless water heater installation fort myers / cape coral · tankless water heater repair near me · tankless water heater service near me | Validated by GSC before building (§2b). Next: enroll in the Navien / Rinnai contractor locators so the page gets manufacturer links. |
 | 5 | **UEP connection cost calculator** (interactive, linkable asset) | uep connection cost · how much to connect to city sewer cape coral | Inputs: distance to main, septic abandonment, irrigation. Calculators get linked from Facebook groups, Reddit, Breeze articles. |
 | 6 | **Cape Coral pipe material by year built** (map or table) | what pipes does my house have · polybutylene years cape coral · cpvc homes 2004 | Linkable from realtor blogs and inspection companies. |
 | 7 | **Lehigh Acres new-construction plumbing for spot-lot builders** (strengthen `/new-construction-plumbing/lehigh-acres`) | spot lot builder plumber lehigh acres · plumbing subcontractor lehigh acres | Lehigh is the most active spot-lot market in Lee County. |
@@ -79,4 +110,5 @@ Rule: **one page owns one primary query.** Secondary pages may mention it but mu
 
 - **Source of truth:** Google Search Console via Supermetrics (data source `GW`). Pull monthly: query × page × impressions/clicks/position, last 16 months; Indexing report ("discovered – currently not indexed" count).
 - **Track monthly:** indexed pages (target: 135 → 120+ within 90 days of the link work); impressions for clusters 1, 3, 5, 6; map-pack rank for *plumber cape coral*, *plumber fort myers*, *plumber north fort myers*, *emergency plumber cape coral*, *repipe cape coral*, *uep plumber cape coral* (check from a Cape Coral / Fort Myers location or with a rank tracker); branded impressions.
+- **Baseline (14 days to 2026-11-11):** ≈ 370 impressions/day, 0.7 % CTR, 37 clicks; water-heater cluster at positions 10–35 with 0 clicks; 7 of 54 city landings with any impression; brand query at position 5. Compare against this on every pull.
 - **Decision rules:** a landing with 0 impressions after 90 days of link work → set `indexing: "noindex"` (keeps the page for ads/direct traffic) or redirect it into its area hub; a hub/city collision → retitle the loser per §3.

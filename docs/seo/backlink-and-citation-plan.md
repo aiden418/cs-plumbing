@@ -122,10 +122,11 @@ Government lists (citations, not links, but authoritative): Lee County licensed 
 |---|---|---|---|
 | Referring domains | GSC Links report; Bing Webmaster Tools; Ahrefs Webmaster Tools (free) | ~10 directories, 0 editorial | 25+, ≥5 editorial/association |
 | NAP-consistent citations | `citation-tracker.csv` | 4 of 12 correct | 100% of listed, old address nowhere |
-| Indexed pages | GSC Indexing report | ~50 of 135 | 120+ |
-| Map-pack rank (6 head terms) | manual check or rank tracker | unknown | top 3 in Cape Coral + Fort Myers |
+| Indexed pages | GSC Indexing report | ~50 of 135; only 7 of 54 city landings had any impression in the 14 days to Nov 11 | 120+ |
+| Map-pack rank (6 head terms) | manual check or rank tracker | map pack unknown; home page at organic position 12–17 for "plumber cape coral" | top 3 in Cape Coral + Fort Myers |
 | GBP calls / direction requests | GBP Insights | — | +30% |
-| Branded impressions | GSC (Supermetrics branded dimension, brand terms "c&s plumbing\|cs plumbing\|c and s plumbing") | — | +25% |
+| Branded impressions | GSC (Supermetrics branded dimension, brand terms "c&s plumbing\|cs plumbing\|c and s plumbing") | "c&s plumbing": 40 impressions, 7 clicks, organic position 5 (14 days to Nov 11) | +25%, position 1 |
+| Non-brand impressions & CTR | GSC Performance | ≈ 370 impressions/day, 0.7 % CTR; water-heater cluster 1,861 impressions / 0 clicks at position 21 | CTR ≥ 2 %; water-heater and tankless pages in the top 10 |
 
 ## 9. Do not
 

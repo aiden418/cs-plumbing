@@ -258,6 +258,7 @@ export const NAV_LINKS: NavLink[] = [
       { label: "New Construction", href: "/services/new-construction" },
       { label: "Repiping", href: "/services/repiping" },
       { label: "Water Heaters", href: "/services/water-heaters" },
+      { label: "Tankless Water Heaters", href: "/services/tankless-water-heaters" },
       { label: "Drain Cleaning", href: "/services/drain-cleaning" },
       { label: "Leak Repair", href: "/services/leak-repair" },
       { label: "Water Softeners", href: "/services/water-softeners" },
@@ -939,17 +940,15 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
     heroText: "Water Heater Installation & Repair in Cape Coral & Fort Myers",
     description:
       "No hot water? Whether you need a quick repair or a full replacement, C&S Plumbing installs and services all types of water heaters — traditional tank, tankless, and hybrid systems.",
-    metaTitle: "Water Heater Install & Repair | Cape Coral",
+    metaTitle: "Water Heater Repair & Installation | Fort Myers & Cape Coral",
     metaDescription:
-      "Water heater installation, repair & replacement in Cape Coral, Fort Myers & SWFL. Tankless, tank & hybrid options. Same-day service. Call 833-PLUMB-IT.",
+      "Water heater repair $195–$475, tank replacement $1,650–$2,500 installed, tankless & hybrid options. Same-day service in Fort Myers, Cape Coral & North Fort Myers. Licensed CFC1432485. Call 833-PLUMB-IT.",
     keywords: [
       "water heater Cape Coral",
       "water heater installation Fort Myers",
-      "tankless water heater Cape Coral",
       "water heater repair SWFL",
       "hot water heater replacement",
       "water heater cost Fort Myers",
-      "Rinnai tankless Cape Coral",
       "water heater plumber near me",
     ],
     features: [
@@ -1056,7 +1055,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
         summary: "Replaced an 80-gal electric tank with a Rheem ProTerra hybrid. Customer netted a $1,800 utility rebate; runs ~70% less than the old unit per FPL bill comparison.",
       },
     ],
-    relatedServices: ["repiping", "leak-repair", "water-softeners"],
+    relatedServices: ["tankless-water-heaters", "repiping", "leak-repair", "water-softeners"],
     relatedAreas: ["cape-coral", "fort-myers", "naples", "bonita-springs"],
     gallery: [
       { src: "/images/gallery/tankless-water-heater.jpg", caption: "Tankless water heater install" },
@@ -1086,6 +1085,155 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
         question: "Do tankless water heaters work in Florida hard water?",
         answer: "Yes — but plan on annual flushing.",
         detail: "Florida's hard water builds scale inside tankless heat exchangers. We install with isolation valves so we (or you) can flush the unit annually with vinegar or descaling solution. Skipping the flush voids most manufacturer warranties and shortens unit life.",
+      },
+    ],
+  },
+  {
+    // Spoke of the water-heaters hub, added 2026-11-12 from Search Console
+    // data: ~265 tankless impressions in 14 days were landing on the generic
+    // water-heaters page at positions 17–35. Prices, brands and claims here
+    // are the ones already published on that page — do not add new ones.
+    slug: "tankless-water-heaters",
+    image: "/images/services/cards/water-heaters.jpg",
+    title: "Tankless Water Heaters",
+    heroText: "Tankless Water Heater Installation & Repair in Fort Myers & Cape Coral",
+    description:
+      "Endless hot water without a tank in the garage. C&S installs gas tankless systems from Rinnai, Navien and Noritz — gas line, venting and permit included — and repairs every major brand, usually the same day.",
+    metaTitle: "Tankless Water Heater Installation & Repair | Fort Myers & Cape Coral",
+    metaDescription:
+      "Tankless water heater installation & repair in Fort Myers, Cape Coral & SWFL. Rinnai, Navien & Noritz, $3,500–$5,200 installed incl. gas line & venting. Same-day repair. Call 833-PLUMB-IT.",
+    keywords: [
+      "tankless water heater installation Fort Myers",
+      "tankless water heater installation Cape Coral",
+      "tankless water heater repair near me",
+      "tankless water heater service near me",
+      "Rinnai tankless installer Fort Myers",
+      "Navien tankless Cape Coral",
+      "tankless water heater cost Florida",
+      "gas tankless water heater installation",
+    ],
+    features: [
+      {
+        title: "Gas Tankless Installation",
+        description:
+          "Rinnai, Navien and Noritz whole-home units sized for your household. The gas line, concentric venting and Lee County permit are part of the quoted price, not add-ons.",
+      },
+      {
+        title: "Tank-to-Tankless Conversions",
+        description:
+          "Most conversions are finished in a day: the old tank is hauled away, the unit mounts on the wall, and the garage or closet gets its space back.",
+      },
+      {
+        title: "Tankless Repair & Error Codes",
+        description:
+          "No hot water, flashing error code, or water that runs hot and cold? We service all major brands and carry common parts, so most repairs are same-day.",
+      },
+      {
+        title: "Sized for Your Home",
+        description:
+          "Tankless output is measured in gallons per minute. We size for the showers and appliances that actually run at once in a 2- or 3-bath home, so the unit never starves.",
+      },
+      {
+        title: "Hard-Water Protection",
+        description:
+          "Lee County water scales heat exchangers. Every install gets isolation valves for an annual flush, and we will tell you straight when a softener should go in first.",
+      },
+      {
+        title: "Electric Tankless, Honestly",
+        description:
+          "Whole-home electric tankless units draw well over 100 amps and often need a panel upgrade. We will quote it when it fits, and steer you to gas or a hybrid when it does not.",
+      },
+    ],
+    faqs: [
+      {
+        question: "How much does a tankless water heater cost installed in Fort Myers or Cape Coral?",
+        answer:
+          "A gas tankless from Rinnai, Navien or Noritz runs $3,500–$5,200 installed, including the gas line and venting. Where the unit goes, how far the gas line runs and whether it replaces a tank in the same spot move the number inside that range. Every job is quoted upfront in writing, and estimates are free.",
+      },
+      {
+        question: "Is a tankless water heater worth it in Southwest Florida?",
+        answer:
+          "For most households that run out of hot water, yes. Tankless units last 20+ years against 8–12 for a tank in Florida water, never run out, and use less energy because nothing sits heated all day. They cost two to three times a tank upfront, so the math works best if you plan to stay in the home for years.",
+      },
+      {
+        question: "Do tankless water heaters work with Lee County hard water?",
+        answer:
+          "Yes, with one condition: an annual flush. Hard water builds scale inside the heat exchanger, so we install with isolation valves that let us (or you) descale the unit once a year. Skipping it voids most manufacturer warranties. On very hard or untreated well water, a softener upstream is the right first step.",
+      },
+      {
+        question: "Gas or electric tankless?",
+        answer:
+          "Gas for whole-home hot water. Whole-home electric tankless units draw well over 100 amps and often need a panel upgrade, which erases the savings; electric makes sense for a single bathroom or outbuilding. On untreated well water, any tankless scales quickly and needs a softener or scale-prevention system first.",
+      },
+      {
+        question: "How long does a tankless installation take?",
+        answer:
+          "Most tank-to-tankless conversions are done the same day. A Cape Coral conversion we documented — a 50-gallon tank swapped for a Navien NPE-A2 with a new gas line and concentric vent — took six hours. Long gas-line runs or a new vent path add time, and we tell you that in the quote.",
+      },
+      {
+        question: "Do you repair tankless water heaters?",
+        answer:
+          "Yes — Rinnai, Navien, Noritz, Rheem, A.O. Smith and Bradford White. Repairs run $195–$475 and cover the usual faults: flow sensors, igniters, scaled exchangers and error codes. Same-day in most cases.",
+      },
+      {
+        question: "Do I need a permit to install a tankless water heater in Lee County?",
+        answer:
+          "Yes. A water heater replacement is permitted work in Lee County and Cape Coral. We pull the permit and coordinate the final inspection, and both are included in the installed price.",
+      },
+    ],
+    priceRange: "$195 – $5,200",
+    highlights: [
+      "Rinnai, Navien & Noritz installed",
+      "Gas line & venting included",
+      "Same-day repair in most cases",
+      "Isolation valves for annual flushing",
+      "Permit + Lee County final included",
+      "Upfront written pricing",
+      "Licensed & insured (CFC1432485)",
+      "Free estimates",
+      "Warranty on all installations",
+    ],
+    costBreakdown: [
+      { label: "Gas tankless — installed (Rinnai / Navien / Noritz)", range: "$3,500 – $5,200", note: "Gas line and concentric venting included; whole-home flow" },
+      { label: "Tankless repair & diagnostics", range: "$195 – $475", note: "Flow sensors, igniters, error codes; same-day in most cases" },
+      { label: "Isolation valves for annual flushing", range: "Included on installs", note: "Needed to descale on Lee County hard water" },
+      { label: "Permit + Lee County final", range: "Included on installs", note: "Required when replacing a unit" },
+    ],
+    caseStudies: [
+      {
+        title: "Tankless conversion — Cape Coral",
+        location: "Cape Coral, FL",
+        cost: "$4,650",
+        summary: "Family of 5 was running out of hot water by shower #3. Swapped a 50-gal tank for a Navien NPE-A2. Installed new gas line + concentric vent. Done in 6 hours.",
+      },
+    ],
+    relatedServices: ["water-heaters", "water-softeners", "repiping"],
+    relatedAreas: ["fort-myers", "cape-coral", "north-fort-myers", "punta-gorda"],
+    gallery: [
+      { src: "/images/gallery/tankless-water-heater.jpg", caption: "Tankless water heater install" },
+      { src: "/images/gallery/dual-shower-system.jpg", caption: "Hot water for dual showers" },
+      { src: "/images/gallery/rain-shower-handheld.jpg", caption: "Endless hot water upgrade" },
+    ],
+    answerBlocks: [
+      {
+        question: "How much does a tankless water heater cost installed in Fort Myers?",
+        answer: "$3,500–$5,200 for a gas tankless, including gas line and venting.",
+        detail: "Rinnai, Navien and Noritz whole-home units run $3,500–$5,200 installed. The gas line, concentric venting, permit and Lee County final are in that price. Repairs on an existing tankless run $195–$475.",
+      },
+      {
+        question: "Do tankless water heaters work in Lee County hard water?",
+        answer: "Yes — with an annual flush through isolation valves.",
+        detail: "Scale builds inside the heat exchanger. We install isolation valves so the unit can be descaled once a year; skipping it voids most manufacturer warranties. On untreated well water, put a softener upstream first.",
+      },
+      {
+        question: "Gas or electric tankless for a Southwest Florida home?",
+        answer: "Gas for whole-home; electric only for point-of-use.",
+        detail: "Whole-home electric tankless draws well over 100 amps and usually means a panel upgrade. Gas units carry a 2- or 3-bath home without it. A heat-pump hybrid is the efficient alternative where gas is not available.",
+      },
+      {
+        question: "How long does a tankless install take?",
+        answer: "Most conversions are done the same day.",
+        detail: "A documented Cape Coral tank-to-Navien conversion with a new gas line and vent took six hours. Long gas-line runs or a new vent path add time, and the quote says so upfront.",
       },
     ],
   },
@@ -2586,6 +2734,7 @@ export const BLOG_POSTS: BlogPost[] = [
 </ul>
 
 <h2>Tankless Water Heaters</h2>
+<p>Leaning tankless? Pricing, brands and what an install involves are on our <a href="/services/tankless-water-heaters">tankless water heater installation and repair</a> page.</p>
 <p>Tankless (on-demand) water heaters heat water only when you need it, using high-powered burners to bring water to temperature as it flows through the unit.</p>
 
 <h3>Pros</h3>

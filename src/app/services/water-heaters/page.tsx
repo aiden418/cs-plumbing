@@ -39,7 +39,7 @@ export default function Page() {
       <RelatedPosts
         posts={postsForHub("water-heaters")}
         heading="Water heater guides & costs"
-        description="Tankless vs. tank, replacement signs and costs, and storm prep for your heater."
+        description="Replacement signs and costs, tankless vs. tank, and storm prep for your heater."
       />
       <CTASection />
     </PageTransition>

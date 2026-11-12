@@ -17,6 +17,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // Internal-linking pass: cross-link blocks added to the home page, service
   // hubs, area hubs, service-city landings and blog posts.
   const LINKING_PASS = new Date("2026-10-21");
+  // Tankless page added and the water-heaters hub retitled from Search
+  // Console data.
+  const TANKLESS_PASS = new Date("2026-11-12");
   // Entries that carry their own `updatedAt` report it when it is newer than
   // the site-wide pass, so one rewritten city page gets recrawled alone.
   const laterOf = (iso: string | undefined, floor: Date): Date =>
@@ -121,7 +124,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${baseUrl}/services/water-heaters`,
-      lastModified: LINKING_PASS,
+      lastModified: TANKLESS_PASS,
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/services/tankless-water-heaters`,
+      lastModified: TANKLESS_PASS,
       changeFrequency: "monthly",
       priority: 0.9,
     },

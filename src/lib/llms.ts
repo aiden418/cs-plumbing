@@ -51,7 +51,7 @@ import {
 //
 // Hand-bump VERSION when the prose gets a substantive pass (same philosophy
 // as sitemap.ts LAST_CONTENT_PASS — no new Date()).
-const VERSION = "2.11";
+const VERSION = "2.12";
 const UPDATED = "2026-11";
 
 const BASE = "https://www.csplumbinglee.com";
@@ -114,7 +114,7 @@ Service coverage: ${countiesSentence()}, Southwest Florida.`;
 Professional drain cleaning for residential and commercial properties. Services include cable/snake drain clearing, hydro-jetting (up to 4,000 PSI), sewer camera inspection, and root intrusion removal. Pricing: single-fixture clogs $150–$250; main-line cabling $295–$475; hydro-jetting $450–$800; camera inspection $245–$395 (free with jetting). Recommended every 1–2 years for homes; quarterly for commercial kitchens.
 
 ### Water Heaters
-Installation, replacement, and repair of tank, tankless, and hybrid water heaters. Brands installed: Rinnai, Navien, Rheem, A.O. Smith, Bradford White. Pricing: repairs $195–$475; tank replacements $1,650–$2,500 installed with haul-away; gas tankless installations $3,500–$5,200 including gas line and venting; heat-pump hybrids $3,200–$4,800 (Florida utility rebates of up to ~$2,000 often available). Same-day installation available in most cases. Tank water heaters last 8–12 years in Florida; tankless units 20+ years with annual maintenance.
+Installation, replacement, and repair of tank, tankless, and hybrid water heaters. Brands installed: Rinnai, Navien, Rheem, A.O. Smith, Bradford White. Pricing: repairs $195–$475; tank replacements $1,650–$2,500 installed with haul-away; gas tankless installations $3,500–$5,200 including gas line and venting; heat-pump hybrids $3,200–$4,800 (Florida utility rebates of up to ~$2,000 often available). Same-day installation available in most cases. Tank water heaters last 8–12 years in Florida; tankless units 20+ years with annual maintenance. Tankless installation and repair has its own page: ${BASE}/services/tankless-water-heaters
 
 ### Whole-Home Repiping
 Complete whole-home repiping using copper or PEX pipe — ${BUSINESS.repipesCompleted.toLocaleString()}+ homes repiped in Southwest Florida. Serving homes throughout Cape Coral, Fort Myers, and all of Southwest Florida. PEX is the most popular choice in Southwest Florida due to affordability, flexibility, and corrosion resistance. Copper is also available (+$2,000–$4,000 over PEX). Pricing: $4,000–$15,000 depending on home size, number of bathrooms, and pipe material — most 3-bed/2-bath homes run $6,800–$9,500 in PEX. Most homes completed in 1–2 days. All repipe jobs include full Lee County permitting, final inspection, and drywall patching. License: ${BUSINESS.license}.
@@ -256,7 +256,8 @@ ${NEW_CONSTRUCTION_CITIES.map((c) => `- New Construction Plumbing — ${c.city}:
 - Services Overview: ${BASE}/services
 - Services — Residential: ${BASE}/services/residential
 - Services — Commercial: ${BASE}/services/commercial
-- Services — New Construction: ${BASE}/services/new-construction`;
+- Services — New Construction: ${BASE}/services/new-construction
+- Services — Tankless Water Heaters: ${BASE}/services/tankless-water-heaters`;
 
   const serviceHubLinks = SERVICE_HUBS.filter((h) => h.href !== "/emergency")
     .filter((h) => !["commercial", "new-construction"].includes(h.slug))

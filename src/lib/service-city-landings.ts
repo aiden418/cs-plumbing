@@ -921,6 +921,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       { label: "Emergency Plumber Cape Coral", href: "/emergency-plumber-cape-coral" },
       { label: "Cape Coral Service Area", href: "/areas/cape-coral" },
       { label: "Water Heater Services", href: "/services/water-heaters" },
+      { label: "Tankless Water Heater Installation", href: "/services/tankless-water-heaters" },
     ],
     priceRange: "$1,200–$4,500",
   },
@@ -1335,6 +1336,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       { label: "Water Heater Services", href: "/services/water-heaters" },
       { label: "Emergency Plumber in Fort Myers", href: "/emergency-plumber-fort-myers" },
       { label: "Fort Myers Service Area", href: "/areas/fort-myers" },
+      { label: "Tankless Water Heater Installation", href: "/services/tankless-water-heaters" },
     ],
   },
 
@@ -1606,6 +1608,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       { label: "Punta Gorda Service Area", href: "/areas/punta-gorda" },
       { label: "Emergency Plumber in Punta Gorda", href: "/emergency-plumber-punta-gorda" },
       { label: "Water Heater Services", href: "/services/water-heaters" },
+      { label: "Tankless Water Heater Installation", href: "/services/tankless-water-heaters" },
     ],
   },
 
@@ -2983,6 +2986,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       { label: "Drain Cleaning in Lehigh Acres", href: "/drain-cleaning-lehigh-acres" },
       { label: "Emergency Plumber in Lehigh Acres", href: "/emergency-plumber-lehigh-acres" },
       { label: "Lehigh Acres Service Area", href: "/areas/lehigh-acres" },
+      { label: "Tankless Water Heater Installation", href: "/services/tankless-water-heaters" },
     ],
     priceRange: "$150–$500 repair · $1,200–$4,500 replacement",
   },
@@ -3667,6 +3671,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       { label: "Leak Repair in Estero", href: "/leak-repair-estero" },
       { label: "New Construction Plumbing in Estero", href: "/new-construction-plumbing/estero" },
       { label: "Estero Service Area", href: "/areas/estero" },
+      { label: "Tankless Water Heater Installation", href: "/services/tankless-water-heaters" },
     ],
   },
 
@@ -3861,6 +3866,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       { label: "Repiping in Bonita Springs", href: "/repiping-bonita-springs" },
       { label: "Leak Repair in Bonita Springs", href: "/leak-repair-bonita-springs" },
       { label: "Bonita Springs Service Area", href: "/areas/bonita-springs" },
+      { label: "Tankless Water Heater Installation", href: "/services/tankless-water-heaters" },
     ],
   },
 
@@ -4250,6 +4256,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       { label: "Emergency Plumber in Port Charlotte", href: "/emergency-plumber-port-charlotte" },
       { label: "Repiping in Port Charlotte", href: "/repiping-port-charlotte" },
       { label: "Port Charlotte Service Area", href: "/areas/port-charlotte" },
+      { label: "Tankless Water Heater Installation", href: "/services/tankless-water-heaters" },
     ],
   },
 
@@ -4639,6 +4646,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       { label: "Leak Repair in Naples", href: "/leak-repair-naples" },
       { label: "Repiping in Naples", href: "/repiping-naples" },
       { label: "Naples Service Area", href: "/areas/naples" },
+      { label: "Tankless Water Heater Installation", href: "/services/tankless-water-heaters" },
     ],
   },
 

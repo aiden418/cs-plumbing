@@ -24,7 +24,14 @@ export default function ServiceLandingTemplate({
 }: {
   landing: ServiceLanding;
 }) {
-  const requestService = landing.slug === "water-heaters" ? "water-heater" : landing.slug === "repiping" ? "repipe" : "";
+  // Slugs that map to a ServiceRequestForm option get the inline form;
+  // anything else falls back to /booking.
+  const requestService =
+    landing.slug === "water-heaters" || landing.slug === "tankless-water-heaters"
+      ? "water-heater"
+      : landing.slug === "repiping"
+        ? "repipe"
+        : "";
   return (
     <>
       {/* Hero */}

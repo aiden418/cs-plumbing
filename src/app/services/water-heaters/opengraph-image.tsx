@@ -9,7 +9,7 @@ export default function OgImage() {
   return createOgImage({
     variant: "service",
     eyebrow: "Water Heaters",
-    title: "Tank, Tankless & Hybrid Installation",
-    subtitle: "Repairs from $195 · Tank replacements $1,650–$2,500 · Same-day install in most cases",
+    title: "Water Heater Repair & Installation",
+    subtitle: "Repairs from $195 · Tank replacements $1,650–$2,500 · Tankless & hybrid options · Same-day in most cases",
   });
 }
