@@ -1,0 +1,46 @@
+platform,profile_url,status_2026-11-12,address_shown,phone_shown,website_link,link_type,action,priority,owner,due,notes
+Google Business Profile,https://maps.google.com/?cid=5498090134012520413,live,951 Pondella Rd (per site),unknown,yes,nofollow,Audit categories/services/UTM; weekly posts; seed Q&A; confirm primary phone,P0,Aiden,2026-11-21,Place ID ChIJjeFQMQ9D24gR3WflxNgjTUw; in PROFILES
+Facebook,https://www.facebook.com/csplumbingoflc,live,check,check,yes,nofollow,Align About section to NAP standard,P1,Aiden,2026-11-21,in PROFILES
+Instagram,https://www.instagram.com/cs_plumbing_of_lee/,live,n/a,n/a,yes,nofollow,Bio link to home with UTM,P2,Aiden,2026-11-28,in PROFILES
+Yelp,https://www.yelp.com/biz/c-and-s-plumbing-of-lee-north-fort-myers,live,951 Pondella Rd,239 number,check,nofollow,Claim; add website hours services photos,P0,Aiden,2026-11-21,in PROFILES
+Birdeye (current),https://reviews.birdeye.com/cs-plumbing-of-lee-172502710968475,live,check,check,check,nofollow,Verify NAP; ask Birdeye to merge old profile into this one,P1,Aiden,2026-11-28,in PROFILES
+Birdeye (old duplicate),https://reviews.birdeye.com/cs-plumbing-of-lee-inc-565033664,live-unclaimed,Cape Coral (old),check,check,nofollow,Claim then request merge/removal,P1,Aiden,2026-11-28,28 reviews; never link
+BuildZoom,https://www.buildzoom.com/contractor/c-s-plumbing-of-lee-inc,live,1011 SE 12th Ct Cape Coral (old),check,check,dofollow,Claim; set 951 Pondella; add CFC1432485; merge the separate Draft plumbing Corp entity,P0,Aiden,2026-11-21,in PROFILES; top-5% claim cites this page
+HomeAdvisor / Angi,https://www.homeadvisor.com/rated.CSPlumbingofLee.50304107.html,live,check,check,check,nofollow,Claim; fix 'does not offer warranties'; set NAP,P0,Aiden,2026-11-21,4.7 stars / 51 reviews
+HomeAdvisor (possible duplicate),https://www.homeadvisor.com/rated.CandSPlumbing.24575129.html,live-unverified,check,check,check,nofollow,Confirm whether this is C&S of Lee; merge if so,P2,Aiden,2026-12-05,
+Networx,https://www.networx.com/c.c-s-plumbing-of-lee-inc,live,Cape Coral 33990 (old),check,check,nofollow,Correct or request removal,P1,Aiden,2026-11-28,"listed as C & S Plumbing of Lee, Inc"
+MapQuest,https://www.mapquest.com/us/florida/c-s-plumbing-of-lee-442398673,live,1007 SE 12th Ct Cape Coral (old),check,different website,nofollow,Suggest edit; fix at Foursquare/aggregators,P1,Aiden,2026-11-28,
+Yahoo Local,https://local.yahoo.com/info-236416612-cs-plumbing-of-lee-north-fort-myers/,live,951 Pondella Rd,check,check,nofollow,Verify website link,P2,Aiden,2026-12-05,
+BestProsInTown,https://www.bestprosintown.com/fl/north-fort-myers/c-s-plumbing-of-lee-/,live,North Fort Myers,check,check,nofollow,Verify website link,P3,Aiden,2026-12-12,
+CCCIA member directory,https://members.cccia.org/list/member/c-s-plumbing-of-lee-3110,live,2311 SE 10th Ave Unit J Cape Coral (old),check,check,dofollow,Update address + website in member portal,P0,Aiden,2026-11-21,existing membership; add to PROFILES once fixed
+RocketReach,https://rocketreach.co/cs-plumbing-of-lee-email-format_b6b20cadc8491c6b,live,n/a,n/a,n/a,none,Ignore,P4,,,
+Data Axle / Infogroup,https://www.dataaxle.com,unknown,likely old,unknown,unknown,none,Submit correction (free),P1,Aiden,2026-11-28,aggregator feeds many directories
+Foursquare,https://foursquare.com,unknown,likely old,unknown,unknown,none,Claim/correct (feeds MapQuest Apple etc),P1,Aiden,2026-11-28,
+Neustar Localeze,https://www.neustarlocaleze.biz,unknown,likely old,unknown,unknown,none,Submit correction,P1,Aiden,2026-11-28,
+Bing Places,https://www.bingplaces.com,missing,,,,nofollow,Create (import from GBP),P1,Aiden,2026-11-28,
+Apple Business Connect,https://businessconnect.apple.com,missing,,,,nofollow,Create,P1,Aiden,2026-11-28,
+Nextdoor Business,https://business.nextdoor.com,missing,,,,nofollow,Create; post in Cape Coral + NFM neighborhoods,P1,Aiden,2026-11-28,
+BBB,https://www.bbb.org,missing,,,,dofollow (accredited),Create free profile; then accredit (Tier 2),P1,Aiden,2026-12-05,est $500-1000/yr
+Houzz,https://www.houzz.com,missing,,,,nofollow,Create with remodel photos,P2,Aiden,2026-12-12,
+Thumbtack,https://www.thumbtack.com,missing,,,,nofollow,Create (no paid leads needed),P2,Aiden,2026-12-12,Repipe Specialists SWFL is listed here
+Porch,https://porch.com,missing,,,,nofollow,Create,P3,Aiden,2026-12-19,
+Alignable,https://www.alignable.com,missing,,,,nofollow,Create,P3,Aiden,2026-12-19,
+Lee BIA member directory,https://members.bia.net,missing,,,,dofollow,Join (est $700-1000/yr); list; Build My Future + Builders Care,P0,Aiden,2026-12-05,Cape Coral Plumbing and Plumbing Solutions of SWFL are members
+Cape Coral Chamber,https://web.capecoralchamber.com,missing,,,,dofollow,Join (est $400-600/yr),P1,Aiden,2026-12-05,GOAT and Superior Plumbing joined 2025
+SWFL Inc. business directory,https://www.swflinc.com/business-directory,missing,,,,dofollow,Join (est $500/yr),P2,Aiden,2026-12-19,Aztec Premier Edison Fort listed
+Greater Fort Myers Chamber,https://members.fortmyers.org,missing,,,,dofollow,Defer to month 3,P3,Aiden,2027-01-15,Coastal Plumbing Service of SWFL listed
+Levelset,https://www.levelset.com,missing,,,,dofollow,Create contractor profile,P1,Aiden,2026-12-05,free; shows lien history to GCs
+The Blue Book (ProView),https://www.thebluebook.com,missing,,,,dofollow,Create ProView,P1,Aiden,2026-12-05,free tier
+Downtobid,https://downtobid.com/contractors/plumbing/fort-myers,missing,,,,dofollow,Create/verify listing,P2,Aiden,2026-12-12,
+Procore Construction Network,https://www.procore.com/network,missing,,,,nofollow,Create,P2,Aiden,2026-12-12,site already states Procore/Textura capability
+BuildingConnected,https://www.buildingconnected.com,missing,,,,nofollow,Create,P2,Aiden,2026-12-12,
+State / A.O. Smith Contractor Locator,https://www.statewaterheaters.com/pros/contractor-locator-signup.html,missing,,,,dofollow,Enroll via LeadConnect / Contractor Rewards,P1,Aiden,2026-12-05,Cape Coral Plumbing is listed
+Rheem Find-a-Pro,https://www.rheem.com,missing,,,,dofollow,Enroll in Rheem Pro Partner,P2,Aiden,2026-12-12,
+Navien Service Specialist,https://www.navieninc.com,missing,,,,dofollow,Enroll (NSS training),P2,Aiden,2026-12-12,ties to tankless content gap
+Rinnai PRO,https://www.rinnai.us,missing,,,,dofollow,Enroll,P2,Aiden,2026-12-12,
+Bradford White For the Pro,https://www.bradfordwhite.com,missing,,,,dofollow,Enroll,P3,Aiden,2026-12-19,
+Lee County licensed plumbing contractor list,https://www.leefl.gov/dcd/rpts/Documents/ContractorLists/Plumbing.pdf,check,n/a,n/a,none,Confirm C&S / Draft Plumbing Corp appears under current name,P2,Aiden,2026-12-12,citation only
+City of Cape Coral UEP licensed-plumber list,https://www.capecoral.gov/uep/how_to_connect.php,check,,,,dofollow if listed,Ask uepnewconst@capecoral.gov how plumbers get listed,P0,Aiden,2026-11-28,most valuable citation for the UEP moat
+Cape Coral Breeze Best of Cape Coral 2026,https://www.capecoralbreeze.com,check,,,,dofollow,Ask for winners page link + send release,P1,Aiden,2026-12-05,
+draftconstructionswfl.com,https://draftconstructionswfl.com,check,,,,dofollow,Add prominent link to csplumbinglee.com,P1,Aiden,2026-11-28,sister company
+candsplumbingfl.com,https://www.candsplumbingfl.com,live-duplicate,,,,n/a,Set as 301 redirect to www.csplumbinglee.com in Vercel; add as GSC property; Change of Address,P0,Aiden,2026-11-21,currently serves a duplicate copy of the site
