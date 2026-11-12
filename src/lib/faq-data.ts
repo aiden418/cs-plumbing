@@ -1,3 +1,6 @@
+import { rangeInline, spanInline } from "./pricing";
+import { CLAIMS, EMERGENCY_CLAIMS } from "./claims";
+
 export interface FaqCategory {
   category: string;
   slug: string;
@@ -23,7 +26,7 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
       {
         question: "Do you offer free estimates?",
         answer:
-          "Yes, we provide free estimates for all plumbing services. We believe in transparent, upfront pricing — you'll know exactly what a job costs before we start.",
+          `${CLAIMS.serviceCallFee} Either way you get upfront, written pricing before any work starts.`,
       },
       {
         question: "Do you offer 24/7 emergency plumbing service?",
@@ -50,7 +53,7 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
       {
         question: "How much does it cost to repipe a house in Cape Coral?",
         answer:
-          "Whole-home repiping in Cape Coral typically costs between $4,000 and $15,000 depending on the size of your home, number of bathrooms, and pipe material (copper vs PEX). C&S Plumbing provides free estimates with upfront pricing — no hidden fees.",
+          `Whole-home repiping in Cape Coral typically costs ${rangeInline("repipe.overall")} depending on the size of your home, number of bathrooms, and pipe material (copper vs PEX). Most 3-bed/2-bath homes land at ${rangeInline("repipe.pex3x2")} in PEX. C&S Plumbing provides free estimates with upfront pricing — no hidden fees.`,
       },
       {
         question: "How long does a whole-home repipe take?",
@@ -87,7 +90,7 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
       {
         question: "How much does a water heater cost in Cape Coral?",
         answer:
-          "Repairs run $195–$475. Traditional tank replacements run $1,650–$2,500 installed with haul-away included, tankless installations run $3,500–$5,200, and heat-pump hybrids run $3,200–$4,800. C&S Plumbing provides free estimates with upfront pricing.",
+          `Repairs run ${rangeInline("waterHeater.repair")}. Traditional tank replacements run ${spanInline("waterHeater.tank40", "waterHeater.tank50")} installed with haul-away included, tankless installations run ${rangeInline("waterHeater.tankless")}, and heat-pump hybrids run ${rangeInline("waterHeater.hybrid")}. C&S Plumbing provides free estimates with upfront pricing.`,
       },
       {
         question: "Should I get a tankless or traditional water heater?",
@@ -119,7 +122,7 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
       {
         question: "How much does drain cleaning cost in Cape Coral?",
         answer:
-          "Drain cleaning in Cape Coral typically costs between $150 and $500 depending on the type of drain, severity of the clog, and method required. Simple clogs start around $150, while main sewer line cleaning with hydro-jetting can be $300–$500.",
+          `Drain cleaning in Cape Coral runs ${rangeInline("drain.overall")} depending on the drain, how severe the clog is and the method needed. Single-fixture clogs run ${rangeInline("drain.fixture")}, main-line cabling ${rangeInline("drain.mainLine")}, and hydro-jetting ${rangeInline("drain.hydroJet")}.`,
       },
       {
         question: "What causes recurring drain clogs?",
@@ -146,7 +149,7 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
       {
         question: "How much does leak repair cost in Cape Coral?",
         answer:
-          "Leak repair costs in Cape Coral range from $150 for a simple faucet leak to $800+ for slab leaks or pipe leaks behind walls. The cost depends on leak location and accessibility. We provide free estimates with transparent pricing.",
+          `Leak repair in Cape Coral runs from ${rangeInline("leak.visible")} for a visible fixture or supply leak to ${rangeInline("leak.slabSpot")} for slab leak detection with a spot repair, and ${rangeInline("leak.reroute")} for a full under-slab reroute. Finding a hidden leak with electronic detection is ${rangeInline("leak.detection")}. We provide free estimates with transparent pricing.`,
       },
       {
         question: "How do I know if I have a slab leak?",
@@ -172,7 +175,7 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
       {
         question: "How fast can you respond to a plumbing emergency?",
         answer:
-          "Our emergency team typically responds within 60 minutes for critical situations like burst pipes, sewage backups, and gas leaks in the Cape Coral and Fort Myers area. We're available 24/7, 365 days a year.",
+          `Our emergency team responds ${EMERGENCY_CLAIMS.responseTime}, for burst pipes, sewage backups, gas leaks and active leaks. We are available 24/7, 365 days a year.`,
       },
       {
         question: "Do you charge extra for emergency or after-hours calls?",

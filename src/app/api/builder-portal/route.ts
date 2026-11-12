@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { CLAIMS } from "@/lib/claims";
 import { Resend } from "resend";
 import { z } from "zod";
 import { BUSINESS } from "@/lib/constants";
@@ -204,7 +205,7 @@ export async function POST(request: Request) {
           </div>
           <div style="padding: 20px; background: #f9f9f9;">
             <p>Hi ${escapeHtml(name)},</p>
-            <p>Thanks for sending your project to C&S Plumbing. Our estimating team will review your plans and get back to you with a detailed quote.</p>
+            <p>Thanks for sending your project to C&S Plumbing. ${CLAIMS.bidAcknowledgement}</p>
             <div style="background: #fff; padding: 16px; border-radius: 8px; margin: 16px 0;">
               <p style="margin: 4px 0;"><strong>Company:</strong> ${escapeHtml(company)}</p>
               <p style="margin: 4px 0;"><strong>Project:</strong> ${escapeHtml(projectType)}</p>

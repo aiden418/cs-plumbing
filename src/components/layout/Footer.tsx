@@ -226,17 +226,6 @@ export default function Footer() {
                 >
                   #{BUSINESS.license}
                 </a>
-                <span className="mx-1.5 text-gray-300">·</span>
-                <a
-                  href={BUSINESS.licenseLookupUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-semibold text-gray-700 hover:text-primary underline-offset-2 hover:underline transition-colors"
-                  title="Verify on MyFloridaLicense.com"
-                  aria-label={`Verify license ${BUSINESS.license2} on MyFloridaLicense.com`}
-                >
-                  #{BUSINESS.license2}
-                </a>
                 <span className="ml-1.5 text-[10px] text-gray-500">(verify)</span>
               </span>
             </p>
@@ -251,7 +240,7 @@ export default function Footer() {
           </div>
           <p className="text-xs text-gray-500">
             <a href="https://draftconstructionswfl.com" target="_blank" rel="noopener noreferrer" className="hover:text-gray-500 transition-colors">
-              A Division of Draft Construction
+              Part of Draft Construction
             </a>{" · "}Designed &amp; managed by ASP LLC
           </p>
         </div>

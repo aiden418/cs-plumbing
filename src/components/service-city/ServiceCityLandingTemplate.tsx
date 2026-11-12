@@ -65,7 +65,7 @@ export default function ServiceCityLandingTemplate({
           </p>
         )}
         <p className="mt-4 text-xs text-white/40">
-          Serving {landing.city} since 1998 · License #CFC057076 · #CFC1432485
+          Serving {landing.city} since 1998 · License #CFC1432485
         </p>
       </PageHero>
 

@@ -31,7 +31,7 @@ const newConstructionFaqs = [
   },
   {
     question: "Do you pull permits for new construction plumbing in Lee County?",
-    answer: "Yes. C&S Plumbing manages all permit applications, inspections, and final sign-offs for every new construction project. Our license numbers are CFC1432485 and CFC057076, both issued by the Florida Department of Business and Professional Regulation.",
+    answer: "Yes. C&S Plumbing manages all permit applications, inspections, and final sign-offs for every new construction project. Our license number is CFC1432485, issued by the Florida Department of Business and Professional Regulation.",
   },
   {
     question: "How do I get C&S Plumbing on my new construction project as a builder?",

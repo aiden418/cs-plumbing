@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { EMERGENCY_CLAIMS } from "@/lib/claims";
 import PageTransition from "@/components/layout/PageTransition";
 import ServiceDetail from "@/components/services/ServiceDetail";
 import CTASection from "@/components/home/CTASection";
@@ -23,7 +24,7 @@ const commercialFaqs = [
   },
   {
     question: "Can you handle commercial plumbing permits in Lee County and Cape Coral?",
-    answer: "Yes. We manage all commercial plumbing permits through Lee County and the City of Cape Coral. Our licensed plumbing contractors (CFC1432485, CFC057076) handle the full permitting process including plan review, inspections, and final certificate of occupancy sign-off.",
+    answer: "Yes. We manage all commercial plumbing permits through Lee County and the City of Cape Coral. Our licensed plumbing contractor (CFC1432485) handles the full permitting process including plan review, inspections, and final certificate of occupancy sign-off.",
   },
   {
     question: "Do you offer preventive maintenance contracts for commercial properties?",
@@ -31,7 +32,7 @@ const commercialFaqs = [
   },
   {
     question: "How fast do you respond to commercial plumbing emergencies?",
-    answer: "Our commercial emergency team is available 24/7 and typically responds within 60 minutes in the Cape Coral and Fort Myers area. We understand that plumbing emergencies can shut down your business, so we prioritize speed and provide temporary solutions to keep you operating while permanent repairs are made.",
+    answer: `Our commercial emergency team is available 24/7; response is ${EMERGENCY_CLAIMS.responseTime}. We understand that plumbing emergencies can shut down your business, so we prioritize speed and provide temporary solutions to keep you operating while permanent repairs are made.`,
   },
   {
     question: "Do you service restaurants and food service businesses?",

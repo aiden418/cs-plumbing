@@ -143,7 +143,7 @@ export default function CityProofBlock({ cityName }: CityProofBlockProps) {
                   </p>
                 </div>
                 <p className="text-xs text-white/80 mt-6">
-                  CFC1432485 · CFC057076
+                  CFC1432485
                 </p>
               </div>
             </div>

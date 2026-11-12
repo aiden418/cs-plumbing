@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { range, startingAt } from "@/lib/pricing";
 import { Warehouse, DoorOpen, Sun, TreePine, Flame, Plug, Fuel, Shield, ShieldCheck, ShieldPlus } from "lucide-react";
 import type {
   WaterHeaterSelections,
@@ -29,14 +30,14 @@ const HEATER_TYPES: ProductOption[] = [
     id: "traditional",
     label: "Traditional Tank",
     description: "Reliable storage tank that keeps hot water ready. Great value for most homes.",
-    priceHint: "Starting at $1,200",
+    priceHint: startingAt("waterHeater.tank40"),
     image: "/images/quote-builder/tank-heater.png",
   },
   {
     id: "tankless",
     label: "Tankless",
     description: "Heats water on demand — never run out. Compact wall-mounted unit.",
-    priceHint: "Starting at $1,500",
+    priceHint: startingAt("waterHeater.tanklessPointOfUse"),
     image: "/images/quote-builder/tankless-heater.png",
     badge: "Popular",
   },
@@ -44,7 +45,7 @@ const HEATER_TYPES: ProductOption[] = [
     id: "hybrid",
     label: "Hybrid Heat Pump",
     description: "Most energy efficient. Uses heat from the air to warm water. Saves up to 60% on energy.",
-    priceHint: "Starting at $2,800",
+    priceHint: startingAt("waterHeater.hybrid"),
     image: "/images/quote-builder/hybrid-heater.png",
     badge: "Eco-Friendly",
   },
@@ -55,14 +56,14 @@ const TANK_SIZES: ProductOption[] = [
     id: "40gal",
     label: "40 Gallon",
     description: "Perfect for 1–2 people or small households",
-    priceHint: "$1,200 – $1,800",
+    priceHint: range("waterHeater.tank40"),
     image: "/images/quote-builder/rheem-standard-tank.webp",
   },
   {
     id: "50gal",
     label: "50 Gallon",
     description: "Ideal for 2–4 people — our most popular size",
-    priceHint: "$1,400 – $2,100",
+    priceHint: range("waterHeater.tank50"),
     image: "/images/quote-builder/rheem-standard-tank.webp",
     badge: "Most Popular",
   },
@@ -70,7 +71,7 @@ const TANK_SIZES: ProductOption[] = [
     id: "75gal",
     label: "75 Gallon",
     description: "Best for large families with 4+ people",
-    priceHint: "$1,800 – $2,600",
+    priceHint: range("waterHeater.tank75"),
     image: "/images/quote-builder/rheem-standard-tank.webp",
   },
 ];
@@ -80,14 +81,14 @@ const TANKLESS_SIZES: ProductOption[] = [
     id: "single-point",
     label: "Single-Point",
     description: "Serves one fixture like a bathroom or kitchen sink",
-    priceHint: "$1,500 – $2,200",
+    priceHint: range("waterHeater.tanklessPointOfUse"),
     image: "/images/quote-builder/rheem-tankless-product.webp",
   },
   {
     id: "whole-home",
     label: "Whole-Home",
     description: "Powers your entire house with endless hot water",
-    priceHint: "$3,000 – $4,500",
+    priceHint: range("waterHeater.tankless"),
     image: "/images/quote-builder/rheem-tankless-product.webp",
     badge: "Recommended",
   },
@@ -105,7 +106,7 @@ const BRAND_TIERS: ProductOption[] = [
     id: "premium",
     label: "Premium Brands",
     description: "Rinnai, Navien — top-tier performance and advanced features. Best-in-class efficiency and longevity.",
-    priceHint: "+$400 – $800",
+    priceHint: "+$400 – $800", // claim-ok: calculator modifier
     image: "/images/quote-builder/rinnai-tankless.png",
     badge: "Upgrade",
   },
@@ -136,7 +137,7 @@ const WARRANTIES: ProductOption[] = [
     id: "extended",
     label: "Extended 10-Year",
     description: "Extra peace of mind for your investment",
-    priceHint: "+$150 – $200",
+    priceHint: "+$150 – $200", // claim-ok: calculator modifier
     icon: <ShieldCheck className="w-8 h-8 sm:w-10 sm:h-10" />,
     badge: "Best Value",
   },
@@ -144,7 +145,7 @@ const WARRANTIES: ProductOption[] = [
     id: "premium",
     label: "Premium 12-Year",
     description: "Maximum coverage — full parts & labor",
-    priceHint: "+$300 – $400",
+    priceHint: "+$300 – $400", // claim-ok: calculator modifier
     icon: <ShieldPlus className="w-8 h-8 sm:w-10 sm:h-10" />,
   },
 ];

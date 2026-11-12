@@ -19,6 +19,8 @@ import PageHero from "@/components/ui/PageHero";
 import SectionHeading from "@/components/ui/SectionHeading";
 import ScrollReveal from "@/components/animations/ScrollReveal";
 import { BUSINESS, COASTAL_COMEBACK_FAQS } from "@/lib/constants";
+import { money, price } from "@/lib/pricing";
+import { SEASON_COPY, type Season } from "@/lib/claims";
 
 const problems = [
   {
@@ -41,7 +43,7 @@ const problems = [
 const tiers = [
   {
     name: "Coastal Comfort",
-    price: "$349",
+    price: money(price("plan.comfort").min),
     period: "/yr",
     tagline: "Pre-departure shutdown + return-ready inspection.",
     cta: "Get Started",
@@ -58,7 +60,7 @@ const tiers = [
   },
   {
     name: "Coastal Shield",
-    price: "$549",
+    price: money(price("plan.shield").min),
     period: "/yr",
     tagline: "Everything in Comfort + a mid-summer check & priority dispatch.",
     cta: "Get Started",
@@ -117,25 +119,25 @@ const steps = [
 
 const trustItems = [
   `Lic. #${BUSINESS.license}`,
-  `Lic. #${BUSINESS.license2}`,
   `Family-owned since ${BUSINESS.founded}`,
   "5★ on Google",
   "Insured & bonded",
-  "A Division of Draft Construction",
+  "Part of Draft Construction",
 ];
 
-export default function CoastalComebackPlanPage() {
+export default function CoastalComebackPlanPage({ season = "departure" }: { season?: Season }) {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const copy = SEASON_COPY[season];
 
   return (
     <>
       {/* HERO */}
       <PageHero
-        overline="For SWFL Snowbirds"
-        title="Leaving for the Summer?"
-        accent="Your Pipes Aren't."
+        overline={copy.overline}
+        title={copy.title}
+        accent={copy.accent}
         accentPosition="block"
-        description="The Coastal Comeback Plan keeps your vacant Florida home dry, protected, and ready to live in the day you fly back. Licensed plumbers — not a home watch service — checking your pipes, valves, and water heater while you're gone."
+        description={copy.description}
         actions={
           <>
             <Button

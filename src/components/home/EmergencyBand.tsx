@@ -1,4 +1,5 @@
 import { Phone } from "lucide-react";
+import { EMERGENCY_CLAIMS } from "@/lib/claims";
 import Container from "@/components/ui/Container";
 import { BUSINESS } from "@/lib/constants";
 import RadarPulse from "./RadarPulse";
@@ -32,7 +33,7 @@ export default function EmergencyBand() {
           Burst pipe at 2 AM? We&apos;re already rolling.
         </h2>
         <p className="mt-5 text-white/70 text-base sm:text-lg max-w-xl mx-auto">
-          Average 60-minute response across Lee County. Upfront pricing
+          Response {EMERGENCY_CLAIMS.responseTime}. Upfront pricing
           before any work begins — nights, weekends, and holidays included.
         </p>
 

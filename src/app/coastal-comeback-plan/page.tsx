@@ -3,12 +3,18 @@ import CoastalComebackPlanPage from "./CoastalComebackPlanPage";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import FaqJsonLd from "@/components/seo/FaqJsonLd";
 import { COASTAL_COMEBACK_FAQS } from "@/lib/constants";
+import { perYear } from "@/lib/pricing";
+import { season } from "@/lib/claims";
+
+// Seasonal copy (arrival Nov–Apr, departure May–Oct) is computed at request
+// time; revalidating daily means the flip needs no deploy.
+export const revalidate = 86400;
 
 export const metadata: Metadata = {
   alternates: { canonical: "/coastal-comeback-plan" },
   title: "Snowbird Plumbing Protection Plan",
   description:
-    "Leaving SWFL for the summer? The Coastal Comeback Plan protects your vacant home from leaks, water heater failures and mold. Annual plans from $349.",
+    `Snowbird plumbing protection for SWFL: shutdown before you leave, checks while you're away, start-up inspection when you're back. Annual plans from ${perYear("plan.comfort")}.`,
   keywords: [
     "snowbird plumbing Cape Coral",
     "vacant home plumbing inspection Fort Myers",
@@ -21,7 +27,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Coastal Comeback Plan | C&S Plumbing of Lee",
     description:
-      "Annual snowbird plumbing protection. Pre-departure shutdown, mid-summer checks, and a return-ready inspection — from $349/yr.",
+      `Annual snowbird plumbing protection. Pre-departure shutdown, mid-summer checks, and a return-ready inspection — from ${perYear("plan.comfort")}.`,
     url: "https://www.csplumbinglee.com/coastal-comeback-plan",
   },
 };
@@ -36,7 +42,7 @@ export default function Page() {
         ]}
       />
       <FaqJsonLd faqs={COASTAL_COMEBACK_FAQS} />
-      <CoastalComebackPlanPage />
+      <CoastalComebackPlanPage season={season()} />
     </>
   );
 }

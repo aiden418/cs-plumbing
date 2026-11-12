@@ -16,7 +16,7 @@ a placeholder in its place.
 | Coverage | "Southwest Florida, from Port Charlotte through Naples" (coverage, not permit jurisdictions) | `SERVICE_COVERAGE` |
 | Warranty | One-year warranty on materials supplied by C&S, per written project terms. Not labor, not manufacturer, not customer-supplied fixtures | `WARRANTY` in constants.ts |
 | Legal name | Draft Plumbing Corp, d/b/a C&S Plumbing of Lee (owner-stated 2026-11-03), on the Terms, prequal packet and schema; brand stays C&S Plumbing of Lee | `BUSINESS.legalName` |
-| Licenses | CFC1432485 is the company's current license since the 2023 reorganization as part of Draft Construction; CFC057076 is Samuel Pellechio's original license (owner-stated 2026-11-03). Both stay on formal documents | `BUSINESS.license`, `BUSINESS.license2` |
+| Licenses | CFC1432485 is the company's current license since the 2023 reorganization as part of Draft Construction; CFC057076 is Samuel Pellechio's original license (owner-stated 2026-11-03). Both stay on formal documents (Terms, prequal packet, capability statement, builder print docs, JSON-LD credentials); marketing pages, the footer, FAQs and city landings show CFC1432485 only (Aiden, 2026-11-12) | `LICENSE` in claims.ts, `licenseLine()` |
 | Qualifications | $2M GL, workers' comp, bonding on request, OSHA-30, 100% self-performed, AIA G702/G703, Procore/Textura | `QUALIFICATIONS` |
 | Removed | EMR (none exists — do not list as outstanding), commercial auto / umbrella, drug testing, all bid-turnaround day counts, OSHA-10 wording | — |
 
@@ -31,7 +31,7 @@ a placeholder in its place.
 | Hangar 97 completion date | `COMPLETED_PROJECTS[hangar-97].completedOn` | Marked Completed per owner; date unset. Trim/final phases not photographed — confirm performed before listing |
 | Case-study facts | `COMPLETED_PROJECTS[].caseStudy` | Fixture counts, schedule vs. plan, inspection results for Hansen 1210 trim-out and Hangar 97 — omitted until supplied |
 | Permission to name builders in case studies | `caseStudy.builder.permission` | Hansen Homes and Stellar Development set to `false` → hidden in the case-study block. The existing project titles/client fields already name them (pre-existing content) — decide whether that stays |
-| Homeowner warranty wording | residential/commercial service pages | Pre-existing "Warranty on all workmanship" (residential) and "Warranty on all installations" (commercial) are broader than the confirmed builder wording; repipe pages state a 1-year labor + manufacturer PEX warranty. Confirm or align |
+| Homeowner warranty wording | `CLAIMS.warrantyInstall` (claims.ts) | Aligned 2026-11-12 to the Terms: one year labor + one year materials supplied by C&S, manufacturer warranties pass through; lifetime / 25-year claims removed. Chris/Sam sign-off on the Terms warranty clause still open |
 | Permit jurisdictions (unverified, unpublished) | — | City of Cape Coral; Lee County (incl. Lehigh Acres, North Fort Myers); City of Fort Myers; Village of Estero; City of Bonita Springs; Town of Fort Myers Beach; City of Sanibel; City of Punta Gorda; Charlotte County; Collier County / City of Naples |
 
 ## Deploying a preview

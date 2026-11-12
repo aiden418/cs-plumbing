@@ -1,4 +1,5 @@
 import { createOgImage, ogImageContentType, ogImageSize } from "@/lib/og";
+import { perYear } from "@/lib/pricing";
 
 export const runtime = "edge";
 export const size = ogImageSize;
@@ -9,6 +10,6 @@ export default function OgImage() {
   return createOgImage({
     eyebrow: "Seasonal & Snowbird Homes",
     title: "The Coastal Comeback Plan",
-    subtitle: "Shutdown, monitoring, and spring start-up for vacant SWFL homes — plans from $349/yr.",
+    subtitle: `Shutdown, monitoring, and spring start-up for vacant SWFL homes — plans from ${perYear("plan.comfort")}.`,
   });
 }

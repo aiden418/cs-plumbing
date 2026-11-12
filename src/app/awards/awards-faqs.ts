@@ -21,6 +21,6 @@ export const AWARDS_FAQS: FAQ[] = [
   },
   {
     question: "How can I verify these awards and C&S's credentials?",
-    answer: `The ${LATEST_AWARD.issuer} publishes its Best of Cape Coral winners each year. Separately, both of our Florida Certified Plumbing Contractor licenses (CFC1432485 and CFC057076) can be checked on the DBPR's MyFloridaLicense.com, and our Google rating and reviews are public on our reviews page.`,
+    answer: `The ${LATEST_AWARD.issuer} publishes its Best of Cape Coral winners each year. Separately, our Florida Certified Plumbing Contractor license (CFC1432485) can be checked on the DBPR's MyFloridaLicense.com, and our Google rating and reviews are public on our reviews page.`,
   },
 ];

@@ -17,7 +17,7 @@ const credentials = [
   {
     icon: <FileCheck className="w-5 h-5" />,
     title: "State-Licensed Plumbing Contractors",
-    body: `Florida-licensed Certified Plumbing Contractors, ${BUSINESS.license} and ${BUSINESS.license2}. Verifiable on the DBPR (MyFloridaLicense.com). We pull every required permit and pass every Lee County inspection — no exceptions.`,
+    body: `Florida Certified Plumbing Contractor, license ${BUSINESS.license}. Verifiable on the DBPR (MyFloridaLicense.com). We pull every required permit and pass every Lee County inspection — no exceptions.`,
   },
   {
     icon: <ShieldCheck className="w-5 h-5" />,

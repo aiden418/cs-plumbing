@@ -8,49 +8,60 @@ import type {
   Bathrooms,
   HoseBibs,
 } from "./quote-types";
+import { price } from "./pricing";
+import { CLAIMS } from "./claims";
 
 // ============================================
 // WATER HEATER PRICING
 // ============================================
 
+// Base installed prices come from the approved sheet, so the calculator can
+// never show a number the service pages don't. Everything below BASE_PRICES
+// is a calculator modifier (brand, location, fuel, warranty tier, add-ons),
+// not a published price, and stays local.
+const sheet = (id: Parameters<typeof price>[0]): PriceRange => ({
+  min: price(id).min,
+  max: price(id).max,
+});
+
 const BASE_PRICES: Record<string, PriceRange> = {
-  "traditional-40gal": { min: 995, max: 1500 },
-  "traditional-50gal": { min: 1275, max: 1675 },
-  "traditional-75gal": { min: 1800, max: 2600 },
-  "tankless-single-point": { min: 1500, max: 2200 },
-  "tankless-whole-home": { min: 3000, max: 4500 },
-  hybrid: { min: 2800, max: 4200 },
+  "traditional-40gal": sheet("waterHeater.tank40"),
+  "traditional-50gal": sheet("waterHeater.tank50"),
+  "traditional-75gal": sheet("waterHeater.tank75"),
+  "tankless-single-point": sheet("waterHeater.tanklessPointOfUse"),
+  "tankless-whole-home": sheet("waterHeater.tankless"),
+  hybrid: sheet("waterHeater.hybrid"),
 };
 
 const BRAND_ADDER: Record<string, PriceRange> = {
   standard: { min: 0, max: 0 },
-  premium: { min: 400, max: 800 },
+  premium: { min: 400, max: 800 }, // claim-ok: calculator modifier
 };
 
 const LOCATION_ADDER: Record<string, PriceRange> = {
   garage: { min: 0, max: 0 },
-  closet: { min: 100, max: 200 },
-  outdoor: { min: 150, max: 250 },
-  attic: { min: 300, max: 500 },
+  closet: { min: 100, max: 200 }, // claim-ok: calculator modifier
+  outdoor: { min: 150, max: 250 }, // claim-ok: calculator modifier
+  attic: { min: 300, max: 500 }, // claim-ok: calculator modifier
 };
 
 const FUEL_ADDER: Record<string, PriceRange> = {
   electric: { min: 0, max: 0 },
-  gas: { min: 200, max: 400 },
-  propane: { min: 300, max: 500 },
+  gas: { min: 200, max: 400 }, // claim-ok: calculator modifier
+  propane: { min: 300, max: 500 }, // claim-ok: calculator modifier
 };
 
 const WARRANTY_ADDER: Record<string, PriceRange> = {
   standard: { min: 0, max: 0 },
-  extended: { min: 150, max: 200 },
-  premium: { min: 300, max: 400 },
+  extended: { min: 150, max: 200 }, // claim-ok: calculator modifier
+  premium: { min: 300, max: 400 }, // claim-ok: calculator modifier
 };
 
 const ADDON_PRICES: Record<HeaterAddon, { label: string; price: number }> = {
-  "expansion-tank": { label: "Expansion Tank", price: 150 },
-  "drain-pan": { label: "Drain Pan", price: 75 },
-  "shutoff-valve": { label: "Shutoff Valve", price: 100 },
-  "recirc-pump": { label: "Recirculation Pump", price: 350 },
+  "expansion-tank": { label: "Expansion Tank", price: 150 }, // claim-ok: calculator modifier
+  "drain-pan": { label: "Drain Pan", price: 75 }, // claim-ok: calculator modifier
+  "shutoff-valve": { label: "Shutoff Valve", price: 100 }, // claim-ok: calculator modifier
+  "recirc-pump": { label: "Recirculation Pump", price: 350 }, // claim-ok: calculator modifier
 };
 
 export function calculateWaterHeater(sel: WaterHeaterSelections): QuoteResult {
@@ -116,7 +127,7 @@ export function calculateWaterHeater(sel: WaterHeaterSelections): QuoteResult {
   const warranty = WARRANTY_ADDER[sel.warranty!] ?? { min: 0, max: 0 };
   if (warranty.max > 0) {
     lineItems.push({
-      label: `${sel.warranty === "extended" ? "Extended 10-Year" : "Premium 12-Year"} Warranty`,
+      label: `${sel.warranty === "extended" ? "Extended 10-Year" : "Premium 12-Year"} Manufacturer Warranty`,
       range: warranty,
     });
   }
@@ -137,7 +148,8 @@ export function calculateWaterHeater(sel: WaterHeaterSelections): QuoteResult {
   };
 
   notes.push("Includes professional installation, old unit removal & disposal, and cleanup");
-  notes.push("Standard permit fees included");
+  notes.push("Permit and Lee County final inspection included");
+  notes.push(CLAIMS.warrantyInstall);
 
   return { service: "water-heater", total, lineItems, notes };
 }
@@ -178,14 +190,25 @@ function getDropCount(bathrooms: Bathrooms, hoseBibs: HoseBibs): number {
   );
 }
 
+/**
+ * The published PEX band for a home of this size. The per-drop estimate
+ * below is clamped into it (plus the copper upcharge when copper is chosen),
+ * so the calculator never shows a 3/2 outside the figure on the repipe page.
+ */
+function publishedBand(bathrooms: Bathrooms, stories: RepipeSelections["stories"]): PriceRange {
+  if (stories === "2" || bathrooms === "3.5" || bathrooms === "4+") return sheet("repipe.pex4plus");
+  if (bathrooms === "2.5" || bathrooms === "3") return sheet("repipe.pex3x2");
+  return sheet("repipe.pex2x2");
+}
+
 export function calculateRepipe(sel: RepipeSelections): QuoteResult {
   const lineItems: QuoteLineItem[] = [];
   const notes: string[] = [];
 
   const drops = getDropCount(sel.bathrooms!, sel.hoseBibs!);
 
-  // Base per-drop rate
-  const basePricePerDrop: PriceRange = { min: 225, max: 500 };
+  // Base per-drop rate (calculator modifier; the total is clamped to the sheet)
+  const basePricePerDrop: PriceRange = { min: 225, max: 500 }; // claim-ok: calculator modifier
 
   // Story multiplier
   const storyMultiplier = sel.stories === "2" ? 1.25 : 1.0;
@@ -222,13 +245,14 @@ export function calculateRepipe(sel: RepipeSelections): QuoteResult {
     range: pipeTotal,
   });
 
-  // Current pipe surcharge
+  // Current pipe surcharge — polybutylene removal is the published upcharge;
+  // the rest are calculator modifiers.
   const pipeSurcharges: Record<string, PriceRange> = {
-    polybutylene: { min: 0, max: 0 },
-    galvanized: { min: 500, max: 800 },
-    copper: { min: -200, max: -200 },
-    pvc: { min: 0, max: 200 },
-    "not-sure": { min: 0, max: 200 },
+    polybutylene: sheet("repipe.polyRemoval"),
+    galvanized: { min: 500, max: 800 }, // claim-ok: calculator modifier
+    copper: { min: -200, max: -200 }, // claim-ok: calculator modifier
+    pvc: { min: 0, max: 200 }, // claim-ok: calculator modifier
+    "not-sure": { min: 0, max: 200 }, // claim-ok: calculator modifier
   };
 
   const surcharge = pipeSurcharges[sel.pipeMaterial!] ?? { min: 0, max: 0 };
@@ -240,27 +264,26 @@ export function calculateRepipe(sel: RepipeSelections): QuoteResult {
       });
     } else {
       lineItems.push({
-        label: `${sel.pipeMaterial === "galvanized" ? "Galvanized" : "Existing pipe"} removal surcharge`,
+        label: `${sel.pipeMaterial === "polybutylene" ? "Polybutylene" : sel.pipeMaterial === "galvanized" ? "Galvanized" : "Existing pipe"} removal surcharge`,
         range: surcharge,
       });
     }
   }
 
-  // Permit
-  lineItems.push({
-    label: "Permit & inspections",
-    range: { min: 500, max: 1000 },
-  });
-
-  // Total with floor
+  // Raw total from the formula
   const rawTotal: PriceRange = {
     min: lineItems.reduce((sum, item) => sum + item.range.min, 0),
     max: lineItems.reduce((sum, item) => sum + item.range.max, 0),
   };
 
+  // Clamp into the published band for this home size (copper sits above it)
+  const band = publishedBand(sel.bathrooms!, sel.stories);
+  const copper = sel.newMaterial === "copper" ? sheet("repipe.copperUpcharge") : { min: 0, max: 0 };
+  const floor = band.min + copper.min;
+  const ceiling = band.max + copper.max;
   const total: PriceRange = {
-    min: Math.max(4500, rawTotal.min),
-    max: Math.max(4500, rawTotal.max),
+    min: Math.min(Math.max(rawTotal.min, floor), ceiling),
+    max: Math.min(Math.max(rawTotal.max, floor), ceiling),
   };
 
   // Add multiplier notes
@@ -268,12 +291,14 @@ export function calculateRepipe(sel: RepipeSelections): QuoteResult {
     notes.push("Two-story homes require additional labor for vertical pipe runs");
   }
   if (sel.homeAge === "pre-1980" || sel.homeAge === "1980-1995") {
-    notes.push("Older homes may require additional wall access and patching");
+    notes.push("Older homes may require additional wall access");
   }
   if (sel.newMaterial === "not-sure") {
     notes.push("Estimate based on PEX piping — copper upgrade available at higher cost");
   }
-  notes.push("Includes all materials, labor, permit, inspections, and drywall patching");
+  notes.push("Includes all materials, labor, Lee County permit and final inspection");
+  notes.push(CLAIMS.repipeRestoration);
+  notes.push(CLAIMS.warrantyInstall);
 
   return { service: "repipe", total, lineItems, notes };
 }

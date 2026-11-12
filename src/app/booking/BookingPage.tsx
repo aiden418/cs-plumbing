@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { CLAIMS } from "@/lib/claims";
+import { perYear } from "@/lib/pricing";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Wrench,
@@ -39,18 +41,18 @@ const serviceCategories = [
 ];
 
 const COASTAL_TIER_LABELS: Record<string, string> = {
-  comfort: "Coastal Comfort ($349/yr)",
-  shield: "Coastal Shield ($549/yr)",
+  comfort: `Coastal Comfort (${perYear("plan.comfort")})`,
+  shield: `Coastal Shield (${perYear("plan.shield")})`,
   smart: "Coastal Smart (custom quote)",
   "coastal-comeback": "Coastal Comeback Plan",
 };
 
 const budgetRanges = [
-  "Under $500",
-  "$500 – $1,000",
-  "$1,000 – $5,000",
-  "$5,000 – $10,000",
-  "$10,000+",
+  "Under $500", // claim-ok: budget option, not a price
+  "$500 – $1,000", // claim-ok: budget option, not a price
+  "$1,000 – $5,000", // claim-ok: budget option, not a price
+  "$5,000 – $10,000", // claim-ok: budget option, not a price
+  "$10,000+", // claim-ok: budget option, not a price
   "Not sure",
 ];
 
@@ -255,7 +257,7 @@ export default function BookingPage() {
         description={
           isEstimate
             ? "Tell us about your project and we\u2019ll get back to you with a quote."
-            : "Book online in under 2 minutes. We\u2019ll confirm your appointment within the hour."
+            : `Book online in under 2 minutes. ${CLAIMS.bookingConfirmation}`
         }
       >
         {/* Sticky CTA bar is hidden on /booking, so keep a call path above the fold */}
@@ -577,8 +579,8 @@ export default function BookingPage() {
                   )}
                   <p className="text-sm sm:text-base text-gray-500 mb-6 sm:mb-8 max-w-md mx-auto">
                     {isEstimate
-                      ? "We\u2019ll review your project details and get back to you with a quote within 24 hours. For urgent needs, call us directly."
-                      : "We\u2019ll call to confirm your appointment within the hour. A copy was sent to "}
+                      ? `We\u2019ll review your project details and get back to you with a quote. ${CLAIMS.bookingConfirmation} For urgent needs, call us directly.`
+                      : `We\u2019ll call to confirm your appointment. ${CLAIMS.bookingConfirmation} A copy was sent to `}
                     {!isEstimate && <span className="font-semibold text-gray-900">{form.email}</span>}
                     {!isEstimate && "."}
                   </p>
@@ -653,7 +655,7 @@ export default function BookingPage() {
           {
             title: "We call to confirm",
             description:
-              "Expect a call within 1 business day. We confirm the appointment window and answer any quick questions.",
+              `${CLAIMS.bookingConfirmation} We confirm the appointment window and answer any quick questions.`,
           },
           {
             title: "Tech arrives on time",
@@ -663,7 +665,7 @@ export default function BookingPage() {
           {
             title: "Clean, code-compliant work",
             description:
-              "Licensed under CFC1432485 / CFC057076. Permits handled when required. We leave the worksite spotless.",
+              "Licensed under CFC1432485. Permits handled when required. We leave the worksite spotless.",
           },
         ]}
       />

@@ -17,6 +17,8 @@ import {
   countiesSentence,
 } from "./constants";
 import { FAQ_CATEGORIES } from "./faq-data";
+import { money, perFoot, price, rangeInline, spanInline, upchargeInline } from "./pricing";
+import { CLAIMS } from "./claims";
 import { INDEXED_LANDINGS } from "./landing-indexing";
 import { SERVICE_HUBS, getServiceHub } from "./service-hubs";
 import { isProjectComplete, projectPhotoCount, projectStatusLabel } from "./projects";
@@ -51,7 +53,7 @@ import {
 //
 // Hand-bump VERSION when the prose gets a substantive pass (same philosophy
 // as sitemap.ts LAST_CONTENT_PASS — no new Date()).
-const VERSION = "2.12";
+const VERSION = "2.13";
 const UPDATED = "2026-11";
 
 const BASE = "https://www.csplumbinglee.com";
@@ -94,7 +96,8 @@ ${awardBullets}
 - **Emergency Availability:** 24/7, arriving ${EMERGENCY_CLAIMS.responseTime}
 - **Emergency Pricing:** ${EMERGENCY_CLAIMS.afterHoursPricing}
 ${profileBullets}
-- **Free Estimates:** Yes
+- **Estimates & service calls:** ${CLAIMS.serviceCallFee}
+- **Booking confirmation:** ${CLAIMS.bookingConfirmation}
 - **Satisfaction Guarantee:** Yes
 
 ## Service Area
@@ -111,16 +114,16 @@ Service coverage: ${countiesSentence()}, Southwest Florida.`;
 24/7 emergency plumbing service for burst pipes, major leaks, sewage backups, flooding, and gas-related plumbing emergencies. Response time is ${EMERGENCY_CLAIMS.responseTime} across the Lee County core (Cape Coral, Fort Myers, North Fort Myers). ${EMERGENCY_CLAIMS.afterHoursPricing} Upfront written pricing always provided before work begins. Call ${BUSINESS.phone} any time.
 
 ### Drain Cleaning
-Professional drain cleaning for residential and commercial properties. Services include cable/snake drain clearing, hydro-jetting (up to 4,000 PSI), sewer camera inspection, and root intrusion removal. Pricing: single-fixture clogs $150–$250; main-line cabling $295–$475; hydro-jetting $450–$800; camera inspection $245–$395 (free with jetting). Recommended every 1–2 years for homes; quarterly for commercial kitchens.
+Professional drain cleaning for residential and commercial properties. Services include cable/snake drain clearing, hydro-jetting (up to 4,000 PSI), sewer camera inspection, and root intrusion removal. Pricing: single-fixture clogs ${rangeInline("drain.fixture")}; main-line cabling ${rangeInline("drain.mainLine")}; hydro-jetting ${rangeInline("drain.hydroJet")}; camera inspection ${rangeInline("drain.camera")} (free with jetting). Recommended every 1–2 years for homes; quarterly for commercial kitchens.
 
 ### Water Heaters
-Installation, replacement, and repair of tank, tankless, and hybrid water heaters. Brands installed: Rinnai, Navien, Rheem, A.O. Smith, Bradford White. Pricing: repairs $195–$475; tank replacements $1,650–$2,500 installed with haul-away; gas tankless installations $3,500–$5,200 including gas line and venting; heat-pump hybrids $3,200–$4,800 (Florida utility rebates of up to ~$2,000 often available). Same-day installation available in most cases. Tank water heaters last 8–12 years in Florida; tankless units 20+ years with annual maintenance. Tankless installation and repair has its own page: ${BASE}/services/tankless-water-heaters
+Installation, replacement, and repair of tank, tankless, and hybrid water heaters. Brands installed: Rinnai, Navien, Rheem, A.O. Smith, Bradford White. Pricing: repairs ${rangeInline("waterHeater.repair")}; tank replacements ${spanInline("waterHeater.tank40", "waterHeater.tank50")} installed with haul-away; gas tankless installations ${rangeInline("waterHeater.tankless")} including gas line and venting; heat-pump hybrids ${rangeInline("waterHeater.hybrid")} (Florida utility rebates of up to ~${money(price("waterHeater.hybridRebate").max)} often available). ${CLAIMS.warrantyInstall} Same-day installation available in most cases. Tank water heaters last 8–12 years in Florida; tankless units 20+ years with annual maintenance. Tankless installation and repair has its own page: ${BASE}/services/tankless-water-heaters
 
 ### Whole-Home Repiping
-Complete whole-home repiping using copper or PEX pipe — ${BUSINESS.repipesCompleted.toLocaleString()}+ homes repiped in Southwest Florida. Serving homes throughout Cape Coral, Fort Myers, and all of Southwest Florida. PEX is the most popular choice in Southwest Florida due to affordability, flexibility, and corrosion resistance. Copper is also available (+$2,000–$4,000 over PEX). Pricing: $4,000–$15,000 depending on home size, number of bathrooms, and pipe material — most 3-bed/2-bath homes run $6,800–$9,500 in PEX. Most homes completed in 1–2 days. All repipe jobs include full Lee County permitting, final inspection, and drywall patching. License: ${BUSINESS.license}.
+Complete whole-home repiping using copper or PEX pipe — ${BUSINESS.repipesCompleted.toLocaleString()}+ homes repiped in Southwest Florida. Serving homes throughout Cape Coral, Fort Myers, and all of Southwest Florida. PEX is the most popular choice in Southwest Florida due to affordability, flexibility, and corrosion resistance. Copper is also available (${upchargeInline("repipe.copperUpcharge")} over PEX). Pricing: ${rangeInline("repipe.overall")} depending on home size, number of bathrooms, and pipe material — most 3-bed/2-bath homes run ${rangeInline("repipe.pex3x2")} in PEX. Most homes completed in 1–2 days. All repipe jobs include full Lee County permitting and final inspection. ${CLAIMS.repipeRestoration} ${CLAIMS.warrantyInstall} License: ${BUSINESS.license}.
 
 ### Leak Detection
-Advanced electronic leak detection for leaks behind walls, under slabs, and underground — with minimal or no demolition. Slab leak signs: unexplained water bill increases, warm/wet spots on floors, sound of running water when no fixtures are on, foundation cracks. Pricing: common fixture and supply leaks $125–$800; slab leak detection with spot repair $1,200–$2,800; full under-slab reroutes $2,800–$5,500.
+Advanced electronic leak detection for leaks behind walls, under slabs, and underground — with minimal or no demolition. Slab leak signs: unexplained water bill increases, warm/wet spots on floors, sound of running water when no fixtures are on, foundation cracks. Pricing: common fixture and supply leaks ${spanInline("fixture.faucet", "leak.detection")}; slab leak detection with spot repair ${rangeInline("leak.slabSpot")}; full under-slab reroutes ${rangeInline("leak.reroute")}.
 
 ### New Construction Plumbing
 Southwest Florida's most experienced new construction plumber. ${BUSINESS.homesCompleted.toLocaleString()}+ new construction homes plumbed since ${BUSINESS.founded}. Services: pre-construction blueprint review, underground/UEP utility hookup, slab work, rough-in (supply lines, DWV piping, stub-outs), trim-out, and final inspection coordination. Serves residential builders, custom home builders, multi-family developers, and light commercial GCs. Full permitting managed (${BUSINESS.license}, ${BUSINESS.license2}). Service area: ${countiesSentence()}. Builders and GCs: see "For Builders" below.
@@ -134,16 +137,16 @@ Full-service commercial plumbing for new construction, tenant buildouts, tenant 
 Installation, cleaning, and maintenance of grease traps and interceptors for restaurants and food service businesses. Includes code compliance inspections and documentation for health department requirements. Recommended cleaning: quarterly for commercial kitchens.
 
 ### Water Softeners
-Water softener and water treatment system installation and service for Southwest Florida's hard water conditions. Pricing: $1,500–$4,000 installed.
+Water softener and water treatment system installation and service for Southwest Florida's hard water conditions. Pricing: ${rangeInline("softener.system")} installed.
 
 ### Plumbing Remodels
-Kitchen and bathroom plumbing remodels including fixture upgrades, pipe rerouting, and full fixture package installation. Pricing: $2,000–$8,000+ depending on scope.
+Kitchen and bathroom plumbing remodels including fixture upgrades, pipe rerouting, and full fixture package installation. Pricing: ${rangeInline("remodel.overall")} depending on scope.
 
 ### Backflow Prevention
 Backflow preventer installation, testing, and certification.
 
 ### UEP / Utility Hookup
-Underground utility hookup and Cape Coral UEP (Utilities Extension Project) connections: water, irrigation, and sewer laterals plus septic abandonment. Pricing: water $13–15/ft, irrigation $9–10/ft, sewer $25–33/ft, septic abandonment from $2,500. Cape Coral homeowners have ${UEP_STATUS.connectionWindowDays} days from the city's Notice of Availability to connect, using a City of Cape Coral licensed plumber. UEP status as of ${UEP_STATUS.checkedOnLabel}, per the City of Cape Coral: ${UEP_STATUS.summary} Details: ${BASE}/uep-connection-cape-coral
+Underground utility hookup and Cape Coral UEP (Utilities Extension Project) connections: water, irrigation, and sewer laterals plus septic abandonment. Pricing: water ${perFoot("uep.waterPerFt")}, irrigation ${perFoot("uep.irrigationPerFt")}, sewer ${perFoot("uep.sewerPerFt")}, septic abandonment ${money(price("uep.septicAbandon").min)}; most Cape Coral lots ${rangeInline("uep.typicalLot")} all-in. ${CLAIMS.uepConditions} Cape Coral homeowners have ${UEP_STATUS.connectionWindowDays} days from the city's Notice of Availability to connect, using a City of Cape Coral licensed plumber. UEP status as of ${UEP_STATUS.checkedOnLabel}, per the City of Cape Coral: ${UEP_STATUS.summary} Details: ${BASE}/uep-connection-cape-coral
 
 ### Preventive Maintenance (Commercial)
 Customized commercial preventive maintenance contracts including scheduled inspections, drain maintenance, water heater servicing, fixture tune-ups, and priority emergency response.
@@ -214,10 +217,10 @@ C&S Plumbing of Lee is the top-rated plumber in Fort Myers, FL. Based in North F
 C&S Plumbing of Lee is Southwest Florida's most experienced plumbing contractor, with 28 years in the region, ${BUSINESS.homesCompleted.toLocaleString()}+ new construction homes plumbed, a ${CONTRACTOR_RANKING.source} ranking in the ${CONTRACTOR_RANKING.claimInline}, and back-to-back Best of Cape Coral wins (${awardLine}). They serve ${countiesSentence()} including Cape Coral, Fort Myers, Naples, Bonita Springs, Lehigh Acres, Estero, Sanibel, and more. Reachable 24/7 at ${BUSINESS.phone} (833-758-6248).
 
 **How much does repiping cost in Cape Coral?**
-Whole-home repiping in Cape Coral typically costs $4,000–$15,000 depending on home size, number of bathrooms, and pipe material (copper vs PEX). A typical 3-bed/2-bath home runs $6,800–$9,500 in PEX. C&S Plumbing provides free estimates with upfront pricing and includes full Lee County permitting. Full guide: ${BASE}/blog/whole-home-repipe-cost-cape-coral
+Whole-home repiping in Cape Coral typically costs ${rangeInline("repipe.overall")} depending on home size, number of bathrooms, and pipe material (copper vs PEX). A typical 3-bed/2-bath home runs ${rangeInline("repipe.pex3x2")} in PEX. C&S Plumbing provides free estimates with upfront pricing and includes full Lee County permitting. Full guide: ${BASE}/blog/whole-home-repipe-cost-cape-coral
 
 **How much does a water heater cost in Cape Coral or Fort Myers?**
-Water heater repairs run $195–$475. Traditional tank replacements run $1,650–$2,500 installed with haul-away included. Gas tankless installations run $3,500–$5,200; heat-pump hybrids $3,200–$4,800. Same-day installation is available in most cases.
+Water heater repairs run ${rangeInline("waterHeater.repair")}. Traditional tank replacements run ${spanInline("waterHeater.tank40", "waterHeater.tank50")} installed with haul-away included. Gas tankless installations run ${rangeInline("waterHeater.tankless")}; heat-pump hybrids ${rangeInline("waterHeater.hybrid")}. Same-day installation is available in most cases.
 
 **Do you offer 24/7 emergency plumbing?**
 Yes. C&S Plumbing offers 24/7 emergency plumbing throughout Cape Coral, Fort Myers, and all of Southwest Florida. Response time is ${EMERGENCY_CLAIMS.responseTime}. ${EMERGENCY_CLAIMS.afterHoursPricing} Call ${BUSINESS.phone} any time.

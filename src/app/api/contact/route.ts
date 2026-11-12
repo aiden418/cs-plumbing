@@ -1,6 +1,8 @@
 import { NextResponse, after } from "next/server";
 import { Resend } from "resend";
 import { serviceRequestSchema, SERVICE_REQUEST_OPTIONS } from "@/lib/service-request";
+import { BUSINESS } from "@/lib/constants";
+import { CLAIMS } from "@/lib/claims";
 import {
   escapeHtml,
   getClientIp,
@@ -91,6 +93,29 @@ export async function POST(request: Request) {
         subject: `New Lead`,
         text: `New contact from ${name} for ${serviceLabel} in ${zip}. Phone: ${phone}`,
       }, "contact SMS notification");
+    }
+
+    // Customer confirmation (best effort — never blocks the lead). The office
+    // copy above already went out; this is the only receipt the customer gets.
+    if (email) {
+      await sendEmailBestEffort(resend, {
+        from: "C&S Plumbing of Lee <contact@csplumbinglee.com>",
+        to: [email],
+        subject: "We received your request — C&S Plumbing of Lee",
+        html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <div style="background: #0A0A0F; padding: 20px; text-align: center;">
+            <h1 style="color: #0099FF; margin: 0;">Request Received</h1>
+          </div>
+          <div style="padding: 20px; background: #f9f9f9;">
+            <p>Hi ${safe.name},</p>
+            <p>Thanks for contacting C&S Plumbing of Lee about <strong>${safe.service}</strong>. ${CLAIMS.bookingConfirmation}</p>
+            <p>Your appointment is confirmed only once we have spoken with you. For urgent service, call <a href="tel:${BUSINESS.phoneRaw}" style="color: #0099FF;">${BUSINESS.phone}</a> any time.</p>
+            <p style="color: #999; font-size: 12px; margin-top: 20px;">${BUSINESS.fullName} · ${BUSINESS.address}, ${BUSINESS.city}, ${BUSINESS.state} ${BUSINESS.zip}</p>
+          </div>
+        </div>
+      `,
+      }, "contact customer confirmation");
     }
 
     // No PII in logs; the Resend id is enough to trace a lead in the Resend dashboard.

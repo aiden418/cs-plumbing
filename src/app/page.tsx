@@ -9,6 +9,11 @@ import HomeFaq, { HOME_FAQS } from "@/components/home/HomeFaq";
 import FaqJsonLd from "@/components/seo/FaqJsonLd";
 import RelatedPosts from "@/components/blog/RelatedPosts";
 import { latestPosts } from "@/lib/internal-links";
+import { season } from "@/lib/claims";
+
+// The snowbird teaser flips between arrival (Nov–Apr) and departure copy;
+// daily revalidation means the flip needs no deploy.
+export const revalidate = 86400;
 
 // Below-the-fold sections — server-rendered for SEO, JS deferred for performance
 const CoastalComebackTeaser = dynamic(
@@ -18,10 +23,6 @@ const WhyChooseUs = dynamic(() => import("@/components/home/WhyChooseUs"));
 const ServiceAreasSection = dynamic(
   () => import("@/components/home/ServiceAreasSection"),
 );
-const ServiceMapTeaser = dynamic(
-  () => import("@/components/home/ServiceMapTeaser"),
-);
-const Testimonials = dynamic(() => import("@/components/home/Testimonials"));
 const GoogleReviews = dynamic(() => import("@/components/home/GoogleReviews"));
 const BrandsCarousel = dynamic(
   () => import("@/components/home/BrandsCarousel"),
@@ -91,10 +92,8 @@ export default function Home() {
       <EmergencyBand />
       <WhyChooseUs />
       <BuilderShowcase />
-      <CoastalComebackTeaser />
-      <Testimonials />
+      <CoastalComebackTeaser season={season()} />
       <GoogleReviews />
-      <ServiceMapTeaser />
       <BrandsCarousel />
       {/* Server-rendered: /blog had no inbound link in the HTML before this. */}
       <RelatedPosts

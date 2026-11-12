@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { CLAIMS } from "@/lib/claims";
 import { motion } from "framer-motion";
 import {
   CheckCircle,
@@ -38,7 +39,7 @@ const INCLUDED_ITEMS = {
   repipe: [
     "All materials & labor",
     "Permit & inspections",
-    "Drywall patching & restoration",
+    CLAIMS.repipeRestoration,
     "Post-install cleanup",
     "Pressure testing & inspection",
   ],
@@ -99,7 +100,7 @@ export default function QuoteResult({
       {/* Header */}
       <div className="text-center mb-6 sm:mb-8">
         <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">
-          Your Estimate
+          Your preliminary estimate
         </h2>
         <p className="text-sm text-gray-500">
           Most homeowners in Lee County pay
@@ -164,8 +165,7 @@ export default function QuoteResult({
       {/* Disclaimer */}
       <div className="bg-blue-50 border border-blue-100 rounded-xl p-4 mb-6 sm:mb-8">
         <p className="text-xs sm:text-sm text-blue-700 leading-relaxed">
-          Every home is different. A licensed C&S plumber will confirm your exact price during a{" "}
-          <strong>free, no-obligation visit</strong>. This estimate is based on typical installations in Lee County.
+          {CLAIMS.estimateDisclaimer}
         </p>
       </div>
 

@@ -1,3 +1,8 @@
+import type { PriceString } from "./pricing";
+
+/** A price field: a formatter result from ./pricing, or an inclusion label. */
+export type PriceText = PriceString | "Included" | "Included on installs";
+
 export interface Service {
   id: string;
   title: string;
@@ -142,13 +147,14 @@ export interface ServiceLanding {
   keywords: string[];
   features: { title: string; description: string }[];
   faqs: FAQ[];
-  priceRange?: string;
+  /** Always a ./pricing formatter result — never a typed literal. */
+  priceRange?: PriceString;
   highlights: string[];
   image?: string;
   gallery?: { src: string; caption?: string }[];
   relatedServices?: string[];
   relatedAreas?: string[];
-  costBreakdown?: { label: string; range: string; note?: string }[];
+  costBreakdown?: { label: string; range: PriceText; note?: string }[];
   caseStudies?: { title: string; location: string; cost: string; summary: string }[];
   answerBlocks?: AnswerBlock[];
 }

@@ -1,4 +1,5 @@
 import { NextResponse, after } from "next/server";
+import { CLAIMS } from "@/lib/claims";
 import { Resend } from "resend";
 import { z } from "zod";
 import {
@@ -181,7 +182,7 @@ export async function POST(request: Request) {
 
             <div style="background: #EFF6FF; padding: 16px; border-radius: 8px; margin: 16px 0;">
               <p style="color: #1D4ED8; margin: 0; font-size: 14px;">
-                Every home is different. A licensed C&S plumber will confirm your exact price during a <strong>free, no-obligation visit</strong>. This estimate is based on typical installations in Lee County.
+                ${CLAIMS.estimateDisclaimer}
               </p>
             </div>
 

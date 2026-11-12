@@ -7,6 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "check:claims": "node scripts/check-content-claims.mjs --strict",
+    "prebuild": "npm run check:claims",
     "photos:ingest": "node scripts/ingest-project-photos.mjs",
     "photos:check": "node scripts/check-project-images.mjs && node scripts/strip-image-metadata.mjs --check",
     "gallery:ingest": "node scripts/ingest-gallery-photos.mjs",

@@ -1,4 +1,5 @@
 import { createOgImage, ogImageContentType, ogImageSize } from "@/lib/og";
+import { rangeInline } from "@/lib/pricing";
 
 export const runtime = "edge";
 export const size = ogImageSize;
@@ -10,6 +11,6 @@ export default function OgImage() {
     variant: "service",
     eyebrow: "Repipe Specialists",
     title: "Whole-Home Repiping",
-    subtitle: "Copper or PEX, $4,000–$15,000. Most homes done in 1–2 days. Full Lee County permitting.",
+    subtitle: `Copper or PEX, ${rangeInline("repipe.overall")}. Most homes done in 1–2 days. Full Lee County permitting.`,
   });
 }

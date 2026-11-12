@@ -1,4 +1,5 @@
 import { createOgImage, ogImageContentType, ogImageSize } from "@/lib/og";
+import { rangeInline } from "@/lib/pricing";
 
 export const runtime = "edge";
 export const size = ogImageSize;
@@ -10,6 +11,6 @@ export default function OgImage() {
     variant: "service",
     eyebrow: "Leak Detection",
     title: "Find Hidden Leaks Without Demolition",
-    subtitle: "Electronic detection for slab, wall & underground leaks. From $150 simple, $800+ slab.",
+    subtitle: `Electronic detection for slab, wall & underground leaks. ${rangeInline("leak.visible")} visible, ${rangeInline("leak.slabSpot")} slab.`,
   });
 }

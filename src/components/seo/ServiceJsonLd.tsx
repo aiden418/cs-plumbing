@@ -1,5 +1,6 @@
 import type { ServiceLanding } from "@/lib/types";
 import { BUSINESS, areaServedCities } from "@/lib/constants";
+import { PRICE_RANGE_RE } from "@/lib/pricing";
 import { TERMS_URL } from "@/lib/terms-meta";
 
 // Parses simple money ranges — "$4,200 – $6,500", "$195 – $4,500+" — into
@@ -8,7 +9,7 @@ import { TERMS_URL } from "@/lib/terms-meta";
 // strings, which stay prose-only.
 function parseMoneyRange(s: string | undefined): { min: number; max: number } | null {
   if (!s) return null;
-  const m = s.match(/^\$([\d,]+)\s*[–-]\s*\$?([\d,]+)\+?$/);
+  const m = s.match(PRICE_RANGE_RE);
   if (!m) return null;
   return { min: Number(m[1].replace(/,/g, "")), max: Number(m[2].replace(/,/g, "")) };
 }
