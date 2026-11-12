@@ -3,9 +3,9 @@ import { BUSINESS, areaServedCities } from "@/lib/constants";
 import { PRICE_RANGE_RE } from "@/lib/pricing";
 import { TERMS_URL } from "@/lib/terms-meta";
 
-// Parses simple money ranges — "$4,200 – $6,500", "$195 – $4,500+" — into
+// Parses simple money ranges — "$4,200 – $6,500", "$195 – $4,500+" — into // claim-ok: regex documentation
 // numbers for PriceSpecification. Returns null for non-price rows
-// ("Included"), upcharges ("+$500 – $1,200"), and per-foot/multi-line
+// ("Included"), upcharges ("+$500 – $1,200"), and per-foot/multi-line // claim-ok: regex documentation
 // strings, which stay prose-only.
 function parseMoneyRange(s: string | undefined): { min: number; max: number } | null {
   if (!s) return null;

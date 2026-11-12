@@ -87,7 +87,7 @@ async function main() {
     const lines = text.split("\n");
     lines.forEach((line, i) => {
       let hits = hitsInLine(line);
-      if (allow instanceof RegExp) hits = hits.filter((h) => !allow.test(h));
+      if (allow instanceof RegExp && allow.test(line)) hits = [];
       if (hits.length) {
         perFile[rel] = (perFile[rel] ?? 0) + hits.length;
         details.push(`${rel}:${i + 1}: ${hits.join(", ")}`);

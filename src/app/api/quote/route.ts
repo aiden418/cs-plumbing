@@ -100,7 +100,7 @@ export async function POST(request: Request) {
     const selectionsHtml = Object.entries(selections)
       .filter(([, v]) => v !== null && v !== "" && !(Array.isArray(v) && v.length === 0))
       .map(([k, v]) => {
-        const safeKey = escapeHtml(k.replace(/([A-Z])/g, " $1").replace(/^./, (s) => s.toUpperCase()));
+        const safeKey = escapeHtml(k.replace(/([A-Z])/g, " $1").replace(/^./, (s) => s.toUpperCase())); // claim-ok: regex replacement token
         const safeVal = escapeHtml(
           (Array.isArray(v) ? v.join(", ") : String(v)).slice(0, 200)
         );

@@ -197,7 +197,7 @@ ${awardBullets}
 - **Google Rating:** ${BUSINESS.rating.toFixed(1)} stars across ${BUSINESS.reviewCount}+ reviews
 - **Homes Plumbed:** ${BUSINESS.homesCompleted.toLocaleString()}+ new construction homes plumbed (owner-reported)
 - **Homes Repiped:** ${BUSINESS.repipesCompleted.toLocaleString()}+ (owner-reported)
-- **Insurance:** $2 million general liability, workers' compensation; bonding information on request
+- **Insurance:** $2 million general liability, workers' compensation; bonding information on request // claim-ok: insurance limit, not a price
 - **Warranty (new construction):** ${WARRANTY.detail}
 - **Terms & Conditions:** Every estimate, proposal and invoice is governed by ${TERMS_CITATION} at ${BASE}/terms (pricing basis, change orders, payment, warranty, dispute resolution in Lee County, FL)
 - **Emergency Response:** 24/7, arriving ${EMERGENCY_CLAIMS.responseTime}

@@ -1,3 +1,6 @@
+import { rangeInline } from "@/lib/pricing";
+import { CLAIMS } from "@/lib/claims";
+
 import type { FAQ } from "@/lib/types";
 
 // Co-located route FAQs (same pattern as builders/builder-faqs.ts and
@@ -17,7 +20,7 @@ export const RESIDENTIAL_FAQS: FAQ[] = [
   {
     question: "What does a residential service call cost?",
     answer:
-      "Every job gets an upfront written price before work begins. Common fixture repairs start around $125, drain clearing runs $150–$250 for a single fixture, and larger projects like water heaters or repipes get a free estimate with itemized pricing.",
+      `Every job gets an upfront written price before work begins. ${CLAIMS.serviceCallFee} Common fixture repairs run ${rangeInline("fixture.faucet")}, drain clearing ${rangeInline("drain.fixture")} for a single fixture, and larger projects like water heaters or repipes get a free estimate with itemized pricing.`,
   },
   {
     question: "Are your plumbers licensed and background-checked?",

@@ -195,7 +195,8 @@ export interface ServiceCityLanding {
   neighborhoods: string[];
   faqs: FAQ[];
   relatedPages: { label: string; href: string }[];
-  priceRange?: string;
+  /** Always a ./pricing formatter result — never a typed literal. */
+  priceRange?: PriceString;
   image?: string;
   /**
    * Slug of the parent service hub (see SERVICE_HUBS). Drives the hub page's

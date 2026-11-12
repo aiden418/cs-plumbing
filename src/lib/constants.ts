@@ -2054,7 +2054,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
       {
         question: "How much does a septic-to-sewer conversion cost in North Fort Myers?",
         answer:
-          "Most North Fort Myers conversions run $3,500–$8,000 depending on the distance from the house to the sewer connection point, the depth of the main and soil conditions, plus Lee County's connection fee. C&S handles the whole process — permits, the new lateral, inspections and abandoning the old septic tank.",
+          `Most North Fort Myers conversions run ${rangeInline("septicToSewer.nfm")} depending on the distance from the house to the sewer connection point, the depth of the main and soil conditions, plus Lee County's connection fee. C&S handles the whole process — permits, the new lateral, inspections and abandoning the old septic tank.`,
       },
       {
         question: "Can you work on manufactured homes in North Fort Myers?",
@@ -2252,7 +2252,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
       {
         question: "How much does a plumber cost in Lehigh Acres?",
         answer:
-          "Service call and diagnostic fees start at $89. Common repairs are priced upfront before work begins — faucet replacement $150–$350, toilet repair $125–$300, water heater repair $150–$500 — and larger projects like repiping ($4,000–$12,000) and water heater replacement ($1,200–$4,500) include a free in-home estimate. Flat-rate pricing, no hourly surprises.",
+          `${CLAIMS.serviceCallFee} Common repairs are priced upfront before work begins — faucet replacement ${rangeInline("fixture.faucet")}, toilet repair ${rangeInline("fixture.toilet")}, water heater repair ${rangeInline("waterHeater.repair")} — and larger projects like repiping (${rangeInline("repipe.overall")}) and water heater replacement (${spanInline("waterHeater.tank40", "waterHeater.tankless")}) include a free in-home estimate. Flat-rate pricing, no hourly surprises.`,
       },
       {
         question: "What areas of Lehigh Acres do you reach fastest?",

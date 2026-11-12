@@ -143,7 +143,7 @@ function Section({ section }: { section: NumberedSection }) {
 export default function TermsDocument() {
   const sections = numberedTerms();
   const effective = formatTermsDate(TERMS_EFFECTIVE_DATE);
-  const phoneDigits = BUSINESS.phoneRaw.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3");
+  const phoneDigits = BUSINESS.phoneRaw.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3"); // claim-ok: regex replacement tokens
 
   return (
     <article className="terms-doc mx-auto max-w-5xl">

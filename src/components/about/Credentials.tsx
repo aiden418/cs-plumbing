@@ -22,7 +22,7 @@ const credentials = [
   {
     icon: <ShieldCheck className="w-5 h-5" />,
     title: "Fully Insured & Bonded",
-    body: "$2M general liability and full workers' comp on every crew. Certificates of insurance available on request — required by virtually every GC and HOA we work with.",
+    body: "$2M general liability and full workers' comp on every crew. Certificates of insurance available on request — required by virtually every GC and HOA we work with.", // claim-ok: insurance limit, not a price
   },
   {
     icon: <Award className="w-5 h-5" />,

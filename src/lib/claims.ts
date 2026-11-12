@@ -27,13 +27,17 @@ export function licenseLine(variant: "marketing" | "formal"): string {
     : `Licensed & insured — ${LICENSE.company}; co-founder Samuel Pellechio also holds ${LICENSE.founder}`;
 }
 
+const CORE_MINUTES = "30–60 minutes";
+const CORE_CITIES = "Cape Coral, Fort Myers and North Fort Myers";
+
 export const EMERGENCY_CLAIMS = {
+  /** The minute window for the Lee County core, on its own ("… in 30–60 minutes"). */
+  coreMinutes: CORE_MINUTES,
+  coreCities: CORE_CITIES,
   /** Lower-case, mid-sentence: "Response time is typically …". */
-  responseTime:
-    "typically 30–60 minutes in Cape Coral, Fort Myers and North Fort Myers; same-day elsewhere",
+  responseTime: `typically ${CORE_MINUTES} in ${CORE_CITIES}; same-day elsewhere`,
   /** Sentence form. */
-  responseTimeSentence:
-    "Typically 30–60 minutes in Cape Coral, Fort Myers and North Fort Myers; same-day elsewhere.",
+  responseTimeSentence: `Typically ${CORE_MINUTES} in ${CORE_CITIES}; same-day elsewhere.`,
   afterHoursSurcharge: rangeInline("emergency.afterHoursSurcharge"),
   afterHoursPricing: `After-hours calls (nights, weekends, and holidays) carry a ${rangeInline("emergency.afterHoursSurcharge")} surcharge — always included in the written price you approve before any work begins.`,
 } as const;
