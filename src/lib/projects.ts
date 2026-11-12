@@ -1,5 +1,5 @@
 import { AREA_LANDINGS, COMPLETED_PROJECTS } from "./constants";
-import { SERVICE_CITY_LANDINGS } from "./service-city-landings";
+import { PUBLISHED_LANDINGS } from "./landing-indexing";
 import { SERVICE_HUBS, type ServiceHub } from "./service-hubs";
 import type { AreaLanding, CompletedProject, ServiceCityLanding } from "./types";
 
@@ -57,7 +57,7 @@ export function projectArea(project: CompletedProject): AreaLanding | undefined 
 export function projectCityPage(project: CompletedProject): ServiceCityLanding | undefined {
   const city = projectCity(project)?.toLowerCase();
   if (!city) return undefined;
-  const inCity = SERVICE_CITY_LANDINGS.filter((p) => p.city.toLowerCase() === city);
+  const inCity = PUBLISHED_LANDINGS.filter((p) => p.city.toLowerCase() === city);
   const hubs = projectHubSlugs(project);
   for (const hub of hubs) {
     const match = inCity.find((p) => p.serviceSlug === hub);

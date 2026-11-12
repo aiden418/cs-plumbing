@@ -16,7 +16,7 @@ import ServiceRequestForm from "@/components/services/ServiceRequestForm";
 import JobGallery from "@/components/services/JobGallery";
 import AnswerBlocks from "@/components/seo/AnswerBlocks";
 import { BUSINESS, SERVICE_LANDINGS, AREA_LANDINGS } from "@/lib/constants";
-import { SERVICE_CITY_LANDINGS } from "@/lib/service-city-landings";
+import { INDEXED_LANDINGS } from "@/lib/landing-indexing";
 import type { ServiceLanding } from "@/lib/types";
 
 export default function ServiceLandingTemplate({
@@ -256,7 +256,7 @@ export default function ServiceLandingTemplate({
 
       {/* Internal Cross-Linking */}
       {(() => {
-        const cityPages = SERVICE_CITY_LANDINGS.filter(
+        const cityPages = INDEXED_LANDINGS.filter(
           (p) => p.serviceSlug === landing.slug
         );
         const hasRelatedServices = landing.relatedServices && landing.relatedServices.length > 0;

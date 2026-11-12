@@ -34,8 +34,10 @@ const EmergencyBand = dynamic(() => import("@/components/home/EmergencyBand"));
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
-  // Identity is builders + homeowners; emergency lives on /emergency.
-  title: "New Construction & Service Plumber | Cape Coral & Fort Myers",
+  // Keyword first, brand last, 60 characters so results don't cut it off.
+  // The builder door lives in the description, the H1 and /builders; the
+  // old title plus the layout template ran 81 characters.
+  title: { absolute: "Plumber in Cape Coral & Fort Myers, FL | C&S Plumbing of Lee" },
   description:
     "New construction plumbing for builders and GCs; repairs, repipes and remodels for homeowners in Cape Coral, Fort Myers & SWFL. 9,500+ homes plumbed since 1998.",
   keywords: [

@@ -1,5 +1,5 @@
 import type { ServiceLanding } from "@/lib/types";
-import { BUSINESS } from "@/lib/constants";
+import { BUSINESS, areaServedCities } from "@/lib/constants";
 import { TERMS_URL } from "@/lib/terms-meta";
 
 // Parses simple money ranges — "$4,200 – $6,500", "$195 – $4,500+" — into
@@ -47,16 +47,7 @@ export default function ServiceJsonLd({ landing }: { landing: ServiceLanding }) 
         },
       },
     },
-    areaServed: [
-      { "@type": "City", name: "Cape Coral" },
-      { "@type": "City", name: "Fort Myers" },
-      { "@type": "City", name: "North Fort Myers" },
-      { "@type": "City", name: "Naples" },
-      { "@type": "City", name: "Bonita Springs" },
-      { "@type": "City", name: "Lehigh Acres" },
-      { "@type": "City", name: "Estero" },
-      { "@type": "City", name: "Sanibel Island" },
-    ],
+    areaServed: areaServedCities(),
     termsOfService: TERMS_URL,
     ...(range && {
       offers: {

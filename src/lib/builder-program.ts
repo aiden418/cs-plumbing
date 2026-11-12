@@ -434,7 +434,7 @@ export const NEW_CONSTRUCTION_CITIES: NewConstructionCity[] = [
     ],
     faqs: cityFaqs("Lehigh Acres", "Lee County"),
     areaHref: "/areas/lehigh-acres",
-    related: [{ label: "Plumber in Lehigh Acres", href: "/plumber-lehigh-acres" }],
+    related: [{ label: "Emergency Plumber in Lehigh Acres", href: "/emergency-plumber-lehigh-acres" }],
   },
   {
     slug: "estero",
@@ -458,7 +458,7 @@ export const NEW_CONSTRUCTION_CITIES: NewConstructionCity[] = [
     ],
     faqs: cityFaqs("Estero", "the Village of Estero"),
     areaHref: "/areas/estero",
-    related: [{ label: "Plumber in Estero", href: "/plumber-estero" }],
+    related: [{ label: "Water Heater Repair in Estero", href: "/water-heater-repair-estero" }],
   },
   {
     slug: "bonita-springs",

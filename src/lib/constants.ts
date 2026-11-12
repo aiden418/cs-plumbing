@@ -101,6 +101,23 @@ export const CONTRACTOR_RANKING = {
   quote: "Their BuildZoom score of 109 ranks in the top 5% of 191,428 Florida licensed contractors.",
 } as const;
 
+/**
+ * Every public profile that should resolve to this business. One list feeds
+ * the schema `sameAs`, llms.txt and the footer, so a new directory listing
+ * (BBB, Nextdoor, a chamber page) is added here once and shows up everywhere.
+ * Only list a profile once it shows the current North Fort Myers address —
+ * pointing search engines at a stale listing does more harm than no link
+ * (the citation tracker in docs/seo/ records which listings still need fixing).
+ */
+export const PROFILES = [
+  { id: "google", label: "Google Business Profile", url: BUSINESS.googleProfileUrl, kind: "map", footer: true },
+  { id: "facebook", label: "Facebook", url: BUSINESS.facebookUrl, kind: "social", footer: true },
+  { id: "instagram", label: "Instagram", url: BUSINESS.instagramUrl, kind: "social", footer: true },
+  { id: "yelp", label: "Yelp", url: "https://www.yelp.com/biz/c-and-s-plumbing-of-lee-north-fort-myers", kind: "review", footer: false },
+  { id: "birdeye", label: "Birdeye reviews", url: BUSINESS.birdeyeUrl, kind: "review", footer: false },
+  { id: "buildzoom", label: "BuildZoom contractor profile", url: CONTRACTOR_RANKING.sourceUrl, kind: "directory", footer: false },
+] as const;
+
 // Warranty wording confirmed by the owner (Sep 2026). Materials supplied by
 // C&S only — do not extend to labor, manufacturer coverage, or customer-
 // supplied fixtures without confirmation. Written project terms govern —
@@ -658,21 +675,50 @@ export const TIMELINE_EVENTS: TimelineEvent[] = [
 // SERVICE AREAS
 // ============================================
 
-export const SERVICE_AREAS = [
-  "Cape Coral",
-  "Fort Myers",
-  "North Fort Myers",
-  "Punta Gorda",
-  "Port Charlotte",
-  "Naples",
-  "Bonita Springs",
-  "Estero",
-  "Lehigh Acres",
-  "Sanibel Island",
-  "Captiva Island",
-  "Fort Myers Beach",
-  "Marco Island",
-];
+/**
+ * Cities served, grouped by county — the one list behind every `areaServed`
+ * (site-wide Plumber node, service schemas) and the llms.txt coverage
+ * sentences. Add a city here and every schema picks it up; the JSON-LD,
+ * ServiceJsonLd and /services/residential used to carry three different
+ * hand-written lists.
+ */
+export const SERVICE_AREAS_BY_COUNTY = {
+  Lee: [
+    "Cape Coral",
+    "Fort Myers",
+    "North Fort Myers",
+    "Lehigh Acres",
+    "Bonita Springs",
+    "Estero",
+    "Sanibel Island",
+    "Captiva Island",
+    "Fort Myers Beach",
+  ],
+  Charlotte: ["Punta Gorda", "Port Charlotte"],
+  Collier: ["Naples", "Marco Island"],
+} as const;
+
+export const SERVICE_AREAS: readonly string[] = Object.values(SERVICE_AREAS_BY_COUNTY).flat();
+
+/** "Lee, Charlotte and Collier Counties" — for prose that states coverage. */
+export function countiesSentence(): string {
+  const names = Object.keys(SERVICE_AREAS_BY_COUNTY);
+  return `${names.slice(0, -1).join(", ")} and ${names[names.length - 1]} Counties`;
+}
+
+/** schema.org City nodes for `areaServed`, each placed in its county. */
+export function areaServedCities() {
+  return Object.entries(SERVICE_AREAS_BY_COUNTY).flatMap(([county, cities]) =>
+    cities.map((name) => ({
+      "@type": "City" as const,
+      name,
+      containedInPlace: {
+        "@type": "AdministrativeArea" as const,
+        name: `${county} County, Florida`,
+      },
+    })),
+  );
+}
 
 // ============================================
 // COST ESTIMATOR DATA
@@ -1862,9 +1908,20 @@ export const AREA_LANDINGS: AreaLanding[] = [
         answer:
           "Yes — Florida Certified Plumbing Contractors (CFC1432485 / CFC057076), fully insured, and family owned and operated since 1998.",
       },
+      {
+        question: "How much does a septic-to-sewer conversion cost in North Fort Myers?",
+        answer:
+          "Most North Fort Myers conversions run $3,500–$8,000 depending on the distance from the house to the sewer connection point, the depth of the main and soil conditions, plus Lee County's connection fee. C&S handles the whole process — permits, the new lateral, inspections and abandoning the old septic tank.",
+      },
+      {
+        question: "Can you work on manufactured homes in North Fort Myers?",
+        answer:
+          "Yes. North Fort Myers has many manufactured-home communities, and our plumbers know the systems they use — flexible water lines, under-home access through belly boards and plastic drain fittings. We handle everything from leak repairs to complete replumbs.",
+      },
     ],
     localContext:
-      "North Fort Myers is our home. C&S Plumbing's office is located at 951 Pondella Rd, and many of our team members live right here in the community. That means the fastest response times in the area — often under 30 minutes for emergencies. We've plumbed hundreds of homes in North Fort Myers and understand the specific needs of properties in this area, from older homes near the river to newer construction east of I-75.",
+      "North Fort Myers is our home. C&S Plumbing's office is located at 951 Pondella Rd, and many of our team members live right here in the community. That means the fastest response times in the area — often under 30 minutes for emergencies. We've plumbed hundreds of homes in North Fort Myers and understand the specific needs of properties in this area, from older homes near the river to newer construction east of I-75.\n\nPlumbing here is different from Cape Coral or Fort Myers proper. Many homes rely on private wells rather than municipal supply, which means high iron, a sulfur smell and hard-water scaling — and the well pumps, pressure tanks and whole-home treatment systems that go with them. North Fort Myers is also in the middle of a long-running septic-to-sewer conversion. Connecting to Lee County Utilities sewer takes a licensed plumber to abandon the old tank, run the new lateral and pass the county inspection, and C&S has completed dozens of these conversions start to finish, permits included.\n\nThe housing stock runs from 1960s–70s block homes in Bayshore and Hancock Bridge, many still on galvanized supply lines and cast iron drains, to manufactured homes in communities like Del Tura and Lochmoor Waterway Estates, where flexible water lines and brittle plastic drain fittings are the usual failure points. No travel fees in North Fort Myers — we're already here.",
+    updatedAt: "2026-11-12",
   },
   {
     slug: "naples",
@@ -1872,7 +1929,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     state: "FL",
     metaTitle: "Plumber in Naples, FL",
     metaDescription:
-      "Professional plumber in Naples, FL. Luxury home plumbing, repiping, water heaters, emergency service. Family-owned, 9,500+ homes plumbedd. Call 833-PLUMB-IT.",
+      "Professional plumber in Naples, FL. Luxury home plumbing, repiping, water heaters, emergency service. Family-owned, 9,500+ homes plumbed. Call 833-PLUMB-IT.",
     keywords: [
       "plumber Naples",
       "plumber Naples FL",
@@ -2044,9 +2101,25 @@ export const AREA_LANDINGS: AreaLanding[] = [
         answer:
           "Yes — Florida Certified Plumbing Contractors (CFC1432485 / CFC057076), fully insured, pulling every required Lee County permit.",
       },
+      {
+        question: "Why do newer Lehigh Acres homes have plumbing problems?",
+        answer:
+          "Many homes from the 2004–2008 building boom used builder-grade materials to keep costs down. The CPVC supply lines, economy water heaters and basic fixtures from that era are failing as they approach 20 years, and CPVC in particular turns brittle in Florida heat and cracks at fittings. An inspection can flag at-risk joints before they let go.",
+      },
+      {
+        question: "How much does a plumber cost in Lehigh Acres?",
+        answer:
+          "Service call and diagnostic fees start at $89. Common repairs are priced upfront before work begins — faucet replacement $150–$350, toilet repair $125–$300, water heater repair $150–$500 — and larger projects like repiping ($4,000–$12,000) and water heater replacement ($1,200–$4,500) include a free in-home estimate. Flat-rate pricing, no hourly surprises.",
+      },
+      {
+        question: "What areas of Lehigh Acres do you reach fastest?",
+        answer:
+          "Our trucks come in on SR-82 and Joel Boulevard, so neighborhoods near Veterans Park, Mirror Lakes and the Lee/Joel intersection are usually a 20–30 minute response. The southern and eastern edges take a little longer but are still inside our standard service area with no travel charge.",
+      },
     ],
     localContext:
-      "Lehigh Acres is one of the fastest-growing communities in Lee County, with a mix of established homes and new construction that keeps our team busy. Many homes built in the 1980s and 1990s in Lehigh Acres still have original polybutylene pipes that are overdue for replacement. We also see a lot of well water systems in the eastern parts of Lehigh Acres, which require water treatment expertise alongside standard plumbing services. C&S Plumbing's North Fort Myers headquarters is just a short drive from Lehigh Acres, ensuring fast response times for emergencies.",
+      "Lehigh Acres is one of the fastest-growing communities in Lee County, with a mix of established homes and new construction that keeps our team busy. Many homes built in the 1980s and 1990s in Lehigh Acres still have original polybutylene pipes that are overdue for replacement. We also see a lot of well water systems in the eastern parts of Lehigh Acres, which require water treatment expertise alongside standard plumbing services. C&S Plumbing's North Fort Myers headquarters is just a short drive from Lehigh Acres, ensuring fast response times for emergencies.\n\nThe homes that went up in the 2004–2007 boom bring a different problem. Many used builder-grade fixtures, economy water heaters and CPVC supply lines that are now showing their age — we regularly find CPVC cracking at fittings in Lehigh homes from that era, where attic heat and certain cement compounds leave the plastic brittle. If your home was built between 2004 and 2008, an inspection can catch the vulnerable joints before they fail. In the older neighborhoods along Lee Boulevard and Homestead Road the concerns are the usual ones for aging Lee County systems: galvanized lines losing flow, water heaters worn out by hard water and drains invaded by mature roots.\n\nNew construction continues at a fast pace on Lehigh's remaining vacant lots, and C&S is an active new-construction plumber here, working with local builders through underground, rough-in and trim.",
+    updatedAt: "2026-11-12",
   },
   {
     slug: "estero",
@@ -2105,9 +2178,20 @@ export const AREA_LANDINGS: AreaLanding[] = [
         answer:
           "Yes — Florida Certified Plumbing Contractors (CFC1432485 / CFC057076), fully insured, family owned and operated since 1998.",
       },
+      {
+        question: "My Estero home is only 15 years old — can it already have pipe problems?",
+        answer:
+          "Yes. Many Estero homes built between 2000 and 2012 use CPVC supply lines, and we see more joint failures in that age range every year. Heat cycling (especially in attic runs), the reaction between CPVC and fitting cements and Florida's water chemistry crack joints and start small leaks. If you notice drips at connections, have the system inspected before a joint fails outright.",
+      },
+      {
+        question: "How hard is the water in Estero?",
+        answer:
+          "Estero's water comes from the same regional aquifer as the rest of Lee County and typically tests between 250 and 350 parts per million for hardness — well into the EPA's 'very hard' range. Without a softener that mineral load scales fixtures, cuts water heater efficiency and shortens appliance life, so we recommend a whole-home softener for every Estero residence.",
+      },
     ],
     localContext:
-      "Estero has transformed from a quiet community into one of Southwest Florida's most desirable addresses, with master-planned communities like Miromar Lakes, The Brooks, and Grandezza attracting homeowners who expect top-quality service. C&S Plumbing understands the HOA standards and architectural guidelines that come with working in these upscale neighborhoods. Whether you need a water heater replacement in a single-family home or repiping for a villa, we deliver the professionalism and attention to detail that Estero homeowners demand.",
+      "Estero has transformed from a quiet community into one of Southwest Florida's most desirable addresses, with master-planned communities like Miromar Lakes, The Brooks, and Grandezza attracting homeowners who expect top-quality service. C&S Plumbing understands the HOA standards and architectural guidelines that come with working in these upscale neighborhoods. Whether you need a water heater replacement in a single-family home or repiping for a villa, we deliver the professionalism and attention to detail that Estero homeowners demand.\n\nMost homes in Estero's newer communities were built between 2000 and 2020, which puts many of them on CPVC supply lines now entering the age range where joint failures become common. Heat cycling in un-insulated attic runs and the chemistry between CPVC and certain fitting cements cause cracking at joints, typically from the 15–20 year mark. Small drips at pipe connections in an early-2000s Estero home are usually the first sign of a system-wide CPVC problem that is cheaper to address proactively than after a joint lets go.\n\nEstero draws on the same regional aquifer as the rest of Lee County, so hard water is a fact of life; a whole-home softener protects pipes, the water heater and fixtures from scale. Near Estero Bay, salt air also shortens the life of outdoor fixtures and hose bibs, and we stock marine-grade replacements that hold up in coastal exposure.",
+    updatedAt: "2026-11-12",
   },
   {
     slug: "sanibel",
@@ -2165,9 +2249,25 @@ export const AREA_LANDINGS: AreaLanding[] = [
         answer:
           "Yes — Florida Certified Plumbing Contractors (CFC1432485 / CFC057076), fully insured, family owned and operated since 1998.",
       },
+      {
+        question: "How much does a plumber cost on Sanibel Island?",
+        answer:
+          "Every job starts with an upfront written quote before any work begins. Island work can run modestly higher than the equivalent mainland job because of travel time and the marine-grade materials Sanibel homes need, but there are no hidden trip charges — the quoted price is the price you pay.",
+      },
+      {
+        question: "Can you maintain my Sanibel home while I'm away for the season?",
+        answer:
+          "Yes. Our seasonal service includes a proper shutdown before you leave — main valve off, water heater set appropriately, fixtures checked — and a startup inspection when you return, where we repressurize slowly, test every fixture and the water heater, and look for leaks that developed over the summer. It is the single best way to protect an unoccupied island home from water damage.",
+      },
+      {
+        question: "Do you work on stilt and elevated homes on Sanibel?",
+        answer:
+          "Regularly. Elevated homes in Gulf Pines, The Dunes and along West Gulf Drive route supply and drain lines beneath the living space, exposed to salt air and storms. We repair, insulate and re-secure those runs, replace corroded sections with coastal-rated materials and can re-route vulnerable lines during larger renovations.",
+      },
     ],
     localContext:
-      "Sanibel Island's unique barrier island environment presents specific plumbing challenges that mainland homes don't face. Salt air accelerates pipe corrosion, hurricane damage can compromise entire plumbing systems, and the island's building codes require contractors who understand the local requirements. C&S Plumbing has been helping Sanibel and Captiva Island homeowners rebuild and maintain their plumbing systems for years, including extensive work following recent hurricane seasons. Our team is experienced with the logistics of island work, including coordinating with the causeway schedule and island-specific permitting requirements.",
+      "Sanibel Island's unique barrier island environment presents specific plumbing challenges that mainland homes don't face. Salt air accelerates pipe corrosion, hurricane damage can compromise entire plumbing systems, and the island's building codes require contractors who understand the local requirements. C&S Plumbing has been helping Sanibel and Captiva Island homeowners rebuild and maintain their plumbing systems for years, including extensive work following recent hurricane seasons. Our team is experienced with the logistics of island work, including coordinating with the causeway schedule and island-specific permitting requirements.\n\nWe treat the causeway as part of the job, not an excuse. Island service runs are scheduled so one trip covers everything your home needs, trucks arrive stocked so we are not driving back to the mainland for parts, and dispatch quotes arrival windows that account for causeway and Periwinkle Way traffic. Salt-laden air corrodes exposed supply lines, hose bibs and water heater connections far faster than inland, and stilt homes in Gulf Pines, The Dunes and along Sanibel-Captiva Road carry supply and drain lines beneath the living space where UV, salt and storm debris take a constant toll — so we recommend marine-grade fixtures, brass fittings and stainless hardware by default on island work.\n\nSanibel's seasonal owners add one more layer. A home that sits empty from May through November can hide a slow leak for months, and idle water heaters, valves and supply lines often fail the day the water comes back on. Our seasonal shutdown and startup service checks every fixture, tests the water heater and verifies the main shutoff, so a failed fitting costs a service call instead of a renovation.",
+    updatedAt: "2026-11-12",
   },
   {
     slug: "fort-myers-beach",
@@ -2680,7 +2780,7 @@ export const BLOG_POSTS: BlogPost[] = [
     category: "Water Quality",
     publishDate: "2026-03-17",
     readTime: "5 min read",
-    relatedLandings: ["water-softeners-cape-coral", "water-softeners-fort-myers", "plumber-lehigh-acres"],
+    relatedLandings: ["water-softeners-cape-coral", "water-softeners-fort-myers", "water-heater-repair-lehigh-acres"],
     content: `<h2>The Hard Water Problem in Southwest Florida</h2>
 <p>If you live in <a href="/areas/cape-coral">Cape Coral</a>, <a href="/areas/fort-myers">Fort Myers</a>, <a href="/areas/lehigh-acres">Lehigh Acres</a>, or anywhere in Lee County, your water is hard. Hard water contains high levels of dissolved calcium and magnesium, which cause white buildup on faucets, dry skin and hair, soap that doesn't lather well, and shortened appliance lifespans.</p>
 <p>The question isn't whether you need water treatment — it's which type.</p>

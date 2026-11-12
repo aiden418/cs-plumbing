@@ -426,6 +426,11 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
   // ============================================
   {
     slug: "north-fort-myers-plumber",
+    // Retired 2026-11-12: targeted the exact query of /areas/north-fort-myers,
+    // so the two pages competed with each other. The area hub now carries
+    // this page's local context and FAQs; the entry stays so the 301 is
+    // declared beside the content it replaced.
+    indexing: { redirectTo: "/areas/north-fort-myers" },
     metaTitle: "North Fort Myers Plumber | Local & Licensed",
     metaDescription:
       "Plumber in North Fort Myers, FL. Well water systems, septic-to-sewer, repiping & repairs. Family owned and operated since 1998. Call 833-PLUMB-IT.",
@@ -925,6 +930,8 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
   // ============================================
   {
     slug: "plumber-lehigh-acres",
+    // Retired 2026-11-12 — duplicate of the area hub; see north-fort-myers-plumber.
+    indexing: { redirectTo: "/areas/lehigh-acres" },
     metaTitle: "Plumber Lehigh Acres FL | Reliable & Affordable",
     metaDescription:
       "Licensed plumber in Lehigh Acres, FL. Repairs, repiping, water heaters & new construction. Family owned and operated since 1998. Call 833-PLUMB-IT.",
@@ -1787,7 +1794,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     ],
     relatedPages: [
       { label: "North Fort Myers Service Area", href: "/areas/north-fort-myers" },
-      { label: "Your North Fort Myers Plumber", href: "/north-fort-myers-plumber" },
+      { label: "Repiping in North Fort Myers", href: "/repiping-north-fort-myers" },
       { label: "UEP & Utility Connections", href: "/services/uep-utilities" },
     ],
   },
@@ -2463,6 +2470,8 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
   // ============================================
   {
     slug: "plumber-estero",
+    // Retired 2026-11-12 — duplicate of the area hub; see north-fort-myers-plumber.
+    indexing: { redirectTo: "/areas/estero" },
     metaTitle: "Plumber Estero FL | Licensed & Local",
     metaDescription:
       "Trusted plumber in Estero, FL. Repairs, repiping, water heaters & drain cleaning. Licensed CFC1432485, 5-star rated. Call 833-PLUMB-IT for a free estimate.",
@@ -2866,7 +2875,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       },
     ],
     relatedPages: [
-      { label: "Your North Fort Myers Plumber", href: "/north-fort-myers-plumber" },
+      { label: "Repiping in North Fort Myers", href: "/repiping-north-fort-myers" },
       { label: "Drain Cleaning in North Fort Myers", href: "/drain-cleaning-north-fort-myers" },
       { label: "North Fort Myers Service Area", href: "/areas/north-fort-myers" },
     ],
@@ -2972,7 +2981,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     ],
     relatedPages: [
       { label: "Drain Cleaning in Lehigh Acres", href: "/drain-cleaning-lehigh-acres" },
-      { label: "Your Lehigh Acres Plumber", href: "/plumber-lehigh-acres" },
+      { label: "Emergency Plumber in Lehigh Acres", href: "/emergency-plumber-lehigh-acres" },
       { label: "Lehigh Acres Service Area", href: "/areas/lehigh-acres" },
     ],
     priceRange: "$150–$500 repair · $1,200–$4,500 replacement",
@@ -3276,6 +3285,8 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
   // ============================================
   {
     slug: "plumber-sanibel",
+    // Retired 2026-11-12 — duplicate of the area hub; see north-fort-myers-plumber.
+    indexing: { redirectTo: "/areas/sanibel" },
     metaTitle: "Plumber Sanibel Island FL | Licensed & Local",
     metaDescription:
       "Trusted plumber on Sanibel Island, FL. Repairs, repiping, water heaters & seasonal home service. Licensed CFC1432485. Call 833-PLUMB-IT for a free estimate.",
@@ -3458,8 +3469,8 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       },
     ],
     relatedPages: [
-      { label: "Sanibel Island Plumber", href: "/plumber-sanibel" },
       { label: "Repiping on Sanibel Island", href: "/repiping-sanibel" },
+      { label: "Seasonal Home Protection Plan", href: "/coastal-comeback-plan" },
       { label: "Sanibel Service Area", href: "/areas/sanibel" },
     ],
   },
@@ -3556,7 +3567,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     ],
     relatedPages: [
       { label: "Emergency Plumber on Sanibel", href: "/emergency-plumber-sanibel" },
-      { label: "Sanibel Island Plumber", href: "/plumber-sanibel" },
+      { label: "Seasonal Home Protection Plan", href: "/coastal-comeback-plan" },
       { label: "Sanibel Service Area", href: "/areas/sanibel" },
     ],
     priceRange: "$4,500–$14,000",
@@ -3654,7 +3665,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     ],
     relatedPages: [
       { label: "Leak Repair in Estero", href: "/leak-repair-estero" },
-      { label: "Estero Plumber", href: "/plumber-estero" },
+      { label: "New Construction Plumbing in Estero", href: "/new-construction-plumbing/estero" },
       { label: "Estero Service Area", href: "/areas/estero" },
     ],
   },
@@ -3751,7 +3762,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     ],
     relatedPages: [
       { label: "Water Heater Repair in Estero", href: "/water-heater-repair-estero" },
-      { label: "Estero Plumber", href: "/plumber-estero" },
+      { label: "New Construction Plumbing in Estero", href: "/new-construction-plumbing/estero" },
       { label: "Estero Service Area", href: "/areas/estero" },
     ],
   },
@@ -4529,7 +4540,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     ],
     relatedPages: [
       { label: "Drain Cleaning in Lehigh Acres", href: "/drain-cleaning-lehigh-acres" },
-      { label: "Lehigh Acres Plumber", href: "/plumber-lehigh-acres" },
+      { label: "Water Heater Repair in Lehigh Acres", href: "/water-heater-repair-lehigh-acres" },
       { label: "Lehigh Acres Service Area", href: "/areas/lehigh-acres" },
     ],
   },

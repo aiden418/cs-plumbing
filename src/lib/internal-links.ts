@@ -10,6 +10,7 @@
  */
 import { AREA_LANDINGS, BLOG_POSTS } from "./constants";
 import { SERVICE_CITY_LANDINGS } from "./service-city-landings";
+import { INDEXED_LANDINGS, isIndexed, isRedirected } from "./landing-indexing";
 import { getServiceHub, type ServiceHub } from "./service-hubs";
 import {
   NEW_CONSTRUCTION_CITIES,
@@ -27,7 +28,7 @@ export function landingsForCity(
   city: string,
   exceptSlug?: string,
 ): ServiceCityLanding[] {
-  return SERVICE_CITY_LANDINGS.filter(
+  return INDEXED_LANDINGS.filter(
     (l) => l.city === city && l.slug !== exceptSlug,
   );
 }
@@ -38,7 +39,7 @@ export function landingsForHub(
   exceptSlug?: string,
 ): ServiceCityLanding[] {
   if (!hubSlug) return [];
-  return SERVICE_CITY_LANDINGS.filter(
+  return INDEXED_LANDINGS.filter(
     (l) => l.serviceSlug === hubSlug && l.slug !== exceptSlug,
   );
 }
@@ -89,8 +90,9 @@ export function postsForHub(hubSlug: string, limit = 4): BlogPost[] {
 
 /**
  * Service-city landings a post points readers to. Slugs are curated per
- * post (BlogPost.relatedLandings); an unknown slug throws so a typo fails
- * the static build instead of silently dropping the link.
+ * post (BlogPost.relatedLandings); an unknown, retired or noindexed slug
+ * throws so the static build fails instead of linking a page search
+ * engines should not see.
  */
 export function landingsForPost(post: BlogPost): ServiceCityLanding[] {
   return (post.relatedLandings ?? []).map((slug) => {
@@ -98,6 +100,11 @@ export function landingsForPost(post: BlogPost): ServiceCityLanding[] {
     if (!landing) {
       throw new Error(
         `BLOG_POSTS["${post.slug}"].relatedLandings: no service-city landing with slug "${slug}"`,
+      );
+    }
+    if (isRedirected(landing) || !isIndexed(landing)) {
+      throw new Error(
+        `BLOG_POSTS["${post.slug}"].relatedLandings: "${slug}" is retired or noindexed — link an indexed landing instead`,
       );
     }
     return landing;

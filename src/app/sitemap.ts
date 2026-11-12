@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { AREA_LANDINGS, BLOG_POSTS, COMPLETED_PROJECTS } from "@/lib/constants";
 import { GALLERY_ITEMS } from "@/lib/gallery-data";
 import { isProjectComplete, projectImages, projectLastModified } from "@/lib/projects";
-import { SERVICE_CITY_LANDINGS } from "@/lib/service-city-landings";
+import { INDEXED_LANDINGS } from "@/lib/landing-indexing";
 import { NEW_CONSTRUCTION_CITIES } from "@/lib/builder-program";
 import { TERMS_EFFECTIVE_DATE } from "@/lib/terms-meta";
 
@@ -17,6 +17,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // Internal-linking pass: cross-link blocks added to the home page, service
   // hubs, area hubs, service-city landings and blog posts.
   const LINKING_PASS = new Date("2026-10-21");
+  // Entries that carry their own `updatedAt` report it when it is newer than
+  // the site-wide pass, so one rewritten city page gets recrawled alone.
+  const laterOf = (iso: string | undefined, floor: Date): Date =>
+    iso && new Date(iso) > floor ? new Date(iso) : floor;
 
   const blogPages = BLOG_POSTS.map((post) => ({
     url: `${baseUrl}/blog/${post.slug}`,
@@ -155,7 +159,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // appear automatically (each still needs its /areas/<slug> route files).
     ...AREA_LANDINGS.map((area) => ({
       url: `${baseUrl}/areas/${area.slug}`,
-      lastModified: LINKING_PASS,
+      lastModified: laterOf(area.updatedAt, LINKING_PASS),
       changeFrequency: "monthly" as const,
       priority: 0.8,
     })),
@@ -253,10 +257,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     },
     ...blogPages,
-    // Service + City landing pages
-    ...SERVICE_CITY_LANDINGS.map((page) => ({
+    // Service + City landing pages (indexed ones only; retired slugs redirect)
+    ...INDEXED_LANDINGS.map((page) => ({
       url: `${baseUrl}/${page.slug}`,
-      lastModified: LINKING_PASS,
+      lastModified: laterOf(page.updatedAt, LINKING_PASS),
       changeFrequency: "monthly" as const,
       priority: 0.9,
     })),

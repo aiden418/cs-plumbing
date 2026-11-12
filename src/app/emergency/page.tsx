@@ -4,7 +4,7 @@ import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import FaqJsonLd from "@/components/seo/FaqJsonLd";
 import { EMERGENCY_FAQS } from "./emergency-faqs";
 import { BUSINESS } from "@/lib/constants";
-import { SERVICE_CITY_LANDINGS } from "@/lib/service-city-landings";
+import { PUBLISHED_LANDINGS } from "@/lib/landing-indexing";
 import RelatedPosts from "@/components/blog/RelatedPosts";
 import { postsForHub } from "@/lib/internal-links";
 
@@ -13,7 +13,8 @@ const DESCRIPTION =
 
 export const metadata: Metadata = {
   alternates: { canonical: "/emergency" },
-  title: "24/7 Emergency Plumber",
+  // Geo in the title: "emergency plumber" alone is a national query.
+  title: { absolute: "24/7 Emergency Plumber Cape Coral & Fort Myers | C&S Plumbing" },
   description: DESCRIPTION,
   keywords: [
     "emergency plumber Cape Coral",
@@ -34,7 +35,7 @@ export const metadata: Metadata = {
 
 // City pages with 24/7 coverage — drives both the schema areaServed and the
 // visible "Areas we cover" grid, so they can never drift apart.
-const EMERGENCY_CITIES = SERVICE_CITY_LANDINGS.filter(
+const EMERGENCY_CITIES = PUBLISHED_LANDINGS.filter(
   (p) => p.serviceSlug === "emergency"
 ).map((p) => ({ slug: p.slug, city: p.city, state: p.state }));
 

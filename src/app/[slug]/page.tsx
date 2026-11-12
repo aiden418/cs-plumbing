@@ -9,13 +9,17 @@ import FaqJsonLd from "@/components/seo/FaqJsonLd";
 import CTASection from "@/components/home/CTASection";
 import GoogleReviews from "@/components/home/GoogleReviews";
 import RelatedProjects from "@/components/projects/RelatedProjects";
-import { SERVICE_CITY_LANDINGS } from "@/lib/service-city-landings";
+import { PUBLISHED_LANDINGS, isIndexed } from "@/lib/landing-indexing";
 import { getServiceHub } from "@/lib/service-hubs";
 import { areaForCity } from "@/lib/internal-links";
 import { projectsForCity } from "@/lib/projects";
 
+// Only published landings get a page; a retired slug is a redirect in
+// next.config.ts, and anything else is a 404 rather than a runtime render.
+export const dynamicParams = false;
+
 export function generateStaticParams() {
-  return SERVICE_CITY_LANDINGS.map((l) => ({ slug: l.slug }));
+  return PUBLISHED_LANDINGS.map((l) => ({ slug: l.slug }));
 }
 
 export async function generateMetadata({
@@ -24,7 +28,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const landing = SERVICE_CITY_LANDINGS.find((l) => l.slug === slug);
+  const landing = PUBLISHED_LANDINGS.find((l) => l.slug === slug);
   if (!landing) return {};
 
   return {
@@ -34,6 +38,7 @@ export async function generateMetadata({
     description: landing.metaDescription,
     keywords: landing.keywords,
     alternates: { canonical: `/${landing.slug}` },
+    ...(isIndexed(landing) ? {} : { robots: { index: false, follow: true } }),
     openGraph: {
       title: landing.metaTitle,
       description: landing.metaDescription,
@@ -48,7 +53,7 @@ export default async function Page({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const landing = SERVICE_CITY_LANDINGS.find((l) => l.slug === slug);
+  const landing = PUBLISHED_LANDINGS.find((l) => l.slug === slug);
   if (!landing) notFound();
 
   const hub = getServiceHub(landing.serviceSlug);
