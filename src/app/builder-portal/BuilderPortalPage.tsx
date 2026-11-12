@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   User,
@@ -16,12 +16,21 @@ import {
 import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
 import PageTransition from "@/components/layout/PageTransition";
-import FileUpload from "@/components/builder-portal/FileUpload";
+import FileUpload, { type FileUploadStatus } from "@/components/builder-portal/FileUpload";
 import BuilderPortalIntro from "@/components/builder-portal/BuilderPortalIntro";
 import WhatHappensNext from "@/components/ui/WhatHappensNext";
 import { BUSINESS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { trackBuilderLead } from "@/lib/pixel";
+import {
+  formatBytes,
+  PLAN_SIZE_MB,
+  PLAN_TOTAL_MB,
+  PLAN_UPLOAD,
+  planTotalError,
+  type PlanFileRef,
+} from "@/lib/plan-upload";
+import { PlanUploadError, uploadPlanFiles } from "@/lib/upload-plans";
 
 const steps = [
   { label: "Contact", icon: <User className="w-4 h-4" /> },
@@ -65,8 +74,15 @@ interface FormData {
 export default function BuilderPortalPage() {
   const [step, setStep] = useState(0);
   const [submitted, setSubmitted] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
+  const [phase, setPhase] = useState<"idle" | "uploading" | "sending">("idle");
   const [files, setFiles] = useState<File[]>([]);
+  const [statuses, setStatuses] = useState<Map<File, FileUploadStatus>>(new Map());
+  const [error, setError] = useState<string | null>(null);
+  const [uploadsUnavailable, setUploadsUnavailable] = useState(false);
+  const abort = useRef<AbortController | null>(null);
+  useEffect(() => () => abort.current?.abort(), []);
+  const submitting = phase !== "idle";
+  const uploadedCount = files.filter((f) => statuses.get(f)?.done).length;
   const [form, setForm] = useState<FormData>({
     name: "",
     company: "",
@@ -100,37 +116,62 @@ export default function BuilderPortalPage() {
     }
   };
 
-  const handleSubmit = async () => {
-    setSubmitting(true);
+  // Plan files upload straight to Vercel Blob first (src/lib/upload-plans.ts);
+  // the submission itself is a small JSON body with the blob URLs.
+  const handleSubmit = async (planFiles: File[] = files) => {
+    if (submitting) return;
+    setError(null);
+    const sizeError = planTotalError(planFiles, BUSINESS.email);
+    if (sizeError) {
+      setError(sizeError);
+      return;
+    }
+    const controller = new AbortController();
+    abort.current = controller;
     try {
-      const body = new FormData();
-      // Text fields
-      Object.entries(form).forEach(([key, val]) => body.append(key, val));
-      // Files
-      files.forEach((file) => body.append("files", file));
-
+      let refs: PlanFileRef[] = [];
+      if (planFiles.length > 0) {
+        setPhase("uploading");
+        refs = await uploadPlanFiles(planFiles, {
+          officeEmail: BUSINESS.email,
+          signal: controller.signal,
+          onStatus: (file, status) => setStatuses((prev) => new Map(prev).set(file, status)),
+        });
+      }
+      setPhase("sending");
       const res = await fetch("/api/builder-portal", {
         method: "POST",
-        body,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...form, files: refs }),
+        signal: controller.signal,
       });
-
-      if (!res.ok) throw new Error("Failed");
-      const data: { eventId?: string } = await res.json().catch(() => ({}));
+      const data: { eventId?: string; error?: string; code?: string } = await res
+        .json()
+        .catch(() => ({}));
+      if (!res.ok) throw Object.assign(new Error(data.error ?? "Failed"), { code: data.code });
       trackBuilderLead(
         { units: form.units, community: form.community, source: "builder-portal" },
         { eventId: data.eventId, email: form.email }
       );
       setSubmitted(true);
-    } catch {
-      alert("Something went wrong. Please call us directly at 833-PLUMB-IT.");
+    } catch (err) {
+      if (controller.signal.aborted) return;
+      if (err instanceof PlanUploadError) {
+        setError(err.message);
+        if (err.code === "uploads-unavailable") setUploadsUnavailable(true);
+      } else {
+        // File problems are explained by the server in builder-facing words
+        // (code set); anything else gets the generic message.
+        const code = (err as { code?: string }).code;
+        setError(
+          code && err instanceof Error
+            ? err.message
+            : `Something went wrong. Please call us directly at ${BUSINESS.phone}, or email your plans to ${BUSINESS.email}.`
+        );
+      }
     } finally {
-      setSubmitting(false);
+      if (!controller.signal.aborted) setPhase("idle");
     }
-  };
-
-  const formatSize = (bytes: number) => {
-    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(0)} KB`;
-    return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
   };
 
   const inputClass =
@@ -411,7 +452,22 @@ export default function BuilderPortalPage() {
                       Upload blueprints, site plans, floor plans, or photos of existing
                       conditions. This helps us provide a more accurate quote.
                     </p>
-                    <FileUpload files={files} onChange={setFiles} />
+                    <FileUpload
+                      files={files}
+                      onChange={setFiles}
+                      maxFiles={PLAN_UPLOAD.maxFiles}
+                      maxSizeMb={PLAN_SIZE_MB}
+                      maxTotalMb={PLAN_TOTAL_MB}
+                      disabled={submitting}
+                      fileStatus={(file) => statuses.get(file)}
+                    />
+                    <p className="text-xs text-gray-500">
+                      Plan sets over {PLAN_SIZE_MB} MB per file? Email them to{" "}
+                      <a href={`mailto:${BUSINESS.email}`} className="text-primary underline underline-offset-2">
+                        {BUSINESS.email}
+                      </a>
+                      , or paste a shared-drive link in the project description.
+                    </p>
                   </div>
                 )}
 
@@ -520,15 +576,40 @@ export default function BuilderPortalPage() {
                       </div>
                       {files.length > 0 ? (
                         <ul className="space-y-1.5 text-sm">
-                          {files.map((f, i) => (
-                            <li key={i} className="flex items-center gap-2 text-gray-700">
-                              <FileText className="w-3.5 h-3.5 text-gray-400" />
-                              <span className="truncate">{f.name}</span>
-                              <span className="text-gray-400 text-xs">
-                                ({formatSize(f.size)})
-                              </span>
-                            </li>
-                          ))}
+                          {files.map((f, i) => {
+                            const status = statuses.get(f);
+                            return (
+                              <li key={i} className="text-gray-700">
+                                <div className="flex items-center gap-2">
+                                  <FileText className="w-3.5 h-3.5 text-gray-400" />
+                                  <span className="truncate">{f.name}</span>
+                                  <span className="text-gray-400 text-xs">
+                                    ({formatBytes(f.size)})
+                                  </span>
+                                  {status?.done && (
+                                    <span className="text-xs text-green-700">Uploaded</span>
+                                  )}
+                                </div>
+                                {status?.error ? (
+                                  <p className="mt-1 text-xs text-red-600">{status.error}</p>
+                                ) : typeof status?.progress === "number" && !status.done ? (
+                                  <div
+                                    className="mt-1 h-1 w-full rounded bg-gray-200"
+                                    role="progressbar"
+                                    aria-label={`Uploading ${f.name}`}
+                                    aria-valuemin={0}
+                                    aria-valuemax={100}
+                                    aria-valuenow={Math.round(status.progress)}
+                                  >
+                                    <div
+                                      className="h-1 rounded bg-primary transition-[width] duration-200"
+                                      style={{ width: `${Math.max(2, Math.min(100, status.progress))}%` }}
+                                    />
+                                  </div>
+                                ) : null}
+                              </li>
+                            );
+                          })}
                         </ul>
                       ) : (
                         <p className="text-sm text-gray-400 italic">
@@ -540,6 +621,24 @@ export default function BuilderPortalPage() {
                 )}
               </motion.div>
             </AnimatePresence>
+
+            {error && (
+              <div className="mt-6 rounded-xl border border-red-200 bg-red-50 px-4 py-3" role="alert">
+                <p className="text-sm text-red-700">{error}</p>
+                {uploadsUnavailable && files.length > 0 && !submitting && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setFiles([]);
+                      void handleSubmit([]);
+                    }}
+                    className="mt-3 rounded-lg border border-red-300 bg-white px-4 py-2 text-sm font-semibold text-red-700 transition-colors hover:bg-red-100"
+                  >
+                    Send request without plans
+                  </button>
+                )}
+              </div>
+            )}
 
             {/* Navigation */}
             <div className="flex items-center justify-between mt-8 sm:mt-10 pt-6 border-t border-gray-200">
@@ -576,14 +675,16 @@ export default function BuilderPortalPage() {
               ) : (
                 <button
                   type="button"
-                  onClick={handleSubmit}
+                  onClick={() => void handleSubmit()}
                   disabled={submitting}
                   className="flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-semibold bg-primary text-white hover:bg-primary/90 transition-colors disabled:opacity-50"
                 >
                   {submitting ? (
                     <>
                       <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                      Submitting...
+                      {phase === "uploading"
+                        ? `Uploading plans (${Math.min(uploadedCount + 1, files.length)} of ${files.length})…`
+                        : "Submitting..."}
                     </>
                   ) : (
                     <>

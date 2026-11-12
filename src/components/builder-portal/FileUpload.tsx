@@ -1,35 +1,42 @@
 "use client";
 
 import { useCallback, useRef, useState } from "react";
-import { Upload, X, FileText, ImageIcon } from "lucide-react";
+import { Upload, X, FileText, ImageIcon, Check } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { formatBytes, PLAN_SIZE_MB, PLAN_UPLOAD } from "@/lib/plan-upload";
 
-const ACCEPTED_TYPES = [
-  "application/pdf",
-  "image/jpeg",
-  "image/png",
-];
-const ACCEPTED_EXTENSIONS = ".pdf,.jpg,.jpeg,.png";
-const MAX_FILES = 10;
-const MAX_SIZE_MB = 10;
+const ACCEPTED_TYPES: readonly string[] = PLAN_UPLOAD.types;
+const ACCEPTED_EXTENSIONS = PLAN_UPLOAD.extensions.join(",");
+
+/** Per-file upload state a parent can show while it sends the files. */
+export type FileUploadStatus = { progress?: number; done?: boolean; error?: string };
 
 interface FileUploadProps {
   files: File[];
   onChange: (files: File[]) => void;
-  /** Lower cap for the homeowner forms; the builder portal keeps the default. */
+  /** Lower cap for the homeowner forms; the builder portal passes PLAN_UPLOAD.maxFiles. */
   maxFiles?: number;
-  /** Per-file cap in MB; the builder portal keeps the default. */
+  /** Per-file cap in MB; the builder portal passes its own. */
   maxSizeMb?: number;
+  /** Shown in the hint when the whole set is capped as well. */
+  maxTotalMb?: number;
   /** Tighter drop zone for use inside a short form. */
   compact?: boolean;
+  /** Blocks picking and removing files, e.g. while they upload. */
+  disabled?: boolean;
+  /** Upload progress or result per file, rendered under the file row. */
+  fileStatus?: (file: File) => FileUploadStatus | undefined;
 }
 
 export default function FileUpload({
   files,
   onChange,
-  maxFiles = MAX_FILES,
-  maxSizeMb = MAX_SIZE_MB,
+  maxFiles = PLAN_UPLOAD.maxFiles,
+  maxSizeMb = PLAN_SIZE_MB,
+  maxTotalMb,
   compact = false,
+  disabled = false,
+  fileStatus,
 }: FileUploadProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [dragOver, setDragOver] = useState(false);
@@ -37,6 +44,7 @@ export default function FileUpload({
 
   const addFiles = useCallback(
     (incoming: FileList | File[]) => {
+      if (disabled) return;
       setError(null);
       const newFiles = Array.from(incoming);
 
@@ -63,10 +71,11 @@ export default function FileUpload({
 
       onChange(combined);
     },
-    [files, onChange, maxFiles, maxSizeMb]
+    [files, onChange, maxFiles, maxSizeMb, disabled]
   );
 
   const removeFile = (index: number) => {
+    if (disabled) return;
     onChange(files.filter((_, i) => i !== index));
     setError(null);
   };
@@ -79,12 +88,6 @@ export default function FileUpload({
     },
     [addFiles]
   );
-
-  const formatSize = (bytes: number) => {
-    if (bytes < 1024) return `${bytes} B`;
-    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(0)} KB`;
-    return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
-  };
 
   const getIcon = (type: string) =>
     type === "application/pdf" ? (
@@ -99,17 +102,22 @@ export default function FileUpload({
       <div
         onDragOver={(e) => {
           e.preventDefault();
-          setDragOver(true);
+          if (!disabled) setDragOver(true);
         }}
         onDragLeave={() => setDragOver(false)}
         onDrop={handleDrop}
-        onClick={() => inputRef.current?.click()}
+        onClick={() => {
+          if (!disabled) inputRef.current?.click();
+        }}
+        aria-disabled={disabled || undefined}
         className={cn(
-          "relative border-2 border-dashed rounded-xl text-center cursor-pointer transition-all duration-200",
+          "relative border-2 border-dashed rounded-xl text-center transition-all duration-200",
           compact ? "p-4 sm:p-5" : "p-8 sm:p-12",
-          dragOver
-            ? "border-primary bg-primary/5 scale-[1.01]"
-            : "border-gray-300 hover:border-primary/50 hover:bg-gray-50"
+          disabled
+            ? "border-gray-200 bg-gray-50 cursor-not-allowed opacity-70"
+            : dragOver
+              ? "border-primary bg-primary/5 scale-[1.01] cursor-pointer"
+              : "border-gray-300 hover:border-primary/50 hover:bg-gray-50 cursor-pointer"
         )}
       >
         <input
@@ -117,6 +125,7 @@ export default function FileUpload({
           type="file"
           accept={ACCEPTED_EXTENSIONS}
           multiple
+          disabled={disabled}
           className="hidden"
           onChange={(e) => {
             if (e.target.files?.length) addFiles(e.target.files);
@@ -130,6 +139,7 @@ export default function FileUpload({
         </p>
         <p className="text-xs sm:text-sm text-gray-500 mt-1">
           PDF, JPG, PNG &middot; Up to {maxFiles} files &middot; {maxSizeMb}MB max each
+          {maxTotalMb ? <> &middot; {maxTotalMb}MB total</> : null}
         </p>
       </div>
 
@@ -146,30 +156,57 @@ export default function FileUpload({
           <p className="text-sm font-medium text-gray-700">
             {files.length} file{files.length !== 1 ? "s" : ""} selected
           </p>
-          {files.map((file, i) => (
-            <div
-              key={`${file.name}-${i}`}
-              className="flex items-center gap-3 bg-white border border-gray-200 rounded-lg px-4 py-3"
-            >
-              {getIcon(file.type)}
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-gray-900 truncate">
-                  {file.name}
-                </p>
-                <p className="text-xs text-gray-500">{formatSize(file.size)}</p>
-              </div>
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  removeFile(i);
-                }}
-                className="p-1 text-gray-400 hover:text-red-500 transition-colors"
+          {files.map((file, i) => {
+            const status = fileStatus?.(file);
+            return (
+              <div
+                key={`${file.name}-${i}`}
+                className="flex items-center gap-3 bg-white border border-gray-200 rounded-lg px-4 py-3"
               >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-          ))}
+                {getIcon(file.type)}
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-gray-900 truncate">
+                    {file.name}
+                  </p>
+                  <p className="text-xs text-gray-500">{formatBytes(file.size)}</p>
+                  {status?.error ? (
+                    <p className="mt-1 text-xs text-red-600">{status.error}</p>
+                  ) : status?.done ? (
+                    <p className="mt-1 flex items-center gap-1 text-xs text-green-700">
+                      <Check className="w-3 h-3" aria-hidden="true" /> Uploaded
+                    </p>
+                  ) : typeof status?.progress === "number" ? (
+                    <div
+                      className="mt-1.5 h-1 w-full rounded bg-gray-200"
+                      role="progressbar"
+                      aria-label={`Uploading ${file.name}`}
+                      aria-valuemin={0}
+                      aria-valuemax={100}
+                      aria-valuenow={Math.round(status.progress)}
+                    >
+                      <div
+                        className="h-1 rounded bg-primary transition-[width] duration-200"
+                        style={{ width: `${Math.max(2, Math.min(100, status.progress))}%` }}
+                      />
+                    </div>
+                  ) : null}
+                </div>
+                {!disabled && (
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      removeFile(i);
+                    }}
+                    aria-label={`Remove ${file.name}`}
+                    className="p-1 text-gray-400 hover:text-red-500 transition-colors"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                )}
+              </div>
+            );
+          })}
         </div>
       )}
     </div>

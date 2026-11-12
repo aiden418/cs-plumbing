@@ -60,3 +60,6 @@ photo-inbox/_generated/
 
 # local form-delivery harness output (npm run start:capture)
 .resend-capture.jsonl
+
+# builder-portal plan fixtures served by scripts/resend-capture.cjs
+.blob-fixtures/

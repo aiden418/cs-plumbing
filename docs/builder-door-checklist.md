@@ -28,6 +28,11 @@ a placeholder in its place.
 | BuildZoom profile housekeeping | external | Profile still shows the former Cape Coral address (1011 SE 12th Ct) and only CFC057076; claim/update it so the linked source matches the site |
 | Production `ADMIN_EMAIL` | Vercel env | Intended destination is office@csplumbinglee.com (code default). Not verified: `vercel login` then `vercel env ls production` |
 | Production bid-form test | /builders#bid after deploy; /builder-portal today | Owner submits a labeled test; confirm admin email, SMS gateway copy, and submitter confirmation arrive |
+| Blob store for plan sets | Vercel → Storage → Create → Blob (public access), connect to `cs-plumbing` for all environments, redeploy | Sets `BLOB_READ_WRITE_TOKEN`. Until then the builder forms say uploads are unavailable and submit without files (`docs/forms-and-photos.md`) |
+| Production plan-set test | /builders#bid and /builder-portal | Owner submits a labeled test with a plan set over 5 MB; confirm the office email arrives with the attachment (set under 15 MB) and the links, and the confirmation names the files |
+| Office mailbox inbound limit | `PLAN_UPLOAD.attachBytesTotal` in `src/lib/plan-upload.ts` | 15 MB raw today. Raise to 25 MB if the office mailbox is Google Workspace; Microsoft 365 defaults to 35 MB inbound, which 25 MB raw exceeds once base64-encoded |
+| Public plan links | — | Plan sets sit at unguessable public URLs for 30 days, then Blob deletes them. Confirm that is acceptable, or move to a private store with signed links |
+| "PDF or DWG" wording | `BuilderPortalIntro.tsx` | The forms accept PDF, JPG and PNG only; accept DWG or change the copy |
 | Hangar 97 completion date | `COMPLETED_PROJECTS[hangar-97].completedOn` | Marked Completed per owner; date unset. Trim/final phases not photographed — confirm performed before listing |
 | Case-study facts | `COMPLETED_PROJECTS[].caseStudy` | Fixture counts, schedule vs. plan, inspection results for Hansen 1210 trim-out and Hangar 97 — omitted until supplied |
 | Permission to name builders in case studies | `caseStudy.builder.permission` | Hansen Homes and Stellar Development set to `false` → hidden in the case-study block. The existing project titles/client fields already name them (pre-existing content) — decide whether that stays |
