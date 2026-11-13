@@ -1,3 +1,6 @@
+import { rangeInline } from "@/lib/pricing";
+import { CLAIMS } from "@/lib/claims";
+
 import type { FAQ } from "@/lib/types";
 
 // Co-located route FAQs (same pattern as builders/builder-faqs.ts and
@@ -17,12 +20,12 @@ export const RESIDENTIAL_FAQS: FAQ[] = [
   {
     question: "What does a residential service call cost?",
     answer:
-      "Every job gets an upfront written price before work begins. Common fixture repairs start around $125, drain clearing runs $150–$250 for a single fixture, and larger projects like water heaters or repipes get a free estimate with itemized pricing.",
+      `Every job gets an upfront written price before work begins. ${CLAIMS.serviceCallFee} Common fixture repairs run ${rangeInline("fixture.faucet")}, drain clearing ${rangeInline("drain.fixture")} for a single fixture, and larger projects like water heaters or repipes get a free estimate with itemized pricing.`,
   },
   {
     question: "Are your plumbers licensed and background-checked?",
     answer:
-      "Yes. C&S Plumbing of Lee is a Florida Certified Plumbing Contractor (CFC1432485, CFC057076), fully insured, and every technician who enters your home is background-checked. All permit-required work is permitted and inspected.",
+      "Yes. C&S Plumbing of Lee is a Florida Certified Plumbing Contractor (CFC1432485), fully insured, and every technician who enters your home is background-checked. All permit-required work is permitted and inspected.",
   },
   {
     question: "Which areas do you serve for residential plumbing?",

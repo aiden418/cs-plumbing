@@ -1,6 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { CLAIMS } from "@/lib/claims";
+import { perYear } from "@/lib/pricing";
+import FileUpload from "@/components/builder-portal/FileUpload";
+import { PHOTO_UPLOAD, photoTotalError } from "@/lib/photo-upload";
+import { compressAll } from "@/lib/compress-image";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Wrench,
@@ -39,18 +44,18 @@ const serviceCategories = [
 ];
 
 const COASTAL_TIER_LABELS: Record<string, string> = {
-  comfort: "Coastal Comfort ($349/yr)",
-  shield: "Coastal Shield ($549/yr)",
+  comfort: `Coastal Comfort (${perYear("plan.comfort")})`,
+  shield: `Coastal Shield (${perYear("plan.shield")})`,
   smart: "Coastal Smart (custom quote)",
   "coastal-comeback": "Coastal Comeback Plan",
 };
 
 const budgetRanges = [
-  "Under $500",
-  "$500 – $1,000",
-  "$1,000 – $5,000",
-  "$5,000 – $10,000",
-  "$10,000+",
+  "Under $500", // claim-ok: budget option, not a price
+  "$500 – $1,000", // claim-ok: budget option, not a price
+  "$1,000 – $5,000", // claim-ok: budget option, not a price
+  "$5,000 – $10,000", // claim-ok: budget option, not a price
+  "$10,000+", // claim-ok: budget option, not a price
   "Not sure",
 ];
 
@@ -142,6 +147,9 @@ export default function BookingPage() {
   const steps = isEstimate ? estimateSteps : bookingSteps;
   const totalSteps = steps.length;
 
+  // Optional photos; kept outside `form` because that object is JSON-serialised.
+  const [photos, setPhotos] = useState<File[]>([]);
+
   const update = (field: keyof FormData, value: string) =>
     setForm((prev) => ({ ...prev, [field]: value }));
 
@@ -183,32 +191,54 @@ export default function BookingPage() {
   };
 
   const handleSubmit = async () => {
+    const sizeError = photoTotalError(photos);
+    if (sizeError) {
+      setSubmitError(sizeError);
+      return;
+    }
     setSubmitting(true);
     try {
-      const res = await fetch("/api/booking", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, sourcePath: window.location.pathname }),
-      });
+      const payload = { ...form, sourcePath: window.location.pathname };
+      // Photos ride along as multipart; without them the payload stays JSON.
+      const res = photos.length > 0
+        ? await fetch("/api/booking", {
+            method: "POST",
+            body: (() => {
+              const body = new FormData();
+              for (const [key, value] of Object.entries(payload)) body.append(key, String(value ?? ""));
+              photos.forEach((file) => body.append(PHOTO_UPLOAD.field, file));
+              return body;
+            })(),
+          })
+        : await fetch("/api/booking", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          });
       const data: {
         success?: boolean;
         confirmationId?: string;
         eventId?: string;
         error?: string;
+        code?: string;
       } = await res
         .json()
         .catch(() => ({}));
       if (!res.ok || !data.success) {
-        throw new Error(data.error ?? "Submission failed");
+        throw Object.assign(new Error(data.error ?? "Submission failed"), { code: data.code });
       }
       if (data.confirmationId) setConfirmationId(data.confirmationId);
       const track = form.requestType === "estimate" ? trackEstimateRequest : trackBooking;
       void track({ email: form.email, eventId: data.eventId });
       // Only show the confirmation screen once the server has accepted the request.
       setStep(totalSteps);
-    } catch {
+    } catch (err) {
+      // Attachment problems are explained by the server in customer-facing words.
+      const attachmentIssue = (err as { code?: string }).code === "attachments" && err instanceof Error;
       setSubmitError(
-        `Something went wrong and your request was not submitted. Please try again, or call us at ${BUSINESS.phone}.`
+        attachmentIssue
+          ? err.message
+          : `Something went wrong and your request was not submitted. Please try again, or call us at ${BUSINESS.phone}.`
       );
     } finally {
       setSubmitting(false);
@@ -255,7 +285,7 @@ export default function BookingPage() {
         description={
           isEstimate
             ? "Tell us about your project and we\u2019ll get back to you with a quote."
-            : "Book online in under 2 minutes. We\u2019ll confirm your appointment within the hour."
+            : `Book online in under 2 minutes. ${CLAIMS.bookingConfirmation}`
         }
       >
         {/* Sticky CTA bar is hidden on /booking, so keep a call path above the fold */}
@@ -395,6 +425,21 @@ export default function BookingPage() {
                     rows={4}
                     className="w-full bg-white border border-gray-200 rounded-xl px-3 sm:px-4 py-2.5 sm:py-3 text-gray-900 text-sm outline-none focus:border-primary transition-colors resize-none"
                   />
+                  <div className="mt-4">
+                    <p className="text-sm font-medium text-gray-700 mb-1">
+                      Photos {isEstimate ? "of the space or plans" : "of the problem"} (optional, up to {PHOTO_UPLOAD.maxFiles})
+                    </p>
+                    <FileUpload
+                      files={photos}
+                      onChange={(next) => {
+                        // Downscale phone photos as they are picked so the upload stays small.
+                        void compressAll(next).then(setPhotos);
+                      }}
+                      maxFiles={PHOTO_UPLOAD.maxFiles}
+                      maxSizeMb={PHOTO_UPLOAD.maxBytesEach / 1024 / 1024}
+                      compact
+                    />
+                  </div>
 
                   {isEstimate ? (
                     /* Budget Range for Estimate */
@@ -577,8 +622,8 @@ export default function BookingPage() {
                   )}
                   <p className="text-sm sm:text-base text-gray-500 mb-6 sm:mb-8 max-w-md mx-auto">
                     {isEstimate
-                      ? "We\u2019ll review your project details and get back to you with a quote within 24 hours. For urgent needs, call us directly."
-                      : "We\u2019ll call to confirm your appointment within the hour. A copy was sent to "}
+                      ? `We\u2019ll review your project details and get back to you with a quote. ${CLAIMS.bookingConfirmation} For urgent needs, call us directly.`
+                      : `We\u2019ll call to confirm your appointment. ${CLAIMS.bookingConfirmation} A copy was sent to `}
                     {!isEstimate && <span className="font-semibold text-gray-900">{form.email}</span>}
                     {!isEstimate && "."}
                   </p>
@@ -653,7 +698,7 @@ export default function BookingPage() {
           {
             title: "We call to confirm",
             description:
-              "Expect a call within 1 business day. We confirm the appointment window and answer any quick questions.",
+              `${CLAIMS.bookingConfirmation} We confirm the appointment window and answer any quick questions.`,
           },
           {
             title: "Tech arrives on time",
@@ -663,7 +708,7 @@ export default function BookingPage() {
           {
             title: "Clean, code-compliant work",
             description:
-              "Licensed under CFC1432485 / CFC057076. Permits handled when required. We leave the worksite spotless.",
+              "Licensed under CFC1432485. Permits handled when required. We leave the worksite spotless.",
           },
         ]}
       />

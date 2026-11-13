@@ -1,4 +1,10 @@
 import type { Service, TeamMember, Testimonial, TimelineEvent, NavLink, Stat, ServiceLanding, AreaLanding, BlogPost, CompletedProject, Partner, Award } from "./types";
+import { composed, money, perFoot, price, range, rangeInline, span, spanInline, upcharge, upchargeInline } from "./pricing";
+import { CLAIMS, EMERGENCY_CLAIMS, LICENSE, licenseLine } from "./claims";
+
+// Prices live in ./pricing, promises in ./claims; both are re-exported so
+// existing consumers keep importing them from here.
+export { EMERGENCY_CLAIMS, LICENSE, CLAIMS };
 
 // ============================================
 // BUSINESS INFO
@@ -45,10 +51,10 @@ export const BUSINESS = {
   /** The company's current Florida Certified Plumbing Contractor license,
    *  in place since the 2023 reorganization as part of Draft Construction
    *  (owner-stated 2026-11-03). Goes on every contract, proposal and invoice. */
-  license: "CFC1432485",
+  license: LICENSE.company,
   /** Samuel Pellechio's original license, still active; listed alongside the
    *  company license on formal documents. */
-  license2: "CFC057076",
+  license2: LICENSE.founder,
   // DBPR "Search by License Number" form (search=LicNbr). Direct per-license
   // detail links aren't possible — the DBPR site is session-coupled.
   licenseLookupUrl:
@@ -101,6 +107,23 @@ export const CONTRACTOR_RANKING = {
   quote: "Their BuildZoom score of 109 ranks in the top 5% of 191,428 Florida licensed contractors.",
 } as const;
 
+/**
+ * Every public profile that should resolve to this business. One list feeds
+ * the schema `sameAs`, llms.txt and the footer, so a new directory listing
+ * (BBB, Nextdoor, a chamber page) is added here once and shows up everywhere.
+ * Only list a profile once it shows the current North Fort Myers address —
+ * pointing search engines at a stale listing does more harm than no link
+ * (the citation tracker in docs/seo/ records which listings still need fixing).
+ */
+export const PROFILES = [
+  { id: "google", label: "Google Business Profile", url: BUSINESS.googleProfileUrl, kind: "map", footer: true },
+  { id: "facebook", label: "Facebook", url: BUSINESS.facebookUrl, kind: "social", footer: true },
+  { id: "instagram", label: "Instagram", url: BUSINESS.instagramUrl, kind: "social", footer: true },
+  { id: "yelp", label: "Yelp", url: "https://www.yelp.com/biz/c-and-s-plumbing-of-lee-north-fort-myers", kind: "review", footer: false },
+  { id: "birdeye", label: "Birdeye reviews", url: BUSINESS.birdeyeUrl, kind: "review", footer: false },
+  { id: "buildzoom", label: "BuildZoom contractor profile", url: CONTRACTOR_RANKING.sourceUrl, kind: "directory", footer: false },
+] as const;
+
 // Warranty wording confirmed by the owner (Sep 2026). Materials supplied by
 // C&S only — do not extend to labor, manufacturer coverage, or customer-
 // supplied fixtures without confirmation. Written project terms govern —
@@ -108,9 +131,8 @@ export const CONTRACTOR_RANKING = {
 // owner sign-off (Nov 2026). Align this constant and the service pages once
 // that is confirmed.
 export const WARRANTY = {
-  summary: "One-year warranty on materials supplied by C&S Plumbing",
-  detail:
-    "One-year warranty on materials supplied by C&S Plumbing, as set out in the written project terms for each job.",
+  summary: CLAIMS.warrantyInstall,
+  detail: `${CLAIMS.warrantyInstall} Set out in the written project terms for each job.`,
 } as const;
 
 // C&S New Construction Customer Benefits — owner-confirmed wording (Sep
@@ -139,17 +161,6 @@ export const NEW_CONSTRUCTION_BENEFITS = {
   /** One-paragraph version for llms.txt and print. */
   summary:
     "Homes and commercial properties with new-construction plumbing completed by C&S qualify for a lifetime discount on future plumbing service. New homeowners also receive one complimentary water heater flush and whole-home plumbing inspection during their home’s first year; the homeowner calls 833-PLUMB-IT ext. 0 within 12 months of home completion to request and schedule it.",
-} as const;
-
-// Single source of truth for emergency-service claims. Every surface that
-// states a response time or after-hours price (emergency page, FAQs,
-// llms.txt, landing pages) must read these — AI engines cross-check pages
-// and inconsistent claims cost citations.
-export const EMERGENCY_CLAIMS = {
-  responseTime: "typically 30–60 minutes",
-  afterHoursSurcharge: "$95–$150",
-  afterHoursPricing:
-    "After-hours calls (nights, weekends, and holidays) carry a $95–$150 surcharge — always included in the written price you approve before any work begins.",
 } as const;
 
 // City of Cape Coral Utilities Extension Project status, as the city's own
@@ -241,6 +252,7 @@ export const NAV_LINKS: NavLink[] = [
       { label: "New Construction", href: "/services/new-construction" },
       { label: "Repiping", href: "/services/repiping" },
       { label: "Water Heaters", href: "/services/water-heaters" },
+      { label: "Tankless Water Heaters", href: "/services/tankless-water-heaters" },
       { label: "Drain Cleaning", href: "/services/drain-cleaning" },
       { label: "Leak Repair", href: "/services/leak-repair" },
       { label: "Water Softeners", href: "/services/water-softeners" },
@@ -317,7 +329,7 @@ export const TRUST_PROOF_POINTS = [
   `${BUSINESS.rating.toFixed(1)} stars across ${BUSINESS.reviewCount} Google reviews`,
   AWARD_TRUST_LINE,
   "24/7 emergency service",
-  "Licensed & insured (CFC057076 / CFC1432485)",
+  licenseLine("marketing"),
   "5.0-star Google rating",
   "Upfront, transparent pricing",
   "Same-day service available",
@@ -363,7 +375,7 @@ export const SERVICES: Service[] = [
       "Minimal wall damage",
       "Code-compliant installation",
       "Permit handling",
-      "1-year labor warranty + manufacturer warranty on PEX",
+      CLAIMS.warrantyBullet,
     ],
   },
   {
@@ -658,21 +670,50 @@ export const TIMELINE_EVENTS: TimelineEvent[] = [
 // SERVICE AREAS
 // ============================================
 
-export const SERVICE_AREAS = [
-  "Cape Coral",
-  "Fort Myers",
-  "North Fort Myers",
-  "Punta Gorda",
-  "Port Charlotte",
-  "Naples",
-  "Bonita Springs",
-  "Estero",
-  "Lehigh Acres",
-  "Sanibel Island",
-  "Captiva Island",
-  "Fort Myers Beach",
-  "Marco Island",
-];
+/**
+ * Cities served, grouped by county — the one list behind every `areaServed`
+ * (site-wide Plumber node, service schemas) and the llms.txt coverage
+ * sentences. Add a city here and every schema picks it up; the JSON-LD,
+ * ServiceJsonLd and /services/residential used to carry three different
+ * hand-written lists.
+ */
+export const SERVICE_AREAS_BY_COUNTY = {
+  Lee: [
+    "Cape Coral",
+    "Fort Myers",
+    "North Fort Myers",
+    "Lehigh Acres",
+    "Bonita Springs",
+    "Estero",
+    "Sanibel Island",
+    "Captiva Island",
+    "Fort Myers Beach",
+  ],
+  Charlotte: ["Punta Gorda", "Port Charlotte"],
+  Collier: ["Naples", "Marco Island"],
+} as const;
+
+export const SERVICE_AREAS: readonly string[] = Object.values(SERVICE_AREAS_BY_COUNTY).flat();
+
+/** "Lee, Charlotte and Collier Counties" — for prose that states coverage. */
+export function countiesSentence(): string {
+  const names = Object.keys(SERVICE_AREAS_BY_COUNTY);
+  return `${names.slice(0, -1).join(", ")} and ${names[names.length - 1]} Counties`;
+}
+
+/** schema.org City nodes for `areaServed`, each placed in its county. */
+export function areaServedCities() {
+  return Object.entries(SERVICE_AREAS_BY_COUNTY).flatMap(([county, cities]) =>
+    cities.map((name) => ({
+      "@type": "City" as const,
+      name,
+      containedInPlace: {
+        "@type": "AdministrativeArea" as const,
+        name: `${county} County, Florida`,
+      },
+    })),
+  );
+}
 
 // ============================================
 // COST ESTIMATOR DATA
@@ -734,10 +775,10 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
     title: "Whole-Home Repiping",
     heroText: "Whole-Home Repiping in Cape Coral, Fort Myers & SWFL",
     description:
-      "Aging pipes cause low water pressure, discolored water, and costly leaks. C&S Plumbing replaces your entire plumbing system with modern copper or PEX piping — backed by 3,500+ homes repiped and a 1-year labor warranty.",
+      `Aging pipes cause low water pressure, discolored water, and costly leaks. C&S Plumbing replaces your entire plumbing system with modern copper or PEX piping — backed by 3,500+ homes repiped and ${CLAIMS.warrantyInstallShort}.`,
     metaTitle: "Whole-Home Repiping | Cape Coral & Fort Myers",
     metaDescription:
-      "Whole-home repiping in Cape Coral, Fort Myers & SWFL. Copper & PEX, minimal wall damage, 1-year labor warranty. 3,500+ homes repiped. Call 833-PLUMB-IT.",
+      `Whole-home repiping in Cape Coral, Fort Myers & SWFL. Copper & PEX, ${rangeInline("repipe.overall")}, 1-year labor & materials warranty. 3,500+ homes repiped. Call 833-PLUMB-IT.`,
     keywords: [
       "repiping Cape Coral",
       "repipe Fort Myers",
@@ -757,7 +798,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       {
         title: "Minimal Wall Damage",
         description:
-          "Our experienced crews plan pipe routes carefully to minimize drywall cuts. We patch and restore any openings so your home looks like we were never there.",
+          `Our crews plan pipe routes to keep drywall cuts to a minimum. ${CLAIMS.repipeRestoration}`,
       },
       {
         title: "Full Permit & Inspection",
@@ -770,16 +811,16 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
           "Most whole-home repipes are completed in 1-2 days. We work efficiently to minimize disruption to your daily routine.",
       },
       {
-        title: "Lifetime Warranty on PEX",
+        title: "Warranty-Backed Installation",
         description:
-          "PEX piping comes with a manufacturer warranty, and C&S Plumbing backs every installation with a 1-year labor warranty. Your investment is fully protected.",
+          `${CLAIMS.warrantyInstall} Every repipe is pressure-tested and passes Lee County final inspection before we leave.`,
       },
     ],
     faqs: [
       {
         question: "How much does it cost to repipe a house in Cape Coral?",
         answer:
-          "Whole-home repiping in Cape Coral typically costs between $4,000 and $15,000 depending on the size of your home, number of bathrooms, and pipe material (copper vs PEX). C&S Plumbing provides free estimates with upfront pricing — no hidden fees.",
+          `Whole-home repiping in Cape Coral typically costs ${rangeInline("repipe.overall")} depending on the size of your home, number of bathrooms, and pipe material (copper vs PEX). Most 3-bed/2-bath homes land at ${rangeInline("repipe.pex3x2")} in PEX. C&S Plumbing provides free estimates with upfront pricing — no hidden fees.`,
       },
       {
         question: "How long does a whole-home repipe take?",
@@ -804,7 +845,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       {
         question: "Will repiping damage my walls or floors?",
         answer:
-          "We minimize wall openings by using flexible PEX piping that can be routed through existing pathways. Small access holes are necessary, but we patch drywall after the job and leave your home clean. Most homeowners are surprised at how little disruption is involved.",
+          `We minimize wall openings by routing flexible PEX through existing pathways. Small access holes are necessary. ${CLAIMS.repipeRestoration} Most homeowners are surprised at how little disruption is involved.`,
       },
       {
         question: "Does repiping increase my home's value?",
@@ -812,45 +853,45 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
           "Yes. A whole-home repipe is one of the best investments you can make. It eliminates the risk of pipe failure, can improve water pressure, and is often required by insurance companies and home inspectors during a sale.",
       },
     ],
-    priceRange: "$4,000 – $15,000",
+    priceRange: range("repipe.overall"),
     highlights: [
       "3,500+ residential repipes completed",
       "1-2 day completion for most homes",
       "Copper & PEX options available",
       "Full permit & inspection included",
-      "Minimal wall damage guaranteed",
+      "Minimal wall openings, patched and textured",
       "Licensed & insured (CFC1432485)",
       "Free estimates with upfront pricing",
-      "1-year labor warranty + manufacturer warranty on PEX",
+      CLAIMS.warrantyBullet,
       "Serving all of Southwest Florida",
     ],
     costBreakdown: [
-      { label: "PEX repipe — 2BR / 2BA, ≤1,500 sq ft", range: "$4,200 – $6,500", note: "Most condos and small slab homes" },
-      { label: "PEX repipe — 3BR / 2BA, 1,800–2,400 sq ft", range: "$6,800 – $9,500", note: "Typical Cape Coral / Fort Myers single-family" },
-      { label: "PEX repipe — 4BR+, ≥2,500 sq ft", range: "$9,500 – $13,000", note: "Two-story or larger floor plans" },
-      { label: "Copper repipe (premium)", range: "+$2,000 – $4,000 over PEX", note: "Type-L copper, longer install time" },
-      { label: "Polybutylene removal upcharge", range: "+$500 – $1,200", note: "Required for 1978–1995 homes still on poly" },
-      { label: "Drywall patch & paint-ready finish", range: "Included", note: "We patch every access cut before we leave" },
+      { label: "PEX repipe — 2BR / 2BA, ≤1,500 sq ft", range: range("repipe.pex2x2"), note: "Most condos and small slab homes" },
+      { label: "PEX repipe — 3BR / 2BA, 1,800–2,400 sq ft", range: range("repipe.pex3x2"), note: "Typical Cape Coral / Fort Myers single-family" },
+      { label: "PEX repipe — 4BR+, ≥2,500 sq ft", range: range("repipe.pex4plus"), note: "Two-story or larger floor plans" },
+      { label: "Copper repipe (premium)", range: upcharge("repipe.copperUpcharge"), note: "Over PEX; Type-L copper, longer install time" },
+      { label: "Polybutylene removal upcharge", range: upcharge("repipe.polyRemoval"), note: "Required for 1978–1995 homes still on poly" },
+      { label: "Drywall patch & texture", range: "Included", note: "Every access cut patched and textured; painting by others" },
       { label: "Lee County permit + final inspection", range: "Included", note: "Required by code; we handle it" },
     ],
     caseStudies: [
       {
         title: "1990 Cape Coral SE — polybutylene → PEX",
         location: "Cape Coral, FL",
-        cost: "$7,200",
+        cost: "$7,200", // claim-ok: documented job
         summary: "3BR / 2BA, 1,950 sq ft. Original Quest poly with three pinhole leaks in 18 months. Crew of 3 finished rough + trim in 1.5 days, 9 access cuts patched.",
       },
       {
         title: "Fort Myers River District — copper for resale",
         location: "Fort Myers, FL",
-        cost: "$11,800",
+        cost: "$11,800", // claim-ok: documented job
         summary: "4BR / 3BA, 2,650 sq ft pre-1985 home. Owner wanted Type-L copper for inspection appraisal. 2-day job; passed county final on first inspection.",
       },
       {
         title: "North Fort Myers condo — fast turn",
         location: "North Fort Myers, FL",
-        cost: "$4,950",
-        summary: "2BR / 2BA, 1,300 sq ft. PEX repipe done in a single day so the unit could be re-rented that weekend. Minimal wall openings — drywall ready for paint.",
+        cost: "$4,950", // claim-ok: documented job
+        summary: "2BR / 2BA, 1,300 sq ft. PEX repipe done in a single day so the unit could be re-rented that weekend. Minimal wall openings — patched and textured, ready for paint.",
       },
     ],
     relatedServices: ["leak-repair", "water-heaters", "plumbing-remodel"],
@@ -866,18 +907,18 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
     answerBlocks: [
       {
         question: "How much does whole-home repiping cost in Southwest Florida?",
-        answer: "Most repipes run $4,000–$15,000.",
-        detail: "PEX repipes for a 3-bed, 2-bath home typically land between $4,000–$8,000. Copper repipes and larger homes (4+ baths or 2-story) push the range to $10,000–$15,000. Every estimate includes Lee County permitting and final inspection.",
+        answer: `Most repipes run ${rangeInline("repipe.overall")}.`,
+        detail: `PEX repipes for a 2-bed, 2-bath home run ${rangeInline("repipe.pex2x2")}; a 3-bed, 2-bath home lands at ${rangeInline("repipe.pex3x2")}; 4+ bedrooms or two-story homes run ${rangeInline("repipe.pex4plus")}. Copper adds ${upchargeInline("repipe.copperUpcharge")}. Every estimate includes Lee County permitting and final inspection.`,
       },
       {
         question: "How long does a repipe take?",
         answer: "Most homes are done in 1–2 days.",
-        detail: "Standard 3/2 homes complete in a single day for the rough + trim. 4+ bath or 2-story homes take 2 days. We protect your floors and walls, patch all access points, and pressure-test before turning water back on.",
+        detail: "Standard 3/2 homes complete in a single day for the rough + trim. 4+ bath or 2-story homes take 2 days. We protect your floors, patch and texture every access cut, and pressure-test before turning water back on.",
       },
       {
         question: "PEX or copper — which is better in Cape Coral?",
         answer: "PEX-A is the right answer for most Cape Coral homes.",
-        detail: "Cape Coral's high-chloride soil causes pinhole corrosion in copper from the outside in. PEX-A is flexible, corrosion-proof, and carries a 25-year warranty. We still install copper when it's required for resale appraisals or HOA rules.",
+        detail: "Cape Coral's high-chloride soil causes pinhole corrosion in copper from the outside in. PEX-A is flexible, corrosion-proof, and carries its manufacturer's warranty on top of our one-year labor and materials warranty. We still install copper when it's required for resale appraisals or HOA rules.",
       },
       {
         question: "Do you pull permits for repiping?",
@@ -893,17 +934,15 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
     heroText: "Water Heater Installation & Repair in Cape Coral & Fort Myers",
     description:
       "No hot water? Whether you need a quick repair or a full replacement, C&S Plumbing installs and services all types of water heaters — traditional tank, tankless, and hybrid systems.",
-    metaTitle: "Water Heater Install & Repair | Cape Coral",
+    metaTitle: "Water Heater Repair & Installation | Fort Myers & Cape Coral",
     metaDescription:
-      "Water heater installation, repair & replacement in Cape Coral, Fort Myers & SWFL. Tankless, tank & hybrid options. Same-day service. Call 833-PLUMB-IT.",
+      `Water heater repair ${rangeInline("waterHeater.repair")}, tank replacement ${spanInline("waterHeater.tank40", "waterHeater.tank50")} installed, tankless & hybrid options. Same-day service in Fort Myers, Cape Coral & North Fort Myers. Licensed CFC1432485. Call 833-PLUMB-IT.`,
     keywords: [
       "water heater Cape Coral",
       "water heater installation Fort Myers",
-      "tankless water heater Cape Coral",
       "water heater repair SWFL",
       "hot water heater replacement",
       "water heater cost Fort Myers",
-      "Rinnai tankless Cape Coral",
       "water heater plumber near me",
     ],
     features: [
@@ -937,7 +976,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       {
         question: "How much does a water heater cost in Cape Coral?",
         answer:
-          "Repairs run $195–$475. Traditional tank replacements run $1,650–$2,500 installed with haul-away included, tankless installations run $3,500–$5,200, and heat-pump hybrids run $3,200–$4,800. C&S Plumbing provides free estimates with upfront pricing.",
+          `Repairs run ${rangeInline("waterHeater.repair")}. Traditional tank replacements run ${spanInline("waterHeater.tank40", "waterHeater.tank50")} installed with haul-away included, tankless installations run ${rangeInline("waterHeater.tankless")}, and heat-pump hybrids run ${rangeInline("waterHeater.hybrid")}. C&S Plumbing provides free estimates with upfront pricing.`,
       },
       {
         question: "Should I get a tankless or traditional water heater?",
@@ -970,7 +1009,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
           "Common signs include inconsistent water temperature, rusty water from the hot side only, rumbling or popping noises, visible corrosion or leaking around the base, and an age of 10+ years. If your water heater shows any of these signs, schedule a free inspection.",
       },
     ],
-    priceRange: "$195 – $4,500+",
+    priceRange: span("waterHeater.repair", "waterHeater.tankless"),
     highlights: [
       "Same-day service available",
       "All brands installed & serviced",
@@ -979,38 +1018,38 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       "Upfront pricing, no surprises",
       "Licensed & insured (CFC1432485)",
       "Free estimates",
-      "Warranty on all installations",
+      CLAIMS.warrantyBullet,
       "Serving Cape Coral, Fort Myers & SWFL",
     ],
     costBreakdown: [
-      { label: "40-gallon electric tank — installed", range: "$1,650 – $2,200", note: "Includes haul-away of old unit, code-compliant pan & T&P" },
-      { label: "50-gallon electric tank — installed", range: "$1,850 – $2,500", note: "Most common SWFL family-of-four size" },
-      { label: "Tankless gas (Rinnai/Navien)", range: "$3,500 – $5,200", note: "Gas line + venting included; whole-home flow" },
-      { label: "Heat-pump hybrid (50–80 gal)", range: "$3,200 – $4,800", note: "Up to ~$2,000 in FL utility rebates available" },
-      { label: "Same-day repair (thermostat / element / T&P)", range: "$195 – $475", note: "If it can be repaired vs replaced" },
+      { label: "40-gallon electric tank — installed", range: range("waterHeater.tank40"), note: "Includes haul-away of old unit, code-compliant pan & T&P" },
+      { label: "50-gallon electric tank — installed", range: range("waterHeater.tank50"), note: "Most common SWFL family-of-four size" },
+      { label: "Tankless gas (Rinnai/Navien)", range: range("waterHeater.tankless"), note: "Gas line + venting included; whole-home flow" },
+      { label: "Heat-pump hybrid (50–80 gal)", range: range("waterHeater.hybrid"), note: `Often qualifies for FL utility rebates of up to ~${money(price("waterHeater.hybridRebate").max)} (confirm with your utility)` },
+      { label: "Same-day repair (thermostat / element / T&P)", range: range("waterHeater.repair"), note: "If it can be repaired vs replaced" },
       { label: "Permit + Lee County final", range: "Included on installs", note: "Required when replacing a unit" },
     ],
     caseStudies: [
       {
         title: "Tankless conversion — Cape Coral",
         location: "Cape Coral, FL",
-        cost: "$4,650",
+        cost: "$4,650", // claim-ok: documented job
         summary: "Family of 5 was running out of hot water by shower #3. Swapped a 50-gal tank for a Navien NPE-A2. Installed new gas line + concentric vent. Done in 6 hours.",
       },
       {
         title: "Emergency replacement — Fort Myers",
         location: "Fort Myers, FL",
-        cost: "$2,150",
+        cost: "$2,150", // claim-ok: documented job
         summary: "11-year-old tank failed Friday at 5pm with water on the floor. On-site by 7pm Saturday with a new 50-gal Bradford White; old unit hauled away same trip.",
       },
       {
         title: "Heat-pump retrofit — Naples",
         location: "Naples, FL",
-        cost: "$3,950",
-        summary: "Replaced an 80-gal electric tank with a Rheem ProTerra hybrid. Customer netted a $1,800 utility rebate; runs ~70% less than the old unit per FPL bill comparison.",
+        cost: "$3,950", // claim-ok: documented job
+        summary: "Replaced an 80-gal electric tank with a Rheem ProTerra hybrid. Customer netted a $1,800 utility rebate; runs ~70% less than the old unit per FPL bill comparison.", // claim-ok: documented job
       },
     ],
-    relatedServices: ["repiping", "leak-repair", "water-softeners"],
+    relatedServices: ["tankless-water-heaters", "repiping", "leak-repair", "water-softeners"],
     relatedAreas: ["cape-coral", "fort-myers", "naples", "bonita-springs"],
     gallery: [
       { src: "/images/gallery/tankless-water-heater.jpg", caption: "Tankless water heater install" },
@@ -1023,8 +1062,8 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
     answerBlocks: [
       {
         question: "How much does a water heater cost installed in Cape Coral?",
-        answer: "Tank replacements run $1,650–$2,500 installed; tankless runs $3,500–$5,200.",
-        detail: "A standard 40-gallon electric tank is $1,650–$2,200 installed and a 50-gallon is $1,850–$2,500 — including haul-away of the old unit, code-compliant pan, and fittings. Gas tankless (Rinnai/Navien) runs $3,500–$5,200 including gas line and venting. Heat-pump hybrids are $3,200–$4,800 and often qualify for Florida utility rebates of up to ~$2,000.",
+        answer: `Tank replacements run ${spanInline("waterHeater.tank40", "waterHeater.tank50")} installed; tankless runs ${rangeInline("waterHeater.tankless")}.`,
+        detail: `A standard 40-gallon electric tank is ${rangeInline("waterHeater.tank40")} installed and a 50-gallon is ${rangeInline("waterHeater.tank50")} — including haul-away of the old unit, code-compliant pan, and fittings. Gas tankless (Rinnai/Navien) runs ${rangeInline("waterHeater.tankless")} including gas line and venting. Heat-pump hybrids are ${rangeInline("waterHeater.hybrid")} and often qualify for Florida utility rebates of up to ~${money(price("waterHeater.hybridRebate").max)}.`,
       },
       {
         question: "Tankless vs traditional — which is right for my home?",
@@ -1034,12 +1073,161 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       {
         question: "How fast can you replace a failed water heater?",
         answer: "Same-day installation in most cases.",
-        detail: "If your tank fails in the morning, we can usually have a new unit installed and running the same day. After-hours and weekend emergency installs are available 24/7. Repairs (thermostat, element, valve) start at $195.",
+        detail: `If your tank fails in the morning, we can usually have a new unit installed and running the same day. After-hours and weekend emergency installs are available 24/7. Repairs (thermostat, element, valve) run ${rangeInline("waterHeater.repair")}.`,
       },
       {
         question: "Do tankless water heaters work in Florida hard water?",
         answer: "Yes — but plan on annual flushing.",
         detail: "Florida's hard water builds scale inside tankless heat exchangers. We install with isolation valves so we (or you) can flush the unit annually with vinegar or descaling solution. Skipping the flush voids most manufacturer warranties and shortens unit life.",
+      },
+    ],
+  },
+  {
+    // Spoke of the water-heaters hub, added 2026-11-12 from Search Console
+    // data: ~265 tankless impressions in 14 days were landing on the generic
+    // water-heaters page at positions 17–35. Prices, brands and claims here
+    // are the ones already published on that page — do not add new ones.
+    slug: "tankless-water-heaters",
+    image: "/images/services/cards/water-heaters.jpg",
+    title: "Tankless Water Heaters",
+    heroText: "Tankless Water Heater Installation & Repair in Fort Myers & Cape Coral",
+    description:
+      "Endless hot water without a tank in the garage. C&S installs gas tankless systems from Rinnai, Navien and Noritz — gas line, venting and permit included — and repairs every major brand, usually the same day.",
+    metaTitle: "Tankless Water Heater Installation & Repair | Fort Myers & Cape Coral",
+    metaDescription:
+      `Tankless water heater installation & repair in Fort Myers, Cape Coral & SWFL. Rinnai, Navien & Noritz, ${rangeInline("waterHeater.tankless")} installed incl. gas line & venting. Same-day repair. Call 833-PLUMB-IT.`,
+    keywords: [
+      "tankless water heater installation Fort Myers",
+      "tankless water heater installation Cape Coral",
+      "tankless water heater repair near me",
+      "tankless water heater service near me",
+      "Rinnai tankless installer Fort Myers",
+      "Navien tankless Cape Coral",
+      "tankless water heater cost Florida",
+      "gas tankless water heater installation",
+    ],
+    features: [
+      {
+        title: "Gas Tankless Installation",
+        description:
+          "Rinnai, Navien and Noritz whole-home units sized for your household. The gas line, concentric venting and Lee County permit are part of the quoted price, not add-ons.",
+      },
+      {
+        title: "Tank-to-Tankless Conversions",
+        description:
+          "Most conversions are finished in a day: the old tank is hauled away, the unit mounts on the wall, and the garage or closet gets its space back.",
+      },
+      {
+        title: "Tankless Repair & Error Codes",
+        description:
+          "No hot water, flashing error code, or water that runs hot and cold? We service all major brands and carry common parts, so most repairs are same-day.",
+      },
+      {
+        title: "Sized for Your Home",
+        description:
+          "Tankless output is measured in gallons per minute. We size for the showers and appliances that actually run at once in a 2- or 3-bath home, so the unit never starves.",
+      },
+      {
+        title: "Hard-Water Protection",
+        description:
+          "Lee County water scales heat exchangers. Every install gets isolation valves for an annual flush, and we will tell you straight when a softener should go in first.",
+      },
+      {
+        title: "Electric Tankless, Honestly",
+        description:
+          "Whole-home electric tankless units draw well over 100 amps and often need a panel upgrade. We will quote it when it fits, and steer you to gas or a hybrid when it does not.",
+      },
+    ],
+    faqs: [
+      {
+        question: "How much does a tankless water heater cost installed in Fort Myers or Cape Coral?",
+        answer:
+          `A gas tankless from Rinnai, Navien or Noritz runs ${rangeInline("waterHeater.tankless")} installed, including the gas line and venting. Where the unit goes, how far the gas line runs and whether it replaces a tank in the same spot move the number inside that range. Every job is quoted upfront in writing, and estimates are free.`,
+      },
+      {
+        question: "Is a tankless water heater worth it in Southwest Florida?",
+        answer:
+          "For most households that run out of hot water, yes. Tankless units last 20+ years against 8–12 for a tank in Florida water, never run out, and use less energy because nothing sits heated all day. They cost two to three times a tank upfront, so the math works best if you plan to stay in the home for years.",
+      },
+      {
+        question: "Do tankless water heaters work with Lee County hard water?",
+        answer:
+          "Yes, with one condition: an annual flush. Hard water builds scale inside the heat exchanger, so we install with isolation valves that let us (or you) descale the unit once a year. Skipping it voids most manufacturer warranties. On very hard or untreated well water, a softener upstream is the right first step.",
+      },
+      {
+        question: "Gas or electric tankless?",
+        answer:
+          "Gas for whole-home hot water. Whole-home electric tankless units draw well over 100 amps and often need a panel upgrade, which erases the savings; electric makes sense for a single bathroom or outbuilding. On untreated well water, any tankless scales quickly and needs a softener or scale-prevention system first.",
+      },
+      {
+        question: "How long does a tankless installation take?",
+        answer:
+          "Most tank-to-tankless conversions are done the same day. A Cape Coral conversion we documented — a 50-gallon tank swapped for a Navien NPE-A2 with a new gas line and concentric vent — took six hours. Long gas-line runs or a new vent path add time, and we tell you that in the quote.",
+      },
+      {
+        question: "Do you repair tankless water heaters?",
+        answer:
+          `Yes — Rinnai, Navien, Noritz, Rheem, A.O. Smith and Bradford White. Repairs run ${rangeInline("waterHeater.repair")} and cover the usual faults: flow sensors, igniters, scaled exchangers and error codes. Same-day in most cases.`,
+      },
+      {
+        question: "Do I need a permit to install a tankless water heater in Lee County?",
+        answer:
+          "Yes. A water heater replacement is permitted work in Lee County and Cape Coral. We pull the permit and coordinate the final inspection, and both are included in the installed price.",
+      },
+    ],
+    priceRange: span("waterHeater.repair", "waterHeater.tankless"),
+    highlights: [
+      "Rinnai, Navien & Noritz installed",
+      "Gas line & venting included",
+      "Same-day repair in most cases",
+      "Isolation valves for annual flushing",
+      "Permit + Lee County final included",
+      "Upfront written pricing",
+      "Licensed & insured (CFC1432485)",
+      "Free estimates",
+      CLAIMS.warrantyBullet,
+    ],
+    costBreakdown: [
+      { label: "Gas tankless — installed (Rinnai / Navien / Noritz)", range: range("waterHeater.tankless"), note: "Gas line and concentric venting included; whole-home flow" },
+      { label: "Tankless repair & diagnostics", range: range("waterHeater.repair"), note: "Flow sensors, igniters, error codes; same-day in most cases" },
+      { label: "Isolation valves for annual flushing", range: "Included on installs", note: "Needed to descale on Lee County hard water" },
+      { label: "Permit + Lee County final", range: "Included on installs", note: "Required when replacing a unit" },
+    ],
+    caseStudies: [
+      {
+        title: "Tankless conversion — Cape Coral",
+        location: "Cape Coral, FL",
+        cost: "$4,650", // claim-ok: documented job
+        summary: "Family of 5 was running out of hot water by shower #3. Swapped a 50-gal tank for a Navien NPE-A2. Installed new gas line + concentric vent. Done in 6 hours.",
+      },
+    ],
+    relatedServices: ["water-heaters", "water-softeners", "repiping"],
+    relatedAreas: ["fort-myers", "cape-coral", "north-fort-myers", "punta-gorda"],
+    gallery: [
+      { src: "/images/gallery/tankless-water-heater.jpg", caption: "Tankless water heater install" },
+      { src: "/images/gallery/dual-shower-system.jpg", caption: "Hot water for dual showers" },
+      { src: "/images/gallery/rain-shower-handheld.jpg", caption: "Endless hot water upgrade" },
+    ],
+    answerBlocks: [
+      {
+        question: "How much does a tankless water heater cost installed in Fort Myers?",
+        answer: `${rangeInline("waterHeater.tankless")} for a gas tankless, including gas line and venting.`,
+        detail: `Rinnai, Navien and Noritz whole-home units run ${rangeInline("waterHeater.tankless")} installed. The gas line, concentric venting, permit and Lee County final are in that price. Repairs on an existing tankless run ${rangeInline("waterHeater.repair")}.`,
+      },
+      {
+        question: "Do tankless water heaters work in Lee County hard water?",
+        answer: "Yes — with an annual flush through isolation valves.",
+        detail: "Scale builds inside the heat exchanger. We install isolation valves so the unit can be descaled once a year; skipping it voids most manufacturer warranties. On untreated well water, put a softener upstream first.",
+      },
+      {
+        question: "Gas or electric tankless for a Southwest Florida home?",
+        answer: "Gas for whole-home; electric only for point-of-use.",
+        detail: "Whole-home electric tankless draws well over 100 amps and usually means a panel upgrade. Gas units carry a 2- or 3-bath home without it. A heat-pump hybrid is the efficient alternative where gas is not available.",
+      },
+      {
+        question: "How long does a tankless install take?",
+        answer: "Most conversions are done the same day.",
+        detail: "A documented Cape Coral tank-to-Navien conversion with a new gas line and vent took six hours. Long gas-line runs or a new vent path add time, and the quote says so upfront.",
       },
     ],
   },
@@ -1094,7 +1282,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       {
         question: "How much does drain cleaning cost in Cape Coral?",
         answer:
-          "Drain cleaning in Cape Coral typically costs between $150 and $500 depending on the type of drain, severity of the clog, and method required. Simple clogs start around $150, while main sewer line cleaning with hydro-jetting can be $300-$500.",
+          `Drain cleaning in Cape Coral runs ${rangeInline("drain.overall")} depending on the drain, how severe the clog is and the method needed. Single-fixture clogs run ${rangeInline("drain.fixture")}, main-line cabling ${rangeInline("drain.mainLine")}, and hydro-jetting ${rangeInline("drain.hydroJet")}.`,
       },
       {
         question: "What causes recurring drain clogs?",
@@ -1127,7 +1315,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
           "Yes, tree roots are one of the most common causes of sewer line blockages in Southwest Florida. Roots seek out moisture and can infiltrate tiny cracks in pipes, growing until they block the line entirely. We use camera inspections to identify root intrusion and hydro-jetting to clear them.",
       },
     ],
-    priceRange: "$150 – $500",
+    priceRange: range("drain.overall"),
     highlights: [
       "Same-day service available",
       "Hydro-jetting technology",
@@ -1140,30 +1328,30 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       "24/7 emergency service",
     ],
     costBreakdown: [
-      { label: "Single-fixture clog (sink, tub, toilet)", range: "$150 – $250", note: "Cabling from accessible cleanout" },
-      { label: "Main line cabling (sewer)", range: "$295 – $475", note: "Includes cleanout access if available" },
-      { label: "Hydro-jetting — main line", range: "$450 – $800", note: "4,000 PSI; most thorough cleaning method" },
-      { label: "Sewer camera inspection", range: "$245 – $395", note: "Free with hydro-jetting on same trip" },
-      { label: "Root removal + jetting + camera", range: "$650 – $1,100", note: "Common for older Cape Coral homes near big trees" },
-      { label: "After-hours / weekend surcharge", range: "+$95 – $150", note: "We aim to never charge it — most jobs handled in business hours" },
+      { label: "Single-fixture clog (sink, tub, toilet)", range: range("drain.fixture"), note: "Cabling from accessible cleanout" },
+      { label: "Main line cabling (sewer)", range: range("drain.mainLine"), note: "Includes cleanout access if available" },
+      { label: "Hydro-jetting — main line", range: range("drain.hydroJet"), note: "4,000 PSI; most thorough cleaning method" },
+      { label: "Sewer camera inspection", range: range("drain.camera"), note: "Free with hydro-jetting on same trip" },
+      { label: "Root removal + jetting + camera", range: range("drain.rootsJetCamera"), note: "Common for older Cape Coral homes near big trees" },
+      { label: "After-hours / weekend surcharge", range: upcharge("emergency.afterHoursSurcharge"), note: "Nights, weekends and holidays; always in the written price" },
     ],
     caseStudies: [
       {
         title: "Recurring kitchen backup — Lehigh Acres",
         location: "Lehigh Acres, FL",
-        cost: "$520",
+        cost: "$520", // claim-ok: documented job
         summary: "Customer was paying another plumber 3x/year to cable. We jetted the line, camera-inspected, and found a low spot trapping grease. Hasn't backed up in 14 months.",
       },
       {
         title: "Root-blocked main — Fort Myers",
         location: "Fort Myers, FL",
-        cost: "$895",
+        cost: "$895", // claim-ok: documented job
         summary: "1976 home, 60-ft cast-iron run with two large oak roots. Jetting + cutter cleared it; camera found one cracked joint flagged for future replacement.",
       },
       {
         title: "Restaurant grease line — Cape Coral",
         location: "Cape Coral, FL",
-        cost: "$1,250 / quarter",
+        cost: "$1,250 / quarter", // claim-ok: documented job
         summary: "Quarterly preventive jetting on a 4-inch grease line keeps the kitchen open. Better than the alternative — a Friday-night shutdown for emergency cabling.",
       },
     ],
@@ -1180,8 +1368,8 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
     answerBlocks: [
       {
         question: "How much does drain cleaning cost?",
-        answer: "Most residential drains cost $150–$500.",
-        detail: "A simple sink, tub, or toilet cable runs $150–$250. Main-line cabling is $250–$400. Hydro-jetting (up to 4,000 PSI) for grease, roots, or recurring blockages is $400–$650. Sewer camera inspection is $150 standalone or included with most jet jobs.",
+        answer: `Most residential drains run ${rangeInline("drain.fixture")} for a single fixture, up to ${rangeInline("drain.rootsJetCamera")} for roots, jetting and a camera.`,
+        detail: `A simple sink, tub, or toilet cable runs ${rangeInline("drain.fixture")}. Main-line cabling is ${rangeInline("drain.mainLine")}. Hydro-jetting (up to 4,000 PSI) for grease, roots, or recurring blockages is ${rangeInline("drain.hydroJet")}. A sewer camera inspection is ${rangeInline("drain.camera")} on its own and free with hydro-jetting on the same trip.`,
       },
       {
         question: "Cable or hydro-jet — which do I need?",
@@ -1246,7 +1434,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       {
         question: "How much does leak repair cost in Cape Coral?",
         answer:
-          "Leak repair costs in Cape Coral range from $150 for a simple faucet leak to $800+ for slab leaks or pipe leaks behind walls. The cost depends on leak location and accessibility. We provide free estimates with transparent pricing.",
+          `Leak repair in Cape Coral runs from ${rangeInline("leak.visible")} for a visible fixture or supply leak to ${rangeInline("leak.slabSpot")} for slab leak detection with a spot repair, and ${rangeInline("leak.reroute")} for a full under-slab reroute. Finding a hidden leak with electronic detection is ${rangeInline("leak.detection")}. We provide free estimates with transparent pricing.`,
       },
       {
         question: "How do I know if I have a slab leak?",
@@ -1279,7 +1467,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
           "First, shut off the water supply at the nearest valve or the main shutoff. Then contain the water with towels or buckets to minimize damage. Call C&S Plumbing at 833-PLUMB-IT for 24/7 emergency response — we typically arrive within 1-2 hours in our service area.",
       },
     ],
-    priceRange: "$150 – $800+",
+    priceRange: range("leak.overall"),
     highlights: [
       "24/7 emergency response",
       "Electronic leak detection",
@@ -1292,30 +1480,30 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       "Serving Cape Coral, Fort Myers & SWFL",
     ],
     costBreakdown: [
-      { label: "Faucet / fixture leak repair", range: "$125 – $325", note: "Most common — washer, cartridge, supply line" },
-      { label: "Toilet leak (flapper, fill valve, wax seal)", range: "$165 – $385", note: "Stops $200+/yr in wasted water on a single toilet" },
-      { label: "Visible pipe leak under-sink / vanity", range: "$185 – $475", note: "Drain trap, supply, or drain arm replacement" },
-      { label: "Slab leak detection + spot repair", range: "$1,200 – $2,800", note: "Acoustic + thermal locate, single break under slab" },
-      { label: "Slab leak — full reroute (bypass)", range: "$2,800 – $5,500", note: "Often more cost-effective than chasing multiple leaks" },
-      { label: "Whole-house pressure regulator", range: "$425 – $725", note: "Fixes pressure-driven pinholes; required at 80+ PSI" },
+      { label: "Faucet / fixture leak repair", range: range("fixture.faucet"), note: "Most common — washer, cartridge, supply line" },
+      { label: "Toilet leak (flapper, fill valve, wax seal)", range: range("fixture.toilet"), note: "Stops $200+/yr in wasted water on a single toilet" }, // claim-ok: water-bill fact, not a price
+      { label: "Visible pipe leak under-sink / vanity", range: range("fixture.underSink"), note: "Drain trap, supply, or drain arm replacement" },
+      { label: "Slab leak detection + spot repair", range: range("leak.slabSpot"), note: "Acoustic + thermal locate, single break under slab" },
+      { label: "Slab leak — full reroute (bypass)", range: range("leak.reroute"), note: "Often more cost-effective than chasing multiple leaks" },
+      { label: "Whole-house pressure regulator", range: range("leak.prv"), note: "Fixes pressure-driven pinholes; required at 80+ PSI" },
     ],
     caseStudies: [
       {
         title: "Hidden slab leak — Cape Coral",
         location: "Cape Coral, FL",
-        cost: "$2,450",
-        summary: "$300/mo water bill, no visible leak. Acoustic locate found a hot-side pinhole under the kitchen slab. Bypassed via attic; floor untouched.",
+        cost: "$2,450", // claim-ok: documented job
+        summary: "$300/mo water bill, no visible leak. Acoustic locate found a hot-side pinhole under the kitchen slab. Bypassed via attic; floor untouched.", // claim-ok: documented job
       },
       {
         title: "Wax-ring failure — Naples",
         location: "Naples, FL",
-        cost: "$285",
-        summary: "Customer thought they had a slab leak. Actually a 12-year-old wax ring leaking on every flush. Reset toilet + new ring; saved a $2k+ slab investigation.",
+        cost: "$285", // claim-ok: documented job
+        summary: "Customer thought they had a slab leak. Actually a 12-year-old wax ring leaking on every flush. Reset toilet + new ring; saved a $2k+ slab investigation.", // claim-ok: documented job
       },
       {
         title: "Pinhole hot line — Bonita Springs",
         location: "Bonita Springs, FL",
-        cost: "$675",
+        cost: "$675", // claim-ok: documented job
         summary: "Garage ceiling staining; pinhole on hot line above. Cut a 2x2 access, replaced 8ft of copper with PEX-A, patched drywall paint-ready.",
       },
     ],
@@ -1332,8 +1520,8 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
     answerBlocks: [
       {
         question: "How much does leak detection cost?",
-        answer: "Simple visible leaks start at $150; slab and underground leak detection runs $400–$800.",
-        detail: "If we can see and access the leak, repairs typically run $150–$400. Hidden leaks behind walls, under slabs, or in irrigation lines need electronic detection equipment — $400–$800 to find, plus repair cost. We use acoustic and pressure-trace methods first to avoid unnecessary demolition.",
+        answer: `Visible leaks run ${rangeInline("leak.visible")}; finding a slab or underground leak runs ${rangeInline("leak.detection")}.`,
+        detail: `If we can see and access the leak, repairs typically run ${rangeInline("leak.visible")}. Hidden leaks behind walls, under slabs, or in irrigation lines need electronic detection equipment — ${rangeInline("leak.detection")} to find, plus the repair. A slab leak with a single spot repair runs ${rangeInline("leak.slabSpot")}; a full reroute ${rangeInline("leak.reroute")}. We use acoustic and pressure-trace methods first to avoid unnecessary demolition.`,
       },
       {
         question: "What are the signs of a slab leak?",
@@ -1342,7 +1530,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       },
       {
         question: "How fast can you respond to a leak emergency?",
-        answer: "Within 60 minutes for active leaks in Cape Coral and Fort Myers.",
+        answer: `${EMERGENCY_CLAIMS.responseTimeSentence}`,
         detail: "If you have water actively running where it shouldn't be, call 833-PLUMB-IT and shut off your main water valve. We'll dispatch a licensed plumber 24/7. While you wait, move valuables off the floor and document damage with photos for insurance.",
       },
     ],
@@ -1403,7 +1591,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       {
         question: "How much does a water softener cost in Fort Myers?",
         answer:
-          "Water softener installation in Fort Myers typically costs between $1,500 and $4,000 depending on the system type and capacity. Basic softeners start around $1,500, while premium whole-home systems with reverse osmosis run $3,000-$4,000.",
+          `Water softener installation in Fort Myers typically costs ${rangeInline("softener.system")} depending on the system type and capacity. Basic softeners start around ${money(price("softener.system").min)}, while premium whole-home systems with reverse osmosis run ${rangeInline("softener.premium")}.`,
       },
       {
         question: "How long do water softeners last?",
@@ -1421,7 +1609,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
           "Yes, we install compact water softeners and under-sink filtration systems for condos and smaller spaces. We'll recommend the right size and type based on your unit's plumbing and your water quality needs.",
       },
     ],
-    priceRange: "$1,500 – $4,000",
+    priceRange: range("softener.system"),
     highlights: [
       "Free water testing",
       "All major brands installed",
@@ -1446,8 +1634,8 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
     answerBlocks: [
       {
         question: "How much does a water softener cost in Southwest Florida?",
-        answer: "Most installations run $1,500–$4,000.",
-        detail: "Basic salt-based softeners start around $1,500 installed. Premium whole-home systems with reverse osmosis run $3,000–$4,000. We test your water free first, so you only pay for the capacity your home actually needs.",
+        answer: `Most installations run ${rangeInline("softener.system")}.`,
+        detail: `Basic salt-based softeners start around ${money(price("softener.system").min)} installed. Premium whole-home systems with reverse osmosis run ${rangeInline("softener.premium")}. We test your water free first, so you only pay for the capacity your home actually needs.`,
       },
       {
         question: "Do Cape Coral homes really need a water softener?",
@@ -1512,7 +1700,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       {
         question: "How much does a bathroom plumbing remodel cost?",
         answer:
-          "Bathroom plumbing remodel costs in Cape Coral range from $2,000 for basic fixture swaps to $8,000+ for full layout changes with pipe relocation. The cost depends on scope — a simple fixture upgrade is much less than moving plumbing for a new layout.",
+          `Bathroom plumbing remodel costs in Cape Coral run ${rangeInline("remodel.overall")} — basic fixture swaps at the low end, full layout changes with pipe relocation at the top. The cost depends on scope: a simple fixture upgrade is much less than moving plumbing for a new layout.`,
       },
       {
         question: "Do I need a plumber for a kitchen remodel?",
@@ -1535,7 +1723,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
           "Yes, we install all brands from budget-friendly to high-end luxury. Whether it's a Kohler, Moen, Delta, or premium brands like Brizo or Grohe, we have experience with professional installation of any fixture.",
       },
     ],
-    priceRange: "$2,000 – $8,000+",
+    priceRange: range("remodel.overall"),
     highlights: [
       "Kitchen & bathroom specialists",
       "All fixture brands installed",
@@ -1560,8 +1748,8 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
     answerBlocks: [
       {
         question: "How much does remodel plumbing cost in Cape Coral?",
-        answer: "Most kitchen and bathroom remodel plumbing runs $2,000–$8,000+.",
-        detail: "Basic fixture swaps sit at the low end; full layout changes with supply and drain relocation push toward $8,000+. Every quote is written and upfront, and permits are included.",
+        answer: `Most kitchen and bathroom remodel plumbing runs ${rangeInline("remodel.overall")}.`,
+        detail: `Basic fixture swaps sit at the low end of ${rangeInline("remodel.overall")}; full layout changes with supply and drain relocation push toward the top. Every quote is written and upfront, and permits are included.`,
       },
       {
         question: "How long does the plumbing phase of a remodel take?",
@@ -1585,7 +1773,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
     metaTitle:
       "UEP Hookup Cape Coral | Water, Sewer & Septic",
     metaDescription:
-      "Cape Coral UEP hookup: water $13-15/ft, irrigation $9-10/ft, sewer $25-33/ft, septic abandonment $2,500. All permits included. Call 833-PLUMB-IT.",
+      `Cape Coral UEP hookup: water ${perFoot("uep.waterPerFt")}, irrigation ${perFoot("uep.irrigationPerFt")}, sewer ${perFoot("uep.sewerPerFt")}, septic abandonment ${money(price("uep.septicAbandon").min)}. All permits included. Call 833-PLUMB-IT.`,
     keywords: [
       "UEP Cape Coral",
       "UEP utilities hookup",
@@ -1600,22 +1788,22 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
     ],
     features: [
       {
-        title: "Water Service Line — $13–15/ft",
+        title: `Water Service Line — ${perFoot("uep.waterPerFt")}`,
         description:
           "We install your water service line from the city meter to your home. You list C&S as your plumber with Cape Coral Utilities, and we handle the rest — from trenching to connection and pressure testing.",
       },
       {
-        title: "Irrigation Line — $9–10/ft",
+        title: `Irrigation Line — ${perFoot("uep.irrigationPerFt")}`,
         description:
           "Separate irrigation meter connection to keep your lawn and landscaping on its own water line. We run the line from the irrigation meter to your system with proper backflow prevention.",
       },
       {
-        title: "Sewer Lateral — $25–33/ft",
+        title: `Sewer Lateral — ${perFoot("uep.sewerPerFt")}`,
         description:
           "We connect your home to the city sewer main with a new sewer lateral. Pricing varies based on distance and depth. Every install includes proper grade, cleanouts, and full inspection.",
       },
       {
-        title: "Septic Abandonment & Pump-Out — $2,500",
+        title: `Septic Abandonment & Pump-Out — ${money(price("uep.septicAbandon").min)}`,
         description:
           "Once you're connected to city sewer, your old septic tank needs to be pumped out and properly abandoned. We coordinate the pump truck, collapse or fill the tank, and handle the required permit and inspection.",
       },
@@ -1639,7 +1827,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       {
         question: "How much does a UEP utilities hookup cost?",
         answer:
-          "Costs depend on what services you need and the distance from the city connection to your home. Water service lines run $13–15 per foot, irrigation lines $9–10 per foot, sewer laterals $25–33 per foot, and septic abandonment is a flat $2,500. We provide a free estimate based on your specific property.",
+          `Costs depend on which services you need and the distance from the city connection to your home. Water service lines run ${perFoot("uep.waterPerFt")}, irrigation lines ${perFoot("uep.irrigationPerFt")}, sewer laterals ${perFoot("uep.sewerPerFt")}, and septic abandonment is ${money(price("uep.septicAbandon").min)}. Most Cape Coral lots land at ${rangeInline("uep.typicalLot")} for all three connections plus abandonment. ${CLAIMS.uepConditions} We provide a free estimate based on your specific property.`,
       },
       {
         question: "What is the process for getting connected?",
@@ -1657,8 +1845,9 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
           "Yes — we handle everything from start to finish. That includes pulling all required permits, coordinating with Cape Coral Utilities, scheduling inspections, and closing out permits after the work passes. You don't have to deal with any of the paperwork.",
       },
     ],
-    priceRange:
-      "Water: $13–15/ft · Irrigation: $9–10/ft · Sewer: $25–33/ft · Septic: $2,500",
+    priceRange: composed(
+      `Water: ${perFoot("uep.waterPerFt")} · Irrigation: ${perFoot("uep.irrigationPerFt")} · Sewer: ${perFoot("uep.sewerPerFt")} · Septic: ${money(price("uep.septicAbandon").min)}`,
+    ),
     highlights: [
       "Full start-to-finish service",
       "All permits & inspections handled",
@@ -1737,7 +1926,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
       {
         question: "Are you licensed to pull permits in Cape Coral?",
         answer:
-          "Yes. We're Florida Certified Plumbing Contractors (CFC1432485 / CFC057076), fully insured, and we pull every required City of Cape Coral permit and pass inspection — no exceptions.",
+          "Yes. We're a Florida Certified Plumbing Contractor (CFC1432485), fully insured, and we pull every required City of Cape Coral permit and pass inspection — no exceptions.",
       },
     ],
     localContext:
@@ -1800,7 +1989,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
       {
         question: "Are you licensed and insured in Fort Myers?",
         answer:
-          "Yes — Florida Certified Plumbing Contractors (CFC1432485 / CFC057076), fully insured, pulling every required Lee County permit.",
+          "Yes — a Florida Certified Plumbing Contractor (CFC1432485), fully insured, pulling every required Lee County permit.",
       },
     ],
     localContext:
@@ -1860,11 +2049,22 @@ export const AREA_LANDINGS: AreaLanding[] = [
       {
         question: "Are you licensed and insured?",
         answer:
-          "Yes — Florida Certified Plumbing Contractors (CFC1432485 / CFC057076), fully insured, and family owned and operated since 1998.",
+          "Yes — a Florida Certified Plumbing Contractor (CFC1432485), fully insured, and family owned and operated since 1998.",
+      },
+      {
+        question: "How much does a septic-to-sewer conversion cost in North Fort Myers?",
+        answer:
+          `Most North Fort Myers conversions run ${rangeInline("septicToSewer.nfm")} depending on the distance from the house to the sewer connection point, the depth of the main and soil conditions, plus Lee County's connection fee. C&S handles the whole process — permits, the new lateral, inspections and abandoning the old septic tank.`,
+      },
+      {
+        question: "Can you work on manufactured homes in North Fort Myers?",
+        answer:
+          "Yes. North Fort Myers has many manufactured-home communities, and our plumbers know the systems they use — flexible water lines, under-home access through belly boards and plastic drain fittings. We handle everything from leak repairs to complete replumbs.",
       },
     ],
     localContext:
-      "North Fort Myers is our home. C&S Plumbing's office is located at 951 Pondella Rd, and many of our team members live right here in the community. That means the fastest response times in the area — often under 30 minutes for emergencies. We've plumbed hundreds of homes in North Fort Myers and understand the specific needs of properties in this area, from older homes near the river to newer construction east of I-75.",
+      "North Fort Myers is our home. C&S Plumbing's office is located at 951 Pondella Rd, and many of our team members live right here in the community. That means the fastest response times anywhere in our service area. We've plumbed hundreds of homes in North Fort Myers and understand the specific needs of properties in this area, from older homes near the river to newer construction east of I-75.\n\nPlumbing here is different from Cape Coral or Fort Myers proper. Many homes rely on private wells rather than municipal supply, which means high iron, a sulfur smell and hard-water scaling — and the well pumps, pressure tanks and whole-home treatment systems that go with them. North Fort Myers is also in the middle of a long-running septic-to-sewer conversion. Connecting to Lee County Utilities sewer takes a licensed plumber to abandon the old tank, run the new lateral and pass the county inspection, and C&S has completed dozens of these conversions start to finish, permits included.\n\nThe housing stock runs from 1960s–70s block homes in Bayshore and Hancock Bridge, many still on galvanized supply lines and cast iron drains, to manufactured homes in communities like Del Tura and Lochmoor Waterway Estates, where flexible water lines and brittle plastic drain fittings are the usual failure points. No travel fees in North Fort Myers — we're already here.",
+    updatedAt: "2026-11-12",
   },
   {
     slug: "naples",
@@ -1872,7 +2072,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     state: "FL",
     metaTitle: "Plumber in Naples, FL",
     metaDescription:
-      "Professional plumber in Naples, FL. Luxury home plumbing, repiping, water heaters, emergency service. Family-owned, 9,500+ homes plumbedd. Call 833-PLUMB-IT.",
+      "Professional plumber in Naples, FL. Luxury home plumbing, repiping, water heaters, emergency service. Family-owned, 9,500+ homes plumbed. Call 833-PLUMB-IT.",
     keywords: [
       "plumber Naples",
       "plumber Naples FL",
@@ -1921,7 +2121,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
       {
         question: "Do you pull permits in Naples?",
         answer:
-          "Yes. We're Florida Certified Plumbing Contractors (CFC1432485 / CFC057076), fully insured, and we pull every required Collier County permit.",
+          "Yes. We're a Florida Certified Plumbing Contractor (CFC1432485), fully insured, and we pull every required Collier County permit.",
       },
     ],
     localContext:
@@ -1981,7 +2181,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
       {
         question: "Are you licensed and insured?",
         answer:
-          "Yes — Florida Certified Plumbing Contractors (CFC1432485 / CFC057076), fully insured, family owned and operated since 1998.",
+          "Yes — a Florida Certified Plumbing Contractor (CFC1432485), fully insured, family owned and operated since 1998.",
       },
     ],
     localContext:
@@ -2042,11 +2242,27 @@ export const AREA_LANDINGS: AreaLanding[] = [
       {
         question: "Are you licensed and insured in Lehigh Acres?",
         answer:
-          "Yes — Florida Certified Plumbing Contractors (CFC1432485 / CFC057076), fully insured, pulling every required Lee County permit.",
+          "Yes — a Florida Certified Plumbing Contractor (CFC1432485), fully insured, pulling every required Lee County permit.",
+      },
+      {
+        question: "Why do newer Lehigh Acres homes have plumbing problems?",
+        answer:
+          "Many homes from the 2004–2008 building boom used builder-grade materials to keep costs down. The CPVC supply lines, economy water heaters and basic fixtures from that era are failing as they approach 20 years, and CPVC in particular turns brittle in Florida heat and cracks at fittings. An inspection can flag at-risk joints before they let go.",
+      },
+      {
+        question: "How much does a plumber cost in Lehigh Acres?",
+        answer:
+          `${CLAIMS.serviceCallFee} Common repairs are priced upfront before work begins — faucet replacement ${rangeInline("fixture.faucet")}, toilet repair ${rangeInline("fixture.toilet")}, water heater repair ${rangeInline("waterHeater.repair")} — and larger projects like repiping (${rangeInline("repipe.overall")}) and water heater replacement (${spanInline("waterHeater.tank40", "waterHeater.tankless")}) include a free in-home estimate. Flat-rate pricing, no hourly surprises.`,
+      },
+      {
+        question: "What areas of Lehigh Acres do you reach fastest?",
+        answer:
+          "Our trucks come in on SR-82 and Joel Boulevard, so neighborhoods near Veterans Park, Mirror Lakes and the Lee/Joel intersection usually get our quickest Lehigh Acres response. The southern and eastern edges take a little longer but are still inside our standard service area with no travel charge.",
       },
     ],
     localContext:
-      "Lehigh Acres is one of the fastest-growing communities in Lee County, with a mix of established homes and new construction that keeps our team busy. Many homes built in the 1980s and 1990s in Lehigh Acres still have original polybutylene pipes that are overdue for replacement. We also see a lot of well water systems in the eastern parts of Lehigh Acres, which require water treatment expertise alongside standard plumbing services. C&S Plumbing's North Fort Myers headquarters is just a short drive from Lehigh Acres, ensuring fast response times for emergencies.",
+      "Lehigh Acres is one of the fastest-growing communities in Lee County, with a mix of established homes and new construction that keeps our team busy. Many homes built in the 1980s and 1990s in Lehigh Acres still have original polybutylene pipes that are overdue for replacement. We also see a lot of well water systems in the eastern parts of Lehigh Acres, which require water treatment expertise alongside standard plumbing services. C&S Plumbing's North Fort Myers headquarters is just a short drive from Lehigh Acres, ensuring fast response times for emergencies.\n\nThe homes that went up in the 2004–2007 boom bring a different problem. Many used builder-grade fixtures, economy water heaters and CPVC supply lines that are now showing their age — we regularly find CPVC cracking at fittings in Lehigh homes from that era, where attic heat and certain cement compounds leave the plastic brittle. If your home was built between 2004 and 2008, an inspection can catch the vulnerable joints before they fail. In the older neighborhoods along Lee Boulevard and Homestead Road the concerns are the usual ones for aging Lee County systems: galvanized lines losing flow, water heaters worn out by hard water and drains invaded by mature roots.\n\nNew construction continues at a fast pace on Lehigh's remaining vacant lots, and C&S is an active new-construction plumber here, working with local builders through underground, rough-in and trim.",
+    updatedAt: "2026-11-12",
   },
   {
     slug: "estero",
@@ -2103,11 +2319,22 @@ export const AREA_LANDINGS: AreaLanding[] = [
       {
         question: "Are you licensed and insured?",
         answer:
-          "Yes — Florida Certified Plumbing Contractors (CFC1432485 / CFC057076), fully insured, family owned and operated since 1998.",
+          "Yes — a Florida Certified Plumbing Contractor (CFC1432485), fully insured, family owned and operated since 1998.",
+      },
+      {
+        question: "My Estero home is only 15 years old — can it already have pipe problems?",
+        answer:
+          "Yes. Many Estero homes built between 2000 and 2012 use CPVC supply lines, and we see more joint failures in that age range every year. Heat cycling (especially in attic runs), the reaction between CPVC and fitting cements and Florida's water chemistry crack joints and start small leaks. If you notice drips at connections, have the system inspected before a joint fails outright.",
+      },
+      {
+        question: "How hard is the water in Estero?",
+        answer:
+          "Estero's water comes from the same regional aquifer as the rest of Lee County and typically tests between 250 and 350 parts per million for hardness — well into the EPA's 'very hard' range. Without a softener that mineral load scales fixtures, cuts water heater efficiency and shortens appliance life, so we recommend a whole-home softener for every Estero residence.",
       },
     ],
     localContext:
-      "Estero has transformed from a quiet community into one of Southwest Florida's most desirable addresses, with master-planned communities like Miromar Lakes, The Brooks, and Grandezza attracting homeowners who expect top-quality service. C&S Plumbing understands the HOA standards and architectural guidelines that come with working in these upscale neighborhoods. Whether you need a water heater replacement in a single-family home or repiping for a villa, we deliver the professionalism and attention to detail that Estero homeowners demand.",
+      "Estero has transformed from a quiet community into one of Southwest Florida's most desirable addresses, with master-planned communities like Miromar Lakes, The Brooks, and Grandezza attracting homeowners who expect top-quality service. C&S Plumbing understands the HOA standards and architectural guidelines that come with working in these upscale neighborhoods. Whether you need a water heater replacement in a single-family home or repiping for a villa, we deliver the professionalism and attention to detail that Estero homeowners demand.\n\nMost homes in Estero's newer communities were built between 2000 and 2020, which puts many of them on CPVC supply lines now entering the age range where joint failures become common. Heat cycling in un-insulated attic runs and the chemistry between CPVC and certain fitting cements cause cracking at joints, typically from the 15–20 year mark. Small drips at pipe connections in an early-2000s Estero home are usually the first sign of a system-wide CPVC problem that is cheaper to address proactively than after a joint lets go.\n\nEstero draws on the same regional aquifer as the rest of Lee County, so hard water is a fact of life; a whole-home softener protects pipes, the water heater and fixtures from scale. Near Estero Bay, salt air also shortens the life of outdoor fixtures and hose bibs, and we stock marine-grade replacements that hold up in coastal exposure.",
+    updatedAt: "2026-11-12",
   },
   {
     slug: "sanibel",
@@ -2163,11 +2390,27 @@ export const AREA_LANDINGS: AreaLanding[] = [
       {
         question: "Are you licensed and insured?",
         answer:
-          "Yes — Florida Certified Plumbing Contractors (CFC1432485 / CFC057076), fully insured, family owned and operated since 1998.",
+          "Yes — a Florida Certified Plumbing Contractor (CFC1432485), fully insured, family owned and operated since 1998.",
+      },
+      {
+        question: "How much does a plumber cost on Sanibel Island?",
+        answer:
+          "Every job starts with an upfront written quote before any work begins. Island work can run modestly higher than the equivalent mainland job because of travel time and the marine-grade materials Sanibel homes need, but there are no hidden trip charges — the quoted price is the price you pay.",
+      },
+      {
+        question: "Can you maintain my Sanibel home while I'm away for the season?",
+        answer:
+          "Yes. Our seasonal service includes a proper shutdown before you leave — main valve off, water heater set appropriately, fixtures checked — and a startup inspection when you return, where we repressurize slowly, test every fixture and the water heater, and look for leaks that developed over the summer. It is the single best way to protect an unoccupied island home from water damage.",
+      },
+      {
+        question: "Do you work on stilt and elevated homes on Sanibel?",
+        answer:
+          "Regularly. Elevated homes in Gulf Pines, The Dunes and along West Gulf Drive route supply and drain lines beneath the living space, exposed to salt air and storms. We repair, insulate and re-secure those runs, replace corroded sections with coastal-rated materials and can re-route vulnerable lines during larger renovations.",
       },
     ],
     localContext:
-      "Sanibel Island's unique barrier island environment presents specific plumbing challenges that mainland homes don't face. Salt air accelerates pipe corrosion, hurricane damage can compromise entire plumbing systems, and the island's building codes require contractors who understand the local requirements. C&S Plumbing has been helping Sanibel and Captiva Island homeowners rebuild and maintain their plumbing systems for years, including extensive work following recent hurricane seasons. Our team is experienced with the logistics of island work, including coordinating with the causeway schedule and island-specific permitting requirements.",
+      "Sanibel Island's unique barrier island environment presents specific plumbing challenges that mainland homes don't face. Salt air accelerates pipe corrosion, hurricane damage can compromise entire plumbing systems, and the island's building codes require contractors who understand the local requirements. C&S Plumbing has been helping Sanibel and Captiva Island homeowners rebuild and maintain their plumbing systems for years, including extensive work following recent hurricane seasons. Our team is experienced with the logistics of island work, including coordinating with the causeway schedule and island-specific permitting requirements.\n\nWe treat the causeway as part of the job, not an excuse. Island service runs are scheduled so one trip covers everything your home needs, trucks arrive stocked so we are not driving back to the mainland for parts, and dispatch quotes arrival windows that account for causeway and Periwinkle Way traffic. Salt-laden air corrodes exposed supply lines, hose bibs and water heater connections far faster than inland, and stilt homes in Gulf Pines, The Dunes and along Sanibel-Captiva Road carry supply and drain lines beneath the living space where UV, salt and storm debris take a constant toll — so we recommend marine-grade fixtures, brass fittings and stainless hardware by default on island work.\n\nSanibel's seasonal owners add one more layer. A home that sits empty from May through November can hide a slow leak for months, and idle water heaters, valves and supply lines often fail the day the water comes back on. Our seasonal shutdown and startup service checks every fixture, tests the water heater and verifies the main shutoff, so a failed fitting costs a service call instead of a renovation.",
+    updatedAt: "2026-11-12",
   },
   {
     slug: "fort-myers-beach",
@@ -2229,7 +2472,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
       {
         question: "Are you licensed and insured?",
         answer:
-          "Yes — Florida Certified Plumbing Contractors (CFC1432485 / CFC057076), fully insured, family owned and operated since 1998.",
+          "Yes — a Florida Certified Plumbing Contractor (CFC1432485), fully insured, family owned and operated since 1998.",
       },
     ],
     localContext:
@@ -2273,7 +2516,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
       {
         question: "Do you really service Punta Gorda from North Fort Myers?",
         answer:
-          "Yes. Our shop at 951 Pondella Rd in North Fort Myers is about 25–35 minutes from most of Punta Gorda via US-41 or I-75. We schedule Charlotte County work daily, and emergency calls are dispatched 24/7 — same as Lee County.",
+          "Yes. Our shop at 951 Pondella Rd in North Fort Myers is about 25–35 minutes from most of Punta Gorda via US-41 or I-75. We schedule Charlotte County work daily, and emergency calls are dispatched 24/7 — same as Lee County.", // claim-ok: drive time, not a response promise
       },
       {
         question: "Can you replace a water heater in Punta Gorda the same day?",
@@ -2288,7 +2531,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
       {
         question: "Do you pull permits with Charlotte County?",
         answer:
-          "Yes. C&S Plumbing works under Florida Certified Plumbing Contractor license CFC1432485, the company's license since its 2023 reorganization as part of Draft Construction; co-founder Samuel Pellechio also holds license CFC057076, and we pull permits and coordinate inspections with Charlotte County for water heaters, repipes, and remodel work. You never have to handle the paperwork yourself.",
+          "Yes. C&S Plumbing works under Florida Certified Plumbing Contractor license CFC1432485, and we pull permits and coordinate inspections with Charlotte County for water heaters, repipes, and remodel work. You never have to handle the paperwork yourself.",
       },
       {
         question: "Is your emergency service available in Punta Gorda?",
@@ -2345,12 +2588,12 @@ export const AREA_LANDINGS: AreaLanding[] = [
       {
         question: "How fast can you get to Port Charlotte for an emergency?",
         answer:
-          "Our North Fort Myers shop is roughly 30–40 minutes from most of Port Charlotte via US-41 or I-75. The emergency line at 833-PLUMB-IT is answered 24/7, and a licensed plumber is dispatched — not an answering service promise.",
+          "Our North Fort Myers shop is roughly 30–40 minutes from most of Port Charlotte via US-41 or I-75. The emergency line at 833-PLUMB-IT is answered 24/7, and a licensed plumber is dispatched — not an answering service promise.", // claim-ok: drive time, not a response promise
       },
       {
         question: "Do you pull permits with Charlotte County?",
         answer:
-          "Yes. We work under Florida Certified Plumbing Contractor license CFC1432485 (co-founder Samuel Pellechio also holds CFC057076) and handle Charlotte County permitting and inspections for water heaters, repipes, drain line replacements, and remodel plumbing.",
+          "Yes. We work under Florida Certified Plumbing Contractor license CFC1432485 and handle Charlotte County permitting and inspections for water heaters, repipes, drain line replacements, and remodel plumbing.",
       },
       {
         question: "Can you replace a water heater in Port Charlotte?",
@@ -2395,7 +2638,7 @@ export const BLOG_POSTS: BlogPost[] = [
 <h2>Why it matters for your plumbing</h2>
 <p>A community vote is a lagging indicator. It reflects the work that was already done — the <a href="/services/water-heaters">water heaters</a> that got replaced the same day, the <a href="/services/repiping">repipes</a> that came in on the written price, the 2 a.m. <a href="/emergency">emergency calls</a> that got answered. If you're comparing plumbers in Cape Coral, an award like this is worth reading alongside the things you can check yourself:</p>
 <ul>
-<li>Both of our Florida Certified Plumbing Contractor licenses (CFC1432485 and CFC057076) are verifiable on the DBPR's MyFloridaLicense.com.</li>
+<li>Our Florida Certified Plumbing Contractor license (CFC1432485) is verifiable on the DBPR's MyFloridaLicense.com.</li>
 <li>Our Google rating and reviews are public — see the <a href="/reviews">reviews page</a>.</li>
 <li>Our work is on the site, phase by phase, on the <a href="/projects">projects pages</a>.</li>
 </ul>
@@ -2471,7 +2714,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h3>Pros</h3>
 <ul>
-<li><strong>Lower upfront cost:</strong> $1,650-$2,500 installed in Southwest Florida</li>
+<li><strong>Lower upfront cost:</strong> ${spanInline("waterHeater.tank40", "waterHeater.tank50")} installed in Southwest Florida</li>
 <li><strong>Simple installation:</strong> Straightforward replacement of existing units</li>
 <li><strong>Reliable technology:</strong> Proven and well-understood by all plumbers</li>
 <li><strong>Works during power outages:</strong> Gas models continue heating without electricity</li>
@@ -2486,6 +2729,7 @@ export const BLOG_POSTS: BlogPost[] = [
 </ul>
 
 <h2>Tankless Water Heaters</h2>
+<p>Leaning tankless? Pricing, brands and what an install involves are on our <a href="/services/tankless-water-heaters">tankless water heater installation and repair</a> page.</p>
 <p>Tankless (on-demand) water heaters heat water only when you need it, using high-powered burners to bring water to temperature as it flows through the unit.</p>
 
 <h3>Pros</h3>
@@ -2499,7 +2743,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h3>Cons</h3>
 <ul>
-<li><strong>Higher upfront cost:</strong> $3,500-$5,200 installed</li>
+<li><strong>Higher upfront cost:</strong> ${rangeInline("waterHeater.tankless")} installed</li>
 <li><strong>May need gas line upgrades:</strong> Some homes need larger gas lines</li>
 <li><strong>Flow rate limits:</strong> Very high simultaneous usage can overwhelm smaller units</li>
 </ul>
@@ -2680,7 +2924,7 @@ export const BLOG_POSTS: BlogPost[] = [
     category: "Water Quality",
     publishDate: "2026-03-17",
     readTime: "5 min read",
-    relatedLandings: ["water-softeners-cape-coral", "water-softeners-fort-myers", "plumber-lehigh-acres"],
+    relatedLandings: ["water-softeners-cape-coral", "water-softeners-fort-myers", "water-heater-repair-lehigh-acres"],
     content: `<h2>The Hard Water Problem in Southwest Florida</h2>
 <p>If you live in <a href="/areas/cape-coral">Cape Coral</a>, <a href="/areas/fort-myers">Fort Myers</a>, <a href="/areas/lehigh-acres">Lehigh Acres</a>, or anywhere in Lee County, your water is hard. Hard water contains high levels of dissolved calcium and magnesium, which cause white buildup on faucets, dry skin and hair, soap that doesn't lather well, and shortened appliance lifespans.</p>
 <p>The question isn't whether you need water treatment — it's which type.</p>
@@ -2712,10 +2956,10 @@ export const BLOG_POSTS: BlogPost[] = [
 <h2>How Much Does Water Treatment Cost?</h2>
 <p>In Southwest Florida, expect to pay:</p>
 <ul>
-<li><strong>Water softener:</strong> $1,500–$3,500 installed</li>
-<li><strong>Whole-home carbon filter:</strong> $800–$2,000 installed</li>
-<li><strong>Under-sink RO system:</strong> $300–$800 installed</li>
-<li><strong>Softener + RO combo:</strong> $2,000–$4,000 installed</li>
+<li><strong>Water softener:</strong> ${rangeInline("softener.system")} installed</li>
+<li><strong>Whole-home carbon filter:</strong> ${rangeInline("softener.carbon")} installed</li>
+<li><strong>Under-sink RO system:</strong> ${rangeInline("softener.ro")} installed</li>
+<li><strong>Softener + RO combo:</strong> ${rangeInline("softener.combo")} installed</li>
 </ul>
 
 <h2>Get a Free Water Test</h2>
@@ -2843,15 +3087,15 @@ export const BLOG_POSTS: BlogPost[] = [
 <h2>Slab Leak Repair Costs in Southwest Florida</h2>
 <p>Repair costs vary widely based on the leak's location, accessibility, and severity:</p>
 <ul>
-<li><strong>Leak detection service:</strong> $200–$500</li>
-<li><strong>Spot repair (slab access):</strong> $1,500–$4,000</li>
-<li><strong>Pipe re-routing:</strong> $1,500–$3,500</li>
-<li><strong>Whole-home repipe:</strong> $4,500–$10,000+ (eliminates all future slab leak risk)</li>
+<li><strong>Leak detection service:</strong> ${rangeInline("leak.detection")}</li>
+<li><strong>Slab leak detection + spot repair:</strong> ${rangeInline("leak.slabSpot")}</li>
+<li><strong>Pipe re-routing:</strong> ${rangeInline("leak.reroute")}</li>
+<li><strong>Whole-home repipe:</strong> ${rangeInline("repipe.overall")} (eliminates all future slab leak risk)</li>
 </ul>
 <p>Most homeowner's insurance policies in Florida cover slab leak repair, though coverage varies. Document the damage thoroughly before any repairs — photos and video of wet flooring, cracks, and water damage strengthen your claim significantly.</p>
 
 <h2>Don't Wait — Slab Leaks Get Worse Quickly</h2>
-<p>A small slab leak that costs $2,000 to repair today can become a $20,000+ foundation and mold remediation project in six months. The concrete and soil beneath your slab will erode faster than you expect once water starts flowing freely underground.</p>
+<p>A small slab leak that costs $2,000 to repair today can become a $20,000+ foundation and mold remediation project in six months. The concrete and soil beneath your slab will erode faster than you expect once water starts flowing freely underground.</p> // claim-ok: illustrative comparison, not a published price
 <p>If you've noticed any of the warning signs above, call <a href="tel:8337586248">833-PLUMB-IT</a> immediately. C&S Plumbing provides expert <a href="/services/leak-repair">leak detection and repair</a> throughout <a href="/areas/cape-coral">Cape Coral</a>, <a href="/areas/fort-myers">Fort Myers</a>, <a href="/areas/north-fort-myers">North Fort Myers</a>, <a href="/areas/bonita-springs">Bonita Springs</a>, and all of Lee County. <a href="/booking">Book a leak detection appointment</a> today — fast diagnosis is the difference between a minor repair and a major reconstruction.</p>`,
   },
   {
@@ -2999,7 +3243,7 @@ export const BLOG_POSTS: BlogPost[] = [
 <p>The conversion involves several steps, and <a href="/services/uep-utilities">C&S Plumbing handles the entire process</a>:</p>
 
 <h3>1. Sewer Lateral Installation</h3>
-<p>A new sewer line is trenched from your home to the city sewer main in the street. This involves excavation across your yard, installing new PVC sewer pipe at the proper grade, and connecting to the city main. Typical cost is $25-$33 per linear foot depending on depth and distance.</p>
+<p>A new sewer line is trenched from your home to the city sewer main in the street. This involves excavation across your yard, installing new PVC sewer pipe at the proper grade, and connecting to the city main. Typical cost is ${perFoot("uep.sewerPerFt")} depending on depth and distance.</p>
 
 <h3>2. Septic Tank Abandonment</h3>
 <p>Your existing septic tank must be properly abandoned according to Lee County code. This involves pumping out the tank, collapsing or filling it with clean fill material, and obtaining a permit and inspection. We handle the entire abandonment process, including coordination with the county inspector.</p>
@@ -3013,11 +3257,11 @@ export const BLOG_POSTS: BlogPost[] = [
 <h2>How Much Does Septic to Sewer Cost?</h2>
 <p>Total project costs vary based on your property's specific situation, but typical ranges for <a href="/areas/cape-coral">Cape Coral</a> homeowners include:</p>
 <ul>
-<li><strong>Sewer lateral:</strong> $2,500–$5,000 (based on distance to main)</li>
-<li><strong>Septic abandonment:</strong> $2,500–$3,500</li>
-<li><strong>Water service line:</strong> $1,300–$2,500 (if needed)</li>
-<li><strong>Irrigation line:</strong> $900–$1,500 (if needed)</li>
-<li><strong>Total typical range:</strong> $5,000–$12,000</li>
+<li><strong>Sewer lateral:</strong> ${perFoot("uep.sewerPerFt")} (based on distance to main)</li>
+<li><strong>Septic abandonment:</strong> ${money(price("uep.septicAbandon").min)}</li>
+<li><strong>Water service line:</strong> ${perFoot("uep.waterPerFt")} (if needed)</li>
+<li><strong>Irrigation line:</strong> ${perFoot("uep.irrigationPerFt")} (if needed)</li>
+<li><strong>Total typical range (Cape Coral UEP lot):</strong> ${rangeInline("uep.typicalLot")}; North Fort Myers conversions ${rangeInline("septicToSewer.nfm")}</li>
 </ul>
 <p>The city may also charge assessment fees for the sewer infrastructure itself, which are separate from the plumbing connection costs.</p>
 
@@ -3079,7 +3323,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>4. Test Your Toilets for Running or Silent Leaks</h2>
 <p>A running toilet is one of the most common — and wasteful — plumbing problems in residential homes. A toilet that runs continuously can waste 200 gallons per day. The flapper valve is usually the culprit: it's a rubber seal that deteriorates over time, especially in Florida's chlorinated water.</p>
-<p>To check for a silent toilet leak, put a few drops of food coloring or a dye tablet in the tank and wait 15 minutes without flushing. If color appears in the bowl, the flapper is leaking. Replacing a flapper costs about $10 and takes 10 minutes — one of the few plumbing repairs genuinely worth doing yourself before calling a plumber.</p>
+<p>To check for a silent toilet leak, put a few drops of food coloring or a dye tablet in the tank and wait 15 minutes without flushing. If color appears in the bowl, the flapper is leaking. Replacing a flapper costs about $10 and takes 10 minutes — one of the few plumbing repairs genuinely worth doing yourself before calling a plumber.</p> // claim-ok: DIY part cost, not a C&S price
 
 <h2>5. Inspect and Clear All Drains</h2>
 <p>Summer in Southwest Florida brings daily rainfall and heavy use of showers (everyone's sweating constantly). Make sure all drains are flowing freely before summer begins. Pour a bucket of water into floor drains in the garage, laundry room, and any utility areas — these drains sit unused for long periods and their water traps can evaporate, allowing sewer gas odors into the home.</p>
@@ -3254,10 +3498,10 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "How Much Does Whole-Home Repiping Cost in Cape Coral?",
     metaTitle: "Whole-Home Repipe Cost in Cape Coral — Real 2026 Prices",
     metaDescription:
-      "Cape Coral whole-home repipe costs $4,000–$15,000; most 3-bed homes run $6,800–$9,500 in PEX. Price by home size, PEX vs copper, and what's included.",
+      `Cape Coral whole-home repipe costs ${rangeInline("repipe.overall")}; most 3-bed homes run ${rangeInline("repipe.pex3x2")} in PEX. Price by home size, PEX vs copper, and what's included.`,
     keywords: ["repipe cost Cape Coral", "whole home repipe cost Florida", "how much does repiping cost", "PEX repipe price Cape Coral", "polybutylene replacement cost"],
     excerpt:
-      "Straight answer: most Cape Coral repipes cost $4,000–$15,000, and a typical 3-bed, 2-bath home lands between $6,800–$9,500 in PEX. Here's the full price breakdown by home size and pipe material, and exactly what that money buys.",
+      `Straight answer: most Cape Coral repipes cost ${rangeInline("repipe.overall")}, and a typical 3-bed, 2-bath home lands between ${rangeInline("repipe.pex3x2")} in PEX. Here's the full price breakdown by home size and pipe material, and exactly what that money buys.`,
     category: "Repiping",
     publishDate: "2026-07-21",
     readTime: "7 min read",
@@ -3265,11 +3509,11 @@ export const BLOG_POSTS: BlogPost[] = [
     faqs: [
       {
         question: "How much does it cost to repipe a 3-bedroom house in Cape Coral?",
-        answer: "A PEX repipe on a typical 3-bed, 2-bath Cape Coral home (1,800–2,400 sq ft) runs $6,800–$9,500 with C&S Plumbing, including the Lee County permit, final inspection, and drywall patching. Smaller 2-bed homes and condos run $4,200–$6,500.",
+        answer: `A PEX repipe on a typical 3-bed, 2-bath Cape Coral home (1,800–2,400 sq ft) runs ${rangeInline("repipe.pex3x2")} with C&S Plumbing, including the Lee County permit, final inspection, and patching and texturing the access cuts (painting by others). Smaller 2-bed homes and condos run ${rangeInline("repipe.pex2x2")}.`,
       },
       {
         question: "How much more does a copper repipe cost than PEX?",
-        answer: "Plan on $2,000–$4,000 over the equivalent PEX price for Type-L copper. Most Cape Coral homeowners choose PEX — it's corrosion-proof in Florida water, quieter, and carries a manufacturer warranty — but we install both.",
+        answer: `Plan on ${rangeInline("repipe.copperUpcharge")} over the equivalent PEX price for Type-L copper. Most Cape Coral homeowners choose PEX — it's corrosion-proof in Florida water, quieter, and carries a manufacturer warranty — but we install both.`,
       },
       {
         question: "How long does a whole-home repipe take?",
@@ -3280,20 +3524,20 @@ export const BLOG_POSTS: BlogPost[] = [
         answer: "Yes. Every C&S repipe quote includes the Lee County permit, the final inspection, and patching every access cut to paint-ready condition before we leave. There are no add-on surprises at the end.",
       },
     ],
-    content: `<p><strong>The straight answer: whole-home repiping in Cape Coral costs $4,000–$15,000, and the large majority of homes land between $4,200 and $9,500 with PEX.</strong> Where you fall in that range comes down to three things — the size of your home, the pipe material you choose, and whether we're removing polybutylene. Below are the actual price brackets we quote every week, so you can ballpark your own home before anyone steps through your door.</p>
+    content: `<p><strong>The straight answer: whole-home repiping in Cape Coral costs ${rangeInline("repipe.overall")}, and the large majority of homes land between ${money(price("repipe.pex2x2").min)} and ${money(price("repipe.pex3x2").max)} with PEX.</strong> Where you fall in that range comes down to three things — the size of your home, the pipe material you choose, and whether we're removing polybutylene. Below are the actual price brackets we quote every week, so you can ballpark your own home before anyone steps through your door.</p>
 
 <h2>Repipe Cost by Home Size (PEX)</h2>
 <p>These are C&S Plumbing's real working ranges for a complete hot-and-cold repipe in PEX, including materials, labor, the Lee County permit, final inspection, and drywall patching:</p>
-<p><strong>2-bed / 2-bath, up to 1,500 sq ft — $4,200–$6,500.</strong> Most condos and smaller slab homes. A North Fort Myers condo we repiped recently came in at $4,950, done in a single day so the unit could be re-rented that weekend.</p>
-<p><strong>3-bed / 2-bath, 1,800–2,400 sq ft — $6,800–$9,500.</strong> The typical Cape Coral and Fort Myers single-family home. A 1990 Cape Coral SE home with failing polybutylene ran $7,200, finished in a day and a half with nine access cuts, all patched.</p>
-<p><strong>4-bed or larger, 2,500+ sq ft — $9,500–$13,000.</strong> Two-story layouts and bigger floor plans take more pipe, more openings, and more time.</p>
+<p><strong>2-bed / 2-bath, up to 1,500 sq ft — ${rangeInline("repipe.pex2x2")}.</strong> Most condos and smaller slab homes. A North Fort Myers condo we repiped recently came in at $4,950, done in a single day so the unit could be re-rented that weekend.</p> // claim-ok: documented job
+<p><strong>3-bed / 2-bath, 1,800–2,400 sq ft — ${rangeInline("repipe.pex3x2")}.</strong> The typical Cape Coral and Fort Myers single-family home. A 1990 Cape Coral SE home with failing polybutylene ran $7,200, finished in a day and a half with nine access cuts, all patched.</p> // claim-ok: documented job
+<p><strong>4-bed or larger, 2,500+ sq ft — ${rangeInline("repipe.pex4plus")}.</strong> Two-story layouts and bigger floor plans take more pipe, more openings, and more time.</p>
 
 <h2>PEX or Copper?</h2>
 <p>PEX is what we recommend for most Southwest Florida homes, and it's what the price brackets above assume. It doesn't corrode in our aggressive water, it tolerates minor slab movement, installs faster with fewer wall openings, and carries a manufacturer warranty on the pipe itself.</p>
-<p>Type-L copper is still the right call for some owners — often ahead of an appraisal or for personal preference — and adds <strong>$2,000–$4,000 over the PEX price</strong> plus roughly an extra day of install time. A 2,650 sq ft Fort Myers home we repiped in copper for resale came to $11,800 and passed the county final on the first inspection.</p>
+<p>Type-L copper is still the right call for some owners — often ahead of an appraisal or for personal preference — and adds <strong>${rangeInline("repipe.copperUpcharge")} over the PEX price</strong> plus roughly an extra day of install time. A 2,650 sq ft Fort Myers home we repiped in copper for resale came to $11,800 and passed the county final on the first inspection.</p> // claim-ok: documented job
 
 <h2>The Polybutylene Factor</h2>
-<p>If your Cape Coral home was built between 1978 and 1995, there's a good chance it still has gray <a href="/blog/polybutylene-pipe-problems-cape-coral">polybutylene supply lines</a> — the pipe material that failed so widely it triggered a class-action settlement. Removing poly adds <strong>$500–$1,200</strong> to the job, and it's the single most common reason Cape Coral homes get repiped. Some Florida insurers now require poly replacement as a condition of coverage, which means the repipe often pays for itself in premiums and insurability.</p>
+<p>If your Cape Coral home was built between 1978 and 1995, there's a good chance it still has gray <a href="/blog/polybutylene-pipe-problems-cape-coral">polybutylene supply lines</a> — the pipe material that failed so widely it triggered a class-action settlement. Removing poly adds <strong>${rangeInline("repipe.polyRemoval")}</strong> to the job, and it's the single most common reason Cape Coral homes get repiped. Some Florida insurers now require poly replacement as a condition of coverage, which means the repipe often pays for itself in premiums and insurability.</p>
 
 <h2>What's Included (Ask Any Plumber This)</h2>
 <p>When you compare repipe quotes, make sure you're comparing the same job. Every C&S repipe includes the <strong>Lee County permit and final inspection</strong> — required by code, and a red flag if a bidder wants to skip it — plus <strong>drywall patching to paint-ready condition</strong> on every access cut. Those two items are where lowball quotes quietly make their money back.</p>
@@ -3309,10 +3553,10 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "Signs Your Water Heater Needs Replacing (And What It Costs in SWFL)",
     metaTitle: "Water Heater Replacement Signs & Costs — SWFL 2026 Guide",
     metaDescription:
-      "Rusty water, popping sounds, water at the base: the signs a water heater is done, and real SWFL replacement costs, $1,650 for tanks to $5,200 for tankless.",
+      `Rusty water, popping sounds, water at the base: the signs a water heater is done, and real SWFL replacement costs, ${money(price("waterHeater.tank40").min)} for tanks to ${money(price("waterHeater.tankless").max)} for tankless.`,
     keywords: ["water heater replacement cost Florida", "signs water heater needs replacing", "water heater lifespan Florida", "water heater leaking replace or repair", "tankless water heater cost SWFL"],
     excerpt:
-      "A water heater rarely dies without warning. Here are the five signs ours techs look for, the repair-or-replace rule we use on every call, and real installed prices for Southwest Florida — from $195 repairs to $5,200 tankless conversions.",
+      `A water heater rarely dies without warning. Here are the five signs ours techs look for, the repair-or-replace rule we use on every call, and real installed prices for Southwest Florida — from ${money(price("waterHeater.repair").min)} repairs to ${money(price("waterHeater.tankless").max)} tankless conversions.`,
     category: "Water Heaters",
     publishDate: "2026-07-24",
     readTime: "6 min read",
@@ -3324,18 +3568,18 @@ export const BLOG_POSTS: BlogPost[] = [
       },
       {
         question: "How much does it cost to replace a water heater in SWFL?",
-        answer: "With C&S Plumbing: a 40-gallon electric tank installed runs $1,650–$2,200, a 50-gallon runs $1,850–$2,500, heat-pump hybrids run $3,200–$4,800, and gas tankless systems run $3,500–$5,200. Every install includes haul-away, code-compliant pan and fittings, and the Lee County permit.",
+        answer: `With C&S Plumbing: a 40-gallon electric tank installed runs ${rangeInline("waterHeater.tank40")}, a 50-gallon runs ${rangeInline("waterHeater.tank50")}, heat-pump hybrids run ${rangeInline("waterHeater.hybrid")}, and gas tankless systems run ${rangeInline("waterHeater.tankless")}. Every install includes haul-away, code-compliant pan and fittings, and the Lee County permit.`,
       },
       {
         question: "My water heater is leaking — can it be repaired?",
-        answer: "It depends where. Leaks at a valve or fitting are usually repairable ($195–$475). Water weeping from the tank itself means the tank has corroded through, and no repair fixes that — it's a replacement, ideally before it lets go completely.",
+        answer: `It depends where. Leaks at a valve or fitting are usually repairable (${rangeInline("waterHeater.repair")}). Water weeping from the tank itself means the tank has corroded through, and no repair fixes that — it's a replacement, ideally before it lets go completely.`,
       },
       {
         question: "Should I repair or replace a 10-year-old water heater?",
         answer: "At 10+ years we usually advise replacement. A repair might buy a year or two, but you'd be putting a few hundred dollars into a unit at the end of its design life — and an old tank that fails wet can flood the garage or house.",
       },
     ],
-    content: `<p><strong>The short answer: if your water heater is 10+ years old, is leaking from the tank itself, or is producing rusty water — replace it. If it's under 8 years old with a specific failed part, repair it ($195–$475).</strong> Replacement in Southwest Florida runs $1,650–$2,500 installed for a standard tank, or $3,200–$5,200 for hybrid and tankless upgrades. Here's how to tell which side of the line your unit is on.</p>
+    content: `<p><strong>The short answer: if your water heater is 10+ years old, is leaking from the tank itself, or is producing rusty water — replace it. If it's under 8 years old with a specific failed part, repair it (${rangeInline("waterHeater.repair")}).</strong> Replacement in Southwest Florida runs ${spanInline("waterHeater.tank40", "waterHeater.tank50")} installed for a standard tank, or ${spanInline("waterHeater.hybrid", "waterHeater.tankless")} for hybrid and tankless upgrades. Here's how to tell which side of the line your unit is on.</p>
 
 <h2>The Five Signs It's Done</h2>
 <p><strong>1. Water around the base.</strong> Moisture or rust streaks at the bottom of the tank mean the tank wall itself has corroded through. There is no repair for a weeping tank — only a countdown to the day it fails completely, usually 40–80 gallons at a time.</p>
@@ -3345,14 +3589,14 @@ export const BLOG_POSTS: BlogPost[] = [
 <p><strong>5. It's simply old.</strong> Tank units in Southwest Florida realistically last <strong>8–12 years</strong>. Check the manufacture date on the data plate; if it starts with 201, you're on borrowed time.</p>
 
 <h2>Repair vs. Replace: The Rule We Use</h2>
-<p>Our techs apply a simple test on every call. <strong>Under 8 years old with a specific failed part</strong> — thermostat, element, T&P valve — repair it: <strong>$195–$475, usually same-day</strong>. <strong>Over 10 years old, or any tank leak</strong> — replace it. Between 8 and 10 is a judgment call we'll make honestly based on the unit's condition, because putting $400 into a 9-year-old tank only sometimes makes sense.</p>
+<p>Our techs apply a simple test on every call. <strong>Under 8 years old with a specific failed part</strong> — thermostat, element, T&P valve — repair it: <strong>${rangeInline("waterHeater.repair")}, usually same-day</strong>. <strong>Over 10 years old, or any tank leak</strong> — replace it. Between 8 and 10 is a judgment call we'll make honestly based on the unit's condition, because putting $400 into a 9-year-old tank only sometimes makes sense.</p> // claim-ok: illustrative repair, not a published price
 
 <h2>What Replacement Actually Costs in SWFL</h2>
 <p>Real installed prices from our current price book — including haul-away of the old unit, code-compliant pan and fittings, and the Lee County permit:</p>
-<p><strong>40-gallon electric tank — $1,650–$2,200.</strong> The right size for 1–2 people.</p>
-<p><strong>50-gallon electric tank — $1,850–$2,500.</strong> The most common size for an SWFL family of four. When an 11-year-old tank in Fort Myers failed on a Friday at 5pm, this is what got installed by 7pm Saturday — $2,150, old unit hauled away same trip.</p>
-<p><strong>Heat-pump hybrid (50–80 gal) — $3,200–$4,800.</strong> Cuts water-heating energy use dramatically — one Naples retrofit is running about 70% less than the old unit on the owner's FPL bill — and Florida utility rebates of up to ~$2,000 are often available.</p>
-<p><strong>Gas tankless (Rinnai/Navien) — $3,500–$5,200</strong> including gas line and venting. Endless hot water and a 20+ year service life with annual flushing; see our <a href="/blog/tankless-vs-traditional-water-heaters">tankless vs. tank comparison</a> for whether it fits your home.</p>
+<p><strong>40-gallon electric tank — ${rangeInline("waterHeater.tank40")}.</strong> The right size for 1–2 people.</p>
+<p><strong>50-gallon electric tank — ${rangeInline("waterHeater.tank50")}.</strong> The most common size for an SWFL family of four. When an 11-year-old tank in Fort Myers failed on a Friday at 5pm, this is what got installed by 7pm Saturday — $2,150, old unit hauled away same trip.</p> // claim-ok: documented job
+<p><strong>Heat-pump hybrid (50–80 gal) — ${rangeInline("waterHeater.hybrid")}.</strong> Cuts water-heating energy use dramatically — one Naples retrofit is running about 70% less than the old unit on the owner's FPL bill — and Florida utility rebates of up to ~${money(price("waterHeater.hybridRebate").max)} are often available.</p>
+<p><strong>Gas tankless (Rinnai/Navien) — ${rangeInline("waterHeater.tankless")}</strong> including gas line and venting. Endless hot water and a 20+ year service life with annual flushing; see our <a href="/blog/tankless-vs-traditional-water-heaters">tankless vs. tank comparison</a> for whether it fits your home.</p>
 
 <h2>Don't Wait for the Flood</h2>
 <p>Most water heaters sit in the garage or an interior closet, and a tank that fails wet dumps its entire capacity onto the floor. If your unit is showing two or more of the signs above, replacing it on your schedule beats replacing it at 2am — and if a storm is coming, read our guide on <a href="/blog/water-heater-hurricane-prep-florida">water heaters and hurricanes</a> first.</p>
@@ -3363,7 +3607,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "How Long Does Drain Cleaning Take? A Plumber's Honest Answer",
     metaTitle: "How Long Does Drain Cleaning Take? Honest Times & Prices",
     metaDescription:
-      "Single-drain clogs clear in about an hour; main lines take 1–2 hours, hydro-jetting 2–3. Honest drain cleaning times, costs ($150–$800), and why clogs return.",
+      `Single-drain clogs clear in about an hour; main lines take 1–2 hours, hydro-jetting 2–3. Honest drain cleaning times, costs (${spanInline("drain.fixture", "drain.hydroJet")}), and why clogs return.`,
     keywords: ["how long does drain cleaning take", "drain cleaning cost Cape Coral", "main sewer line clog cost", "hydro jetting cost Florida", "why does my drain keep clogging"],
     excerpt:
       "Honest answer: about an hour for a single clogged fixture, 1–2 hours for a main sewer line, 2–3 hours for hydro-jetting with a camera. Here's what changes those numbers, what each job costs, and when cabling alone won't fix it.",
@@ -3374,11 +3618,11 @@ export const BLOG_POSTS: BlogPost[] = [
     faqs: [
       {
         question: "How long does it take a plumber to unclog a drain?",
-        answer: "A single clogged fixture — kitchen sink, tub, or toilet — typically takes about an hour on site and costs $150–$250. A blocked main sewer line takes 1–2 hours and runs $295–$475 with cable equipment.",
+        answer: `A single clogged fixture — kitchen sink, tub, or toilet — typically takes about an hour on site and costs ${rangeInline("drain.fixture")}. A blocked main sewer line takes 1–2 hours and runs ${rangeInline("drain.mainLine")} with cable equipment.`,
       },
       {
         question: "How much does drain cleaning cost in the Cape Coral area?",
-        answer: "With C&S Plumbing: single-fixture clogs run $150–$250, main-line cabling $295–$475, hydro-jetting $450–$800, and a sewer camera inspection $245–$395 (free when done with jetting). Root removal with jetting and camera runs $650–$1,100.",
+        answer: `With C&S Plumbing: single-fixture clogs run ${rangeInline("drain.fixture")}, main-line cabling ${rangeInline("drain.mainLine")}, hydro-jetting ${rangeInline("drain.hydroJet")}, and a sewer camera inspection ${rangeInline("drain.camera")} (free when done with jetting). Root removal with jetting and camera runs ${rangeInline("drain.rootsJetCamera")}.`,
       },
       {
         question: "Is hydro-jetting worth the extra cost over cabling?",
@@ -3392,10 +3636,10 @@ export const BLOG_POSTS: BlogPost[] = [
     content: `<p><strong>The honest answer: about an hour for a single clogged fixture, 1–2 hours for a blocked main sewer line, and 2–3 hours for hydro-jetting with a camera inspection.</strong> Any plumber who quotes you a time without asking what's clogged and where is guessing. Here's how the real numbers break down — in time and in dollars — and the situations that make a "quick snake job" take all afternoon.</p>
 
 <h2>Typical Times and Prices, Job by Job</h2>
-<p><strong>Single-fixture clog (sink, tub, toilet) — about an hour, $150–$250.</strong> We cable from the nearest accessible cleanout or the fixture itself. If the clog is in the fixture's own trap arm, it can be done in 30 minutes; hair-and-soap tub clogs and grease-packed kitchen lines sit at the longer end.</p>
-<p><strong>Main sewer line cabling — 1–2 hours, $295–$475.</strong> This is the "every drain in the house is backing up" call. Time depends heavily on cleanout access (more on that below) and how far down the line the blockage sits.</p>
-<p><strong>Hydro-jetting the main line — 2–3 hours, $450–$800.</strong> A 4,000 PSI jet scours the full pipe diameter clean instead of punching a hole through the clog. We camera the line on the same trip — <strong>the $245–$395 camera inspection is free with jetting</strong> — so you see exactly what condition your pipe is in.</p>
-<p><strong>Roots in the line — 2–4 hours, $650–$1,100</strong> for cutting, jetting, and camera. Common in older Cape Coral and Fort Myers neighborhoods with big oaks and ficus. One 1976 Fort Myers home had a 60-foot cast iron run with two oak roots grown in; jetting plus a root cutter cleared it, and the camera flagged one cracked joint to watch.</p>
+<p><strong>Single-fixture clog (sink, tub, toilet) — about an hour, ${rangeInline("drain.fixture")}.</strong> We cable from the nearest accessible cleanout or the fixture itself. If the clog is in the fixture's own trap arm, it can be done in 30 minutes; hair-and-soap tub clogs and grease-packed kitchen lines sit at the longer end.</p>
+<p><strong>Main sewer line cabling — 1–2 hours, ${rangeInline("drain.mainLine")}.</strong> This is the "every drain in the house is backing up" call. Time depends heavily on cleanout access (more on that below) and how far down the line the blockage sits.</p>
+<p><strong>Hydro-jetting the main line — 2–3 hours, ${rangeInline("drain.hydroJet")}.</strong> A 4,000 PSI jet scours the full pipe diameter clean instead of punching a hole through the clog. We camera the line on the same trip — <strong>the ${rangeInline("drain.camera")} camera inspection is free with jetting</strong> — so you see exactly what condition your pipe is in.</p>
+<p><strong>Roots in the line — 2–4 hours, ${rangeInline("drain.rootsJetCamera")}</strong> for cutting, jetting, and camera. Common in older Cape Coral and Fort Myers neighborhoods with big oaks and ficus. One 1976 Fort Myers home had a 60-foot cast iron run with two oak roots grown in; jetting plus a root cutter cleared it, and the camera flagged one cracked joint to watch.</p>
 
 <h2>What Makes It Take Longer</h2>
 <p><strong>No accessible cleanout.</strong> If your home doesn't have one (or it's buried under landscaping), we may need to pull a toilet or go through a roof vent — add an hour. Many older SWFL homes are missing them; installing one during the visit saves money on every future call.</p>
@@ -3406,7 +3650,7 @@ export const BLOG_POSTS: BlogPost[] = [
 <p>Our rule: <strong>the second time the same line clogs within a year, it's a jetting-and-camera conversation.</strong> One Lehigh Acres customer had been paying another plumber three times a year to cable the same kitchen line. We jetted it, scoped it, found a low spot trapping grease — it hasn't backed up in 14 months. Cheaper than the fourth cabling would have been. More on causes and prevention in our <a href="/blog/clogged-drains-causes-fixes-swfl">clogged drains guide</a>.</p>
 
 <h2>Same-Day Service, Honest Clock</h2>
-<p>Most drain calls across <a href="/drain-cleaning-cape-coral">Cape Coral</a>, Fort Myers, and Lehigh Acres get same-day service in regular hours, and we handle 24/7 emergencies when every drain in the house is backing up. After-hours work carries a $95–$150 surcharge — which we aim to never charge, because most jobs fit in business hours. Call <a href="tel:8337586248">833-PLUMB-IT</a> or <a href="/booking">book online</a>, and see full pricing on our <a href="/services/drain-cleaning">drain cleaning page</a>.</p>`,
+<p>Most drain calls across <a href="/drain-cleaning-cape-coral">Cape Coral</a>, Fort Myers, and Lehigh Acres get same-day service in regular hours, and we handle 24/7 emergencies when every drain in the house is backing up. After-hours work carries a ${EMERGENCY_CLAIMS.afterHoursSurcharge} surcharge — which we aim to never charge, because most jobs fit in business hours. Call <a href="tel:8337586248">833-PLUMB-IT</a> or <a href="/booking">book online</a>, and see full pricing on our <a href="/services/drain-cleaning">drain cleaning page</a>.</p>`,
   },
 ];
 
@@ -3536,7 +3780,7 @@ export const COMPLETED_PROJECTS: CompletedProject[] = [
     clientUrl: "https://heatherwoodconstruction.com",
     category: "New Construction",
     timeline: "7 months",
-    cost: "$55K",
+    cost: "$55K", // claim-ok: documented project
     description:
       "Full plumbing installation for the IFHA Community Center new construction project in Lee County. C&S Plumbing handled all phases from underground rough-in through final trim out, working alongside Heatherwood Construction to deliver a complete commercial plumbing system on schedule and within budget.",
     location: "Lee County, FL",
@@ -3637,7 +3881,7 @@ export const COMPLETED_PROJECTS: CompletedProject[] = [
     client: "Mangos Restaurant & Bar",
     category: "Commercial Remodel",
     timeline: "2 months",
-    cost: "$20K\u2013$25K",
+    cost: "$20K\u2013$25K", // claim-ok: documented project
     description:
       "Complete commercial bathroom remodel for Mangos Restaurant & Bar on North Captiva Island. C&S Plumbing handled the full scope from demolition of the existing restroom facilities through rough-in of all new supply and drain lines to final trim and fixture installation, delivering a modern, code-compliant restroom for this popular island destination.",
     location: "North Captiva Island, FL",
@@ -4243,6 +4487,6 @@ export const COASTAL_COMEBACK_FAQS = [
   {
     question: "How is this different from a home watch service?",
     answer:
-      "Home watch services are great generalists — they look for obvious problems. We're licensed plumbers (CFC1432485 / CFC057076), so we actually shut down, drain, inspect, and fix the plumbing system. Many of our snowbird customers use both: a home watch service for general property checks, and the Coastal Comeback Plan specifically for plumbing.",
+      "Home watch services are great generalists — they look for obvious problems. We're licensed plumbers (CFC1432485), so we actually shut down, drain, inspect, and fix the plumbing system. Many of our snowbird customers use both: a home watch service for general property checks, and the Coastal Comeback Plan specifically for plumbing.",
   },
 ];

@@ -1,9 +1,14 @@
 "use client";
 
+import Link from "next/link";
+import { CLAIMS } from "@/lib/claims";
 import { useId, useRef, useState } from "react";
 import { BUSINESS } from "@/lib/constants";
 import { serviceRequestSchema, SERVICE_REQUEST_OPTIONS } from "@/lib/service-request";
 import { trackContactForm } from "@/lib/pixel";
+import FileUpload from "@/components/builder-portal/FileUpload";
+import { PHOTO_UPLOAD, photoTotalError } from "@/lib/photo-upload";
+import { compressAll } from "@/lib/compress-image";
 
 export default function ServiceRequestForm({
   defaultService = "",
@@ -19,6 +24,7 @@ export default function ServiceRequestForm({
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
   const [error, setError] = useState("");
+  const [photos, setPhotos] = useState<File[]>([]);
   const inputClass = "mt-1 w-full rounded-xl border border-gray-300 bg-white px-3 py-2.5 text-sm text-gray-900 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary";
   const labelClass = "block text-sm font-medium text-gray-700";
 
@@ -35,21 +41,45 @@ export default function ServiceRequestForm({
       setError(parsed.error.issues[0].message);
       return;
     }
+    const sizeError = photoTotalError(photos);
+    if (sizeError) {
+      setError(sizeError);
+      return;
+    }
     busy.current = true;
     setSending(true);
     setError("");
     try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(parsed.data),
-      });
+      // Photos ride along as multipart; without them the payload stays JSON.
+      let response: Response;
+      if (photos.length > 0) {
+        const body = new FormData();
+        for (const [key, value] of Object.entries(parsed.data)) {
+          if (value !== undefined && value !== null) body.append(key, String(value));
+        }
+        photos.forEach((file) => body.append(PHOTO_UPLOAD.field, file));
+        response = await fetch("/api/contact", { method: "POST", body });
+      } else {
+        response = await fetch("/api/contact", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(parsed.data),
+        });
+      }
       const result = await response.json();
-      if (!response.ok || !result.success) throw new Error("Submission failed");
+      if (!response.ok || !result.success) {
+        throw Object.assign(new Error(result.error ?? "Submission failed"), { code: result.code });
+      }
       setSent(true);
       void trackContactForm({ email: parsed.data.email, eventId: result.eventId });
-    } catch {
-      setError(`Your request could not be sent. Please try again or call ${BUSINESS.phone}.`);
+    } catch (err) {
+      // Attachment problems are explained by the server in customer-facing words.
+      const attachmentIssue = (err as { code?: string }).code === "attachments" && err instanceof Error;
+      setError(
+        attachmentIssue
+          ? err.message
+          : `Your request could not be sent. Please try again or call ${BUSINESS.phone}.`
+      );
     } finally {
       busy.current = false;
       setSending(false);
@@ -60,7 +90,7 @@ export default function ServiceRequestForm({
     return (
       <div role="status" className="rounded-2xl border border-green-200 bg-green-50 p-6 text-center">
         <h3 className="text-lg font-bold text-gray-900">Request sent!</h3>
-        <p className="mt-2 text-sm text-gray-600">Our office will contact you using the details you provided. Your appointment is confirmed only after we contact you.</p>
+        <p className="mt-2 text-sm text-gray-600">Our office will contact you using the details you provided. {CLAIMS.bookingConfirmation} Your appointment is confirmed only after we contact you.</p>
         <p className="mt-3 text-sm text-gray-600">For urgent service, call <a className="font-semibold text-primary underline" href={`tel:${BUSINESS.phoneRaw}`}>{BUSINESS.phone}</a>.</p>
       </div>
     );
@@ -97,11 +127,26 @@ export default function ServiceRequestForm({
           <label className={labelClass} htmlFor={`${id}-message`}>Brief description (optional)</label>
           <textarea id={`${id}-message`} name="message" rows={2} maxLength={5000} className={inputClass} />
         </div>
+        <div className={compact ? "" : "sm:col-span-2"}>
+          <span className={labelClass}>Photos of the problem (optional, up to {PHOTO_UPLOAD.maxFiles})</span>
+          <div className="mt-1">
+            <FileUpload
+              files={photos}
+              onChange={(next) => {
+                // Downscale phone photos as they are picked so the upload stays small.
+                void compressAll(next).then(setPhotos);
+              }}
+              maxFiles={PHOTO_UPLOAD.maxFiles}
+              maxSizeMb={PHOTO_UPLOAD.maxBytesEach / 1024 / 1024}
+              compact
+            />
+          </div>
+        </div>
         <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="absolute -left-[9999px] w-px h-px opacity-0" />
       </fieldset>
       {error && <p role="alert" className="text-sm text-red-700">{error}</p>}
       <button type="submit" disabled={sending} className="w-full rounded-xl bg-primary px-4 py-3 font-semibold text-white hover:bg-primary-dark disabled:opacity-60">{sending ? "Sending…" : "Request Service"}</button>
-      <p className="text-xs text-gray-500">We&apos;ll call or email you about this request. <a className="underline" href="/privacy-policy">Privacy policy</a></p>
+      <p className="text-xs text-gray-500">We&apos;ll call or email you about this request. <Link className="underline" href="/privacy-policy">Privacy policy</Link></p>
     </form>
   );
 }

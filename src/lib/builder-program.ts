@@ -192,7 +192,7 @@ export const SERVICE_COVERAGE = "Southwest Florida, from Port Charlotte through 
 // Owner-confirmed (Sep 2026). State each as written; do not expand into
 // further promises.
 export const QUALIFICATIONS = [
-  { id: "gl", label: "$2 million general liability coverage" },
+  { id: "gl", label: "$2 million general liability coverage" }, // claim-ok: insurance limit, not a price
   { id: "wc", label: "Workers' compensation coverage" },
   { id: "bond", label: "Bonding available — bonding information on request" },
   { id: "osha", label: "OSHA-30 trained" },
@@ -434,7 +434,7 @@ export const NEW_CONSTRUCTION_CITIES: NewConstructionCity[] = [
     ],
     faqs: cityFaqs("Lehigh Acres", "Lee County"),
     areaHref: "/areas/lehigh-acres",
-    related: [{ label: "Plumber in Lehigh Acres", href: "/plumber-lehigh-acres" }],
+    related: [{ label: "Emergency Plumber in Lehigh Acres", href: "/emergency-plumber-lehigh-acres" }],
   },
   {
     slug: "estero",
@@ -458,7 +458,7 @@ export const NEW_CONSTRUCTION_CITIES: NewConstructionCity[] = [
     ],
     faqs: cityFaqs("Estero", "the Village of Estero"),
     areaHref: "/areas/estero",
-    related: [{ label: "Plumber in Estero", href: "/plumber-estero" }],
+    related: [{ label: "Water Heater Repair in Estero", href: "/water-heater-repair-estero" }],
   },
   {
     slug: "bonita-springs",

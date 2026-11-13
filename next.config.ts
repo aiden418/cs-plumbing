@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { landingRedirects } from "./src/lib/landing-indexing";
 
 const nextConfig: NextConfig = {
   images: {
@@ -22,6 +23,9 @@ const nextConfig: NextConfig = {
       { source: "/home", destination: "/", permanent: true },
       // Legal page consolidated into the versioned Terms & Conditions at /terms.
       { source: "/terms-of-service", destination: "/terms", permanent: true },
+      // Retired service-city landings, declared on each entry as
+      // `indexing: { redirectTo }` in src/lib/service-city-landings.ts.
+      ...landingRedirects(),
     ];
   },
   poweredByHeader: false,

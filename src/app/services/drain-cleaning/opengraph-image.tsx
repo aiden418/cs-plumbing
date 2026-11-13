@@ -1,4 +1,5 @@
 import { createOgImage, ogImageContentType, ogImageSize } from "@/lib/og";
+import { rangeInline } from "@/lib/pricing";
 
 export const runtime = "edge";
 export const size = ogImageSize;
@@ -10,6 +11,6 @@ export default function OgImage() {
     variant: "service",
     eyebrow: "Drain Cleaning",
     title: "Hydro-Jetting & Sewer Camera Inspection",
-    subtitle: "Cable, hydro-jetting up to 4,000 PSI, root removal. $150–$500 typical residential.",
+    subtitle: `Cable, hydro-jetting up to 4,000 PSI, root removal. ${rangeInline("drain.overall")} typical residential.`,
   });
 }

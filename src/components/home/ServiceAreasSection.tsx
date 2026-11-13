@@ -9,38 +9,27 @@ import SectionHeading from "@/components/ui/SectionHeading";
 import ScrollReveal from "@/components/animations/ScrollReveal";
 import { registerGSAP, gsap, ScrollTrigger } from "@/lib/gsap";
 import { AREA_LANDINGS } from "@/lib/constants";
+import { EMERGENCY_CLAIMS } from "@/lib/claims";
 
-// Per-city response copy. Falls back to "Same-day service" for any slug
-// not listed. Move into AREA_LANDINGS in Phase 2 once we verify per-city.
-const RESPONSE_TIMES: Record<string, string> = {
-  "north-fort-myers": "15 min response", // shop is here
-  "cape-coral": "30 min response",
-  "fort-myers": "30 min response",
-  "lehigh-acres": "45 min response",
-  "estero": "45 min response",
-  "bonita-springs": "60 min response",
-  "naples": "60 min response",
-  "sanibel": "60 min response",
-  "fort-myers-beach": "45 min response",
-  "punta-gorda": "45 min response",
-  "port-charlotte": "60 min response",
-};
+// No per-city minute claims: the one response-time statement lives in
+// EMERGENCY_CLAIMS (src/lib/claims.ts) and is shown once in the intro.
 
 // Per-city imagery sourced from Unsplash (free for commercial use).
 // Stored locally in /public/images/areas/<slug>.jpg so card load doesn't
 // depend on an external CDN.
 const AREA_IMAGES: Record<string, string> = {
-  "cape-coral": "/images/areas/cape-coral.jpg",
+  // Real C&S jobs where one exists in the city; Unsplash stock elsewhere.
+  "cape-coral": "/images/projects/hansen-homes-cape-coral/underground/aerial-1.jpg",
   "fort-myers": "/images/areas/fort-myers.jpg",
-  "north-fort-myers": "/images/areas/north-fort-myers.jpg",
+  "north-fort-myers": "/images/gallery/cs-plumbing-crew.jpg",
   "naples": "/images/areas/naples.jpg",
   "bonita-springs": "/images/areas/bonita-springs.jpg",
-  "lehigh-acres": "/images/areas/lehigh-acres.jpg",
+  "lehigh-acres": "/images/projects/1119-harvest-ave-lehigh-acres/2nd-rough/photo-1.jpg",
   "estero": "/images/areas/estero.jpg",
   "sanibel": "/images/areas/sanibel.jpg",
   // Our own Fort Myers Beach build (306 Seminal Way) until a dedicated aerial exists.
   "fort-myers-beach": "/images/projects/306-seminal-way-fort-myers-beach/build/hero-1.webp",
-  "punta-gorda": "/images/areas/punta-gorda.jpg",
+  "punta-gorda": "/images/projects/decker-homes-punta-gorda/new-construction/photo-1.jpg",
   "port-charlotte": "/images/areas/port-charlotte.jpg",
 };
 
@@ -186,7 +175,7 @@ export default function ServiceAreasSection() {
           <SectionHeading
             overline="Service Areas"
             title="Serving All of Southwest Florida"
-            subtitle="From Cape Coral to Naples — fast, reliable plumbing across Lee and Collier County."
+            subtitle={`From Cape Coral to Naples — response ${EMERGENCY_CLAIMS.responseTime}.`}
           />
         </div>
       </Container>
@@ -254,7 +243,7 @@ export default function ServiceAreasSection() {
                     <div className="inline-flex items-center gap-2 mb-3 sm:mb-4 px-3 py-1.5 rounded-full bg-white/90 backdrop-blur-sm border border-white/40">
                       <MapPin className="w-3.5 h-3.5 text-primary" />
                       <span className="text-xs font-semibold text-gray-800">
-                        {RESPONSE_TIMES[area.slug] ?? "Same-day service"}
+                        Same-day service
                       </span>
                     </div>
                     <h3

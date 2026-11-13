@@ -1,6 +1,7 @@
 "use client";
 
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
+import { CLAIMS } from "@/lib/claims";
 import Container from "@/components/ui/Container";
 import PageTransition from "@/components/layout/PageTransition";
 import PageHero from "@/components/ui/PageHero";
@@ -126,7 +127,7 @@ export default function ContactPage() {
           {
             title: "Reply within 1 business day",
             description:
-              "Most messages get a response within a few hours during business hours. Urgent? Call 833-PLUMB-IT.",
+              `${CLAIMS.bookingConfirmation} Urgent? Call 833-PLUMB-IT.`,
           },
           {
             title: "Free site visit if needed",

@@ -433,7 +433,7 @@ export const TERMS_SECTIONS: readonly TermsSection[] = [
           "products you supplied: our workmanship in installing them is covered for the labor period above; the product itself is not.",
         ],
         attorneyReview:
-          "Tiered labor warranty is broader than the owner-confirmed WARRANTY constant (Sep 2026: one year on C&S-supplied materials only). Chris/Sam must sign off before this revision is merged; then align the residential, repipe and commercial service pages. Owner decision also needed on the rule that labor after the labor period is billed at service rates.",
+          "Tiered labor warranty is broader than the owner-confirmed WARRANTY constant of Sep 2026 (one year on C&S-supplied materials only). On 2026-11-12 the WARRANTY constant, the repipe and water-heater pages and llms.txt were aligned to this clause (one year labor + one year materials, manufacturer warranties pass through). Chris/Sam sign-off on the clause itself is still open, as is the rule that labor after the labor period is billed at service rates.",
       },
       {
         id: "warranty-manufacturer",
@@ -482,7 +482,7 @@ export const TERMS_SECTIONS: readonly TermsSection[] = [
       {
         id: "exclusions-finishes",
         heading: "Finishes and restoration.",
-        text: "Unless the document lists it, the price does not include restoring, patching, painting, or replacing drywall, stucco, tile, flooring, cabinets, countertops, trim, insulation, concrete, pavers, driveways, sod, landscaping, or irrigation that must be opened or removed to reach the plumbing. Where the document includes cutting and patching, the patch is a rough patch ready for finish by others unless it says otherwise.",
+        text: "Unless the document lists it, the price does not include restoring, patching, painting, or replacing drywall, stucco, tile, flooring, cabinets, countertops, trim, insulation, concrete, pavers, driveways, sod, landscaping, or irrigation that must be opened or removed to reach the plumbing. Where the document includes cutting and patching, the patch is a rough patch ready for finish by others unless it says otherwise. Whole-home repipes quoted by C&S include patching and texturing the access cuts we make; painting is by others.",
       },
       {
         id: "exclusions-other-work",
@@ -856,6 +856,11 @@ export const TERMS_REVISIONS: readonly TermsRevision[] = [
   {
     version: TERMS_VERSION,
     effectiveDate: TERMS_EFFECTIVE_DATE,
+    note: "Clause on finishes and restoration now states that whole-home repipes include patching and texturing the access cuts C&S makes, with painting by others — matching the repipe service pages, which no longer promise paint-match restoration, lifetime or 25-year warranties.",
+  },
+  {
+    version: "2026-11-03",
+    effectiveDate: "2026-11-03",
     note: "First published revision. Replaces the Terms of Service page dated March 10, 2026. Same-day corrections: the contracting entity is Draft Plumbing Corp, doing business as C&S Plumbing of Lee, and clause 2.1 states which license is the company's current license.",
   },
 ];

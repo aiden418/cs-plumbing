@@ -116,9 +116,11 @@ export default function AreaLandingTemplate({
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-6 sm:mb-8">
                 Serving {landing.city} Since 1998
               </h2>
-              <p className="text-gray-500 text-sm sm:text-base leading-relaxed mb-8">
-                {landing.localContext}
-              </p>
+              <div className="text-gray-500 text-sm sm:text-base leading-relaxed mb-8 space-y-4">
+                {landing.localContext.split("\n\n").map((paragraph) => (
+                  <p key={paragraph.slice(0, 40)}>{paragraph}</p>
+                ))}
+              </div>
 
               {landing.neighborhoods && landing.neighborhoods.length > 0 && (
                 <>

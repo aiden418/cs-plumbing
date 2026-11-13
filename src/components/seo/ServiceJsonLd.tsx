@@ -1,14 +1,15 @@
 import type { ServiceLanding } from "@/lib/types";
-import { BUSINESS } from "@/lib/constants";
+import { BUSINESS, areaServedCities } from "@/lib/constants";
+import { PRICE_RANGE_RE } from "@/lib/pricing";
 import { TERMS_URL } from "@/lib/terms-meta";
 
-// Parses simple money ranges — "$4,200 – $6,500", "$195 – $4,500+" — into
+// Parses simple money ranges — "$4,200 – $6,500", "$195 – $4,500+" — into // claim-ok: regex documentation
 // numbers for PriceSpecification. Returns null for non-price rows
-// ("Included"), upcharges ("+$500 – $1,200"), and per-foot/multi-line
+// ("Included"), upcharges ("+$500 – $1,200"), and per-foot/multi-line // claim-ok: regex documentation
 // strings, which stay prose-only.
 function parseMoneyRange(s: string | undefined): { min: number; max: number } | null {
   if (!s) return null;
-  const m = s.match(/^\$([\d,]+)\s*[–-]\s*\$?([\d,]+)\+?$/);
+  const m = s.match(PRICE_RANGE_RE);
   if (!m) return null;
   return { min: Number(m[1].replace(/,/g, "")), max: Number(m[2].replace(/,/g, "")) };
 }
@@ -47,16 +48,7 @@ export default function ServiceJsonLd({ landing }: { landing: ServiceLanding }) 
         },
       },
     },
-    areaServed: [
-      { "@type": "City", name: "Cape Coral" },
-      { "@type": "City", name: "Fort Myers" },
-      { "@type": "City", name: "North Fort Myers" },
-      { "@type": "City", name: "Naples" },
-      { "@type": "City", name: "Bonita Springs" },
-      { "@type": "City", name: "Lehigh Acres" },
-      { "@type": "City", name: "Estero" },
-      { "@type": "City", name: "Sanibel Island" },
-    ],
+    areaServed: areaServedCities(),
     termsOfService: TERMS_URL,
     ...(range && {
       offers: {

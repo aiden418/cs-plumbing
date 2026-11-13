@@ -7,14 +7,17 @@ import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
 import ScrollReveal from "@/components/animations/ScrollReveal";
 import { BUSINESS } from "@/lib/constants";
+import { perYear } from "@/lib/pricing";
+import { SEASON_COPY, type Season } from "@/lib/claims";
 
 const tierPills = [
-  { name: "Coastal Comfort", price: "$349/yr" },
-  { name: "Coastal Shield", price: "$549/yr", featured: true },
+  { name: "Coastal Comfort", price: perYear("plan.comfort") },
+  { name: "Coastal Shield", price: perYear("plan.shield"), featured: true },
   { name: "Coastal Smart", price: "Call" },
 ];
 
-export default function CoastalComebackTeaser() {
+export default function CoastalComebackTeaser({ season = "departure" }: { season?: Season }) {
+  const copy = SEASON_COPY[season];
   return (
     <section className="relative py-16 sm:py-24 lg:py-28 bg-[#F5F5F7] overflow-hidden">
       {/* Background image */}
@@ -35,16 +38,13 @@ export default function CoastalComebackTeaser() {
             {/* Left: copy */}
             <div>
               <span className="inline-block text-primary text-xs sm:text-sm font-semibold tracking-widest uppercase mb-3 sm:mb-4">
-                New · For SWFL Snowbirds
+                {copy.teaserEyebrow}
               </span>
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 leading-tight mb-4 sm:mb-6">
-                Heading North for the Summer? Don&apos;t Leave Your Pipes
-                Behind.
+                {copy.teaserTitle}
               </h2>
               <p className="text-base sm:text-lg text-gray-500 leading-relaxed mb-6 sm:mb-8">
-                The Coastal Comeback Plan is our annual snowbird program — a
-                licensed plumber shuts down, inspects, and watches your vacant
-                Florida home so you fly back to a dry house, not a flood.
+                {copy.teaserBody}
               </p>
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                 <Button

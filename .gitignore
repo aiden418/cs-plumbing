@@ -57,3 +57,6 @@ photo-inbox/**/*.JPEG
 photo-inbox/**/*.PNG
 photo-inbox/**/*.HEIC
 photo-inbox/_generated/
+
+# local form-delivery harness output (npm run start:capture)
+.resend-capture.jsonl

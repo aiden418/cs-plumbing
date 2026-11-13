@@ -24,7 +24,7 @@ const PRINT_CSS = `
 `;
 
 export function PrintDocument({ title, children }: { title: string; children: ReactNode }) {
-  const phoneDigits = BUSINESS.phoneRaw.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3");
+  const phoneDigits = BUSINESS.phoneRaw.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3"); // claim-ok: regex replacement tokens
   return (
     <div className="print-shell bg-[#F5F5F7] px-4 pb-16 pt-28 sm:pt-32">
       <style dangerouslySetInnerHTML={{ __html: PRINT_CSS }} />

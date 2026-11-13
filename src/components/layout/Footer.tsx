@@ -2,8 +2,19 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Phone, Mail, MapPin, Clock, ChevronRight, MessageSquareText, Facebook, Instagram } from "lucide-react";
-import { BUSINESS, AREA_LANDINGS } from "@/lib/constants";
+import {
+  Phone,
+  Mail,
+  MapPin,
+  Clock,
+  ChevronRight,
+  MessageSquareText,
+  Facebook,
+  Instagram,
+  ExternalLink,
+  type LucideIcon,
+} from "lucide-react";
+import { BUSINESS, AREA_LANDINGS, PROFILES } from "@/lib/constants";
 import { SERVICE_HUBS } from "@/lib/service-hubs";
 
 const quickLinks = [
@@ -27,11 +38,22 @@ const quickLinks = [
   { label: "Recommended Companies", href: "/partners" },
 ];
 
+// Profiles shown in the footer (PROFILES entries with footer: true). A
+// profile without its own icon gets a generic outbound mark.
+const PROFILE_ICONS: Record<string, LucideIcon> = {
+  facebook: Facebook,
+  instagram: Instagram,
+  google: MapPin,
+};
+
 // Every service hub, not SERVICES.slice(0, 7): the footer is the one set of
 // links in the HTML on every page (the nav dropdowns render on hover only).
 const footerServices = [
   { title: "Residential Plumbing", href: "/services/residential" },
   ...SERVICE_HUBS.map((hub) => ({ title: hub.title, href: hub.href })),
+  // Spoke page (not a hub) that still needs a sitewide HTML link; the nav
+  // dropdown that lists it only renders on hover.
+  { title: "Tankless Water Heaters", href: "/services/tankless-water-heaters" },
 ];
 
 export default function Footer() {
@@ -87,24 +109,21 @@ export default function Footer() {
               </div>
             </div>
             <div className="flex items-center gap-3 mt-4 sm:mt-6">
-              <a
-                href={BUSINESS.facebookUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="C&S Plumbing on Facebook"
-                className="w-9 h-9 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-600 hover:text-primary hover:border-primary/40 transition-colors"
-              >
-                <Facebook className="w-4 h-4" />
-              </a>
-              <a
-                href={BUSINESS.instagramUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="C&S Plumbing on Instagram"
-                className="w-9 h-9 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-600 hover:text-primary hover:border-primary/40 transition-colors"
-              >
-                <Instagram className="w-4 h-4" />
-              </a>
+              {PROFILES.filter((p) => p.footer).map((p) => {
+                const Icon = PROFILE_ICONS[p.id] ?? ExternalLink;
+                return (
+                  <a
+                    key={p.id}
+                    href={p.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`C&S Plumbing on ${p.label}`}
+                    className="w-9 h-9 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-600 hover:text-primary hover:border-primary/40 transition-colors"
+                  >
+                    <Icon className="w-4 h-4" />
+                  </a>
+                );
+              })}
             </div>
           </div>
 
@@ -207,17 +226,6 @@ export default function Footer() {
                 >
                   #{BUSINESS.license}
                 </a>
-                <span className="mx-1.5 text-gray-300">·</span>
-                <a
-                  href={BUSINESS.licenseLookupUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-semibold text-gray-700 hover:text-primary underline-offset-2 hover:underline transition-colors"
-                  title="Verify on MyFloridaLicense.com"
-                  aria-label={`Verify license ${BUSINESS.license2} on MyFloridaLicense.com`}
-                >
-                  #{BUSINESS.license2}
-                </a>
                 <span className="ml-1.5 text-[10px] text-gray-500">(verify)</span>
               </span>
             </p>
@@ -232,7 +240,7 @@ export default function Footer() {
           </div>
           <p className="text-xs text-gray-500">
             <a href="https://draftconstructionswfl.com" target="_blank" rel="noopener noreferrer" className="hover:text-gray-500 transition-colors">
-              A Division of Draft Construction
+              Part of Draft Construction
             </a>{" · "}Designed &amp; managed by ASP LLC
           </p>
         </div>

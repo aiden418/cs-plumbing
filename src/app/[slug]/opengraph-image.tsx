@@ -1,5 +1,5 @@
 import { createOgImage, ogImageContentType, ogImageSize, type OgVariant } from "@/lib/og";
-import { SERVICE_CITY_LANDINGS } from "@/lib/service-city-landings";
+import { PUBLISHED_LANDINGS } from "@/lib/landing-indexing";
 
 export const size = ogImageSize;
 export const contentType = ogImageContentType;
@@ -11,7 +11,7 @@ export async function generateImageMetadata({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const landing = SERVICE_CITY_LANDINGS.find((l) => l.slug === slug);
+  const landing = PUBLISHED_LANDINGS.find((l) => l.slug === slug);
   return [{ id: "default", alt: landing?.metaTitle ?? alt }];
 }
 
@@ -21,7 +21,7 @@ export default async function OgImage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const landing = SERVICE_CITY_LANDINGS.find((l) => l.slug === slug);
+  const landing = PUBLISHED_LANDINGS.find((l) => l.slug === slug);
   if (!landing) {
     return createOgImage({
       eyebrow: "Southwest Florida",

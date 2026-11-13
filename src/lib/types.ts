@@ -1,3 +1,8 @@
+import type { PriceString } from "./pricing";
+
+/** A price field: a formatter result from ./pricing, or an inclusion label. */
+export type PriceText = PriceString | "Included" | "Included on installs";
+
 export interface Service {
   id: string;
   title: string;
@@ -123,9 +128,13 @@ export interface AreaLanding {
   heroText: string;
   description: string;
   neighborhoods?: string[];
+  /** Paragraphs separated by a blank line ("\n\n"); the template splits them. */
   localContext: string;
   relatedServices?: string[];
   faqs?: FAQ[];
+  /** ISO date of the last substantive content change; the sitemap uses the
+   *  later of this and the site-wide pass date. */
+  updatedAt?: string;
 }
 
 export interface ServiceLanding {
@@ -138,16 +147,31 @@ export interface ServiceLanding {
   keywords: string[];
   features: { title: string; description: string }[];
   faqs: FAQ[];
-  priceRange?: string;
+  /** Always a ./pricing formatter result — never a typed literal. */
+  priceRange?: PriceString;
   highlights: string[];
   image?: string;
   gallery?: { src: string; caption?: string }[];
   relatedServices?: string[];
   relatedAreas?: string[];
-  costBreakdown?: { label: string; range: string; note?: string }[];
+  costBreakdown?: { label: string; range: PriceText; note?: string }[];
   caseStudies?: { title: string; location: string; cost: string; summary: string }[];
   answerBlocks?: AnswerBlock[];
 }
+
+/**
+ * How a service-city landing is exposed to search engines (see
+ * src/lib/landing-indexing.ts for the lists every consumer reads).
+ * - "index" (default): built, in the sitemap and llms.txt, linked from the
+ *   cross-link blocks.
+ * - "noindex": built and reachable, but `robots: noindex` and left out of the
+ *   sitemap, llms.txt and cross-link blocks. For a page kept for visitors
+ *   (ads, direct links) that should not compete in search.
+ * - { redirectTo }: not built; the slug 301s to `redirectTo`, normally the
+ *   city's /areas hub. Use when two pages target the same query. Keep the
+ *   entry so the redirect stays declared beside the content it replaced.
+ */
+export type LandingIndexing = "index" | "noindex" | { redirectTo: string };
 
 export interface ServiceCityLanding {
   slug: string;
@@ -171,7 +195,8 @@ export interface ServiceCityLanding {
   neighborhoods: string[];
   faqs: FAQ[];
   relatedPages: { label: string; href: string }[];
-  priceRange?: string;
+  /** Always a ./pricing formatter result — never a typed literal. */
+  priceRange?: PriceString;
   image?: string;
   /**
    * Slug of the parent service hub (see SERVICE_HUBS). Drives the hub page's
@@ -179,6 +204,10 @@ export interface ServiceCityLanding {
    * "plumber-<city>" pages that have no single parent service.
    */
   serviceSlug?: string;
+  /** Defaults to "index". See LandingIndexing. */
+  indexing?: LandingIndexing;
+  /** ISO date of the last substantive content change (sitemap lastmod). */
+  updatedAt?: string;
 }
 
 export interface BlogPost {

@@ -1,4 +1,5 @@
 import { NextResponse, after } from "next/server";
+import { CLAIMS } from "@/lib/claims";
 import { Resend } from "resend";
 import { z } from "zod";
 import {
@@ -99,7 +100,7 @@ export async function POST(request: Request) {
     const selectionsHtml = Object.entries(selections)
       .filter(([, v]) => v !== null && v !== "" && !(Array.isArray(v) && v.length === 0))
       .map(([k, v]) => {
-        const safeKey = escapeHtml(k.replace(/([A-Z])/g, " $1").replace(/^./, (s) => s.toUpperCase()));
+        const safeKey = escapeHtml(k.replace(/([A-Z])/g, " $1").replace(/^./, (s) => s.toUpperCase())); // claim-ok: regex replacement token
         const safeVal = escapeHtml(
           (Array.isArray(v) ? v.join(", ") : String(v)).slice(0, 200)
         );
@@ -181,7 +182,7 @@ export async function POST(request: Request) {
 
             <div style="background: #EFF6FF; padding: 16px; border-radius: 8px; margin: 16px 0;">
               <p style="color: #1D4ED8; margin: 0; font-size: 14px;">
-                Every home is different. A licensed C&S plumber will confirm your exact price during a <strong>free, no-obligation visit</strong>. This estimate is based on typical installations in Lee County.
+                ${CLAIMS.estimateDisclaimer}
               </p>
             </div>
 

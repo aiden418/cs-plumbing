@@ -1,4 +1,5 @@
 import { createOgImage, ogImageContentType, ogImageSize } from "@/lib/og";
+import { from, spanInline } from "@/lib/pricing";
 
 export const runtime = "edge";
 export const size = ogImageSize;
@@ -9,7 +10,7 @@ export default function OgImage() {
   return createOgImage({
     variant: "service",
     eyebrow: "Water Heaters",
-    title: "Tank, Tankless & Hybrid Installation",
-    subtitle: "Repairs from $195 · Tank replacements $1,650–$2,500 · Same-day install in most cases",
+    title: "Water Heater Repair & Installation",
+    subtitle: `Repairs ${from("waterHeater.repair")} · Tank replacements ${spanInline("waterHeater.tank40", "waterHeater.tank50")} · Tankless & hybrid options · Same-day in most cases`,
   });
 }

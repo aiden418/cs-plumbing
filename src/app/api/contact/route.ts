@@ -1,6 +1,9 @@
 import { NextResponse, after } from "next/server";
 import { Resend } from "resend";
 import { serviceRequestSchema, SERVICE_REQUEST_OPTIONS } from "@/lib/service-request";
+import { BUSINESS } from "@/lib/constants";
+import { CLAIMS } from "@/lib/claims";
+import { readSubmission } from "@/lib/api/attachments";
 import {
   escapeHtml,
   getClientIp,
@@ -24,8 +27,15 @@ export async function POST(request: Request) {
     const rl = rateLimit(ip);
     if (!rl.ok) return tooManyRequests(rl.retryAfter);
 
-    const json = await request.json();
-    const parsed = serviceRequestSchema.safeParse(json);
+    // JSON from the chat widget and the plain form; multipart when the
+    // customer attached photos (see src/lib/api/attachments.ts).
+    const submission = await readSubmission(request);
+    if ("error" in submission) {
+      // code lets the form show this message verbatim (it is written for the customer).
+      return NextResponse.json({ error: submission.error, code: "attachments" }, { status: 400 });
+    }
+    const { attachments } = submission;
+    const parsed = serviceRequestSchema.safeParse(submission.fields);
     if (!parsed.success) {
       return NextResponse.json(
         { error: "Invalid submission" },
@@ -76,12 +86,14 @@ export async function POST(request: Request) {
             <p><strong>Requested from:</strong> ${safe.sourcePath}</p>
             <h3 style="color: #333; border-bottom: 2px solid #0099FF; padding-bottom: 8px; margin-top: 16px;">Message</h3>
             <p style="white-space: pre-wrap;">${safe.message || "No description provided."}</p>
+            <p><strong>Photos attached:</strong> ${attachments.length}</p>
           </div>
           <div style="background: #0A0A0F; padding: 12px; text-align: center;">
             <p style="color: #666; margin: 0; font-size: 12px;">Sent from csplumbinglee.com</p>
           </div>
         </div>
       `,
+      ...(attachments.length > 0 && { attachments }),
     }, "contact admin email");
 
     if (SMS_TO) {
@@ -91,6 +103,29 @@ export async function POST(request: Request) {
         subject: `New Lead`,
         text: `New contact from ${name} for ${serviceLabel} in ${zip}. Phone: ${phone}`,
       }, "contact SMS notification");
+    }
+
+    // Customer confirmation (best effort — never blocks the lead). The office
+    // copy above already went out; this is the only receipt the customer gets.
+    if (email) {
+      await sendEmailBestEffort(resend, {
+        from: "C&S Plumbing of Lee <contact@csplumbinglee.com>",
+        to: [email],
+        subject: "We received your request — C&S Plumbing of Lee",
+        html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <div style="background: #0A0A0F; padding: 20px; text-align: center;">
+            <h1 style="color: #0099FF; margin: 0;">Request Received</h1>
+          </div>
+          <div style="padding: 20px; background: #f9f9f9;">
+            <p>Hi ${safe.name},</p>
+            <p>Thanks for contacting C&S Plumbing of Lee about <strong>${safe.service}</strong>. ${CLAIMS.bookingConfirmation}</p>${attachments.length > 0 ? `<p>We received ${attachments.length} photo${attachments.length === 1 ? "" : "s"} with your request.</p>` : ""}
+            <p>Your appointment is confirmed only once we have spoken with you. For urgent service, call <a href="tel:${BUSINESS.phoneRaw}" style="color: #0099FF;">${BUSINESS.phone}</a> any time.</p>
+            <p style="color: #999; font-size: 12px; margin-top: 20px;">${BUSINESS.fullName} · ${BUSINESS.address}, ${BUSINESS.city}, ${BUSINESS.state} ${BUSINESS.zip}</p>
+          </div>
+        </div>
+      `,
+      }, "contact customer confirmation");
     }
 
     // No PII in logs; the Resend id is enough to trace a lead in the Resend dashboard.

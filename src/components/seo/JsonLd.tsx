@@ -1,13 +1,14 @@
-import { BUSINESS, AWARDS, CONTRACTOR_RANKING, LATEST_AWARD } from "@/lib/constants";
+import {
+  BUSINESS,
+  AWARDS,
+  CONTRACTOR_RANKING,
+  LATEST_AWARD,
+  PROFILES,
+  SERVICE_AREAS_BY_COUNTY,
+  areaServedCities,
+} from "@/lib/constants";
 import { fetchPlaceData } from "@/lib/google-reviews";
 import { BUILDER_DESK, CONSTRUCTION_PHASES } from "@/lib/builder-program";
-
-// Cities we list as served, grouped by county so areaServed says both.
-const AREA_BY_COUNTY: Record<string, string[]> = {
-  Lee: ["Cape Coral", "Fort Myers", "North Fort Myers", "Bonita Springs", "Estero", "Lehigh Acres", "Sanibel Island", "Fort Myers Beach"],
-  Charlotte: ["Punta Gorda", "Port Charlotte"],
-  Collier: ["Naples", "Marco Island"],
-};
 
 export default async function JsonLd() {
   const BASE = "https://www.csplumbinglee.com";
@@ -212,19 +213,13 @@ export default async function JsonLd() {
       "Emergency plumbing — burst pipes, slab leaks, sewage backups",
     ],
 
-    /* ── Service Areas ── */
+    /* ── Service Areas (SERVICE_AREAS_BY_COUNTY: counties, then every city in each) ── */
     areaServed: [
-      ...Object.entries(AREA_BY_COUNTY).map(([county]) => ({
+      ...Object.keys(SERVICE_AREAS_BY_COUNTY).map((county) => ({
         "@type": "AdministrativeArea",
         name: `${county} County, Florida`,
       })),
-      ...Object.entries(AREA_BY_COUNTY).flatMap(([county, cities]) =>
-        cities.map((name) => ({
-          "@type": "City",
-          name,
-          containedInPlace: { "@type": "AdministrativeArea", name: `${county} County, Florida` },
-        })),
-      ),
+      ...areaServedCities(),
     ],
 
     /* ── Service Catalog ── */
@@ -371,14 +366,12 @@ export default async function JsonLd() {
     ],
 
     /* ── Social / Profiles ── */
-    sameAs: [
-      "https://www.google.com/maps/place/C%26S+Plumbing+of+Lee",
-      BUSINESS.facebookUrl,
-      BUSINESS.instagramUrl,
-      // The current (North Fort Myers) review profile — the older Cape Coral
-      // one is a stale duplicate and is deliberately not listed.
-      BUSINESS.birdeyeUrl,
-    ],
+    // The permanent Google listing link (by CID), not a Maps search URL, so
+    // the entity resolves to the 951 Pondella Rd profile.
+    hasMap: BUSINESS.googleProfileUrl,
+    // PROFILES is the single list of verified profiles (the stale Cape Coral
+    // Birdeye duplicate is deliberately absent from it).
+    sameAs: PROFILES.map((p) => p.url),
   };
 
   /* ── WebSite schema ── */

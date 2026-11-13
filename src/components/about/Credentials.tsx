@@ -17,12 +17,12 @@ const credentials = [
   {
     icon: <FileCheck className="w-5 h-5" />,
     title: "State-Licensed Plumbing Contractors",
-    body: `Florida-licensed Certified Plumbing Contractors, ${BUSINESS.license} and ${BUSINESS.license2}. Verifiable on the DBPR (MyFloridaLicense.com). We pull every required permit and pass every Lee County inspection — no exceptions.`,
+    body: `Florida Certified Plumbing Contractor, license ${BUSINESS.license}. Verifiable on the DBPR (MyFloridaLicense.com). We pull every required permit and pass every Lee County inspection — no exceptions.`,
   },
   {
     icon: <ShieldCheck className="w-5 h-5" />,
     title: "Fully Insured & Bonded",
-    body: "$2M general liability and full workers' comp on every crew. Certificates of insurance available on request — required by virtually every GC and HOA we work with.",
+    body: "$2M general liability and full workers' comp on every crew. Certificates of insurance available on request — required by virtually every GC and HOA we work with.", // claim-ok: insurance limit, not a price
   },
   {
     icon: <Award className="w-5 h-5" />,

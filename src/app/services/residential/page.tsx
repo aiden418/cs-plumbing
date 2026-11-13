@@ -3,16 +3,18 @@ import PageTransition from "@/components/layout/PageTransition";
 import ServiceDetail from "@/components/services/ServiceDetail";
 import CTASection from "@/components/home/CTASection";
 import FaqJsonLd from "@/components/seo/FaqJsonLd";
+import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import FaqAccordion from "@/components/ui/FaqAccordion";
 import Container from "@/components/ui/Container";
 import NewConstructionBenefits from "@/components/builders/NewConstructionBenefits";
-import { BUSINESS, SERVICES } from "@/lib/constants";
+import { BUSINESS, SERVICES, areaServedCities } from "@/lib/constants";
 import { TERMS_URL } from "@/lib/terms-meta";
 import { RESIDENTIAL_FAQS } from "./residential-faqs";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/services/residential" },
-  title: "Residential Plumbing Services",
+  // Keyword + geo first, brand last, ≤60 characters.
+  title: { absolute: "Residential Plumber Cape Coral & Fort Myers | C&S Plumbing" },
   description:
     "Residential plumbing in Cape Coral & Fort Myers — emergency repairs, drain cleaning, water heaters, repiping and fixtures. Same-day service available.",
   keywords: [
@@ -70,18 +72,7 @@ function ResidentialServiceJsonLd() {
       name: BUSINESS.fullName,
       telephone: `+1${BUSINESS.phoneRaw}`,
     },
-    areaServed: [
-      { "@type": "City", name: "Cape Coral" },
-      { "@type": "City", name: "Fort Myers" },
-      { "@type": "City", name: "North Fort Myers" },
-      { "@type": "City", name: "Naples" },
-      { "@type": "City", name: "Bonita Springs" },
-      { "@type": "City", name: "Lehigh Acres" },
-      { "@type": "City", name: "Estero" },
-      { "@type": "City", name: "Sanibel Island" },
-      { "@type": "City", name: "Punta Gorda" },
-      { "@type": "City", name: "Port Charlotte" },
-    ],
+    areaServed: areaServedCities(),
     termsOfService: TERMS_URL,
   };
 
@@ -98,6 +89,13 @@ export default function ResidentialPage() {
     <PageTransition>
       <FaqJsonLd faqs={RESIDENTIAL_FAQS} />
       <ResidentialServiceJsonLd />
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", href: "/" },
+          { name: "Services", href: "/services" },
+          { name: "Residential Plumbing", href: "/services/residential" },
+        ]}
+      />
       <ServiceDetail
         title="Residential Services"
         heroText="Your Home Deserves the Best Plumbing"
