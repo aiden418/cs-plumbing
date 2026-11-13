@@ -210,7 +210,7 @@ needs the Birdeye sign-in; its draft is still in Drafts.
 |---|---|---|
 | Website | https://www.csplumbinglee.com/ | https://www.csplumbinglee.com/?utm_source=google&utm_medium=organic&utm_campaign=gbp |
 | Description | "Here at C&S Plumbing of Lee, we have been working hard since 1998! …" | NAP description (238 chars) |
-| Hours | Open 24 hours, every day | Mon–Fri 7:30 AM–4:30 PM, Sat 9:00 AM–3:00 PM, Sun closed |
+| Hours | Open 24 hours, every day | set to Mon–Fri 7:30–4:30 / Sat 9–3 / Sun closed per the NAP standard, published by Google, then **reverted to Open 24 hours** the same evening: Aiden confirmed the business is 24/7. Update §1 of backlink-and-citation-plan.md and every listing to match. |
 | Services | existing list (already had "Whole Home Repipes") | + Tankless water heater installation, UEP water/sewer connection, Septic-to-sewer conversion, Slab leak repair |
 | Post | — | Update with "Learn more" → /services/tankless-water-heaters (Pending) |
 | Categories | Plumber (primary), Bathroom remodeler, Plumbing supply store | unchanged — the category picker never shows suggestions for automated typing and rejects typed text; set by hand |
