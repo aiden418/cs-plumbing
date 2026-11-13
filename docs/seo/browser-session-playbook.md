@@ -156,3 +156,74 @@ ProView, Procore Network, BuildingConnected; manufacturer locators (State /
 A.O. Smith first, then Rheem, Navien, Rinnai).
 
 Mark each row in `docs/seo/citation-tracker.csv` as it is done.
+
+## Done / blocked — 2026-11-13 (device session, Claude in Chrome on Aiden's Mac)
+
+**Step 0 — preview and merge.** Preview checked: `/contact` photo block, `/services/repiping`
+one 3/2 figure ($6,800 – $9,500) in text and table, patch-and-texture sentence, one-year
+warranty, no "Lifetime"; `/services/tankless-water-heaters` 200; `/coastal-comeback-plan`
+"Back for the Season?" copy; `/terms` rev shown. Merged on 2026-11-13, so `TERMS_VERSION` /
+`TERMS_EFFECTIVE_DATE` were bumped to `2026-11-13` first (commit 6d2eb6f). PR #21 merged as
+447810c (merge commit, branch kept). Production: tankless page 200, `/terms` shows
+"Revision 2026-11-13 · Effective November 13, 2026". Phone-width pass done on production in the
+desktop app's browser pane (Chrome would not resize). Still owed per `docs/terms-on-documents.md`
+§3 steps 4–6: PDF archive `CS-Terms-rev-2026-11-13.pdf`, invoicing template string, proposal
+renderer footer, payment-terms reference, section 1 of that file.
+
+**Step 1 — Search Console property.** `sc-domain:candsplumbingfl.com` added and verified by
+TXT (`google-site-verification=Gm0n7xJPsveR8EWoNf-2rdxzJ9S1LXlH1QUue-CxIg4`). No data yet.
+
+**Step 2 — GoDaddy DNS.** Forward deleted; GoDaddy left an `A @ Parked` record, which was
+edited to `216.150.1.1`; `A @ 216.150.16.1` added; both TTL 600; www CNAME and all `lc.*`,
+`pay`, `links`, `coastalcomeback`, `comfortflow` records untouched. Every GoDaddy save needs
+an SMS/WhatsApp identity code (four codes in all). Vercel reports the domain
+"misconfigured: false" with its 308 to www.csplumbinglee.com; the apex certificate was issued
+≈14 minutes after the A record landed and `https://candsplumbingfl.com/` now 308s to
+`https://www.csplumbinglee.com/`.
+
+**Step 3 — indexing, export, move.** Sitemap resubmitted (135 URLs). 16-month export saved
+as `~/Downloads/gsc-csplumbinglee-2026-11-12.zip` (Queries, Pages, Countries, Devices, Chart,
+Search appearance, Filters); not committed. Indexing requested for: tankless-water-heaters,
+water-heaters, `/`, repiping, leak-repair, drain-cleaning, coastal-comeback-plan, terms. The
+daily quota message appeared on the ninth request. **`/services/emergency` does not exist**
+(404 + noindex; Google rejected the request) — the live page is `/emergency`. Left for the
+next day, in order: `/emergency`, `/north-fort-myers-plumber`, `/plumber-lehigh-acres`,
+`/plumber-estero`, `/plumber-sanibel` (the last four redirect to `/areas/<city>`). Change of
+Address (candsplumbingfl.com → https://www.csplumbinglee.com/): "Verification for both sites"
+passes, "301-redirect from homepage" failed at 11:27 and 11:37 EST — Google was still
+resolving the old GoDaddy forwarding IPs (one-hour TTL, forwarder now answers 404). Retry.
+
+**Step 4 — Gmail.** The Gmail connector rewrites every URL in a draft to a google.com/url
+redirect, so the four emails were composed and sent from the Gmail web UI and the connector
+drafts deleted. Sent 2026-11-13: CCCIA → bryannah@cccia.org (cc info@cccia.org); BuildZoom →
+support@buildzoom.com; UEP → uepnewconst@capecoral.gov; Breeze → news@breezenewspapers.com
+(cc lragle@breezenewspapers.com, advertising manager). Birdeye "Create a case" paste: blocked,
+needs the Birdeye sign-in; its draft is still in Drafts.
+
+**Step 5 — Google Business Profile** (all edits pending Google review):
+
+| Field | Before | After |
+|---|---|---|
+| Website | https://www.csplumbinglee.com/ | https://www.csplumbinglee.com/?utm_source=google&utm_medium=organic&utm_campaign=gbp |
+| Description | "Here at C&S Plumbing of Lee, we have been working hard since 1998! …" | NAP description (238 chars) |
+| Hours | Open 24 hours, every day | Mon–Fri 7:30 AM–4:30 PM, Sat 9:00 AM–3:00 PM, Sun closed |
+| Services | existing list (already had "Whole Home Repipes") | + Tankless water heater installation, UEP water/sewer connection, Septic-to-sewer conversion, Slab leak repair |
+| Post | — | Update with "Learn more" → /services/tankless-water-heaters (Pending) |
+| Categories | Plumber (primary), Bathroom remodeler, Plumbing supply store | unchanged — the category picker never shows suggestions for automated typing and rejects typed text; set by hand |
+| Phone | (833) 758-6248 primary, no additional | unchanged — which 239 number is the office line is undecided (candidates 239-628-9355 on BBB/repo, 239-458-9223 on BuildZoom/Networx, 239-314-6991 GBP chat) |
+
+No "Emergency" type exists under "Add more hours" (only Access, Breakfast, Brunch, Delivery,
+Dinner, Drive through, Happy hours, Kitchen, Lunch, Online service hours, Pickup, Senior
+hours, Takeout). "Collected info" holds a Sep 25, 2026 phone-call note quoting a $225 toilet
+repair ballpark; left in place, deletable.
+
+**Step 6 — listings.** BBB: access requested for the existing "C & S Plumbing of Lee, Inc"
+profile with the new NAP (local BBB emails aiden@). BuildZoom: claim steps 1–5 done, stopped
+at the referral-fee agreement (step 6 of 7). Networx: correction sent via contact form.
+Data Axle: no listing under any name or phone. Foursquare: old listing found (1007 SE 12th
+Ct), claim behind login. Blocked on sign-ins: Yelp, HomeAdvisor/Angi, Birdeye, Bing Places,
+Apple Business Connect, Nextdoor, MapQuest Business Suite, TransUnion Localeze (account).
+
+**For Aiden.** Sign-ins above; BuildZoom referral-fee decision; GBP categories and 239 line;
+Terms §3 steps 4–6; tomorrow's five indexing requests; Change of Address retry; GSC export of
+candsplumbingfl.com once it has data.
