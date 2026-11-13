@@ -23,7 +23,7 @@ Internal working doc (not published). Written 2026-11-12. Companion files:
 | Website | https://www.csplumbinglee.com (with `https://www.`, no trailing slash) |
 | Categories | Plumber (primary); Water heater installation service; Drainage service; Contractor (new construction) |
 | Description (≤ 250 chars) | Family-owned plumber in North Fort Myers since 1998. New-construction plumbing for builders, plus repipes, water heaters, drains, UEP hookups and 24/7 emergency service across Cape Coral, Fort Myers and Southwest Florida. Lic. CFC1432485. |
-| Hours | Mon–Fri 7:30–4:30, Sat 9–3, Sun closed (emergency line 24/7) |
+| Hours | **Open 24 hours, 7 days** on every listing (Aiden, 2026-11-13: the business runs 24/7). Office is staffed Mon–Fri 7:30–4:30, Sat 9–3; say that in descriptions only, never in the hours field |
 | Founded | 1998 |
 | License | CFC1432485 (and CFC057076 where a second license field exists) |
 
