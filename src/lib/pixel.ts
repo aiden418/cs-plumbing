@@ -198,3 +198,17 @@ export function trackBuilderLead(
     // never throw into a form's success path
   }
 }
+
+/**
+ * Water heater giveaway entry. Like builder leads, deliberately NOT a Meta
+ * "Lead", an OpenAI "lead_created" or a Google Ads service-lead conversion:
+ * someone entering a drawing is not asking for service, and counting them
+ * would teach the ad platforms to chase giveaway entrants. Custom event on
+ * Meta and GA4 only, so a giveaway audience can still be built from it.
+ */
+export function trackGiveawayEntry(opts?: ConversionOptions) {
+  if (typeof window === 'undefined' || !opts?.eventId) return;
+  const data = { content_name: 'Water Heater Giveaway', content_category: 'Giveaway Entry' };
+  safeFbq('trackCustom', 'giveaway_entry', data, { eventID: opts.eventId });
+  safeGtag('event', 'giveaway_entry', { ...data, event_id: opts.eventId });
+}

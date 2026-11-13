@@ -75,3 +75,32 @@ a builder attaching a full plan set gets a platform 413, not our error
 message. Fix is either a direct-to-storage upload (Vercel Blob client
 upload) or a much lower advertised cap with a "email large plan sets"
 fallback line.
+
+## Water heater giveaway (`/water-heater-giveaway`)
+
+Added 2026-11-13. Everything that changes between runs lives in
+`src/lib/giveaway.ts`: end date, drawing date, prize wording, official rules
+and the entry schema. The approximate retail value reads from `PRICES`.
+
+- Entry = first/last name, phone, email, street/city/ZIP, year the heater was
+  made (or "not sure"), 1–3 photos, and a required "18+, own the home, agree
+  to the rules" box. A second, optional box records consent to be contacted
+  about a replacement; the office email shows it as YES / No.
+- `/api/giveaway` sends one email per entry to `office@csplumbinglee.com`
+  with the photos attached (subject starts `Giveaway Entry:`) and a receipt
+  to the entrant. Nothing is stored: the inbox is the entry list, so the
+  drawing and the one-per-household check are done from those emails.
+- Heaters 10+ years old are tagged "replacement candidate" in the office
+  email.
+- After `endsAt` the API returns 403 and the page shows a closed state
+  within the hour (`revalidate = 3600`). The sitemap entry drops on the next
+  deploy.
+- Tracking is a custom `giveaway_entry` event on Meta and GA4 only. It is
+  deliberately not a `Lead` / Google Ads conversion, so entrants do not
+  dilute service-lead bidding.
+- The coupon popup is suppressed on this path (it covered the submit button).
+
+Verified with the capture harness: valid multipart entry (200, office email
+with photo, receipt), no photo (400), 4 photos (400), missing agreement
+(400), honeypot (200, no email), browser submit at phone width, and the
+closed state with a past `endsAt` (page copy, API 403).

@@ -5,6 +5,7 @@ import { isProjectComplete, projectImages, projectLastModified } from "@/lib/pro
 import { INDEXED_LANDINGS } from "@/lib/landing-indexing";
 import { NEW_CONSTRUCTION_CITIES } from "@/lib/builder-program";
 import { TERMS_EFFECTIVE_DATE } from "@/lib/terms-meta";
+import { GIVEAWAY, isGiveawayOpen } from "@/lib/giveaway";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://www.csplumbinglee.com";
@@ -193,6 +194,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.9,
     },
+    // Water heater giveaway: listed only while entries are open.
+    ...(isGiveawayOpen()
+      ? [
+          {
+            url: `${baseUrl}${GIVEAWAY.path}`,
+            lastModified: new Date("2026-11-13"),
+            changeFrequency: "weekly" as const,
+            priority: 0.6,
+          },
+        ]
+      : []),
     // Service Map
     {
       url: `${baseUrl}/service-map`,

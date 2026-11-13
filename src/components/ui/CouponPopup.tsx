@@ -11,7 +11,7 @@ const STORAGE_KEY = "cs-coupon-seen";
 const REARM_DAYS = 30;
 
 // Never interrupt someone with a burst pipe or someone already converting.
-const SUPPRESSED_PATHS = ["/emergency", "/booking", "/contact", "/quote-builder"];
+const SUPPRESSED_PATHS = ["/emergency", "/booking", "/contact", "/quote-builder", "/water-heater-giveaway"];
 
 function wasRecentlyDismissed(): boolean {
   const raw = localStorage.getItem(STORAGE_KEY);
