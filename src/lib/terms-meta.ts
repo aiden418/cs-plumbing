@@ -10,8 +10,8 @@
 // document templates (see docs/terms-on-documents.md). Nothing else in the
 // codebase may hard-code the revision string.
 
-export const TERMS_VERSION = "2026-11-12";
-export const TERMS_EFFECTIVE_DATE = "2026-11-12";
+export const TERMS_VERSION = "2026-11-13";
+export const TERMS_EFFECTIVE_DATE = "2026-11-13";
 export const TERMS_PATH = "/terms";
 export const TERMS_URL = `https://www.csplumbinglee.com${TERMS_PATH}`;
 export const TERMS_SHORT_URL = "csplumbinglee.com/terms";
