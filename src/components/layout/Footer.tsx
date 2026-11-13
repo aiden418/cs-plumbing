@@ -175,10 +175,8 @@ export default function Footer() {
             <div className="flex flex-col gap-2 text-sm text-gray-500 mb-6 sm:mb-8">
               <div className="flex items-center gap-2">
                 <Clock className="w-4 h-4 text-primary flex-shrink-0" />
-                <span>{BUSINESS.hours.weekday}</span>
+                <span>{BUSINESS.hours.open}</span>
               </div>
-              <div className="ml-6">{BUSINESS.hours.saturday}</div>
-              <div className="ml-6">{BUSINESS.hours.sunday}</div>
               <div className="mt-2 text-primary-dark font-semibold">
                 {BUSINESS.hours.emergency}
               </div>

@@ -93,9 +93,7 @@ export default function ContactPage() {
                     <div>
                       <p className="text-gray-900 font-semibold text-sm sm:text-base">Hours</p>
                       <p className="text-gray-500 text-xs sm:text-sm">
-                        {BUSINESS.hours.weekday}
-                        <br />
-                        {BUSINESS.hours.saturday}
+                        {BUSINESS.hours.open}
                         <br />
                         <span className="text-primary">
                           {BUSINESS.hours.emergency}

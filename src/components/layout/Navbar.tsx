@@ -101,7 +101,7 @@ export default function Navbar() {
               <div className="flex items-center gap-5">
                 <span className="flex items-center gap-1.5">
                   <Clock className="w-3.5 h-3.5" />
-                  Mon–Fri 7:30 AM – 4:30 PM · 24/7 Emergency
+                  Open 24 hours · 7 days a week
                 </span>
                 <span className="hidden xl:flex items-center gap-1.5 opacity-80">
                   <ShieldCheck className="w-3.5 h-3.5" />
