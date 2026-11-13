@@ -191,7 +191,11 @@ next day, in order: `/emergency`, `/north-fort-myers-plumber`, `/plumber-lehigh-
 `/plumber-estero`, `/plumber-sanibel` (the last four redirect to `/areas/<city>`). Change of
 Address (candsplumbingfl.com → https://www.csplumbinglee.com/): "Verification for both sites"
 passes, "301-redirect from homepage" failed at 11:27 and 11:37 EST — Google was still
-resolving the old GoDaddy forwarding IPs (one-hour TTL, forwarder now answers 404). Retry.
+resolving the old GoDaddy forwarding IPs (one-hour TTL, forwarder now answers 404). A third
+try at 11:45 EST failed the same way; the expanded check reads "Couldn't fetch the page
+http://candsplumbingfl.com/" even though Google's public resolver already returned the Vercel
+IPs and both IPs answer 308 → https://www.csplumbinglee.com/. Retry the next day; if it still
+fails, change the Vercel redirect for candsplumbingfl.com from 308 to 301 and try once more.
 
 **Step 4 — Gmail.** The Gmail connector rewrites every URL in a draft to a google.com/url
 redirect, so the four emails were composed and sent from the Gmail web UI and the connector
