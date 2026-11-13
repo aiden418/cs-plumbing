@@ -130,8 +130,8 @@ standard in `backlink-and-citation-plan.md` §1:
   service; Contractor. Services list: add Tankless water heater installation,
   Whole-home repipe, UEP water/sewer connection, Septic-to-sewer conversion,
   Slab leak repair.
-- Description: the ≤250-character text from the NAP table. Hours Mon–Fri
-  7:30–4:30, Sat 9–3, emergency line 24/7 (use "more hours" → emergency).
+- Description: the ≤250-character text from the NAP table. Hours: Open 24 hours,
+  7 days (the business is 24/7; Google has no "emergency" more-hours type).
 - Photos: add 6–10 job photos from `public/images/projects/` (already
   metadata-stripped). Q&A: seed three questions (service area, free
   estimates on installs, UEP). Post: one update a week; first one is the
