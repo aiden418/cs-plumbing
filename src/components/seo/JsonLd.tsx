@@ -126,22 +126,16 @@ export default async function JsonLd() {
       latitude: BUSINESS.geo.latitude,
       longitude: BUSINESS.geo.longitude,
     },
+    // The business operates 24/7 (Aiden, 2026-11-13); the emergency
+    // ContactPoint below keeps the dedicated after-hours line discoverable.
     openingHoursSpecification: [
       {
         "@type": "OpeningHoursSpecification",
-        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-        opens: "07:30",
-        closes: "16:30",
-      },
-      {
-        "@type": "OpeningHoursSpecification",
-        dayOfWeek: "Saturday",
-        opens: "09:00",
-        closes: "15:00",
+        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+        opens: "00:00",
+        closes: "23:59",
       },
     ],
-    // Office is closed Sundays — 24/7 availability is the emergency line,
-    // modeled honestly as a ContactPoint instead of fake Sunday office hours.
     contactPoint: {
       "@type": "ContactPoint",
       contactType: "emergency",

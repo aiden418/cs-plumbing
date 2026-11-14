@@ -39,10 +39,17 @@ export const BUSINESS = {
   // claim must never borrow the new-construction number.
   homesCompleted: 9500,
   repipesCompleted: 3500,
+  // Public hours. The business runs 24/7 (Aiden, 2026-11-13), so every hours
+  // field on the site and on listings says so. `officeHours` is the staffed
+  // office schedule: the Terms "Office." clause prints it verbatim, so changing
+  // it is a Terms revision (docs/terms-on-documents.md §3).
   hours: {
+    open: "Open 24 hours, 7 days a week",
+    emergency: "24/7 Emergency Service",
+  },
+  officeHours: {
     weekday: "Mon–Fri: 7:30 AM – 4:30 PM",
     saturday: "Sat: 9:00 AM – 3:00 PM",
-    sunday: "Sun: Emergency Only",
     emergency: "24/7 Emergency Service",
   },
   tagline: "Southwest Florida's Most Trusted Plumbing Team",
@@ -2536,7 +2543,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
       {
         question: "Is your emergency service available in Punta Gorda?",
         answer:
-          "Yes — 24/7 emergency plumbing covers Punta Gorda and all of Charlotte County. Call 833-PLUMB-IT any hour. Office hours are Mon–Fri 7:30 AM–4:30 PM and Sat 9 AM–3 PM, but the emergency line never closes.",
+          "Yes — 24/7 emergency plumbing covers Punta Gorda and all of Charlotte County. Call 833-PLUMB-IT any hour — we answer and dispatch around the clock, every day of the week.",
       },
     ],
   },

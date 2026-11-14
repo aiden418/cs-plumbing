@@ -838,7 +838,7 @@ export const TERMS_SECTIONS: readonly TermsSection[] = [
       {
         id: "contact-office",
         heading: "Office.",
-        text: `${BUSINESS.legalName}, doing business as ${BUSINESS.fullName}, Florida Certified Plumbing Contractor ${BUSINESS.license}. ${OFFICE}. ${BUSINESS.hours.weekday}; ${BUSINESS.hours.saturday}; ${BUSINESS.hours.emergency.toLowerCase()}.`,
+        text: `${BUSINESS.legalName}, doing business as ${BUSINESS.fullName}, Florida Certified Plumbing Contractor ${BUSINESS.license}. ${OFFICE}. ${BUSINESS.officeHours.weekday}; ${BUSINESS.officeHours.saturday}; ${BUSINESS.officeHours.emergency.toLowerCase()}.`,
         links: [
           { label: BUSINESS.phone, href: `tel:${BUSINESS.phoneRaw}` },
           { label: BUSINESS.email, href: `mailto:${BUSINESS.email}` },
