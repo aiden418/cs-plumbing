@@ -4,17 +4,18 @@ import { Resend } from "resend";
 import { z } from "zod";
 import { BUSINESS } from "@/lib/constants";
 import { randomUUID } from "node:crypto";
+import { BUILDER_UPLOAD, collectAttachments } from "@/lib/api/attachments";
 import {
   ADMIN_EMAIL,
   escapeHtml,
+  forbiddenOrigin,
   getClientIp,
   isHoneypotTripped,
+  isTrustedOrigin,
   rateLimit,
   SMS_TO,
   tooManyRequests,
 } from "@/lib/api/secure";
-
-const MAX_ATTACHMENT_BYTES = 25 * 1024 * 1024;
 
 // Shared by the full Builder Portal wizard and the short "Submit plans for a
 // bid" form on /builders and the new-construction city pages. The short form
@@ -47,6 +48,7 @@ export async function POST(request: Request) {
     const ip = getClientIp(request);
     const rl = rateLimit(ip);
     if (!rl.ok) return tooManyRequests(rl.retryAfter);
+    if (!isTrustedOrigin(request)) return forbiddenOrigin();
 
     const formData = await request.formData();
 
@@ -74,27 +76,15 @@ export async function POST(request: Request) {
     }
     const resend = new Resend(process.env.RESEND_API_KEY);
 
-    // Extract files
-    const fileEntries = formData.getAll("files") as File[];
-    const attachments = await Promise.all(
-      fileEntries
-        .filter((f) => f instanceof File && f.size > 0)
-        .map(async (file) => {
-          const buffer = Buffer.from(await file.arrayBuffer());
-          return {
-            filename: file.name,
-            content: buffer,
-          };
-        })
-    );
-
-    const totalBytes = attachments.reduce((sum, a) => sum + a.content.length, 0);
-    if (totalBytes > MAX_ATTACHMENT_BYTES) {
-      return NextResponse.json(
-        { error: "Attachments too large (25 MB max). Please email plans to office@csplumbinglee.com." },
-        { status: 400 }
-      );
+    // Plan files: type, count and size are checked server-side (the browser's
+    // FileUpload hints are not a control), filenames are sanitized, and the
+    // files ride along on the office email. Nothing is stored.
+    const collected = await collectAttachments(formData, BUILDER_UPLOAD);
+    if ("error" in collected) {
+      // code lets the form show this message verbatim (it is written for the customer).
+      return NextResponse.json({ error: collected.error, code: "attachments" }, { status: 400 });
     }
+    const { attachments } = collected;
 
     const fileCount = attachments.length;
 

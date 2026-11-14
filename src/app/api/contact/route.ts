@@ -6,8 +6,10 @@ import { CLAIMS } from "@/lib/claims";
 import { readSubmission } from "@/lib/api/attachments";
 import {
   escapeHtml,
+  forbiddenOrigin,
   getClientIp,
   isHoneypotTripped,
+  isTrustedOrigin,
   rateLimit,
   sendEmailBestEffort,
   sendEmailOrThrow,
@@ -26,6 +28,7 @@ export async function POST(request: Request) {
     const ip = getClientIp(request);
     const rl = rateLimit(ip);
     if (!rl.ok) return tooManyRequests(rl.retryAfter);
+    if (!isTrustedOrigin(request)) return forbiddenOrigin();
 
     // JSON from the chat widget and the plain form; multipart when the
     // customer attached photos (see src/lib/api/attachments.ts).

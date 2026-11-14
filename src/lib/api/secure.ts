@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import type { Resend } from "resend";
 
+export { isTrustedOrigin } from "./origin";
+
 const ESCAPE_MAP: Record<string, string> = {
   "&": "&amp;",
   "<": "&lt;",
@@ -42,6 +44,11 @@ export function tooManyRequests(retryAfter?: number) {
     { error: "Too many requests" },
     { status: 429, headers: retryAfter ? { "Retry-After": String(retryAfter) } : undefined }
   );
+}
+
+/** 403 for a browser POST whose Origin is another site (see ./origin.ts). */
+export function forbiddenOrigin() {
+  return NextResponse.json({ error: "Forbidden" }, { status: 403 });
 }
 
 export function isHoneypotTripped(value: unknown): boolean {
