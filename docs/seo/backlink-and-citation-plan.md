@@ -19,7 +19,7 @@ Internal working doc (not published). Written 2026-11-12. Companion files:
 |---|---|
 | Business name | **C&S Plumbing of Lee** (never "C & S Plumbing of Lee, Inc." on new listings; legal name Draft Plumbing Corp goes only where a legal name is asked for) |
 | Address | **951 Pondella Rd, North Fort Myers, FL 33903** |
-| Phone | **One primary number on every listing — the number shown on the Google Business Profile.** The site uses 833-PLUMB-IT (833-758-6248); older listings show 239 numbers. Decide once (recommendation: keep 833-758-6248 as the tracked line on the site *and* GBP, and list the 239 office line as "additional phone" where a directory allows two). |
+| Phone | **833-758-6248 (833-PLUMB-IT) is the company's only line** (Aiden, 2026-11-14). Put it in every phone field; never add a second number. Older listings show 239 numbers from former offices and co-founders' cells: replace them, don't keep them as "additional". |
 | Website | https://www.csplumbinglee.com (with `https://www.`, no trailing slash) |
 | Categories | Plumber (primary); Water heater installation service; Drainage service; Contractor (new construction) |
 | Description (≤ 250 chars) | Family-owned plumber in North Fort Myers since 1998. New-construction plumbing for builders, plus repipes, water heaters, drains, UEP hookups and 24/7 emergency service across Cape Coral, Fort Myers and Southwest Florida. Lic. CFC1432485. |
