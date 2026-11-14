@@ -120,7 +120,7 @@ export default function CapabilityStatementPage() {
         <p>
           Bids, scheduling and documents: {BUILDER_DESK.contactName}, {BUILDER_DESK.contactRole} ·{" "}
           {BUILDER_DESK.phone} · {BUILDER_DESK.email}. Owner: Samuel &ldquo;Sam&rdquo; Pellechio ·{" "}
-          {BUSINESS.ownerPhone} or 833-PLUMB-IT ext. 1. Submit plans at csplumbinglee.com/builders.
+          {BUSINESS.ownerPhone}. Submit plans at csplumbinglee.com/builders.
         </p>
       </DocSection>
     </PrintDocument>

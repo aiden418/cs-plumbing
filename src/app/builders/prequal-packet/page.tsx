@@ -28,7 +28,7 @@ export default function PrequalPacketPage() {
             <tr><td>Legal name</td><td>{BUSINESS.legalName}</td></tr>
             <tr><td>Doing business as</td><td>{BUSINESS.fullName}</td></tr>
             <tr><td>Founded</td><td>{BUSINESS.founded}, Cape Coral, FL — family owned and operated</td></tr>
-            <tr><td>Owner &amp; co-founder</td><td>Samuel &ldquo;Sam&rdquo; Pellechio · {BUSINESS.ownerPhone} or 833-PLUMB-IT ext. 1</td></tr>
+            <tr><td>Owner &amp; co-founder</td><td>Samuel &ldquo;Sam&rdquo; Pellechio · {BUSINESS.ownerPhone}</td></tr>
             <tr><td>Office</td><td>{BUSINESS.address}, {BUSINESS.city}, {BUSINESS.state} {BUSINESS.zip}</td></tr>
             <tr><td>Phone / email</td><td>{BUSINESS.phone} (833-758-6248) · {BUSINESS.email}</td></tr>
             <tr><td>Builder contact</td><td>{BUILDER_DESK.contactName}, {BUILDER_DESK.contactRole} · {BUILDER_DESK.phone} · {BUILDER_DESK.email}</td></tr>
