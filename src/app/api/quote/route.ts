@@ -1,12 +1,14 @@
 import { NextResponse, after } from "next/server";
 import { CLAIMS } from "@/lib/claims";
 import { Resend } from "resend";
-import { z } from "zod";
+import { parseQuoteSubmission } from "@/lib/quote-submission";
 import {
   ADMIN_EMAIL,
   escapeHtml,
+  forbiddenOrigin,
   getClientIp,
   isHoneypotTripped,
+  isTrustedOrigin,
   rateLimit,
   sendEmailBestEffort,
   sendEmailOrThrow,
@@ -20,54 +22,27 @@ import {
 } from "@/lib/openai-ads-capi";
 import { TERMS_URL, TERMS_VERSION } from "@/lib/terms-meta";
 
-// Bounds are sized to what the quote engine can legitimately produce (see
-// src/lib/quote-pricing.ts). This public endpoint renders caller-supplied text
-// into a C&S-branded email sent to the caller-supplied address — anything
-// larger than these caps is abuse, not a real quote.
-const MoneySchema = z.number().finite().min(-100_000).max(1_000_000);
-const RangeSchema = z.object({ min: MoneySchema, max: MoneySchema });
-
-const QuoteSchema = z.object({
-  service: z.enum(["water-heater", "repipe"]),
-  selections: z
-    .record(z.string().max(64), z.unknown())
-    .refine((obj) => Object.keys(obj).length <= 24, "Too many selections"),
-  result: z.object({
-    total: RangeSchema,
-    lineItems: z
-      .array(
-        z.object({
-          label: z.string().max(120),
-          range: RangeSchema,
-        })
-      )
-      .max(24),
-    notes: z.array(z.string().max(500)).max(12),
-  }),
-  lead: z.object({
-    name: z.string().min(2).max(100),
-    email: z.string().email().max(200),
-    phone: z.string().min(7).max(30),
-  }),
-  sourcePath: z.string().max(200).optional(),
-  website: z.string().optional(),
-});
+// The estimate is recomputed on the server from the shopper's selections
+// (src/lib/quote-submission.ts). This public endpoint renders text into a
+// C&S-branded email sent to the caller-supplied address, so no number or line
+// of text in that email may come from the request body itself.
 
 export async function POST(request: Request) {
   try {
     const ip = getClientIp(request);
     const rl = rateLimit(ip);
     if (!rl.ok) return tooManyRequests(rl.retryAfter);
+    if (!isTrustedOrigin(request)) return forbiddenOrigin();
 
     const json = await request.json();
-    const parsed = QuoteSchema.safeParse(json);
-    if (!parsed.success) {
+    const parsed = parseQuoteSubmission(json);
+    if (!parsed.ok) {
       return NextResponse.json(
         { error: "Invalid submission" },
         { status: 400 }
       );
     }
-    const { service, selections, result, lead, sourcePath, website } = parsed.data;
+    const { service, selections, result, lead, sourcePath, website } = parsed.quote;
 
     if (isHoneypotTripped(website)) {
       return NextResponse.json({ success: true });

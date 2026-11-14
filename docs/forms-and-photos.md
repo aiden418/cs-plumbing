@@ -36,6 +36,23 @@ A server-side rejection (wrong type, too many, too large) comes back as
 `{ error, code: "attachments" }` and the form shows that message verbatim.
 Any other failure shows the generic "call us" message.
 
+## Checks every route runs before sending
+
+In order, on `/api/contact`, `/api/booking`, `/api/quote` and
+`/api/builder-portal` (the pure-math `/api/estimator` runs only the origin
+check):
+
+| Check | Where | Behaviour |
+|---|---|---|
+| Rate limit | `rateLimit` in `src/lib/api/secure.ts` | 5 per minute per IP, 429 with `Retry-After`. In-memory, so per warm instance; Vercel's firewall is the real throttle. |
+| Same origin | `src/lib/api/origin.ts` | A browser POST whose `Origin` is another site (or `null`) gets 403. No `Origin` (curl, this harness) is allowed. |
+| Schema | zod | 400 "Invalid submission" |
+| Honeypot | `website` field | 200 with no email and no `eventId` |
+| Attachments | `src/lib/api/attachments.ts` | Count, MIME type (JPG/PNG/PDF) and size per form; filenames sanitized. 400 `{ error, code: "attachments" }`. The builder portal uses `BUILDER_UPLOAD` (10 files, 10 MB each, 25 MB total). |
+| Quote figures | `src/lib/quote-submission.ts` | `/api/quote` recomputes the estimate from the selections with the same engine as the page; the browser's `result` is ignored. |
+
+`npm test` covers all of these (`tests/`).
+
 ## Testing delivery locally without sending mail
 
 `scripts/resend-capture.cjs` intercepts the Resend API and writes each
@@ -69,9 +86,9 @@ with bad fields (400 "Invalid submission" from zod).
 ## Known gap (not in this change)
 
 The builder portal's upload (`src/components/builder-portal/FileUpload.tsx`
-defaults, `src/app/api/builder-portal/route.ts`) still advertises 10 MB per
-file and 25 MB total, which Vercel's 4.5 MB request limit makes unreachable:
-a builder attaching a full plan set gets a platform 413, not our error
-message. Fix is either a direct-to-storage upload (Vercel Blob client
+defaults, `BUILDER_UPLOAD` in `src/lib/api/attachments.ts`) still advertises
+10 MB per file and 25 MB total, which Vercel's 4.5 MB request limit makes
+unreachable: a builder attaching a full plan set gets a platform 413, not our
+error message. Fix is either a direct-to-storage upload (Vercel Blob client
 upload) or a much lower advertised cap with a "email large plan sets"
 fallback line.

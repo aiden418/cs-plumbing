@@ -7,8 +7,10 @@ import { BUSINESS } from "@/lib/constants";
 import {
   ADMIN_EMAIL,
   escapeHtml,
+  forbiddenOrigin,
   getClientIp,
   isHoneypotTripped,
+  isTrustedOrigin,
   rateLimit,
   sendEmailBestEffort,
   sendEmailOrThrow,
@@ -46,6 +48,7 @@ export async function POST(request: Request) {
     const ip = getClientIp(request);
     const rl = rateLimit(ip);
     if (!rl.ok) return tooManyRequests(rl.retryAfter);
+    if (!isTrustedOrigin(request)) return forbiddenOrigin();
 
     // JSON when no photos were attached; multipart otherwise.
     const submission = await readSubmission(request);
