@@ -27,8 +27,9 @@ export const BUSINESS = {
   email: "office@csplumbinglee.com",
   /** Builder inquiries and prequal document requests. */
   builderPhone: "833-PLUMB-IT ext. 0",
-  ownerPhone: "239-628-9355",
-  ownerPhoneRaw: "2396289355",
+  /** Owner line on the builder documents. 833-758-6248 is the company's only
+   *  line (Aiden, 2026-11-14): no direct cell numbers on any page or PDF. */
+  ownerPhone: "833-PLUMB-IT ext. 1",
   address: "951 Pondella Rd",
   city: "North Fort Myers",
   state: "FL",
