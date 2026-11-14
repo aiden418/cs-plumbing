@@ -22,7 +22,7 @@ RULES
 7. Keep every tab you open until the wrap-up, then close them.
 
 DECISIONS ALREADY MADE (don't re-ask)
-- Primary phone everywhere: 833-758-6248. The 239 office line goes in as "additional phone" only where a listing allows two numbers.
+- Phone everywhere: 833-758-6248. It is the only line; never add a second number (Aiden, 2026-11-14).
 - Merge the branch first (step 0). The Terms effective date in the code is 2026-11-12. If today is a later date, stop before merging and tell me; I'll have the date bumped first.
 
 NAP STANDARD (copy exactly, everywhere)
@@ -83,7 +83,7 @@ Open Gmail → Drafts. For each one: fill the recipient if it is blank, show me 
 5. "[Paste into Birdeye "Create a case"] Merge duplicate profile" is not an email. Sign in to Birdeye, open support → Create a case, paste the draft body, submit, then delete the draft.
 
 STEP 5 — GOOGLE BUSINESS PROFILE
-https://business.google.com → C&S Plumbing of Lee. Compare every field with the NAP standard and fix differences: primary phone 833-758-6248 (239 line as additional), address, website set to https://www.csplumbinglee.com/?utm_source=google&utm_medium=organic&utm_campaign=gbp, categories, hours (add 24/7 emergency under "more hours"), description. Services: add Tankless water heater installation, Whole-home repipe, UEP water/sewer connection, Septic-to-sewer conversion, Slab leak repair. Create one post linking https://www.csplumbinglee.com/services/tankless-water-heaters (two short sentences, no prices). Report each field as before → after.
+https://business.google.com → C&S Plumbing of Lee. Compare every field with the NAP standard and fix differences: phone 833-758-6248 only, address, website set to https://www.csplumbinglee.com/?utm_source=google&utm_medium=organic&utm_campaign=gbp, categories, hours (add 24/7 emergency under "more hours"), description. Services: add Tankless water heater installation, Whole-home repipe, UEP water/sewer connection, Septic-to-sewer conversion, Slab leak repair. Create one post linking https://www.csplumbinglee.com/services/tankless-water-heaters (two short sentences, no prices). Report each field as before → after.
 
 STEP 6 — LISTINGS (claim and correct; no payments)
 In this order, using the NAP standard. If a site asks for payment or a phone verification code, tell me and move on.

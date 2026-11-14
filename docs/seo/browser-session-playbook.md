@@ -121,9 +121,8 @@ set the recipient where it is blank, read once, send:
 https://business.google.com → C&S Plumbing of Lee. Check against the NAP
 standard in `backlink-and-citation-plan.md` §1:
 
-- **Primary phone**: decide once. Recommendation: 833-758-6248 (the site's
-  tracked line) as primary, the 239 office line as additional. Whatever is
-  chosen here becomes the number for every listing below.
+- **Phone**: 833-758-6248 (833-PLUMB-IT) is the only line (Aiden, 2026-11-14). It
+  goes in every phone field; nothing is added as a second number.
 - Address 951 Pondella Rd, North Fort Myers, FL 33903; website
   `https://www.csplumbinglee.com/?utm_source=google&utm_medium=organic&utm_campaign=gbp`.
 - Categories: Plumber (primary); Water heater installation service; Drainage
@@ -214,7 +213,7 @@ needs the Birdeye sign-in; its draft is still in Drafts.
 | Services | existing list (already had "Whole Home Repipes") | + Tankless water heater installation, UEP water/sewer connection, Septic-to-sewer conversion, Slab leak repair |
 | Post | — | Update with "Learn more" → /services/tankless-water-heaters (Pending) |
 | Categories | Plumber (primary), Bathroom remodeler, Plumbing supply store | unchanged — the category picker never shows suggestions for automated typing and rejects typed text; set by hand |
-| Phone | (833) 758-6248 primary, no additional | unchanged — which 239 number is the office line is undecided (candidates 239-628-9355 on BBB/repo, 239-458-9223 on BuildZoom/Networx, 239-314-6991 GBP chat) |
+| Phone | (833) 758-6248 primary, no additional | unchanged — correct as is: 833-758-6248 is the only line (Aiden, 2026-11-14); the 239 numbers on old listings are former offices and co-founders' cells. Open: the Chat (SMS) field still shows 239-314-6991. |
 
 No "Emergency" type exists under "Add more hours" (only Access, Breakfast, Brunch, Delivery,
 Dinner, Drive through, Happy hours, Kitchen, Lunch, Online service hours, Pickup, Senior
@@ -228,6 +227,6 @@ Data Axle: no listing under any name or phone. Foursquare: old listing found (10
 Ct), claim behind login. Blocked on sign-ins: Yelp, HomeAdvisor/Angi, Birdeye, Bing Places,
 Apple Business Connect, Nextdoor, MapQuest Business Suite, TransUnion Localeze (account).
 
-**For Aiden.** Sign-ins above; BuildZoom referral-fee decision; GBP categories and 239 line;
+**For Aiden.** Sign-ins above; BuildZoom referral-fee decision; GBP categories and the Chat (SMS) number;
 Terms §3 steps 4–6; tomorrow's five indexing requests; Change of Address retry; GSC export of
 candsplumbingfl.com once it has data.
