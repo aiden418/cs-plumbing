@@ -8,13 +8,25 @@ import { image } from "@/lib/media";
  * The logo lockup: the emblem cut from the logo artwork (marlin, compass,
  * "C&S" and "PLUMBING"; the crop is set in src/content/media.json under
  * crops["logo.emblem"]) and the name set as real text, "C&S Plumbing" in the
- * display face with "of Lee" as a plan-drawing label.
+ * display face with "of Lee" under it.
  *
- * Server component (it reads the picture system). Text colours come from the
- * section tone.
+ * Server component (it reads the picture system). `surface` picks the text
+ * colours: "light" (navy name, blue "of Lee": white and shell surfaces, the
+ * emblem's black lettering reads there), "dark" (white: over a photograph or
+ * a navy band) or "tone" (the section's tone variables, the default). The
+ * header switches between its two states in CSS through the data-lockup-*
+ * hooks (header.css).
  */
 
 type LockupSize = "sm" | "md" | "lg";
+type LockupSurface = "tone" | "light" | "dark";
+
+const nameColor: Record<LockupSurface, string> = { tone: "text-fg", light: "text-navy", dark: "text-white" };
+const suffixColor: Record<LockupSurface, string> = {
+  tone: "text-accent",
+  light: "text-primary-dark",
+  dark: "text-white/90",
+};
 
 const heights: Record<LockupSize, string> = {
   // the header: 34 px on phones, 40 px from the nav breakpoint
@@ -26,7 +38,7 @@ const heights: Record<LockupSize, string> = {
 const pixelHeight: Record<LockupSize, number> = { sm: 40, md: 56, lg: 120 };
 
 const wordSizes: Record<LockupSize, string> = {
-  sm: "text-[1.0625rem] nav:text-[1.1875rem]",
+  sm: "text-[1.125rem] nav:text-[1.25rem]",
   md: "text-xl sm:text-2xl",
   lg: "text-xl sm:text-[2.5rem]",
 };
@@ -46,6 +58,8 @@ interface LogoLockupProps {
   label?: string;
   /** Preload the emblem (the header on every page). */
   preload?: boolean;
+  /** Text colours for a light or dark surface (default: the section tone). */
+  surface?: LockupSurface;
   className?: string;
 }
 
@@ -55,6 +69,7 @@ export default function LogoLockup({
   href = "/",
   label = `${BUSINESS.fullName}, home`,
   preload = false,
+  surface = "tone",
   className,
 }: LogoLockupProps) {
   const emblem = image("derived:logo.emblem");
@@ -80,13 +95,22 @@ export default function LogoLockup({
         <span className="flex flex-col leading-none" aria-hidden={linked ? true : undefined}>
           <span
             className={cn(
-              "font-display font-bold tracking-[-0.01em] whitespace-nowrap text-fg [font-stretch:112%]",
+              "font-display font-bold tracking-[-0.01em] whitespace-nowrap [font-stretch:112%]",
+              nameColor[surface],
               wordSizes[size],
             )}
+            data-lockup-name=""
           >
             {BUSINESS.name}
           </span>
-          {SUFFIX && <span className="label-tech mt-1 text-accent">{SUFFIX}</span>}
+          {SUFFIX && (
+            <span
+              className={cn("mt-1 text-[0.875rem] leading-none font-semibold", suffixColor[surface])}
+              data-lockup-suffix=""
+            >
+              {SUFFIX}
+            </span>
+          )}
         </span>
       )}
     </>
