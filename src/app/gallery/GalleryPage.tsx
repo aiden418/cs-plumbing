@@ -1,19 +1,24 @@
 import PageHero from "@/components/ui/PageHero";
+import Button from "@/components/ui/Button";
 import Container from "@/components/ui/Container";
 import Section from "@/components/ui/Section";
-import GalleryGrid, { type GalleryGridItem } from "@/components/gallery/GalleryGrid";
+import { Phone } from "@/components/ui/icons";
+import type { GalleryGridItem } from "@/components/gallery/GalleryGrid";
 import LightboxProvider from "@/components/lightbox/LightboxProvider";
+import { BUSINESS } from "@/lib/business";
 import { GALLERY_CATEGORIES } from "@/lib/constants";
 import { image } from "@/lib/media";
 import type { GalleryItem } from "@/lib/types";
-import { GALLERY_PAGE } from "@/content/projects";
+import { GALLERY_PAGE, PROJECTS_ACTIONS } from "@/content/projects";
+import GalleryCards from "./GalleryCards";
 
 /**
- * /gallery (pages.md "Gallery"): a compact hero on ink, then every gallery
- * photo in justified rows with the existing category filters. Each photo
- * opens the lightbox with its title as the caption. Server component: the
- * pictures are resolved here and handed to the grid as MediaRef props;
- * without JavaScript every photo shows and links to its file.
+ * /gallery (v2-bright.md "Inner pages"): the first gallery photograph fills
+ * the hero behind the headline, then every gallery photo as a card with its
+ * title under it, behind the existing category chips. Each photo opens the
+ * lightbox with its title as the caption. Server component: the pictures
+ * are resolved here and handed to the grid as MediaRef props; without
+ * JavaScript every photo shows and links to its file.
  */
 export default function GalleryPage({ items }: { items: GalleryItem[] }) {
   const photos: GalleryGridItem[] = [];
@@ -22,15 +27,27 @@ export default function GalleryPage({ items }: { items: GalleryItem[] }) {
     if (media) photos.push({ media, category: item.category });
   }
   const categories = GALLERY_CATEGORIES.map(({ id, label }) => ({ id, label }));
+  const hero = photos[0]?.media ?? null;
 
   return (
     <>
       <PageHero
-        layout="compact"
+        layout="photo"
+        frame={hero}
         overline={GALLERY_PAGE.overline}
         title={GALLERY_PAGE.title}
         accent={GALLERY_PAGE.accent}
         description={GALLERY_PAGE.description}
+        actions={
+          <>
+            <Button href={BUSINESS.phoneHref} size="lg" icon={<Phone className="size-5" />}>
+              {`${PROJECTS_ACTIONS.call} ${BUSINESS.phone}`}
+            </Button>
+            <Button href={PROJECTS_ACTIONS.book.href} variant="onPhoto" size="lg">
+              {PROJECTS_ACTIONS.book.label}
+            </Button>
+          </>
+        }
       />
 
       <Section tone="white" spacing="sm" labelledBy="gallery-heading">
@@ -39,7 +56,7 @@ export default function GalleryPage({ items }: { items: GalleryItem[] }) {
             {GALLERY_PAGE.gridHeading}
           </h2>
           <LightboxProvider>
-            <GalleryGrid items={photos} categories={categories} title={GALLERY_PAGE.lightboxTitle} eager={4} />
+            <GalleryCards items={photos} categories={categories} title={GALLERY_PAGE.lightboxTitle} />
           </LightboxProvider>
         </Container>
       </Section>

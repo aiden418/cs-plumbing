@@ -7,6 +7,13 @@
  * Plain data, safe for server and client components.
  */
 
+/** The two buttons in the first screen of every page of this family. */
+export const PROJECTS_ACTIONS = {
+  /** Followed by BUSINESS.phone. */
+  call: "Call",
+  book: { label: "Book a Service", href: "/booking" },
+} as const;
+
 /** /projects */
 export const PROJECTS_INDEX = {
   overline: "Our Work",
@@ -37,6 +44,8 @@ export const PROJECTS_INDEX = {
 export const PROJECT_PAGE = {
   breadcrumb: { home: "Home", projects: "Projects" },
   walk: "Scroll to walk the build",
+  /** The small line over each phase heading ("Phase 2 of 3"). */
+  phaseOf: (n: number, total: number) => `Phase ${n} of ${total}`,
   facts: {
     client: "Client",
     timeline: "Timeline",

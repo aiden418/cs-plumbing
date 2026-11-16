@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import ProjectDetail from "@/components/projects/ProjectDetail";
-import ProjectCrossLinks from "@/components/projects/ProjectCrossLinks";
 import ProjectJsonLd from "@/components/seo/ProjectJsonLd";
 import CTASection from "@/components/home/CTASection";
 import { COMPLETED_PROJECTS } from "@/lib/projects-data";
@@ -72,7 +71,6 @@ export default async function Page({
       />
       <ProjectJsonLd project={project} />
       <ProjectDetail project={project} />
-      <ProjectCrossLinks project={project} />
       <CTASection />
     </>
   );
