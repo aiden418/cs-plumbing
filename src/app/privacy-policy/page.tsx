@@ -17,7 +17,7 @@ export default function PrivacyPolicyPage() {
       <PageHero layout="compact" overline={PRIVACY.overline} title={PRIVACY.title} />
       <Section tone="white" spacing="sm">
         <Container>
-          <div className="mx-auto max-w-[46rem]">
+          <div className="max-w-[46rem]">
             <div className="rich-text">
               <p>
                 <strong>Last updated:</strong> March 10, 2026

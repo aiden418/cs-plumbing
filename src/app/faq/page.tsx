@@ -86,10 +86,9 @@ export default function FAQPage() {
                     <li key={cat.slug} className="-mb-px border-b border-rule">
                       <a
                         href={`#${cat.slug}`}
-                        className="flex min-h-12 items-center justify-between gap-3 py-2 font-medium text-fg underline-offset-4 transition-colors duration-150 hover:text-link hover:underline"
+                        className="flex min-h-12 items-center py-2 font-medium text-fg underline-offset-4 transition-colors duration-150 hover:text-link hover:underline"
                       >
-                        <span>{cat.category}</span>
-                        <span className="text-sm text-muted tabular-nums">{cat.faqs.length}</span>
+                        {cat.category}
                       </a>
                     </li>
                   ))}

@@ -64,8 +64,7 @@ export default function BlogContent({ post }: { post: BlogPost }) {
 
             <aside
               aria-labelledby="post-help-heading"
-              data-tone="shell"
-              className="mt-16 grid gap-6 rounded-frame bg-canvas p-6 sm:mt-20 sm:grid-cols-[1fr_auto] sm:items-center sm:p-8"
+              className="mt-16 grid gap-6 border-t border-rule pt-8 sm:mt-20 sm:grid-cols-[1fr_auto] sm:items-center"
             >
               <div>
                 <h3 id="post-help-heading" className="text-xl text-fg">

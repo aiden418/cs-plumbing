@@ -99,8 +99,7 @@ export default function ServiceMapPage() {
           <div className="space-y-10">
             {COUNTIES.map((group) => (
               <div key={group.county} className="grid grid-cols-1 gap-y-4 lg:grid-cols-12 lg:gap-x-8">
-                <h3 className="label-tech flex items-center gap-2.5 self-start text-accent lg:col-span-3 lg:min-h-14">
-                  <span className="joint" aria-hidden="true" />
+                <h3 className="self-start text-lg text-fg lg:col-span-3 lg:flex lg:min-h-14 lg:items-center">
                   {group.county}
                   {SERVICE_MAP.areas.countySuffix}
                 </h3>

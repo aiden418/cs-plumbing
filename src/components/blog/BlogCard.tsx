@@ -22,7 +22,7 @@ export default function BlogCard({ post }: { post: BlogPost }) {
   return (
     <Link
       href={`/blog/${post.slug}`}
-      className="group flex h-full transition-transform duration-150 ease-enter active:scale-[0.99] flex-col border-t border-rule py-8 sm:py-10"
+      className="group flex h-full flex-col border-t border-rule py-8 sm:py-10"
     >
       <p className="label-tech flex flex-wrap items-center gap-x-3 gap-y-1 text-muted">
         <time dateTime={post.publishDate}>{formatPostDate(post.publishDate)}</time>
