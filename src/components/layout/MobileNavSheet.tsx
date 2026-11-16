@@ -123,7 +123,7 @@ export default function MobileNavSheet({ logo, children, label }: MobileNavSheet
       ref={ref}
       id={MENU_DIALOG_ID}
       className="mnav-dialog"
-      data-tone="ink"
+      data-tone="white"
       aria-label={label}
       onClose={onClose}
       onClick={onClick}

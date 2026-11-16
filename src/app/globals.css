@@ -304,7 +304,7 @@
   --dur-3: 450ms;
   --dur-4: 900ms;
 
-  --nav-h: 3.75rem;
+  --nav-h: 4rem;
   --dock-h: calc(4rem + env(safe-area-inset-bottom, 0px));
 
   /* default tone = white */
@@ -327,7 +327,7 @@
 
 @media (min-width: 70rem) {
   :root {
-    --nav-h: 4.5rem;
+    --nav-h: 4.75rem;
   }
 }
 

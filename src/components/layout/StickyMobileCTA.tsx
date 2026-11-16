@@ -9,12 +9,13 @@ import { trackTextClick } from "@/lib/pixel";
 const HIDDEN_PATHS = ["/booking", "/contact", "/quote-builder"];
 
 const target =
-  "flex min-h-12 items-center justify-center gap-2 rounded-control text-[0.9375rem] font-semibold transition-[background-color,transform] duration-150 ease-enter active:scale-[0.98]";
-const outline = `${target} border border-white/70 text-white hover:bg-white/10`;
+  "flex min-h-12 items-center justify-center gap-2 rounded-control text-base font-semibold transition-[background-color,transform] duration-150 ease-enter active:scale-[0.98]";
+const outline = `${target} border border-steel-300 bg-white text-navy hover:bg-steel-50 [&>svg]:text-primary-dark`;
 
 /**
- * The phone dock (chrome-and-opening.md section 3): Call, Text and Book, fixed
- * to the bottom below md. The footer reserves its height (--dock-h), and the
+ * The phone dock (chrome-and-opening.md section 3; v2-bright.md: a white bar
+ * with a top line, Call in blue, Text and Book white with a border): Call,
+ * Text and Book, fixed to the bottom below md. The footer reserves its height (--dock-h), and the
  * page's scroll-padding keeps focused elements clear of it.
  *
  * Call tracking: the tel: link has no handler of its own (one document-level
@@ -31,8 +32,8 @@ export default function StickyMobileCTA() {
       // data-drawer-hide: hidden while the mobile menu is open (see globals.css)
       data-drawer-hide
       data-dock
-      data-tone="ink"
-      className="fixed inset-x-0 bottom-0 z-40 h-(--dock-h) border-t border-white/14 bg-ink pt-2 pr-[calc(0.75rem+env(safe-area-inset-right,0px))] pb-[calc(0.5rem+env(safe-area-inset-bottom,0px))] pl-[calc(0.75rem+env(safe-area-inset-left,0px))] md:hidden"
+      data-tone="white"
+      className="fixed inset-x-0 bottom-0 z-40 h-(--dock-h) border-t border-steel-200 bg-white pt-2 pr-[calc(0.75rem+env(safe-area-inset-right,0px))] pb-[calc(0.5rem+env(safe-area-inset-bottom,0px))] pl-[calc(0.75rem+env(safe-area-inset-left,0px))] md:hidden"
       role="region"
       aria-label="Quick contact"
     >

@@ -67,12 +67,12 @@ function Details({ id }: { id: string }) {
   return (
     <dl
       id={id}
-      className="absolute top-1/2 left-full ml-2 grid w-[min(18rem,calc(100vw-3.5rem))] -translate-y-1/2 grid-cols-[auto_1fr] gap-x-4 gap-y-1 rounded-control bg-ink-700 p-4 text-[0.8125rem] leading-snug text-white/84 shadow-float"
+      className="absolute top-1/2 left-full ml-2 grid w-[min(18rem,calc(100vw-3.5rem))] -translate-y-1/2 grid-cols-[auto_1fr] gap-x-4 gap-y-1 rounded-control border border-steel-200 bg-white p-4 text-[0.875rem] leading-snug text-steel-800 shadow-lift"
     >
       {rows.map(([label, value]) => (
         <div key={label} className="contents">
-          <dt className="text-white/66">{label}</dt>
-          <dd className="break-all text-white tabular-nums">{value}</dd>
+          <dt className="text-steel-600">{label}</dt>
+          <dd className="break-all text-navy tabular-nums">{value}</dd>
         </div>
       ))}
     </dl>
@@ -83,7 +83,7 @@ function Ribbon() {
   const [open, setOpen] = useState(false);
   const id = useId();
   return (
-    <div data-tone="ink" className="preview-ribbon">
+    <div data-tone="white" className="preview-ribbon">
       <button
         type="button"
         aria-expanded={open}

@@ -132,7 +132,7 @@ export default function CouponPopup() {
       ref={cardRef}
       data-tone="white"
       aria-label="Coupon for your first service"
-      className="coupon-card enter overflow-hidden rounded-frame border-t-2 border-brass bg-canvas text-body shadow-float"
+      className="coupon-card enter overflow-hidden rounded-2xl border border-steel-200 bg-canvas text-body shadow-lift"
     >
             {/* Close button */}
             <button
@@ -154,8 +154,8 @@ export default function CouponPopup() {
               </p>
 
               {/* Coupon code */}
-              <div className="mt-4 border-y border-rule py-3">
-                <p className="label-tech text-accent">Your coupon code</p>
+              <div className="mt-4 rounded-control border border-dashed border-steel-300 bg-shell px-4 py-3">
+                <p className="text-[0.875rem] font-semibold text-accent">Your coupon code</p>
                 <p className="mt-1.5 font-mono text-xl font-bold tracking-widest text-fg tabular-nums">
                   WELCOME50
                 </p>

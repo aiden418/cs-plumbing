@@ -31,6 +31,8 @@ import { ChevronDown } from "@/components/ui/icons";
 const HOVER_OPEN_MS = 80;
 const HOVER_CLOSE_MS = 150;
 const HOVER_GRACE_MS = 500;
+/** Scroll distance after which the header over a photo hero turns white. */
+const SCROLLED_PX = 40;
 /** The nav breakpoint (--breakpoint-nav). */
 const DESKTOP_QUERY = "(min-width: 70rem)";
 
@@ -128,8 +130,8 @@ export default function HeaderController({ children, sheet }: HeaderControllerPr
 
   useEffect(() => () => clearTimer(), []);
 
-  // data-scrolled: the hairline under the header appears once the page has
-  // scrolled. Written straight to the element (React does not own the
+  // data-scrolled: over a photo hero the header turns from transparent to
+  // white once the page has scrolled about 40 px (header.css). Written straight to the element (React does not own the
   // attribute), so scrolling never re-renders the header.
   useEffect(() => {
     const header = headerRef.current;
@@ -137,7 +139,7 @@ export default function HeaderController({ children, sheet }: HeaderControllerPr
     let frame = 0;
     const update = () => {
       frame = 0;
-      header.toggleAttribute("data-scrolled", window.scrollY > 0);
+      header.toggleAttribute("data-scrolled", window.scrollY > SCROLLED_PX);
     };
     const onScroll = () => {
       if (!frame) frame = requestAnimationFrame(update);
@@ -195,7 +197,7 @@ export default function HeaderController({ children, sheet }: HeaderControllerPr
 
   return (
     <HeaderContext.Provider value={value}>
-      <header ref={headerRef} className="site-header" data-tone="ink" data-panel-open={open ?? undefined}>
+      <header ref={headerRef} className="site-header" data-panel-open={open ?? undefined}>
         {children}
       </header>
       {sheet}
