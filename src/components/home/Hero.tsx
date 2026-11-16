@@ -149,6 +149,8 @@ export default function Hero() {
                   loop={hero.mode === "loop"}
                   aria-hidden="true"
                   tabIndex={-1}
+                  // the frame script sets src before hydration on the Opening path
+                  suppressHydrationWarning
                 />
                 <InlineScript html={frameScript(HERO_SOURCES)} />
                 <HeroController
