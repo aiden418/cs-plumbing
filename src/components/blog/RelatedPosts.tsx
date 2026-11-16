@@ -46,10 +46,10 @@ export default function RelatedPosts({
       <p className="mt-6">
         <Link
           href="/blog"
-          className="group inline-flex min-h-11 items-center gap-2 font-semibold text-link underline-offset-[0.2em] hover:underline"
+          className="group inline-flex min-h-11 items-center gap-2 text-[1.0625rem] font-semibold text-link underline-offset-[0.2em] hover:underline"
         >
           All plumbing guides &amp; tips
-          <ArrowRight className="size-5 transition-transform duration-250 ease-settle group-hover:translate-x-0.5" />
+          <ArrowRight className="size-5 transition-transform duration-150 group-hover:translate-x-0.5" />
         </Link>
       </p>
     </LinkBlock>

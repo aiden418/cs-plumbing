@@ -61,7 +61,7 @@ export default async function GoogleReviews({ tone = "white" }: { tone?: Tone } 
       <Container>
         <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between md:gap-12">
           <div>
-            <p className="label-tech flex items-center gap-2.5 text-accent">
+            <p className="eyebrow flex items-center gap-2.5 text-accent">
               <GoogleMark className="size-5 shrink-0" />
               <span>Google Reviews</span>
             </p>

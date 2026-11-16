@@ -33,10 +33,10 @@ export default function LinkBlock({
       <Container>
         <div className="mb-8 max-w-2xl sm:mb-10">
           {overline && <Eyebrow className="mb-4">{overline}</Eyebrow>}
-          <h2 id={headingId} className="text-display-sm text-fg">
+          <h2 id={headingId} className="text-display-md text-fg">
             {heading}
           </h2>
-          {description && <p className="mt-3 max-w-[56ch] text-body">{description}</p>}
+          {description && <p className="mt-4 max-w-[56ch] text-lead text-body">{description}</p>}
         </div>
         {children}
       </Container>
