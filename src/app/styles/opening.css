@@ -14,9 +14,9 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    /* Phones: the whole first screen above the dock. */
-    min-height: 34rem;
-    height: calc(100svh - var(--dock-h));
+    /* Phones: the whole first screen above the dock. A minimum, not a fixed
+       height: on a short or narrow phone the words may need more room. */
+    min-height: max(34rem, calc(100svh - var(--dock-h)));
     padding-top: calc(var(--nav-h) + 1rem);
     padding-bottom: 1.25rem;
     overflow: hidden;
@@ -26,7 +26,8 @@
 
   @media (min-width: 48rem) {
     .home-hero {
-      height: clamp(36rem, 88svh, 56rem);
+      min-height: clamp(36rem, 88svh, 56rem);
+      padding-top: calc(var(--nav-h) + 2.5rem);
       padding-bottom: 2.5rem;
     }
   }
@@ -74,23 +75,18 @@
     }
   }
 
-  /* The scrim: navy, strongest where the words sit (bottom-left), light at
-     the top-right so the picture still reads as a photograph. A thin band at
-     the top keeps the transparent header legible. */
+  /* The scrim: navy, strongest where the words sit (bottom-left), never a
+     wash over the whole picture. A band at the top keeps the transparent
+     header legible. On phones the words span the full width, so the darkest
+     part is tied to the text block itself (.home-hero-body::before) and holds
+     whatever the screen height; the photograph above it stays light. */
   .home-hero-scrim {
     position: absolute;
     inset: 0;
     z-index: -1;
     background:
       linear-gradient(to bottom, rgb(10 23 48 / 0.55) 0, rgb(10 23 48 / 0) 7.5rem),
-      linear-gradient(
-        to top,
-        rgb(10 23 48 / 0.9) 0%,
-        rgb(10 23 48 / 0.82) 40%,
-        rgb(10 23 48 / 0.68) 62%,
-        rgb(10 23 48 / 0.25) 82%,
-        rgb(10 23 48 / 0.1) 100%
-      );
+      linear-gradient(to top, rgb(10 23 48 / 0.35) 0%, rgb(10 23 48 / 0) 60%);
   }
 
   @media (min-width: 48rem) {
@@ -108,7 +104,29 @@
     }
   }
 
+  @media (max-width: 47.9375rem) {
+    .home-hero-body::before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      top: -5rem;
+      bottom: -1.25rem;
+      left: 0;
+      right: 0;
+      background: linear-gradient(
+        to bottom,
+        rgb(10 23 48 / 0) 0,
+        rgb(10 23 48 / 0.7) 4.5rem,
+        rgb(10 23 48 / 0.74) 50%,
+        rgb(10 23 48 / 0.86) 100%
+      );
+      pointer-events: none;
+    }
+  }
+
+  /* On phones the Container spans the full width, so its ::before does too. */
   .home-hero-body {
+    position: relative;
     width: 100%;
   }
 
@@ -130,10 +148,17 @@
     font-family: var(--font-display);
     font-stretch: 104%;
     font-weight: 800;
-    font-size: clamp(2.625rem, 1.55rem + 4.1vw, 5rem);
+    /* 36 px at 320, 43 px at 390, 80 px on a wide desktop */
+    font-size: clamp(2.25rem, 0.25rem + 10vw, 2.75rem);
     line-height: 1.02;
     letter-spacing: -0.025em;
     text-wrap: balance;
+  }
+
+  @media (min-width: 48rem) {
+    .home-hero-title {
+      font-size: clamp(3rem, 1.4rem + 3.8vw, 4.5rem);
+    }
   }
 
   /* "Most Trusted" on a line of its own, with the brass rule of the current

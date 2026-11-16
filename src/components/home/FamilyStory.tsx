@@ -47,7 +47,7 @@ export default function FamilyStory() {
   ];
 
   return (
-    <section data-tone="shell" aria-labelledby="home-family-title" className="relative bg-canvas py-14 text-body lg:py-20">
+    <section data-tone="shell" aria-labelledby="home-family-title" className="relative bg-canvas py-12 text-body lg:py-20">
       <Container>
         <div className="grid grid-cols-1 gap-y-8 lg:grid-cols-12 lg:gap-x-12">
           <div className="lg:col-span-5">
@@ -58,7 +58,7 @@ export default function FamilyStory() {
                   media={main}
                   aspect="16/9"
                   sizes="(min-width: 80rem) 460px, (min-width: 64rem) 36vw, 92vw"
-                  className="lg:aspect-[4/3]"
+                  className="max-md:aspect-[2/1] lg:aspect-[4/3]"
                 />
                 {inset && (
                   <Frame

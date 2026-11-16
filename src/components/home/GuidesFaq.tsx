@@ -12,7 +12,7 @@ import { ArrowLink, HomeHeading } from "./HomeHeading";
  */
 export default function GuidesFaq({ posts }: { posts: BlogPost[] }) {
   return (
-    <section data-tone="shell" aria-labelledby="related-posts-heading" className="relative bg-canvas py-14 text-body lg:py-20">
+    <section data-tone="shell" aria-labelledby="related-posts-heading" className="relative bg-canvas py-12 text-body lg:py-20">
       <Container>
         <div className="grid grid-cols-1 gap-y-14 lg:grid-cols-12 lg:gap-x-12">
           <div className="lg:col-span-5">

@@ -64,6 +64,19 @@ function blockReason() {
   });
 }
 
+/** Resolves once the still has loaded (or failed) and a frame with it has been painted. */
+function stillPainted(media: HTMLElement): Promise<void> {
+  const img = media.querySelector("img");
+  const loaded =
+    !img || img.complete
+      ? Promise.resolve()
+      : new Promise<void>((resolve) => {
+          img.addEventListener("load", () => resolve(), { once: true });
+          img.addEventListener("error", () => resolve(), { once: true });
+        });
+  return loaded.then(() => new Promise<void>((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => resolve()))));
+}
+
 /** Candidate files for this viewport, HEVC first when the device decodes it efficiently. */
 async function resolveCandidates(sources: readonly HeroSource[], video: HTMLVideoElement): Promise<HeroSource[]> {
   const audience = audienceFor({
@@ -137,16 +150,20 @@ export default function HeroController({ sources, labels }: HeroControllerProps)
     const start = () => {
       if (started) return;
       started = true;
-      void resolveCandidates(sources, video).then((list) => {
-        if (cancelled) return;
-        candidates.current = list;
-        if (list.length === 0) {
-          debug({ intro: "still:no-file", state: "still" });
-          return;
-        }
-        debug({ intro: "film" });
-        send({ type: readPref() === "off" ? "PREF_OFF" : "START", sources: list.length });
-      });
+      // The still is painted first and stays the LCP element: nothing of the
+      // film is requested before it has loaded and been on screen for a frame.
+      void stillPainted(media)
+        .then(() => resolveCandidates(sources, video))
+        .then((list) => {
+          if (cancelled) return;
+          candidates.current = list;
+          if (list.length === 0) {
+            debug({ intro: "still:no-file", state: "still" });
+            return;
+          }
+          debug({ intro: "film" });
+          send({ type: readPref() === "off" ? "PREF_OFF" : "START", sources: list.length });
+        });
     };
 
     const io = new IntersectionObserver(
@@ -188,9 +205,14 @@ export default function HeroController({ sources, labels }: HeroControllerProps)
     const media = mediaRef.current;
     if (!video || !media) return;
     const current = candidates.current[source];
+    // The film layer fades in only over a decoded frame.
+    const showFilm = () => {
+      if (video.readyState >= 2) media.setAttribute("data-film", "on");
+    };
     const film = (on: boolean) => {
-      if (on && video.readyState >= 2) media.setAttribute("data-film", "on");
-      else if (!on) media.removeAttribute("data-film");
+      if (!on) media.removeAttribute("data-film");
+      else if (video.readyState >= 2) showFilm();
+      else video.addEventListener("loadeddata", showFilm, { once: true });
     };
     let watchdog = 0;
     let frameCallback = 0;
@@ -244,6 +266,7 @@ export default function HeroController({ sources, labels }: HeroControllerProps)
     return () => {
       window.clearTimeout(watchdog);
       video.removeEventListener("playing", onPlaying);
+      video.removeEventListener("loadeddata", showFilm);
       if (frameCallback && typeof video.cancelVideoFrameCallback === "function") video.cancelVideoFrameCallback(frameCallback);
     };
   }, [status, source, send]);

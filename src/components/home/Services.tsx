@@ -24,7 +24,7 @@ export default function Services() {
   const rows = tiles.filter((t) => !t.media);
 
   return (
-    <section data-tone="shell" aria-labelledby="home-services-title" className="relative bg-canvas py-14 text-body lg:py-20">
+    <section data-tone="shell" aria-labelledby="home-services-title" className="relative bg-canvas py-12 text-body lg:py-20">
       <Container>
         <HomeHeading
           id="home-services-title"

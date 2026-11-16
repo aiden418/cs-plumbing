@@ -30,7 +30,7 @@ function whiteLogo(path: string) {
 export default function CoastalComebackTeaser({ season = "departure" }: { season?: Season }) {
   const copy = SEASON_COPY[season];
   return (
-    <section data-tone="white" aria-labelledby="home-coastal-title" className="relative bg-canvas py-14 text-body lg:py-20">
+    <section data-tone="white" aria-labelledby="home-coastal-title" className="relative bg-canvas py-12 text-body lg:py-20">
       <Container>
         <div className="home-card grid grid-cols-1 gap-y-6 p-5 sm:p-8 lg:grid-cols-12 lg:gap-x-10 lg:p-10">
           <div className="lg:col-span-7">
@@ -38,7 +38,7 @@ export default function CoastalComebackTeaser({ season = "departure" }: { season
             <h2 id="home-coastal-title" className="home-h2-sm">
               {copy.teaserTitle}
             </h2>
-            <p className="mt-3 max-w-[56ch]">{copy.teaserBody}</p>
+            <p className="mt-3 max-w-[56ch] max-md:sr-only">{copy.teaserBody}</p>
             <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2">
               <Button href={coastal.plansLink.href} size="lg" icon={<ShieldCheck className="size-5" />} className="max-sm:w-full">
                 {coastal.plansLink.label}

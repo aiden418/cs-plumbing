@@ -26,7 +26,7 @@ function byCounty() {
 export default function WhereWeWork() {
   const groups = byCounty();
   return (
-    <section data-tone="shell" id={areas.id} aria-labelledby="home-areas-title" className="relative bg-canvas py-14 text-body lg:py-20">
+    <section data-tone="shell" id={areas.id} aria-labelledby="home-areas-title" className="relative bg-canvas py-12 text-body lg:py-20">
       <Container>
         <div className="grid grid-cols-1 gap-y-8 lg:grid-cols-12 lg:gap-x-12">
           <HomeHeading
