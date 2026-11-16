@@ -22,6 +22,7 @@ import WhatHappensNext from "@/components/ui/WhatHappensNext";
 import { BUSINESS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { trackBuilderLead } from "@/lib/pixel";
+import { PLAN_SET_MAX_BYTES } from "@/lib/plan-upload";
 
 const steps = [
   { label: "Contact", icon: <User className="w-4 h-4" /> },
@@ -456,7 +457,12 @@ export default function BuilderPortalPage() {
                       Upload blueprints, site plans, floor plans, or photos of existing
                       conditions. This helps us provide a more accurate quote.
                     </p>
-                    <FileUpload files={files} onChange={setFiles} />
+                    <FileUpload
+                      files={files}
+                      onChange={setFiles}
+                      maxTotalBytes={PLAN_SET_MAX_BYTES}
+                      largePlanSetEmail={BUSINESS.email}
+                    />
                   </div>
                 )}
 

@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { CheckCircle, Send } from "lucide-react";
 import FileUpload from "@/components/builder-portal/FileUpload";
+import { PLAN_SET_MAX_BYTES } from "@/lib/plan-upload";
 import { trackBuilderLead } from "@/lib/pixel";
 import { BUSINESS } from "@/lib/constants";
 
@@ -136,7 +137,12 @@ export default function BuilderBidForm({
 
       <div className="mt-5">
         <span className={label}>Plans (PDF, JPG or PNG)</span>
-        <FileUpload files={files} onChange={setFiles} />
+        <FileUpload
+          files={files}
+          onChange={setFiles}
+          maxTotalBytes={PLAN_SET_MAX_BYTES}
+          largePlanSetEmail={BUSINESS.email}
+        />
       </div>
 
       {error && (

@@ -3,6 +3,8 @@
 import { useCallback, useRef, useState } from "react";
 import { Upload, X, FileText, ImageIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { PHOTO_UPLOAD } from "@/lib/photo-upload";
+import { planSetTooLarge } from "@/lib/plan-upload";
 
 const ACCEPTED_TYPES = [
   "application/pdf",
@@ -11,17 +13,57 @@ const ACCEPTED_TYPES = [
 ];
 const ACCEPTED_EXTENSIONS = ".pdf,.jpg,.jpeg,.png";
 const MAX_FILES = 10;
-const MAX_SIZE_MB = 10;
+// Production refuses request bodies over about 4.5 MB before our code runs
+// (see src/lib/photo-upload.ts), so no default here may promise more than that.
+const MAX_SIZE_MB = PHOTO_UPLOAD.maxBytesEach / 1024 / 1024;
+
+/** Whole megabytes, or one decimal, rounded down so a hint never overstates a cap. */
+const formatMb = (bytes: number) => String(Math.floor((bytes / 1024 / 1024) * 10) / 10);
+
+/**
+ * What a builder reads when the files chosen would pass the combined cap: the
+ * cap itself and, when an office address is given, email as the way to send a
+ * full plan set.
+ */
+export function PlanSetTooLarge({ maxBytes, email }: { maxBytes: number; email?: string }) {
+  return (
+    <>
+      That would put this upload over its {formatMb(maxBytes)} MB total limit. Choose fewer or
+      smaller files
+      {email ? (
+        <>
+          , or email large plan sets to{" "}
+          <a href={`mailto:${email}`} className="font-semibold underline">
+            {email}
+          </a>{" "}
+          and submit this request without them.
+        </>
+      ) : (
+        "."
+      )}
+    </>
+  );
+}
 
 interface FileUploadProps {
   files: File[];
   onChange: (files: File[]) => void;
-  /** Lower cap for the homeowner forms; the builder portal keeps the default. */
+  /** Lower cap for the homeowner forms; the builder forms keep the default. */
   maxFiles?: number;
-  /** Per-file cap in MB; the builder portal keeps the default. */
+  /** Per-file cap in MB. */
   maxSizeMb?: number;
   /** Tighter drop zone for use inside a short form. */
   compact?: boolean;
+  /**
+   * Cap on the combined size of the selection, in bytes. The builder forms set
+   * it: plan files go up exactly as picked (a plan PDF cannot be downscaled the
+   * way a phone photo is), so the whole selection has to fit in one request.
+   * With a cap set, the hint states it and a selection that would pass it is
+   * refused as soon as it is chosen, before anything is sent.
+   */
+  maxTotalBytes?: number;
+  /** Office address offered, as a mailto link, for plan sets over maxTotalBytes. */
+  largePlanSetEmail?: string;
 }
 
 export default function FileUpload({
@@ -30,10 +72,12 @@ export default function FileUpload({
   maxFiles = MAX_FILES,
   maxSizeMb = MAX_SIZE_MB,
   compact = false,
+  maxTotalBytes,
+  largePlanSetEmail,
 }: FileUploadProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [dragOver, setDragOver] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<React.ReactNode>(null);
 
   const addFiles = useCallback(
     (incoming: FileList | File[]) => {
@@ -44,6 +88,13 @@ export default function FileUpload({
       const invalid = newFiles.filter((f) => !ACCEPTED_TYPES.includes(f.type));
       if (invalid.length) {
         setError(`Invalid file type: ${invalid.map((f) => f.name).join(", ")}. Only PDF, JPG, and PNG are accepted.`);
+        return;
+      }
+
+      // Validate combined size (builder forms). Checked before the per-file
+      // cap so one oversized plan set gets the email offer, not a bare limit.
+      if (maxTotalBytes !== undefined && planSetTooLarge([...files, ...newFiles], maxTotalBytes)) {
+        setError(<PlanSetTooLarge maxBytes={maxTotalBytes} email={largePlanSetEmail} />);
         return;
       }
 
@@ -63,7 +114,7 @@ export default function FileUpload({
 
       onChange(combined);
     },
-    [files, onChange, maxFiles, maxSizeMb]
+    [files, onChange, maxFiles, maxSizeMb, maxTotalBytes, largePlanSetEmail]
   );
 
   const removeFile = (index: number) => {
@@ -129,13 +180,17 @@ export default function FileUpload({
           <span className="text-primary font-semibold">browse</span>
         </p>
         <p className="text-xs sm:text-sm text-gray-500 mt-1">
-          PDF, JPG, PNG &middot; Up to {maxFiles} files &middot; {maxSizeMb}MB max each
+          {maxTotalBytes === undefined ? (
+            <>PDF, JPG, PNG &middot; Up to {maxFiles} files &middot; {maxSizeMb}MB max each</>
+          ) : (
+            <>PDF, JPG, PNG &middot; Up to {maxFiles} files &middot; {formatMb(maxTotalBytes)} MB total</>
+          )}
         </p>
       </div>
 
       {/* Error */}
       {error && (
-        <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-4 py-2">
+        <p role="alert" className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-4 py-2">
           {error}
         </p>
       )}
