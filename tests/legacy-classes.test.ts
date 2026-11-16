@@ -1,7 +1,7 @@
 import { after, test } from "node:test";
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
-import { cpSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { copyFileSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -19,7 +19,7 @@ function project(files: Record<string, string>) {
   const dir = mkdtempSync(path.join(tmpdir(), "legacy-classes-"));
   projects.push(dir);
   mkdirSync(path.join(dir, "scripts"));
-  cpSync(SCRIPT, path.join(dir, "scripts", "check-legacy-classes.mjs"));
+  copyFileSync(SCRIPT, path.join(dir, "scripts", "check-legacy-classes.mjs"));
   const write = (rel: string, text: string) => {
     mkdirSync(path.dirname(path.join(dir, rel)), { recursive: true });
     writeFileSync(path.join(dir, rel), text);
@@ -43,7 +43,7 @@ test("legacy gate: the class names in these fixtures stay out of the site's styl
   const css = readFileSync(new URL("../src/app/globals.css", import.meta.url), "utf8");
   assert.match(
     css,
-    /@import\s+"tailwindcss"\s+source\("\.\."\)\s*;/,
+    /@import\s+["']tailwindcss["']\s+source\(\s*["']\.\.\/?["']\s*\)\s*;/,
     'src/app/globals.css must import Tailwind with source("..") so only src/ is scanned for class names',
   );
 });
