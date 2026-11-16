@@ -2,3 +2,123 @@
    Put rules inside @layer components { ... } so utility classes can still
    override them; use the design tokens (var(--color-*), var(--tone-*),
    var(--ease-*), var(--dur-*)) rather than raw values. */
+
+@layer components {
+  /* Footer: the phone dock is fixed over the bottom of the page below md, so
+     the footer ends with room for it (--dock-h is 0 from 48rem), plus room
+     for the request button that floats above it, so neither ever covers the
+     last line. Where the dock is not rendered (HIDDEN_PATHS) its share goes. */
+  .site-footer {
+    --float-room: 4.5rem;
+    padding-bottom: calc(var(--dock-h) + var(--float-room));
+  }
+
+  body:not(:has([data-dock])) .site-footer {
+    padding-bottom: var(--float-room);
+  }
+
+  /* Review builds: the preview ribbon sits a row higher on narrow phones. */
+  @media (max-width: 29.99rem) {
+    body:has(.preview-ribbon) .site-footer {
+      --float-room: 7.75rem;
+    }
+  }
+
+  /* Request service button: bottom right, above the dock on phones. One
+     floating control at a time: it steps aside while the coupon card shows. */
+  .request-fab {
+    position: fixed;
+    z-index: 40;
+    right: calc(1rem + env(safe-area-inset-right, 0px));
+    bottom: calc(var(--dock-h) + 0.75rem);
+  }
+
+  @media (min-width: 48rem) {
+    .request-fab {
+      bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+    }
+  }
+
+  body[data-coupon-open] .request-fab {
+    display: none;
+  }
+
+  /* Coupon card. Fine pointers: top right under the header. Touch: attached
+     above the dock, full width minus 12 px margins. */
+  .coupon-card {
+    position: fixed;
+    z-index: 40;
+    top: calc(var(--nav-h) + 0.75rem);
+    right: calc(1rem + env(safe-area-inset-right, 0px));
+    width: min(21.25rem, calc(100% - 1.5rem));
+  }
+
+  @media (pointer: coarse) {
+    .coupon-card {
+      top: auto;
+      left: 0;
+      right: 0;
+      bottom: calc(var(--dock-h) + 0.75rem);
+      width: calc(100% - 1.5rem);
+      max-width: 30rem;
+      margin-inline: auto;
+    }
+  }
+
+  /* While the card shows, keyboard focus is scrolled clear of it as well as
+     of the header and the dock (--coupon-h is the card's measured height). */
+  @media (pointer: fine) {
+    html:has(body[data-coupon-open]) {
+      scroll-padding-top: calc(var(--nav-h) + var(--coupon-h, 0px) + 1.5rem);
+    }
+  }
+
+  @media (pointer: coarse) {
+    html:has(body[data-coupon-open]) {
+      scroll-padding-bottom: calc(var(--dock-h) + var(--coupon-h, 0px) + 1.5rem);
+    }
+
+    /* The page can scroll its last lines out from under the card... */
+    body[data-coupon-open] .site-footer {
+      --float-room: calc(var(--coupon-h, 0px) + 1.5rem);
+    }
+
+    /* ...and the preview ribbon steps aside like the request button. */
+    body[data-coupon-open] .preview-ribbon {
+      display: none;
+    }
+  }
+
+  /* Preview ribbon (review builds only): bottom left, above the dock. On
+     narrow phones it sits one row higher so it clears the request button. */
+  .preview-ribbon {
+    position: fixed;
+    z-index: 30;
+    left: calc(0.75rem + env(safe-area-inset-left, 0px));
+    bottom: calc(var(--dock-h) + 0.75rem);
+    max-width: calc(100% - 1.5rem);
+  }
+
+  @media (max-width: 29.99rem) {
+    .preview-ribbon {
+      bottom: calc(var(--dock-h) + 4rem);
+    }
+  }
+
+  @media (min-width: 48rem) {
+    .preview-ribbon {
+      bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+    }
+  }
+}
+
+/* No site chrome on paper: the printed documents rely on it. */
+@media print {
+  [data-dock],
+  .request-fab,
+  dialog.request-dialog,
+  .coupon-card,
+  .preview-ribbon {
+    display: none !important;
+  }
+}
