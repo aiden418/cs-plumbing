@@ -10,7 +10,13 @@ export const metadata: Metadata = {
   title: "Privacy Policy",
   description: `Privacy policy for ${BUSINESS.fullName}. Learn how we collect, use, and protect your personal information.`,
   alternates: { canonical: "/privacy-policy" },
+  // A page-level block replaces the site-wide one whole, so the shared
+  // fields (type, site name, locale, logo image) are repeated here.
   openGraph: {
+    type: "website",
+    locale: "en_US",
+    siteName: BUSINESS.fullName,
+    images: [{ url: "/images/logos/logo-512.png", width: 512, height: 512, alt: `${BUSINESS.fullName} Logo` }],
     title: `Privacy Policy | ${BUSINESS.fullName}`,
     description: `Privacy policy for ${BUSINESS.fullName}. Learn how we collect, use, and protect your personal information.`,
     url: "https://www.csplumbinglee.com/privacy-policy",

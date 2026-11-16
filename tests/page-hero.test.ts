@@ -100,7 +100,7 @@ test("the H1 is the title and accent as one run of text; no photo gives the plai
 test("block accent breaks the line without wrapping the words", async () => {
   const html = await render({ title: "Every Plumbing Solution", accent: "Under One Roof", accentPosition: "block", align: "center", size: "lg" });
   const h1 = html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/)!;
-  assert.equal(h1[1], "Every Plumbing Solution<br/>Under One Roof");
+  assert.equal(h1[1], "Every Plumbing Solution <br/>Under One Roof");
   assert.match(html, /data-hero-layout="plain"/);
 });
 
