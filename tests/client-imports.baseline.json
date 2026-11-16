@@ -1,11 +1,1 @@
-{
-  "src/components/home/ServiceAreasSection.tsx": [
-    "src/lib/constants.ts"
-  ],
-  "src/components/home/ServiceHighlights.tsx": [
-    "src/lib/constants.ts"
-  ],
-  "src/components/home/StatsBar.tsx": [
-    "src/lib/constants.ts"
-  ]
-}
+{}

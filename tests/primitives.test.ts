@@ -9,8 +9,6 @@ import { stepOfLabel } from "../src/components/ui/WizardProgress";
 import WizardProgress from "../src/components/ui/WizardProgress";
 import Reveal, { REVEAL_MAX_STAGGER, revealIndex, startsBelowFold } from "../src/components/ui/Reveal";
 import FaqAccordion from "../src/components/ui/FaqAccordion";
-import CountUp, { formatCount } from "../src/components/animations/CountUp";
-import { staggerItem } from "../src/components/animations/StaggerChildren";
 import Breadcrumbs from "../src/components/ui/Breadcrumbs";
 import CTASection from "../src/components/home/CTASection";
 import { BUSINESS } from "../src/lib/business";
@@ -119,16 +117,6 @@ test("Reveal writes attributes only: nothing is hidden in the server HTML", () =
 });
 
 // Legacy wrappers ------------------------------------------------------------
-
-test("CountUp shows the final number from the start", () => {
-  assert.equal(formatCount(9500, "", "+"), "9,500+");
-  assert.equal(renderToStaticMarkup(createElement(CountUp, { end: 3500, suffix: "+" })), "<span>3,500+</span>");
-});
-
-test("staggerItem is still the plain variants object", () => {
-  assert.deepEqual(Object.keys(staggerItem), ["hidden", "visible"]);
-  assert.equal(staggerItem.visible.opacity, 1);
-});
 
 test("every FAQ answer is in the HTML, in native exclusive details", () => {
   const faqs = [
