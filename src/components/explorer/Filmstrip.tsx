@@ -9,7 +9,7 @@ import { photoCountLabel } from "./explorer-utils";
  * Renders nothing for an empty set.
  *
  * `heading` names the set as a heading (`as` h2 or h3, as the page needs);
- * `label` instead shows a plain label-tech line (a single-phase project).
+ * `label` instead shows a plain label line (a single-phase project).
  */
 
 interface FilmstripProps {
@@ -54,8 +54,7 @@ export default function Filmstrip({
   const header = !showName ? null : (
     <>
       {plain ? (
-        <p id={headingId} className="label-tech flex items-center gap-3 text-accent">
-          <span className="joint" aria-hidden="true" />
+        <p id={headingId} className="meta flex items-center gap-3 text-[1rem] text-fg">
           {name}
           <span className="text-muted">{photoCountLabel(items.length)}</span>
         </p>

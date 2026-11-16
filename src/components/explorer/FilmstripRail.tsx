@@ -195,7 +195,7 @@ export default function FilmstripRail({
       <div className="filmstrip-head">
         <div className="min-w-0">{header}</div>
         <div className="filmstrip-controls">
-          <p className="label-tech tabular-nums text-muted">
+          <p className="meta tabular-nums text-muted">
             <span className="sr-only">Photo </span>
             {formatCounter(current, total)}
           </p>

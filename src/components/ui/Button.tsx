@@ -4,7 +4,7 @@ import { ArrowRight } from "@/components/ui/icons";
 import { type AriaAttributes, type MouseEventHandler, type ReactNode } from "react";
 
 /**
- * The site's button and button-styled link (design-system.md section 4).
+ * The site's button and button-styled link (v2-bright.md "Buttons are obvious").
  *
  * Server-safe: no hooks and no handler of its own, so a server page can
  * render it; a client component may pass `onClick`. Colours come from the
@@ -18,6 +18,8 @@ export type ButtonVariant =
   | "emergency"
   | "brass"
   | "inverse"
+  /** Solid white with a navy label: the second button on a photograph. */
+  | "onPhoto"
   /** Legacy name of `brass`. */
   | "gold"
   /** Legacy: the secondary outline on a dark band that has no data-tone. */
@@ -49,20 +51,26 @@ export function relFor(kind: HrefKind, target: string | undefined, rel: string |
   return undefined;
 }
 
+// Version 2 (v2-bright.md "Buttons are obvious"): primary is brand blue;
+// secondary is white with a navy label and a 1 px steel-300 border, so it
+// reads on white, shell, a photo or a dark band alike. Brass is no longer a
+// button colour: the two brass names draw the primary look.
 const variants: Record<ButtonVariant, string> = {
   primary: "bg-primary text-white hover:bg-primary-dark",
-  secondary: "border border-fg bg-transparent text-fg hover:bg-fg/[0.06]",
+  secondary: "border border-steel-300 bg-white text-navy hover:border-steel-400 hover:bg-shell",
   ghost: "min-h-11 bg-transparent px-0 text-link underline-offset-[0.2em] hover:underline",
   emergency: "bg-emergency text-white hover:bg-emergency-dark",
-  brass: "bg-brass text-ink hover:bg-brass-300",
-  gold: "bg-brass text-ink hover:bg-brass-300",
-  inverse: "bg-white text-ink hover:bg-shell",
+  brass: "bg-primary text-white hover:bg-primary-dark",
+  gold: "bg-primary text-white hover:bg-primary-dark",
+  inverse: "bg-white text-navy hover:bg-shell",
+  onPhoto: "bg-white text-navy hover:bg-shell",
   "outline-light": "border border-white bg-transparent text-white hover:bg-white/10",
 };
 
+// 44 / 52 / 56 px tall; labels 15 / 16 / 17 px.
 const sizes: Record<ButtonSize, string> = {
   sm: "min-h-11 px-4 text-[0.9375rem]",
-  md: "min-h-12 px-5 text-base",
+  md: "min-h-13 px-6 text-base",
   lg: "min-h-14 px-7 text-[1.0625rem]",
 };
 

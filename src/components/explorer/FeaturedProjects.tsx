@@ -140,7 +140,7 @@ export default function FeaturedProjects({
               const active = p === selected.project;
               const body = (
                 <>
-                  <span className="label-tech block text-accent">
+                  <span className="meta block text-accent">
                     {[item.category, item.city].filter(Boolean).join(" · ")}
                   </span>
                   <span className="featured-project-name">{item.name}</span>
@@ -185,7 +185,7 @@ export default function FeaturedProjects({
                   <span className="featured-step-joint" aria-hidden="true" />
                   <span className="featured-step-text">
                     <span className="featured-step-name">{item.name}</span>
-                    <span className="label-tech tabular-nums text-muted">{photoCountLabel(item.count)}</span>
+                    <span className="meta tabular-nums text-muted">{photoCountLabel(item.count)}</span>
                   </span>
                 </>
               );
@@ -223,7 +223,7 @@ export default function FeaturedProjects({
           <Link href={project.href} className="featured-link group">
             View the project
             <span className="sr-only">: {project.name}</span>
-            <ArrowRight className="size-5 transition-transform duration-250 ease-settle group-hover:translate-x-0.5" />
+            <ArrowRight className="size-5 transition-transform duration-150 group-hover:translate-x-0.5" />
           </Link>
         </div>
 

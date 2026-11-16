@@ -8,7 +8,8 @@ import Dialog from "@/components/ui/Dialog";
 import ServiceRequestForm from "@/components/services/ServiceRequestForm";
 
 /**
- * Request service (chrome-and-opening.md section 4): a labelled button,
+ * Request service (chrome-and-opening.md section 4; v2-bright.md: a small
+ * white pill with a border): a labelled button,
  * bottom right (above the phone dock below md), that opens the shared Dialog
  * as a sheet (bottom on phones, right from 48rem) with the compact service
  * request form. It steps aside while the coupon card shows and while the
@@ -34,9 +35,9 @@ export default function ChatWidget() {
           onClick={() => setIsOpen(true)}
           aria-haspopup="dialog"
           aria-expanded={isOpen}
-          className="inline-flex min-h-11 items-center gap-2 rounded-chip bg-ink-700 px-4 font-sans text-[0.875rem] font-semibold text-white shadow-float ring-1 ring-white/15 transition-[background-color,transform] duration-150 ease-enter active:scale-[0.98] md:min-h-12 md:gap-2.5 md:bg-white md:px-5 md:text-[0.9375rem] md:text-ink md:ring-ink/10 md:hover:bg-shell"
+          className="inline-flex min-h-11 items-center gap-2 rounded-chip border border-steel-300 bg-white px-4 font-sans text-[0.9375rem] font-semibold text-navy shadow-lift transition-[background-color,transform] duration-150 ease-enter hover:bg-steel-50 active:scale-[0.98]"
         >
-          <span className="joint text-brass-300 md:text-bronze" aria-hidden="true" />
+          <MessageSquareText className="size-5 text-primary-dark" />
           Request service
         </button>
       </div>

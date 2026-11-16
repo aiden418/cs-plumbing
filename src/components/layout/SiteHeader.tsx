@@ -19,7 +19,10 @@ import HeaderController, { HeaderLink, NavItem } from "./HeaderController";
 import MobileNavSheet, { MenuButton, TextUsLink } from "./MobileNavSheet";
 
 /**
- * The site header (.redesign/spec/chrome-and-opening.md sections 1 and 2).
+ * The site header (.redesign/spec/chrome-and-opening.md sections 1 and 2;
+ * version 2 look: .redesign/spec/v2-bright.md, Chrome). White with navy
+ * text; transparent over a [data-hero-photo] hero until the page scrolls
+ * (header.css).
  *
  * Server component: the whole header, all four panels (hidden) and the full
  * mobile menu are in the server HTML, so every link is in the page source
@@ -62,7 +65,7 @@ export function Panel({ group, lookup = picture }: { group: NavGroup; lookup?: (
         <div className={cn(linkSpan, "grid gap-x-8")} style={{ gridTemplateColumns: `repeat(${columnCount}, minmax(0, 1fr))` }}>
           {group.columns.map((column, i) => (
             <div key={column.title ?? i} className="min-w-0">
-              {column.title && <p className="label-tech mb-3 text-accent">{column.title}</p>}
+              {column.title && <p className="panel-title">{column.title}</p>}
               <ul className={cn("panel-list", group.id === "about" && "panel-list--split")}>
                 {column.links.map((link) => (
                   <PanelLink key={link.href} link={link} />
@@ -168,13 +171,13 @@ export default function SiteHeader() {
   return (
     <HeaderController
       sheet={
-        <MobileNavSheet label="Menu" logo={<LogoLockup size="sm" className="header-logo" />}>
+        <MobileNavSheet label="Menu" logo={<LogoLockup size="sm" surface="light" className="header-logo" />}>
           <MobileMenu />
         </MobileNavSheet>
       }
     >
       <Container size="wide" className="header-bar max-w-none">
-        <LogoLockup size="sm" preload className="header-logo" />
+        <LogoLockup size="sm" surface="light" preload className="header-logo" />
 
         <nav aria-label="Main" className="header-nav">
           <ul data-intro-in="" className="header-nav-list">

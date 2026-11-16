@@ -42,8 +42,8 @@ export default function FaqAccordion({ faqs, className, name }: FaqAccordionProp
         >
           <summary
             className={cn(
-              "flex min-h-14 cursor-pointer list-none items-center justify-between gap-6 py-4 text-left [&::-webkit-details-marker]:hidden",
-              "text-[1.0625rem] leading-snug font-semibold text-fg hover:text-link",
+              "flex min-h-16 cursor-pointer list-none items-center justify-between gap-6 py-5 text-left [&::-webkit-details-marker]:hidden",
+              "text-[1.0625rem] leading-snug font-semibold text-fg hover:text-link sm:text-lg",
             )}
           >
             <span>{faq.question}</span>
@@ -52,7 +52,7 @@ export default function FaqAccordion({ faqs, className, name }: FaqAccordionProp
               <span className="absolute top-0 left-1/2 h-full w-[1.5px] -translate-x-1/2 bg-current transition-transform duration-250 ease-move group-open:scale-y-0" />
             </span>
           </summary>
-          <div className="max-w-[68ch] pr-11 pb-6 text-body">
+          <div className="max-w-[68ch] pr-11 pb-6 leading-relaxed text-body">
             <p>{faq.answer}</p>
           </div>
         </details>

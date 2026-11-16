@@ -1,6 +1,5 @@
 import { cn } from "@/lib/utils";
 import Eyebrow from "@/components/ui/Eyebrow";
-import Reveal from "@/components/ui/Reveal";
 
 interface SectionHeadingProps {
   /** The eyebrow label above the heading. */
@@ -22,7 +21,7 @@ interface SectionHeadingProps {
   className?: string;
 }
 
-/** Chapter header: eyebrow, display heading, optional lead. */
+/** Chapter header: optional eyebrow (14 px, blue), a big bold heading, optional lead. No motion. */
 export default function SectionHeading({
   overline,
   title,
@@ -37,7 +36,7 @@ export default function SectionHeading({
   const center = align === "center";
   const Heading = level === 3 ? "h3" : "h2";
   return (
-    <Reveal className={cn("mb-12", className)}>
+    <div className={cn("mb-10 sm:mb-12", className)}>
       <div
         // Legacy dark bands set bg-navy without a tone: borrow the dark text
         // colours but keep the band's own background.
@@ -60,6 +59,6 @@ export default function SectionHeading({
           <p className={cn("mt-5 max-w-[56ch] text-lead text-body", center && "mx-auto")}>{subtitle}</p>
         )}
       </div>
-    </Reveal>
+    </div>
   );
 }

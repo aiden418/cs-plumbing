@@ -51,7 +51,7 @@ const SERVICE_OPTIONS = [
 function Cell({ state, children }: { state: string; children: ReactNode }) {
   return (
     <div className="flex min-w-0 flex-col gap-2">
-      <p className="label-tech text-accent">{state}</p>
+      <p className="meta text-accent">{state}</p>
       {children}
     </div>
   );
@@ -281,7 +281,7 @@ function StateMatrix({ tone }: { tone: Tone }) {
 function WizardStep() {
   return (
     <form action="#" aria-label="Sample wizard step" className="flex flex-col gap-8">
-      <p className="label-tech text-accent">Step 2 of 4</p>
+      <p className="meta text-accent">Step 2 of 4</p>
       <OptionGroup
         id="wizard-urgency"
         legend="How soon do you need us?"
@@ -323,11 +323,11 @@ export default function FormsSpecimenPage() {
     <>
       <section
         id="specimen-top"
-        data-tone="ink"
-        className="px-gutter pt-[calc(var(--nav-h)+clamp(2rem,5vw,4.5rem))] pb-section-sm"
+        data-tone="white"
+        className="border-b border-rule px-gutter pt-[calc(var(--nav-h)+clamp(2rem,5vw,4.5rem))] pb-section-sm"
       >
         <div className="mx-auto max-w-[80rem]">
-          <p className="label-tech text-accent">Specimen</p>
+          <p className="meta text-accent">Specimen</p>
           <h1 className="mt-3 text-display-lg">Forms kit</h1>
           <p className="mt-4 max-w-[56ch] text-lead">
             Every control in every state, on white and on shell, then a complete form, a wizard step and a form on ink.

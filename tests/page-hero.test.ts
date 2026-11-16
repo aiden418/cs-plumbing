@@ -10,8 +10,8 @@ import {
   headlineText,
   headlineWidth,
   isTypeLedHeroPath,
-  planVariant,
   resolveHeroLayout,
+  resolveHeroLook,
   serviceHeroImage,
   areaHeroImage,
 } from "../src/lib/hero-images";
@@ -53,10 +53,14 @@ test("headline width follows its length; the longest steps down", () => {
   assert.equal(headlineText("Privacy Policy"), "Privacy Policy");
 });
 
-test("plan motif variant is deterministic and uses all three drawings", () => {
-  assert.equal(planVariant("Where We Work"), planVariant("Where We Work"));
-  const seen = new Set(["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"].map((s) => planVariant(`page ${s}`)));
-  assert.deepEqual([...seen].sort(), ["a", "b", "c"]);
+test("version 2 maps every layout name onto photo or plain", () => {
+  for (const name of ["split", "cinema", "editorial", "photo", undefined] as const) {
+    assert.equal(resolveHeroLook(name, true), "photo", `${name} with a photo`);
+    assert.equal(resolveHeroLook(name, false), "plain", `${name} without a photo`);
+  }
+  for (const name of ["type-led", "compact", "urgent", "plain"] as const) {
+    assert.equal(resolveHeroLook(name, true), "plain", `${name} stays plain`);
+  }
 });
 
 test("coordinates are computed from BUSINESS.geo", () => {
@@ -83,22 +87,21 @@ async function render(props: Record<string, unknown>): Promise<string> {
   return renderToStaticMarkup(createElement(PageHero, props as never));
 }
 
-test("the H1 is the title and accent as one run of text, on ink", async () => {
+test("the H1 is the title and accent as one run of text; no photo gives the plain white hero", async () => {
   const html = await render({ title: "Where We", accent: "Work", overline: "Service Area" });
-  assert.match(html, /<section[^>]*data-tone="ink"[^>]*data-header="overlay"/);
+  assert.match(html, /<section[^>]*data-tone="white"[^>]*data-hero-layout="plain"/);
+  assert.doesNotMatch(html, /data-hero-photo/);
   const h1 = html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/)!;
   assert.equal(h1[1], "Where We Work");
   assert.doesNotMatch(h1[0], /gradient|opacity-0/);
-  assert.match(html, /data-hero-layout="type-led"/);
-  assert.match(html, /aria-hidden="true"[^>]*>\s*<svg/);
-  assert.ok(html.includes(formatCoordinates(BUSINESS.geo)));
+  assert.doesNotMatch(html, /<svg/, "no plan-drawing motif");
 });
 
 test("block accent breaks the line without wrapping the words", async () => {
   const html = await render({ title: "Every Plumbing Solution", accent: "Under One Roof", accentPosition: "block", align: "center", size: "lg" });
   const h1 = html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/)!;
   assert.equal(h1[1], "Every Plumbing Solution<br/>Under One Roof");
-  assert.match(html, /data-hero-layout="editorial"/);
+  assert.match(html, /data-hero-layout="plain"/);
 });
 
 test("breadcrumb is an ordered list with the current page marked", async () => {
@@ -112,16 +115,23 @@ test("breadcrumb is an ordered list with the current page marked", async () => {
   });
   assert.match(html, /<nav aria-label="Breadcrumb"[^>]*><ol/);
   assert.match(html, /<span aria-current="page"[^>]*>Terms<\/span>/);
-  assert.match(html, /data-hero-layout="compact"/);
+  assert.match(html, /href="\/"/);
+  assert.doesNotMatch(html, /href="\/terms"/);
 });
 
-test("a resolved frame gives the split layout; a bare path gives type-led", async () => {
+test("a resolved frame fills a photo hero; a bare path gives the plain hero", async () => {
   const { heroFrame } = await import("../src/lib/hero-frame");
   const frame = heroFrame(serviceHeroImage("repiping"));
-  const split = await render({ title: "Repiping in Cape Coral, FL", frame, size: "sm" });
-  assert.match(split, /data-hero-layout="split"/);
-  assert.match(split, /<figure[^>]*aspect-\[4\/5\]/);
+  const photo = await render({ title: "Repiping in Cape Coral, FL", frame, layout: "split", size: "sm" });
+  assert.match(photo, /<section[^>]*data-hero-photo=""[^>]*data-hero-layout="photo"/);
+  assert.match(photo, /<img[^>]*sizes="100vw"/);
+  assert.match(photo, /class="hero-scrim/);
+  const h1 = photo.match(/<h1[^>]*>([\s\S]*?)<\/h1>/)!;
+  assert.equal(h1[1], "Repiping in Cape Coral, FL");
   const bare = await render({ title: "Repiping in Cape Coral, FL", image: serviceHeroImage("repiping"), size: "sm" });
-  assert.match(bare, /data-hero-layout="type-led"/);
+  assert.match(bare, /data-hero-layout="plain"/);
   assert.doesNotMatch(bare, /<img/);
+  const compact = await render({ title: "Contact", frame, layout: "compact" });
+  assert.match(compact, /data-hero-layout="plain"/);
+  assert.doesNotMatch(compact, /<img/);
 });

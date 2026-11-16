@@ -10,7 +10,7 @@ import { NEW_CONSTRUCTION_BENEFITS } from "@/lib/constants";
  * statement. Wording comes from NEW_CONSTRUCTION_BENEFITS verbatim — it is
  * deliberately separate from warranty terms.
  *
- * An editorial list: each benefit is a hairline-ruled row with who it applies
+ * A simple list: each benefit is a row with a 1 px line with who it applies
  * to as the plan label, the title and the terms. `#customer-benefits` stays.
  */
 export default function NewConstructionBenefits({
@@ -26,6 +26,7 @@ export default function NewConstructionBenefits({
     <Section
       id="customer-benefits"
       tone={tone === "surface" ? "shell" : tone}
+      spacing="sm"
       divider={tone === "white"}
       labelledBy="customer-benefits-heading"
       className="scroll-mt-[calc(var(--nav-h)+0.75rem)]"
@@ -42,11 +43,8 @@ export default function NewConstructionBenefits({
           <div className="lg:col-span-7">
             <ul className="border-b border-rule">
               {b.items.map((item) => (
-                <li key={item.id} className="grid gap-y-2 border-t border-rule py-6 sm:grid-cols-[11rem_1fr] sm:gap-x-8 sm:py-8">
-                  <p className="label-tech flex items-start gap-2.5 pt-1 text-accent">
-                    <span className="joint mt-[0.1em]" aria-hidden="true" />
-                    <span>{item.appliesTo}</span>
-                  </p>
+                <li key={item.id} className="grid gap-y-1.5 border-t border-rule py-5 sm:grid-cols-[11rem_1fr] sm:gap-x-8 sm:py-6">
+                  <p className="meta pt-1 text-accent">{item.appliesTo}</p>
                   <div>
                     <h3 className="text-xl leading-snug font-semibold text-fg">{item.title}</h3>
                     <p className="mt-2 max-w-[60ch] text-body">{item.body}</p>
@@ -64,7 +62,7 @@ export default function NewConstructionBenefits({
                 {b.contact}
               </a>
             </p>
-            <p className="mt-1 text-sm text-muted">Customer benefits are separate from warranty terms.</p>
+            <p className="mt-1 text-[0.9375rem] text-muted">Customer benefits are separate from warranty terms.</p>
           </div>
         </div>
       </Container>

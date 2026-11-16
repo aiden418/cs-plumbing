@@ -50,7 +50,7 @@ export default function ExplorerSpecimenPage() {
 
   return (
     <LightboxProvider>
-      <Section tone="ink" spacing="sm" className="pt-[calc(var(--nav-h)+6rem)]">
+      <Section tone="white" spacing="sm" className="pt-[calc(var(--nav-h)+3rem)]">
         <Container>
           <Eyebrow>Development only</Eyebrow>
           <h1 className="mt-4 text-display-lg">Walk the job</h1>
@@ -83,7 +83,7 @@ export default function ExplorerSpecimenPage() {
         </Section>
       )}
 
-      <Section tone="ink" labelledBy="specimen-featured">
+      <Section tone="white" divider labelledBy="specimen-featured">
         <Container>
           <SectionHeading id="specimen-featured" overline="FeaturedProjects" title="Two jobs, phase by phase" />
         </Container>
@@ -108,7 +108,7 @@ export default function ExplorerSpecimenPage() {
       <Section tone="shell" labelledBy="specimen-cards">
         <Container>
           <SectionHeading id="specimen-cards" overline="ProjectCard" title="Every project, 4:5 then 4:3" />
-          <h3 className="label-tech mt-12 text-accent">Responsive: 4:5 on phones, 4:3 from 48rem</h3>
+          <h3 className="meta mt-12 text-accent">Responsive: 4:5 on phones, 4:3 from 48rem</h3>
           <ul className="mt-6 grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3 md:gap-x-8 lg:grid-cols-4">
             {COMPLETED_PROJECTS.map((project) => (
               <li key={project.slug}>
@@ -120,7 +120,7 @@ export default function ExplorerSpecimenPage() {
               </li>
             ))}
           </ul>
-          <h3 className="label-tech mt-16 text-accent">Fixed 4:5</h3>
+          <h3 className="meta mt-16 text-accent">Fixed 4:5</h3>
           <ul className="mt-6 grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-4 md:gap-x-8">
             {COMPLETED_PROJECTS.map((project) => (
               <li key={project.slug}>
@@ -128,7 +128,7 @@ export default function ExplorerSpecimenPage() {
               </li>
             ))}
           </ul>
-          <h3 className="label-tech mt-16 text-accent">Fixed 4:3</h3>
+          <h3 className="meta mt-16 text-accent">Fixed 4:3</h3>
           <ul className="mt-6 grid gap-x-8 gap-y-10 md:grid-cols-3">
             {COMPLETED_PROJECTS.map((project) => (
               <li key={project.slug}>
