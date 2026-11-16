@@ -61,8 +61,9 @@ function writePref(off: boolean) {
 }
 
 function debug(patch: Partial<HeroDebug>) {
-  const current: HeroDebug = window.__csHero ?? { intro: "ineligible:unknown", file: "none", autoplay: "n/a", state: "idle" };
-  window.__csHero = { ...current, ...patch };
+  // Mutated in place: the head and frame scripts hold a reference to this object.
+  if (!window.__csHero) window.__csHero = { intro: "ineligible:unknown", file: "none", autoplay: "n/a", state: "idle" };
+  Object.assign(window.__csHero, patch);
   document.dispatchEvent(new Event("cs:hero-debug"));
 }
 
@@ -103,7 +104,7 @@ interface HeroControllerProps {
  * All decisions are made by the pure reducer in src/lib/hero-controller.ts.
  */
 export default function HeroController({ sources, mode, labels }: HeroControllerProps) {
-  const [model, dispatch] = useReducer(heroReducer, undefined, () => initialHeroModel());
+  const [model, dispatch] = useReducer(heroReducer, undefined, () => initialHeroModel(false));
   const candidates = useRef<HeroSource[]>([]);
   const lastEvent = useRef<HeroEvent["type"] | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -126,6 +127,8 @@ export default function HeroController({ sources, mode, labels }: HeroController
     let inView = true;
     let pageVisible = document.visibilityState === "visible";
     let decided = false;
+    // Decide only once the observer has said whether the frame is on screen.
+    let ioReported = false;
     let cancelled = false;
     const report = () => send({ type: inView && pageVisible ? "VISIBLE" : "HIDDEN" });
 
@@ -144,6 +147,10 @@ export default function HeroController({ sources, mode, labels }: HeroController
         const entry = entries[entries.length - 1];
         inView = entry.isIntersecting && entry.intersectionRatio >= 0.25;
         report();
+        if (!ioReported) {
+          ioReported = true;
+          decide();
+        }
       },
       { threshold: [0, 0.25, 0.5] },
     );
@@ -165,7 +172,7 @@ export default function HeroController({ sources, mode, labels }: HeroController
     window.addEventListener("pageshow", onPageShow);
 
     const decide = () => {
-      if (decided || cancelled) return;
+      if (decided || cancelled || !ioReported) return;
       const intro = window.__csIntro;
       // The inline script is still choosing a file: wait for its next debug event.
       if (intro && (intro.s === "wait" || intro.s === "play") && !intro.files && !autoplayUsed) return;
@@ -203,12 +210,9 @@ export default function HeroController({ sources, mode, labels }: HeroController
       });
     };
     document.addEventListener("cs:hero-debug", decide);
-    // After the current task, so the IntersectionObserver has reported first.
-    const timer = window.setTimeout(decide, 0);
 
     return () => {
       cancelled = true;
-      window.clearTimeout(timer);
       io.disconnect();
       video.removeEventListener("playing", onPlaying);
       video.removeEventListener("ended", onEnded);

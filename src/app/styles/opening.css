@@ -186,7 +186,7 @@
      already under way restarts with the short duration. */
   html[data-intro="skip"] .cs-hero-frame {
     transform: translate3d(0, 0, 0);
-    transition: transform 180ms var(--ease-exit);
+    transition: transform var(--dur-1) var(--ease-exit);
   }
 
   html[data-intro="skip"] [data-intro-in] {

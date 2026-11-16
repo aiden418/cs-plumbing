@@ -30,7 +30,7 @@ export const FIRST_FRAME_CAP_MS = 1000;
 export const HOLD_MS = { desktop: 900, phone: 600 } as const;
 /** The frame's settle into the hero (the CSS uses the same value). */
 export const SETTLE_MS = 900;
-/** The skip transition (the CSS uses 180 ms). */
+/** The skip transition (the CSS uses --dur-1, 150 ms). */
 export const SKIP_MS = 200;
 /** Where navigator.connection is missing: the document's own response must start within this. */
 export const QUICK_RESPONSE_MS = 600;
@@ -74,7 +74,7 @@ if(r){H.intro="ineligible:"+r;dbg();return}
 var O={capture:true,passive:true},E=["keydown","wheel","touchstart","pointerdown"];
 function set(x){I.s=x;h.setAttribute("data-intro",x)}
 function clock(fn,ms){clearTimeout(t);t=setTimeout(function(){try{fn()}catch(e){done()}},ms)}
-function keep(x){return x&&x.closest&&x.closest("header a,header button,[data-drawer-hide] a,[data-drawer-hide] button,[data-intro-keep]")}
+function keep(x){return x&&x.closest&&x.closest('header a,header button,[data-drawer-hide] a,[data-drawer-hide] button,[data-intro-keep],a[href^="tel:"],a[href^="sms:"]')}
 function skipEl(x){return x&&x.closest&&x.closest("[data-intro-skip]")}
 function on(e){if(e.type!=="keydown"&&e.type!=="wheel"&&!skipEl(e.target)&&keep(e.target))return;skip(skipEl(e.target)?"button":e.type)}
 function click(e){if(skipEl(e.target))skip("button")}

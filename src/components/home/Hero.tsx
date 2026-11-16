@@ -100,7 +100,7 @@ export default function Hero() {
         </div>
 
         <Container className="cs-hero-body">
-          <div className="grid grid-cols-1 gap-y-10 lg:grid-cols-12 lg:items-center lg:gap-x-8">
+          <div className="grid grid-cols-1 gap-y-10 lg:grid-cols-12 lg:items-start lg:gap-x-8">
             <div className="lg:col-span-5">
               <div data-intro-in="" style={arrive(0)}>
                 <Eyebrow>{hero.kicker}</Eyebrow>
@@ -128,16 +128,15 @@ export default function Hero() {
                   {hero.quoteLabel}
                 </Button>
               </div>
-              <p data-intro-in="" style={arrive(4)} className="mt-8 text-sm text-muted">
+              <p data-intro-in="" style={arrive(4)} className="mt-8 flex flex-wrap gap-x-3 gap-y-1 text-sm text-muted">
                 <span>{`${hero.licensePrefix} · ${BUSINESS.license}`}</span>
-                <span aria-hidden="true"> · </span>
-                <Link href="/awards" className="text-link underline-offset-[0.2em] hover:underline">
+                <Link href="/awards" className="whitespace-nowrap text-link underline-offset-[0.2em] hover:underline">
                   {LATEST_AWARD.title}
                 </Link>
               </p>
             </div>
 
-            <figure className="cs-hero-figure lg:col-span-7">
+            <figure className="cs-hero-figure lg:col-span-7 lg:mt-10">
               <div id="cs-hero-frame" className="cs-hero-frame" style={frameStyle()} suppressHydrationWarning>
                 <HeroStill />
                 <video

@@ -14,7 +14,7 @@ export const hero = {
   lead:
     "Family owned and operated since 1998, with 9,500+ homes plumbed. New construction for builders, and repairs, repipes and remodels for homeowners across Cape Coral, Fort Myers and Southwest Florida.",
   /** The small line under the hero photograph. */
-  caption: "Underground rough-in, from the drone",
+  caption: "On the job site, from the drone",
   /** Labels of the hero actions. The call label reads the phone number from @/lib/business. */
   bookLabel: "Book a Service",
   quoteLabel: "Get an instant quote",
