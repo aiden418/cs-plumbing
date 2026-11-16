@@ -1,0 +1,4 @@
+/* builders styles. Imported by ../globals.css.
+   Put rules inside @layer components { ... } so utility classes can still
+   override them; use the design tokens (var(--color-*), var(--tone-*),
+   var(--ease-*), var(--dur-*)) rather than raw values. */

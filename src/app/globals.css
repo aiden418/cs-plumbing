@@ -3,6 +3,23 @@
    each add rules to the site's stylesheet. */
 @import "tailwindcss" source("..");
 
+/* Area stylesheets: the site chrome, the two signature interactions, the
+   shared blocks, and one file per page family. Each is small and owned by
+   one part of the site. */
+@import "./styles/header.css";
+@import "./styles/chrome.css";
+@import "./styles/opening.css";
+@import "./styles/explorer.css";
+@import "./styles/shared.css";
+@import "./styles/home.css";
+@import "./styles/services.css";
+@import "./styles/areas.css";
+@import "./styles/builders.css";
+@import "./styles/projects.css";
+@import "./styles/about.css";
+@import "./styles/conversion.css";
+@import "./styles/reading.css";
+
 /* Tailwind reads every file in the project for class names. The ones written
    in tests and tooling are fixtures, not markup, and must not end up in the
    stylesheet that ships. */
