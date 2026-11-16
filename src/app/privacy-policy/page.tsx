@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import PageTransition from "@/components/layout/PageTransition";
 import Container from "@/components/ui/Container";
 import PageHero from "@/components/ui/PageHero";
-import { BUSINESS } from "@/lib/constants";
+import Section from "@/components/ui/Section";
+import { PRIVACY } from "@/content/reading";
+import { BUSINESS } from "@/lib/business";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
@@ -12,12 +13,12 @@ export const metadata: Metadata = {
 
 export default function PrivacyPolicyPage() {
   return (
-    <PageTransition>
-      <PageHero size="sm" overline="Legal" title="Privacy Policy" />
-      <section className="pt-10 sm:pt-14 pb-16 sm:pb-24">
+    <>
+      <PageHero layout="compact" overline={PRIVACY.overline} title={PRIVACY.title} />
+      <Section tone="white" spacing="sm">
         <Container>
-          <div className="max-w-3xl mx-auto">
-            <div className="prose prose-gray max-w-none text-sm sm:text-base text-gray-600 space-y-6">
+          <div className="max-w-[46rem]">
+            <div className="rich-text">
               <p>
                 <strong>Last updated:</strong> March 10, 2026
               </p>
@@ -29,11 +30,11 @@ export default function PrivacyPolicyPage() {
                 services.
               </p>
 
-              <h2 className="text-xl font-bold text-gray-900 mt-8 mb-3">
+              <h2>
                 Information We Collect
               </h2>
               <p>We may collect the following types of information:</p>
-              <ul className="list-disc pl-6 space-y-2">
+              <ul>
                 <li>
                   <strong>Contact information</strong> you provide through our
                   booking and contact forms, including your name, email address,
@@ -51,17 +52,17 @@ export default function PrivacyPolicyPage() {
                 </li>
               </ul>
 
-              <h2 className="text-xl font-bold text-gray-900 mt-8 mb-3">
+              <h2>
                 How We Use Your Information
               </h2>
-              <ul className="list-disc pl-6 space-y-2">
+              <ul>
                 <li>To respond to your service inquiries and schedule appointments.</li>
                 <li>To provide, maintain, and improve our plumbing services.</li>
                 <li>To send service confirmations and follow-up communications.</li>
                 <li>To comply with legal obligations.</li>
               </ul>
 
-              <h2 className="text-xl font-bold text-gray-900 mt-8 mb-3">
+              <h2>
                 Information Sharing
               </h2>
               <p>
@@ -72,7 +73,7 @@ export default function PrivacyPolicyPage() {
                 information confidential.
               </p>
 
-              <h2 className="text-xl font-bold text-gray-900 mt-8 mb-3">
+              <h2>
                 Data Security
               </h2>
               <p>
@@ -82,7 +83,7 @@ export default function PrivacyPolicyPage() {
                 absolute security.
               </p>
 
-              <h2 className="text-xl font-bold text-gray-900 mt-8 mb-3">
+              <h2>
                 Cookies
               </h2>
               <p>
@@ -91,7 +92,7 @@ export default function PrivacyPolicyPage() {
                 control cookie settings through your browser preferences.
               </p>
 
-              <h2 className="text-xl font-bold text-gray-900 mt-8 mb-3">
+              <h2>
                 Your Rights
               </h2>
               <p>
@@ -99,21 +100,21 @@ export default function PrivacyPolicyPage() {
                 personal information by contacting us at{" "}
                 <a
                   href={`mailto:${BUSINESS.email}`}
-                  className="text-primary hover:underline"
+                 
                 >
                   {BUSINESS.email}
                 </a>{" "}
                 or calling{" "}
                 <a
                   href={BUSINESS.phoneHref}
-                  className="text-primary hover:underline"
+                 
                 >
                   {BUSINESS.phone}
                 </a>
                 .
               </p>
 
-              <h2 className="text-xl font-bold text-gray-900 mt-8 mb-3">
+              <h2>
                 Changes to This Policy
               </h2>
               <p>
@@ -121,7 +122,7 @@ export default function PrivacyPolicyPage() {
                 will be posted on this page with an updated revision date.
               </p>
 
-              <h2 className="text-xl font-bold text-gray-900 mt-8 mb-3">
+              <h2>
                 Contact Us
               </h2>
               <p>
@@ -137,7 +138,7 @@ export default function PrivacyPolicyPage() {
                 Phone:{" "}
                 <a
                   href={BUSINESS.phoneHref}
-                  className="text-primary hover:underline"
+                 
                 >
                   {BUSINESS.phone}
                 </a>
@@ -145,7 +146,7 @@ export default function PrivacyPolicyPage() {
                 Email:{" "}
                 <a
                   href={`mailto:${BUSINESS.email}`}
-                  className="text-primary hover:underline"
+                 
                 >
                   {BUSINESS.email}
                 </a>
@@ -153,7 +154,7 @@ export default function PrivacyPolicyPage() {
             </div>
           </div>
         </Container>
-      </section>
-    </PageTransition>
+      </Section>
+    </>
   );
 }
