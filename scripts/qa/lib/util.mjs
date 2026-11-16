@@ -4,6 +4,7 @@ import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
+import { pathToFileURL } from "node:url";
 import { parseArgs } from "node:util";
 
 export function sha256(data) {
@@ -29,6 +30,11 @@ export function readJsonIfExists(file) {
 
 /** A mistake in how a script was called: reported without a stack trace, exit code 2. */
 export class UsageError extends Error {}
+
+/** True when the module at `metaUrl` (pass import.meta.url) is the script node was started with. */
+export function isMain(metaUrl) {
+  return metaUrl === pathToFileURL(process.argv[1] ?? "").href;
+}
 
 /**
  * Run a script's main(): a UsageError prints its message and exits 2, anything

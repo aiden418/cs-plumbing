@@ -18,8 +18,7 @@
 
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
-import { pathToFileURL } from "node:url";
-import { cli, readJson, run, UsageError } from "./lib/util.mjs";
+import { cli, isMain, readJson, run, UsageError } from "./lib/util.mjs";
 
 /** Framework-internal entries that are not addressable pages. */
 const INTERNAL = new Set(["/_not-found", "/_global-error", "/_error", "/404", "/500"]);
@@ -153,4 +152,4 @@ function main() {
   for (const r of routes.redirects) out(`  ${r.statusCode} ${r.source} -> ${r.destination}${r.internal ? "  (framework)" : ""}`);
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) run(main);
+if (isMain(import.meta.url)) run(main);

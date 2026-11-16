@@ -30,6 +30,7 @@ import {
   freshOrigin,
   hostFacts,
   intArg,
+  isMain,
   kb,
   listArg,
   normalizeBase,
@@ -62,7 +63,7 @@ Usage: node scripts/qa/vitals.mjs --base http://localhost:PORT --out FILE.json -
 `;
 
 /** Installed before any page script; records what cannot be read back later. */
-function installProbe() {
+export function installProbe() {
   if (window.top !== window || window.__qaVitals) return;
   const describe = (node) => {
     if (!node || node.nodeType !== 1) return null;
@@ -98,7 +99,7 @@ function installProbe() {
 }
 
 /** Runs in the page when the run is over. */
-function readProbe() {
+export function readProbe() {
   const store = window.__qaVitals ?? { lcp: [], shifts: [], longTasks: [] };
   const nav = performance.getEntriesByType("navigation")[0];
   const viewport = { width: window.innerWidth, height: window.innerHeight };
@@ -213,7 +214,7 @@ function sessionCls(shifts) {
   return best;
 }
 
-function digest(raw, page) {
+export function digest(raw, page) {
   const local = (url) => {
     try {
       const u = new URL(url);
@@ -669,4 +670,4 @@ async function main() {
   return report.totals.failed || report.totals.tagLeaks || report.totals.notHttp200 ? 1 : 0;
 }
 
-run(main);
+if (isMain(import.meta.url)) run(main);
