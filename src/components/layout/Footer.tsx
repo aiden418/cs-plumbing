@@ -1,23 +1,21 @@
-"use client";
-
 import Link from "next/link";
-import Image from "next/image";
-import {
-  Phone,
-  Mail,
-  MapPin,
-  Clock,
-  ChevronRight,
-  MessageSquareText,
-  Facebook,
-  Instagram,
-  ExternalLink,
-  type LucideIcon,
-} from "lucide-react";
-import { BUSINESS, AREA_LANDINGS, PROFILES } from "@/lib/constants";
+import { BUSINESS } from "@/lib/business";
+import { AREA_LANDINGS, PROFILES } from "@/lib/constants";
 import { SERVICE_HUBS } from "@/lib/service-hubs";
+import Container from "@/components/ui/Container";
+import LogoLockup from "@/components/ui/LogoLockup";
+import { ArrowUpRight, Clock, Mail, MapPin, MessageSquareText, Phone } from "@/components/ui/icons";
 
-const quickLinks = [
+/**
+ * The site footer (chrome-and-opening.md section 6). Server component on ink.
+ *
+ * Its links are the one set of navigation in the HTML of every page, and the
+ * phone menu button falls back to #footer-nav without JavaScript, so every
+ * href here stays: tests/footer-coverage.test.ts compares them with the
+ * footer of the site before the redesign.
+ */
+
+export const quickLinks = [
   { label: "Home", href: "/" },
   { label: "About Us", href: "/about" },
   { label: "Awards", href: "/awards" },
@@ -38,211 +36,199 @@ const quickLinks = [
   { label: "Recommended Companies", href: "/partners" },
 ];
 
-// Profiles shown in the footer (PROFILES entries with footer: true). A
-// profile without its own icon gets a generic outbound mark.
-const PROFILE_ICONS: Record<string, LucideIcon> = {
-  facebook: Facebook,
-  instagram: Instagram,
-  google: MapPin,
-};
-
 // Every service hub, not SERVICES.slice(0, 7): the footer is the one set of
-// links in the HTML on every page (the nav dropdowns render on hover only).
-const footerServices = [
-  { title: "Residential Plumbing", href: "/services/residential" },
-  ...SERVICE_HUBS.map((hub) => ({ title: hub.title, href: hub.href })),
-  // Spoke page (not a hub) that still needs a sitewide HTML link; the nav
-  // dropdown that lists it only renders on hover.
-  { title: "Tankless Water Heaters", href: "/services/tankless-water-heaters" },
+// links in the HTML on every page.
+export const footerServices = [
+  { label: "Residential Plumbing", href: "/services/residential" },
+  ...SERVICE_HUBS.map((hub) => ({ label: hub.title, href: hub.href })),
+  // Spoke page (not a hub) that still needs a sitewide HTML link.
+  { label: "Tankless Water Heaters", href: "/services/tankless-water-heaters" },
 ];
 
-export default function Footer() {
+// All 11 area hubs. Matching SERVICE_AREAS by name left Fort Myers Beach with
+// two inbound links site-wide.
+export const footerAreas = AREA_LANDINGS.map((area) => ({ label: area.city, href: `/areas/${area.slug}` }));
+
+export const footerProfiles = PROFILES.filter((p) => p.footer);
+
+export const legalLinks = [
+  { label: "Privacy Policy", href: "/privacy-policy" },
+  { label: "Terms & Conditions", href: "/terms" },
+];
+
+export const PARENT_COMPANY = { label: "Part of Draft Construction", href: "https://draftconstructionswfl.com" };
+
+const linkClass =
+  "inline-flex min-h-11 items-center text-[0.9375rem] leading-snug text-body transition-colors duration-150 hover:text-fg hover:underline underline-offset-[0.25em] decoration-brass";
+
+function LinkColumn({
+  id,
+  title,
+  links,
+  className,
+  listClassName,
+}: {
+  id: string;
+  title: string;
+  links: { label: string; href: string }[];
+  className?: string;
+  listClassName?: string;
+}) {
   return (
-    <footer className="bg-[#F5F5F7] border-t border-gray-200">
-      {/* Main Footer */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 lg:gap-12">
-          {/* Company Info */}
-          <div className="sm:col-span-2 lg:col-span-1">
-            <div className="mb-4 sm:mb-6">
-              <Image
-                src="/images/logos/logo-new.png"
-                alt="C&S Plumbing of Lee"
-                width={200}
-                height={200}
-                sizes="80px"
-                className="h-20 w-auto object-contain"
-              />
-            </div>
-            <p className="text-gray-500 text-sm leading-relaxed mb-4 sm:mb-6">
-              {BUSINESS.description}
-            </p>
-            <div className="flex flex-col gap-3 text-sm">
-              <a
-                href={BUSINESS.phoneHref}
-                className="flex items-center gap-2 text-gray-600 hover:text-primary transition-colors"
-              >
-                <Phone className="w-4 h-4 text-primary flex-shrink-0" />
-                {BUSINESS.phone}
-              </a>
-              <a
-                href={BUSINESS.smsHref}
-                className="flex items-center gap-2 text-gray-600 hover:text-primary transition-colors"
-              >
-                <MessageSquareText className="w-4 h-4 text-primary flex-shrink-0" />
-                Text us anytime
-              </a>
-              <a
-                href={`mailto:${BUSINESS.email}`}
-                className="flex items-center gap-2 text-gray-600 hover:text-primary transition-colors"
-              >
-                <Mail className="w-4 h-4 text-primary flex-shrink-0" />
-                {BUSINESS.email}
-              </a>
-              <div className="flex items-start gap-2 text-gray-600">
-                <MapPin className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+    <div className={className}>
+      <h3 id={id} className="label-tech text-accent">
+        {title}
+      </h3>
+      <ul aria-labelledby={id} className={`mt-4 border-t border-rule ${listClassName ?? ""}`}>
+        {links.map((link) => (
+          <li key={link.href} className="border-b border-rule">
+            <Link href={link.href} className={linkClass}>
+              {link.label}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default function Footer() {
+  const contactRow = "flex min-h-11 items-start gap-3 py-2.5 text-[0.9375rem] leading-snug";
+  const icon = "size-5 shrink-0 text-accent";
+
+  return (
+    <footer data-tone="ink" className="site-footer bg-canvas text-body">
+      <Container className="pt-section-sm">
+        {/* Row 1: the lockup and the family line; how to reach the office */}
+        <div className="grid gap-10 lg:grid-cols-12 lg:gap-x-8">
+          <div className="lg:col-span-5">
+            <LogoLockup size="md" />
+            <p className="mt-5 max-w-[44ch] text-[0.9375rem] leading-relaxed text-body">{BUSINESS.description}</p>
+            <ul className="mt-5 flex flex-wrap gap-x-5 gap-y-1">
+              {footerProfiles.map((p) => (
+                <li key={p.id}>
+                  <a
+                    href={p.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`C&S Plumbing on ${p.label}`}
+                    className={`${linkClass} gap-1`}
+                  >
+                    {p.label}
+                    <ArrowUpRight className="size-4 text-accent" />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="grid gap-8 sm:grid-cols-2 lg:col-span-7">
+            <div className="flex flex-col gap-1">
+              <p className="mb-3 font-semibold text-fg">{BUSINESS.fullName}</p>
+              <div className={contactRow}>
+                <MapPin className={icon} />
                 <span>
                   {BUSINESS.address}
                   <br />
                   {BUSINESS.city}, {BUSINESS.state} {BUSINESS.zip}
                 </span>
               </div>
+              <a href={BUSINESS.phoneHref} className={`${contactRow} hover:text-fg`}>
+                <Phone className={icon} />
+                {BUSINESS.phone}
+              </a>
+              <a href={BUSINESS.smsHref} className={`${contactRow} hover:text-fg`}>
+                <MessageSquareText className={icon} />
+                Text us anytime
+              </a>
+              <a href={`mailto:${BUSINESS.email}`} className={`${contactRow} break-all hover:text-fg`}>
+                <Mail className={icon} />
+                {BUSINESS.email}
+              </a>
             </div>
-            <div className="flex items-center gap-3 mt-4 sm:mt-6">
-              {PROFILES.filter((p) => p.footer).map((p) => {
-                const Icon = PROFILE_ICONS[p.id] ?? ExternalLink;
-                return (
-                  <a
-                    key={p.id}
-                    href={p.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`C&S Plumbing on ${p.label}`}
-                    className="w-9 h-9 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-600 hover:text-primary hover:border-primary/40 transition-colors"
-                  >
-                    <Icon className="w-4 h-4" />
-                  </a>
-                );
-              })}
+            <div>
+              <h3 className="label-tech text-accent">Business Hours</h3>
+              <div className={`${contactRow} mt-2`}>
+                <Clock className={icon} />
+                <div>
+                  <div>{BUSINESS.hours.open}</div>
+                  <div className="mt-1 font-semibold text-fg">{BUSINESS.hours.emergency}</div>
+                </div>
+              </div>
             </div>
           </div>
+        </div>
 
-          {/* Quick Links */}
-          <div>
-            <h3 className="text-gray-900 font-semibold text-base sm:text-lg mb-4 sm:mb-6">
-              Quick Links
-            </h3>
-            <ul className="space-y-2.5 sm:space-y-3">
-              {quickLinks.map((link) => (
+        {/* Row 2: the link columns. The phone menu button links here without JavaScript. */}
+        <nav id="footer-nav" aria-label="Footer" className="mt-14 grid gap-10 lg:mt-20 lg:grid-cols-12 lg:gap-x-8">
+          <LinkColumn
+            id="footer-explore"
+            title="Quick Links"
+            links={quickLinks}
+            className="lg:col-span-5"
+            listClassName="grid grid-cols-2 gap-x-6"
+          />
+          <LinkColumn
+            id="footer-services"
+            title="Our Services"
+            links={footerServices}
+            className="lg:col-span-4"
+            listClassName="grid grid-cols-2 gap-x-6 lg:grid-cols-1"
+          />
+          <div className="lg:col-span-3">
+            <LinkColumn
+              id="footer-areas"
+              title="Service Areas"
+              links={footerAreas}
+              listClassName="grid grid-cols-2 gap-x-6 lg:grid-cols-1"
+            />
+            <p className="mt-3 text-[0.9375rem] text-muted">&amp; more</p>
+          </div>
+        </nav>
+
+        {/* Row 3: license, legal pages, the parent company, copyright */}
+        <div className="mt-14 border-t border-rule py-6 text-sm text-muted lg:mt-20">
+          <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+            <p>
+              &copy; {new Date().getFullYear()} {BUSINESS.fullName}. All rights reserved.{" "}
+              <span className="whitespace-nowrap">
+                FL Licensed:{" "}
+                <a
+                  href={BUSINESS.licenseLookupUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="-my-3 inline-block py-3 font-semibold text-body underline decoration-brass underline-offset-[0.25em] hover:text-fg"
+                  title="Verify on MyFloridaLicense.com"
+                  aria-label={`Verify license ${BUSINESS.license} on MyFloridaLicense.com`}
+                >
+                  #{BUSINESS.license}
+                </a>
+                <span className="ml-1.5">(verify)</span>
+              </span>
+            </p>
+            <ul className="flex flex-wrap gap-x-6">
+              {legalLinks.map((link) => (
                 <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="flex items-center gap-1 text-sm text-gray-500 hover:text-primary transition-colors group"
-                  >
-                    <ChevronRight className="w-3 h-3 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all duration-200" />
+                  <Link href={link.href} className="inline-flex min-h-11 items-center hover:text-fg hover:underline underline-offset-[0.25em]">
                     {link.label}
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
-
-          {/* Services */}
-          <div>
-            <h3 className="text-gray-900 font-semibold text-base sm:text-lg mb-4 sm:mb-6">
-              Our Services
-            </h3>
-            <ul className="space-y-2.5 sm:space-y-3">
-              {footerServices.map((service) => (
-                <li key={service.href}>
-                  <Link
-                    href={service.href}
-                    className="flex items-center gap-1 text-sm text-gray-500 hover:text-primary transition-colors group"
-                  >
-                    <ChevronRight className="w-3 h-3 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all duration-200" />
-                    {service.title}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Hours & Service Areas */}
-          <div>
-            <h3 className="text-gray-900 font-semibold text-base sm:text-lg mb-4 sm:mb-6">
-              Business Hours
-            </h3>
-            <div className="flex flex-col gap-2 text-sm text-gray-500 mb-6 sm:mb-8">
-              <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4 text-primary flex-shrink-0" />
-                <span>{BUSINESS.hours.open}</span>
-              </div>
-              <div className="mt-2 text-primary-dark font-semibold">
-                {BUSINESS.hours.emergency}
-              </div>
-            </div>
-
-            <h3 className="text-gray-900 font-semibold text-base sm:text-lg mb-3 sm:mb-4">
-              Service Areas
-            </h3>
-            <div className="flex flex-wrap gap-x-1.5 gap-y-1 text-xs sm:text-sm text-gray-500">
-              {/* All 11 area hubs. Matching SERVICE_AREAS by name left Fort Myers
-                  Beach (item 12) with two inbound links site-wide. */}
-              {AREA_LANDINGS.map((area) => (
-                <span key={area.slug}>
-                  <Link
-                    href={`/areas/${area.slug}`}
-                    className="hover:text-primary transition-colors"
-                  >
-                    {area.city}
-                  </Link>
-                  {" · "}
-                </span>
-              ))}
-              <span>& more</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Bottom Bar */}
-      <div className="border-t border-gray-200">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-4 sm:py-6 flex flex-col items-center gap-3 sm:gap-4">
-          <div className="flex flex-col sm:flex-row items-center justify-between w-full gap-3 sm:gap-4">
-            <p className="text-xs sm:text-sm text-gray-500 text-center sm:text-left">
-              &copy; {new Date().getFullYear()} {BUSINESS.fullName}. All rights
-              reserved.{" "}
-              <span className="block sm:inline mt-1 sm:mt-0">
-                FL Licensed:{" "}
-                <a
-                  href={BUSINESS.licenseLookupUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-semibold text-gray-700 hover:text-primary underline-offset-2 hover:underline transition-colors"
-                  title="Verify on MyFloridaLicense.com"
-                  aria-label={`Verify license ${BUSINESS.license} on MyFloridaLicense.com`}
-                >
-                  #{BUSINESS.license}
-                </a>
-                <span className="ml-1.5 text-[10px] text-gray-500">(verify)</span>
-              </span>
-            </p>
-            <div className="flex items-center gap-4 sm:gap-6 text-xs sm:text-sm text-gray-500">
-              <Link href="/privacy-policy" className="hover:text-gray-700 transition-colors">
-                Privacy Policy
-              </Link>
-              <Link href="/terms" className="hover:text-gray-700 transition-colors">
-                Terms &amp; Conditions
-              </Link>
-            </div>
-          </div>
-          <p className="text-xs text-gray-500">
-            <a href="https://draftconstructionswfl.com" target="_blank" rel="noopener noreferrer" className="hover:text-gray-500 transition-colors">
-              Part of Draft Construction
-            </a>{" · "}Designed &amp; managed by ASP LLC
+          <p>
+            <a
+              href={PARENT_COMPANY.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="-my-3 inline-block py-3 hover:text-fg hover:underline underline-offset-[0.25em]"
+            >
+              {PARENT_COMPANY.label}
+            </a>
+            {" · "}Designed &amp; managed by ASP LLC
           </p>
         </div>
-      </div>
+      </Container>
     </footer>
   );
 }
