@@ -1,5 +1,6 @@
 import type { FAQ } from "@/lib/types";
 import { AWARDS, LATEST_AWARD } from "@/lib/constants";
+import { BUSINESS } from "@/lib/business";
 
 // Co-located route FAQs (same pattern as services/residential/residential-faqs.ts).
 // Written for this page — about the award itself, not the /faq bank — so the
@@ -21,6 +22,6 @@ export const AWARDS_FAQS: FAQ[] = [
   },
   {
     question: "How can I verify these awards and C&S's credentials?",
-    answer: `The ${LATEST_AWARD.issuer} publishes its Best of Cape Coral winners each year. Separately, our Florida Certified Plumbing Contractor license (CFC1432485) can be checked on the DBPR's MyFloridaLicense.com, and our Google rating and reviews are public on our reviews page.`,
+    answer: `The ${LATEST_AWARD.issuer} publishes its Best of Cape Coral winners each year. Separately, our Florida Certified Plumbing Contractor license (${BUSINESS.license}) can be checked on the DBPR's MyFloridaLicense.com, and our Google rating and reviews are public on our reviews page.`,
   },
 ];

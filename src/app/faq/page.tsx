@@ -65,7 +65,7 @@ export default function FAQPage() {
               href={BUSINESS.phoneHref}
               className="text-gold font-semibold hover:underline"
             >
-              833-PLUMB-IT
+              {BUSINESS.phone}
             </a>
             .
           </>
@@ -140,7 +140,7 @@ export default function FAQPage() {
               href={BUSINESS.phoneHref}
               className="inline-flex items-center justify-center px-6 py-3 text-white/80 font-semibold hover:text-white transition-colors"
             >
-              Call 833-PLUMB-IT
+              {`Call ${BUSINESS.phone}`}
             </a>
           </div>
         </div>

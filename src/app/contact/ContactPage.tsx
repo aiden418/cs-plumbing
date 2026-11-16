@@ -125,7 +125,7 @@ export default function ContactPage() {
           {
             title: "Reply within 1 business day",
             description:
-              `${CLAIMS.bookingConfirmation} Urgent? Call 833-PLUMB-IT.`,
+              `${CLAIMS.bookingConfirmation} Urgent? Call ${BUSINESS.phone}.`,
           },
           {
             title: "Free site visit if needed",

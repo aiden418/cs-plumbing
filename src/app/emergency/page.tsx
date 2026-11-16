@@ -9,7 +9,7 @@ import RelatedPosts from "@/components/blog/RelatedPosts";
 import { postsForHub } from "@/lib/internal-links";
 
 const DESCRIPTION =
-  "24/7 emergency plumbing in Cape Coral, Fort Myers & SWFL. Burst pipes, sewage backups, gas leaks, flooding — call C&S Plumbing at 833-PLUMB-IT.";
+  `24/7 emergency plumbing in Cape Coral, Fort Myers & SWFL. Burst pipes, sewage backups, gas leaks, flooding — call C&S Plumbing at ${BUSINESS.phone}.`;
 
 export const metadata: Metadata = {
   alternates: { canonical: "/emergency" },
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "24/7 Emergency Plumber | Cape Coral, Fort Myers, SWFL",
     description:
-      "Plumbing emergency? C&S Plumbing responds 24/7 across Southwest Florida. Call 833-PLUMB-IT now.",
+      `Plumbing emergency? C&S Plumbing responds 24/7 across Southwest Florida. Call ${BUSINESS.phone} now.`,
     url: "https://www.csplumbinglee.com/emergency",
   },
 };

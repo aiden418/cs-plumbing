@@ -1,6 +1,7 @@
 import Container from "@/components/ui/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
 import type { FAQ } from "@/lib/types";
+import { BUSINESS } from "@/lib/business";
 
 export const HOME_FAQS: FAQ[] = [
   {
@@ -16,7 +17,7 @@ export const HOME_FAQS: FAQ[] = [
   {
     question: "Is C&S Plumbing licensed and insured?",
     answer:
-      "Yes. We work under Florida Certified Plumbing Contractor license CFC1432485 and carry full general liability and workers' comp insurance. We pull every required permit and pass every inspection — no exceptions.",
+      `Yes. We work under Florida Certified Plumbing Contractor license ${BUSINESS.license} and carry full general liability and workers' comp insurance. We pull every required permit and pass every inspection — no exceptions.`,
   },
   {
     question: "What plumbing services do you offer?",

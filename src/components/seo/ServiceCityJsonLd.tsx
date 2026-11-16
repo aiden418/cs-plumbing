@@ -26,7 +26,7 @@ export default function ServiceCityJsonLd({
         {
           "@type": "EducationalOccupationalCredential",
           credentialCategory: "Professional License",
-          name: "Certified Plumbing Contractor — CFC1432485",
+          name: `Certified Plumbing Contractor — ${BUSINESS.license}`,
           recognizedBy: {
             "@type": "GovernmentOrganization",
             name: "Florida Department of Business and Professional Regulation",
@@ -35,7 +35,7 @@ export default function ServiceCityJsonLd({
         {
           "@type": "EducationalOccupationalCredential",
           credentialCategory: "Professional License",
-          name: "Certified Plumbing Contractor — CFC057076",
+          name: `Certified Plumbing Contractor — ${BUSINESS.license2}`,
           recognizedBy: {
             "@type": "GovernmentOrganization",
             name: "Florida Department of Business and Professional Regulation",

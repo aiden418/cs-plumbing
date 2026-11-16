@@ -8,6 +8,7 @@ import FaqJsonLd from "@/components/seo/FaqJsonLd";
 import RelatedProjects from "@/components/projects/RelatedProjects";
 import HubCityLinks from "@/components/service-city/HubCityLinks";
 import { projectsForHub } from "@/lib/projects";
+import { BUSINESS } from "@/lib/business";
 
 const commercialFaqs = [
   {
@@ -24,7 +25,7 @@ const commercialFaqs = [
   },
   {
     question: "Can you handle commercial plumbing permits in Lee County and Cape Coral?",
-    answer: "Yes. We manage all commercial plumbing permits through Lee County and the City of Cape Coral. Our licensed plumbing contractor (CFC1432485) handles the full permitting process including plan review, inspections, and final certificate of occupancy sign-off.",
+    answer: `Yes. We manage all commercial plumbing permits through Lee County and the City of Cape Coral. Our licensed plumbing contractor (${BUSINESS.license}) handles the full permitting process including plan review, inspections, and final certificate of occupancy sign-off.`,
   },
   {
     question: "Do you offer preventive maintenance contracts for commercial properties?",

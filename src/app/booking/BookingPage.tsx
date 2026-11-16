@@ -708,7 +708,7 @@ export default function BookingPage() {
           {
             title: "Clean, code-compliant work",
             description:
-              "Licensed under CFC1432485. Permits handled when required. We leave the worksite spotless.",
+              `Licensed under ${BUSINESS.license}. Permits handled when required. We leave the worksite spotless.`,
           },
         ]}
       />

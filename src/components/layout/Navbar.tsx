@@ -105,7 +105,7 @@ export default function Navbar() {
                 </span>
                 <span className="hidden xl:flex items-center gap-1.5 opacity-80">
                   <ShieldCheck className="w-3.5 h-3.5" />
-                  Licensed CFC1432485
+                  {`Licensed ${BUSINESS.license}`}
                 </span>
               </div>
               <div className="flex items-center gap-5">

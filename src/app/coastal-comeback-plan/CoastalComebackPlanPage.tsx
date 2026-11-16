@@ -162,7 +162,7 @@ export default function CoastalComebackPlanPage({ season = "departure" }: { seas
         <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs sm:text-sm text-white/60">
           <span className="flex items-center gap-1.5">
             <ShieldCheck className="w-4 h-4 text-gold" />
-            Licensed CFC1432485
+            {`Licensed ${BUSINESS.license}`}
           </span>
           <span>·</span>
           <span>Family owned and operated since 1998</span>

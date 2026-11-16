@@ -5,6 +5,7 @@ import FaqJsonLd from "@/components/seo/FaqJsonLd";
 import BuildersPage from "./BuildersPage";
 import { BUILDER_FAQS } from "./builder-faqs";
 import { BUILDER_PROOF, CONSTRUCTION_PHASES, NEW_CONSTRUCTION_CITIES } from "@/lib/builder-program";
+import { BUSINESS } from "@/lib/business";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/builders" },
@@ -28,7 +29,7 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: "For Builders & GCs — New Construction Plumbing | C&S Plumbing of Lee",
-    description: `${BUILDER_PROOF.headline}. Three generations, Florida Certified Plumbing Contractor CFC1432485, slab to final.`,
+    description: `${BUILDER_PROOF.headline}. Three generations, Florida Certified Plumbing Contractor ${BUSINESS.license}, slab to final.`,
     url: "https://www.csplumbinglee.com/builders",
   },
 };

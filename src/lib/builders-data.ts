@@ -1,4 +1,5 @@
 import type { Builder, BuilderStat, BuilderGalleryItem, BuilderCaseStudy, BuilderSpecSheet } from "./types";
+import { BUSINESS } from "./business";
 
 export const BUILDERS: Builder[] = [
   { name: "Alair Homes", logo: "/images/builders/alair-homes.svg", logoWidth: 2007, logoHeight: 342 },
@@ -185,7 +186,7 @@ export const BUILDER_SPEC_SHEETS: BuilderSpecSheet[] = [
 export const AIDEN_CONTACT = {
   name: "Aiden Pellechio",
   title: "Office Manager, Estimating & Project Management",
-  phone: "833-PLUMB-IT ext. 0",
-  phoneRaw: "8337586248",
-  email: "office@csplumbinglee.com",
+  phone: `${BUSINESS.phone} ext. 0`,
+  phoneRaw: BUSINESS.phoneRaw,
+  email: BUSINESS.email,
 } as const;

@@ -52,7 +52,7 @@ export default function EmergencyBand() {
         </div>
 
         <p className="mt-10 text-white/40 text-xs tracking-wide">
-          Florida Certified Plumbing Contractor · CFC1432485
+          {`Florida Certified Plumbing Contractor · ${BUSINESS.license}`}
         </p>
       </Container>
     </section>
