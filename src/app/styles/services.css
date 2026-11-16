@@ -82,11 +82,16 @@
   }
 
   /* The request form beside the page from lg: it stays in view while the
-     reader scrolls the column next to it. */
+     reader scrolls the column next to it. The form is taller than most
+     screens, so the panel keeps to the screen height and scrolls inside
+     itself: the submit button is always reachable. */
   @media (min-width: 64rem) {
     .service-request-panel {
       position: sticky;
       top: calc(var(--nav-h) + 1rem);
+      max-height: calc(100svh - var(--nav-h) - 2rem);
+      overflow-y: auto;
+      scrollbar-width: thin;
     }
   }
 }

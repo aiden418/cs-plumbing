@@ -48,7 +48,7 @@ export default function ServiceCard({
       className={cn(
         "service-tile group flex h-full flex-col rounded-frame",
         door && frame && "grid grid-cols-[minmax(0,5fr)_minmax(0,7fr)] items-start gap-5 sm:gap-8",
-        !frame && "border-t border-rule pt-6",
+        !frame && "rounded-none border-t border-rule pt-6",
         className,
       )}
     >

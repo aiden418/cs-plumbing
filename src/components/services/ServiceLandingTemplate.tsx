@@ -77,7 +77,8 @@ export function Chapter({
   overline,
   title,
   description,
-  wide = true,
+  wide: wideProp = true,
+  stacked = false,
   children,
 }: {
   id: string;
@@ -85,11 +86,14 @@ export function Chapter({
   title: string;
   description?: ReactNode;
   wide?: boolean;
+  /** Header above a full-width body even when wide (varies the rhythm of a long page). */
+  stacked?: boolean;
   children: ReactNode;
 }) {
+  const wide = wideProp && !stacked;
   return (
-    <div className={cn("grid grid-cols-1 gap-y-8", wide && "lg:grid-cols-12 lg:gap-x-8")}>
-      <Reveal className={cn(wide && "lg:col-span-4")}>
+    <div className={cn("grid grid-cols-1 gap-y-8", wide && "lg:grid-cols-12 lg:gap-x-8", stacked && "gap-y-10")}>
+      <Reveal className={cn(wide && "lg:col-span-4", stacked && "max-w-3xl")}>
         {overline && <Eyebrow className="mb-4">{overline}</Eyebrow>}
         <h2 id={id} className="text-display-md text-fg">
           {title}
@@ -104,24 +108,30 @@ export function Chapter({
 /** Feature rows: number, title, one or two lines; an optional list under each. */
 export function OfferList({
   items,
+  columns = 1,
 }: {
   items: { title: string; description: string; features?: readonly string[] }[];
+  /** 2: two columns of rows from md (full-width chapters). */
+  columns?: 1 | 2;
 }) {
   return (
-    <ol className="border-b border-rule">
+    <ol className={cn(columns === 2 ? "grid grid-cols-1 gap-x-8 md:grid-cols-2" : "border-b border-rule")}>
       {items.map((item, i) => (
         <Reveal
           as="li"
           key={item.title}
           index={items.length <= 6 ? i : undefined}
-          className="grid grid-cols-[2.5rem_minmax(0,1fr)] gap-x-3 border-t border-rule py-6 sm:grid-cols-[3.5rem_minmax(0,1fr)] sm:py-7"
+          className={cn(
+            "grid grid-cols-[2.5rem_minmax(0,1fr)] gap-x-3 border-t border-rule py-6 sm:grid-cols-[3.5rem_minmax(0,1fr)] sm:py-7",
+            columns === 2 && "-mb-px border-b",
+          )}
         >
           <span className="label-tech pt-1.5 text-accent tabular-nums">{String(i + 1).padStart(2, "0")}</span>
           <div>
             <h3 className="text-lg leading-snug font-semibold text-fg sm:text-xl">{item.title}</h3>
             <p className="mt-2 max-w-[62ch] text-body">{item.description}</p>
             {item.features && item.features.length > 0 && (
-              <ul className="service-tile-features mt-4 grid max-w-[44rem] gap-x-8 text-sm text-body sm:grid-cols-2">
+              <ul className={cn("service-tile-features mt-4 grid max-w-[44rem] gap-x-8 text-sm text-body", columns === 1 && "sm:grid-cols-2")}>
                 {item.features.map((feature) => (
                   <li key={feature}>{feature}</li>
                 ))}
@@ -135,9 +145,12 @@ export function OfferList({
 }
 
 /** "Why choose": short lines, each led by a joint, in two columns from sm. */
-export function PointList({ items }: { items: readonly string[] }) {
+export function PointList({ items, columns = 2 }: { items: readonly string[]; columns?: 2 | 3 }) {
   return (
-    <Reveal as="ul" className="service-points grid border-b border-rule sm:grid-cols-2 sm:gap-x-8">
+    <Reveal
+      as="ul"
+      className={cn("service-points grid border-b border-rule sm:grid-cols-2 sm:gap-x-8", columns === 3 && "lg:grid-cols-3")}
+    >
       {items.map((item) => (
         <li key={item}>{item}</li>
       ))}
@@ -225,16 +238,16 @@ export default function ServiceLandingTemplate({
       {
         key: "offer",
         node: (
-          <Chapter id="offer-heading" title={COPY.offer} wide={wide}>
-            <OfferList items={landing.features} />
+          <Chapter id="offer-heading" title={COPY.offer} wide={wide} stacked={wide}>
+            <OfferList items={landing.features} columns={wide ? 2 : 1} />
           </Chapter>
         ),
       },
       landing.highlights.length > 0 && {
         key: "why",
         node: (
-          <Chapter id="why-heading" title={`${COPY.whyBefore}${landing.title}`} wide={wide}>
-            <PointList items={landing.highlights} />
+          <Chapter id="why-heading" title={`${COPY.whyBefore}${landing.title}`} wide={wide} stacked={wide}>
+            <PointList items={landing.highlights} columns={wide ? 3 : 2} />
           </Chapter>
         ),
       },
@@ -444,7 +457,7 @@ export default function ServiceLandingTemplate({
         // The gallery draws its own ink section.
         if (section.key === "gallery") return <Fragment key={section.key}>{section.node(tone)}</Fragment>;
         return (
-          <Section key={section.key} tone={tone} divider={divider}>
+          <Section key={section.key} tone={tone} divider={divider} spacing={section.key === "links" ? "sm" : "default"}>
             {section.node(tone)}
           </Section>
         );

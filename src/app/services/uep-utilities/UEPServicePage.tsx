@@ -95,8 +95,8 @@ export default function UEPServicePage({
       {/* Features */}
       <Section tone="white" labelledBy="offer-heading">
         <Container>
-          <Chapter id="offer-heading" title={SERVICE_PAGE.offer}>
-            <OfferList items={landing.features} />
+          <Chapter id="offer-heading" title={SERVICE_PAGE.offer} stacked>
+            <OfferList items={landing.features} columns={2} />
           </Chapter>
         </Container>
       </Section>
@@ -107,8 +107,8 @@ export default function UEPServicePage({
       {/* Highlights */}
       <Section tone="shell" labelledBy="why-heading">
         <Container>
-          <Chapter id="why-heading" title={`${SERVICE_PAGE.whyBefore}${landing.title}`}>
-            <PointList items={landing.highlights} />
+          <Chapter id="why-heading" title={`${SERVICE_PAGE.whyBefore}${landing.title}`} stacked>
+            <PointList items={landing.highlights} columns={3} />
           </Chapter>
         </Container>
       </Section>

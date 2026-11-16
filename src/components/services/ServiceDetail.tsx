@@ -52,8 +52,8 @@ export default function ServiceDetail({
 
       <Section tone="white" labelledBy="offer-heading">
         <Container>
-          <Chapter id="offer-heading" title={COPY.offer}>
-            <OfferList items={services} />
+          <Chapter id="offer-heading" title={COPY.offer} stacked>
+            <OfferList items={services} columns={2} />
           </Chapter>
         </Container>
       </Section>
@@ -61,8 +61,8 @@ export default function ServiceDetail({
       {highlights && (
         <Section tone="shell" labelledBy="why-heading">
           <Container>
-            <Chapter id="why-heading" title={`${COPY.whyBefore}${title}`}>
-              <PointList items={highlights} />
+            <Chapter id="why-heading" title={`${COPY.whyBefore}${title}`} stacked>
+              <PointList items={highlights} columns={3} />
             </Chapter>
           </Container>
         </Section>

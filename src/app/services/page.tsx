@@ -97,7 +97,7 @@ export default function ServicesPage() {
                           className={
                             door
                               ? "grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2"
-                              : "grid grid-cols-2 gap-x-4 gap-y-12 sm:gap-x-6 md:grid-cols-4 lg:gap-x-8"
+                              : "grid grid-cols-2 gap-x-4 gap-y-12 sm:gap-x-6 lg:grid-cols-4 lg:gap-x-8"
                           }
                         >
                           {framed.map(({ service, media }, i) => (
@@ -110,7 +110,7 @@ export default function ServicesPage() {
                                 sizes={
                                   door
                                     ? "(min-width: 1280px) 260px, (min-width: 768px) 20vw, 40vw"
-                                    : "(min-width: 1280px) 290px, (min-width: 768px) 22vw, 45vw"
+                                    : "(min-width: 1280px) 290px, (min-width: 1024px) 22vw, 45vw"
                                 }
                               />
                             </Reveal>
