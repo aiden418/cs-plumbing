@@ -2,9 +2,6 @@
   "src/app/builders/BuildersPage.tsx": [
     "src/lib/constants.ts"
   ],
-  "src/components/estimator/CostEstimator.tsx": [
-    "src/lib/constants.ts"
-  ],
   "src/components/home/ServiceAreasSection.tsx": [
     "src/lib/constants.ts"
   ],
@@ -13,9 +10,5 @@
   ],
   "src/components/home/StatsBar.tsx": [
     "src/lib/constants.ts"
-  ],
-  "src/components/services/ServiceLandingTemplate.tsx": [
-    "src/lib/constants.ts",
-    "src/lib/landing-indexing.ts"
   ]
 }
