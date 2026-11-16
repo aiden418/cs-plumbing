@@ -61,6 +61,7 @@ export default function CityProofBlock({ cityName, projects }: CityProofBlockPro
                 <Reveal as="li" key={project.slug} index={i}>
                   <ProjectCard
                     project={project}
+                    aspect="4/3"
                     sizes="(min-width: 1280px) 400px, (min-width: 1024px) 30vw, (min-width: 640px) 46vw, 90vw"
                   />
                 </Reveal>

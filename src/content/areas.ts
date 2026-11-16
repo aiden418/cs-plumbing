@@ -16,12 +16,10 @@ export const AREA_COPY = {
     call: "Call",
   },
   services: {
-    eyebrow: "Services",
     heading: (city: string) => `Plumbing Services in ${city}`,
     lead: (city: string) => `Full-service residential and commercial plumbing for ${city} homes and businesses.`,
   },
   local: {
-    eyebrow: "Local knowledge",
     heading: (city: string) => `Serving ${city} Since 1998`,
     neighborhoodsHeading: (city: string) => `Neighborhoods We Serve in ${city}`,
   },
@@ -40,7 +38,6 @@ export const AREA_COPY = {
     fallbackStatCaption: "homes plumbed across Lee County",
   },
   trust: {
-    eyebrow: "Why C&S",
     heading: (city: string) => `Why ${city} Trusts C&S Plumbing`,
     /** Appended to the shared trust proof points. */
     localPoint: (city: string) => `Fast response to ${city}`,
@@ -75,16 +72,13 @@ export const SERVICE_CITY_COPY = {
     servingPrefix: "Serving",
   },
   description: {
-    eyebrow: "Overview",
     /** Used when a landing has no hand-written section heading. */
     fallbackHeading: (city: string, state: string) => `Plumbing services in ${city}, ${state}`,
   },
   features: {
-    eyebrow: "What's included",
     heading: (city: string) => `What We Offer in ${city}`,
   },
   area: {
-    eyebrow: "Service area",
     heading: (city: string, state: string) => `Serving All of ${city}, ${state}`,
     sentence: (city: string, state: string) =>
       `Licensed plumbers covering all of ${city}, ${state}, including every neighborhood listed below.`,
@@ -92,7 +86,6 @@ export const SERVICE_CITY_COPY = {
     neighborhoodsHeading: (city: string) => `Neighborhoods We Serve in ${city}`,
   },
   faq: {
-    eyebrow: "FAQ",
     heading: "Frequently Asked Questions",
   },
   related: {

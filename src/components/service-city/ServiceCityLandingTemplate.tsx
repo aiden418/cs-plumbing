@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Button from "@/components/ui/Button";
 import Container from "@/components/ui/Container";
-import Eyebrow from "@/components/ui/Eyebrow";
 import FaqAccordion from "@/components/ui/FaqAccordion";
 import PageHero from "@/components/ui/PageHero";
 import Reveal from "@/components/ui/Reveal";
@@ -52,7 +51,7 @@ export default function ServiceCityLandingTemplate({
         actions={
           <>
             <Button href={BUSINESS.phoneHref} size="lg" icon={<Phone className="size-5" />}>
-              {copy.hero.call} {BUSINESS.phone}
+              {copy.hero.call} <span className="whitespace-nowrap">{BUSINESS.phone}</span>
             </Button>
             <Button href="/booking" variant="secondary" size="lg" icon={<Calendar className="size-5" />}>
               {copy.hero.book}
@@ -78,13 +77,12 @@ export default function ServiceCityLandingTemplate({
       {/* Trust row */}
       <Section tone="white" spacing="none" className="border-b border-rule">
         <Container>
-          <ul className="grid grid-cols-1 sm:grid-cols-2 lg:flex lg:flex-wrap lg:justify-between lg:gap-x-8">
+          <ul className="grid grid-cols-1 sm:grid-cols-2 lg:flex">
             {landing.trustBadges.map((badge) => (
               <li
                 key={badge}
-                className="flex items-center gap-3 border-rule py-4 text-[0.9375rem] font-medium text-fg max-sm:border-b max-sm:last:border-b-0"
+                className="flex items-center border-rule py-4 text-[0.9375rem] font-medium text-fg max-sm:border-b max-sm:last:border-b-0 lg:flex-1 lg:border-l lg:px-6 lg:first:border-l-0 lg:first:pl-0"
               >
-                <span className="joint text-accent" aria-hidden="true" />
                 {badge}
               </li>
             ))}
@@ -99,7 +97,6 @@ export default function ServiceCityLandingTemplate({
             <div className="lg:col-span-5">
               {/* The heading stays in view beside the long description. */}
               <div className="lg:sticky lg:top-[calc(var(--nav-h)+2.5rem)]">
-                <Eyebrow className="mb-4">{copy.description.eyebrow}</Eyebrow>
                 <h2 id="service-city-description-heading" className="text-display-md text-fg">
                   {landing.sectionHeading ??
                     copy.description.fallbackHeading(landing.city, landing.state)}
@@ -121,7 +118,6 @@ export default function ServiceCityLandingTemplate({
       <Section tone="shell" labelledBy="service-city-features-heading">
         <Container>
           <Reveal className="mb-10 max-w-2xl sm:mb-12">
-            <Eyebrow className="mb-4">{copy.features.eyebrow}</Eyebrow>
             <h2 id="service-city-features-heading" className="text-display-md text-fg">
               {copy.features.heading(landing.city)}
             </h2>
@@ -152,7 +148,6 @@ export default function ServiceCityLandingTemplate({
         <Container>
           <div className="grid grid-cols-1 gap-y-10 lg:grid-cols-12 lg:gap-x-8">
             <Reveal className="lg:col-span-7">
-              <Eyebrow className="mb-4">{copy.area.eyebrow}</Eyebrow>
               <h2 id="service-city-area-heading" className="text-display-md text-fg">
                 {copy.area.heading(landing.city, landing.state)}
               </h2>
@@ -192,7 +187,6 @@ export default function ServiceCityLandingTemplate({
         <Container>
           <div className="grid grid-cols-1 gap-y-10 lg:grid-cols-12 lg:gap-x-8">
             <Reveal className="lg:col-span-4">
-              <Eyebrow className="mb-4">{copy.faq.eyebrow}</Eyebrow>
               <h2 id="service-city-faq-heading" className="text-display-md text-fg">
                 {copy.faq.heading}
               </h2>

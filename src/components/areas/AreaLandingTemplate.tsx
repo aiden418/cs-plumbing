@@ -78,7 +78,6 @@ export default function AreaLandingTemplate({
       <Section tone="white" labelledBy="area-services-heading">
         <Container>
           <Reveal className="mb-10 max-w-2xl sm:mb-14">
-            <Eyebrow className="mb-4">{copy.services.eyebrow}</Eyebrow>
             <h2 id="area-services-heading" className="text-display-md text-fg">
               {copy.services.heading(landing.city)}
             </h2>
@@ -101,10 +100,9 @@ export default function AreaLandingTemplate({
                     {service.description}
                   </p>
                   {service.features && (
-                    <ul className="mt-2 flex flex-wrap gap-x-5 gap-y-1.5 md:col-span-8 md:col-start-5 lg:col-span-3 lg:col-start-auto lg:mt-0 lg:block lg:space-y-1.5">
+                    <ul className="mt-2 space-y-1 md:col-span-8 md:col-start-5 lg:col-span-3 lg:col-start-auto lg:mt-0">
                       {service.features.slice(0, 3).map((feature) => (
-                        <li key={feature} className="flex items-baseline gap-2.5 text-sm text-muted">
-                          <span className="joint size-1.5 translate-y-[-0.1em] text-accent" aria-hidden="true" />
+                        <li key={feature} className="text-sm text-muted">
                           {feature}
                         </li>
                       ))}
@@ -125,7 +123,6 @@ export default function AreaLandingTemplate({
         <Container>
           <div className="grid grid-cols-1 gap-y-12 lg:grid-cols-12 lg:gap-x-8">
             <Reveal className={hasNeighborhoods ? "lg:col-span-7" : "lg:col-span-8"}>
-              <Eyebrow className="mb-4">{copy.local.eyebrow}</Eyebrow>
               <h2 id="area-local-heading" className="text-display-md text-fg">
                 {copy.local.heading(landing.city)}
               </h2>
@@ -159,7 +156,6 @@ export default function AreaLandingTemplate({
         <Container>
           <div className="grid grid-cols-1 gap-y-10 lg:grid-cols-12 lg:gap-x-8">
             <Reveal className="lg:col-span-4">
-              <Eyebrow className="mb-4">{copy.trust.eyebrow}</Eyebrow>
               <h2 id="area-trust-heading" className="text-display-md text-fg">
                 {copy.trust.heading(landing.city)}
               </h2>
@@ -167,8 +163,7 @@ export default function AreaLandingTemplate({
             <Reveal className="lg:col-span-8">
               <ul className="grid grid-cols-1 gap-x-8 sm:grid-cols-2">
                 {trustPoints.map((point) => (
-                  <li key={point} className="-mt-px flex items-baseline gap-3 border-y border-rule py-3.5 text-fg">
-                    <span className="joint translate-y-[-0.05em] text-accent" aria-hidden="true" />
+                  <li key={point} className="-mt-px border-y border-rule py-3.5 text-fg">
                     <span>{point}</span>
                   </li>
                 ))}
