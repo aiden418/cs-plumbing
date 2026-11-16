@@ -37,8 +37,7 @@
   },
   "photo-10.jpg": {
     "alt": "View from the hangar roof edge over the job site toward the Punta Gorda Airport apron",
-    "order": 10,
-    "cover": true
+    "order": 10
   },
   "photo-11.jpg": {
     "alt": "Hangar roof deck and open door seen through the mezzanine window, runway beyond",
@@ -118,7 +117,9 @@
   },
   "photo-30.jpg": {
     "alt": "Lavatory carrier with 3-inch PVC DWV riser and red and blue PEX feeding copper stub-outs",
-    "order": 30
+    "order": 30,
+    "cover": true,
+    "position": "50% 82.1%"
   },
   "photo-31.jpg": {
     "alt": "Open hangar bay under the pre-engineered steel frame with the door raised toward the airfield",

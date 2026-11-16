@@ -1,8 +1,7 @@
 {
   "photo-1.jpg": {
     "alt": "PVC drain lines laid in open trenches with stub-ups on a wooded Punta Gorda lot before backfill",
-    "order": 1,
-    "cover": true
+    "order": 1
   },
   "photo-2.jpg": {
     "alt": "PVC DWV branch lines and stub-ups across the formboarded pad of a new home before the slab pour",
@@ -10,7 +9,9 @@
   },
   "photo-3.jpg": {
     "alt": "Capped PVC stub-up in the foreground with drain runs and vent risers laid out inside the formboards",
-    "order": 3
+    "order": 3,
+    "cover": true,
+    "position": "62.4% 50%"
   },
   "photo-4.jpg": {
     "alt": "Newly framed and sheathed Decker Homes house on a graded lot with the porch slab poured",

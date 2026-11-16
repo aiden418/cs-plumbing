@@ -2,7 +2,8 @@
   "hero-1.webp": {
     "alt": "Finished kitchen island with gold pull-down faucet and undermount sink at the Fort Myers Beach custom home",
     "order": 1,
-    "cover": true
+    "cover": true,
+    "position": "50% 73%"
   },
   "hero-2.webp": {
     "alt": "Double vanity with two undermount sinks and matte black widespread faucets trimmed out beside a floor-mount toilet",

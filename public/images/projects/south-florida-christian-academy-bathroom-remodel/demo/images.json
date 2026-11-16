@@ -1,8 +1,7 @@
 {
   "photo-1.jpg": {
     "alt": "PVC riser with a brass hose connection and blue-handled ball valve at the base of an exterior wall",
-    "order": 1,
-    "cover": true
+    "order": 1
   },
   "photo-2.jpg": {
     "alt": "Four closet flanges taped off and angle stops left on the wall after the toilets were pulled",
@@ -34,7 +33,9 @@
   },
   "photo-9.jpg": {
     "alt": "Eight taped closet flanges and capped angle stops in a row after the school toilets were pulled",
-    "order": 9
+    "order": 9,
+    "cover": true,
+    "position": "75% 50%"
   },
   "photo-10.jpg": {
     "alt": "Gutted school restroom with taped closet flanges, stacked partitions and a cart of demo debris",

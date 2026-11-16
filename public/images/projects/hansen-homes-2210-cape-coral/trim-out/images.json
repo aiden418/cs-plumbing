@@ -2,7 +2,8 @@
   "photo-1.jpg": {
     "alt": "Freestanding soaking tub with brushed nickel wall-mount tub filler and valve trim in a tiled master bath",
     "order": 1,
-    "cover": true
+    "cover": true,
+    "position": "0% 44.4%"
   },
   "photo-2.jpg": {
     "alt": "White two-piece elongated toilet with chrome trip lever installed in a Cape Coral new-build water closet",

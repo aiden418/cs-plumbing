@@ -1,8 +1,7 @@
 {
   "photo-1.jpg": {
     "alt": "Ruud electric tank water heater in the garage with CPVC supply lines, ball valve and T&P relief valve",
-    "order": 1,
-    "cover": true
+    "order": 1
   },
   "photo-2.jpg": {
     "alt": "Plumber connecting the drain under a freestanding laundry tub with a two-handle chrome utility faucet",
@@ -14,7 +13,9 @@
   },
   "photo-4.jpg": {
     "alt": "Brushed nickel tub and shower trim with spout, valve and shower head beside a glass mosaic tile niche",
-    "order": 4
+    "order": 4,
+    "cover": true,
+    "position": "50% 95.8%"
   },
   "photo-5.jpg": {
     "alt": "Undermount bathroom sink with brushed nickel single-handle lavatory faucet and pop-up drain in a quartz vanity top",

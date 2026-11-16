@@ -2,7 +2,8 @@
   "aerial-1.jpg": {
     "alt": "Drone view of mini excavator cutting underground plumbing trenches inside the block stem wall before the slab pour",
     "order": 1,
-    "cover": true
+    "cover": true,
+    "position": "45% 50%"
   },
   "aerial-2.jpg": {
     "alt": "Top-down aerial of stem wall footprint with sewer trench lines and PVC stub-ups being set in Cape Coral",

@@ -1,8 +1,7 @@
 {
   "photo-1.jpg": {
     "alt": "Wood-stud partition framing with red and blue PEX runs and a PVC vent stack beneath roof trusses",
-    "order": 1,
-    "cover": true
+    "order": 1
   },
   "photo-2.jpg": {
     "alt": "Red and blue PEX supply stub-outs on stud blocking beside a PVC drain riser through the slab",
@@ -10,7 +9,9 @@
   },
   "photo-3.jpg": {
     "alt": "Red and blue PEX branches and a PVC drain tee with vent riser roughed through a stud partition",
-    "order": 3
+    "order": 3,
+    "cover": true,
+    "position": "15% 50%"
   },
   "photo-4.jpg": {
     "alt": "PEX trunk lines along truss bottom chords with a PVC vent elbow above a block wall doorway",

@@ -2,7 +2,8 @@
   "photo-1.jpg": {
     "alt": "Red PEX hot water lines strapped down block-wall furring and run through a framed island knee wall",
     "order": 1,
-    "cover": true
+    "cover": true,
+    "position": "50% 72.9%"
   },
   "photo-2.jpg": {
     "alt": "Red and blue PEX supply lines crossing roof trusses and dropping down furring strips on a block wall",

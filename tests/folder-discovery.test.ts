@@ -119,8 +119,14 @@ describe("projects-data", () => {
       assert.ok(p.phases.length > 0 && p.phases.every((ph) => ph.images.length > 0), p.slug);
       assert.ok(p.phases.some((ph) => ph.images.some((i) => i.src === p.coverImage)), `${p.slug} cover is one of its photos`);
     }
-    const hangar = COMPLETED_PROJECTS.find((p) => p.slug === "hangar-97-punta-gorda-airport");
-    assert.equal(hangar?.coverImage, "/images/projects/hangar-97-punta-gorda-airport/2nd-rough/photo-10.jpg", "a cover that is not the first photo");
+    // The cover is whichever photo the owner flagged in images.json; it does
+    // not have to be the first photo, and changing it must not break a test.
+    const manifest = JSON.parse(readFileSync(path.join(process.cwd(), "src/generated/images-meta.json"), "utf8")) as ImageManifest;
+    const flagged = COMPLETED_PROJECTS.filter((p) => p.coverImage !== p.phases[0]?.images[0]?.src);
+    assert.ok(flagged.length > 0, "at least one project has a cover that is not its first photo");
+    for (const p of flagged) {
+      assert.equal(manifest.images[p.coverImage]?.cover, true, `${p.slug}: the cover is the photo flagged "cover" in its folder`);
+    }
     const hansen = COMPLETED_PROJECTS.find((p) => p.slug === "hansen-homes-cape-coral");
     assert.ok(hansen && projectStatusLabel(hansen) === "In progress");
     const card = projectCardData(hansen);
