@@ -34,9 +34,9 @@ export default function ChatWidget() {
           onClick={() => setIsOpen(true)}
           aria-haspopup="dialog"
           aria-expanded={isOpen}
-          className="inline-flex min-h-12 items-center gap-2.5 rounded-chip bg-white px-5 font-sans text-[0.9375rem] font-semibold text-ink shadow-float ring-1 ring-ink/10 transition-[background-color,transform] duration-150 ease-enter hover:bg-shell active:scale-[0.98]"
+          className="inline-flex min-h-11 items-center gap-2 rounded-chip bg-ink-700 px-4 font-sans text-[0.875rem] font-semibold text-white shadow-float ring-1 ring-white/15 transition-[background-color,transform] duration-150 ease-enter active:scale-[0.98] md:min-h-12 md:gap-2.5 md:bg-white md:px-5 md:text-[0.9375rem] md:text-ink md:ring-ink/10 md:hover:bg-shell"
         >
-          <span className="joint text-bronze" aria-hidden="true" />
+          <span className="joint text-brass-300 md:text-bronze" aria-hidden="true" />
           Request service
         </button>
       </div>
