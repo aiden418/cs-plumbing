@@ -15,20 +15,6 @@ export { EMERGENCY_CLAIMS, LICENSE, CLAIMS };
 // so existing server code keeps importing them from here.
 export { BUSINESS, AWARDS, LATEST_AWARD, AWARD_TRUST_LINE, UEP_STATUS };
 
-// Third-party contractor ranking. This is BuildZoom's score, not a state or
-// DBPR ranking, and every surface that cites it must say so and link the
-// profile. Re-check the profile before bumping `checkedOn`.
-export const CONTRACTOR_RANKING = {
-  claim: "Top 5% of Florida licensed contractors",
-  /** Same claim, for mid-sentence use. */
-  claimInline: "top 5% of Florida licensed contractors",
-  source: "BuildZoom",
-  sourceUrl: "https://www.buildzoom.com/contractor/c-s-plumbing-of-lee-inc",
-  checkedOn: "2026-09-29",
-  /** What the profile says, verbatim, on `checkedOn`. */
-  quote: "Their BuildZoom score of 109 ranks in the top 5% of 191,428 Florida licensed contractors.",
-} as const;
-
 /**
  * Every public profile that should resolve to this business. One list feeds
  * the schema `sameAs`, llms.txt and the footer, so a new directory listing
@@ -43,7 +29,7 @@ export const PROFILES = [
   { id: "instagram", label: "Instagram", url: BUSINESS.instagramUrl, kind: "social", footer: true },
   { id: "yelp", label: "Yelp", url: "https://www.yelp.com/biz/c-and-s-plumbing-of-lee-north-fort-myers", kind: "review", footer: false },
   { id: "birdeye", label: "Birdeye reviews", url: BUSINESS.birdeyeUrl, kind: "review", footer: false },
-  { id: "buildzoom", label: "BuildZoom contractor profile", url: CONTRACTOR_RANKING.sourceUrl, kind: "directory", footer: false },
+  { id: "buildzoom", label: "BuildZoom contractor profile", url: "https://www.buildzoom.com/contractor/c-s-plumbing-of-lee", kind: "directory", footer: false },
 ] as const;
 
 // Warranty wording confirmed by the owner (Sep 2026). Materials supplied by
@@ -167,7 +153,9 @@ export const NAV_LINKS: NavLink[] = [
 export const STATS: Stat[] = [
   { value: 9500, suffix: "+", label: "Homes Plumbed" },
   { value: 28, suffix: "+", label: "Years of Service" },
-  { value: 5, suffix: "%", label: "Top FL Contractors (BuildZoom)" },
+  // Was BuildZoom's "top 5%" ranking until 2026-11-16: once the profile was
+  // claimed, BuildZoom showed a score of 0, so the claim came off the site.
+  { value: AWARDS.length, suffix: "×", label: "Best of Cape Coral" },
   { value: 24, suffix: "/7", label: "Emergency Service" },
 ];
 

@@ -50,8 +50,6 @@ export const proof = {
   label: "Proof",
   ratingSuffix: "Stars",
   reviewsSuffix: "Reviews",
-  /** The ranking stat links to its source (CONTRACTOR_RANKING.sourceUrl). */
-  rankingLabel: "Top FL Contractors (BuildZoom)",
   emergencyLead: "Plumbing emergency?",
   emergencyLink: { href: "/emergency", label: "24/7 service" },
   trust: ["Licensed & Insured", "9,500+ Homes Plumbed", "Free Estimates"],

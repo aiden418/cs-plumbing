@@ -41,7 +41,7 @@ const credentials: { title: string; body: string; href?: string; hrefLabel?: str
 ];
 
 /**
- * Licenses, insurance, award and ranking: the figures in one row, then the
+ * Licenses, insurance and award: the figures in one row, then the
  * credentials as a definition list with a 1 px line between rows (title
  * beside the text on desktop).
  */

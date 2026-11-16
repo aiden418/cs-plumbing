@@ -1,4 +1,4 @@
-import { BUSINESS, CONTRACTOR_RANKING, LATEST_AWARD, WARRANTY } from "./constants";
+import { BUSINESS, LATEST_AWARD, WARRANTY } from "./constants";
 
 // ============================================
 // BUILDER PROGRAM — single source of truth
@@ -201,13 +201,6 @@ export const QUALIFICATIONS = [
   { id: "self-perform", label: "100% self-performed plumbing work — no sub-to-sub layering" },
   { id: "aia", label: "AIA G702/G703 pay applications" },
   { id: "portals", label: "Procore and Textura experience" },
-  {
-    id: "top5",
-    label: `Ranked in the ${CONTRACTOR_RANKING.claimInline} on ${CONTRACTOR_RANKING.source}`,
-    source: CONTRACTOR_RANKING.source,
-    sourceUrl: CONTRACTOR_RANKING.sourceUrl,
-    checkedOn: CONTRACTOR_RANKING.checkedOn,
-  },
   { id: "warranty", label: WARRANTY.summary },
 ] as const;
 

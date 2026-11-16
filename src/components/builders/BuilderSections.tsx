@@ -388,20 +388,6 @@ export function Qualifications({ tone = "white", spacing = "default" }: { tone?:
             {QUALIFICATIONS.map((q) => (
               <li key={q.id} className="border-t border-rule py-3.5 text-lg leading-snug font-medium text-fg">
                 {q.label}
-                {"sourceUrl" in q && (
-                  <span className="mt-1 block text-[0.9375rem] font-normal text-body">
-                    {COPY.qualifications.source}{" "}
-                    <a
-                      href={q.sourceUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="font-semibold text-link underline underline-offset-2"
-                    >
-                      {q.source} {COPY.qualifications.profile}
-                    </a>{" "}
-                    {COPY.qualifications.checkedPrefix} {q.checkedOn})
-                  </span>
-                )}
               </li>
             ))}
           </ul>
