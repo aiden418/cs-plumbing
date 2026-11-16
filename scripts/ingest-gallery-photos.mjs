@@ -182,12 +182,12 @@ async function main() {
   }
 
   if (totalPhotos === 0 && totalSkipped === 0) {
-    log(`No new gallery photos. Drop them in photo-inbox/gallery/<category>/ and run this again.`);
+    log(`No new gallery photos. Drop them in photo-inbox/gallery/<category>/ (${CATEGORIES.join(", ")}) and run this again; photos loose in photo-inbox/gallery/ itself are not picked up.`);
     return unknown.length > 0 ? 1 : 0;
   }
   log(`\n${totalPhotos} gallery photo${totalPhotos === 1 ? "" : "s"}${dryRun ? " would be added" : ` added: ${mb(totalIn)} -> ${mb(totalOut)}`}${totalSkipped > 0 ? `; ${totalSkipped} skipped (still in the inbox)` : ""}.`);
   if (dryRun || totalPhotos === 0) return unknown.length > 0 ? 1 : 0;
-  log(`Originals moved to photo-inbox/_done/. Next: fill in "alt" (what the photo shows) and "title" (the caption on the tile) in`);
+  log(`Originals moved to photo-inbox/_done/. Next: fill in "alt" (what the photo shows) and "title" (the caption shown when the photo is opened) in`);
   for (const file of toDescribe) log(`  ${file}`);
   log("");
   const code = rebuildManifest(root);

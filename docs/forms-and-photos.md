@@ -130,7 +130,8 @@ form, which the sections above cover.)
 
 The goal is the owner-update standard: drop a photo into a folder, or replace
 a file under the same name, and it shows on the site with no page code edited
-and no stale cache.
+and no stale cache. The owner's step-by-step version is `HOW-TO-UPDATE.md` at
+the repository root; every step in it was performed on 2026-11-16.
 
 ### How a picture reaches a page
 
@@ -166,7 +167,7 @@ package scripts take care of that:
 
 ```
 npm install       ->  postinstall: manifest (never fails the install)
-npm run dev       ->  predev: manifest, then scripts/dev.mjs (next dev + watcher)
+npm run dev       ->  scripts/dev.mjs: manifest, then next dev + watcher
 npm test          ->  pretest: manifest
 npm run build     ->  prebuild: manifest -> check:claims -> check-images --gate -> next build
 npm run photos    ->  both ingest scripts, then the manifest
@@ -216,18 +217,19 @@ read, notes included.
 | Field | Meaning |
 |---|---|
 | `alt` | What the photo shows, for screen readers and search. |
-| `caption`, `title`, `category`, `id` | Passed through to the page data (the gallery uses all four). |
+| `caption` | Passed through to the page data; project pages show it in the full-screen viewer (the gallery does not read it). |
+| `title`, `category`, `id` | Read by `/gallery`: `title` is the caption in its full-screen viewer, `category` drives the filter (photos in `gallery/<category>/` take it from the folder name), `id` is the stable id. |
 | `order` | Photos with an `order` come first, lowest number first; the rest follow in natural file-name order (`photo-2` before `photo-10`). |
 | `position` | CSS `object-position` for cropped frames. |
 | `hidden` | Takes the photo off every page without deleting the file. (The file is still reachable at its `/images/...` address; delete it to take it off the internet.) |
 | `cover` | The card photo of a project. More than one in a project is a warning. |
-| `featured` | A homepage pick. |
+| `featured` | A pick for the featured-project rail (`src/components/explorer/featured-data.tsx`). In this build that rail is only on the noindexed `/dev/specimen/explorer` page; the homepage does not read the flag. |
 
 Mistakes fail softly:
 
 | Mistake | What happens |
 |---|---|
-| The file is not valid JSON | One line naming the file, line and column. That folder's settings are skipped, its photos still publish in file-name order, the step exits 0. |
+| The file is not valid JSON | One line naming the file, line and column. That folder's settings are skipped, its photos still publish in file-name order, the step exits 0. In `public/images/gallery/images.json` that also drops every root gallery photo's title and category: they publish titled by file name and all filed under "residential" until the typo is fixed (checked 2026-11-16). |
 | A wrong value (`"order": "first"`) | That one setting is ignored, with a line saying so. |
 | An unknown setting (`"captoin"`) | A line naming it. |
 | An entry for a file that is not there | A warning; with a hint when only the capital letters differ. |
@@ -262,7 +264,11 @@ Mistakes fail softly:
   `image("derived:home.hero.mobile")` and through `slot()`.
 - **Crop**: `box` is in pixels of the upright source. A PNG crop stays a PNG
   and keeps its transparency. Available as `image("derived:<id>")`. A box with
-  no size makes nothing.
+  no size makes nothing. The box is tied to the picture's pixel size: when
+  the picture is replaced by one of another size (a new `logo-new.png`, a
+  different `services/cards/repiping.jpg`), a box that no longer fits is
+  trimmed to the picture with a one-line note and the build goes on, so the
+  framing can change. Replacing with a file of the same size keeps it.
 - A typo in this file prints one line and leaves the slots empty, so the
   deploy gate (below) stops the build rather than publish a page without its
   hero.
@@ -315,7 +321,10 @@ const everyGalleryPhoto = collection("gallery", { deep: true });   // includes g
 
 Notes that never stop a deploy: a gallery or project photo with no alt text,
 files over 1.5 MB (one summary line), two covers in one project, an
-`images.json` entry for a missing file, an empty photo folder.
+`images.json` entry for a missing file, an empty photo folder, a project or
+phase folder that no entry in `COMPLETED_PROJECT_TEXT` (`src/lib/constants.ts`)
+names (it is not published), a `media.json` position whose picture is marked
+`hidden`, a crop box trimmed to fit a replaced picture.
 
 `--gate` (what `prebuild` runs) and the default mode fail on the same things;
 the default mode prints the full list of photos that still need a description.

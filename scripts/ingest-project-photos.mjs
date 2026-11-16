@@ -344,7 +344,7 @@ async function main() {
         lines.push(...notes);
       }
       if (lines.length === 0) continue;
-      log(`\n${slug}${isNew ? "  (a new project folder: its name and details still have to be added before it has a page)" : ""}`);
+      log(`\n${slug}${isNew ? "  (a new project folder: it has no page until a project with this slug is added to COMPLETED_PROJECT_TEXT in src/lib/constants.ts)" : ""}`);
       for (const line of lines) log(line);
     }
   } finally {
