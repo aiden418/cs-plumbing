@@ -3,124 +3,439 @@
    each add rules to the site's stylesheet. */
 @import "tailwindcss" source("..");
 
-/* ========================================
-   C&S PLUMBING — DESIGN SYSTEM
-   Light & Clean, Apple-Inspired
-   ======================================== */
+/* Tailwind reads every file in the project for class names. The ones written
+   in tests and tooling are fixtures, not markup, and must not end up in the
+   stylesheet that ships. */
+@source not "../../tests";
+@source not "../../scripts";
 
-@theme inline {
-  /* Colors */
-  --color-background: #FFFFFF;
-  --color-surface: #F5F5F7;
-  --color-surface-light: #E8E8ED;
-  --color-primary: #0077CC;
-  --color-primary-dark: #005FA3;
-  --color-primary-glow: rgba(0, 119, 204, 0.12);
-  --color-white: #FFFFFF;
-  --color-gray-100: #F3F4F6;
-  --color-gray-300: #D2D2D7;
-  /* #6E6E73 (Apple secondary label) clears WCAG AA on white (5.1:1) and on
-     the #F5F5F7 surface (4.6:1). The previous #86868B was 3.6:1 and failed
-     the contrast audit on every page. */
-  --color-gray-500: #6E6E73;
-  --color-gray-700: #1D1D1F;
-  --color-emergency: #FF3B30;
+/* ==========================================================================
+   C&S PLUMBING OF LEE — DESIGN SYSTEM  ·  "Precision in every connection."
+   --------------------------------------------------------------------------
+   One place for every color, type size, space, radius and motion value.
+   Change a brand color here and the whole site follows.
+
+   Layers in this file
+     1. Tokens            (@theme static  -> real :root variables + utilities)
+     2. Tone variables    (what "canvas / text / rule / accent" mean on a
+                           white, shell, navy or ink section)
+     3. Base              (html, body, headings, links, focus, scroll offsets)
+     4. Utilities         (label-tech, display widths, rich-text, joint motif,
+                           reveal, press)
+     5. Legacy            (aliases + old utilities kept until every page is
+                           rebuilt; scripts/check-legacy-classes.mjs counts
+                           their uses and the counts may only go down)
+     6. Print documents   (capability statement, prequal packet, Terms keep
+                           their exact pre-redesign look)
+     7. Reduced motion
+   ========================================================================== */
+
+/* 1. TOKENS ---------------------------------------------------------------- */
+
+@theme static {
+  /* Brand palette — drawn from the logo, the truck wrap and the job site */
+  --color-ink: #0A1730;            /* the marlin's deepest navy: cinematic sections */
+  --color-ink-700: #12244A;        /* raised surface on ink (panels, menus) */
+  --color-navy: #1B2B4B;           /* brand navy (unchanged) */
+  --color-primary: #0077CC;        /* truck-wrap blue: THE interactive color (unchanged) */
+  --color-primary-dark: #005FA3;   /* hover on primary; link color on light */
+  --color-primary-300: #66B5F2;    /* links on ink / navy */
+  --color-brass: #B8975A;          /* the compass: hairlines, labels on dark */
+  --color-brass-600: #A8884C;
+  --color-brass-300: #D4BC8A;
+  --color-bronze: #7A6235;         /* brass for text on light surfaces */
+  --color-shell: #F5F2EC;          /* warm white for calm sections */
+  --color-shell-200: #EAE6DC;
+  --color-shell-300: #DCD6C8;      /* hairline on shell */
+  --color-steel-50: #F6F7F9;
+  --color-steel-100: #ECEEF2;
+  --color-steel-200: #D9DDE3;
+  --color-steel-300: #B4BCC7;
+  --color-steel-400: #7F8A99;      /* non-text only (3.5:1 on white) */
+  --color-steel-500: #5F6B7C;      /* secondary text (5.4:1 white, 4.8:1 shell) */
+  --color-steel-600: #4E5A6B;
+  --color-steel-700: #3D4858;      /* body text on light */
+  --color-steel-800: #273142;
+  --color-steel-900: #131E30;
+  --color-emergency: #D4281C;      /* white text on it = 5.1:1 */
+  --color-emergency-dark: #B42318;
+  --color-emergency-300: #FF7A70;  /* emergency accent on dark */
   --color-success: #34C759;
+  --color-success-ink: #1A7F37;    /* success text on light */
+  --color-white: #FFFFFF;
+  --color-background: #FFFFFF;
 
-  /* Brand (C&S identity — navy/gold accents for showpiece elements) */
-  --color-navy: #1B2B4B;
-  --color-gold: #E8A427;
-  --color-gold-dark: #C98A1B;
-  --color-light: #F4F6F9;
+  /* Type families (next/font variables live on <html>) */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display: var(--font-archivo), "Archivo Fallback", ui-sans-serif, system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
 
-  /* Typography */
-  --font-sans: var(--font-inter);
-  --font-display: var(--font-montserrat);
+  /* Type scale — fluid, each with its own line-height and tracking */
+  --text-display-2xl: clamp(3rem, 1rem + 8vw, 7.5rem);
+  --text-display-2xl--line-height: 0.98;
+  --text-display-2xl--letter-spacing: -0.03em;
+  --text-display-xl: clamp(2.5rem, 1.1rem + 5.6vw, 5.5rem);
+  --text-display-xl--line-height: 1;
+  --text-display-xl--letter-spacing: -0.025em;
+  --text-display-lg: clamp(2.125rem, 1.25rem + 3.6vw, 4rem);
+  --text-display-lg--line-height: 1.04;
+  --text-display-lg--letter-spacing: -0.02em;
+  --text-display-md: clamp(1.75rem, 1.2rem + 2.3vw, 3rem);
+  --text-display-md--line-height: 1.08;
+  --text-display-md--letter-spacing: -0.018em;
+  --text-display-sm: clamp(1.375rem, 1.1rem + 1.1vw, 2rem);
+  --text-display-sm--line-height: 1.15;
+  --text-display-sm--letter-spacing: -0.012em;
+  --text-lead: clamp(1.125rem, 1.05rem + 0.4vw, 1.375rem);
+  --text-lead--line-height: 1.5;
+  --text-label: clamp(0.75rem, 0.72rem + 0.15vw, 0.8125rem);
+  --text-label--line-height: 1.2;
+  --text-label--letter-spacing: 0.14em;
+  --text-sm: 0.9375rem;            /* secondary UI text: 15px (Tailwind's default is 14px) */
 
-  /* Display type scale (Apple-style fluid, clamped) */
-  --text-display-2xl: clamp(3.5rem, 10vw, 9rem);
-  --text-display-xl:  clamp(2.75rem, 7vw, 6rem);
-  --text-display-lg:  clamp(2.25rem, 5vw, 4.5rem);
-  --text-display-md:  clamp(1.75rem, 3.5vw, 3rem);
-  --text-display-sm:  clamp(1.375rem, 2.5vw, 2rem);
+  --font-weight-black: 800;        /* Archivo 800 is the heaviest we draw */
 
-  /* Spacing */
-  --section-padding: 7.5rem;
-  --section-padding-mobile: 5rem;
+  /* Space */
+  --spacing-gutter: clamp(1.25rem, 0.5rem + 3.2vw, 3rem);
+  --spacing-section: clamp(4.5rem, 2.5rem + 7vw, 9rem);
+  --spacing-section-sm: clamp(3rem, 2rem + 4vw, 5.5rem);
 
-  /* Animation */
-  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  /* Shape */
+  --radius-frame: clamp(0.875rem, 0.55rem + 1vw, 1.5rem);  /* photographs, panels */
+  --radius-control: 0.75rem;                               /* buttons, inputs */
+  --radius-chip: 999px;
+
+  /* Elevation — only for things that float above the page */
+  --shadow-float: 0 24px 60px -20px rgb(10 23 48 / 0.35), 0 2px 8px rgb(10 23 48 / 0.08);
+  --shadow-lift: 0 10px 30px -12px rgb(10 23 48 / 0.25);
+
+  /* Motion */
+  --ease-enter: cubic-bezier(0.16, 1, 0.3, 1);      /* things arriving: fast start, long settle */
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);          /* things leaving: get out of the way */
+  --ease-move: cubic-bezier(0.65, 0, 0.35, 1);      /* things moving while on screen */
+  --ease-settle: cubic-bezier(0.34, 1.26, 0.64, 1); /* a small overshoot, then rest */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);   /* legacy name */
+
+  /* Layout */
+  --breakpoint-nav: 70rem;         /* desktop navigation appears here */
 }
 
-/* ========================================
-   BASE STYLES
-   ======================================== */
+/* "Archivo Fallback": what headlines are set in until Archivo arrives, so
+   they keep their line breaks when it does.
+
+   Measured, not estimated: scripts/fonts/measure-fallback.mjs sets the site's
+   real headlines (132 H1 and 929 H2, 553 different strings) in the built
+   Archivo file and in local Arial Bold, in headless Chrome.
+
+   The default headline, Archivo 700 at 108% width, is the fourth rule:
+     size-adjust 106.86%, ascent 82.16%, descent 19.65%, line gap 0
+     width: 0.00% in total; each headline -3.35% to +2.15% (9 in 10 within
+     -1.44% to +1.10%); the H1s alone -2.32% to +2.15%
+     line box: identical to Archivo (ascent 0.878em, descent 0.210em)
+     Helvetica Neue Bold with the same numbers: -0.16% in total (-2.32% to
+     +1.87%). Roboto Bold is not installed here and was not measured.
+
+   That one rule cannot stand in for the other widths. Left over if it did
+   (fallback width minus Archivo width, all headlines):
+     display-normal 104%   +4.1%       display-tight 94%     +14.4%
+     display-wide 120%    -10.6%       font-display 100%      +8.6%
+     label-tech 600/112%   -1.4%       font-black 800/108%    -3.8%
+   So there is one rule per width and a second row for the heavy weight. The
+   browser picks by the element's font-stretch and font-weight; the ranges
+   touch and never overlap. With the family, every case above measures 0.00%
+   in total (label-tech stays at -1.4%), each headline within about 4%, and
+   the line box matches Archivo in all of them.
+
+   Next's own automatic fallback is switched off for Archivo in layout.tsx.
+   Browsers that do not know size-adjust (Safari before 17) get plain Arial
+   Bold. To regenerate: npx next build, then run the script and paste. */
+
+@font-face {
+  font-family: "Archivo Fallback";
+  src: local("Arial Bold"), local("Arial-BoldMT"), local("Helvetica Neue Bold"), local("HelveticaNeue-Bold"), local("Roboto Bold"), local("Roboto-Bold");
+  font-weight: 100 749;
+  font-stretch: 50% 97%;
+  size-adjust: 93.45%;
+  ascent-override: 93.95%;
+  descent-override: 22.47%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "Archivo Fallback";
+  src: local("Arial Bold"), local("Arial-BoldMT"), local("Helvetica Neue Bold"), local("HelveticaNeue-Bold"), local("Roboto Bold"), local("Roboto-Bold");
+  font-weight: 100 749;
+  font-stretch: 97.01% 102%;
+  size-adjust: 98.43%;
+  ascent-override: 89.20%;
+  descent-override: 21.34%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "Archivo Fallback";
+  src: local("Arial Bold"), local("Arial-BoldMT"), local("Helvetica Neue Bold"), local("HelveticaNeue-Bold"), local("Roboto Bold"), local("Roboto-Bold");
+  font-weight: 100 749;
+  font-stretch: 102.01% 106%;
+  size-adjust: 102.64%;
+  ascent-override: 85.54%;
+  descent-override: 20.46%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "Archivo Fallback";
+  src: local("Arial Bold"), local("Arial-BoldMT"), local("Helvetica Neue Bold"), local("HelveticaNeue-Bold"), local("Roboto Bold"), local("Roboto-Bold");
+  font-weight: 100 749;
+  font-stretch: 106.01% 114%;
+  size-adjust: 106.86%;
+  ascent-override: 82.16%;
+  descent-override: 19.65%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "Archivo Fallback";
+  src: local("Arial Bold"), local("Arial-BoldMT"), local("Helvetica Neue Bold"), local("HelveticaNeue-Bold"), local("Roboto Bold"), local("Roboto-Bold");
+  font-weight: 100 749;
+  font-stretch: 114.01% 200%;
+  size-adjust: 119.52%;
+  ascent-override: 73.46%;
+  descent-override: 17.57%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "Archivo Fallback";
+  src: local("Arial Bold"), local("Arial-BoldMT"), local("Helvetica Neue Bold"), local("HelveticaNeue-Bold"), local("Roboto Bold"), local("Roboto-Bold");
+  font-weight: 750 900;
+  font-stretch: 50% 97%;
+  size-adjust: 97.68%;
+  ascent-override: 89.89%;
+  descent-override: 21.50%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "Archivo Fallback";
+  src: local("Arial Bold"), local("Arial-BoldMT"), local("Helvetica Neue Bold"), local("HelveticaNeue-Bold"), local("Roboto Bold"), local("Roboto-Bold");
+  font-weight: 750 900;
+  font-stretch: 97.01% 102%;
+  size-adjust: 103.05%;
+  ascent-override: 85.20%;
+  descent-override: 20.38%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "Archivo Fallback";
+  src: local("Arial Bold"), local("Arial-BoldMT"), local("Helvetica Neue Bold"), local("HelveticaNeue-Bold"), local("Roboto Bold"), local("Roboto-Bold");
+  font-weight: 750 900;
+  font-stretch: 102.01% 106%;
+  size-adjust: 107.08%;
+  ascent-override: 81.99%;
+  descent-override: 19.61%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "Archivo Fallback";
+  src: local("Arial Bold"), local("Arial-BoldMT"), local("Helvetica Neue Bold"), local("HelveticaNeue-Bold"), local("Roboto Bold"), local("Roboto-Bold");
+  font-weight: 750 900;
+  font-stretch: 106.01% 114%;
+  size-adjust: 111.12%;
+  ascent-override: 79.01%;
+  descent-override: 18.90%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "Archivo Fallback";
+  src: local("Arial Bold"), local("Arial-BoldMT"), local("Helvetica Neue Bold"), local("HelveticaNeue-Bold"), local("Roboto Bold"), local("Roboto-Bold");
+  font-weight: 750 900;
+  font-stretch: 114.01% 200%;
+  size-adjust: 123.23%;
+  ascent-override: 71.25%;
+  descent-override: 17.04%;
+  line-gap-override: 0%;
+}
+
+/* Tone-aware color utilities: bg-canvas, text-fg, text-body, text-muted,
+   border-rule, text-accent, text-link. `inline` so each utility reads the
+   --tone-* variable at the element, which lets a [data-tone] section restyle
+   everything inside it. */
+@theme inline {
+  --color-canvas: var(--tone-canvas);
+  --color-fg: var(--tone-fg);
+  --color-body: var(--tone-body);
+  --color-muted: var(--tone-muted);
+  --color-rule: var(--tone-rule);
+  --color-accent: var(--tone-accent);
+  --color-link: var(--tone-link);
+  --color-focus: var(--tone-focus);
+  --color-raised: var(--tone-raised);
+}
+
+@custom-variant hocus (&:is(:hover, :focus-visible));
+
+/* 2. TONE VARIABLES --------------------------------------------------------- */
+
+:root {
+  /* durations: 150 quick feedback · 250 small moves · 450 reveals · 900 showpiece */
+  --dur-1: 150ms;
+  --dur-2: 250ms;
+  --dur-3: 450ms;
+  --dur-4: 900ms;
+
+  --nav-h: 3.75rem;
+  --dock-h: calc(4rem + env(safe-area-inset-bottom, 0px));
+
+  /* default tone = white */
+  --tone-canvas: var(--color-white);
+  --tone-raised: var(--color-white);
+  --tone-fg: var(--color-ink);
+  --tone-body: var(--color-steel-700);
+  --tone-muted: var(--color-steel-500);
+  --tone-rule: var(--color-steel-200);
+  --tone-accent: var(--color-bronze);
+  --tone-link: var(--color-primary-dark);
+  --tone-focus: var(--color-primary-dark);
+}
+
+@media (min-width: 48rem) {
+  :root {
+    --dock-h: 0px;
+  }
+}
+
+@media (min-width: 70rem) {
+  :root {
+    --nav-h: 4.5rem;
+  }
+}
+
+[data-tone] {
+  background-color: var(--tone-canvas);
+  color: var(--tone-body);
+}
+
+[data-tone="white"] {
+  --tone-canvas: var(--color-white);
+  --tone-raised: var(--color-white);
+  --tone-fg: var(--color-ink);
+  --tone-body: var(--color-steel-700);
+  --tone-muted: var(--color-steel-500);
+  --tone-rule: var(--color-steel-200);
+  --tone-accent: var(--color-bronze);
+  --tone-link: var(--color-primary-dark);
+  --tone-focus: var(--color-primary-dark);
+}
+
+[data-tone="shell"] {
+  --tone-canvas: var(--color-shell);
+  --tone-raised: var(--color-white);
+  --tone-fg: var(--color-ink);
+  --tone-body: var(--color-steel-700);
+  --tone-muted: var(--color-steel-500);
+  --tone-rule: var(--color-shell-300);
+  --tone-accent: var(--color-bronze);
+  --tone-link: var(--color-primary-dark);
+  --tone-focus: var(--color-primary-dark);
+}
+
+[data-tone="ink"],
+[data-tone="navy"] {
+  --tone-fg: var(--color-white);
+  --tone-body: rgb(255 255 255 / 0.84);
+  --tone-muted: rgb(255 255 255 / 0.66);
+  --tone-rule: rgb(255 255 255 / 0.14);
+  --tone-accent: var(--color-brass);
+  --tone-link: var(--color-primary-300);
+  --tone-focus: var(--color-white);
+}
+
+[data-tone="ink"] {
+  --tone-canvas: var(--color-ink);
+  --tone-raised: var(--color-ink-700);
+}
+
+[data-tone="navy"] {
+  --tone-canvas: var(--color-navy);
+  --tone-raised: #243760;
+}
+
+/* 3. BASE ------------------------------------------------------------------- */
 
 @layer base {
   html {
-    /* Lenis owns scroll behavior — native smooth fights it on anchor jumps.
-       The reduced-motion block below sets scroll-behavior: auto !important. */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    /* ScrollReveal parks left/right children 60px outside the viewport until
-       they animate in, which widened the layout on narrow screens. Clipping on
-       <body> alone didn't stop it — <html> still scrolled. `clip` rather than
-       `hidden` so neither element becomes a scroll container, which would
-       break position: sticky descendants and fight Lenis. */
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    /* `clip`, not `hidden`: neither element becomes a scroll container, so
+       position: sticky keeps working. */
     overflow-x: clip;
+    /* Anchors and keyboard focus land below the fixed header and above the
+       phone dock. */
+    scroll-padding-top: calc(var(--nav-h) + 0.75rem);
+    scroll-padding-bottom: calc(var(--dock-h) + 0.75rem);
+    scrollbar-gutter: stable;
+  }
+
+  /* Scroll lock for modal dialogs and the mobile menu (replaces the old
+     body.style.overflow lock, which did nothing because <html> scrolls). */
+  html:has(dialog:modal[open]),
+  html:has(body[data-drawer-open]) {
+    overflow: hidden;
   }
 
   body {
-    background: var(--color-background);
-    color: #424245;
-    font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
-    font-size: 1.125rem;
-    line-height: 1.7;
+    background: var(--tone-canvas);
+    color: var(--tone-body);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.65;
     overflow-x: clip;
   }
-}
 
-/* ========================================
-   CUSTOM SCROLLBAR & SELECTION
-   ======================================== */
-
-@layer base {
-  ::-webkit-scrollbar {
-    width: 8px;
+  @media (min-width: 64rem) {
+    body {
+      font-size: 1.125rem;
+    }
   }
 
-  ::-webkit-scrollbar-track {
-    background: #F5F5F7;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: var(--tone-fg);
+    text-wrap: balance;
   }
 
-  ::-webkit-scrollbar-thumb {
-    background: #C7C7CC;
-    border-radius: 4px;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: #A1A1A6;
-  }
-
-  ::selection {
-    background: var(--color-primary);
-    color: var(--color-white);
-  }
-}
-
-/* ========================================
-   TYPOGRAPHY
-   ======================================== */
-
-@layer base {
-  h1, h2, h3, h4, h5, h6 {
-    color: #1D1D1F;
-    /* --font-montserrat directly: @theme inline tokens aren't emitted as
-       runtime vars, but the next/font variable lives on <body> */
-    font-family: var(--font-montserrat), var(--font-inter), system-ui, sans-serif;
+  h1,
+  h2 {
+    font-family: var(--font-display);
+    font-stretch: 108%;
     font-weight: 700;
     letter-spacing: -0.02em;
-    line-height: 1.1;
+    line-height: 1.06;
+  }
+
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-sans);
+    font-weight: 650;
+    letter-spacing: -0.012em;
+    line-height: 1.25;
+  }
+
+  p,
+  li,
+  figcaption {
+    text-wrap: pretty;
   }
 
   a {
@@ -128,25 +443,287 @@
     text-decoration: none;
   }
 
-  /* Kill the gray iOS tap flash and the 300ms double-tap-zoom delay.
-     Safe because primary tap targets carry explicit :active states
-     (Button active:scale, the pressable utility below). */
-  a, button {
+  /* No gray tap flash, no 300ms double-tap delay. Every tap target has its
+     own :active state. */
+  a,
+  button,
+  summary,
+  label {
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
   }
 
-  /* Contract with Navbar's mobile drawer: while the drawer is open it sets
-     body[data-drawer-open], and fixed chrome marked data-drawer-hide
-     (StickyMobileCTA, ChatWidget) gets out of the way. */
+  :focus-visible {
+    outline: 2px solid var(--tone-focus);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background: var(--color-primary);
+    color: var(--color-white);
+  }
+
+  /* Contract with the mobile menu: while it is open it sets
+     body[data-drawer-open], and fixed chrome marked data-drawer-hide gets out
+     of the way. */
   body[data-drawer-open] [data-drawer-hide] {
     display: none;
   }
+
+  dialog::backdrop {
+    background: rgb(10 23 48 / 0.62);
+  }
 }
 
-/* ========================================
-   UTILITY CLASSES
-   ======================================== */
+/* 4. UTILITIES --------------------------------------------------------------- */
+
+/* Plan-drawing label: small, wide, uppercase. Phases, counts, coordinates. */
+@utility label-tech {
+  font-family: var(--font-display);
+  font-stretch: 112%;
+  font-weight: 600;
+  font-size: var(--text-label);
+  line-height: 1.2;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* Headline widths (Archivo's width axis). Short display lines go wide like
+   the lettering on the logo; long keyword headlines stay near normal width so
+   they do not run to five lines on a phone. */
+@utility display-wide {
+  font-family: var(--font-display);
+  font-stretch: 120%;
+}
+
+@utility display-normal {
+  font-family: var(--font-display);
+  font-stretch: 104%;
+}
+
+@utility display-tight {
+  font-family: var(--font-display);
+  font-stretch: 94%;
+}
+
+@utility tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* The joint: a small ring where two lines meet. Use on a flex row:
+   <span class="joint"></span> or the Eyebrow / Stepper components. */
+@utility joint {
+  display: inline-block;
+  flex: none;
+  width: 0.5rem;
+  height: 0.5rem;
+  border: 1.5px solid currentColor;
+  border-radius: 999px;
+}
+
+/* A hairline that fades out — the run of pipe after the joint. */
+@utility hairline {
+  height: 1px;
+  border: 0;
+  background: linear-gradient(90deg, currentColor, transparent);
+  opacity: 0.55;
+}
+
+/* Reading styles for long-form copy (blog articles, legal pages, long
+   answers). Hand-written: the Tailwind `prose` classes used before were never
+   installed, so articles had no paragraph spacing or heading sizes. */
+@utility rich-text {
+  max-width: 68ch;
+  color: var(--tone-body);
+  font-size: 1.0625rem;
+  line-height: 1.75;
+
+  @media (min-width: 64rem) {
+    font-size: 1.125rem;
+  }
+
+  & > * + * {
+    margin-top: 1.25em;
+  }
+
+  & h2 {
+    margin-top: 2.2em;
+    margin-bottom: 0.6em;
+    font-size: var(--text-display-sm);
+    line-height: 1.15;
+  }
+
+  & h3 {
+    margin-top: 1.8em;
+    margin-bottom: 0.4em;
+    font-size: 1.25rem;
+  }
+
+  & h4 {
+    margin-top: 1.5em;
+    font-size: 1.0625rem;
+  }
+
+  & a {
+    color: var(--tone-link);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+  }
+
+  & a:hover {
+    text-decoration-thickness: 2px;
+  }
+
+  & strong {
+    color: var(--tone-fg);
+    font-weight: 650;
+  }
+
+  & ul {
+    padding-left: 1.4em;
+    list-style: none;
+  }
+
+  & ul > li {
+    position: relative;
+  }
+
+  & ul > li::before {
+    content: "";
+    position: absolute;
+    left: -1.2em;
+    top: 0.68em;
+    width: 0.4em;
+    height: 0.4em;
+    border: 1.5px solid var(--tone-accent);
+    border-radius: 999px;
+  }
+
+  & ol {
+    padding-left: 1.5em;
+    list-style: decimal;
+  }
+
+  & li + li {
+    margin-top: 0.5em;
+  }
+
+  & blockquote {
+    padding-left: 1.25em;
+    border-left: 2px solid var(--tone-accent);
+    color: var(--tone-fg);
+    font-size: 1.12em;
+    line-height: 1.5;
+  }
+
+  & hr {
+    margin-block: 2.5em;
+    border: 0;
+    border-top: 1px solid var(--tone-rule);
+  }
+
+  & table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95em;
+  }
+
+  & th,
+  & td {
+    padding: 0.7em 0.8em;
+    border-bottom: 1px solid var(--tone-rule);
+    text-align: left;
+    vertical-align: top;
+  }
+
+  & th {
+    color: var(--tone-fg);
+    font-weight: 650;
+  }
+
+  & img {
+    height: auto;
+    border-radius: var(--radius-frame);
+  }
+}
+
+/* Press feedback for any tap target that is not a Button. */
+@utility pressable {
+  transition: transform var(--dur-1) var(--ease-enter);
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+/* Reveal on scroll. Content is visible by default; the observer marks only
+   below-the-fold elements "pending" and then "in". Without JavaScript nothing
+   is ever hidden. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-reveal="pending"] {
+    opacity: 0;
+    transform: translate3d(0, 1rem, 0);
+  }
+
+  [data-reveal="in"] {
+    transition:
+      opacity var(--dur-3) var(--ease-enter),
+      transform var(--dur-3) var(--ease-enter);
+    transition-delay: calc(var(--reveal-i, 0) * 70ms);
+  }
+}
+
+@media print {
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* Entrance for content that is on screen at first paint. Opacity is NOT
+   animated from zero: text that starts invisible is not counted as painted
+   (LCP) and looks broken if a script fails. */
+@keyframes enter-rise {
+  from {
+    transform: translate3d(0, 0.75rem, 0);
+  }
+
+  to {
+    transform: none;
+  }
+}
+
+@utility enter {
+  @media (prefers-reduced-motion: no-preference) {
+    animation: enter-rise var(--dur-3) var(--ease-enter) both;
+    animation-delay: calc(var(--enter-i, 0) * 70ms);
+  }
+}
+
+/* 5. LEGACY — removed in the cleanup step once nothing uses them ------------ */
+
+@theme static {
+  /* Old gray scale now resolves to steel. gray-400 maps to steel-500 on
+     purpose: it was used for text and failed contrast. */
+  --color-gray-50: #F6F7F9;
+  --color-gray-100: #ECEEF2;
+  --color-gray-200: #D9DDE3;
+  --color-gray-300: #B4BCC7;
+  --color-gray-400: #5F6B7C;
+  --color-gray-500: #5F6B7C;
+  --color-gray-600: #4E5A6B;
+  --color-gray-700: #273142;
+  --color-gray-800: #273142;
+  --color-gray-900: #131E30;
+  --color-gray-950: #0A1730;
+  --color-gold: #B8975A;
+  --color-gold-dark: #A8884C;
+  --color-surface: #F5F2EC;
+  --color-surface-light: #EAE6DC;
+  --color-light: #F6F7F9;
+  --color-primary-glow: rgba(0, 119, 204, 0.12);
+}
 
 @utility text-gradient {
   background: linear-gradient(135deg, #0077CC 0%, #00A8E8 100%);
@@ -156,7 +733,7 @@
 }
 
 @utility text-gold-gradient {
-  background: linear-gradient(90deg, #E8A427 0%, #F6C453 100%);
+  background: linear-gradient(90deg, #B8975A 0%, #D4BC8A 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -170,25 +747,15 @@
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
 }
 
-@utility tabular-nums {
-  font-variant-numeric: tabular-nums;
-}
-
-/* Apple-style section breathing room — clamped padding that scales with viewport */
 @utility section-py {
-  padding-top: clamp(5rem, 10vw, 9rem);
-  padding-bottom: clamp(5rem, 10vw, 9rem);
+  padding-top: var(--spacing-section);
+  padding-bottom: var(--spacing-section);
 }
-
-/* ========================================
-   CARD LIFT (Apple-style hover)
-   ======================================== */
 
 @utility card-lift {
   transition-property: transform, box-shadow, border-color;
   transition-duration: 400ms;
   transition-timing-function: var(--ease-out-expo);
-  will-change: transform;
 }
 
 @utility card-lift-hover {
@@ -197,14 +764,6 @@
     box-shadow:
       0 16px 48px -8px rgba(0, 119, 204, 0.18),
       0 4px 12px rgba(0, 0, 0, 0.04);
-  }
-}
-
-/* Press feedback for card-like tap targets (buttons already have active:scale) */
-@utility pressable {
-  transition: transform 150ms var(--ease-out-expo);
-  &:active {
-    transform: scale(0.98);
   }
 }
 
@@ -217,14 +776,6 @@
   }
 }
 
-/* ========================================
-   HERO KINETIC HEADLINE — WORD REVEAL
-   ======================================== */
-
-/* Overflow mask + translateY keeps the reveal fully on the compositor
-   (the old clip-path transition repainted on the CPU every frame). The
-   padding/negative-margin pair gives descenders room inside the mask
-   without changing layout. */
 @utility word-mask {
   display: inline-block;
   overflow: hidden;
@@ -233,8 +784,6 @@
   margin-bottom: -0.12em;
 }
 
-/* Keyframe-driven so the headline reveals from first paint without waiting
-   for hydration. Per-word stagger comes from an inline animation-delay. */
 @utility word-mask-inner {
   display: inline-block;
   transform: translateY(110%);
@@ -246,12 +795,12 @@
   from {
     transform: translateY(110%);
   }
+
   to {
     transform: translateY(0);
   }
 }
 
-/* Gold underline under the accent line, drawn after the words land. */
 @utility animate-underline-in {
   transform: scaleX(0);
   animation: underline-in 0.8s var(--ease-out-expo) 1s both;
@@ -261,20 +810,19 @@
   from {
     transform: scaleX(0);
   }
+
   to {
     transform: scaleX(1);
   }
 }
 
-/* ========================================
-   LOGO AURA (slow primary-tinted pulse)
-   ======================================== */
-
 @keyframes logo-aura {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
     opacity: 0.3;
   }
+
   50% {
     transform: scale(1.15);
     opacity: 0.6;
@@ -285,17 +833,12 @@
   animation: logo-aura 10s ease-in-out infinite;
 }
 
-/* ========================================
-   PAGE HERO ENTRANCE (CSS-only fade-up)
-   ======================================== */
-
-/* Server-safe entrance for PageHero rows — stagger with inline
-   animation-delay. The reduced-motion block collapses it to instant. */
 @keyframes hero-in {
   from {
     opacity: 0;
     transform: translateY(24px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -306,16 +849,14 @@
   animation: hero-in 0.9s var(--ease-out-expo) both;
 }
 
-/* ========================================
-   PULSE ANIMATION (for emergency page)
-   ======================================== */
-
 @keyframes pulse-glow {
-  0%, 100% {
-    box-shadow: 0 0 0 0 rgba(255, 59, 48, 0.4);
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(212, 40, 28, 0.4);
   }
+
   50% {
-    box-shadow: 0 0 0 20px rgba(255, 59, 48, 0);
+    box-shadow: 0 0 0 20px rgba(212, 40, 28, 0);
   }
 }
 
@@ -323,13 +864,14 @@
   animation: pulse-glow 2s ease-in-out infinite;
 }
 
-/* ========================================
-   BRANDS MARQUEE
-   ======================================== */
-
 @keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 @utility animate-marquee {
@@ -337,15 +879,19 @@
 }
 
 @keyframes marquee-reverse {
-  0% { transform: translateX(-50%); }
-  100% { transform: translateX(0); }
+  0% {
+    transform: translateX(-50%);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
 }
 
 @utility animate-marquee-reverse {
   animation: marquee-reverse 35s linear infinite;
 }
 
-/* Pause whichever marquee is inside the hovered parent */
 @utility marquee-pausable {
   &:hover .animate-marquee,
   &:hover .animate-marquee-reverse {
@@ -353,9 +899,117 @@
   }
 }
 
-/* ========================================
-   REDUCED MOTION
-   ======================================== */
+/* 6. PRINT DOCUMENTS ---------------------------------------------------------
+   The capability statement, prequal packet and Terms are printed and sent to
+   builders. They keep the exact look they had before the redesign: every
+   value below is the pre-redesign one, scoped to the document, so nothing
+   here follows the tokens above. Montserrat stays declared in layout.tsx for
+   these documents alone.
+
+   Proved when this block was written by recording, on the old build and on
+   this one, the computed font, size, weight, width, tracking, leading and
+   colours of every element in the three documents (screen at 1440 and 390,
+   and print), the box of every element, and the text on every page of the
+   printed PDF: no differences. Repeat that before changing anything here.
+
+   Everything sits in the base layer so the documents' own utility classes
+   (text-[13px], font-black, text-navy ...) keep winning exactly as before.
+
+   The documents are written with the old class names (bg-surface, bg-gold,
+   text-gray-800 ...). At cleanup, keep the `gold`, `surface` and gray tokens
+   in the Legacy block for as long as these documents use them: without the
+   token Tailwind stops generating the class. */
+
+@layer base {
+  .print-doc,
+  .terms-doc {
+    /* Old gray scale: 100/300/500/700 were project values, the rest are
+       Tailwind's defaults (node_modules/tailwindcss/theme.css). */
+    --color-gray-50: oklch(98.5% 0.002 247.839);
+    --color-gray-100: #F3F4F6;
+    --color-gray-200: oklch(92.8% 0.006 264.531);
+    --color-gray-300: #D2D2D7;
+    --color-gray-400: oklch(70.7% 0.022 261.325);
+    --color-gray-500: #6E6E73;
+    --color-gray-600: oklch(44.6% 0.03 256.802);
+    --color-gray-700: #1D1D1F;
+    --color-gray-800: oklch(27.8% 0.033 256.848);
+    --color-gray-900: oklch(21% 0.034 264.665);
+    --color-gray-950: oklch(13% 0.028 261.692);
+    --color-gold: #E8A427;
+    --color-gold-dark: #C98A1B;
+    --color-emergency: #FF3B30;
+    --color-surface: #F5F5F7;
+    --color-surface-light: #E8E8ED;
+    --color-light: #F4F6F9;
+    --font-display: var(--font-montserrat), var(--font-inter), system-ui, sans-serif;
+    --font-weight-black: 900;
+    --text-sm: 0.875rem;
+
+    /* Body text never rendered in Inter before (the font variables sat on
+       <body> while the theme read them at :root), so the documents were set
+       in the system font. This is the stack that computed then. */
+    font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  }
+
+  /* The Terms article has no size or colour of its own: it inherited the old
+     body text. On paper its own print styles set the size on <body>, so the
+     size is pinned for screens only. */
+  .terms-doc {
+    color: #424245;
+  }
+
+  @media not print {
+    .terms-doc {
+      font-size: 1.125rem;
+      line-height: 1.7;
+    }
+  }
+
+  /* Old headings: Montserrat 700, normal width, no balancing. */
+  .print-doc :is(h1, h2, h3, h4, h5, h6),
+  .terms-doc :is(h1, h2, h3, h4, h5, h6) {
+    color: #1D1D1F;
+    font-family: var(--font-montserrat), var(--font-inter), system-ui, sans-serif;
+    font-stretch: normal;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    text-wrap: wrap;
+  }
+
+  .print-doc :is(p, li, figcaption),
+  .terms-doc :is(p, li, figcaption) {
+    text-wrap: wrap;
+  }
+}
+
+/* Tints used inside the documents. The old build mixed them from literal
+   colours at build time; a token is now mixed in the browser. The colour is
+   the same but the computed value would read oklab() instead of lab(), so
+   the four tints the documents use are pinned in their old form. Outside the
+   layers on purpose (they must beat the utility); the two on the Terms
+   summary box give way on paper, where print:bg-white and
+   print:border-gray-300 take over as before. */
+.print-doc .text-white\/75 {
+  color: color-mix(in oklab, #FFFFFF 75%, transparent);
+}
+
+.terms-doc .bg-gold\/15 {
+  background-color: color-mix(in oklab, #E8A427 15%, transparent);
+}
+
+@media not print {
+  .terms-doc .bg-gold\/5 {
+    background-color: color-mix(in oklab, #E8A427 5%, transparent);
+  }
+
+  .terms-doc .border-gold\/40 {
+    border-color: color-mix(in oklab, #E8A427 40%, transparent);
+  }
+}
+
+/* 7. REDUCED MOTION ----------------------------------------------------------- */
 
 @media (prefers-reduced-motion: reduce) {
   * {
@@ -365,7 +1019,6 @@
     scroll-behavior: auto !important;
   }
 
-  /* Headline must be readable even if the reveal transition never runs */
   .word-mask-inner,
   .animate-underline-in {
     animation: none !important;
