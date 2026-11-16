@@ -58,10 +58,12 @@ export default function QuoteResult({
   });
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [website, setWebsite] = useState(""); // honeypot
 
   const handleSubmit = async () => {
     setSubmitting(true);
+    setSubmitError(null);
     try {
       const res = await fetch("/api/quote", {
         method: "POST",
@@ -82,7 +84,7 @@ export default function QuoteResult({
       void trackQuoteBuilder({ email: lead.email, eventId: data.eventId });
       setSubmitted(true);
     } catch {
-      alert("Something went wrong. Please call us directly.");
+      setSubmitError("Something went wrong. Please call us directly.");
     } finally {
       setSubmitting(false);
     }
@@ -230,6 +232,14 @@ export default function QuoteResult({
                   className="w-full bg-white border border-gray-200 rounded-xl px-3 sm:px-4 py-2.5 sm:py-3 text-gray-900 text-sm outline-none focus:border-primary transition-colors"
                 />
               </div>
+              {submitError && (
+                <p
+                  role="alert"
+                  className="rounded-xl bg-red-50 border border-red-100 px-4 py-3 text-sm text-red-700"
+                >
+                  {submitError}
+                </p>
+              )}
               <button
                 onClick={handleSubmit}
                 disabled={!canSubmit || submitting}

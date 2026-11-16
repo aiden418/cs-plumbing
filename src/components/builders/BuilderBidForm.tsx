@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { CheckCircle, Send } from "lucide-react";
 import FileUpload from "@/components/builder-portal/FileUpload";
+import { PLAN_SET_MAX_BYTES } from "@/lib/plan-upload";
 import { trackBuilderLead } from "@/lib/pixel";
 import { BUSINESS } from "@/lib/business";
 
@@ -36,8 +37,14 @@ export default function BuilderBidForm({
     files.forEach((f) => body.append("files", f));
     try {
       const res = await fetch("/api/builder-portal", { method: "POST", body });
-      const data: { eventId?: string; error?: string } = await res.json().catch(() => ({}));
-      if (!res.ok) throw new Error(data.error ?? "Failed");
+      // Not every failure is JSON: the platform answers a request body that is
+      // too large with a plain-text 413 before the route runs.
+      const data: { success?: boolean; eventId?: string; error?: string; code?: string } = await res
+        .json()
+        .catch(() => ({}));
+      if (!res.ok || !data.success) {
+        throw Object.assign(new Error(data.error ?? "Submission failed"), { code: data.code });
+      }
       trackBuilderLead(
         {
           units: String(body.get("units") ?? ""),
@@ -48,8 +55,10 @@ export default function BuilderBidForm({
       );
       setSubmitted(true);
     } catch (err) {
+      // Attachment problems are explained by the server in customer-facing words.
+      const attachmentIssue = (err as { code?: string }).code === "attachments" && err instanceof Error;
       setError(
-        err instanceof Error && err.message !== "Failed"
+        attachmentIssue
           ? err.message
           : `Something went wrong. Please call ${BUSINESS.phone} or email your plans to ${BUSINESS.email}.`
       );
@@ -136,7 +145,12 @@ export default function BuilderBidForm({
 
       <div className="mt-5">
         <span className={label}>Plans (PDF, JPG or PNG)</span>
-        <FileUpload files={files} onChange={setFiles} />
+        <FileUpload
+          files={files}
+          onChange={setFiles}
+          maxTotalBytes={PLAN_SET_MAX_BYTES}
+          largePlanSetEmail={BUSINESS.email}
+        />
       </div>
 
       {error && (

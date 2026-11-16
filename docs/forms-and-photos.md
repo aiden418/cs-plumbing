@@ -2,7 +2,8 @@
 
 Internal note. Covers `/contact` (and every `ServiceRequestForm` on the
 service pages and chat widget), `/booking`, and the two API routes behind
-them. The builder portal has its own upload path and is not covered here.
+them. The two builder forms upload plan sets differently; see "Builder plan
+uploads" at the end.
 
 ## What a submission does
 
@@ -48,7 +49,7 @@ check):
 | Same origin | `src/lib/api/origin.ts` | A browser POST whose `Origin` is another site (or `null`) gets 403. No `Origin` (curl, this harness) is allowed. |
 | Schema | zod | 400 "Invalid submission" |
 | Honeypot | `website` field | 200 with no email and no `eventId` |
-| Attachments | `src/lib/api/attachments.ts` | Count, MIME type (JPG/PNG/PDF) and size per form; filenames sanitized. 400 `{ error, code: "attachments" }`. The builder portal uses `BUILDER_UPLOAD` (10 files, 10 MB each, 25 MB total). |
+| Attachments | `src/lib/api/attachments.ts` | Count, MIME type (JPG/PNG/PDF) and size per form; filenames sanitized. 400 `{ error, code: "attachments" }`. The builder portal uses `BUILDER_UPLOAD` (10 files, 10 MB each, 25 MB total) as its server ceiling; the browser stops a plan set sooner (see "Builder plan uploads"). |
 | Quote figures | `src/lib/quote-submission.ts` | `/api/quote` recomputes the estimate from the selections with the same engine as the page; the browser's `result` is ignored. |
 
 `npm test` covers all of these (`tests/`).
@@ -83,12 +84,40 @@ JSON with no photos on both routes (200, unchanged), booking multipart with
 one PNG (200, attachment on the office email), and a multipart submission
 with bad fields (400 "Invalid submission" from zod).
 
-## Known gap (not in this change)
+Verified 2026-11-16 the same way on `/api/builder-portal` (`SMS_GATEWAY_TO`
+blank, so no SMS copy): the wizard's fields with one PDF and one PNG (200
+with an `eventId`; office email with both attachments and a reply-to, plus
+the confirmation to the builder), the bid form's fields with no files (200),
+`website=qa` (200, no email, no `eventId`), a `.txt` file (400 with
+`code: "attachments"`), an 11 MB PDF (400, the server ceiling), bad fields
+(400), a foreign `Origin` (403) and a sixth request in a minute from one
+address (429). A send Resend refuses cannot be produced with this harness;
+`tests/builder-portal-route.test.ts` covers it with a stub.
 
-The builder portal's upload (`src/components/builder-portal/FileUpload.tsx`
-defaults, `BUILDER_UPLOAD` in `src/lib/api/attachments.ts`) still advertises
-10 MB per file and 25 MB total, which Vercel's 4.5 MB request limit makes
-unreachable: a builder attaching a full plan set gets a platform 413, not our
-error message. Fix is either a direct-to-storage upload (Vercel Blob client
-upload) or a much lower advertised cap with a "email large plan sets"
-fallback line.
+## Builder plan uploads
+
+The Builder Portal wizard (`/builder-portal`) and the short bid form
+(`BuilderBidForm`, on `/builders` and the new-construction city pages) both
+post multipart to `/api/builder-portal`, with plan files under `files`.
+
+Plan files go up exactly as picked (a plan PDF cannot be downscaled the way a
+phone photo is), so the whole selection has to fit under the same 4.5 MB
+request limit:
+
+| Where | Rule |
+|---|---|
+| Browser: `src/lib/plan-upload.ts`, `FileUpload` with `maxTotalBytes` | Up to 10 files, 4 MB in total (`PLAN_SET_MAX_BYTES`, which is `PHOTO_UPLOAD.maxBytesTotal`, not a second number). The hint states it. A selection that would pass it is refused when it is chosen, with a message offering to email large plan sets to `BUSINESS.email` and submit the request without them. |
+| Server: `BUILDER_UPLOAD` in `src/lib/api/attachments.ts` | 10 files, 10 MB each, 25 MB total, JPG/PNG/PDF. In production the platform limit is reached first, so only a local run gets this far. |
+
+If the platform refuses a request anyway, the answer is its own 413, which
+does not carry our JSON. Both forms tolerate a body that is not JSON and show
+their generic "call us" line; a server message is shown verbatim only for
+`code: "attachments"`.
+
+The office email goes through `sendEmailOrThrow` like the other routes: a
+send Resend refuses is a 500 with no `eventId`, the builder sees an inline
+error instead of the success screen, and no `builder_lead` event fires. The
+SMS copy and the builder's confirmation are best effort.
+
+Still open: a direct-to-storage upload (Vercel Blob client upload) would let
+a full plan set through the form instead of by email.
