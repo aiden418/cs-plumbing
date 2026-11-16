@@ -792,7 +792,14 @@
     --color-light: #F4F6F9;
     --font-display: var(--font-montserrat), var(--font-inter), system-ui, sans-serif;
     --font-weight-black: 900;
+    /* The small type sizes and their line heights as they were when these
+       documents were typeset (Tailwind's defaults). The site's own values
+       are larger; with them the letterhead and the last lines of a page
+       reflow on paper. */
+    --text-xs: 0.75rem;
+    --text-xs--line-height: calc(1 / 0.75);
     --text-sm: 0.875rem;
+    --text-sm--line-height: calc(1.25 / 0.875);
 
     /* Body text never rendered in Inter before (the font variables sat on
        <body> while the theme read them at :root), so the documents were set
