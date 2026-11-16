@@ -10,8 +10,8 @@
 
 /** /services */
 export const SERVICES_INDEX = {
-  /** The hero photograph: a named position in media.json (a C&S bathroom remodel). */
-  heroPhoto: "service.header.plumbing-remodel",
+  /** The hero photograph: a named position in media.json (an aerial of a C&S underground layout). */
+  heroPhoto: "service.header.new-construction",
   hero: {
     overline: "Our Services",
     title: "Every Plumbing Solution",
