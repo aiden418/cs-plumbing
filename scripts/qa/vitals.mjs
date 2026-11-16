@@ -36,6 +36,7 @@ import {
   normalizeBase,
   pairsArg,
   progress,
+  readJson,
   run,
   stats,
   UsageError,
@@ -60,6 +61,9 @@ Usage: node scripts/qa/vitals.mjs --base http://localhost:PORT --out FILE.json -
   --storage LIST      localStorage entries set before load, key=value ("now" = current time in ms)
   --settle MS         read the page this long after its load event, default 5000
   --timeout MS        load timeout, default 60000
+
+  node scripts/qa/vitals.mjs --render FILE.json [--md FILE.md]
+                      rebuild the Markdown table from an earlier result without measuring anything
 `;
 
 /** Installed before any page script; records what cannot be read back later. */
@@ -477,10 +481,16 @@ function markdown(report) {
   const lines = [];
   const add = (line = "") => lines.push(line);
   const first = report.runs.find((r) => !r.error);
-  const ms = (s) => (s.median === null ? "–" : s.min === s.max ? `${Math.round(s.median)}` : `${Math.round(s.median)} (${Math.round(s.min)}–${Math.round(s.max)})`);
-  const shift = (s) => (s.median === null ? "–" : s.min === s.max ? s.median.toFixed(3) : `${s.median.toFixed(3)} (${s.min.toFixed(3)}–${s.max.toFixed(3)})`);
-  const size = (s) => (s.median === null ? "–" : s.min === s.max ? kb(s.median) : `${kb(s.median)} (${kb(s.min)}–${kb(s.max)})`);
-  const count = (s) => (s.median === null ? "–" : s.min === s.max ? `${s.median}` : `${s.median} (${s.min}–${s.max})`);
+  // "median (min–max)"; the range is left out when it rounds to a single value.
+  const spread = (s, format) => {
+    if (!s || s.median === null) return "–";
+    const [median, min, max] = [s.median, s.min, s.max].map(format);
+    return min === max ? median : `${median} (${min}–${max})`;
+  };
+  const ms = (s) => spread(s, (v) => `${Math.round(v)}`);
+  const shift = (s) => spread(s, (v) => v.toFixed(3));
+  const size = (s) => spread(s, (v) => kb(v));
+  const count = (s) => spread(s, (v) => `${Number.isInteger(v) ? v : v.toFixed(1)}`);
 
   add("# Page-load measurements");
   add();
@@ -557,7 +567,23 @@ async function main() {
     storage: { type: "string", multiple: true },
     settle: { type: "string" },
     timeout: { type: "string" },
+    render: { type: "string" },
   });
+  if (values.render) {
+    // Rebuild the medians and the Markdown table from an earlier result; nothing is measured.
+    let report;
+    try {
+      report = readJson(values.render);
+    } catch (err) {
+      throw new UsageError(`Cannot read ${values.render}: ${err.message}`);
+    }
+    if (report?.kind !== "cs-qa-vitals") throw new UsageError(`${values.render} was not written by scripts/qa/vitals.mjs`);
+    report.summary = summarize(report.runs);
+    const target = values.md ?? values.render.replace(/\.json$/i, "") + ".md";
+    writeFile(target, markdown(report));
+    process.stdout.write(`${target} rebuilt from ${values.render}\n`);
+    return 0;
+  }
   if (!values.out) throw new UsageError("--out is required");
   const base = normalizeBase(values.base);
   const routes = [...new Set(listArg(values.routes))];
