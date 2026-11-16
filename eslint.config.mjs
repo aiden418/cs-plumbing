@@ -24,6 +24,8 @@ const eslintConfig = defineConfig([
     ".claude/**",
     // Local redesign review artifacts and helper scripts (git-ignored).
     ".redesign/**",
+    // Written by scripts/build-image-manifest.mjs (git-ignored).
+    "src/generated/**",
   ]),
 ]);
 

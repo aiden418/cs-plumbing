@@ -39,6 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+/src/generated/
 public/images/projects/mangos-bathroom-remodel/final/*.MOV
 
 # photo-inbox: raw uploads and generated snippets are staging only.
@@ -63,3 +64,6 @@ photo-inbox/_generated/
 
 # redesign review artifacts (screenshots, snapshots, measurements) — local only
 .redesign/
+
+# originals moved aside by the photo ingest scripts
+photo-inbox/_done/

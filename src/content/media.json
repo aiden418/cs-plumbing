@@ -1,0 +1,14 @@
+{
+  "slots": {
+    "home.hero": {
+      "image": "/images/hero/drone-construction.jpg",
+      "alt": "Aerial view of a C&S Plumbing underground rough-in: white drain lines laid out inside a block stem wall beside a mini excavator",
+      "position": "50% 50%",
+      "mobile": {
+        "aspect": "4/5",
+        "focal": [0.44, 0.5]
+      }
+    }
+  },
+  "crops": {}
+}
