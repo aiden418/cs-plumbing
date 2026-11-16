@@ -2,3 +2,86 @@
    Put rules inside @layer components { ... } so utility classes can still
    override them; use the design tokens (var(--color-*), var(--tone-*),
    var(--ease-*), var(--dur-*)) rather than raw values. */
+
+@layer components {
+  /* "What happens next": a joint per step on one connection line. Vertical
+     on phones (the line runs down the left), horizontal from 640 px. */
+  .cv-step-joint {
+    position: absolute;
+    top: 0.2rem;
+    left: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 1.5px solid var(--tone-accent);
+    border-radius: 999px;
+    background: var(--tone-canvas);
+    z-index: 1;
+  }
+  .cv-step-joint::after {
+    content: "";
+    position: absolute;
+    inset: 0.4rem;
+    border-radius: 999px;
+    background: var(--tone-accent);
+  }
+  .cv-step::before {
+    content: "";
+    position: absolute;
+    background: var(--tone-rule);
+    top: 1.95rem;
+    bottom: -2rem;
+    left: 0.75rem;
+    width: 1px;
+  }
+  .cv-step:last-child::before {
+    display: none;
+  }
+  @media (min-width: 40rem) {
+    .cv-step-joint {
+      top: 0;
+    }
+    .cv-step::before {
+      top: 0.75rem;
+      bottom: auto;
+      left: 1.95rem;
+      right: -2rem;
+      width: auto;
+      height: 1px;
+    }
+    /* Two columns: the line ends at each row's right-hand step. */
+    .cv-step:nth-child(2n)::before {
+      display: none;
+    }
+  }
+  @media (min-width: 64rem) {
+    .cv-step:nth-child(2n)::before {
+      display: block;
+    }
+    .cv-step:last-child::before {
+      display: none;
+    }
+  }
+
+  /* Numbered editorial rows (emergency tips, plan steps). */
+  .cv-num {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* The booking and quote wizards: steps swap without moving the page. */
+  .cv-step-panel {
+    animation: cv-panel-in var(--dur-2) var(--ease-enter) both;
+  }
+  @keyframes cv-panel-in {
+    from {
+      transform: translateY(8px);
+    }
+    to {
+      transform: none;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cv-step-panel {
+      animation: none;
+    }
+  }
+}

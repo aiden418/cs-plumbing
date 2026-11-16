@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import PageTransition from "@/components/layout/PageTransition";
 import PageHero from "@/components/ui/PageHero";
+import Container from "@/components/ui/Container";
+import Section from "@/components/ui/Section";
+import { QUOTE } from "@/content/conversion";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import CTASection from "@/components/home/CTASection";
 import QuoteBuilderPage from "./QuoteBuilderPage";
@@ -21,7 +23,7 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <PageTransition>
+    <>
       <BreadcrumbJsonLd
         items={[
           { name: "Home", href: "/" },
@@ -32,33 +34,34 @@ export default function Page() {
           page copy are in the prerendered HTML. The quiz below reads
           ?service= and is client-only by design. */}
       <PageHero
-        size="sm"
-        align="center"
-        overline="Instant Quote Builder"
-        title="Instant Plumbing Quote for"
-        accent="Water Heaters & Repiping in Lee County"
-        description="Answer a few questions and get an instant price range for water heater installation or whole-home repiping anywhere in Cape Coral, Fort Myers, and Lee County. Final price set after a free on-site inspection — no obligation, no pressure."
+        layout="compact"
+        overline={QUOTE.hero.overline}
+        title={QUOTE.hero.title}
+        accent={QUOTE.hero.accent}
+        description={QUOTE.hero.description}
       >
         {/* What happens next */}
-        <div className="mt-6 sm:mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs sm:text-sm text-white/60">
-          <span className="inline-flex items-center gap-1.5">
-            <span className="flex items-center justify-center w-5 h-5 rounded-full bg-gold text-navy text-[10px] font-bold">1</span>
-            Answer a few questions
-          </span>
-          <span className="inline-flex items-center gap-1.5">
-            <span className="flex items-center justify-center w-5 h-5 rounded-full bg-gold text-navy text-[10px] font-bold">2</span>
-            Get your instant range
-          </span>
-          <span className="inline-flex items-center gap-1.5">
-            <span className="flex items-center justify-center w-5 h-5 rounded-full bg-gold text-navy text-[10px] font-bold">3</span>
-            C&amp;S confirms within 1 business day
-          </span>
-        </div>
+        <ol
+          aria-label={QUOTE.hero.stepsLabel}
+          className="mt-8 grid grid-cols-1 gap-y-3 text-sm text-body sm:flex sm:flex-wrap sm:items-center sm:gap-x-3"
+        >
+          {QUOTE.hero.steps.map((step, i) => (
+            <li key={step} className="flex items-center gap-3">
+              {i > 0 && <span aria-hidden="true" className="hidden h-px w-6 bg-rule sm:block" />}
+              <span className="label-tech text-accent tabular-nums">{String(i + 1).padStart(2, "0")}</span>
+              <span>{step}</span>
+            </li>
+          ))}
+        </ol>
       </PageHero>
-      <Suspense>
-        <QuoteBuilderPage />
-      </Suspense>
+      <Section tone="shell" spacing="sm">
+        <Container className="min-h-[20rem]">
+          <Suspense>
+            <QuoteBuilderPage />
+          </Suspense>
+        </Container>
+      </Section>
       <CTASection />
-    </PageTransition>
+    </>
   );
 }
