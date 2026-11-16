@@ -17,13 +17,6 @@
     padding-bottom: var(--float-room);
   }
 
-  /* Review builds: the preview ribbon sits a row higher on narrow phones. */
-  @media (max-width: 29.99rem) {
-    body:has(.preview-ribbon) .site-footer {
-      --float-room: 7.75rem;
-    }
-  }
-
   /* Request service button: bottom right, above the dock on phones. One
      floating control at a time: it steps aside while the coupon card shows. */
   .request-fab {
@@ -83,31 +76,46 @@
       --float-room: calc(var(--coupon-h, 0px) + 1.5rem);
     }
 
-    /* ...and the preview ribbon steps aside like the request button. */
-    body[data-coupon-open] .preview-ribbon {
-      display: none;
-    }
   }
 
-  /* Preview ribbon (review builds only): bottom left, above the dock. On
-     narrow phones it sits one row higher so it clears the request button. */
+  /* Preview marker (review builds only): a slim tab on the left edge, half
+     way down, where no page content sits. Its details open beside it. */
   .preview-ribbon {
     position: fixed;
     z-index: 30;
-    left: calc(0.75rem + env(safe-area-inset-left, 0px));
-    bottom: calc(var(--dock-h) + 0.75rem);
-    max-width: calc(100% - 1.5rem);
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
   }
 
-  @media (max-width: 29.99rem) {
-    .preview-ribbon {
-      bottom: calc(var(--dock-h) + 4rem);
-    }
+  .preview-tab {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.375rem;
+    padding: 0.75rem 0;
+    border: 1px solid color-mix(in oklab, var(--color-brass) 60%, transparent);
+    border-left: 0;
+    border-radius: 0 0.5rem 0.5rem 0;
+    background: var(--color-ink);
+    color: #fff;
+    font-size: 0.625rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  .preview-tab > span {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    white-space: nowrap;
   }
 
   @media (min-width: 48rem) {
-    .preview-ribbon {
-      bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+    .preview-tab {
+      width: 1.875rem;
+      font-size: 0.6875rem;
     }
   }
 }

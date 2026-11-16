@@ -100,18 +100,22 @@ export default function Hero() {
         </div>
 
         <Container className="cs-hero-body">
-          <div className="grid grid-cols-1 gap-y-10 lg:grid-cols-12 lg:items-start lg:gap-x-8">
-            <div className="lg:col-span-5">
-              <div data-intro-in="" style={arrive(0)}>
+          {/* Phones and tablets: kicker, headline, photograph, then the rest of the
+              copy, so the film is on the first screen. The copy column dissolves
+              into the grid there (display: contents) and is ordered around the
+              figure; from lg it is the left column again. */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 lg:items-start lg:gap-x-8">
+            <div className="max-lg:contents lg:col-span-5">
+              <div data-intro-in="" style={arrive(0)} className="max-lg:order-1">
                 <Eyebrow>{hero.kicker}</Eyebrow>
               </div>
-              <h1 id="hero-title" data-intro-in="" style={arrive(1)} className="mt-5 text-display-lg text-fg display-normal">
+              <h1 id="hero-title" data-intro-in="" style={arrive(1)} className="mt-5 text-display-lg text-fg display-normal max-lg:order-2">
                 {hero.headline}
               </h1>
-              <p data-intro-in="" style={arrive(2)} className="mt-6 max-w-[48ch] text-lead text-body">
+              <p data-intro-in="" style={arrive(2)} className="mt-6 max-w-[48ch] text-lead text-body max-lg:order-4 max-lg:mt-8">
                 {hero.lead}
               </p>
-              <div data-intro-in="" style={arrive(3)} className="mt-8 flex flex-wrap items-center gap-3">
+              <div data-intro-in="" style={arrive(3)} className="mt-8 flex flex-wrap items-center gap-3 max-lg:order-5">
                 <Button
                   href={BUSINESS.phoneHref}
                   size="lg"
@@ -128,7 +132,7 @@ export default function Hero() {
                   {hero.quoteLabel}
                 </Button>
               </div>
-              <p data-intro-in="" style={arrive(4)} className="mt-8 flex flex-wrap gap-x-3 gap-y-1 text-sm text-muted">
+              <p data-intro-in="" style={arrive(4)} className="mt-8 flex flex-wrap gap-x-3 gap-y-1 text-sm text-muted max-lg:order-6">
                 <span>{`${hero.licensePrefix} · ${BUSINESS.license}`}</span>
                 <Link href="/awards" className="whitespace-nowrap text-link underline-offset-[0.2em] hover:underline">
                   {LATEST_AWARD.title}
@@ -136,7 +140,7 @@ export default function Hero() {
               </p>
             </div>
 
-            <figure className="cs-hero-figure lg:col-span-7 lg:mt-10">
+            <figure className="cs-hero-figure max-lg:order-3 max-lg:mt-8 lg:col-span-7 lg:mt-10">
               <div id="cs-hero-frame" className="cs-hero-frame" style={frameStyle()} suppressHydrationWarning>
                 <HeroStill />
                 <video

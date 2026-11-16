@@ -6,8 +6,9 @@ import { ANALYTICS_MODE } from "@/lib/pixel";
 /**
  * "Preview: not live" (chrome-and-opening.md section 7). Only in review builds
  * (NEXT_PUBLIC_ANALYTICS=off), so a reviewer on an iPhone can tell a preview
- * from the live site and read what the homepage Opening decided. Fixed, so it
- * never shifts the layout; hidden in print (chrome.css).
+ * from the live site and read what the homepage Opening decided. A slim tab on
+ * the left edge, half way down, where no page content sits; it never shifts
+ * the layout and is hidden in print (chrome.css).
  *
  * The hero facts come from window.__csHero ({ intro, file, autoplay, state }),
  * kept by the home hero's code, which dispatches `cs:hero-debug` on document
@@ -66,7 +67,7 @@ function Details({ id }: { id: string }) {
   return (
     <dl
       id={id}
-      className="absolute bottom-full left-0 mb-2 grid w-[min(18rem,calc(100vw-1.5rem))] grid-cols-[auto_1fr] gap-x-4 gap-y-1 rounded-control bg-ink-700 p-4 text-[0.8125rem] leading-snug text-white/84 shadow-float"
+      className="absolute top-1/2 left-full ml-2 grid w-[min(18rem,calc(100vw-3.5rem))] -translate-y-1/2 grid-cols-[auto_1fr] gap-x-4 gap-y-1 rounded-control bg-ink-700 p-4 text-[0.8125rem] leading-snug text-white/84 shadow-float"
     >
       {rows.map(([label, value]) => (
         <div key={label} className="contents">
@@ -83,19 +84,17 @@ function Ribbon() {
   const id = useId();
   return (
     <div data-tone="ink" className="preview-ribbon">
+      <button
+        type="button"
+        aria-expanded={open}
+        aria-controls={open ? id : undefined}
+        aria-label="Preview: not live. Show details"
+        onClick={() => setOpen((v) => !v)}
+        className="preview-tab"
+      >
+        <span aria-hidden="true">Preview: not live</span>
+      </button>
       {open && <Details id={id} />}
-      <div className="flex items-center gap-1 rounded-chip bg-ink py-1 pr-1 pl-4 text-[0.8125rem] text-white shadow-float ring-1 ring-brass/60">
-        <span className="font-semibold whitespace-nowrap">Preview: not live</span>
-        <button
-          type="button"
-          aria-expanded={open}
-          aria-controls={open ? id : undefined}
-          onClick={() => setOpen((v) => !v)}
-          className="inline-flex min-h-11 items-center rounded-chip px-3 font-semibold text-primary-300 underline-offset-[0.2em] hover:underline active:scale-[0.98]"
-        >
-          Details
-        </button>
-      </div>
     </div>
   );
 }
