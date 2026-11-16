@@ -1,6 +1,5 @@
 import Container from "@/components/ui/Container";
-import Eyebrow from "@/components/ui/Eyebrow";
-import Section from "@/components/ui/Section";
+import Section, { type Tone } from "@/components/ui/Section";
 import type { CompletedProject } from "@/lib/types";
 import { PROJECT_PAGE } from "@/content/projects";
 
@@ -11,9 +10,9 @@ const T = PROJECT_PAGE.glance;
  * type, fixtures, phases, schedule vs. plan, inspections, and one field
  * problem solved. Renders only the facts that are filled in, and nothing at
  * all when the project has no `caseStudy`. Facts are a definition list with
- * hairlines (design-system "Data rows").
+ * hairlines (design-system "Data rows"), on the surface the page gives it.
  */
-export default function CaseStudyFacts({ project }: { project: CompletedProject }) {
+export default function CaseStudyFacts({ project, tone = "white" }: { project: CompletedProject; tone?: Tone }) {
   const cs = project.caseStudy;
   if (!cs) return null;
 
@@ -40,7 +39,7 @@ export default function CaseStudyFacts({ project }: { project: CompletedProject 
               {T.actual} {cs.schedule.actual}
             </span>
           )}
-          {cs.schedule.note && <span className="mt-1 block font-normal text-muted">{cs.schedule.note}</span>}
+          {cs.schedule.note && <span className="mt-1 block font-normal text-body">{cs.schedule.note}</span>}
         </>
       ),
     });
@@ -48,11 +47,11 @@ export default function CaseStudyFacts({ project }: { project: CompletedProject 
   const hasInspections = Boolean(cs.inspections && cs.inspections.length > 0);
 
   return (
-    <Section tone="white" labelledBy="case-study-facts">
+    <Section tone={tone} spacing="sm" labelledBy="case-study-facts">
       <Container>
-        <div className="grid grid-cols-1 gap-y-10 lg:grid-cols-12 lg:gap-x-8">
+        <div className="grid grid-cols-1 gap-y-8 lg:grid-cols-12 lg:gap-x-12">
           <div className="lg:col-span-4">
-            <Eyebrow className="mb-4">{T.overline}</Eyebrow>
+            <p className="eyebrow mb-3 text-accent">{T.overline}</p>
             <h2 id="case-study-facts" className="text-display-md text-fg">
               {T.heading}
             </h2>
@@ -60,25 +59,25 @@ export default function CaseStudyFacts({ project }: { project: CompletedProject 
 
           <div className="lg:col-span-8">
             {facts.length > 0 && (
-              <dl className="grid grid-cols-1 gap-x-8 sm:grid-cols-2">
+              <dl className="project-facts project-facts--wide">
                 {facts.map((f) => (
-                  <div key={f.label} className="border-t border-rule py-4">
-                    <dt className="text-sm text-muted">{f.label}</dt>
-                    <dd className="mt-1.5 font-semibold text-fg tabular-nums">{f.value}</dd>
+                  <div key={f.label}>
+                    <dt>{f.label}</dt>
+                    <dd className="tabular-nums">{f.value}</dd>
                   </div>
                 ))}
               </dl>
             )}
 
             {(hasInspections || cs.fieldProblem) && (
-              <div className="mt-10 grid grid-cols-1 gap-y-10 sm:grid-cols-2 sm:gap-x-8">
+              <div className="mt-8 grid grid-cols-1 gap-y-8 sm:grid-cols-2 sm:gap-x-8">
                 {hasInspections && (
                   <div>
-                    <h3 className="mb-4 text-lg font-semibold text-fg">{T.inspections}</h3>
+                    <h3 className="mb-3 text-xl font-semibold text-fg">{T.inspections}</h3>
                     <dl className="border-t border-rule">
                       {cs.inspections!.map((i) => (
                         <div key={i.phase} className="flex justify-between gap-4 border-b border-rule py-3">
-                          <dt className="text-muted">{i.phase}</dt>
+                          <dt className="text-body">{i.phase}</dt>
                           <dd className="text-right font-semibold text-fg">{i.result}</dd>
                         </div>
                       ))}
@@ -87,7 +86,7 @@ export default function CaseStudyFacts({ project }: { project: CompletedProject 
                 )}
                 {cs.fieldProblem && (
                   <div>
-                    <h3 className="mb-4 text-lg font-semibold text-fg">{T.fieldProblem}</h3>
+                    <h3 className="mb-3 text-xl font-semibold text-fg">{T.fieldProblem}</h3>
                     <div className="border-t border-rule pt-4">
                       <p className="text-body">
                         <strong className="font-semibold text-fg">{T.problem}</strong> {cs.fieldProblem.problem}

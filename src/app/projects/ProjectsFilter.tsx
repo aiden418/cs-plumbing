@@ -67,7 +67,7 @@ export default function ProjectsFilter({ categories, cards, spotlight, labels }:
         ))}
       </ul>
 
-      {visible === 0 && <p className="py-16 text-center text-muted">{labels.empty}</p>}
+      {visible === 0 && <p className="py-16 text-center text-body">{labels.empty}</p>}
     </>
   );
 }
