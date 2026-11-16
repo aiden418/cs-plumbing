@@ -1,4 +1,6 @@
-import { LinkGrid, LinkSection } from "@/components/links/LinkGrid";
+import { LinkGrid } from "@/components/links/LinkGrid";
+import LinkBlock from "@/components/links/LinkBlock";
+import type { Tone } from "@/components/ui/Section";
 import { landingsForPost } from "@/lib/internal-links";
 import type { BlogPost } from "@/lib/types";
 
@@ -7,16 +9,23 @@ import type { BlogPost } from "@/lib/types";
  * Server-rendered under the article so each post passes a real, descriptive
  * link to the matching local service page.
  */
-export default function BlogRelatedLandings({ post }: { post: BlogPost }) {
+export default function BlogRelatedLandings({
+  post,
+  tone = "surface",
+}: {
+  post: BlogPost;
+  /** "surface" is the legacy name of shell. */
+  tone?: Tone | "surface";
+}) {
   const landings = landingsForPost(post);
   if (landings.length === 0) return null;
 
   return (
-    <LinkSection
+    <LinkBlock
       overline="Local service pages"
       heading="Pricing and details for your city"
       description="The service pages this guide refers to, with local price ranges, FAQs and the neighborhoods we cover."
-      tone="surface"
+      tone={tone}
       headingId="blog-related-landings-heading"
     >
       <LinkGrid
@@ -29,6 +38,6 @@ export default function BlogRelatedLandings({ post }: { post: BlogPost }) {
         }))}
         columns={landings.length >= 4 ? 4 : 3}
       />
-    </LinkSection>
+    </LinkBlock>
   );
 }

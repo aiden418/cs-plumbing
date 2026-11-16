@@ -1,15 +1,23 @@
 import Link from "next/link";
-import Image from "next/image";
-import { ArrowRight, Camera, Check, MapPin } from "lucide-react";
 import Container from "@/components/ui/Container";
+import Eyebrow from "@/components/ui/Eyebrow";
+import Frame from "@/components/ui/Frame";
+import Section, { type Tone } from "@/components/ui/Section";
+import { ArrowRight, Camera, Check, MapPin } from "@/components/ui/icons";
+import { image } from "@/lib/media";
 import { isProjectComplete, projectPhotoCount, projectStatusLabel } from "@/lib/projects";
 import type { CompletedProject } from "@/lib/types";
 
 /**
- * Grid of project tiles used as local proof on service hubs, service+city
- * pages and at the foot of a project page. No hooks or motion on purpose:
- * it renders on the server, adds nothing to the client bundle, and every
- * link is in the HTML for crawlers on first paint.
+ * Project tiles used as local proof on service hubs, service+city pages and
+ * at the foot of a project page. No hooks or motion on purpose: it renders on
+ * the server, adds nothing to the client bundle, and every link is in the
+ * HTML for crawlers on first paint.
+ *
+ * Each tile is one link: the cover in a frame, and below it (never on it) the
+ * category and status as the plan label, the name, the place and the photo
+ * count. On phones a tile is a row (small portrait frame beside the words);
+ * from 640px the tiles stand in two or three columns.
  */
 export default function RelatedProjects({
   projects,
@@ -22,90 +30,83 @@ export default function RelatedProjects({
   overline?: string;
   heading: string;
   description?: string;
-  tone?: "white" | "surface";
+  /** The section's surface; "surface" is the legacy name of shell. */
+  tone?: Tone | "surface";
 }) {
   if (projects.length === 0) return null;
 
   return (
-    <section
-      className={`py-16 sm:py-24 ${tone === "surface" ? "bg-[#F5F5F7]" : "bg-white border-t border-gray-200"}`}
-      aria-labelledby="related-projects-heading"
+    <Section
+      tone={tone === "surface" ? "shell" : tone}
+      divider={tone === "white"}
+      labelledBy="related-projects-heading"
     >
       <Container>
-        <div className="mb-8 flex flex-col gap-4 sm:mb-10 sm:flex-row sm:items-end sm:justify-between">
+        <div className="mb-10 flex flex-col gap-5 sm:mb-12 sm:flex-row sm:items-end sm:justify-between sm:gap-8">
           <div className="max-w-2xl">
-            <span className="mb-3 inline-block text-xs font-semibold uppercase tracking-widest text-primary-dark sm:text-sm">
-              {overline}
-            </span>
-            <h2
-              id="related-projects-heading"
-              className="text-2xl font-bold leading-tight text-gray-900 sm:text-3xl lg:text-4xl"
-            >
+            <Eyebrow className="mb-4">{overline}</Eyebrow>
+            <h2 id="related-projects-heading" className="text-display-md text-fg">
               {heading}
             </h2>
-            {description && (
-              <p className="mt-3 text-sm leading-relaxed text-gray-500 sm:text-base">
-                {description}
-              </p>
-            )}
+            {description && <p className="mt-4 max-w-[56ch] text-lead text-body">{description}</p>}
           </div>
           <Link
             href="/projects"
-            className="inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-primary-dark hover:underline"
+            className="group inline-flex min-h-11 shrink-0 items-center gap-2 font-semibold text-link underline-offset-[0.2em] hover:underline"
           >
-            All projects <ArrowRight className="h-4 w-4" />
+            All projects
+            <ArrowRight className="size-5 transition-transform duration-250 ease-settle group-hover:translate-x-0.5" />
           </Link>
         </div>
 
-        <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
+        <ul className="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-12 lg:grid-cols-3 lg:gap-x-8">
           {projects.map((project) => {
             const done = isProjectComplete(project);
+            const cover = project.coverImage ? image(project.coverImage) : null;
             return (
-              <li key={project.slug}>
+              <li key={project.slug} className="max-sm:border-t max-sm:border-rule max-sm:pt-6">
                 <Link
                   href={`/projects/${project.slug}`}
-                  className="group block h-full overflow-hidden rounded-2xl border border-gray-200 bg-white transition-all duration-500 hover:border-primary/30 hover:shadow-md"
+                  className="group grid grid-cols-[minmax(0,2fr)_minmax(0,3fr)] items-start gap-x-4 rounded-frame sm:block"
                 >
-                  <div className="relative aspect-[16/10] overflow-hidden bg-surface">
-                    <Image
-                      src={project.coverImage}
+                  {cover ? (
+                    <Frame
+                      media={cover}
+                      aspect="4/3"
                       alt={`${project.name} — C&S Plumbing of Lee project`}
-                      fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      sizes="(min-width: 1024px) 26rem, (min-width: 640px) 46vw, 38vw"
+                      className="max-sm:aspect-[4/5] transition-[transform,box-shadow] duration-250 ease-settle group-hover:-translate-y-0.5 group-hover:shadow-lift"
                     />
-                    <div className="absolute inset-x-3 top-3 flex items-center justify-between gap-2">
-                      <span className="rounded-full bg-white/90 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-gray-900 backdrop-blur-sm sm:text-xs">
-                        {project.category}
-                      </span>
-                      <span
-                        className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider sm:text-xs ${
-                          done ? "bg-white/90 text-navy backdrop-blur-sm" : "bg-gold/95 text-navy"
-                        }`}
-                      >
-                        {done && <Check className="h-3 w-3 text-[#34C759]" strokeWidth={3} />}
+                  ) : (
+                    <span aria-hidden="true" className="block aspect-[4/5] rounded-frame bg-raised sm:aspect-[4/3]" />
+                  )}
+                  <div className="min-w-0 sm:mt-5">
+                    <span className="label-tech flex flex-wrap items-center gap-x-2 gap-y-1 text-accent">
+                      <span>{project.category}</span>
+                      <span aria-hidden="true" className="max-sm:hidden">·</span>
+                      <span className="inline-flex items-center gap-1 max-sm:basis-full">
+                        {done && <Check className="size-3.5 shrink-0" strokeWidth={2.25} />}
                         {projectStatusLabel(project)}
                       </span>
-                    </div>
-                  </div>
-                  <div className="p-5 sm:p-6">
-                    <h3 className="mb-1 text-base font-bold leading-snug text-gray-900 transition-colors group-hover:text-primary-dark sm:text-lg">
+                    </span>
+                    <h3 className="mt-2 text-lg leading-snug font-semibold text-fg group-hover:underline group-hover:decoration-1 group-hover:underline-offset-4">
                       {project.name}
                     </h3>
-                    <p className="mb-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-gray-500">
+                    <span className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted">
                       {project.location && (
-                        <span className="inline-flex items-center gap-1">
-                          <MapPin className="h-3 w-3 text-primary-dark" />
+                        <span className="inline-flex items-center gap-1.5">
+                          <MapPin className="size-4 shrink-0" />
                           {project.location}
                         </span>
                       )}
-                      <span className="inline-flex items-center gap-1">
-                        <Camera className="h-3 w-3 text-primary-dark" />
+                      <span className="inline-flex items-center gap-1.5 tabular-nums">
+                        <Camera className="size-4 shrink-0" />
                         {projectPhotoCount(project)} photos
                       </span>
-                    </p>
-                    <span className="inline-flex items-center gap-1 text-xs font-semibold text-primary-dark sm:text-sm">
-                      See the project <ArrowRight className="h-3.5 w-3.5" />
+                    </span>
+                    <span className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-link">
+                      See the project
+                      <ArrowRight className="size-4 transition-transform duration-250 ease-settle group-hover:translate-x-0.5" />
                     </span>
                   </div>
                 </Link>
@@ -114,6 +115,6 @@ export default function RelatedProjects({
           })}
         </ul>
       </Container>
-    </section>
+    </Section>
   );
 }

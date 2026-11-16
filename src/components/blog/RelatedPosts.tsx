@@ -1,6 +1,8 @@
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
-import { LinkGrid, LinkSection } from "@/components/links/LinkGrid";
+import { ArrowRight } from "@/components/ui/icons";
+import { LinkGrid } from "@/components/links/LinkGrid";
+import LinkBlock from "@/components/links/LinkBlock";
+import type { Tone } from "@/components/ui/Section";
 import type { BlogPost } from "@/lib/types";
 
 /**
@@ -20,12 +22,13 @@ export default function RelatedPosts({
   overline?: string;
   heading: string;
   description?: string;
-  tone?: "white" | "surface";
+  /** "surface" is the legacy name of shell. */
+  tone?: Tone | "surface";
 }) {
   if (posts.length === 0) return null;
 
   return (
-    <LinkSection
+    <LinkBlock
       overline={overline}
       heading={heading}
       description={description}
@@ -43,12 +46,12 @@ export default function RelatedPosts({
       <p className="mt-6">
         <Link
           href="/blog"
-          className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary transition-all hover:gap-2.5"
+          className="group inline-flex min-h-11 items-center gap-2 font-semibold text-link underline-offset-[0.2em] hover:underline"
         >
           All plumbing guides &amp; tips
-          <ArrowRight className="w-4 h-4" />
+          <ArrowRight className="size-5 transition-transform duration-250 ease-settle group-hover:translate-x-0.5" />
         </Link>
       </p>
-    </LinkSection>
+    </LinkBlock>
   );
 }
