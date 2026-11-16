@@ -192,7 +192,7 @@ export default function Footer() {
               id="footer-services"
               title="Our Services"
               links={footerServices}
-              listClassName="grid grid-cols-2 gap-x-6 md:grid-cols-1"
+              listClassName="grid"
             />
             <LinkGroup
               id="footer-areas"
