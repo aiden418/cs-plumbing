@@ -1,19 +1,34 @@
-import Link from "next/link";
 import Container from "@/components/ui/Container";
 import Frame from "@/components/ui/Frame";
-import Reveal from "@/components/ui/Reveal";
-import Section from "@/components/ui/Section";
-import SectionHeading from "@/components/ui/SectionHeading";
-import { ArrowRight } from "@/components/ui/icons";
 import { BUSINESS } from "@/lib/business";
 import { LATEST_AWARD } from "@/lib/awards";
 import { picture } from "@/lib/media";
 import { family } from "@/content/home";
+import { ArrowLink, HomeHeading } from "./HomeHeading";
 
 /**
- * Chapter 4 on shell: the family photograph (with the early-2000s job-site
- * inset) beside the why-choose-us heading, "Built on Trust" as a numbered
- * editorial list, and the link to the story.
+ * A reason's description: its first sentence is the "one line" shown on
+ * phones; the rest stays in the HTML and is shown from 768 px.
+ */
+function Line({ text }: { text: string }) {
+  const m = /^([^]+?[.!?])\s+([^]+)$/.exec(text);
+  return (
+    <p className="mt-1 text-base leading-normal text-body">
+      {m ? (
+        <>
+          {m[1]} <span className="max-md:sr-only">{m[2]}</span>
+        </>
+      ) : (
+        text
+      )}
+    </p>
+  );
+}
+
+/**
+ * Why C&S, on shell: the family photograph beside a short list of six
+ * reasons (a title and a line each; two columns from 768 px), and the link to
+ * the story. The early-2000s job-site inset joins the photograph from 1024 px.
  */
 export default function FamilyStory() {
   const main = picture("home.family");
@@ -32,57 +47,46 @@ export default function FamilyStory() {
   ];
 
   return (
-    <Section tone="shell" spacing="none" className="py-section-sm lg:py-section" labelledBy="home-family-title">
+    <section data-tone="shell" aria-labelledby="home-family-title" className="relative bg-canvas py-14 text-body lg:py-20">
       <Container>
-        <div className="grid grid-cols-1 gap-y-10 lg:grid-cols-12 lg:gap-x-8">
-          {main && (
-            <div className="relative max-lg:order-2 max-lg:mr-[42%] sm:max-lg:mr-[50%] lg:sticky lg:top-[calc(var(--nav-h)+2rem)] lg:col-span-5 lg:self-start lg:pb-16">
-              <Frame media={main} aspect="4/5" sizes="(min-width: 80rem) 500px, (min-width: 64rem) 40vw, 90vw" />
-              {inset && (
+        <div className="grid grid-cols-1 gap-y-8 lg:grid-cols-12 lg:gap-x-12">
+          <div className="lg:col-span-5">
+            <HomeHeading id="home-family-title" eyebrow={family.overline} title={family.title} subtitle={family.subtitle} subtitleHidden="phone" />
+            {main && (
+              <div className="relative mt-8 lg:mt-10 lg:mr-10 lg:mb-10">
                 <Frame
-                  media={inset}
-                  aspect="3/2"
-                  sizes="(min-width: 64rem) 240px, 50vw"
-                  className="absolute bottom-0 -right-[calc(65%+1rem)] w-[65%] sm:-right-[calc(80%+1.5rem)] sm:w-[80%] lg:-right-10 lg:w-[48%] lg:rounded-[calc(var(--radius-frame)+6px)] lg:border-[6px] lg:border-canvas"
+                  media={main}
+                  aspect="16/9"
+                  sizes="(min-width: 80rem) 460px, (min-width: 64rem) 36vw, 92vw"
+                  className="lg:aspect-[4/3]"
                 />
-              )}
-            </div>
-          )}
+                {inset && (
+                  <Frame
+                    media={inset}
+                    aspect="3/2"
+                    sizes="220px"
+                    className="absolute -right-10 -bottom-10 w-[52%] rounded-[calc(var(--radius-frame)+6px)] border-[6px] border-canvas max-lg:hidden"
+                  />
+                )}
+              </div>
+            )}
+          </div>
 
-          <div className={main ? "lg:col-span-6 lg:col-start-7" : "lg:col-span-8"}>
-            <SectionHeading
-              id="home-family-title"
-              align="left"
-              overline={family.overline}
-              title={family.title}
-              subtitle={family.subtitle}
-              className="mb-8 lg:mb-10"
-            />
-            <ol className="border-b border-rule">
-              {reasons.map((reason, i) => (
-                <Reveal as="li" index={i} key={reason.title} className="grid grid-cols-[2rem_1fr] gap-x-3 border-t border-rule py-4 sm:grid-cols-[2.5rem_1fr] sm:gap-x-4 sm:py-5">
-                  <span className="label-tech pt-1 text-accent tabular-nums" aria-hidden="true">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <div>
-                    <h3 className="text-lg leading-snug font-semibold text-fg">{reason.title}</h3>
-                    <p className="mt-1.5 max-w-[60ch] text-sm text-body sm:text-base">{reason.description}</p>
-                  </div>
-                </Reveal>
+          <div className="lg:col-span-7 lg:pt-2">
+            <ul className="grid grid-cols-1 border-b border-rule md:grid-cols-2 md:gap-x-10 md:border-b-0">
+              {reasons.map((reason) => (
+                <li key={reason.title} className="border-t border-rule py-3.5 md:py-5">
+                  <h3 className="text-lg leading-snug font-semibold text-fg">{reason.title}</h3>
+                  <Line text={reason.description} />
+                </li>
               ))}
-            </ol>
-            <p className="mt-8">
-              <Link
-                href={family.aboutLink.href}
-                className="group inline-flex min-h-11 items-center gap-2 font-semibold text-link underline-offset-[0.2em] hover:underline"
-              >
-                {family.aboutLink.label}
-                <ArrowRight className="size-5 transition-transform duration-250 ease-settle group-hover:translate-x-0.5" />
-              </Link>
-            </p>
+            </ul>
+            <ArrowLink href={family.aboutLink.href} className="mt-6 md:mt-4">
+              {family.aboutLink.label}
+            </ArrowLink>
           </div>
         </div>
       </Container>
-    </Section>
+    </section>
   );
 }

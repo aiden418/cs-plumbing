@@ -1,13 +1,11 @@
 import Link from "next/link";
 import Container from "@/components/ui/Container";
 import Frame from "@/components/ui/Frame";
-import Section from "@/components/ui/Section";
-import SectionHeading from "@/components/ui/SectionHeading";
 import { ArrowRight } from "@/components/ui/icons";
 import { SERVICES } from "@/lib/constants";
 import { picture } from "@/lib/media";
 import { services } from "@/content/home";
-import ServicesRail from "./ServicesRail";
+import { ArrowLink, HomeHeading } from "./HomeHeading";
 
 /** "/services/plumbing-remodel" → "plumbing-remodel": the key of the tile's named photograph. */
 function slugOf(href: string) {
@@ -15,68 +13,69 @@ function slugOf(href: string) {
 }
 
 /**
- * Chapter 2: the nine services as tiles, a 3 × 3 grid from 1024 px and a
- * snap rail below. A service without a named photograph is a type-led tile
- * (hairline, title, line) instead of a placeholder.
+ * The services on shell: a tidy grid of photo tiles (2 columns on phones, 3
+ * from 768 px) showing the photograph and the name; the services without a
+ * named photograph follow as plain rows. Each one-line description stays in
+ * the HTML and is shown from 768 px.
  */
 export default function Services() {
+  const tiles = SERVICES.map((service) => ({ service, media: picture(`home.service.${slugOf(service.href)}`) }));
+  const withPhoto = tiles.filter((t) => t.media);
+  const rows = tiles.filter((t) => !t.media);
+
   return (
-    <Section tone="shell" spacing="none" className="py-section-sm lg:py-section" labelledBy="home-services-title">
+    <section data-tone="shell" aria-labelledby="home-services-title" className="relative bg-canvas py-14 text-body lg:py-20">
       <Container>
-        <SectionHeading
+        <HomeHeading
           id="home-services-title"
-          align="left"
-          overline={services.overline}
+          eyebrow={services.overline}
           title={services.title}
-          subtitle={services.subtitle}
+          subtitle={services.subtitle} subtitleHidden="phone"
           className="mb-8 lg:mb-12"
         />
-        <ServicesRail
-          label={services.title}
-          previousLabel={services.previousLabel}
-          nextLabel={services.nextLabel}
-          after={
-            <Link
-              href={services.allLink.href}
-              className="group inline-flex min-h-11 items-center gap-2 font-semibold text-link underline-offset-[0.2em] hover:underline"
-            >
-              {services.allLink.label}
-              <ArrowRight className="size-5 transition-transform duration-250 ease-settle group-hover:translate-x-0.5" />
-            </Link>
-          }
-        >
-          <ul className="home-services">
-            {SERVICES.map((service) => {
-              const media = picture(`home.service.${slugOf(service.href)}`);
-              return (
-                <li key={service.id} className={media ? "home-service" : "home-service home-service--type"}>
-                  <Link href={service.href} className={media ? "group block h-full rounded-frame" : "group block h-full"}>
-                    {media && (
-                      <Frame
-                        media={media}
-                        alt=""
-                        aspect="4/5"
-                        sizes="(min-width: 80rem) 400px, (min-width: 64rem) 30vw, (min-width: 48rem) 42vw, 72vw"
-                        frameClassName="transition-transform duration-250 ease-settle group-hover:-translate-y-0.5"
-                      />
-                    )}
-                    <span className="home-service-text">
-                      <h3 className="home-service-title text-fg group-hover:underline group-hover:decoration-1 group-hover:underline-offset-4">
-                        {service.title}
-                      </h3>
-                      <span className="mt-2 block text-sm text-muted">{service.description}</span>
-                      <span className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-link">
-                        {services.tileCta}
-                        <ArrowRight className="size-4 transition-transform duration-250 ease-settle group-hover:translate-x-0.5" />
-                      </span>
+
+        <ul className="grid grid-cols-2 gap-x-3 gap-y-5 md:grid-cols-3 md:gap-x-6 md:gap-y-8">
+          {withPhoto.map(({ service, media }) => (
+            <li key={service.id}>
+              <Link href={service.href} className="group block rounded-frame">
+                <Frame
+                  media={media}
+                  alt=""
+                  aspect="4/3"
+                  sizes="(min-width: 80rem) 400px, (min-width: 48rem) 31vw, 46vw"
+                  className="max-md:aspect-[3/2] lg:aspect-[16/10]"
+                />
+                <h3 className="home-service-title group-hover:text-link">{service.title}</h3>
+                <p className="home-service-text">
+                  {service.description} <span className="sr-only">{services.tileCta}</span>
+                </p>
+              </Link>
+            </li>
+          ))}
+        </ul>
+
+        {rows.length > 0 && (
+          <ul className="mt-8 grid grid-cols-1 border-b border-rule md:mt-12 md:grid-cols-3 md:gap-x-6 md:border-b-0">
+            {rows.map(({ service }) => (
+              <li key={service.id} className="border-t border-rule md:border-t-2">
+                <Link href={service.href} className="group flex min-h-12 items-start justify-between gap-4 py-3 md:py-4">
+                  <span>
+                    <h3 className="text-[1.0625rem] leading-snug font-semibold text-fg group-hover:text-link md:text-lg">{service.title}</h3>
+                    <span className="home-service-text block">
+                      {service.description} <span className="sr-only">{services.tileCta}</span>
                     </span>
-                  </Link>
-                </li>
-              );
-            })}
+                  </span>
+                  <ArrowRight className="mt-0.5 size-5 shrink-0 text-link transition-transform duration-150 group-hover:translate-x-0.5" />
+                </Link>
+              </li>
+            ))}
           </ul>
-        </ServicesRail>
+        )}
+
+        <ArrowLink href={services.allLink.href} className="mt-6 md:mt-8">
+          {services.allLink.label}
+        </ArrowLink>
       </Container>
-    </Section>
+    </section>
   );
 }
