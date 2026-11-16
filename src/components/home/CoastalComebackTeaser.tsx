@@ -1,132 +1,123 @@
 import Image from "next/image";
 import Link from "next/link";
+import BuilderLogoImage from "@/components/ui/BuilderLogoImage";
 import Button from "@/components/ui/Button";
 import Container from "@/components/ui/Container";
-import Eyebrow from "@/components/ui/Eyebrow";
-import Reveal from "@/components/ui/Reveal";
-import Section from "@/components/ui/Section";
 import { ArrowRight, Phone, ShieldCheck } from "@/components/ui/icons";
 import { BUSINESS } from "@/lib/business";
+import { BUILDERS } from "@/lib/builders-data";
+import { imageMeta } from "@/lib/media";
 import { perYear } from "@/lib/pricing";
 import { SEASON_COPY, type Season } from "@/lib/claims";
-import { brands, coastal } from "@/content/home";
+import { brands, builders, coastal } from "@/content/home";
+import { ArrowLink, HomeHeading } from "./HomeHeading";
 
 /**
- * Chapter 2, after the emergency band, on shell: the seasonal Coastal
- * Comeback row (one hairline-framed row: the teaser, then the three annual
- * plans as rows) and the brands we install as a quiet, static, wrapped row.
- * The teaser flips between arrival and departure wording by season.
+ * A see-through logo drawn in white (its dominant colour is pure white)
+ * would vanish on a white cell: that one is set on a navy chip instead.
  */
-export default function CoastalComebackTeaser({
-  season = "departure",
-}: {
-  season?: Season;
-}) {
+function whiteLogo(path: string) {
+  const meta = imageMeta(path);
+  return Boolean(meta?.alpha && meta.color?.toLowerCase() === "#ffffff");
+}
+
+/**
+ * On white: the seasonal Coastal Comeback plan as one compact card (the
+ * teaser beside the three annual plans), then the brands we install and the
+ * builders who trust C&S as one logo strip each. The teaser flips between
+ * arrival and departure wording by season.
+ */
+export default function CoastalComebackTeaser({ season = "departure" }: { season?: Season }) {
   const copy = SEASON_COPY[season];
   return (
-    <>
-      <Section
-        tone="shell"
-        spacing="none"
-        labelledBy="home-coastal-title"
-        className="pt-section-sm"
-      >
-        <Container>
-          <Reveal className="grid grid-cols-1 gap-y-8 border-y border-rule py-8 lg:grid-cols-12 lg:gap-x-8 lg:py-14">
-            <div className="lg:col-span-6">
-              <Eyebrow className="mb-4">{copy.teaserEyebrow}</Eyebrow>
-              <h2 id="home-coastal-title" className="text-display-md text-fg">
-                {copy.teaserTitle}
-              </h2>
-              <p className="mt-5 max-w-[56ch] text-lead text-body">
-                {copy.teaserBody}
-              </p>
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                <Button
-                  href={coastal.plansLink.href}
-                  size="lg"
-                  icon={<ShieldCheck className="size-5" />}
-                >
-                  {coastal.plansLink.label}
-                </Button>
-                <Button
-                  href={BUSINESS.phoneHref}
-                  variant="secondary"
-                  size="lg"
-                  icon={<Phone className="size-5" />}
-                >
-                  {`Call ${BUSINESS.phone}`}
-                </Button>
-              </div>
+    <section data-tone="white" aria-labelledby="home-coastal-title" className="relative bg-canvas py-14 text-body lg:py-20">
+      <Container>
+        <div className="home-card grid grid-cols-1 gap-y-6 p-5 sm:p-8 lg:grid-cols-12 lg:gap-x-10 lg:p-10">
+          <div className="lg:col-span-7">
+            <p className="home-eyebrow">{copy.teaserEyebrow}</p>
+            <h2 id="home-coastal-title" className="home-h2-sm">
+              {copy.teaserTitle}
+            </h2>
+            <p className="mt-3 max-w-[56ch]">{copy.teaserBody}</p>
+            <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2">
+              <Button href={coastal.plansLink.href} size="lg" icon={<ShieldCheck className="size-5" />} className="max-sm:w-full">
+                {coastal.plansLink.label}
+              </Button>
+              <a href={BUSINESS.phoneHref} className="inline-flex min-h-11 items-center gap-2 font-semibold text-fg hover:text-link">
+                <Phone className="size-5 text-link" />
+                {`Call ${BUSINESS.phone}`}
+              </a>
             </div>
+          </div>
 
-            <div className="lg:col-span-5 lg:col-start-8 lg:self-end">
-              <p className="label-tech text-muted">{coastal.plansListLabel}</p>
-              <ul className="mt-4 border-b border-rule">
-                {coastal.tiers.map((tier) => (
-                  <li key={tier.name} className="border-t border-rule">
-                    <Link
-                      href={coastal.plansHref}
-                      className="group flex min-h-14 items-center justify-between gap-4 py-3"
-                    >
-                      <span className="flex items-baseline gap-3">
-                        <span className="font-semibold text-fg group-hover:underline group-hover:underline-offset-4">
-                          {tier.name}
-                        </span>
-                        {"featured" in tier && tier.featured && (
-                          <span className="label-tech text-accent">
-                            {coastal.featuredBadge}
-                          </span>
-                        )}
-                      </span>
-                      <span className="flex items-center gap-2 font-semibold text-fg tabular-nums">
-                        {tier.price ? perYear(tier.price) : coastal.callPrice}
-                        <ArrowRight className="size-4 text-accent transition-transform duration-250 ease-settle group-hover:translate-x-0.5" />
-                      </span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-              <p className="mt-4 text-sm text-muted">{coastal.note}</p>
-            </div>
-          </Reveal>
-        </Container>
-      </Section>
+          <div className="lg:col-span-5 lg:self-center">
+            <p className="text-sm font-semibold text-muted">{coastal.plansListLabel}</p>
+            <ul className="mt-2 border-b border-rule">
+              {coastal.tiers.map((tier) => (
+                <li key={tier.name} className="border-t border-rule">
+                  <Link href={coastal.plansHref} className="group flex min-h-13 items-center justify-between gap-4 py-2.5">
+                    <span className="flex items-baseline gap-2.5">
+                      <span className="font-semibold text-fg group-hover:text-link">{tier.name}</span>
+                      {"featured" in tier && tier.featured && (
+                        <span className="rounded-chip bg-primary/10 px-2 py-0.5 text-sm font-semibold text-link">{coastal.featuredBadge}</span>
+                      )}
+                    </span>
+                    <span className="flex items-center gap-2 font-semibold text-fg tabular-nums">
+                      {tier.price ? perYear(tier.price) : coastal.callPrice}
+                      <ArrowRight className="size-4 text-link transition-transform duration-150 group-hover:translate-x-0.5" />
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-3 text-sm text-muted max-md:sr-only">{coastal.note}</p>
+          </div>
+        </div>
 
-      <Section
-        tone="shell"
-        spacing="none"
-        labelledBy="home-brands-title"
-        className="pt-10 pb-section-sm lg:pt-14"
-      >
-        <Container>
-          <div className="grid grid-cols-1 gap-y-8 lg:grid-cols-12 lg:gap-x-8">
-            <div className="lg:col-span-4">
-              <Eyebrow className="mb-4">{brands.overline}</Eyebrow>
-              <h2
-                id="home-brands-title"
-                className="font-display text-display-sm font-bold text-fg [font-stretch:108%]"
-              >
-                {brands.title}
-              </h2>
-              <p className="mt-3 max-w-[48ch] text-body">{brands.subtitle}</p>
-            </div>
-            <ul className="grid grid-cols-4 items-center gap-x-6 gap-y-6 sm:gap-x-10 lg:col-span-7 lg:col-start-6 lg:self-center">
+        <div className="mt-12 grid grid-cols-1 gap-y-10 lg:mt-14">
+          <div aria-labelledby="home-brands-title" role="group" className="home-strip">
+            <HomeHeading
+              id="home-brands-title"
+              eyebrow={brands.overline}
+              title={brands.title}
+              subtitle={brands.subtitle}
+              subtitleHidden="always"
+              size="sm"
+              className="home-strip-head"
+            />
+            <ul className="home-brands">
               {brands.items.map((brand) => (
-                <li key={brand.name} className="relative h-7 w-full max-w-[104px] sm:h-8">
-                  <Image
-                    src={brand.logo}
-                    alt={`${brand.name} logo`}
-                    fill
-                    sizes="104px"
-                    className="object-contain"
-                  />
+                <li key={brand.name}>
+                  <Image src={brand.logo} alt={`${brand.name} logo`} fill sizes="112px" className="object-contain" />
                 </li>
               ))}
             </ul>
           </div>
-        </Container>
-      </Section>
-    </>
+
+          <div aria-labelledby="home-builders-title" role="group" className="home-strip">
+            <div className="home-strip-head">
+              <HomeHeading
+                id="home-builders-title"
+                eyebrow={builders.overline}
+                title={builders.title}
+                subtitle={builders.subtitle}
+                subtitleHidden="always"
+                size="sm"
+              />
+              <ArrowLink href={builders.link.href} className="mt-2">
+                {builders.link.label}
+              </ArrowLink>
+            </div>
+            <ul className="home-builders">
+              {BUILDERS.map((builder) => (
+                <li key={builder.name} data-tone={whiteLogo(builder.logo) ? "navy" : undefined}>
+                  <BuilderLogoImage builder={builder} sizes="140px" className="h-9 w-auto max-w-full object-contain lg:h-10" />
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </Container>
+    </section>
   );
 }

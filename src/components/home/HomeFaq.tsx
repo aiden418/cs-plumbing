@@ -1,7 +1,5 @@
-import Link from "next/link";
-import Eyebrow from "@/components/ui/Eyebrow";
 import FaqAccordion from "@/components/ui/FaqAccordion";
-import { ArrowRight } from "@/components/ui/icons";
+import { ArrowLink, HomeHeading } from "./HomeHeading";
 import { faq } from "@/content/home";
 import type { FAQ } from "@/lib/types";
 import { BUSINESS } from "@/lib/business";
@@ -39,25 +37,15 @@ export const HOME_FAQS: FAQ[] = [
   },
 ];
 
-/** The home FAQ as a native accordion: every answer is in the HTML. The FAQPage JSON-LD stays in page.tsx. */
+/** The home FAQ as a native accordion, closed: every answer is in the HTML. The FAQPage JSON-LD stays in page.tsx. */
 export default function HomeFaq() {
   return (
     <div>
-      <Eyebrow className="mb-4">{faq.overline}</Eyebrow>
-      <h2 id="home-faq-title" className="font-display text-display-sm font-bold text-fg [font-stretch:108%]">
-        {faq.title}
-      </h2>
-      <p className="mt-4 max-w-[56ch] text-body">{faq.subtitle}</p>
-      <FaqAccordion faqs={HOME_FAQS} name="home-faq" className="mt-8" />
-      <p className="mt-6">
-        <Link
-          href={faq.allLink.href}
-          className="group inline-flex min-h-11 items-center gap-2 font-semibold text-link underline-offset-[0.2em] hover:underline"
-        >
-          {faq.allLink.label}
-          <ArrowRight className="size-5 transition-transform duration-250 ease-settle group-hover:translate-x-0.5" />
-        </Link>
-      </p>
+      <HomeHeading id="home-faq-title" eyebrow={faq.overline} title={faq.title} subtitle={faq.subtitle} subtitleHidden="phone" size="sm" />
+      <FaqAccordion faqs={HOME_FAQS} name="home-faq" className="mt-6" />
+      <ArrowLink href={faq.allLink.href} className="mt-4">
+        {faq.allLink.label}
+      </ArrowLink>
     </div>
   );
 }

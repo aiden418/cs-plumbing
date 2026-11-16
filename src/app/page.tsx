@@ -3,6 +3,7 @@ import Hero from "@/components/home/Hero";
 import HomeIntro from "@/components/home/HomeIntro";
 import Services from "@/components/home/Services";
 import EmergencyBand from "@/components/home/EmergencyBand";
+import ProofStrip from "@/components/home/ProofStrip";
 import CoastalComebackTeaser from "@/components/home/CoastalComebackTeaser";
 import WalkTheJob from "@/components/home/WalkTheJob";
 import FamilyStory from "@/components/home/FamilyStory";
@@ -70,25 +71,24 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <>
-      {/* 1. Opening (frozen) and, on ink under it, the two doors and the proof strip */}
+      {/* The film/photo behind the headline, then the license line and the two doors */}
       <Hero />
       <HomeIntro />
-      {/* 2. Services, the emergency band, Coastal Comeback and brands */}
+      {/* Services, the emergency band, the proof numbers */}
       <Services />
       <EmergencyBand />
-      <CoastalComebackTeaser season={season()} />
-      {/* 3. Walk the job and the builders logo wall */}
+      <ProofStrip />
+      {/* Our work, why C&S, reviews, service areas */}
       <WalkTheJob />
-      {/* 4. Family story and "Built on Trust" */}
       <FamilyStory />
-      {/* 5. Where we work */}
-      <WhereWeWork />
-      {/* 6. Reviews and awards */}
       <ReviewsAwards />
-      {/* 7. Guides and FAQ (server-rendered: /blog had no inbound link in the HTML before) */}
+      <WhereWeWork />
+      {/* Coastal Comeback and the brand and builder logo strips */}
+      <CoastalComebackTeaser season={season()} />
+      {/* Guides and FAQ (server-rendered: /blog had no inbound link in the HTML before) */}
       <GuidesFaq posts={latestPosts(3)} />
       <FaqJsonLd faqs={HOME_FAQS} />
-      {/* 8. Contact */}
+      {/* Contact */}
       <CTASection />
     </>
   );

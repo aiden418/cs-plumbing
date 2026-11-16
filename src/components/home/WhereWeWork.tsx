@@ -1,18 +1,9 @@
 import Link from "next/link";
 import Container from "@/components/ui/Container";
-import Reveal from "@/components/ui/Reveal";
-import Section from "@/components/ui/Section";
-import SectionHeading from "@/components/ui/SectionHeading";
-import { ArrowRight } from "@/components/ui/icons";
-import { LinkGrid } from "@/components/links/LinkGrid";
-import { BUSINESS } from "@/lib/business";
 import { EMERGENCY_CLAIMS } from "@/lib/claims";
 import { AREA_LANDINGS, SERVICE_AREAS_BY_COUNTY } from "@/lib/constants";
-import { formatCoordinates } from "@/lib/hero-images";
 import { areas } from "@/content/home";
-
-const linkClass =
-  "group inline-flex min-h-11 items-center gap-2 font-semibold text-link underline-offset-[0.2em] hover:underline";
+import { ArrowLink, HomeHeading } from "./HomeHeading";
 
 /** The area pages grouped by county, in the order of SERVICE_AREAS_BY_COUNTY. */
 function byCounty() {
@@ -28,61 +19,51 @@ function byCounty() {
 }
 
 /**
- * Chapter 5 on ink: the service-area heading with the response-time
- * wording from EMERGENCY_CLAIMS, the eleven area pages as a LinkGrid grouped
- * by county, and the shop's coordinates as a plan-drawing detail.
+ * Service areas on shell: the heading with the response-time wording from
+ * EMERGENCY_CLAIMS, then the eleven area pages as a compact wrap of text
+ * links by county (no cards), the other towns, and the two links.
  */
 export default function WhereWeWork() {
   const groups = byCounty();
-  const [first, ...rest] = groups;
   return (
-    <Section tone="ink" id={areas.id} spacing="none" className="py-section-sm lg:py-section" labelledBy="home-areas-title">
+    <section data-tone="shell" id={areas.id} aria-labelledby="home-areas-title" className="relative bg-canvas py-14 text-body lg:py-20">
       <Container>
-        <div className="grid grid-cols-1 lg:grid-cols-12 lg:gap-x-8">
-          <SectionHeading
+        <div className="grid grid-cols-1 gap-y-8 lg:grid-cols-12 lg:gap-x-12">
+          <HomeHeading
             id="home-areas-title"
-            align="left"
-            overline={areas.overline}
+            eyebrow={areas.overline}
             title={areas.title}
             subtitle={areas.subtitle(EMERGENCY_CLAIMS.responseTime)}
-            className="mb-6 lg:mb-10 lg:col-span-8"
+            className="lg:col-span-5"
           />
-          <p className="label-tech mb-8 text-muted tabular-nums lg:mb-10 lg:col-span-4 lg:self-end lg:text-right">
-            {formatCoordinates(BUSINESS.geo)}
-          </p>
-        </div>
-
-        <Reveal className="grid grid-cols-1 gap-y-10 lg:grid-cols-12 lg:gap-x-8">
-          {first && (
-            <div className="lg:col-span-8">
-              <h3 className="label-tech mb-3 text-accent">{`${first.county} ${areas.countySuffix}`}</h3>
-              <LinkGrid links={first.links} columns={2} className="grid-cols-2 gap-x-6 sm:gap-x-8" />
+          <div className="lg:col-span-7">
+            <div className="grid grid-cols-2 gap-x-6 border-t border-rule pt-4">
+              {groups.map((group, i) => (
+                <div key={group.county} className={i === 0 ? "col-span-2 mb-3" : undefined}>
+                  <h3 className="text-sm font-semibold text-muted">{`${group.county} ${areas.countySuffix}`}</h3>
+                  <ul className="flex flex-wrap gap-x-5">
+                    {group.links.map((link) => (
+                      <li key={link.href}>
+                        <Link
+                          href={link.href}
+                          className="inline-flex min-h-11 items-center text-lg font-semibold text-link underline-offset-[0.2em] hover:underline"
+                        >
+                          {link.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
             </div>
-          )}
-          <div className="grid grid-cols-2 gap-x-6 gap-y-10 sm:gap-x-8 lg:col-span-4 lg:grid-cols-1">
-            {rest.map((group) => (
-              <div key={group.county}>
-                <h3 className="label-tech mb-3 text-accent">{`${group.county} ${areas.countySuffix}`}</h3>
-                <LinkGrid links={group.links} columns={2} className="sm:grid-cols-1" />
-              </div>
-            ))}
+            <p className="mt-4 border-t border-rule pt-4 text-muted">{areas.more}</p>
+            <p className="mt-2 flex flex-wrap gap-x-8">
+              <ArrowLink href={areas.bookLink.href}>{areas.bookLink.label}</ArrowLink>
+              <ArrowLink href={areas.mapLink.href}>{areas.mapLink.label}</ArrowLink>
+            </p>
           </div>
-        </Reveal>
-
-        <div className="mt-10 flex flex-col gap-x-10 gap-y-2 lg:flex-row lg:items-center lg:justify-between">
-          <p className="max-w-[68ch] text-sm text-muted">{areas.more}</p>
-          <p className="flex flex-wrap gap-x-8">
-            <Link href={areas.bookLink.href} className={linkClass}>
-              {areas.bookLink.label}
-              <ArrowRight className="size-5 transition-transform duration-250 ease-settle group-hover:translate-x-0.5" />
-            </Link>
-            <Link href={areas.mapLink.href} className={linkClass}>
-              {areas.mapLink.label}
-              <ArrowRight className="size-5 transition-transform duration-250 ease-settle group-hover:translate-x-0.5" />
-            </Link>
-          </p>
         </div>
       </Container>
-    </Section>
+    </section>
   );
 }
