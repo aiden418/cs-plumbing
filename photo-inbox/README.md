@@ -5,8 +5,9 @@ grid. Drop originals in, run one command, and they come out resized, converted,
 stripped of location data, and named to match the paths the site expects.
 
 Raw drops are gitignored — only this file and the empty folder structure are
-committed. The finished WebP files land in `public/images/projects/` and those
-**are** committed.
+committed. The finished WebP files land in `public/images/projects/` and
+`public/images/gallery/`, and those **are** committed. The owner's short guide
+is `HOW-TO-UPDATE.md` at the top of the project.
 
 ## How to use it
 
@@ -95,8 +96,8 @@ downscale, WebP.
    `public/images/gallery/<category>/images.json`. The script leaves both
    blank on purpose — a filename like `IMG_4864.jpeg` says nothing about what
    the photo shows, and both fields are read by humans and by search engines.
-   `title` is the caption on the tile; `alt` describes the image for a screen
-   reader. The `id` and `category` are filled in for you; ids continue after
+   `title` is the caption shown when the photo is opened full screen; `alt`
+   describes the image for a screen reader. The `id` and `category` are filled in for you; ids continue after
    the highest one used anywhere in the gallery, so they never collide.
 
 Files land as `public/images/gallery/<category>/<category>-<n>.webp`. Renaming
@@ -111,13 +112,18 @@ wants to be the strongest single frame of a job rather than one of a sequence.
 Use these, because they're what the existing 13 projects already use. A new
 phase slug is fine when the job genuinely has one — just keep it kebab-case.
 
+A phase folder only shows once the project's entry in `COMPLETED_PROJECT_TEXT`
+(`src/lib/constants.ts`) lists a phase with the same `slug` (with its `name`
+and `description`). Until then `npm run photos:check` names the folder as
+"not published". The same goes for a whole new project folder.
+
 `underground` · `2nd-rough` · `rough-in` · `water-repipe` · `trim-out` ·
 `final` · `demo` · `build` · `new-construction`
 
 ## Closing out a project
 
 A project is "closed out" when its page stops saying *In Progress*. Three
-fields in `COMPLETED_PROJECTS` do that work — set them together with the final
+fields of the project's entry in `COMPLETED_PROJECT_TEXT` (`src/lib/constants.ts`) do that work — set them together with the final
 phase of photos:
 
 ```ts
@@ -162,8 +168,12 @@ folder name becomes `csplumbinglee.com/projects/<slug>`.
 | 1326 Lafayette St | 12 HEIC, Jun 2025 | `photo-inbox/1326-lafayette-st/final/` |
 | Naples Dock Line | 2 JPG (before / after), Oct 2025 | `photo-inbox/naples-dock-line/final/` |
 
-Each new project needs the metadata the generated block can't infer — send it
-with the photos and it goes straight in:
+Each new project also needs an entry in `COMPLETED_PROJECT_TEXT`
+(`src/lib/constants.ts`) with the same `slug` as its folder, and its phases
+listed by `slug`; the photos alone do not make a page. These are the facts the
+photos can't supply. Send them with the photos and they go straight in (a
+`cost` with a dollar figure stops the build at the claims check unless it is
+marked as documented, so "On Request" is the default):
 
 ```
 name:        # e.g. "39 Southport — New Construction (Cape Coral)"
@@ -184,8 +194,9 @@ materials:   # brands installed
 The raw drops are gitignored, so a local `git push` never carries them. Two
 ways to get photos onto a branch Claude can process:
 
-1. **Local:** drop the photos in `photo-inbox/…`, run `npm run photos:ingest`,
-   commit the WebP output under `public/images/projects/` and push. Claude
+1. **Local:** drop the photos in `photo-inbox/…`, run `npm run photos`,
+   commit the WebP output and the `images.json` beside it under
+   `public/images/projects/` (or `public/images/gallery/`) and push. Claude
    takes it from there (captions, description, case study, close-out fields).
 2. **No laptop:** upload the originals straight into
    `photo-inbox/<slug>/<phase>/` on the branch through GitHub's *Add file →
