@@ -250,9 +250,11 @@ export async function checkImages({ root = REPO_ROOT, gate = false, useCache = t
   for (const f of [...analysis.scan.files, ...analysis.scan.held, ...analysis.scan.unsupported]) onDisk.add(`/images/${f.rel}`);
   const lower = new Map([...onDisk].map((p) => [p.toLowerCase(), p]));
   const pagesOf = await pagesBySource(root);
-  const onPages = async (ref) => {
+  /** "the /services/repiping page shows" / "the pages /a and /b show"; a generic subject when no page is found. */
+  const pagesShow = async (ref) => {
     const words = await describePages(root, refs.get(ref), pagesOf);
-    return words ? ` (shown on ${words})` : "";
+    if (!words) return "the page that uses it shows";
+    return `${words} ${/^the \//.test(words) ? "shows" : "show"}`;
   };
   for (const ref of [...refs.keys()].sort()) {
     const folder = path.posix.dirname(ref).replace(/^\/images\/?/, "");
@@ -260,7 +262,7 @@ export async function checkImages({ root = REPO_ROOT, gate = false, useCache = t
     if (onDisk.has(ref)) {
       // A collection photo marked hidden that a page still names by path.
       if (collectionPhoto && analysis.records.get(ref)?.settings.hidden) {
-        notes.push(`${ref} is marked hidden but is still named in ${places(refs.get(ref))}${await onPages(ref)}; that page skips it only once it looks photos up through photoOrNull() in src/lib/projects-data.ts, so remove the mention or switch the page over.`);
+        notes.push(`${ref} is marked hidden but is still named in ${places(refs.get(ref))}, so ${await pagesShow(ref)} it anyway; remove the mention, or have that page look the photo up through photoOrNull() in src/lib/projects-data.ts.`);
       }
       continue;
     }
@@ -269,7 +271,7 @@ export async function checkImages({ root = REPO_ROOT, gate = false, useCache = t
     if (near) {
       errors.push(`${where} names ${ref}, but the file is called ${near}; capital letters matter on the live site, so make the two match.`);
     } else if (collectionPhoto) {
-      notes.push(`${ref} is no longer in its folder but is still named in ${where}${await onPages(ref)}; that page shows a gap there until the mention is removed or the photo is put back.`);
+      notes.push(`${ref} is no longer in its folder but is still named in ${where}, so ${await pagesShow(ref)} a gap where it was; remove the mention or put the photo back.`);
     } else {
       errors.push(`${where} names ${ref}, but that file is not in public/images; put the picture back or correct the name.`);
     }
