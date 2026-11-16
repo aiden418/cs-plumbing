@@ -163,9 +163,12 @@ async function main() {
   const browserInfo = browser.info();
   const routes = {};
   let notFound = null;
+  let env = null;
   const renderedRoutes = [];
   try {
     const parser = await browser.newPage({ width: 800, height: 600 });
+    const seen = await parser.env();
+    env = { webdriver: seen.webdriver, userAgent: seen.userAgent, effectiveType: seen.effectiveType };
     const parse = async (response) => {
       const html = response.buffer.toString("utf8");
       const record = {
@@ -312,6 +315,8 @@ async function main() {
     build: { buildId: built.buildId, nextDir: built.nextDir, git: gitFacts() },
     host: hostFacts(),
     browser: browserInfo,
+    // What a page sees in this browser: navigator.webdriver, the user agent, connection.effectiveType.
+    env,
     counts: {
       routes: records.length,
       status200: records.filter((r) => r.status === 200).length,
