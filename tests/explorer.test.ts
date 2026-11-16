@@ -13,6 +13,7 @@ import {
   isNearSlide,
   justifiedItemStyle,
   keyToIndex,
+  lightboxImageStyle,
   phaseAnchor,
   photoAnnouncement,
   photoCountLabel,
@@ -80,6 +81,16 @@ test("sizes follow the rail height and the aspect ratio", () => {
 test("justified grid items grow by their aspect ratio", () => {
   assert.deepEqual(justifiedItemStyle(1600, 900), { "--ar": "1.7778", "--grow": "177.78" });
   assert.deepEqual(justifiedItemStyle(0, 0), { "--ar": "1.0000", "--grow": "100.00" });
+});
+
+test("the lightbox picture keeps its aspect ratio and is never upscaled", () => {
+  assert.deepEqual(lightboxImageStyle(1200, 900, "#123456"), {
+    aspectRatio: "1200 / 900",
+    width: "min(100%, 1200px, calc(var(--lightbox-max-h) * 1.3333))",
+    height: "auto",
+    backgroundColor: "#123456",
+  });
+  assert.equal(lightboxImageStyle(600, 800).backgroundColor, undefined);
 });
 
 test("small helpers", () => {

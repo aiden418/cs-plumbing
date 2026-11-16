@@ -51,11 +51,11 @@ export default function ProjectCard({
       )}
       <span className="mt-4 block">
         <span className="label-tech block text-accent">{[project.category, city].filter(Boolean).join(" · ")}</span>
-        <Title className="mt-2 flex items-start gap-2 text-lg leading-snug font-semibold text-fg">
+        <Title className="mt-2 flex items-start gap-2 text-base leading-snug sm:text-lg font-semibold text-fg">
           <span className="underline-offset-4 group-hover:underline group-hover:decoration-1">{project.name}</span>
           <ArrowRight className="mt-[0.2em] size-5 shrink-0 text-accent transition-transform duration-250 ease-settle group-hover:translate-x-0.5" />
         </Title>
-        <span className="mt-1.5 line-clamp-2 block text-sm text-muted">{project.description}</span>
+        <span className="mt-1.5 line-clamp-2 text-sm text-muted">{project.description}</span>
         {inProgress && (
           <span className="label-tech mt-3 inline-flex items-center gap-2 text-fg">
             <span className="joint text-primary" aria-hidden="true" />

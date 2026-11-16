@@ -115,3 +115,22 @@ export function photoCountLabel(count: number): string {
 export function fileHref(src: string | { src: string }): string {
   return typeof src === "string" ? src : src.src;
 }
+
+export type LightboxImageStyle = { aspectRatio: string; width: string; height: "auto"; backgroundColor?: string };
+
+/**
+ * The lightbox picture's box: its own aspect ratio, as wide as the stage
+ * allows, never wider than the file (no upscaling) and never taller than
+ * the room left for it (`--lightbox-max-h`, set in explorer.css). Sized
+ * before the file arrives, so the caption does not jump.
+ */
+export function lightboxImageStyle(width: number, height: number, color?: string): LightboxImageStyle {
+  const aspect = aspectOf(width, height);
+  const style: LightboxImageStyle = {
+    aspectRatio: `${width} / ${height}`,
+    width: `min(100%, ${Math.round(width)}px, calc(var(--lightbox-max-h) * ${aspect.toFixed(4)}))`,
+    height: "auto",
+  };
+  if (color) style.backgroundColor = color;
+  return style;
+}

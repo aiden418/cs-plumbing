@@ -4,7 +4,13 @@ import Image from "next/image";
 import { useCallback, useEffect, useRef, useState, type MouseEvent } from "react";
 import Dialog from "@/components/ui/Dialog";
 import { ArrowRight, ChevronLeft, ChevronRight } from "@/components/ui/icons";
-import { formatCounter, isNearSlide, keyToIndex, photoAnnouncement } from "@/components/explorer/explorer-utils";
+import {
+  formatCounter,
+  isNearSlide,
+  keyToIndex,
+  lightboxImageStyle,
+  photoAnnouncement,
+} from "@/components/explorer/explorer-utils";
 import type { LightboxCollection } from "./LightboxProvider";
 
 /**
@@ -57,13 +63,13 @@ export default function Lightbox({ collection, startIndex, onClose, onContinue }
       tone="ink"
       closeLabel="Close"
       headerExtra={
-        <p className="label-tech tabular-nums text-muted" aria-hidden="true">
+        <p className="label-tech tabular-nums whitespace-nowrap text-muted" aria-hidden="true">
           {formatCounter(index, total)}
         </p>
       }
       // The stage fills the dialog body edge to edge (Dialog pads its body
       // for text content).
-      className="lightbox [&>div>div:last-child]:overflow-hidden [&>div>div:last-child]:p-0"
+      className="lightbox max-sm:[&_h2]:text-[0.9375rem] [&>div>div:last-child]:overflow-hidden [&>div>div:last-child]:p-0"
     >
       <LightboxStage
         key={collection.id}
@@ -180,7 +186,7 @@ function LightboxStage({ collection, startIndex, index, onIndex, onContinue }: S
                     sizes="100vw"
                     loading={i === index ? "eager" : "lazy"}
                     draggable={false}
-                    style={{ backgroundColor: media.color }}
+                    style={lightboxImageStyle(media.width, media.height, media.color)}
                   />
                 )}
               </div>
