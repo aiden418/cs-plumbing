@@ -94,6 +94,30 @@ The redesign went live on 2026-11-16 with every URL, title, description, canonic
 
 **Compare next on 2026-11-30 and 2026-12-14** (same tables, 14-day windows after the launch). A drop on `/` or `/services/water-heaters` beyond normal daily swing (304–577 impressions/day in this window) is the signal to look at.
 
+**Indexing requested (Search Console → URL inspection, 2026-11-16):** sitemap resubmitted (132 pages), then Request indexing for `/services/tankless-water-heaters`, `/services/commercial`, `/services/repiping`, `/services/uep-utilities`, `/services/drain-cleaning`, `/services/leak-repair`, `/services/new-construction`, `/areas/north-fort-myers`, `/areas/lehigh-acres`, `/uep-connection-cape-coral`, `/services/water-softeners`. The daily quota (about 11) ran out before `/services/plumbing-remodel`; that one and the area hubs are next.
+
+## 2d. AI search baseline (2026-11-16)
+
+Asked live on the redesign's launch day: ChatGPT (signed out, search on), Google AI Mode, Bing AI mode, Perplexity, Brave AI and Claude web search. Answers change from run to run, so repeat each question two or three times before reading a trend into it.
+
+| Question | Named? |
+|---|---|
+| Best plumber in Cape Coral / North Fort Myers / Fort Myers (13 runs across the six) | 2 of 13: ChatGPT, 4th for North Fort Myers (showing "2 reviews", the count on Bing's listing) and 1st for Cape Coral in 1 of 3 runs, citing the Breeze award |
+| Who does new-construction plumbing for builders in Cape Coral and Fort Myers | 1st on ChatGPT and on Google AI Mode; not named by Bing AI mode or Claude |
+| Who can connect my house to the Cape Coral UEP, and the cost | 3rd on Google AI Mode; ChatGPT and Bing AI cite only capecoral.gov |
+| Tankless water heater installers in Fort Myers | Not named |
+| "Who is C&S Plumbing of Lee, are they any good?" | ChatGPT, Google AI Mode and Brave: accurate and positive. Bing AI mode: two old phone numbers (BuildZoom, Yelp) and BuildZoom's "no active license on file". Claude: an unclaimed Birdeye page and BestProsInTown only |
+
+Named instead on the homeowner questions: Next Plumbing (7 of 13), Aztec (4), Ibis (3), Roto-Rooter (3), Superior (2). They show roughly 240 to 6,000 Google reviews against 64.
+
+What the answers leaned on: review counts (Google's, and Bing's for ChatGPT), "top 10" lists (Expertise.com, Yelp, Angi, Thumbtack, ContractorsRanked), the Breeze winners list, and for the brand question old directory records. ChatGPT also quoted site numbers that left the site weeks earlier (46 reviews, 8,500 homes): Bing's copy of some pages was four to seven weeks old.
+
+Google Analytics, 2026-10-19 to 2026-11-15: `chatgpt.com` sent 8 of 485 sessions (3 key events); nothing from Perplexity, Copilot, Gemini or Claude.
+
+**Shipped with this baseline:** IndexNow (`scripts/indexnow.mjs`, run by `.github/workflows/indexnow.yml` after each deploy, changed pages only); the dated state license check with a link to each DBPR record (`LICENSE_RECORD`); the Breeze winners entry as the award citation. The DBPR had also retired the lookup address the footer used, so that link was dead until this change.
+
+**Open, off the site:** Google reviews; Bing Places and Bing Webmaster Tools (Microsoft sign-in); Yelp and BuildZoom phone numbers, BuildZoom license line, Birdeye claim, BBB profile, and the old phone on the Breeze entry (rows in `citation-tracker.csv`).
+
 ## 3. Clusters → owning page
 
 Rule: **one page owns one primary query.** Secondary pages may mention it but must not carry it in the title. Where two pages collide, GSC decides which keeps the query (the one with impressions) and the other is retitled.
