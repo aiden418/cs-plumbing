@@ -1,20 +1,22 @@
 import type { Metadata } from "next";
-import Image from "next/image";
-import PageTransition from "@/components/layout/PageTransition";
 import Container from "@/components/ui/Container";
 import PageHero from "@/components/ui/PageHero";
-import ScrollReveal from "@/components/animations/ScrollReveal";
-import CountUp from "@/components/animations/CountUp";
-import Button from "@/components/ui/Button";
+import Section from "@/components/ui/Section";
+import Stepper from "@/components/ui/Stepper";
+import Reveal from "@/components/ui/Reveal";
+import SectionHeading from "@/components/ui/SectionHeading";
+import FaqAccordion from "@/components/ui/FaqAccordion";
 import CTASection from "@/components/home/CTASection";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import FaqJsonLd from "@/components/seo/FaqJsonLd";
 import RelatedProjects from "@/components/projects/RelatedProjects";
 import NewConstructionBenefits from "@/components/builders/NewConstructionBenefits";
 import NewConstructionCityLinks from "@/components/builders/NewConstructionCityLinks";
-import { Calendar, Phone, HardHat, Shield, Clock, Award } from "lucide-react";
+import { Chapter, HeroActions } from "@/components/services/ServiceLandingTemplate";
 import { BUSINESS } from "@/lib/constants";
 import { projectsForHub } from "@/lib/projects";
+import { picture } from "@/lib/media";
+import { NEW_CONSTRUCTION_PAGE as COPY } from "@/content/services";
 
 const newConstructionFaqs = [
   {
@@ -101,125 +103,79 @@ const process = [
 ];
 
 const advantages = [
-  { icon: <HardHat className="w-4 h-4 sm:w-5 sm:h-5" />, text: "9,500+ homes plumbed" },
-  { icon: <Clock className="w-4 h-4 sm:w-5 sm:h-5" />, text: "On-time, every time" },
-  { icon: <Shield className="w-4 h-4 sm:w-5 sm:h-5" />, text: "Full code compliance" },
-  { icon: <Award className="w-4 h-4 sm:w-5 sm:h-5" />, text: "5.0-Star Rated" },
+  { text: "9,500+ homes plumbed" },
+  { text: "On-time, every time" },
+  { text: "Full code compliance" },
+  { text: "5.0-Star Rated" },
 ];
 
 export default function NewConstructionPage() {
+  const frame = picture("service.header.new-construction");
   return (
-    <PageTransition>
+    <>
       {/* Hero */}
       <PageHero
+        layout={frame ? "split" : "type-led"}
+        frame={frame}
+        breadcrumb={[
+          { name: "Home", href: "/" },
+          { name: "Services", href: "/services" },
+          { name: "New Construction", href: "/services/new-construction" },
+        ]}
         overline="New Construction"
         title="The Builder's Choice for"
         accent="New Construction Plumbing"
         description="With over 9,500 new construction homes plumbed across Southwest Florida, C&S Plumbing is the go-to partner for builders who demand reliability, code-compliance, and timeline precision."
-        media={
-          <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-white/10">
-            <Image
-              src="/images/services/cards/new-construction.jpg"
-              alt="C&S Plumbing new construction site in Southwest Florida"
-              fill
-              priority
-              quality={85}
-              className="object-cover"
-              sizes="(max-width: 1024px) 100vw, 50vw"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-navy/40 to-transparent" />
-          </div>
-        }
-        actions={
-          <>
-            <Button
-              href="/builders"
-              variant="gold"
-              size="lg"
-              icon={<Calendar className="w-5 h-5" />}
-            >
-              Partner With Us
-            </Button>
-            <Button
-              href={BUSINESS.phoneHref}
-              variant="outline-light"
-              size="lg"
-              icon={<Phone className="w-5 h-5" />}
-            >
-              Call {BUSINESS.phone}
-            </Button>
-          </>
-        }
+        actions={<HeroActions second={{ label: COPY.partner, href: COPY.partnerHref }} />}
       />
 
-      {/* Stats */}
-      <section className="py-10 sm:py-16 border-y border-gray-200">
+      {/* Big number and the four proof points */}
+      <Section tone="white" spacing="sm">
         <Container>
-          <ScrollReveal>
-            <div className="grid grid-cols-2 sm:flex sm:flex-wrap sm:justify-center gap-6 sm:gap-8 lg:gap-12">
-              {advantages.map((adv) => (
-                <div
-                  key={adv.text}
-                  className="flex items-center gap-2 sm:gap-3 text-gray-600"
-                >
-                  <div className="text-primary">{adv.icon}</div>
-                  <span className="text-xs sm:text-sm font-medium">{adv.text}</span>
-                </div>
-              ))}
-            </div>
-          </ScrollReveal>
-        </Container>
-      </section>
-
-      {/* Big Number */}
-      <section className="py-16 sm:py-24 lg:py-32">
-        <Container>
-          <ScrollReveal>
-            <div className="text-center">
-              <div className="text-5xl sm:text-7xl lg:text-9xl font-black text-gray-900">
-                <CountUp end={9500} suffix="+" duration={2.5} />
-              </div>
-              <p className="text-base sm:text-xl text-gray-500 mt-3 sm:mt-4">
-                New Construction Homes Plumbed Across SWFL
+          <div className="grid grid-cols-1 items-end gap-y-10 lg:grid-cols-12 lg:gap-x-8">
+            <Reveal className="lg:col-span-6">
+              <p className="font-display text-display-xl font-bold text-fg tabular-nums [font-stretch:108%]">
+                {COPY.bigNumber}
               </p>
-            </div>
-          </ScrollReveal>
-        </Container>
-      </section>
-
-      {/* Process */}
-      <section className="py-16 sm:py-24 lg:py-32 bg-surface">
-        <Container>
-          <ScrollReveal>
-            <div className="text-center mb-10 sm:mb-16">
-              <span className="inline-block text-primary text-xs sm:text-sm font-semibold tracking-widest uppercase mb-3 sm:mb-4">
-                Our Process
-              </span>
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900">
-                From Blueprint to Move-In
-              </h2>
-            </div>
-          </ScrollReveal>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-            {process.map((step, i) => (
-              <ScrollReveal key={step.step} delay={i * 0.1}>
-                <div className="relative">
-                  <span className="text-5xl sm:text-6xl font-black text-primary/10">
-                    {step.step}
-                  </span>
-                  <h3 className="text-lg sm:text-xl font-bold text-gray-900 mt-1.5 sm:mt-2 mb-2 sm:mb-3">
-                    {step.title}
-                  </h3>
-                  <p className="text-gray-500 text-xs sm:text-sm leading-relaxed">
-                    {step.description}
-                  </p>
-                </div>
-              </ScrollReveal>
-            ))}
+              <p className="mt-3 max-w-[32ch] text-lead text-body">{COPY.bigNumberCaption}</p>
+            </Reveal>
+            <Reveal as="ul" className="grid grid-cols-2 border-b border-rule lg:col-span-6">
+              {advantages.map((adv, i) => (
+                <li
+                  key={adv.text}
+                  className={`flex min-h-16 items-center gap-3 border-t border-rule py-4 font-semibold text-fg ${i % 2 === 1 ? "pl-5 border-l" : "pr-5"}`}
+                >
+                  <span className="joint text-accent" aria-hidden="true" />
+                  {adv.text}
+                </li>
+              ))}
+            </Reveal>
           </div>
         </Container>
-      </section>
+      </Section>
+
+      {/* Process */}
+      <Section tone="shell" labelledBy="process-heading">
+        <Container>
+          <SectionHeading
+            align="left"
+            id="process-heading"
+            overline={COPY.processOverline}
+            title={COPY.processTitle}
+          />
+          <Reveal>
+            <Stepper
+              label={COPY.processTitle}
+              items={process.map((step) => ({
+                meta: step.step,
+                label: step.title,
+                description: step.description,
+              }))}
+              className="[&_li]:min-w-[15rem] lg:[&_li]:min-w-0"
+            />
+          </Reveal>
+        </Container>
+      </Section>
 
       <NewConstructionBenefits />
 
@@ -229,52 +185,22 @@ export default function NewConstructionPage() {
         overline="Documented builds"
         heading="New construction plumbing, photographed phase by phase"
         description="Underground, second rough and trim on real Southwest Florida builds, with the builder named on each one. Judge the work, not the pitch."
+        tone="shell"
       />
 
       {/* FAQ */}
-      <section className="py-16 sm:py-24 lg:py-32">
+      <Section tone="white" labelledBy="new-construction-faq-heading">
         <Container>
-          <ScrollReveal>
-            <div className="text-center mb-10 sm:mb-16">
-              <span className="inline-block text-primary text-xs sm:text-sm font-semibold tracking-widest uppercase mb-3 sm:mb-4">
-                FAQ
-              </span>
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900">
-                New Construction Plumbing Questions
-              </h2>
-            </div>
-          </ScrollReveal>
-          <div className="max-w-3xl mx-auto space-y-4">
-            {newConstructionFaqs.map((faq, i) => (
-              <details
-                key={i}
-                className="group bg-white border border-gray-200 rounded-xl overflow-hidden"
-              >
-                <summary className="flex items-center justify-between cursor-pointer px-5 sm:px-6 py-4 sm:py-5 text-left text-base sm:text-lg font-semibold text-gray-900 hover:text-primary transition-colors">
-                  <span className="pr-4">{faq.question}</span>
-                  <svg
-                    className="w-5 h-5 shrink-0 text-gray-400 group-open:rotate-180 transition-transform duration-200"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                  </svg>
-                </summary>
-                <div className="px-5 sm:px-6 pb-5 sm:pb-6 text-gray-600 leading-relaxed">
-                  {faq.answer}
-                </div>
-              </details>
-            ))}
-          </div>
+          <Chapter id="new-construction-faq-heading" overline={COPY.faqOverline} title={COPY.faqTitle}>
+            <FaqAccordion faqs={newConstructionFaqs} />
+          </Chapter>
         </Container>
-      </section>
+      </Section>
 
       <BreadcrumbJsonLd items={[{ name: "Home", href: "/" }, { name: "Services", href: "/services" }, { name: "New Construction", href: "/services/new-construction" }]} />
       <FaqJsonLd faqs={newConstructionFaqs} />
       <NewConstructionCityLinks />
       <CTASection />
-    </PageTransition>
+    </>
   );
 }

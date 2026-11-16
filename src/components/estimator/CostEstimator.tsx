@@ -1,19 +1,37 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Calculator, ChevronRight, RotateCcw } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import Button from "@/components/ui/Button";
-import { ESTIMATOR_SERVICES } from "@/lib/constants";
-import { cn } from "@/lib/utils";
+import { ArrowRight, RotateCcw } from "@/components/ui/icons";
+import { ESTIMATOR_COPY as COPY } from "@/content/services";
 
-export default function CostEstimator() {
+/** One estimator service (ESTIMATOR_SERVICES in @/lib/constants, passed in by the server page). */
+export interface EstimatorService {
+  id: string;
+  label: string;
+  baseMin: number;
+  baseMax: number;
+  factors: readonly string[];
+}
+
+const row =
+  "group flex min-h-12 w-full items-center justify-between gap-4 border-b border-rule py-3 text-left text-body transition-colors duration-150 hover:text-fg active:bg-steel-50";
+
+/**
+ * Three steps in one panel: pick a service, pick what kind, see the range.
+ * The range is the same arithmetic as before (base range × a factor between
+ * 0.5 and 1.5, rounded to 50). When a step changes, focus moves to the new
+ * step's prompt so a keyboard or screen reader user lands on it.
+ */
+export default function CostEstimator({ services }: { services: readonly EstimatorService[] }) {
   const [selectedService, setSelectedService] = useState<string | null>(null);
   const [selectedFactor, setSelectedFactor] = useState<string | null>(null);
   const [showResult, setShowResult] = useState(false);
+  const promptRef = useRef<HTMLParagraphElement>(null);
+  const moveFocus = useRef(false);
 
-  const service = ESTIMATOR_SERVICES.find((s) => s.id === selectedService);
+  const service = services.find((s) => s.id === selectedService);
 
   const calculateRange = () => {
     if (!service || !selectedFactor) return { min: 0, max: 0 };
@@ -26,133 +44,128 @@ export default function CostEstimator() {
   };
 
   const reset = () => {
+    moveFocus.current = true;
     setSelectedService(null);
     setSelectedFactor(null);
     setShowResult(false);
   };
 
+  const pickService = (id: string) => {
+    moveFocus.current = true;
+    setSelectedService(id);
+  };
+
+  const pickFactor = (factor: string) => {
+    moveFocus.current = true;
+    setSelectedFactor(factor);
+    setShowResult(true);
+  };
+
+  // After a step changes (never on first render), put focus on its prompt.
+  useEffect(() => {
+    if (!moveFocus.current) return;
+    moveFocus.current = false;
+    promptRef.current?.focus({ preventScroll: false });
+  }, [selectedService, showResult]);
+
   const range = calculateRange();
+  const step = showResult ? "result" : selectedService && service ? "factors" : "services";
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-200 p-5 sm:p-6 lg:p-8">
-      <div className="flex items-center gap-3 mb-6 sm:mb-8">
-        <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
-          <Calculator className="w-4 h-4 sm:w-5 sm:h-5" />
-        </div>
-        <div>
-          <h3 className="text-base sm:text-lg font-bold text-gray-900">Cost Estimator</h3>
-          <p className="text-[10px] sm:text-xs text-gray-500">Get a rough estimate in seconds</p>
-        </div>
+    <div className="estimator rounded-frame border border-rule bg-canvas p-5 sm:p-8">
+      <div className="border-b border-rule pb-5">
+        <h3 className="text-lg leading-snug font-semibold text-fg">{COPY.title}</h3>
+        <p className="text-sm text-muted">{COPY.tagline}</p>
       </div>
 
-      <AnimatePresence mode="wait">
+      <div key={step} className="estimator-step">
         {/* Step 1: Select Service */}
-        {!selectedService && (
-          <motion.div
-            key="services"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2 }}
-          >
-            <p className="text-xs sm:text-sm text-gray-500 mb-3 sm:mb-4">What service do you need?</p>
-            <div className="grid grid-cols-2 gap-2">
-              {ESTIMATOR_SERVICES.map((s) => (
-                <button
-                  key={s.id}
-                  onClick={() => setSelectedService(s.id)}
-                  className="p-2.5 sm:p-3 rounded-xl border border-gray-200 text-left text-xs sm:text-sm text-gray-600 hover:border-primary/30 hover:text-gray-900 transition-all duration-300 group"
-                >
-                  <span className="group-hover:text-primary transition-colors">
-                    {s.label}
-                  </span>
-                  <ChevronRight className="w-3 h-3 inline ml-1 opacity-0 group-hover:opacity-100 transition-opacity" />
-                </button>
+        {step === "services" && (
+          <>
+            <p ref={promptRef} tabIndex={-1} className="label-tech mt-6 mb-2 text-accent">
+              {COPY.pickService}
+            </p>
+            <ul className="grid grid-cols-1 gap-x-6 sm:grid-cols-2">
+              {services.map((s) => (
+                <li key={s.id}>
+                  <button type="button" onClick={() => pickService(s.id)} className={row}>
+                    <span className="font-medium underline-offset-4 group-hover:underline">{s.label}</span>
+                    <ArrowRight className="size-4 shrink-0 text-accent transition-transform duration-250 ease-settle group-hover:translate-x-0.5" />
+                  </button>
+                </li>
               ))}
-            </div>
-          </motion.div>
+            </ul>
+          </>
         )}
 
         {/* Step 2: Select Factor */}
-        {selectedService && !showResult && service && (
-          <motion.div
-            key="factors"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2 }}
-          >
-            <p className="text-xs sm:text-sm text-gray-500 mb-3 sm:mb-4">
-              What type of {service.label.toLowerCase()}?
+        {step === "factors" && service && (
+          <>
+            <p ref={promptRef} tabIndex={-1} className="label-tech mt-6 mb-2 text-accent">
+              {COPY.pickFactorBefore}
+              {service.label.toLowerCase()}
+              {COPY.pickFactorAfter}
             </p>
-            <div className="space-y-2">
+            <ul>
               {service.factors.map((factor) => (
-                <button
-                  key={factor}
-                  onClick={() => {
-                    setSelectedFactor(factor);
-                    setShowResult(true);
-                  }}
-                  className={cn(
-                    "w-full p-2.5 sm:p-3 rounded-xl border text-left text-xs sm:text-sm transition-all duration-300",
-                    selectedFactor === factor
-                      ? "border-primary bg-primary/10 text-primary"
-                      : "border-gray-200 text-gray-600 hover:border-primary/30 hover:text-gray-900"
-                  )}
-                >
-                  {factor}
-                </button>
+                <li key={factor}>
+                  <button
+                    type="button"
+                    onClick={() => pickFactor(factor)}
+                    aria-pressed={selectedFactor === factor}
+                    className={row}
+                  >
+                    <span className="font-medium underline-offset-4 group-hover:underline">{factor}</span>
+                    <ArrowRight className="size-4 shrink-0 text-accent transition-transform duration-250 ease-settle group-hover:translate-x-0.5" />
+                  </button>
+                </li>
               ))}
-            </div>
+            </ul>
             <button
+              type="button"
               onClick={reset}
-              className="mt-3 sm:mt-4 text-xs text-gray-500 hover:text-gray-600 flex items-center gap-1 transition-colors"
+              className="mt-4 inline-flex min-h-11 items-center gap-2 text-sm font-medium text-muted underline-offset-4 transition-colors duration-150 hover:text-fg hover:underline"
             >
-              <RotateCcw className="w-3 h-3" /> Start over
+              <RotateCcw className="size-4" /> {COPY.startOver}
             </button>
-          </motion.div>
+          </>
         )}
 
         {/* Result */}
-        {showResult && (
-          <motion.div
-            key="result"
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.3 }}
-            className="text-center"
-          >
-            <p className="text-xs sm:text-sm text-gray-500 mb-2">
+        {step === "result" && (
+          <div className="mt-6">
+            <p ref={promptRef} tabIndex={-1} className="label-tech text-accent">
               {service?.label} — {selectedFactor}
             </p>
-            <div className="text-3xl sm:text-4xl font-black text-gray-900 my-3 sm:my-4">
+            <div className="mt-4 font-display text-display-md font-bold text-fg tabular-nums [font-stretch:108%]">
               ${range.min.toLocaleString()} – ${range.max.toLocaleString()}
             </div>
-            <p className="text-[10px] sm:text-xs text-gray-500 mb-4 sm:mb-6">
-              *Estimate only. Actual cost depends on specific conditions.
+            <p className="mt-4 text-sm text-muted">
+              {COPY.disclaimer}
               <br />
-              Contact us for a free, accurate quote.
+              {COPY.disclaimerMore}
             </p>
-            <div className="flex flex-col gap-2">
-              <Button href="/booking" size="sm" className="w-full">
-                Book a Service
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+              <Button href={COPY.bookHref} size="md">
+                {COPY.book}
               </Button>
               <button
+                type="button"
                 onClick={reset}
-                className="text-xs sm:text-sm text-gray-500 hover:text-gray-900 flex items-center justify-center gap-1 transition-colors py-2"
+                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-control border border-rule px-5 text-base font-semibold text-fg transition-colors duration-150 hover:border-fg active:scale-[0.98]"
               >
-                <RotateCcw className="w-3 h-3" /> Try another service
+                <RotateCcw className="size-4" /> {COPY.again}
               </button>
-              <Link
-                href="/quote-builder"
-                className="text-xs text-primary hover:text-primary-dark flex items-center justify-center gap-1 transition-colors"
-              >
-                Want a detailed estimate? Build your custom quote →
-              </Link>
             </div>
-          </motion.div>
+            <Link
+              href={COPY.detailedHref}
+              className="mt-5 inline-flex min-h-11 items-center text-sm font-semibold text-link underline-offset-4 hover:underline"
+            >
+              {COPY.detailed}
+            </Link>
+          </div>
         )}
-      </AnimatePresence>
+      </div>
     </div>
   );
 }
