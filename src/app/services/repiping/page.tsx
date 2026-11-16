@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import PageTransition from "@/components/layout/PageTransition";
 import ServiceLandingTemplate from "@/components/services/ServiceLandingTemplate";
 import ServiceJsonLd from "@/components/seo/ServiceJsonLd";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
@@ -25,7 +24,7 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <PageTransition>
+    <>
       <ServiceJsonLd landing={landing} />
       <FaqJsonLd faqs={landing.faqs} />
       <BreadcrumbJsonLd
@@ -42,6 +41,6 @@ export default function Page() {
         description="What a Cape Coral repipe costs, how to spot failing pipes, and why polybutylene homes get repiped."
       />
       <CTASection />
-    </PageTransition>
+    </>
   );
 }

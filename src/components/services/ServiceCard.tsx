@@ -1,86 +1,75 @@
-"use client";
-
-import { motion } from "framer-motion";
 import Link from "next/link";
-import {
-  Siren,
-  Waves,
-  Flame,
-  Wrench,
-  Building2,
-  HardHat,
-  Droplets,
-  PaintBucket,
-  Shovel,
-  ArrowRight,
-} from "lucide-react";
+import { cn } from "@/lib/utils";
+import Frame from "@/components/ui/Frame";
+import { ArrowRight } from "@/components/ui/icons";
+import type { MediaRef } from "@/lib/media-types";
 import type { Service } from "@/lib/types";
 
-const iconMap: Record<string, React.ReactNode> = {
-  Siren: <Siren className="w-6 h-6 sm:w-7 sm:h-7" />,
-  Waves: <Waves className="w-6 h-6 sm:w-7 sm:h-7" />,
-  Flame: <Flame className="w-6 h-6 sm:w-7 sm:h-7" />,
-  Wrench: <Wrench className="w-6 h-6 sm:w-7 sm:h-7" />,
-  Building2: <Building2 className="w-6 h-6 sm:w-7 sm:h-7" />,
-  HardHat: <HardHat className="w-6 h-6 sm:w-7 sm:h-7" />,
-  Droplets: <Droplets className="w-6 h-6 sm:w-7 sm:h-7" />,
-  PaintBucket: <PaintBucket className="w-6 h-6 sm:w-7 sm:h-7" />,
-  Shovel: <Shovel className="w-6 h-6 sm:w-7 sm:h-7" />,
-};
-
+/**
+ * A service tile (design-system.md "Tiles"): a portrait frame with the title,
+ * the service's line and its feature list below it, never on it. The whole
+ * tile is one link; hover lifts the frame 2 px and nudges the arrow.
+ *
+ * `media` is resolved by the server page (picture("home.service.<slug>"));
+ * without one the tile is type-led: no frame and no stand-in picture, the
+ * words under a hairline.
+ *
+ * "door": the frame sits beside the words (a wide tile for a short group).
+ */
 interface ServiceCardProps {
   service: Service;
-  index: number;
+  media: MediaRef | null;
+  more: string;
+  layout?: "tile" | "door";
+  /** Real layout widths of the frame. */
+  sizes: string;
+  titleAs?: "h3" | "h4";
+  className?: string;
 }
 
-export default function ServiceCard({ service, index }: ServiceCardProps) {
+export default function ServiceCard({
+  service,
+  media,
+  more,
+  layout = "tile",
+  sizes,
+  titleAs: Title = "h4",
+  className,
+}: ServiceCardProps) {
+  const door = layout === "door";
+  const lift = "transition-[transform,box-shadow] duration-250 ease-settle group-hover:-translate-y-0.5 group-hover:shadow-lift";
+  const frame = media ? (
+    <Frame media={media} alt="" aspect="4/5" sizes={sizes} quality={70} frameClassName={lift} />
+  ) : null;
+
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{
-        duration: 0.6,
-        delay: index * 0.08,
-        ease: [0.16, 1, 0.3, 1],
-      }}
+    <Link
+      href={service.href}
+      className={cn(
+        "service-tile group flex h-full flex-col rounded-frame",
+        door && frame && "grid grid-cols-[minmax(0,5fr)_minmax(0,7fr)] items-start gap-5 sm:gap-8",
+        !frame && "border-t border-rule pt-6",
+        className,
+      )}
     >
-      <Link href={service.href} className="group block h-full">
-        <div className="h-full bg-white rounded-2xl border border-gray-200 p-5 sm:p-6 lg:p-8 card-lift card-lift-hover hover:border-primary/30 active:scale-[0.98] relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-40 h-40 bg-primary/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-
-          <div className="relative z-10">
-            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-4 sm:mb-6 group-hover:bg-primary/20 transition-colors duration-300">
-              {iconMap[service.icon]}
-            </div>
-
-            <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">
-              {service.title}
-            </h3>
-            <p className="text-gray-500 text-xs sm:text-sm leading-relaxed mb-4 sm:mb-5">
-              {service.description}
-            </p>
-
-            {service.features && (
-              <ul className="space-y-1.5 sm:space-y-2 mb-4 sm:mb-6">
-                {service.features.slice(0, 4).map((feature) => (
-                  <li
-                    key={feature}
-                    className="flex items-center gap-2 text-xs sm:text-sm text-gray-500"
-                  >
-                    <div className="w-1 h-1 rounded-full bg-primary flex-shrink-0" />
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-            )}
-
-            <div className="flex items-center gap-1 text-primary text-sm font-medium group-hover:gap-2 transition-all duration-300">
-              Learn more <ArrowRight className="w-4 h-4" />
-            </div>
-          </div>
-        </div>
-      </Link>
-    </motion.div>
+      {frame}
+      <div className={cn("flex flex-1 flex-col", !door && frame && "mt-5")}>
+        <Title className="text-lg leading-snug font-semibold text-fg sm:text-xl">
+          <span className="underline-offset-4 group-hover:underline group-hover:decoration-1">{service.title}</span>
+        </Title>
+        <p className="mt-2 text-sm leading-relaxed text-muted">{service.description}</p>
+        {service.features && service.features.length > 0 && (
+          <ul className="service-tile-features mt-4 text-sm text-body">
+            {service.features.slice(0, 4).map((feature) => (
+              <li key={feature}>{feature}</li>
+            ))}
+          </ul>
+        )}
+        <span className="mt-auto inline-flex min-h-6 items-center gap-1.5 pt-4 text-sm font-semibold text-link">
+          {more}
+          <ArrowRight className="size-4 transition-transform duration-250 ease-settle group-hover:translate-x-0.5" />
+        </span>
+      </div>
+    </Link>
   );
 }

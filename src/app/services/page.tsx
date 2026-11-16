@@ -1,12 +1,15 @@
 import type { Metadata } from "next";
-import PageTransition from "@/components/layout/PageTransition";
 import PageHero from "@/components/ui/PageHero";
 import Container from "@/components/ui/Container";
+import Section from "@/components/ui/Section";
+import Reveal from "@/components/ui/Reveal";
 import ServiceCard from "@/components/services/ServiceCard";
 import CostEstimator from "@/components/estimator/CostEstimator";
 import SectionHeading from "@/components/ui/SectionHeading";
 import CTASection from "@/components/home/CTASection";
-import { SERVICES } from "@/lib/constants";
+import { SERVICES, ESTIMATOR_SERVICES } from "@/lib/constants";
+import { picture } from "@/lib/media";
+import { SERVICES_INDEX as COPY } from "@/content/services";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/services" },
@@ -32,55 +35,130 @@ export const metadata: Metadata = {
   },
 };
 
+/** The service page slug behind a tile ("/services/plumbing-remodel" → "plumbing-remodel"). */
+const slugOf = (href: string) => href.split("/").filter(Boolean).pop() ?? "";
+
 export default function ServicesPage() {
+  const groups = COPY.groups.map((group) => ({
+    ...group,
+    services: group.serviceIds
+      .map((id) => SERVICES.find((s) => s.id === id))
+      .filter((s): s is (typeof SERVICES)[number] => Boolean(s)),
+  }));
+  // Every service in SERVICES is listed: one missing from the groups goes to the first group.
+  const grouped = new Set<string>(COPY.groups.flatMap((g) => g.serviceIds));
+  groups[0].services.push(...SERVICES.filter((s) => !grouped.has(s.id)));
+
   return (
-    <PageTransition>
-      {/* Hero */}
+    <>
       <PageHero
-        align="center"
-        size="lg"
-        overline="Our Services"
-        title="Every Plumbing Solution"
-        accent="Under One Roof"
+        layout="type-led"
+        overline={COPY.hero.overline}
+        title={COPY.hero.title}
+        accent={COPY.hero.accent}
         accentPosition="block"
-        description="From a dripping faucet to a 500-unit development, C&S Plumbing has the expertise, equipment, and team to handle it all."
+        description={COPY.hero.description}
       />
 
-      {/* Services Grid */}
-      <section className="py-16 sm:py-24 lg:py-32">
+      {/* Services, in two groups */}
+      <Section tone="shell" labelledBy="services-grid-heading">
         <Container>
           {/* The hero <h1> carries this visually; the grid still needs a
               section heading so the outline doesn't jump h1 -> h3. */}
-          <h2 className="sr-only">All plumbing services</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            {SERVICES.map((service, i) => (
-              <ServiceCard key={service.id} service={service} index={i} />
-            ))}
-          </div>
+          <h2 id="services-grid-heading" className="sr-only">
+            {COPY.gridHeading}
+          </h2>
+          {groups.map((group, gi) => {
+            const door = group.services.length <= 2;
+            return (
+              <section
+                key={group.id}
+                aria-labelledby={`${group.id}-heading`}
+                className={gi > 0 ? "mt-section-sm" : undefined}
+              >
+                <div className="mb-8 flex items-center gap-4 sm:mb-10">
+                  <span className="joint text-accent" aria-hidden="true" />
+                  <h3 id={`${group.id}-heading`} className="shrink-0 text-display-sm text-fg">
+                    {group.title}
+                  </h3>
+                  <span className="h-px flex-1 bg-rule" aria-hidden="true" />
+                </div>
+                {(() => {
+                  const tiles = group.services.map((service) => ({
+                    service,
+                    media: picture(`home.service.${slugOf(service.href)}`),
+                  }));
+                  const framed = tiles.filter((t) => t.media);
+                  const typeLed = tiles.filter((t) => !t.media);
+                  return (
+                    <>
+                      {framed.length > 0 && (
+                        <ul
+                          className={
+                            door
+                              ? "grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2"
+                              : "grid grid-cols-2 gap-x-4 gap-y-12 sm:gap-x-6 md:grid-cols-4 lg:gap-x-8"
+                          }
+                        >
+                          {framed.map(({ service, media }, i) => (
+                            <Reveal as="li" key={service.id} index={Math.min(i, 5)}>
+                              <ServiceCard
+                                service={service}
+                                media={media}
+                                more={COPY.tileMore}
+                                layout={door ? "door" : "tile"}
+                                sizes={
+                                  door
+                                    ? "(min-width: 1280px) 260px, (min-width: 768px) 20vw, 40vw"
+                                    : "(min-width: 1280px) 290px, (min-width: 768px) 22vw, 45vw"
+                                }
+                              />
+                            </Reveal>
+                          ))}
+                        </ul>
+                      )}
+                      {/* Services without a photograph yet: type-led, words under a hairline. */}
+                      {typeLed.length > 0 && (
+                        <ul className="mt-14 grid grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-3">
+                          {typeLed.map(({ service }, i) => (
+                            <Reveal as="li" key={service.id} index={Math.min(i, 5)}>
+                              <ServiceCard service={service} media={null} more={COPY.tileMore} sizes="0px" />
+                            </Reveal>
+                          ))}
+                        </ul>
+                      )}
+                    </>
+                  );
+                })()}
+              </section>
+            );
+          })}
         </Container>
-      </section>
+      </Section>
 
       {/* Cost Estimator */}
-      <section className="py-16 sm:py-24 lg:py-32 bg-surface">
+      <Section tone="white" labelledBy="estimator-heading">
         <Container>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-12 lg:gap-16 items-start">
-            <div>
+          <div className="grid grid-cols-1 items-start gap-y-10 lg:grid-cols-12 lg:gap-x-8">
+            <div className="lg:col-span-5">
               <SectionHeading
                 align="left"
-                overline="Quick Estimate"
-                title="How Much Will It Cost?"
-                subtitle="Get a rough estimate for your plumbing project in seconds. Select a service and answer a quick question to see typical price ranges."
+                id="estimator-heading"
+                overline={COPY.estimator.overline}
+                title={COPY.estimator.title}
+                subtitle={COPY.estimator.subtitle}
+                className="mb-0"
               />
-              <p className="text-xs sm:text-sm text-gray-500 mt-3 sm:mt-4">
-                *All estimates are approximate and vary based on specific conditions, materials, and scope. Contact us for a free, accurate quote.
-              </p>
+              <p className="mt-6 max-w-[56ch] text-sm text-muted">{COPY.estimator.note}</p>
             </div>
-            <CostEstimator />
+            <div className="lg:col-span-6 lg:col-start-7">
+              <CostEstimator services={ESTIMATOR_SERVICES} />
+            </div>
           </div>
         </Container>
-      </section>
+      </Section>
 
       <CTASection />
-    </PageTransition>
+    </>
   );
 }
