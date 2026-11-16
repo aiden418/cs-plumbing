@@ -81,7 +81,7 @@ export default function ProjectDetail({ project }: { project: CompletedProject }
         <dl className="mt-8 grid grid-cols-2 gap-x-6 sm:grid-cols-3">
           {facts.map((fact) => (
             <div key={fact.label} className="flex flex-col border-t border-rule py-3">
-              <dt className="label-tech text-muted">{fact.label}</dt>
+              <dt className="text-sm text-muted">{fact.label}</dt>
               <dd className="mt-1 font-semibold text-fg tabular-nums">{fact.value}</dd>
             </div>
           ))}
@@ -89,7 +89,7 @@ export default function ProjectDetail({ project }: { project: CompletedProject }
         {firstPhase && (
           <Link
             href={`#${phaseAnchor(firstPhase.slug)}`}
-            className="label-tech group mt-6 inline-flex min-h-11 items-center gap-2 text-accent hover:text-fg"
+            className="group mt-6 inline-flex min-h-11 items-center gap-2 text-sm font-medium text-muted hover:text-fg"
           >
             <ArrowRight className="size-4 rotate-90 transition-transform duration-250 ease-settle group-hover:translate-y-0.5" />
             {T.walk}
@@ -137,10 +137,7 @@ export default function ProjectDetail({ project }: { project: CompletedProject }
                   >
                     {lists.map((list, i) => (
                       <Reveal key={list.title} index={i}>
-                        <h3 className="label-tech mb-4 flex items-center gap-2.5 text-accent">
-                          <span className="joint" aria-hidden="true" />
-                          {list.title}
-                        </h3>
+                        <h3 className="mb-4 text-lg font-semibold text-fg">{list.title}</h3>
                         <ul className="project-list text-body">
                           {list.items.map((item) => (
                             <li key={item}>

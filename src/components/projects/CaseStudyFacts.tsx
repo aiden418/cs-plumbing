@@ -63,7 +63,7 @@ export default function CaseStudyFacts({ project }: { project: CompletedProject 
               <dl className="grid grid-cols-1 gap-x-8 sm:grid-cols-2">
                 {facts.map((f) => (
                   <div key={f.label} className="border-t border-rule py-4">
-                    <dt className="label-tech text-muted">{f.label}</dt>
+                    <dt className="text-sm text-muted">{f.label}</dt>
                     <dd className="mt-1.5 font-semibold text-fg tabular-nums">{f.value}</dd>
                   </div>
                 ))}
@@ -74,10 +74,7 @@ export default function CaseStudyFacts({ project }: { project: CompletedProject 
               <div className="mt-10 grid grid-cols-1 gap-y-10 sm:grid-cols-2 sm:gap-x-8">
                 {hasInspections && (
                   <div>
-                    <h3 className="label-tech mb-4 flex items-center gap-2.5 text-accent">
-                      <span className="joint" aria-hidden="true" />
-                      {T.inspections}
-                    </h3>
+                    <h3 className="mb-4 text-lg font-semibold text-fg">{T.inspections}</h3>
                     <dl className="border-t border-rule">
                       {cs.inspections!.map((i) => (
                         <div key={i.phase} className="flex justify-between gap-4 border-b border-rule py-3">
@@ -90,10 +87,7 @@ export default function CaseStudyFacts({ project }: { project: CompletedProject 
                 )}
                 {cs.fieldProblem && (
                   <div>
-                    <h3 className="label-tech mb-4 flex items-center gap-2.5 text-accent">
-                      <span className="joint" aria-hidden="true" />
-                      {T.fieldProblem}
-                    </h3>
+                    <h3 className="mb-4 text-lg font-semibold text-fg">{T.fieldProblem}</h3>
                     <div className="border-t border-rule pt-4">
                       <p className="text-body">
                         <strong className="font-semibold text-fg">{T.problem}</strong> {cs.fieldProblem.problem}

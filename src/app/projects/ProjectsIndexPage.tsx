@@ -93,7 +93,6 @@ function Spotlight({ project }: { project: CompletedProject }) {
           aspect="4/3"
           sizes="(min-width: 1280px) 46rem, (min-width: 1024px) 58vw, 92vw"
           className="lg:col-span-7"
-          frameClassName="transition-transform duration-250 ease-settle group-hover:-translate-y-0.5"
         />
       )}
       <div className="lg:col-span-5">
@@ -107,7 +106,7 @@ function Spotlight({ project }: { project: CompletedProject }) {
           {project.name}
         </h2>
         <p className="mt-4 max-w-[60ch] text-body">{project.description}</p>
-        <p className="label-tech mt-6 flex flex-wrap gap-x-5 gap-y-2 text-muted tabular-nums">
+        <p className="mt-6 flex flex-wrap gap-x-5 gap-y-1 text-sm text-muted tabular-nums">
           {project.location && <span>{project.location}</span>}
           <span>{T.photos(photos)}</span>
           {project.phases.length > 1 && <span>{T.phases(project.phases.length)}</span>}

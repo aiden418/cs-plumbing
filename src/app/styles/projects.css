@@ -51,21 +51,8 @@
   }
 
   .project-list > li {
-    display: flex;
-    gap: 0.875rem;
-    align-items: baseline;
     padding-block: 0.75rem;
     border-bottom: 1px solid var(--tone-rule);
-  }
-
-  .project-list > li::before {
-    content: "";
-    flex: none;
-    width: 0.4375rem;
-    height: 0.4375rem;
-    border: 1.5px solid var(--tone-accent);
-    border-radius: 9999px;
-    transform: translateY(-0.125rem);
   }
 }
 
