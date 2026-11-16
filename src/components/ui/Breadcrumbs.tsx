@@ -20,7 +20,7 @@ export default function Breadcrumbs({ items, className }: BreadcrumbsProps) {
   if (items.length === 0) return null;
   return (
     <nav aria-label="Breadcrumb" className={className}>
-      <ol className="flex flex-wrap items-center gap-x-2 text-sm text-muted">
+      <ol className="flex flex-wrap items-center gap-x-2 text-sm font-medium text-muted">
         {items.map((item, i) => {
           const current = i === items.length - 1;
           return (

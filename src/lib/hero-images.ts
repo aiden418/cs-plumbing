@@ -18,7 +18,13 @@ export interface PageHeroImage {
   position?: string;
 }
 
-export type PageHeroLayout = "cinema" | "split" | "type-led" | "editorial" | "compact" | "urgent";
+/**
+ * Version 2 has two looks: "photo" (the photograph fills the hero behind the
+ * words) and "plain" (white, no picture). The six older names are still
+ * accepted so every existing caller keeps working; resolveHeroLook() maps them.
+ */
+export type HeroLook = "photo" | "plain";
+export type PageHeroLayout = HeroLook | "cinema" | "split" | "type-led" | "editorial" | "compact" | "urgent";
 
 /**
  * Pictures that never fill a page header: stock city scenery is not C&S work,
@@ -118,6 +124,25 @@ export function resolveHeroLayout(input: HeroLayoutInput): PageHeroLayout {
   return "type-led";
 }
 
+/**
+ * What the header looks like (v2-bright.md "Heroes"): split, cinema and
+ * editorial become "photo" when a photograph was resolved, otherwise "plain";
+ * type-led, compact and urgent are always "plain" (urgent keeps its red call
+ * button, which the caller passes). With no layout named, a photograph gives
+ * "photo".
+ */
+export function resolveHeroLook(layout: PageHeroLayout | undefined, hasPhoto: boolean): HeroLook {
+  switch (layout) {
+    case "plain":
+    case "type-led":
+    case "compact":
+    case "urgent":
+      return "plain";
+    default:
+      return hasPhoto ? "photo" : "plain";
+  }
+}
+
 export type HeadlineWidth = "display-wide" | "default" | "display-normal" | "display-tight";
 
 /** The whole H1 as one string: title, then accent after a space. */
@@ -140,16 +165,6 @@ export function headlineWidth(text: string): { width: HeadlineWidth; stepDown: b
 /** Portrait photos go in 4:5 frames, landscape ones in 3:2. */
 export function frameOrientation(media: Pick<MediaRef, "width" | "height">): "portrait" | "landscape" {
   return media.height > media.width ? "portrait" : "landscape";
-}
-
-/** Deterministic pick of one of the three plan-motif drawings. */
-export function planVariant(seed: string): "a" | "b" | "c" {
-  let hash = 2166136261;
-  for (let i = 0; i < seed.length; i++) {
-    hash ^= seed.charCodeAt(i);
-    hash = Math.imul(hash, 16777619);
-  }
-  return (["a", "b", "c"] as const)[(hash >>> 0) % 3];
 }
 
 /** "26.6664° N · 81.9172° W" from a latitude and longitude. */

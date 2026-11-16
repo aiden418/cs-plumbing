@@ -6,8 +6,8 @@ import { ArrowRight } from "@/components/ui/icons";
 import type { MediaRef } from "@/lib/media-types";
 
 /**
- * Frame: the only way a content photograph is shown (design-system.md
- * section 4). An aspect-ratio box with rounded corners, the photo's dominant
+ * Frame: the only way a content photograph is shown. An aspect-ratio box
+ * with 16 px corners (v2-bright.md), the photo's dominant
  * colour underneath while it loads, object-cover with the photo's own
  * object-position, and the caption below the frame, never on it.
  *
@@ -58,7 +58,7 @@ function FrameBox({
 }: Omit<FrameProps, "media" | "caption"> & { media: MediaRef }) {
   return (
     <div
-      className={cn("relative overflow-hidden rounded-frame", aspect !== "natural" && aspects[aspect], className)}
+      className={cn("relative overflow-hidden rounded-2xl", aspect !== "natural" && aspects[aspect], className)}
       style={{
         backgroundColor: media.color,
         aspectRatio: aspect === "natural" ? `${media.width} / ${media.height}` : undefined,
@@ -98,7 +98,7 @@ interface FrameLinkProps {
   media: MediaRef | null | undefined;
   sizes: string;
   title: ReactNode;
-  /** Small label above the title (label-tech, accent): a category, a city, a count. */
+  /** Small label above the title (14 px semibold, accent): a category, a city, a count. */
   label?: ReactNode;
   /** One line under the title. */
   description?: ReactNode;
@@ -109,8 +109,8 @@ interface FrameLinkProps {
 }
 
 /**
- * A tile: frame and the words below it, all one link. Hover lifts the frame
- * 2 px and nudges the arrow. With no picture the text still links.
+ * A tile: frame and the words below it, all one link. Hover underlines the
+ * title and nudges the arrow (no lift). With no picture the text still links.
  */
 export function FrameLink({
   href,
@@ -125,7 +125,7 @@ export function FrameLink({
   className,
 }: FrameLinkProps) {
   return (
-    <Link href={href} className={cn("group block rounded-frame", className)}>
+    <Link href={href} className={cn("group block rounded-2xl", className)}>
       {media && (
         <FrameBox
           media={media}
@@ -133,16 +133,15 @@ export function FrameLink({
           sizes={sizes}
           quality={quality}
           alt=""
-          className="transition-[transform,box-shadow] duration-250 ease-settle group-hover:-translate-y-0.5 group-hover:shadow-lift"
         />
       )}
       <span className="mt-4 block">
-        {label && <span className="label-tech mb-2 block text-accent">{label}</span>}
-        <Title className="flex items-start gap-2 text-lg leading-snug font-semibold text-fg">
+        {label && <span className="meta mb-1.5 block text-accent">{label}</span>}
+        <Title className="flex items-start gap-2 text-lg leading-snug font-semibold text-fg sm:text-xl">
           <span className="group-hover:underline group-hover:decoration-1 group-hover:underline-offset-4">{title}</span>
           <ArrowRight className="mt-[0.2em] size-5 shrink-0 text-accent transition-transform duration-250 ease-settle group-hover:translate-x-0.5" />
         </Title>
-        {description && <span className="mt-1.5 block text-sm text-muted">{description}</span>}
+        {description && <span className="mt-1.5 block text-base text-body">{description}</span>}
       </span>
     </Link>
   );

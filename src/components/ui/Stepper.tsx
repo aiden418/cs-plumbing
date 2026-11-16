@@ -4,8 +4,8 @@ import { cn } from "@/lib/utils";
 import { Check } from "@/components/ui/icons";
 
 /**
- * The connection line: steps as joints joined by a hairline (design-system.md
- * sections 1 and 4). Horizontal for processes and wizards (scrolls sideways
+ * Real steps or phases: numbered dots joined by a 1 px line (v2-bright.md:
+ * a stepper shows real steps only, never decoration). Horizontal for processes and wizards (scrolls sideways
  * on phones), vertical for timelines.
  *
  * Server-safe. An item can be a link, a button (when a client component
@@ -57,10 +57,10 @@ function Joint({ state }: { state: StepState }) {
     <span
       aria-hidden="true"
       className={cn(
-        "relative z-10 inline-flex size-6 shrink-0 items-center justify-center rounded-full border-[1.5px] bg-canvas transition-colors duration-250",
-        state === "done" && "border-accent bg-accent text-canvas",
+        "relative z-10 inline-flex size-6 shrink-0 items-center justify-center rounded-full border-2 bg-canvas",
+        state === "done" && "border-primary bg-primary text-white",
         state === "current" && "border-primary ring-4 ring-primary/15",
-        state === "todo" && "border-rule",
+        state === "todo" && "border-steel-300",
       )}
     >
       {state === "done" && <Check className="size-3.5" strokeWidth={2.5} />}
@@ -73,18 +73,18 @@ function StepBody({ item, state, meta }: { item: StepItem; state: StepState; met
   return (
     <span className="block">
       {meta !== null && meta !== undefined && (
-        <span className={cn("label-tech block", state === "todo" ? "text-muted" : "text-accent")}>{meta}</span>
+        <span className={cn("meta block tabular-nums", state === "todo" ? "text-muted" : "text-accent")}>{meta}</span>
       )}
       <span
         className={cn(
-          "mt-1 block leading-snug font-semibold",
+          "mt-1 block text-[1.0625rem] leading-snug font-semibold",
           state === "todo" ? "text-body" : "text-fg",
           (item.href || item.onClick) && "underline-offset-4 group-hover/step:underline",
         )}
       >
         {item.label}
       </span>
-      {item.description && <span className="mt-1.5 block text-sm text-muted">{item.description}</span>}
+      {item.description && <span className="mt-1.5 block text-base text-body">{item.description}</span>}
     </span>
   );
 }
@@ -140,7 +140,7 @@ export default function Stepper({
                 {!last && (
                   <span
                     aria-hidden="true"
-                    className={cn("absolute top-7 bottom-1 left-3 w-px -translate-x-1/2", states[i] === "done" ? "bg-accent" : "bg-rule")}
+                    className={cn("absolute top-7 bottom-1 left-3 w-px -translate-x-1/2", states[i] === "done" ? "bg-primary" : "bg-rule")}
                   />
                 )}
                 <StepContent
@@ -181,7 +181,7 @@ export default function Stepper({
               {!last && (
                 <span
                   aria-hidden="true"
-                  className={cn("absolute top-[calc(0.75rem+0.5rem)] right-0 left-6 h-px", state === "done" ? "bg-accent" : "bg-rule")}
+                  className={cn("absolute top-[calc(0.75rem+0.5rem)] right-0 left-6 h-px", state === "done" ? "bg-primary" : "bg-rule")}
                 />
               )}
               <StepContent

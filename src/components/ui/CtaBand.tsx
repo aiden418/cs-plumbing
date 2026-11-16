@@ -5,8 +5,6 @@ import Button from "@/components/ui/Button";
 import Container from "@/components/ui/Container";
 import Eyebrow from "@/components/ui/Eyebrow";
 import Frame from "@/components/ui/Frame";
-import Reveal from "@/components/ui/Reveal";
-import Section from "@/components/ui/Section";
 import { Calendar, Phone } from "@/components/ui/icons";
 import type { MediaRef } from "@/lib/media-types";
 
@@ -45,8 +43,10 @@ interface CtaBandProps {
 const DEFAULT_SECONDARY: CtaAction = { label: "Book a Service", href: "/booking" };
 
 /**
- * The closing band on ink: eyebrow, display heading, one line, Call (primary)
- * plus a second action, and the hours.
+ * The closing band (v2-bright.md "Homepage" 11): brand blue with white words,
+ * an optional eyebrow, the heading, one line, Call (solid white, navy label)
+ * plus a second action (white outline), and the hours or a small promise
+ * line. With `media`, a photograph sits beside the words from lg up.
  */
 export default function CtaBand({
   title,
@@ -63,54 +63,64 @@ export default function CtaBand({
   headingId,
   className,
 }: CtaBandProps) {
-  const center = align === "center";
   const split = Boolean(media);
+  const center = align === "center";
   const call: CtaAction = primary ?? {
     label: `Call ${BUSINESS.phone}`,
     href: BUSINESS.phoneHref,
     icon: <Phone className="size-5" />,
   };
   return (
-    <Section tone="ink" id={id} labelledBy={headingId} className={className}>
+    <section id={id} aria-labelledby={headingId} className={cn("cta-band relative py-section-sm", className)}>
       <Container>
-        <div className={cn(split && "lg:grid lg:grid-cols-12 lg:items-center lg:gap-x-8")}>
-        <Reveal className={cn("max-w-3xl", center && "mx-auto text-center", split && "lg:col-span-6 lg:mx-0 lg:text-left")}>
-          {eyebrow && <Eyebrow className={cn("mb-5", center && "justify-center", split && "lg:justify-start")}>{eyebrow}</Eyebrow>}
-          <h2 id={headingId} className="text-display-md text-fg">
-            {title}
-            {accent && <> {accent}</>}
-          </h2>
-          {body && <p className={cn("mt-5 max-w-[56ch] text-lead text-body", center && "mx-auto", split && "lg:mx-0")}>{body}</p>}
-          <div className={cn("mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap", center && "sm:justify-center", split && "lg:justify-start")}>
-            <Button href={call.href} size="lg" icon={call.icon} className="w-full sm:w-auto">
-              {call.label}
-            </Button>
-            {secondary && (
-              <Button
-                href={secondary.href}
-                variant="secondary"
-                size="lg"
-                icon={secondary.icon ?? <Calendar className="size-5" />}
-                className="w-full sm:w-auto"
-              >
-                {secondary.label}
+        <div className={cn(split && "lg:grid lg:grid-cols-12 lg:items-center lg:gap-x-12")}>
+          <div className={cn("max-w-3xl", center && "mx-auto text-center", split && "lg:col-span-7 lg:mx-0 lg:text-left")}>
+            {eyebrow && (
+              <Eyebrow className={cn("mb-4", center && "justify-center", split && "lg:justify-start")}>{eyebrow}</Eyebrow>
+            )}
+            <h2 id={headingId} className="text-display-md text-fg">
+              {title}
+              {accent && <> {accent}</>}
+            </h2>
+            {body && (
+              <p className={cn("mt-4 max-w-[54ch] text-lead text-body", center && "mx-auto", split && "lg:mx-0")}>{body}</p>
+            )}
+            <div
+              className={cn(
+                "mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap",
+                center && "sm:justify-center",
+                split && "lg:justify-start"
+              )}
+            >
+              <Button href={call.href} variant="onPhoto" size="lg" icon={call.icon} className="w-full sm:w-auto">
+                {call.label}
               </Button>
+              {secondary && (
+                <Button
+                  href={secondary.href}
+                  variant="outline-light"
+                  size="lg"
+                  icon={secondary.icon ?? <Calendar className="size-5" />}
+                  className="w-full sm:w-auto"
+                >
+                  {secondary.label}
+                </Button>
+              )}
+            </div>
+            {(showHours || note) && (
+              <div className="mt-6 space-y-1 text-sm font-medium text-body">
+                {showHours && <p>{BUSINESS.hours.open}</p>}
+                {note && <p>{note}</p>}
+              </div>
             )}
           </div>
-          {(showHours || note) && (
-            <div className="mt-6 space-y-1 text-sm text-muted">
-              {showHours && <p>{BUSINESS.hours.open}</p>}
-              {note && <p>{note}</p>}
+          {media && (
+            <div className="hidden lg:col-span-5 lg:block">
+              <Frame media={media} aspect="3/2" sizes="(min-width: 1024px) 40vw, 1px" />
             </div>
           )}
-        </Reveal>
-        {media && (
-          <div className="hidden lg:col-span-5 lg:col-start-8 lg:block">
-            <Frame media={media} aspect="3/2" sizes="(min-width: 1024px) 40vw, 1px" />
-          </div>
-        )}
         </div>
       </Container>
-    </Section>
+    </section>
   );
 }
