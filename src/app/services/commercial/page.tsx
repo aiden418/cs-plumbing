@@ -48,7 +48,8 @@ const commercialFaqs = [
 
 export const metadata: Metadata = {
   alternates: { canonical: "/services/commercial" },
-  title: "Commercial Plumbing Services",
+  // Keyword map, cluster 11: the hub's title carries the two core cities.
+  title: { absolute: "Commercial Plumber Cape Coral & Fort Myers | C&S Plumbing" },
   description:
     "Commercial plumbing in Cape Coral, Fort Myers & Lee County — preventive maintenance, emergency repairs, grease traps and backflow prevention.",
   keywords: [

@@ -13,6 +13,7 @@ import Credentials from "@/components/about/Credentials";
 import TrainingTrade from "@/components/about/TrainingTrade";
 import CTASection from "@/components/home/CTASection";
 import AboutPersonJsonLd from "@/components/seo/AboutPersonJsonLd";
+import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import { BUSINESS } from "@/lib/business";
 import { LATEST_AWARD } from "@/lib/awards";
 import { image, slot } from "@/lib/media";
@@ -50,6 +51,12 @@ export default function AboutPage() {
 
   return (
     <>
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", href: "/" },
+          { name: "About", href: "/about" },
+        ]}
+      />
       <PageHero
         layout="photo"
         frame={lead ? { ...lead, position: "30% 60%" } : null}

@@ -4,6 +4,7 @@ import CTASection from "@/components/home/CTASection";
 import Container from "@/components/ui/Container";
 import PageHero from "@/components/ui/PageHero";
 import Section from "@/components/ui/Section";
+import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import { BLOG_INDEX } from "@/content/reading";
 import { BLOG_POSTS } from "@/lib/constants";
 
@@ -31,6 +32,12 @@ export default function Page() {
   const posts = [...BLOG_POSTS].sort((a, b) => b.publishDate.localeCompare(a.publishDate));
   return (
     <>
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", href: "/" },
+          { name: "Blog", href: "/blog" },
+        ]}
+      />
       <PageHero
         layout="plain"
         overline={BLOG_INDEX.overline}
