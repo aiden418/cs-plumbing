@@ -8,10 +8,11 @@
 //
 //   herovideo probe    <file>
 //   herovideo frame    <file> --time <seconds> --out <png> [--crop x,y,w,h] [--size WxH]
-//   herovideo encode   <in> <out.mp4> --codec h264|hevc --bitrate <bits/s>
+//   herovideo encode   <in> <out.mp4> --codec h264|hevc
+//                      --bitrate <bits/s> [--rate-control auto|variable|average]
+//                        or --quality <0-1>   (constant quality; size follows)
 //                      [--crop x,y,w,h] [--size WxH] [--fps 30] [--keyint 60]
 //                      [--encoder auto|hardware|software]
-//                      [--rate-control auto|variable|average]
 //   herovideo compare  <reference> <test> [--crop x,y,w,h] [--fps 30] [--frames]
 //   herovideo encoders [--properties]
 //
@@ -21,10 +22,10 @@
 //
 // What `encode` always does: H.264 High (CABAC) or HEVC Main tagged hvc1, 8-bit
 // BT.709 video range, constant frame rate, B-frames allowed, a keyframe at
-// least every --keyint frames and every keyframe a clean restart point (closed
-// GOP), no audio, and the index before the picture data so a browser can start
-// playing while the file is still arriving. It refuses to leave a file behind
-// that fails any of those checks.
+// least every --keyint frames, closed GOPs wherever the encoder offers the
+// choice, no audio, and the index before the picture data so a browser can
+// start playing while the file is still arriving. It reads every file back and
+// deletes it if the tag, size, frame count or index position is wrong.
 //
 // Build (what the driver runs; x86_64 instead of arm64 on an Intel Mac):
 //   xcrun swiftc -O -swift-version 5 -target arm64-apple-macos14 \
@@ -512,12 +513,22 @@ enum EncoderMode: String {
     }
 }
 
+/// What an encode aims for.
+enum Target {
+    /// A bit rate in bits per second; see `RateControl` for how it is held.
+    case bitrate(Int)
+    /// A constant quality level between 0 and 1 (not every encoder has one).
+    /// The level moves in steps, so the file size does too.
+    case quality(Double)
+}
+
+/// How a bit-rate target is held.
 enum RateControl: String {
     /// `variable` where the encoder offers it, otherwise `average`.
     case auto
     /// VBR (macOS 26+, hardware encoders): the encoder may spend more on the
     /// hard parts of the clip and less on the easy ones. Measured on the hero
-    /// clip at matched file size this is 0.4-0.9 dB better than `average`, and
+    /// clip at matched file size this is 0.6-1.2 dB better than `average`, and
     /// it lands much closer to the requested rate.
     case variable
     /// The classic average-bit-rate target; works on every macOS and encoder.
@@ -655,11 +666,12 @@ func removeWriterLeftovers(for output: URL) {
 
 func runEncode(_ raw: ArraySlice<String>) async throws {
     let usage =
-        "usage: herovideo encode <in> <out.mp4> --codec h264|hevc --bitrate <bits/s> [--crop x,y,w,h] [--size WxH] "
-        + "[--fps 30] [--keyint 60] [--encoder auto|hardware|software] [--rate-control auto|variable|average]"
-    let args = try Args(raw, options: ["codec", "bitrate", "crop", "size", "fps", "keyint", "encoder", "rate-control"])
-    guard args.positional.count == 2, let codecName = args.string("codec"), let bitrate = try args.int("bitrate")
-    else { throw ToolError(usage) }
+        "usage: herovideo encode <in> <out.mp4> --codec h264|hevc (--bitrate <bits/s> [--rate-control "
+        + "auto|variable|average] | --quality <0-1>) [--crop x,y,w,h] [--size WxH] [--fps 30] [--keyint 60] "
+        + "[--encoder auto|hardware|software]"
+    let args = try Args(
+        raw, options: ["codec", "bitrate", "quality", "crop", "size", "fps", "keyint", "encoder", "rate-control"])
+    guard args.positional.count == 2, let codecName = args.string("codec") else { throw ToolError(usage) }
     guard let codec = Codec(rawValue: codecName) else { throw ToolError("--codec must be h264 or hevc") }
     guard let mode = EncoderMode(rawValue: args.string("encoder") ?? "auto") else {
         throw ToolError("--encoder must be auto, hardware or software")
@@ -667,11 +679,24 @@ func runEncode(_ raw: ArraySlice<String>) async throws {
     guard let requestedRateControl = RateControl(rawValue: args.string("rate-control") ?? "auto") else {
         throw ToolError("--rate-control must be auto, variable or average")
     }
+    // Exactly one target: a bit rate, or a constant quality level.
+    let target: Target
+    switch (try args.int("bitrate"), try args.double("quality")) {
+    case let (bitrate?, nil):
+        guard bitrate >= 50_000, bitrate <= 100_000_000 else { throw ToolError("--bitrate is out of range") }
+        target = .bitrate(bitrate)
+    case let (nil, quality?):
+        guard quality > 0, quality < 1 else { throw ToolError("--quality must be between 0 and 1") }
+        guard args.string("rate-control") == nil else {
+            throw ToolError("--rate-control goes with --bitrate, not with --quality")
+        }
+        target = .quality(quality)
+    default:
+        throw ToolError("give either --bitrate or --quality\n\(usage)")
+    }
     let fps = Int32(try args.int("fps") ?? 30)
     let keyint = try args.int("keyint") ?? 60
-    guard bitrate >= 50_000, bitrate <= 100_000_000, fps >= 1, fps <= 120, keyint >= 1 else {
-        throw ToolError("--bitrate, --fps or --keyint is out of range")
-    }
+    guard fps >= 1, fps <= 120, keyint >= 1 else { throw ToolError("--fps or --keyint is out of range") }
 
     let inputURL = URL(fileURLWithPath: args.positional[0]).standardizedFileURL.resolvingSymlinksInPath()
     let outputURL = URL(fileURLWithPath: args.positional[1]).standardizedFileURL.resolvingSymlinksInPath()
@@ -687,21 +712,6 @@ func runEncode(_ raw: ArraySlice<String>) async throws {
         throw ToolError("no \(mode.rawValue) \(codec.rawValue) encoder is available on this Mac")
     }
 
-    // Rate control: VBR when the encoder has it, the plain average target otherwise.
-    var variableKeys: (rate: String, ceiling: String, window: String)?
-    if #available(macOS 26.0, *) {
-        let keys = (
-            rate: kVTCompressionPropertyKey_VariableBitRate as String,
-            ceiling: kVTCompressionPropertyKey_VBVMaxBitRate as String,
-            window: kVTCompressionPropertyKey_VBVBufferDuration as String
-        )
-        if [keys.rate, keys.ceiling, keys.window].allSatisfy(encoder.properties.contains) { variableKeys = keys }
-    }
-    if requestedRateControl == .variable, variableKeys == nil {
-        throw ToolError("\(encoder.name) has no variable-bit-rate mode on this macOS; use --rate-control average")
-    }
-    let rateControl: RateControl = requestedRateControl == .average || variableKeys == nil ? .average : .variable
-
     var compression: [String: Any] = [
         AVVideoMaxKeyFrameIntervalKey: keyint,
         AVVideoAllowFrameReorderingKey: true,
@@ -714,15 +724,44 @@ func runEncode(_ raw: ArraySlice<String>) async throws {
     case .hevc:
         compression[AVVideoProfileLevelKey] = kVTProfileLevel_HEVC_Main_AutoLevel as String
     }
-    if let keys = variableKeys, rateControl == .variable {
-        // The shape of Apple's own "high quality" encoder preset: a ceiling of
-        // 1.5x the target over a 4-second window. Look-ahead is left off: it
-        // measured slightly worse on this kind of footage.
-        compression[keys.rate] = bitrate
-        compression[keys.ceiling] = bitrate + bitrate / 2
-        compression[keys.window] = 4.0
-    } else {
-        compression[AVVideoAverageBitRateKey] = bitrate
+
+    let rateControl: String
+    switch target {
+    case .quality(let quality):
+        // Constant quality: every part of the clip is held to the same level and
+        // the file size is whatever that takes.
+        let key = kVTCompressionPropertyKey_Quality as String
+        guard encoder.properties.contains(key) else {
+            throw ToolError("\(encoder.name) has no constant-quality mode; use --bitrate")
+        }
+        compression[key] = quality
+        rateControl = "quality"
+    case .bitrate(let bitrate):
+        // VBR when the encoder has it, the plain average target otherwise.
+        var variableKeys: (rate: String, ceiling: String, window: String)?
+        if #available(macOS 26.0, *) {
+            let keys = (
+                rate: kVTCompressionPropertyKey_VariableBitRate as String,
+                ceiling: kVTCompressionPropertyKey_VBVMaxBitRate as String,
+                window: kVTCompressionPropertyKey_VBVBufferDuration as String
+            )
+            if [keys.rate, keys.ceiling, keys.window].allSatisfy(encoder.properties.contains) { variableKeys = keys }
+        }
+        if requestedRateControl == .variable, variableKeys == nil {
+            throw ToolError("\(encoder.name) has no variable-bit-rate mode on this macOS; use --rate-control average")
+        }
+        if let keys = variableKeys, requestedRateControl != .average {
+            // The shape of Apple's own "high quality" encoder preset: a ceiling of
+            // 1.5x the target over a 4-second window. Look-ahead is left off: it
+            // measured slightly worse on this kind of footage.
+            compression[keys.rate] = bitrate
+            compression[keys.ceiling] = bitrate + bitrate / 2
+            compression[keys.window] = 4.0
+            rateControl = RateControl.variable.rawValue
+        } else {
+            compression[AVVideoAverageBitRateKey] = bitrate
+            rateControl = RateControl.average.rawValue
+        }
     }
     // Every keyframe a clean restart point (HEVC would otherwise use open GOPs).
     let closedGOPKey = kVTCompressionPropertyKey_AllowOpenGOP as String
@@ -813,8 +852,7 @@ func runEncode(_ raw: ArraySlice<String>) async throws {
             "out": outputURL.path,
             "bytes": (attributes[.size] as? NSNumber)?.intValue ?? 0,
             "frames": job.frames,
-            "requestedBitrate": bitrate,
-            "rateControl": rateControl.rawValue,
+            "rateControl": rateControl,
             "keyframeInterval": keyint,
             "width": geometry.width,
             "height": geometry.height,
@@ -825,6 +863,10 @@ func runEncode(_ raw: ArraySlice<String>) async throws {
             "topLevelBoxes": boxes.map { $0.type },
             "seconds": rounded(Date().timeIntervalSince(started), places: 2),
         ]
+        switch target {
+        case .bitrate(let bitrate): result["requestedBitrate"] = bitrate
+        case .quality(let quality): result["requestedQuality"] = rounded(quality, places: 4)
+        }
         if let codecString = rfc6381(written.formatDescription) { result["codec"] = codecString }
         try printJSON(result)
     } catch {
@@ -1020,9 +1062,10 @@ let usage = """
 
       herovideo probe    <file>
       herovideo frame    <file> --time <seconds> --out <png> [--crop x,y,w,h] [--size WxH]
-      herovideo encode   <in> <out.mp4> --codec h264|hevc --bitrate <bits/s> [--crop x,y,w,h] [--size WxH]
-                         [--fps 30] [--keyint 60] [--encoder auto|hardware|software]
-                         [--rate-control auto|variable|average]
+      herovideo encode   <in> <out.mp4> --codec h264|hevc
+                         (--bitrate <bits/s> [--rate-control auto|variable|average] | --quality <0-1>)
+                         [--crop x,y,w,h] [--size WxH] [--fps 30] [--keyint 60]
+                         [--encoder auto|hardware|software]
       herovideo compare  <reference> <test> [--crop x,y,w,h] [--fps 30] [--frames]
       herovideo encoders [--properties]
     """
