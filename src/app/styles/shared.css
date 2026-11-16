@@ -2,3 +2,105 @@
    Put rules inside @layer components { ... } so utility classes can still
    override them; use the design tokens (var(--color-*), var(--tone-*),
    var(--ease-*), var(--dur-*)) rather than raw values. */
+
+/* Version 2 labels (v2-bright.md "The look"): 14 px, semibold, never faint.
+   `eyebrow` is the one label above a heading (uppercase, near-normal
+   spacing); `meta` is a small second line such as "Repipe · Cape Coral". */
+@utility eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+@utility meta {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0;
+}
+
+@layer components {
+  /* Photo hero (PageHero layout "photo"). The words are white on a navy
+     scrim that is darkest where they sit (bottom-left) and lets the rest of
+     the photograph show; a light band at the top keeps the transparent site
+     header readable. Measured: H1 and lead at 4.5:1 or better on the lightest
+     pixel behind them (see the v2-shared report). */
+  section[data-hero-photo] {
+    --tone-canvas: var(--color-ink);
+    --tone-raised: var(--color-ink-700);
+    --tone-fg: var(--color-white);
+    --tone-body: var(--color-white);
+    --tone-muted: rgb(255 255 255 / 0.9);
+    --tone-rule: rgb(255 255 255 / 0.3);
+    --tone-accent: var(--color-white);
+    --tone-link: var(--color-white);
+    --tone-focus: var(--color-white);
+    color: var(--tone-body);
+  }
+
+  /* Phones and tablets: the words run the full width and most of the
+     height, so the scrim is darkest at the bottom and never under 56% where
+     white text can sit (below that, a white pixel would drop under 4.5:1). */
+  .hero-scrim {
+    background: linear-gradient(
+      to top,
+      color-mix(in srgb, var(--color-ink) 90%, transparent) 0%,
+      color-mix(in srgb, var(--color-ink) 80%, transparent) 35%,
+      color-mix(in srgb, var(--color-ink) 68%, transparent) 62%,
+      color-mix(in srgb, var(--color-ink) 58%, transparent) 82%,
+      color-mix(in srgb, var(--color-ink) 56%, transparent) 100%
+    );
+  }
+
+  /* Desktop: the words keep to the left half, so the scrim fades out
+     towards the right and the photograph shows there unwashed. */
+  @media (min-width: 64rem) {
+    .hero-scrim {
+      background:
+        linear-gradient(
+          to right,
+          color-mix(in srgb, var(--color-ink) 82%, transparent) 0%,
+          color-mix(in srgb, var(--color-ink) 70%, transparent) 40%,
+          color-mix(in srgb, var(--color-ink) 56%, transparent) 56%,
+          color-mix(in srgb, var(--color-ink) 18%, transparent) 74%,
+          transparent 90%
+        ),
+        linear-gradient(
+          to top,
+          color-mix(in srgb, var(--color-ink) 50%, transparent) 0%,
+          color-mix(in srgb, var(--color-ink) 10%, transparent) 45%,
+          transparent 70%,
+          color-mix(in srgb, var(--color-ink) 40%, transparent) 100%
+        );
+    }
+  }
+
+  /* Rows a caller adds under the hero actions (price line, rating, award)
+     keep their own spacing; on a photo they need no box of their own. */
+  .hero-photo-rows:not(:empty) {
+    margin-top: 1.5rem;
+  }
+}
+
+@layer components {
+  /* The closing band: brand blue, white words (white on primary = 4.6:1, so
+     every word on it is full white, never faded). Not a [data-tone] section:
+     its colours are set here. */
+  .cta-band {
+    --tone-canvas: var(--color-primary);
+    --tone-raised: var(--color-primary-dark);
+    --tone-fg: var(--color-white);
+    --tone-body: var(--color-white);
+    --tone-muted: var(--color-white);
+    --tone-rule: rgb(255 255 255 / 0.3);
+    --tone-accent: var(--color-white);
+    --tone-link: var(--color-white);
+    --tone-focus: var(--color-white);
+    background-color: var(--tone-canvas);
+    color: var(--tone-body);
+  }
+}

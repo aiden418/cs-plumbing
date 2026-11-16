@@ -152,5 +152,7 @@ test("CTASection keeps its words and links", async () => {
   assert.ok(html.includes('href="/booking"') && html.includes("Book a Service"));
   assert.ok(html.includes(`href="${BUSINESS.phoneHref}"`) && html.includes(`Call ${BUSINESS.phone}`));
   assert.ok(html.includes("Free estimates · No hidden fees · Satisfaction guaranteed"));
-  assert.ok(html.includes('data-tone="ink"'));
+  // Version 2: the closing band is brand blue (class cta-band), not ink.
+  assert.match(html, /<section[^>]*class="cta-band/);
+  assert.doesNotMatch(html, /data-tone="ink"/);
 });

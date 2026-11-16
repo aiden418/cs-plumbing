@@ -41,13 +41,13 @@ export function LinkGrid({
         <li key={link.href} className="-mt-px border-y border-rule">
           <Link
             href={link.href}
-            className="group flex min-h-14 items-center justify-between gap-4 py-3 underline-offset-4"
+            className="group flex min-h-15 items-center justify-between gap-4 py-3 underline-offset-4"
           >
             <span className="min-w-0">
-              <span className="block leading-snug font-medium text-fg group-hover:underline">{link.label}</span>
-              {link.meta && <span className="mt-0.5 block text-sm text-muted">{link.meta}</span>}
+              <span className="block text-[1.0625rem] leading-snug font-semibold text-fg group-hover:underline sm:text-lg">{link.label}</span>
+              {link.meta && <span className="mt-0.5 block text-[0.9375rem] text-muted">{link.meta}</span>}
             </span>
-            <ArrowRight className="size-5 shrink-0 text-accent transition-transform duration-250 ease-settle group-hover:translate-x-0.5" />
+            <ArrowRight className="size-5 shrink-0 text-primary transition-transform duration-150 group-hover:translate-x-0.5" />
           </Link>
         </li>
       ))}
@@ -81,10 +81,10 @@ export function LinkSection({
       <Container>
         <div className="mb-8 max-w-2xl sm:mb-10">
           {overline && <Eyebrow className="mb-4">{overline}</Eyebrow>}
-          <h2 id={headingId} className="text-display-sm text-fg">
+          <h2 id={headingId} className="text-display-md text-fg">
             {heading}
           </h2>
-          {description && <p className="mt-3 max-w-[56ch] text-body">{description}</p>}
+          {description && <p className="mt-4 max-w-[56ch] text-lead text-body">{description}</p>}
         </div>
         {children}
       </Container>

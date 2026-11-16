@@ -34,9 +34,9 @@ const TONES: Exclude<Tone, "navy">[] = ["white", "shell", "ink"];
 
 function ToneBar({ tone }: { tone: Tone }) {
   return (
-    <div data-tone="ink" className="border-y border-rule bg-canvas py-3">
+    <div data-tone="shell" className="border-y border-rule bg-canvas py-3">
       <Container>
-        <p className="label-tech text-accent">Tone: {tone}</p>
+        <p className="meta text-accent">Tone: {tone}</p>
       </Container>
     </div>
   );
@@ -55,7 +55,7 @@ export default function SharedBlocksSpecimen() {
           <h1 className="text-display-lg text-fg">Shared blocks</h1>
           <p className="mt-4 max-w-[56ch] text-lead text-body">
             Related projects, related posts, blog landings, builder city links, customer benefits, Google reviews and
-            the two lead forms, on white, shell and ink.
+            the two lead forms, on white and shell (their defaults) and on ink (still supported).
           </p>
         </Container>
       </Section>
@@ -99,7 +99,7 @@ export default function SharedBlocksSpecimen() {
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-8">
             <div>
               <h2 className="mb-6 text-display-sm text-fg">Chat (compact)</h2>
-              <div className="max-w-sm rounded-frame border border-rule p-4">
+              <div className="max-w-sm rounded-2xl border border-rule p-4">
                 <ServiceRequestForm compact source="chat" />
               </div>
             </div>

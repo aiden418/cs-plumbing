@@ -124,7 +124,7 @@ const PHASES = [
 function Block({ title, children, className }: { title: string; children: React.ReactNode; className?: string }) {
   return (
     <div className={cn("min-w-0 border-t border-rule pt-6", className)}>
-      <h3 className="label-tech mb-5 text-muted">{title}</h3>
+      <h3 className="meta mb-5 text-muted">{title}</h3>
       {children}
     </div>
   );
@@ -144,12 +144,11 @@ function ButtonsSpecimen() {
           All services
         </Button>
         <Button variant="emergency">Emergency</Button>
-        <Button variant="brass">Brass</Button>
         <Button variant="inverse">Inverse</Button>
       </div>
       <div className="flex flex-wrap items-center gap-3">
         <Button size="sm">Small 44</Button>
-        <Button size="md">Medium 48</Button>
+        <Button size="md">Medium 52</Button>
         <Button size="lg">Large 56</Button>
         <Button size="sm" variant="secondary">
           Small secondary
@@ -174,7 +173,7 @@ function ButtonsSpecimen() {
         </Button>
       </div>
       <div className="flex flex-wrap items-center gap-3">
-        <Button variant="gold">Legacy gold</Button>
+        <Button variant="gold">Legacy gold (draws primary)</Button>
         <Button variant="outline-light">Legacy outline-light</Button>
         <Button fullWidth variant="secondary" className="sm:w-auto">
           Full width on phones
@@ -210,8 +209,8 @@ function ToneBlock({ tone }: { tone: Tone }) {
           </Block>
           <Block title="Eyebrow">
             <div className="space-y-3">
-              <Eyebrow>Precision in every connection.</Eyebrow>
-              <Eyebrow joint={false}>Without the joint</Eyebrow>
+              <Eyebrow>Water heaters</Eyebrow>
+              <Eyebrow joint>Legacy: with the joint ring</Eyebrow>
             </div>
           </Block>
         </div>
@@ -291,12 +290,12 @@ export default async function SpecimenPage({ searchParams }: { searchParams: Pro
 
   return (
     <>
-      {/* The site header is still the old fixed bar: clear it. */}
-      <Section tone="ink" spacing="sm" className="pt-[calc(var(--nav-h)+6rem)]">
+      {/* Below the solid white header, like every page without a photo hero. */}
+      <Section tone="white" spacing="sm" className="pt-[calc(var(--nav-h)+3rem)]">
         <Container>
           <Eyebrow>Development only</Eyebrow>
           <h1 className="mt-4 text-display-lg">Specimen</h1>
-          <p className="mt-4 max-w-[56ch] text-lead">Every primitive in every state, on every tone.</p>
+          <p className="mt-4 max-w-[56ch] text-lead">Version 2, bright and clear: every primitive in every state. White and shell are the page surfaces; navy and ink still work where a page asks for them.</p>
           <nav aria-label="Tone" className="mt-8 flex flex-wrap gap-2">
             {[{ href: "/dev/specimen", label: "All tones", active: !only }, ...TONES.map((t) => ({ href: `/dev/specimen?tone=${t}`, label: t, active: only === t }))].map(
               (l) => (
@@ -306,7 +305,7 @@ export default async function SpecimenPage({ searchParams }: { searchParams: Pro
                   aria-current={l.active ? "page" : undefined}
                   className={cn(
                     "inline-flex min-h-11 items-center rounded-chip border px-4 text-sm font-medium",
-                    l.active ? "border-white bg-white text-ink" : "border-rule text-fg hover:border-white",
+                    l.active ? "border-primary bg-primary text-white" : "border-steel-300 bg-white text-navy hover:border-steel-400",
                   )}
                 >
                   {l.label}
@@ -328,7 +327,7 @@ export default async function SpecimenPage({ searchParams }: { searchParams: Pro
                 <span className="block text-sm text-muted tabular-nums">{c.hex}</span>
                 <span className="mt-1 flex flex-wrap gap-x-2 text-xs text-muted">
                   <Ratio fg={c.hex} bg="#FFFFFF" label="W" />
-                  <Ratio fg={c.hex} bg="#F5F2EC" label="S" />
+                  <Ratio fg={c.hex} bg="#F4F6F9" label="S" />
                   <Ratio fg={c.hex} bg="#0A1730" label="I" />
                 </span>
               </li>
@@ -350,11 +349,12 @@ export default async function SpecimenPage({ searchParams }: { searchParams: Pro
               { k: "display-sm", el: <p className="font-display text-display-sm font-bold text-fg [font-stretch:108%]">Three generations of one family</p> },
               { k: "lead", el: <p className="max-w-[56ch] text-lead">{BUSINESS.description}</p> },
               { k: "body 17/18", el: <p className="max-w-[68ch]">{BUSINESS.description} Paragraphs stop at 68 characters so a line is easy to follow back.</p> },
-              { k: "sm 15", el: <p className="text-sm text-muted">Secondary UI text, never below 14 px for reading.</p> },
-              { k: "label-tech", el: <p className="label-tech text-accent">Phase 03 · Top-out · 26.6° N</p> },
+              { k: "sm 15", el: <p className="text-sm text-muted">Secondary UI text: 15 px, the smallest size for reading.</p> },
+              { k: "eyebrow 14 semibold", el: <p className="eyebrow text-accent">Water heaters</p> },
+              { k: "meta 14 semibold", el: <p className="meta text-accent">Repipe · Cape Coral</p> },
             ].map((row) => (
               <div key={row.k} className="grid gap-3 py-6 lg:grid-cols-[14rem_1fr] lg:gap-8">
-                <dt className="label-tech pt-2 text-muted">{row.k}</dt>
+                <dt className="meta pt-2 text-muted">{row.k}</dt>
                 <dd className="min-w-0">{row.el}</dd>
               </div>
             ))}
@@ -400,7 +400,7 @@ export default async function SpecimenPage({ searchParams }: { searchParams: Pro
               )}
             </div>
           )}
-          <h3 className="label-tech mt-16 mb-6 text-muted">FrameLink tiles</h3>
+          <h3 className="meta mt-16 mb-6 text-muted">FrameLink tiles</h3>
           <ul className="grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-4">
             {gallery.slice(7, 11).map((m, i) => (
               <li key={m.path}>
@@ -424,7 +424,7 @@ export default async function SpecimenPage({ searchParams }: { searchParams: Pro
           <ol className="grid gap-x-8 sm:grid-cols-2 lg:grid-cols-3">
             {PHASES.concat(PHASES.slice(0, 2)).map((p, i) => (
               <Reveal as="li" key={i} index={i} className="border-t border-rule py-5">
-                <span className="label-tech text-accent">{String(i + 1).padStart(2, "0")}</span>
+                <span className="meta text-accent">{String(i + 1).padStart(2, "0")}</span>
                 <span className="mt-2 block font-semibold text-fg">{p.label}</span>
                 <span className="mt-1 block text-sm text-muted">{p.description}</span>
               </Reveal>
@@ -435,7 +435,7 @@ export default async function SpecimenPage({ searchParams }: { searchParams: Pro
 
       <Section tone="ink" spacing="sm" labelledBy="logo-ink-title">
         <Container>
-          <h2 id="logo-ink-title" className="label-tech mb-8 text-muted">
+          <h2 id="logo-ink-title" className="meta mb-8 text-muted">
             LogoLockup on ink
           </h2>
           <div className="flex flex-wrap items-end gap-x-12 gap-y-8">
@@ -448,7 +448,7 @@ export default async function SpecimenPage({ searchParams }: { searchParams: Pro
       </Section>
       <Section tone="white" spacing="sm" labelledBy="logo-white-title">
         <Container>
-          <h2 id="logo-white-title" className="label-tech mb-8 text-muted">
+          <h2 id="logo-white-title" className="meta mb-8 text-muted">
             LogoLockup on white
           </h2>
           <div className="flex flex-wrap items-end gap-x-12 gap-y-8">

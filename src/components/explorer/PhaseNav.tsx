@@ -8,7 +8,7 @@ import { phaseAnchor, photoCountLabel } from "./explorer-utils";
  * The connection line of a project page (explorer.md "PhaseNav"): native
  * fragment links to each phase section (#phase-<slug>, today's anchors),
  * each a joint, the phase name and its photo count. Sticky under the header
- * on ink; scrolls sideways on phones.
+ * on the surface it sits on (light by default); scrolls sideways on phones.
  *
  * With JavaScript the phase in view is marked aria-current="true", from an
  * IntersectionObserver and from the hash (on load and on hashchange). It
@@ -90,7 +90,7 @@ export default function PhaseNav({ phases, label = "Project phases" }: { phases:
   }, [current]);
 
   return (
-    <nav aria-label={label} className="phase-nav" data-tone="ink">
+    <nav aria-label={label} className="phase-nav">
       <ol ref={listRef} className="phase-nav-list">
         {phases.map((phase, i) => {
           const active = phase.slug === current;
@@ -105,7 +105,7 @@ export default function PhaseNav({ phases, label = "Project phases" }: { phases:
               >
                 <span className="phase-nav-joint" aria-hidden="true" />
                 <span className="phase-nav-name">{phase.name}</span>
-                <span className="label-tech tabular-nums text-muted">{photoCountLabel(phase.count)}</span>
+                <span className="meta tabular-nums text-muted">{photoCountLabel(phase.count)}</span>
               </a>
             </li>
           );

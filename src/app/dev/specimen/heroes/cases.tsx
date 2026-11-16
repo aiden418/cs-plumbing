@@ -7,7 +7,8 @@ import { serviceHeroImage } from "@/lib/hero-images";
 import type { MediaRef } from "@/lib/media-types";
 
 /**
- * Development specimen: every PageHero layout with the shortest and the
+ * Development specimen: every old PageHero layout name as version 2 draws it
+ * (photo or plain), with the shortest and the
  * longest H1 of the site, with and without breadcrumb, actions and trust row,
  * with portrait and landscape frames. Not part of the site: 404 in a
  * production build unless it is a review build (analytics off).
@@ -43,11 +44,22 @@ const LEAD =
 
 const actions = (
   <>
-    <Button href="/booking" variant="gold" size="lg">
+    <Button href="/booking" size="lg">
       Book a Service
     </Button>
-    <Button href="/contact" variant="outline-light" size="lg">
+    <Button href="/contact" variant="secondary" size="lg">
       Contact us
+    </Button>
+  </>
+);
+
+const urgentActions = (
+  <>
+    <Button href="/contact" variant="emergency" size="lg">
+      Call now
+    </Button>
+    <Button href="/booking" variant="secondary" size="lg">
+      Book a Service
     </Button>
   </>
 );
@@ -71,7 +83,7 @@ export function Case({
     <div id={id}>
       <p
         data-tone="white"
-        className="label-tech border-y border-rule px-6 py-3"
+        className="meta border-y border-rule px-6 py-3 text-muted"
       >
         {label}
       </p>
@@ -90,7 +102,7 @@ export function heroCases(): HeroCase[] {
   return [
     {
       id: "cinema-short",
-      label: "cinema · shortest H1 · landscape frame · actions + trust row",
+      label: "cinema → photo · shortest H1 · landscape frame · actions + trust row",
       node: (
         <PageHero
           layout="cinema"
@@ -121,7 +133,7 @@ export function heroCases(): HeroCase[] {
     {
       id: "split-short",
       label:
-        "split · shortest H1 · portrait frame · breadcrumb + actions + trust row",
+        "split → photo · shortest H1 · portrait frame · breadcrumb + actions + trust row",
       node: (
         <PageHero
           frame={portrait}
@@ -137,13 +149,13 @@ export function heroCases(): HeroCase[] {
     },
     {
       id: "split-long",
-      label: "split · longest H1 · landscape frame · nothing else",
+      label: "split → photo · longest H1 · landscape frame · nothing else",
       node: <PageHero frame={landscape} {...LONG} />,
     },
     {
       id: "split-keyword-sm",
       label:
-        "split · keyword H1 · portrait frame · size sm (service-city defaults)",
+        "split → photo · keyword H1 · portrait frame · size sm (service-city defaults)",
       node: (
         <PageHero
           size="sm"
@@ -158,7 +170,7 @@ export function heroCases(): HeroCase[] {
     },
     {
       id: "type-led-short",
-      label: "type-led · shortest H1 · actions",
+      label: "type-led → plain · shortest H1 · actions",
       node: (
         <PageHero
           overline="Service area"
@@ -170,7 +182,7 @@ export function heroCases(): HeroCase[] {
     },
     {
       id: "type-led-long",
-      label: "type-led · longest H1 · breadcrumb + actions + trust row",
+      label: "type-led → plain · longest H1 · breadcrumb + actions + trust row",
       node: (
         <PageHero
           overline="Storm guide"
@@ -185,7 +197,7 @@ export function heroCases(): HeroCase[] {
     },
     {
       id: "editorial-short",
-      label: "editorial · shortest H1 · centred",
+      label: "editorial, no frame → plain · shortest H1 · centred",
       node: (
         <PageHero
           align="center"
@@ -197,7 +209,7 @@ export function heroCases(): HeroCase[] {
     },
     {
       id: "editorial-long-landscape",
-      label: "editorial · longest H1 · breadcrumb · landscape frame below",
+      label: "editorial → photo · longest H1 · breadcrumb · landscape frame below",
       node: (
         <PageHero
           layout="editorial"
@@ -211,7 +223,7 @@ export function heroCases(): HeroCase[] {
     },
     {
       id: "editorial-portrait",
-      label: "editorial · keyword H1 · portrait frame below",
+      label: "editorial → photo · keyword H1 · portrait frame below",
       node: (
         <PageHero
           layout="editorial"
@@ -224,12 +236,12 @@ export function heroCases(): HeroCase[] {
     },
     {
       id: "compact-short",
-      label: "compact · shortest H1",
+      label: "compact → plain · shortest H1",
       node: <PageHero size="sm" overline="Legal" {...SHORT} />,
     },
     {
       id: "compact-long",
-      label: "compact · longest H1 · centred · breadcrumb + trust row",
+      label: "compact → plain · longest H1 · centred · breadcrumb + trust row",
       node: (
         <PageHero
           size="sm"
@@ -245,20 +257,20 @@ export function heroCases(): HeroCase[] {
     },
     {
       id: "urgent-short",
-      label: "urgent · shortest H1 · actions",
+      label: "urgent → plain · shortest H1 · red call button",
       node: (
         <PageHero
           layout="urgent"
           overline="Emergency"
           {...SHORT}
           description={LEAD}
-          actions={actions}
+          actions={urgentActions}
         />
       ),
     },
     {
       id: "urgent-long",
-      label: "urgent · longest H1 · breadcrumb + actions + trust row",
+      label: "urgent → plain · longest H1 · breadcrumb + actions + trust row",
       node: (
         <PageHero
           accentTone="emergency"
@@ -266,7 +278,7 @@ export function heroCases(): HeroCase[] {
           {...LONG}
           breadcrumb={CRUMBS}
           description={LEAD}
-          actions={actions}
+          actions={urgentActions}
         >
           {trust}
         </PageHero>
@@ -274,14 +286,14 @@ export function heroCases(): HeroCase[] {
     },
     {
       id: "legacy-media",
-      label: "legacy media node (split) · keyword H1",
+      label: "legacy media node, no frame → plain with the node beside · keyword H1",
       node: (
         <PageHero
           overline="Water heaters"
           {...KEYWORD}
           description={LEAD}
           media={
-            <div className="aspect-[4/3] rounded-frame border border-rule bg-raised" />
+            <div className="aspect-[4/3] rounded-2xl border border-rule bg-shell" />
           }
         />
       ),

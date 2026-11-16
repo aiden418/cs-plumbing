@@ -74,14 +74,14 @@
 
   .filmstrip-arrow {
     display: inline-flex;
-    width: 2.75rem;
-    height: 2.75rem;
+    width: 3rem;
+    height: 3rem;
     align-items: center;
     justify-content: center;
-    border: 1px solid var(--tone-fg);
+    border: 1px solid color-mix(in oklab, var(--tone-fg) 30%, transparent);
     border-radius: var(--radius-control);
     color: var(--tone-fg);
-    background: transparent;
+    background: var(--tone-raised);
     transition:
       background-color var(--dur-1) var(--ease-enter),
       transform var(--dur-1) var(--ease-enter),
@@ -132,7 +132,7 @@
 
   .filmstrip-photo {
     display: block;
-    border-radius: var(--radius-frame);
+    border-radius: 1rem;
     cursor: zoom-in;
   }
 
@@ -144,14 +144,7 @@
     height: var(--rail-h);
     width: min(calc(var(--rail-h) * var(--ar, 0.75)), 86cqw);
     overflow: hidden;
-    border-radius: var(--radius-frame);
-    transition: transform var(--dur-2) var(--ease-settle);
-  }
-
-  @media (hover: hover) {
-    .filmstrip-photo:hover .filmstrip-frame {
-      transform: translateY(-2px);
-    }
+    border-radius: 1rem;
   }
 
   /* Project page: phases ------------------------------------------------------ */
@@ -201,13 +194,12 @@
     align-items: center;
   }
 
-  /* The run of pipe between two joints. */
+  /* The 1 px line between two phases. */
   .phase-nav-pipe {
     width: clamp(1.25rem, 4cqw, 3.5rem);
     height: 1px;
     margin-inline: 0.75rem;
-    background: var(--tone-accent);
-    opacity: 0.6;
+    background: var(--tone-rule);
   }
 
   .phase-nav-link {
@@ -221,7 +213,7 @@
   }
 
   .phase-nav-name {
-    font-size: 0.9375rem;
+    font-size: 1rem;
     font-weight: 600;
     text-underline-offset: 0.25em;
     transition: color var(--dur-1) var(--ease-enter);
@@ -240,7 +232,7 @@
     flex: none;
     width: 0.75rem;
     height: 0.75rem;
-    border: 1.5px solid var(--tone-accent);
+    border: 2px solid var(--tone-link);
     border-radius: 999px;
     background: var(--tone-canvas);
     transition:
@@ -251,9 +243,9 @@
 
   .phase-nav-link.is-current .phase-nav-joint,
   .featured-step.is-selected .featured-step-joint {
-    border-color: var(--color-primary-300);
-    background: var(--color-primary-300);
-    box-shadow: 0 0 0 4px color-mix(in oklab, var(--color-primary-300) 22%, transparent);
+    border-color: var(--tone-link);
+    background: var(--tone-link);
+    box-shadow: 0 0 0 4px color-mix(in oklab, var(--tone-link) 18%, transparent);
   }
 
   .phase-nav-link.is-current .phase-nav-name {
@@ -363,7 +355,7 @@
   }
 
   .featured-project.is-selected {
-    border-left-color: var(--color-brass);
+    border-left-color: var(--tone-link);
   }
 
   .featured-project-name {
@@ -415,8 +407,7 @@
     left: calc(0.75rem + 0.5rem);
     right: 0.5rem;
     height: 1px;
-    background: var(--tone-accent);
-    opacity: 0.6;
+    background: var(--tone-rule);
   }
 
   .featured-step-text {
@@ -615,12 +606,13 @@
     align-items: center;
     gap: 0.5rem;
     min-height: 2.75rem;
-    padding-inline: 1rem;
-    border: 1px solid color-mix(in oklab, var(--tone-fg) 32%, transparent);
+    padding-inline: 1.125rem;
+    border: 1px solid color-mix(in oklab, var(--tone-fg) 28%, transparent);
     border-radius: var(--radius-chip);
+    background: var(--tone-raised);
     color: var(--tone-fg);
-    font-size: var(--text-sm);
-    font-weight: 500;
+    font-size: 1rem;
+    font-weight: 600;
     transition:
       background-color var(--dur-1) var(--ease-enter),
       border-color var(--dur-1) var(--ease-enter),
@@ -643,11 +635,12 @@
 
   .gallery-chip-count {
     color: var(--tone-muted);
-    font-size: 0.8125rem;
+    font-size: 0.9375rem;
+    font-weight: 500;
   }
 
   .gallery-chip.is-pressed .gallery-chip-count {
-    color: rgb(255 255 255 / 0.85);
+    color: var(--color-white);
   }
 
   /* Justified rows: every item grows by its aspect ratio from its width at
@@ -689,7 +682,7 @@
     display: block;
     width: 100%;
     aspect-ratio: var(--ar, 1);
-    border-radius: var(--radius-frame);
+    border-radius: 1rem;
     cursor: zoom-in;
   }
 
@@ -699,13 +692,6 @@
     width: 100%;
     height: 100%;
     overflow: hidden;
-    border-radius: var(--radius-frame);
-    transition: transform var(--dur-2) var(--ease-settle);
-  }
-
-  @media (hover: hover) {
-    .gallery-photo:hover .gallery-frame {
-      transform: translateY(-2px);
-    }
+    border-radius: 1rem;
   }
 }
