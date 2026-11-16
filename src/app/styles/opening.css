@@ -27,14 +27,14 @@
   @media (min-width: 48rem) {
     .home-hero {
       min-height: clamp(36rem, 88svh, 56rem);
-      padding-top: calc(var(--nav-h) + 2.5rem);
+      padding-top: calc(var(--nav-h) + 2rem);
       padding-bottom: 2.5rem;
     }
   }
 
   @media (min-width: 64rem) {
     .home-hero {
-      padding-bottom: 3.5rem;
+      padding-bottom: 4.5rem;
     }
   }
 
@@ -97,9 +97,9 @@
         linear-gradient(
           to right,
           rgb(10 23 48 / 0.86) 0%,
-          rgb(10 23 48 / 0.78) 38%,
-          rgb(10 23 48 / 0.42) 62%,
-          rgb(10 23 48 / 0.08) 85%
+          rgb(10 23 48 / 0.8) 46%,
+          rgb(10 23 48 / 0.5) 66%,
+          rgb(10 23 48 / 0.08) 88%
         );
     }
   }
@@ -157,7 +157,9 @@
 
   @media (min-width: 48rem) {
     .home-hero-title {
-      font-size: clamp(3rem, 1.4rem + 3.8vw, 4.5rem);
+      /* "Southwest Florida's" on one line: three lines on desktop */
+      max-width: 20ch;
+      font-size: clamp(3rem, 1.4rem + 3.6vw, 4.25rem);
     }
   }
 
@@ -252,7 +254,7 @@
 
   @media (min-width: 64rem) {
     .home-hero-toggle {
-      bottom: 3.5rem;
+      bottom: 4.5rem;
     }
   }
 

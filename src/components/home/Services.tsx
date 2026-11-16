@@ -24,7 +24,7 @@ export default function Services() {
   const rows = tiles.filter((t) => !t.media);
 
   return (
-    <section data-tone="shell" aria-labelledby="home-services-title" className="relative bg-canvas py-12 text-body lg:py-20">
+    <section data-tone="shell" aria-labelledby="home-services-title" className="relative bg-canvas py-10 text-body md:py-14 lg:py-20">
       <Container>
         <HomeHeading
           id="home-services-title"
@@ -43,7 +43,7 @@ export default function Services() {
                   alt=""
                   aspect="4/3"
                   sizes="(min-width: 80rem) 400px, (min-width: 48rem) 31vw, 46vw"
-                  className="max-md:aspect-[3/2] lg:aspect-[16/10]"
+                  className="max-md:aspect-[3/2] lg:aspect-[2/1]"
                 />
                 <h3 className="home-service-title group-hover:text-link">{service.title}</h3>
                 <p className="home-service-text">
@@ -55,7 +55,7 @@ export default function Services() {
         </ul>
 
         {rows.length > 0 && (
-          <ul className="mt-8 grid grid-cols-1 border-b border-rule md:mt-12 md:grid-cols-3 md:gap-x-6 md:border-b-0">
+          <ul className="mt-6 grid grid-cols-2 gap-x-3 md:mt-12 md:grid-cols-3 md:gap-x-6">
             {rows.map(({ service }) => (
               <li key={service.id} className="border-t border-rule md:border-t-2">
                 <Link href={service.href} className="group flex min-h-12 items-start justify-between gap-4 py-3 md:py-4">

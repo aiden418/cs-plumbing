@@ -12,9 +12,9 @@ import { ArrowLink, HomeHeading } from "./HomeHeading";
  */
 export default function GuidesFaq({ posts }: { posts: BlogPost[] }) {
   return (
-    <section data-tone="shell" aria-labelledby="related-posts-heading" className="relative bg-canvas py-12 text-body lg:py-20">
+    <section data-tone="shell" aria-labelledby="related-posts-heading" className="relative bg-canvas py-10 text-body md:py-14 lg:py-20">
       <Container>
-        <div className="grid grid-cols-1 gap-y-14 lg:grid-cols-12 lg:gap-x-12">
+        <div className="grid grid-cols-1 gap-y-10 lg:grid-cols-12 lg:gap-x-12">
           <div className="lg:col-span-5">
             <HomeHeading
               id="related-posts-heading"
@@ -26,7 +26,7 @@ export default function GuidesFaq({ posts }: { posts: BlogPost[] }) {
             <ul className="mt-6 border-b border-rule">
               {posts.map((post) => (
                 <li key={post.slug} className="border-t border-rule">
-                  <Link href={`/blog/${post.slug}`} className="group flex items-start justify-between gap-4 py-4">
+                  <Link href={`/blog/${post.slug}`} className="group flex items-start justify-between gap-4 py-3 md:py-4">
                     <span>
                       <span className="block leading-snug font-semibold text-fg group-hover:text-link">{post.title}</span>
                       <span className="mt-1 block text-sm text-muted max-md:sr-only">{`${post.category} · ${post.readTime}`}</span>

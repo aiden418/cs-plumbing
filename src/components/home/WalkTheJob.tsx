@@ -27,7 +27,7 @@ function featured() {
 export default function WalkTheJob() {
   const projects = featured();
   return (
-    <section data-tone="white" aria-labelledby="home-walk-title" className="relative bg-canvas py-12 text-body lg:py-20">
+    <section data-tone="white" aria-labelledby="home-walk-title" className="relative bg-canvas py-10 text-body md:py-14 lg:py-20">
       <Container>
         <div className="mb-6 flex flex-wrap items-end justify-between gap-x-8 gap-y-2 lg:mb-10">
           <HomeHeading id="home-walk-title" title={walk.title} />

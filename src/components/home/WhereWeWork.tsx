@@ -26,7 +26,7 @@ function byCounty() {
 export default function WhereWeWork() {
   const groups = byCounty();
   return (
-    <section data-tone="shell" id={areas.id} aria-labelledby="home-areas-title" className="relative bg-canvas py-12 text-body lg:py-20">
+    <section data-tone="shell" id={areas.id} aria-labelledby="home-areas-title" className="relative bg-canvas py-10 text-body md:py-14 lg:py-20">
       <Container>
         <div className="grid grid-cols-1 gap-y-8 lg:grid-cols-12 lg:gap-x-12">
           <HomeHeading
@@ -34,6 +34,7 @@ export default function WhereWeWork() {
             eyebrow={areas.overline}
             title={areas.title}
             subtitle={areas.subtitle(EMERGENCY_CLAIMS.responseTime)}
+            subtitleHidden="phone"
             className="lg:col-span-5"
           />
           <div className="lg:col-span-7">
@@ -56,7 +57,7 @@ export default function WhereWeWork() {
                 </div>
               ))}
             </div>
-            <p className="mt-4 border-t border-rule pt-4 text-muted">{areas.more}</p>
+            <p className="mt-4 border-t border-rule pt-4 text-muted max-md:sr-only">{areas.more}</p>
             <p className="mt-2 flex flex-wrap gap-x-8">
               <ArrowLink href={areas.bookLink.href}>{areas.bookLink.label}</ArrowLink>
               <ArrowLink href={areas.mapLink.href}>{areas.mapLink.label}</ArrowLink>

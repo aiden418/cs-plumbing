@@ -7,27 +7,9 @@ import { family } from "@/content/home";
 import { ArrowLink, HomeHeading } from "./HomeHeading";
 
 /**
- * A reason's description: its first sentence is the "one line" shown on
- * phones; the rest stays in the HTML and is shown from 768 px.
- */
-function Line({ text }: { text: string }) {
-  const m = /^([^]+?[.!?])\s+([^]+)$/.exec(text);
-  return (
-    <p className="mt-1 text-base leading-normal text-body">
-      {m ? (
-        <>
-          {m[1]} <span className="max-md:sr-only">{m[2]}</span>
-        </>
-      ) : (
-        text
-      )}
-    </p>
-  );
-}
-
-/**
  * Why C&S, on shell: the family photograph beside a short list of six
- * reasons (a title and a line each; two columns from 768 px), and the link to
+ * reasons in two columns (on phones the titles; each description stays in
+ * the HTML and is shown from 768 px), and the link to
  * the story. The early-2000s job-site inset joins the photograph from 1024 px.
  */
 export default function FamilyStory() {
@@ -47,13 +29,13 @@ export default function FamilyStory() {
   ];
 
   return (
-    <section data-tone="shell" aria-labelledby="home-family-title" className="relative bg-canvas py-12 text-body lg:py-20">
+    <section data-tone="shell" aria-labelledby="home-family-title" className="relative bg-canvas py-10 text-body md:py-14 lg:py-20">
       <Container>
         <div className="grid grid-cols-1 gap-y-8 lg:grid-cols-12 lg:gap-x-12">
           <div className="lg:col-span-5">
             <HomeHeading id="home-family-title" eyebrow={family.overline} title={family.title} subtitle={family.subtitle} subtitleHidden="phone" />
             {main && (
-              <div className="relative mt-8 lg:mt-10 lg:mr-10 lg:mb-10">
+              <div className="relative mt-8 max-md:hidden lg:mt-10 lg:mr-10 lg:mb-10">
                 <Frame
                   media={main}
                   aspect="16/9"
@@ -73,11 +55,11 @@ export default function FamilyStory() {
           </div>
 
           <div className="lg:col-span-7 lg:pt-2">
-            <ul className="grid grid-cols-1 border-b border-rule md:grid-cols-2 md:gap-x-10 md:border-b-0">
+            <ul className="grid grid-cols-2 gap-x-4 md:gap-x-10">
               {reasons.map((reason) => (
-                <li key={reason.title} className="border-t border-rule py-3.5 md:py-5">
+                <li key={reason.title} className="border-t border-rule py-3 md:py-5">
                   <h3 className="text-lg leading-snug font-semibold text-fg">{reason.title}</h3>
-                  <Line text={reason.description} />
+                  <p className="mt-1 text-base leading-normal text-body max-md:sr-only">{reason.description}</p>
                 </li>
               ))}
             </ul>

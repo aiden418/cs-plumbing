@@ -32,7 +32,7 @@ export default function HomeIntro() {
         </Container>
       </div>
 
-      <Container className="py-8 lg:py-14">
+      <Container className="py-6 sm:py-8 lg:py-14">
         <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-5 lg:gap-6">
           {doors.map((door) => {
             const media = picture(door.slot);
@@ -51,7 +51,7 @@ export default function HomeIntro() {
                   <span className="home-door-text">
                     <span className="block text-sm font-semibold text-accent">{door.label}</span>
                     <span className="home-door-title">{door.title}</span>
-                    <span className="home-door-body">{door.body}</span>
+                    <span className="home-door-body max-sm:sr-only">{door.body}</span>
                     <span className="mt-auto inline-flex items-center gap-1.5 pt-2 font-semibold text-link">
                       {door.cta}
                       <ArrowRight className="size-5 transition-transform duration-150 group-hover:translate-x-0.5" />

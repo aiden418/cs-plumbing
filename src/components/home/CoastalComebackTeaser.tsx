@@ -30,7 +30,7 @@ function whiteLogo(path: string) {
 export default function CoastalComebackTeaser({ season = "departure" }: { season?: Season }) {
   const copy = SEASON_COPY[season];
   return (
-    <section data-tone="white" aria-labelledby="home-coastal-title" className="relative bg-canvas py-12 text-body lg:py-20">
+    <section data-tone="white" aria-labelledby="home-coastal-title" className="relative bg-canvas py-10 text-body md:py-14 lg:py-20">
       <Container>
         <div className="home-card grid grid-cols-1 gap-y-6 p-5 sm:p-8 lg:grid-cols-12 lg:gap-x-10 lg:p-10">
           <div className="lg:col-span-7">
@@ -52,11 +52,14 @@ export default function CoastalComebackTeaser({ season = "departure" }: { season
 
           <div className="lg:col-span-5 lg:self-center">
             <p className="text-sm font-semibold text-muted">{coastal.plansListLabel}</p>
-            <ul className="mt-2 border-b border-rule">
+            <ul className="mt-2 grid grid-cols-3 gap-2 md:block md:border-b md:border-rule">
               {coastal.tiers.map((tier) => (
-                <li key={tier.name} className="border-t border-rule">
-                  <Link href={coastal.plansHref} className="group flex min-h-13 items-center justify-between gap-4 py-2.5">
-                    <span className="flex items-baseline gap-2.5">
+                <li key={tier.name} className="max-md:rounded-xl max-md:border max-md:border-rule md:border-t md:border-rule">
+                  <Link
+                    href={coastal.plansHref}
+                    className="group flex h-full min-h-13 flex-col justify-between gap-1 p-2.5 md:flex-row md:items-center md:gap-4 md:px-0"
+                  >
+                    <span className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1 leading-snug">
                       <span className="font-semibold text-fg group-hover:text-link">{tier.name}</span>
                       {"featured" in tier && tier.featured && (
                         <span className="rounded-chip bg-primary/10 px-2 py-0.5 text-sm font-semibold text-link">{coastal.featuredBadge}</span>
