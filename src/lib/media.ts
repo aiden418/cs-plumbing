@@ -150,3 +150,16 @@ export function slot(id: string, options: MediaOptions = {}): MediaSlot | null {
   }
   return out;
 }
+
+/**
+ * The picture for a named position on a page ("home.door.home",
+ * "service.header.repiping", …): the crop of that name when
+ * src/content/media.json defines one under "crops", otherwise the slot's
+ * picture. Null when neither exists, which pages treat as "no photograph
+ * here" and lay out with type alone.
+ */
+export function picture(id: string, options: MediaOptions = {}): MediaRef | null {
+  const named = slot(id, options);
+  const crop = image(`derived:${id}`, { alt: named?.alt, blur: options.blur });
+  return crop ?? named?.desktop ?? null;
+}
