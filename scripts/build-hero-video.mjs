@@ -84,12 +84,29 @@ const RECIPE_VERSION = 1;
 /**
  * bitrate  = the file's target in bits per second (the whole file, not just the picture data)
  * maxBytes = a hard ceiling; the build fails rather than ship a bigger file
+ * control  = how the encoder is steered to that target:
+ *   "bitrate" (default)  ask for a bit rate and correct it until the file lands just under the target
+ *   "quality"            hold one quality level for the whole clip, and pick the highest level
+ *                        whose file fits. Levels move in steps of roughly 15% of the file size,
+ *                        so the file may end up to 5% over the target, or well under it.
+ * encoder  = "auto" (default; the Mac's hardware encoder where there is one) or "software"
+ *
+ * Why the two formats are built differently (all measured on the shipped clip, same file size):
+ *   H.264: the hardware encoder with a variable bit rate beats Apple's software H.264 encoder by
+ *          1.7-2.4 dB, and its own average-bit-rate mode by 0.8-1.2 dB.
+ *   HEVC:  the hardware encoder starts every clip soft (the first second is about 3 dB worse than
+ *          the middle) and goes soft again in the push-in at the end. The software encoder held to
+ *          a constant quality has neither problem: 0.3-0.4 dB better on average, 2.4 dB better on
+ *          the worst frame and 3 dB better in the first half second, at about the same file size.
+ *          Its bit-rate mode is no use here: it spends the bits early and starves the ending, and
+ *          it labels the file with a tier/level pair ("H93") the HEVC standard does not define.
+ *
  * Listed in the order the site should try them: smallest screen first, HEVC before H.264.
  */
 const VARIANTS = [
-  { name: "hero-portrait", codec: "hevc", audience: "portrait-phone", shape: "portrait", bitrate: 600_000, maxBytes: 800_000 },
+  { name: "hero-portrait", codec: "hevc", audience: "portrait-phone", shape: "portrait", bitrate: 600_000, maxBytes: 800_000, control: "quality", encoder: "software" },
   { name: "hero-portrait", codec: "h264", audience: "portrait-phone", shape: "portrait", bitrate: 950_000, maxBytes: 1_250_000 },
-  { name: "hero-mid", codec: "hevc", audience: "up-to-1023", shape: "full", width: 1280, bitrate: 700_000 },
+  { name: "hero-mid", codec: "hevc", audience: "up-to-1023", shape: "full", width: 1280, bitrate: 700_000, control: "quality", encoder: "software" },
   { name: "hero-mid", codec: "h264", audience: "up-to-1023", shape: "full", width: 1280, bitrate: 1_100_000 },
   // No 1920-wide HEVC copy for desktop. Tried at about 1.3 Mbps (1.59 MB, 30%
   // smaller than the original): visibly softer than the original in the first
@@ -100,9 +117,13 @@ const VARIANTS = [
 ];
 
 const AUDIENCES = ["portrait-phone", "up-to-1023", "desktop"];
-/** A finished file may be this far under its target, never over. */
+/** A bit-rate encode is finished when it lands within this much under its target, never over. */
 const UNDER_TARGET = 0.03;
+/** A constant-quality encode may land this much over its target (never over maxBytes): its sizes come in steps. */
+const QUALITY_OVER_TARGET = 0.05;
 const MAX_ATTEMPTS = 7;
+/** Quality levels closer together than this give the same file. */
+const QUALITY_RESOLUTION = 0.004;
 /** Below this the encode is not "a bit soft", it is broken (a wrong crop or wrong colours score around 20 dB). */
 const MIN_SANE_PSNR = 26;
 
@@ -305,6 +326,9 @@ function recipeFor(variant, geometry, source) {
     fps: FPS,
     keyint: source.keyframeInterval,
   };
+  // Only named when they differ from the defaults, so adding these options did not rename the H.264 files.
+  if (variant.control === "quality") inputs.control = "quality";
+  if (variant.encoder && variant.encoder !== "auto") inputs.encoder = variant.encoder;
   return createHash("sha256").update(JSON.stringify(inputs)).digest("hex").slice(0, 12);
 }
 
@@ -351,38 +375,59 @@ function writeCheckStills(run, file, label, geometry, source) {
 // ───────────────────────────── encoding ─────────────────────────────
 
 /**
- * Encodes one variant, asking the encoder for a little more or less until the
- * file lands just under its target. Returns the kept attempt.
+ * Encodes one variant to its size target, trying again with a corrected request
+ * until the file lands in the accepted range, and returns the biggest attempt
+ * that fits.
  */
 function encodeToBudget(run, variant, geometry, source, workDir) {
   const label = `${variant.name}.${variant.codec}`;
-  const budget = Math.floor(Math.min((variant.bitrate * source.durationSeconds) / 8, variant.maxBytes ?? Infinity));
-  const floor = budget * (1 - UNDER_TARGET);
-  const aim = (budget + floor) / 2;
-  let request = (aim * 8) / source.durationSeconds;
+  const target = (variant.bitrate * source.durationSeconds) / 8;
+  const ceiling = variant.maxBytes ?? Infinity;
+  const byQuality = variant.control === "quality";
+  const limit = Math.floor(Math.min(byQuality ? target * (1 + QUALITY_OVER_TARGET) : target, ceiling));
+  const floor = Math.min(target, limit) * (1 - UNDER_TARGET);
+  const aim = (limit + floor) / 2;
+
+  // What to ask the encoder for: a bit rate that gets corrected in proportion, or a quality level found by halving.
+  let request = byQuality ? 0.5 : (aim * 8) / source.durationSeconds;
+  let low = 0.05;
+  let high = 0.95;
+  const describe = () => (byQuality ? `q${request.toFixed(3)}` : `${Math.round(request / 1000)}k`);
+
   let best = null;
   const trail = [];
-  for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt += 1) {
+  for (let attempt = 1; attempt <= MAX_ATTEMPTS + (byQuality ? 2 : 0); attempt += 1) {
     const out = path.join(workDir, `${label}.try${attempt}.mp4`);
-    const args = ["encode", SOURCE, out, "--codec", variant.codec, "--bitrate", String(Math.round(request))];
+    const args = ["encode", SOURCE, out, "--codec", variant.codec];
+    args.push(...(byQuality ? ["--quality", request.toFixed(3)] : ["--bitrate", String(Math.round(request))]));
     args.push("--size", `${geometry.width}x${geometry.height}`, "--fps", String(FPS), "--keyint", String(source.keyframeInterval));
+    if (variant.encoder && variant.encoder !== "auto") args.push("--encoder", variant.encoder);
     if (geometry.crop) args.push("--crop", geometry.crop.join(","));
     const result = run(args);
-    trail.push(`${Math.round(request / 1000)}k→${mb(result.bytes)}`);
-    if (result.bytes <= budget && (!best || result.bytes > best.result.bytes)) {
+    trail.push(`${describe()}→${mb(result.bytes)}`);
+    const fits = result.bytes <= limit;
+    if (fits && (!best || result.bytes > best.result.bytes)) {
       if (best) fs.rmSync(best.out, { force: true });
-      best = { out, result, request };
+      best = { out, result };
     } else {
       fs.rmSync(out, { force: true });
     }
-    if (result.bytes <= budget && result.bytes >= floor) break;
-    request *= aim / result.bytes;
+    if (fits && result.bytes >= floor) break;
+    if (byQuality) {
+      if (fits) low = request;
+      else high = request;
+      if (high - low < QUALITY_RESOLUTION) break;
+      request = (low + high) / 2;
+    } else {
+      request *= aim / result.bytes;
+    }
   }
-  if (!best) fail(`${label}: could not get under ${mb(budget)} in ${MAX_ATTEMPTS} attempts (${trail.join(", ")}).`);
+  if (!best) fail(`${label}: could not get under ${mb(limit)} (${trail.join(", ")}).`);
   if (best.result.bytes < floor) {
-    console.log(`  note: ${label} settled ${((1 - best.result.bytes / budget) * 100).toFixed(1)}% under its target (${trail.join(", ")}).`);
+    const why = byQuality ? "the next quality step up does not fit" : `the encoder would not come closer in ${trail.length} attempts`;
+    console.log(`  note: ${label} is ${((1 - best.result.bytes / target) * 100).toFixed(1)}% under its target; ${why} (${trail.join(", ")}).`);
   }
-  return { ...best, budget, trail };
+  return { ...best, trail };
 }
 
 /** Everything a finished file must be. Throws with the reason if it is not. */
@@ -569,7 +614,8 @@ function build(options) {
         recipe,
       };
       entries.push(entry);
-      const encoder = `${kept.result.encoder.name}, ${kept.result.rateControl} bit rate`;
+      const steering = kept.result.rateControl === "quality" ? `constant quality ${kept.result.requestedQuality}` : `${kept.result.rateControl} bit rate`;
+      const encoder = `${kept.result.encoder.name}, ${steering}`;
       const scores = `PSNR ${Number(quality.psnrY.mean).toFixed(1)} dB (lowest frame ${Number(quality.psnrY.min).toFixed(1)}), SSIM ${Number(quality.ssimY.mean).toFixed(3)}`;
       rows.push([label, `${entry.width}x${entry.height}`, mb(entry.bytes), entry.codec, `${encoder}; ${scores}; ${kept.trail.length} attempt(s)`]);
     }
