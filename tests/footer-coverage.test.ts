@@ -5,6 +5,7 @@ import path from "node:path";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { installMediaStubs } from "./fixtures/media-stubs";
+import { BUSINESS } from "../src/lib/business";
 
 installMediaStubs();
 
@@ -15,10 +16,22 @@ const fixture = JSON.parse(
   readFileSync(path.join(import.meta.dirname, "fixtures", "footer-links.before.json"), "utf8"),
 ) as { hrefs: string[] };
 
-/** tel: links compare by digits (the href gained its +1); URLs ignore a trailing slash. */
+/** The company line when the links were frozen. */
+const FROZEN_COMPANY_DIGITS = "8337586248";
+
+/** tel: and sms: links compare by digits (the href gained its +1); URLs ignore a trailing slash. */
 function normalize(href: string): string {
   const h = href.replace(/&amp;/g, "&").trim();
-  if (h.startsWith("tel:")) return `tel:${h.replace(/\D/g, "").replace(/^1(?=\d{10}$)/, "")}`;
+  // The company line is compared as "the company line" (tel and sms), so
+  // changing the number in src/lib/business.ts does not break this test.
+  if (h.startsWith("tel:") || h.startsWith("sms:")) {
+    const scheme = h.slice(0, 4);
+    const rest = scheme === "sms:" ? h.slice(4).split("?")[0] : h.slice(4);
+    const digits = rest.replace(/\D/g, "").replace(/^1(?=\d{10}$)/, "");
+    const who = digits === FROZEN_COMPANY_DIGITS || digits === BUSINESS.phoneRaw ? "company" : digits;
+    const query = scheme === "sms:" && h.includes("?") ? h.slice(h.indexOf("?")) : "";
+    return `${scheme}${who}${query}`;
+  }
   if (/^https?:\/\//.test(h)) return h.replace(/\/$/, "");
   return h;
 }

@@ -39,11 +39,19 @@ const frozen: { hrefs: string[] } = JSON.parse(
   readFileSync(new URL("./fixtures/header-links.before.json", import.meta.url), "utf8"),
 );
 
-/** tel: links compare by their digits, ignoring a leading country code 1. */
+/** The company line when the links were frozen. The owner may change the number in src/lib/business.ts. */
+const FROZEN_COMPANY_DIGITS = "8337586248";
+
+/**
+ * tel: links compare by their digits, ignoring a leading country code 1. The
+ * company line is compared as "the company line", so changing the phone
+ * number in business.ts does not break this test.
+ */
 function normalize(href: string): string {
   if (/^tel:/i.test(href)) {
-    const digits = href.replace(/\D/g, "");
-    return `tel:${digits.length === 11 && digits.startsWith("1") ? digits.slice(1) : digits}`;
+    const all = href.replace(/\D/g, "");
+    const digits = all.length === 11 && all.startsWith("1") ? all.slice(1) : all;
+    return digits === FROZEN_COMPANY_DIGITS || digits === BUSINESS.phoneRaw ? "tel:company" : `tel:${digits}`;
   }
   return href;
 }

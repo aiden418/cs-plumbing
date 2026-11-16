@@ -67,3 +67,6 @@ photo-inbox/_generated/
 
 # originals moved aside by the photo ingest scripts
 photo-inbox/_done/
+
+# written at the project root by `next dev`; local only
+/AGENTS.md

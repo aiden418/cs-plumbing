@@ -279,9 +279,12 @@ export async function checkImages({ root = REPO_ROOT, gate = false, useCache = t
 
   /* 2. media.json ----------------------------------------------------------- */
   const SLOT_ERRORS = new Set(["media-json-invalid", "slot-invalid", "crop-invalid", "slot-image-missing", "crop-image-missing"]);
+  // A photo list (images.json) that cannot be read loses every description,
+  // caption, order and category in its folder at once. Local preview keeps
+  // working without them, but publishing stops until the typo is fixed, so
+  // the live gallery can never silently lose its text.
+  const SETTINGS_ERRORS = new Set(["json-invalid", "json-shape"]);
   const PASS_THROUGH = new Set([
-    "json-invalid",
-    "json-shape",
     "json-unknown-key",
     "entry-missing-file",
     "unreadable-file",
@@ -291,6 +294,9 @@ export async function checkImages({ root = REPO_ROOT, gate = false, useCache = t
   ]);
   for (const problem of analysis.problems) {
     if (SLOT_ERRORS.has(problem.code)) errors.push(problem.message);
+    else if (SETTINGS_ERRORS.has(problem.code)) {
+      errors.push(`${problem.message} Publishing stops until it is fixed, so the site never goes live without those descriptions.`);
+    }
     else if (problem.code === "claims") {
       // The manifest step is what stops a build for this; here it is listed so
       // `npm run photos:check` shows everything that needs attention.

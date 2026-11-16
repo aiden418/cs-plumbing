@@ -131,9 +131,9 @@ export default async function JsonLd() {
     openingHoursSpecification: [
       {
         "@type": "OpeningHoursSpecification",
-        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-        opens: "00:00",
-        closes: "23:59",
+        dayOfWeek: [...BUSINESS.hours.schema.days],
+        opens: BUSINESS.hours.schema.opens,
+        closes: BUSINESS.hours.schema.closes,
       },
     ],
     contactPoint: {
@@ -143,9 +143,9 @@ export default async function JsonLd() {
       availableLanguage: "English",
       hoursAvailable: {
         "@type": "OpeningHoursSpecification",
-        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-        opens: "00:00",
-        closes: "23:59",
+        dayOfWeek: [...BUSINESS.hours.schema.days],
+        opens: BUSINESS.hours.schema.opens,
+        closes: BUSINESS.hours.schema.closes,
       },
     },
     priceRange: "$$",

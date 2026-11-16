@@ -72,6 +72,13 @@ export const BUSINESS = {
   hours: {
     open: "Open 24 hours, 7 days a week",
     emergency: "24/7 Emergency Service",
+    // The same hours as search engines read them (schema.org). Change these
+    // together with the two lines above.
+    schema: {
+      days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+      opens: "00:00",
+      closes: "23:59",
+    },
   },
   officeHours: {
     weekday: "Mon–Fri: 7:30 AM – 4:30 PM",

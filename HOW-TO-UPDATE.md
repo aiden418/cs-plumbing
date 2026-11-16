@@ -95,7 +95,7 @@ All of these are set in the `images.json` beside the photo:
 | `"caption"` | Shown when the photo is opened on a project page. (Gallery photos use `"title"`.) |
 | `"hidden": true` | Takes the photo off every page and keeps the file. |
 | `"cover": true` | The photo on the project's card on the Projects page. Use it on one photo per project. |
-| `"featured": true` | Saved, but the homepage does not use it yet. |
+| `"featured": true` | Shows the photo in the "Walk the job" section of the homepage, in that phase. The two projects shown there are named in `src/content/home.ts`. |
 
 Keep the quotes, colons and commas exactly as in the example. Every line
 except the last one inside `{ }` ends with a comma.
@@ -186,9 +186,9 @@ it: `PHONE_DIGITS` (ten digits), `PHONE_VANITY` (how customers read it) and
 page, the Google data and `/llms.txt` all follow. Then refresh the two builder
 PDFs (below). Email, address and license are in the same file.
 
-**Hours:** the line "Open 24 hours, 7 days a week" is `hours.open` in
-`src/lib/business.ts`. The hours Google reads are set in the page code; ask
-your developer to change those with it.
+**Hours:** in `src/lib/business.ts`, under `hours`. `open` is the line
+customers read ("Open 24 hours, 7 days a week"). `schema` just below it is the
+same hours as Google reads them (days, `opens`, `closes`). Change both together.
 
 ## Preview on your Mac and phone
 
@@ -236,7 +236,7 @@ Run `npm run photos:check`. Lines marked **x** stop publishing; lines marked
 | "still carries hidden camera data, including the GPS location" | `npm run photos:strip`, then check again. |
 | "`src/content/media.json` has a typo (line 7, column 7: a comma (,) is missing...)" | Add the comma at that spot. Nothing publishes until it is fixed. |
 | "the picture for "home.door.home" ... is not in public/images" | Put the photo back, or point that `"image"` at another photo. |
-| "`images.json` has a typo (line 5...)" | Fix it now. The site still publishes, but that folder loses its descriptions and order; in the gallery every photo loses its title and filter. |
+| "`images.json` has a typo (line 5...)" | Add the missing comma or quote at that spot. Nothing publishes until it is fixed, so the site can never go live without that folder's descriptions. |
 | "is not published because no project or phase ... is named" | Add the phase or project words (above), or rename the folder. |
 | "has no description (alt text) yet" | Fill in `"alt"`. |
 | "larger than 1.5 MB" | It works, but put big photos through `npm run photos`. |
