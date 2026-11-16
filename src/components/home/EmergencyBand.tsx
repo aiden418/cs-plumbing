@@ -1,59 +1,42 @@
-import { Phone } from "lucide-react";
-import { EMERGENCY_CLAIMS } from "@/lib/claims";
+import Button from "@/components/ui/Button";
 import Container from "@/components/ui/Container";
-import { BUSINESS } from "@/lib/constants";
-import RadarPulse from "./RadarPulse";
+import Eyebrow from "@/components/ui/Eyebrow";
+import { Phone } from "@/components/ui/icons";
+import { BUSINESS } from "@/lib/business";
+import { EMERGENCY_CLAIMS } from "@/lib/claims";
+import { emergency } from "@/content/home";
 
 /**
- * Conversion climax of the homepage scroll story: the pipeline "bursts"
- * into a gold radar pulse around the 24/7 number. Server-rendered copy;
- * only the decorative pulse is a client component.
+ * Chapter 2: the emergency band, an ink strip between the services and the
+ * Coastal Comeback row. The words and the response time are the band's
+ * existing wording (EMERGENCY_CLAIMS); the call is the emergency button.
  */
 export default function EmergencyBand() {
   return (
-    <section
-      className="relative overflow-hidden bg-navy section-py min-h-[480px]"
-      aria-label="24/7 emergency plumbing"
-    >
-      {/* Subtle radial depth so the navy doesn't read flat */}
-      <div
-        aria-hidden
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse 70% 60% at 50% 45%, rgba(232,164,39,0.08) 0%, rgba(27,43,75,0) 70%)",
-        }}
-      />
-
-      <Container className="relative z-10 text-center">
-        <p className="text-gold font-bold text-sm sm:text-base uppercase tracking-[0.25em] mb-4">
-          24/7 Emergency Response
-        </p>
-        <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight max-w-3xl mx-auto">
-          Burst pipe at 2 AM? We&apos;re already rolling.
-        </h2>
-        <p className="mt-5 text-white/70 text-base sm:text-lg max-w-xl mx-auto">
-          Response {EMERGENCY_CLAIMS.responseTime}. Upfront pricing
-          before any work begins — nights, weekends, and holidays included.
-        </p>
-
-        <div className="relative mt-10 sm:mt-12 inline-flex flex-col items-center">
-          <RadarPulse />
-          <a
-            href={BUSINESS.phoneHref}
-            className="relative z-10 inline-flex items-center gap-3 sm:gap-4 text-3xl sm:text-5xl lg:text-6xl font-black text-gold hover:text-white transition-colors duration-300 tabular-nums tracking-tight"
-          >
-            <Phone className="w-7 h-7 sm:w-10 sm:h-10 shrink-0" />
-            {BUSINESS.phone}
-          </a>
-          <p className="relative z-10 mt-3 text-white/50 text-sm">
-            One call. A licensed plumber on the way.
-          </p>
+    <section data-tone="ink" aria-label={emergency.ariaLabel} className="relative bg-canvas py-section-sm text-body">
+      <Container>
+        <div className="grid grid-cols-1 gap-y-8 lg:grid-cols-12 lg:items-end lg:gap-x-8">
+          <div className="lg:col-span-7">
+            <Eyebrow className="mb-4">{emergency.overline}</Eyebrow>
+            <h2 className="text-display-md text-fg">{emergency.title}</h2>
+            <p className="mt-5 max-w-[56ch] text-lead text-body">
+              {emergency.body(EMERGENCY_CLAIMS.responseTime)}
+            </p>
+          </div>
+          <div className="lg:col-span-4 lg:col-start-9">
+            <Button
+              href={BUSINESS.phoneHref}
+              variant="emergency"
+              size="lg"
+              icon={<Phone className="size-5" />}
+              className="w-full tabular-nums sm:w-auto lg:w-full"
+            >
+              {BUSINESS.phone}
+            </Button>
+            <p className="mt-3 text-body">{emergency.callLine}</p>
+            <p className="mt-1 text-sm text-muted">{`${emergency.licensePrefix} · ${BUSINESS.license}`}</p>
+          </div>
         </div>
-
-        <p className="mt-10 text-white/40 text-xs tracking-wide">
-          {`Florida Certified Plumbing Contractor · ${BUSINESS.license}`}
-        </p>
       </Container>
     </section>
   );

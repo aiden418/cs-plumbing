@@ -1,13 +1,17 @@
 import type { Metadata } from "next";
-import dynamic from "next/dynamic";
 import Hero from "@/components/home/Hero";
-import StatsBar from "@/components/home/StatsBar";
-import ServiceHighlights from "@/components/home/ServiceHighlights";
-import PipelineSection from "@/components/home/PipelineSection";
-import PageTransition from "@/components/layout/PageTransition";
-import HomeFaq, { HOME_FAQS } from "@/components/home/HomeFaq";
+import HomeIntro from "@/components/home/HomeIntro";
+import Services from "@/components/home/Services";
+import EmergencyBand from "@/components/home/EmergencyBand";
+import CoastalComebackTeaser from "@/components/home/CoastalComebackTeaser";
+import WalkTheJob from "@/components/home/WalkTheJob";
+import FamilyStory from "@/components/home/FamilyStory";
+import WhereWeWork from "@/components/home/WhereWeWork";
+import ReviewsAwards from "@/components/home/ReviewsAwards";
+import GuidesFaq from "@/components/home/GuidesFaq";
+import CTASection from "@/components/home/CTASection";
+import { HOME_FAQS } from "@/components/home/HomeFaq";
 import FaqJsonLd from "@/components/seo/FaqJsonLd";
-import RelatedPosts from "@/components/blog/RelatedPosts";
 import { latestPosts } from "@/lib/internal-links";
 import { season } from "@/lib/claims";
 import { BUSINESS } from "@/lib/business";
@@ -15,24 +19,6 @@ import { BUSINESS } from "@/lib/business";
 // The snowbird teaser flips between arrival (Nov–Apr) and departure copy;
 // daily revalidation means the flip needs no deploy.
 export const revalidate = 86400;
-
-// Below-the-fold sections — server-rendered for SEO, JS deferred for performance
-const CoastalComebackTeaser = dynamic(
-  () => import("@/components/home/CoastalComebackTeaser"),
-);
-const WhyChooseUs = dynamic(() => import("@/components/home/WhyChooseUs"));
-const ServiceAreasSection = dynamic(
-  () => import("@/components/home/ServiceAreasSection"),
-);
-const GoogleReviews = dynamic(() => import("@/components/home/GoogleReviews"));
-const BrandsCarousel = dynamic(
-  () => import("@/components/home/BrandsCarousel"),
-);
-const BuilderShowcase = dynamic(
-  () => import("@/components/home/BuilderShowcase"),
-);
-const CTASection = dynamic(() => import("@/components/home/CTASection"));
-const EmergencyBand = dynamic(() => import("@/components/home/EmergencyBand"));
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
@@ -83,29 +69,27 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <PageTransition>
-      <PipelineSection>
-        <Hero />
-        <StatsBar />
-        <ServiceHighlights />
-      </PipelineSection>
-      <ServiceAreasSection />
+    <>
+      {/* 1. Opening (frozen) and, on ink under it, the two doors and the proof strip */}
+      <Hero />
+      <HomeIntro />
+      {/* 2. Services, the emergency band, Coastal Comeback and brands */}
+      <Services />
       <EmergencyBand />
-      <WhyChooseUs />
-      <BuilderShowcase />
       <CoastalComebackTeaser season={season()} />
-      <GoogleReviews />
-      <BrandsCarousel />
-      {/* Server-rendered: /blog had no inbound link in the HTML before this. */}
-      <RelatedPosts
-        posts={latestPosts(3)}
-        heading="Plumbing guides for Southwest Florida homeowners"
-        description="Costs, warning signs and storm prep, written for Cape Coral, Fort Myers and the rest of SWFL."
-        tone="white"
-      />
+      {/* 3. Walk the job and the builders logo wall */}
+      <WalkTheJob />
+      {/* 4. Family story and "Built on Trust" */}
+      <FamilyStory />
+      {/* 5. Where we work */}
+      <WhereWeWork />
+      {/* 6. Reviews and awards */}
+      <ReviewsAwards />
+      {/* 7. Guides and FAQ (server-rendered: /blog had no inbound link in the HTML before) */}
+      <GuidesFaq posts={latestPosts(3)} />
       <FaqJsonLd faqs={HOME_FAQS} />
-      <HomeFaq />
+      {/* 8. Contact */}
       <CTASection />
-    </PageTransition>
+    </>
   );
 }

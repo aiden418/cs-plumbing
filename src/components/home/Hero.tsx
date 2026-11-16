@@ -1,20 +1,20 @@
 import type { CSSProperties } from "react";
 import { preload } from "react-dom";
-import Image, { getImageProps } from "next/image";
+import { getImageProps } from "next/image";
 import Link from "next/link";
 import Container from "@/components/ui/Container";
 import Eyebrow from "@/components/ui/Eyebrow";
 import Button from "@/components/ui/Button";
 import LogoLockup from "@/components/ui/LogoLockup";
 import { InlineScript } from "@/components/ui/InlineScript";
-import { ArrowRight, HardHat, Home, Phone, Star } from "@/components/ui/icons";
+import { Phone } from "@/components/ui/icons";
 import HeroController from "@/components/home/HeroController";
 import { BUSINESS } from "@/lib/business";
 import { LATEST_AWARD } from "@/lib/awards";
 import { slot } from "@/lib/media";
 import { PHONE_MEDIA } from "@/lib/hero-controller";
 import { HERO_SOURCES, frameScript } from "@/lib/intro";
-import { hero, heroInterim } from "@/content/home";
+import { hero } from "@/content/home";
 
 /**
  * One `sizes` for both art directions. It covers the Opening's stage (the
@@ -170,96 +170,7 @@ export default function Hero() {
           </div>
         </Container>
       </section>
-
-      <HeroInterim />
     </>
   );
 }
 
-/**
- * Interim: what the old hero showed that the new hero does not place. The
- * Home team replaces this block with the doors and the proof strip.
- */
-function HeroInterim() {
-  const [builders, homeowners] = heroInterim.doors;
-  const icons = { [builders.href]: HardHat, [homeowners.href]: Home };
-
-  return (
-    <section data-tone="ink" className="relative border-t border-rule bg-canvas pt-section-sm pb-section-sm text-body">
-      <Container>
-        <div data-pipe-node="hero-cta" className="grid grid-cols-1 border-t border-rule md:grid-cols-2">
-          {heroInterim.doors.map((door, i) => {
-            const Icon = icons[door.href];
-            return (
-              <Link
-                key={door.href}
-                href={door.href}
-                className={`group block border-b border-rule py-6 md:py-8 ${i === 0 ? "md:border-r md:pr-8" : "md:pl-8"}`}
-              >
-                <span className="label-tech flex items-center gap-2 text-accent">
-                  <Icon className="size-5" />
-                  {door.label}
-                </span>
-                <span className="mt-3 block text-display-sm font-display font-bold text-fg">{door.title}</span>
-                <span className="mt-2 block text-body">{door.body}</span>
-                <span className="mt-4 inline-flex items-center gap-1.5 font-semibold text-fg">
-                  {door.cta}
-                  <ArrowRight className="size-5 transition-transform duration-250 ease-settle group-hover:translate-x-0.5" />
-                </span>
-              </Link>
-            );
-          })}
-        </div>
-
-        <div className="mt-8 flex flex-col gap-6 md:flex-row md:flex-wrap md:items-center md:justify-between">
-          <div className="flex flex-col gap-3">
-            <p className="flex items-center gap-2 text-sm text-body">
-              <span className="flex gap-0.5 text-brass" aria-hidden="true">
-                {Array.from({ length: 5 }, (_, i) => (
-                  <Star key={i} className="size-4 fill-current" />
-                ))}
-              </span>
-              <span>
-                {`${BUSINESS.rating.toFixed(1)} ${heroInterim.ratingSuffix} · ${BUSINESS.reviewCount}+ ${heroInterim.reviewsSuffix}`}
-              </span>
-            </p>
-            <ul className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted">
-              {heroInterim.trust.map((item) => (
-                <li key={item} className="flex items-center gap-2">
-                  <span className="joint text-accent" aria-hidden="true" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-            <p className="text-sm text-muted">
-              {heroInterim.emergencyLead}{" "}
-              <a href={BUSINESS.phoneHref} className="inline-flex min-h-11 items-center gap-1 font-semibold text-fg hover:underline">
-                <Phone className="size-4" />
-                {BUSINESS.phone}
-              </a>{" "}
-              ·{" "}
-              <Link href={heroInterim.emergencyLink.href} className="inline-flex min-h-11 items-center text-link hover:underline">
-                {heroInterim.emergencyLink.label}
-              </Link>
-            </p>
-          </div>
-
-          <Link href="/awards" className="flex items-center gap-3 self-start rounded-control border border-rule px-4 py-3 md:self-auto">
-            <Image
-              src={LATEST_AWARD.badge}
-              alt={`${LATEST_AWARD.title} — ${LATEST_AWARD.category}`}
-              width={54}
-              height={38}
-              sizes="54px"
-              className="h-[38px] w-[54px]"
-            />
-            <span className="text-left">
-              <span className="block text-sm font-semibold leading-tight text-fg">{LATEST_AWARD.title}</span>
-              <span className="block text-sm text-muted">{`${heroInterim.awardPrefix} ${LATEST_AWARD.category}`}</span>
-            </span>
-          </Link>
-        </div>
-      </Container>
-    </section>
-  );
-}
