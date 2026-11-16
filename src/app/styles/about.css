@@ -1,11 +1,7 @@
 /* about styles. Imported by ../globals.css.
    Put rules inside @layer components { ... } so utility classes can still
    override them; use the design tokens (var(--color-*), var(--tone-*),
-   var(--ease-*), var(--dur-*)) rather than raw values. */
+   var(--ease-*), var(--dur-*)) rather than raw values.
 
-@layer components {
-  /* The about.lead photograph is small: never show it wider than 35rem. */
-  .about-hero figure {
-    max-width: 35rem;
-  }
-}
+   Version 2: the About, Reviews, Awards and Partners pages are styled with
+   utilities only; nothing family-specific is needed here today. */

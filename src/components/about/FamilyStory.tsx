@@ -1,36 +1,57 @@
 import Container from "@/components/ui/Container";
 import Eyebrow from "@/components/ui/Eyebrow";
 import Frame from "@/components/ui/Frame";
-import Reveal from "@/components/ui/Reveal";
 import Section from "@/components/ui/Section";
 import { BUSINESS } from "@/lib/business";
 import { image } from "@/lib/media";
-import { ABOUT_STORY } from "@/content/about";
+import { ABOUT_HERO, ABOUT_STORY } from "@/content/about";
 
 const strong = "font-semibold text-fg";
 
 /**
- * The long-form story: a 68ch reading column with the opening line set as a
- * pull line, and two small framed photographs beside it (the storefront
- * photo shows an old phone number, so it stays small).
+ * The story: the rest of the hero's lead, then the family story in short
+ * paragraphs beside the family portrait. The storefront photo shows an old
+ * phone number, so it stays small.
  */
 export default function FamilyStory() {
   const portrait = image(ABOUT_STORY.portrait.image, { alt: ABOUT_STORY.portrait.alt });
   const storefront = image(ABOUT_STORY.storefront.image, { alt: ABOUT_STORY.storefront.alt });
 
   return (
-    <Section tone="white" labelledBy="about-story-title">
+    <Section tone="white" spacing="sm" labelledBy="about-story-title">
       <Container>
-        <div className="grid grid-cols-1 gap-y-12 lg:grid-cols-12 lg:gap-x-8">
+        {/* Phones: opening, photos, story. Desktop: photos in the left column beside both. */}
+        <div className="grid grid-cols-1 gap-y-8 lg:grid-cols-12 lg:grid-rows-[auto_1fr] lg:gap-x-12 lg:gap-y-6">
           <div className="lg:col-span-7 lg:col-start-6">
-            <Eyebrow className="mb-4">{ABOUT_STORY.overline}</Eyebrow>
-            <h2 id="about-story-title" className="max-w-[18ch] text-display-md text-fg">
+            <Eyebrow className="mb-3">{ABOUT_STORY.overline}</Eyebrow>
+            <h2 id="about-story-title" className="max-w-[20ch] text-display-md text-fg">
               {ABOUT_STORY.title}
             </h2>
+            <p className="mt-5 max-w-[56ch] text-lead text-body">{ABOUT_HERO.descriptionMore}</p>
+            <p className="mt-6 max-w-[30ch] font-display text-display-sm font-bold text-balance text-fg [font-stretch:108%]">
+              {ABOUT_STORY.pullLine}
+            </p>
+          </div>
 
-            <p className="mt-10 max-w-[34ch] border-l-2 border-accent pl-5 text-display-sm text-balance text-fg">{ABOUT_STORY.pullLine}</p>
+          <div className="grid grid-cols-[3fr_2fr] content-start items-start gap-4 sm:gap-6 lg:col-span-5 lg:col-start-1 lg:row-span-2 lg:row-start-1 lg:grid-cols-1">
+            <Frame
+              media={portrait}
+              aspect="4/5"
+              sizes="(min-width: 1024px) 460px, 56vw"
+              quality={75}
+              className="lg:max-w-[28.75rem]"
+            />
+            <Frame
+              media={storefront}
+              aspect="4/3"
+              sizes="(min-width: 1024px) 256px, 38vw"
+              quality={75}
+              className="lg:max-w-[16rem]"
+            />
+          </div>
 
-            <div className="mt-8 max-w-[68ch] space-y-5 text-body">
+          <div className="lg:col-span-7 lg:col-start-6">
+            <div className="max-w-[64ch] space-y-5 text-body">
               <p>
                 Before C&S, there was <strong className={strong}>Samuel Pellechio
                 Sr.</strong> — a mason and general contractor in Philadelphia who built thousands
@@ -58,32 +79,20 @@ export default function FamilyStory() {
               </p>
             </div>
 
-            <dl className="mt-12 grid max-w-[68ch] grid-cols-3 border-t border-rule">
-              {ABOUT_STORY.stats.map((s, i) => (
-                <div
-                  key={s.label}
-                  className={i > 0 ? "flex flex-col-reverse justify-end border-l border-rule pt-5 pl-4 sm:pl-6" : "flex flex-col-reverse justify-end pt-5 pr-4"}
-                >
-                  <dt className="mt-2 label-tech text-muted">{s.label}</dt>
-                  <dd className="text-display-sm text-fg tabular-nums">{s.value}</dd>
+            <dl className="mt-10 grid max-w-[40rem] grid-cols-3 gap-x-4 border-t border-rule pt-5 sm:gap-x-8">
+              {ABOUT_STORY.stats.map((s) => (
+                <div key={s.label} className="flex flex-col-reverse justify-end">
+                  <dt className="mt-1 text-[0.9375rem] font-medium text-body">{s.label}</dt>
+                  <dd className="font-display text-display-sm font-bold text-fg tabular-nums">{s.value}</dd>
                 </div>
               ))}
-              <div className="flex flex-col-reverse justify-end border-l border-rule pt-5 pl-4 sm:pl-6">
-                <dt className="mt-2 label-tech text-muted">
+              <div className="flex flex-col-reverse justify-end">
+                <dt className="mt-1 text-[0.9375rem] font-medium text-body">
                   {BUSINESS.reviewCount} {ABOUT_STORY.reviewsLabel}
                 </dt>
-                <dd className="text-display-sm text-fg tabular-nums">{BUSINESS.rating.toFixed(1)}★</dd>
+                <dd className="font-display text-display-sm font-bold text-fg tabular-nums">{BUSINESS.rating.toFixed(1)}★</dd>
               </div>
             </dl>
-          </div>
-
-          <div className="grid grid-cols-2 content-start items-start gap-4 sm:gap-6 lg:col-span-4 lg:col-start-1 lg:row-start-1 lg:grid-cols-1 lg:gap-8">
-            <Reveal>
-              <Frame media={portrait} aspect="4/5" sizes="(min-width: 1024px) 380px, 45vw" quality={75} />
-            </Reveal>
-            <Reveal index={1} className="lg:max-w-[18rem]">
-              <Frame media={storefront} aspect="4/3" sizes="(min-width: 1024px) 288px, 45vw" quality={75} />
-            </Reveal>
           </div>
         </div>
       </Container>

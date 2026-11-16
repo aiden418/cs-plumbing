@@ -2,9 +2,8 @@ import type { Metadata } from "next";
 import Button from "@/components/ui/Button";
 import Container from "@/components/ui/Container";
 import PageHero from "@/components/ui/PageHero";
-import Reveal from "@/components/ui/Reveal";
 import Section from "@/components/ui/Section";
-import { ExternalLink, PenLine } from "@/components/ui/icons";
+import { ExternalLink, PenLine, Phone } from "@/components/ui/icons";
 import Stars from "@/components/about/Stars";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import CTASection from "@/components/home/CTASection";
@@ -66,99 +65,102 @@ export default async function ReviewsPage() {
       />
 
       <PageHero
-        layout="editorial"
-        align="center"
+        layout="plain"
         overline={REVIEWS_PAGE.overline}
         title={REVIEWS_PAGE.title}
         accent={REVIEWS_PAGE.accent}
         actions={
           <>
+            <Button href={BUSINESS.phoneHref} variant="primary" size="lg" icon={<Phone className="size-5" />}>
+              {REVIEWS_PAGE.callLabel} {BUSINESS.phone}
+            </Button>
             <Button
               href={writeReviewUrl}
               target="_blank"
               rel="noopener noreferrer"
-              variant="brass"
+              variant="secondary"
+              size="lg"
               icon={<PenLine className="size-5" />}
             >
               {REVIEWS_PAGE.writeReviewLabel}
             </Button>
-            <Button
-              href={profileUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              variant="secondary"
-              iconRight={<ExternalLink className="size-5" />}
-            >
-              {REVIEWS_PAGE.readAllLabel}
-            </Button>
           </>
         }
       >
-        <div className="mx-auto mt-10 max-w-md border-t border-rule pt-8">
-          <div className="flex items-center justify-center gap-4">
-            <span className="text-display-lg leading-none text-fg tabular-nums">{rating.toFixed(1)}</span>
-            <Stars rating={rating} className="size-6 sm:size-7" />
+        <div className="mt-6 flex flex-col gap-x-6 gap-y-1 border-t border-rule pt-5 sm:flex-row sm:flex-wrap sm:items-center">
+          <div className="flex items-center gap-3">
+            <span className="font-display text-display-md leading-none font-bold text-fg tabular-nums">{rating.toFixed(1)}</span>
+            <Stars rating={rating} className="size-6" />
           </div>
-          <p className="mt-3 text-muted">
+          <p className="text-body">
             {REVIEWS_PAGE.basedOnPrefix} {total}
             {REVIEWS_PAGE.basedOnSuffix}
           </p>
+          <a
+            href={profileUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex min-h-11 items-center gap-1.5 font-semibold text-link underline decoration-1 underline-offset-4 hover:decoration-2"
+          >
+            {REVIEWS_PAGE.readAllLabel}
+            <ExternalLink className="size-4 shrink-0" aria-hidden="true" />
+          </a>
         </div>
       </PageHero>
 
-      {/* The quotes as an editorial list: hairline rows, two newspaper columns on desktop. */}
-      <Section tone="white">
+      {/* The quotes as simple rows with a line between them: two columns from 640 px, three on desktop. */}
+      <Section tone="white" spacing="sm">
         <Container>
-          <ul aria-label={REVIEWS_PAGE.listLabel} className="lg:columns-2 lg:gap-x-16">
+          <ul aria-label={REVIEWS_PAGE.listLabel} className="sm:columns-2 sm:gap-x-10 lg:columns-3">
             {cards.map((r, i) => (
-              <li key={i} className="break-inside-avoid border-t border-rule pt-6 pb-10">
+              <li key={i} className="break-inside-avoid border-t border-rule pt-4 pb-5 first:border-t-0 first:pt-0 sm:pb-7 sm:first:border-t sm:first:pt-4">
                 <figure>
                   <div className="flex items-center justify-between gap-4">
                     <Stars rating={r.rating} />
-                    <span className="text-sm text-muted">{r.when}</span>
+                    <span className="text-[0.9375rem] text-body">{r.when}</span>
                   </div>
-                  <blockquote className="mt-4 max-w-[60ch] text-lg leading-relaxed text-fg">
+                  <blockquote className="mt-2 text-fg">
                     <p>&ldquo;{r.text}&rdquo;</p>
                   </blockquote>
-                  <figcaption className="mt-4 text-sm font-semibold text-body">— {r.name}</figcaption>
+                  <figcaption className="mt-2 font-semibold text-body">— {r.name}</figcaption>
                 </figure>
               </li>
             ))}
           </ul>
-          <p className="border-t border-rule pt-6 text-sm text-muted">{REVIEWS_PAGE.sourceNote}</p>
+          <p className="border-t border-rule pt-5 text-[0.9375rem] text-body">{REVIEWS_PAGE.sourceNote}</p>
         </Container>
       </Section>
 
       {/* Why the rating holds up */}
-      <Section tone="navy">
+      <Section tone="shell" spacing="sm">
         <Container>
-          <Reveal className="grid grid-cols-1 gap-y-8 lg:grid-cols-12 lg:gap-x-8">
+          <div className="grid grid-cols-1 gap-y-5 lg:grid-cols-12 lg:gap-x-8">
             <h2 className="text-display-md text-fg lg:col-span-5">
-              {REVIEWS_PAGE.ratingTitle} <span className="text-accent">{REVIEWS_PAGE.ratingAccent}</span>
+              {REVIEWS_PAGE.ratingTitle} {REVIEWS_PAGE.ratingAccent}
             </h2>
             <div className="lg:col-span-6 lg:col-start-7">
-            <p className="max-w-[62ch] text-body">
-              We&apos;ve been family-owned since {BUSINESS.founded}, with{" "}
-              {BUSINESS.homesCompleted.toLocaleString()}+ homes plumbed across
-              Southwest Florida. Every job is done under two active Florida
-              Certified Plumbing Contractor licenses ({BUSINESS.license} and{" "}
-              {BUSINESS.license2}), and the person answering the phone is a
-              dispatcher at our North Fort Myers shop — not a call center.
-            </p>
-            <p className="mt-4 max-w-[62ch] text-body">{REVIEWS_PAGE.shareBody}</p>
-            <Button
-              href={writeReviewUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              variant="brass"
-              size="lg"
-              icon={<PenLine className="size-5" />}
-              className="mt-9"
-            >
-              {REVIEWS_PAGE.shareLabel}
-            </Button>
+              <p className="max-w-[62ch] text-body">
+                We&apos;ve been family-owned since {BUSINESS.founded}, with{" "}
+                {BUSINESS.homesCompleted.toLocaleString()}+ homes plumbed across
+                Southwest Florida. Every job is done under two active Florida
+                Certified Plumbing Contractor licenses ({BUSINESS.license} and{" "}
+                {BUSINESS.license2}), and the person answering the phone is a
+                dispatcher at our North Fort Myers shop — not a call center.
+              </p>
+              <p className="mt-4 max-w-[62ch] text-body">{REVIEWS_PAGE.shareBody}</p>
+              <Button
+                href={writeReviewUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                variant="primary"
+                size="lg"
+                icon={<PenLine className="size-5" />}
+                className="mt-7"
+              >
+                {REVIEWS_PAGE.shareLabel}
+              </Button>
             </div>
-          </Reveal>
+          </div>
         </Container>
       </Section>
 

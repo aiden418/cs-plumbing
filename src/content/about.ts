@@ -17,8 +17,12 @@ export const ABOUT_HERO = {
   overline: "About Us",
   title: "Three Generations.",
   accent: "One Name on Every Job.",
-  description:
-    "Family owned and operated since 1998. From a Philadelphia builder's job sites to 9,500+ homes plumbed across Southwest Florida, the Pellechio family has been doing it the right way for over 28 years.",
+  /** The hero keeps the first sentence; the rest opens the story section below, word for word. */
+  description: "Family owned and operated since 1998.",
+  descriptionMore:
+    "From a Philadelphia builder's job sites to 9,500+ homes plumbed across Southwest Florida, the Pellechio family has been doing it the right way for over 28 years.",
+  /** "Call {phone}": the first button of the hero (the number comes from @/lib/business). */
+  callLabel: "Call",
   primaryAction: { label: "Meet the Family", href: "#team" },
   secondaryAction: { label: "Book a Service", href: "/booking" },
   /** Prefix of the award line under the actions ("Voted Best Plumbing Contractor"). */
@@ -158,6 +162,8 @@ export const REVIEWS_PAGE = {
   ratingTitle: "A 5.0 Rating",
   ratingAccent: "Isn't Luck",
   shareLabel: "Share Your Experience",
+  /** "Call {phone}" in the hero. */
+  callLabel: "Call",
   shareBody:
     "Had us out recently? A quick Google review helps your neighbors find a plumber they can trust — and it means a lot to our family.",
 } as const;
@@ -198,6 +204,8 @@ export const AWARDS_PAGE = {
       },
     ],
   },
+  /** "Call {phone}" in the hero. */
+  callLabel: "Call",
   faq: {
     overline: "Questions",
     title: "About the",
@@ -218,4 +226,6 @@ export const PARTNERS_PAGE = {
   filterLabel: "Filter by category",
   websiteLabel: "Website",
   emptyLabel: "No companies listed in this category yet.",
+  /** "Call {phone}" in the hero (C&S's own line; the partner numbers are their own). */
+  callLabel: "Call",
 } as const;
