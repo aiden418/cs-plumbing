@@ -1,257 +1,164 @@
 import Link from "next/link";
-import {
-  Hammer,
-  ClipboardCheck,
-  Clock,
-  ShieldCheck,
-  ArrowRight,
-  Phone,
-  CheckCircle2,
-} from "lucide-react";
+import PageHero from "@/components/ui/PageHero";
 import Container from "@/components/ui/Container";
-import Button from "@/components/ui/Button";
+import Section from "@/components/ui/Section";
 import SectionHeading from "@/components/ui/SectionHeading";
-import BuilderLogoImage from "@/components/ui/BuilderLogoImage";
-import ScrollReveal from "@/components/animations/ScrollReveal";
+import Stepper from "@/components/ui/Stepper";
+import Reveal from "@/components/ui/Reveal";
+import Button from "@/components/ui/Button";
+import { ArrowRight, Phone } from "@/components/ui/icons";
+import BuilderLogoWall from "@/app/builders/BuilderLogoWall";
+import { BUILDER_PORTAL as COPY } from "@/content/builders";
 import { BUSINESS } from "@/lib/business";
-import { BUILDERS } from "@/lib/builders-data";
 
-const WHY_CS = [
-  {
-    icon: <Hammer className="w-6 h-6" />,
-    title: "Rough-in to trim",
-    description:
-      "Full underground, in-wall rough, water heater set, fixture trim, and final inspection on every project.",
-  },
-  {
-    icon: <ClipboardCheck className="w-6 h-6" />,
-    title: "Permit + inspection support",
-    description:
-      "We pull permits, coordinate inspections, and own the paperwork so your project clears Lee County without delay.",
-  },
-  {
-    icon: <Clock className="w-6 h-6" />,
-    title: "On-schedule delivery",
-    description:
-      "Lee County crews staged across the service area. We hit your rough-in date and stay coordinated with your other trades.",
-  },
-  {
-    icon: <ShieldCheck className="w-6 h-6" />,
-    title: "Code-compliant from day one",
-    description:
-      `Florida Certified Plumbing Contractor license ${BUSINESS.license}; co-founder Samuel Pellechio also holds ${BUSINESS.license2}. Every fixture, slope, and vent meets current FL Building Code.`,
-  },
-];
-
-const PROCESS_STEPS = [
-  {
-    title: "Plans uploaded",
-    description:
-      "Submit prints, scope notes, and target dates via the form below.",
-  },
-  {
-    title: "Takeoff & proposal",
-    description:
-      "Detailed plumbing takeoff and written proposal back to you.",
-  },
-  {
-    title: "Kickoff scheduled",
-    description:
-      "Once approved, we schedule rough-in around your slab / framing dates and confirm material delivery.",
-  },
-  {
-    title: "Rough-in",
-    description:
-      "Underground first, then in-wall. Pressure-tested before pour and before drywall.",
-  },
-  {
-    title: "Trim & final inspection",
-    description:
-      "Fixture trim, water heater set, and final county inspection. We don't leave until it's signed off.",
-  },
-];
-
-const WHAT_WE_NEED = [
-  "Site plans and architectural drawings (PDF or DWG)",
-  "Plumbing fixture schedule (or rough fixture count if not finalized)",
-  "Permit set if you have one — otherwise we'll work from the architecturals",
-  "Target rough-in date and any GC scheduling constraints",
-];
-
+/**
+ * Everything above the plan-upload wizard on /builder-portal. Rendered by the
+ * client wizard page, so it reads no picture registry: the compact hero is
+ * type only and the builder logos come through next/image.
+ */
 export default function BuilderPortalIntro() {
+  const hero = COPY.hero;
   return (
     <>
-      {/* Hero */}
-      <section className="relative pt-24 sm:pt-28 lg:pt-32 pb-16 sm:pb-20 bg-navy overflow-hidden">
-        <div className="pointer-events-none absolute -top-32 left-1/3 h-[480px] w-[480px] -translate-x-1/2 rounded-full bg-primary/25 blur-[120px]" />
-        <div className="pointer-events-none absolute bottom-0 right-0 h-72 w-72 rounded-full bg-gold/15 blur-[100px]" />
-        <Container className="relative z-10">
-          <div className="max-w-3xl">
-            <Link
-              href="/builders"
-              className="inline-flex items-center gap-1.5 text-gold text-xs sm:text-sm font-bold tracking-[0.2em] uppercase mb-3 sm:mb-4 hover:underline"
-            >
-              <span>Builder Portal</span>
-              <span className="text-white/70 normal-case tracking-normal font-normal">
-                · See our full builder story
-              </span>
-              <ArrowRight className="w-3 h-3" />
-            </Link>
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white leading-[1.05] tracking-tight mb-5 sm:mb-6">
-              Plans in. Quote out.{" "}
-              <span className="text-gold-gradient">Crews ready.</span>
-            </h1>
-            <p className="text-base sm:text-lg text-white/70 leading-relaxed mb-3">
-              C&amp;S Plumbing has been the underground-to-trim partner for Lee
-              County builders since 1998. <strong className="text-white">9,500+ homes plumbed</strong>{`, Florida Certified Plumbing Contractor license ${BUSINESS.license}, and a 5.0 rating from the GCs and custom home builders we work with every week.`}
+      <PageHero
+        layout="compact"
+        overline={hero.overline}
+        title={hero.title}
+        accent={hero.accent}
+        description={
+          <>
+            <p>
+              {hero.leadStart}
+              <strong className="font-semibold text-fg">{hero.leadStrong}</strong>
+              {hero.leadEnd}
             </p>
-            <p className="text-base sm:text-lg text-white/70 leading-relaxed mb-8 sm:mb-10">
-              Upload your plans below. We&apos;ll come back with a detailed takeoff
-              and proposal — no upfront cost, no commitment.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-              <Button href="#upload-plans" variant="gold" size="lg">
-                Submit Plans
-                <ArrowRight className="w-4 h-4" />
-              </Button>
-              <Button
-                href={BUSINESS.phoneHref}
-                variant="outline-light"
-                size="lg"
-                icon={<Phone className="w-5 h-5" />}
-              >
-                Call {BUSINESS.phone}
-              </Button>
-            </div>
-            <p className="mt-5 text-xs text-white/40">
-              {`License #${BUSINESS.license} · #${BUSINESS.license2} · Family owned and operated since 1998`}
-            </p>
-          </div>
-        </Container>
-      </section>
+            <p className="mt-3">{hero.lead2}</p>
+          </>
+        }
+        actions={
+          <>
+            <Button href="#upload-plans" size="lg" iconRight={<ArrowRight className="size-5" />}>
+              {hero.submitPlans}
+            </Button>
+            <Button href={BUSINESS.phoneHref} variant="secondary" size="lg" icon={<Phone className="size-5" />}>
+              Call {BUSINESS.phone}
+            </Button>
+          </>
+        }
+      >
+        <div className="mt-8 flex flex-col gap-y-1 border-t border-rule pt-5 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-6">
+          <Link
+            href="/builders"
+            className="group inline-flex min-h-11 items-center gap-1.5 font-semibold text-link underline-offset-[0.2em] hover:underline"
+          >
+            {hero.builderStory}
+            <ArrowRight className="size-4 transition-transform duration-250 ease-settle group-hover:translate-x-0.5" />
+          </Link>
+          <p className="label-tech text-muted">{hero.licenseLine}</p>
+        </div>
+      </PageHero>
 
       {/* Why C&S */}
-      <section className="py-16 sm:py-24 lg:py-28 bg-white">
+      <Section tone="white" labelledBy="portal-why-heading">
         <Container>
-          <SectionHeading
-            overline="Why C&S"
-            title="Why builders choose us for the plumbing scope"
-            subtitle="The plumber on a project either keeps the schedule or breaks it. We keep it."
-          />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-            {WHY_CS.map((item, i) => (
-              <ScrollReveal key={item.title} delay={i * 0.08}>
-                <div className="h-full bg-[#F5F5F7] rounded-2xl border border-gray-200 p-5 sm:p-6 hover:border-primary/30 transition-all duration-500">
-                  <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-4">
-                    {item.icon}
+          <div className="grid gap-y-10 lg:grid-cols-12 lg:gap-x-8">
+            <SectionHeading
+              id="portal-why-heading"
+              overline={COPY.why.overline}
+              title={COPY.why.title}
+              subtitle={COPY.why.subtitle}
+              align="left"
+              className="mb-0 lg:col-span-5"
+            />
+            <ul className="grid border-b border-rule sm:grid-cols-2 sm:gap-x-10 lg:col-span-7">
+              {COPY.why.items.map((item, i) => (
+                <Reveal
+                  as="li"
+                  index={i}
+                  key={item.title}
+                  className="border-t border-rule py-7"
+                >
+                  <div>
+                    <h3 className="text-lg leading-snug font-semibold text-fg">{item.title}</h3>
+                    <p className="mt-2 text-[0.9375rem] text-body">{item.description}</p>
                   </div>
-                  <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-2 leading-snug">
-                    {item.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-gray-500 leading-relaxed">
-                    {item.description}
-                  </p>
-                </div>
-              </ScrollReveal>
-            ))}
+                </Reveal>
+              ))}
+            </ul>
           </div>
         </Container>
-      </section>
+      </Section>
 
       {/* Process */}
-      <section className="py-16 sm:py-24 lg:py-28 bg-[#F5F5F7]">
+      <Section tone="shell" labelledBy="portal-process-heading">
         <Container>
           <SectionHeading
-            overline="Our process"
-            title="Plan to inspection — no surprises"
-            subtitle="The same playbook we've run on 9,500+ homes."
+            id="portal-process-heading"
+            overline={COPY.process.overline}
+            title={COPY.process.title}
+            subtitle={COPY.process.subtitle}
+            align="left"
           />
-          <ol className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-5">
-            {PROCESS_STEPS.map((step, i) => (
-              <li key={step.title} className="h-full">
-                <ScrollReveal delay={i * 0.06} className="relative bg-white rounded-2xl border border-gray-200 p-5 sm:p-6 h-full">
-                  <span
-                    aria-hidden="true"
-                    className="flex items-center justify-center w-10 h-10 rounded-full bg-primary text-white font-bold text-sm shadow-[0_0_30px_rgba(0,119,204,0.25)] mb-4"
-                  >
-                    {i + 1}
-                  </span>
-                  <h3 className="text-sm sm:text-base font-bold text-gray-900 mb-2 leading-snug">
-                    {step.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-gray-500 leading-relaxed">
-                    {step.description}
-                  </p>
-                </ScrollReveal>
-              </li>
-            ))}
-          </ol>
+          <Stepper
+            label={COPY.process.title}
+            className="[&_li]:min-w-[15rem] lg:[&_li]:min-w-0"
+            items={COPY.process.steps.map((step) => ({ label: step.title, description: step.description }))}
+          />
         </Container>
-      </section>
+      </Section>
 
       {/* Builders we work with */}
-      <section className="py-16 sm:py-24 lg:py-28 bg-white">
+      <Section tone="white" labelledBy="portal-logos-heading">
         <Container>
           <SectionHeading
-            overline="Who we build with"
-            title="Lee County's busiest builders pick C&S"
-            subtitle="From custom homes to commercial developments, these builders trust us to keep their projects moving."
+            id="portal-logos-heading"
+            overline={COPY.logos.overline}
+            title={COPY.logos.title}
+            subtitle={COPY.logos.subtitle}
+            align="left"
           />
-          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
-            {BUILDERS.map((b) => (
-              <div
-                key={b.name}
-                className="flex-shrink-0 px-5 sm:px-6 py-2.5 sm:py-3 bg-[#F5F5F7] border border-gray-200 rounded-full flex items-center justify-center hover:border-primary/30 transition-all duration-300"
-              >
-                <BuilderLogoImage
-                  builder={b}
-                  alt={`${b.name} — C&S Plumbing builder partner`}
-                  sizes="(max-width: 640px) 100px, 120px"
-                  className="h-6 sm:h-8 w-auto max-w-[100px] sm:max-w-[120px] object-contain"
-                />
-              </div>
-            ))}
-          </div>
+          <Reveal>
+            <BuilderLogoWall altSuffix={COPY.logos.altSuffix} />
+          </Reveal>
         </Container>
-      </section>
+      </Section>
 
       {/* What we need from you */}
-      <section className="py-16 sm:py-20 bg-[#F5F5F7]">
-        <Container size="narrow">
-          <ScrollReveal>
-            <div className="text-center mb-8 sm:mb-10">
-              <span className="inline-block text-primary text-xs sm:text-sm font-semibold tracking-widest uppercase mb-3">
-                What we need from you
-              </span>
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 leading-tight">
-                What to send with your plans
-              </h2>
+      <Section tone="shell" labelledBy="portal-need-heading">
+        <Container>
+          <div className="grid gap-y-10 lg:grid-cols-12 lg:gap-x-8">
+            <div className="lg:col-span-5">
+              <SectionHeading
+                id="portal-need-heading"
+                overline={COPY.need.overline}
+                title={COPY.need.title}
+                align="left"
+                className="mb-0"
+              />
+              <div className="mt-8 hidden lg:block">
+                <Button href="#upload-plans" size="lg" iconRight={<ArrowRight className="size-5" />}>
+                  {COPY.need.submitPlans}
+                </Button>
+              </div>
             </div>
-          </ScrollReveal>
-
-          <ul className="space-y-3 sm:space-y-4 max-w-2xl mx-auto">
-            {WHAT_WE_NEED.map((item, i) => (
-              <li key={item}>
-                <ScrollReveal delay={i * 0.05} className="flex items-start gap-3 sm:gap-4 p-4 sm:p-5 rounded-xl bg-white border border-gray-200">
-                  <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                  <span className="text-sm sm:text-base text-gray-700 leading-relaxed">
-                    {item}
-                  </span>
-                </ScrollReveal>
-              </li>
-            ))}
-          </ul>
-
-          <ScrollReveal>
-            <div className="mt-10 text-center">
-              <Button href="#upload-plans" size="lg">
-                Submit Plans
-                <ArrowRight className="w-4 h-4" />
-              </Button>
+            <div className="lg:col-span-7">
+              <ul className="border-b border-rule">
+                {COPY.need.items.map((item) => (
+                  <li key={item} className="flex gap-3 border-t border-rule py-5 text-lg text-fg">
+                    <span className="joint mt-[0.6em] text-accent" aria-hidden="true" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-8 lg:hidden">
+                <Button href="#upload-plans" size="lg" fullWidth iconRight={<ArrowRight className="size-5" />}>
+                  {COPY.need.submitPlans}
+                </Button>
+              </div>
             </div>
-          </ScrollReveal>
+          </div>
         </Container>
-      </section>
+      </Section>
     </>
   );
 }

@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import PageTransition from "@/components/layout/PageTransition";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import FaqJsonLd from "@/components/seo/FaqJsonLd";
 import BuildersPage from "./BuildersPage";
@@ -71,7 +70,7 @@ function BuildersJsonLd() {
 
 export default function Page() {
   return (
-    <PageTransition>
+    <>
       <BreadcrumbJsonLd
         items={[
           { name: "Home", href: "/" },
@@ -81,6 +80,6 @@ export default function Page() {
       <BuildersJsonLd />
       <FaqJsonLd faqs={BUILDER_FAQS} />
       <BuildersPage />
-    </PageTransition>
+    </>
   );
 }

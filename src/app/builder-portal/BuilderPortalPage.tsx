@@ -1,35 +1,34 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import {
-  User,
-  Building2,
-  Upload,
-  CheckCircle,
-  ChevronRight,
-  ChevronLeft,
-  Phone,
-  FileText,
-  ClipboardList,
-} from "lucide-react";
+import { useRef, useState, type ReactNode } from "react";
 import Container from "@/components/ui/Container";
+import Section from "@/components/ui/Section";
+import Eyebrow from "@/components/ui/Eyebrow";
 import Button from "@/components/ui/Button";
-import PageTransition from "@/components/layout/PageTransition";
+import PageHero from "@/components/ui/PageHero";
+import Stepper from "@/components/ui/Stepper";
+import WizardProgress from "@/components/ui/WizardProgress";
+import { ChevronLeft, ChevronRight, FileText, Phone } from "@/components/ui/icons";
+import {
+  Field,
+  FormPanel,
+  FormStatus,
+  Honeypot,
+  Input,
+  OptionCard,
+  OptionGroup,
+  Select,
+  Textarea,
+} from "@/components/forms";
 import FileUpload from "@/components/builder-portal/FileUpload";
 import BuilderPortalIntro from "@/components/builder-portal/BuilderPortalIntro";
-import WhatHappensNext from "@/components/ui/WhatHappensNext";
+import { AFTER_SUBMIT, BUILDER_PORTAL } from "@/content/builders";
 import { BUSINESS } from "@/lib/business";
-import { cn } from "@/lib/utils";
 import { trackBuilderLead } from "@/lib/pixel";
 import { PLAN_SET_MAX_BYTES } from "@/lib/plan-upload";
 
-const steps = [
-  { label: "Contact", icon: <User className="w-4 h-4" /> },
-  { label: "Project", icon: <Building2 className="w-4 h-4" /> },
-  { label: "Plans", icon: <Upload className="w-4 h-4" /> },
-  { label: "Review", icon: <ClipboardList className="w-4 h-4" /> },
-];
+const COPY = BUILDER_PORTAL.wizard;
+const steps = COPY.steps.map((label) => ({ label }));
 
 const projectTypes = [
   "Residential New Construction",
@@ -90,6 +89,15 @@ export default function BuilderPortalPage() {
   const update = (field: keyof FormData, value: string) =>
     setForm((prev) => ({ ...prev, [field]: value }));
 
+  // Moving between steps puts focus on the new step's heading, so keyboard and
+  // screen-reader users land at the top of what just appeared.
+  const stepHeadingRef = useRef<HTMLHeadingElement>(null);
+  const successRef = useRef<HTMLDivElement>(null);
+  const goTo = (next: number) => {
+    setStep(next);
+    requestAnimationFrame(() => stepHeadingRef.current?.focus({ preventScroll: false }));
+  };
+
   // Changing step (Back, Edit, the progress bar) clears a submit error, so it
   // is not still on screen while the builder fixes the cause. It is keyed to
   // the change, not to the step on screen: Back and Edit stay usable while a
@@ -148,6 +156,11 @@ export default function BuilderPortalPage() {
         { eventId: result.eventId, email: form.email }
       );
       setSubmitted(true);
+      // The success screen replaces the page: start it at the top, focused.
+      requestAnimationFrame(() => {
+        window.scrollTo({ top: 0 });
+        successRef.current?.focus({ preventScroll: true });
+      });
     } catch (err) {
       // Attachment problems are explained by the server in customer-facing words.
       const attachmentIssue = (err as { code?: string }).code === "attachments" && err instanceof Error;
@@ -166,524 +179,355 @@ export default function BuilderPortalPage() {
     return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
   };
 
-  const inputClass =
-    "w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors";
-  const labelClass = "block text-sm font-medium text-gray-700 mb-1.5";
+  const fid = (name: string) => `portal-${name}`;
+  const R = COPY.review;
 
   // ── Success screen ──
   if (submitted) {
+    const done = BUILDER_PORTAL.success;
     return (
-      <PageTransition>
-        <section className="pt-24 sm:pt-28 lg:pt-32 pb-16 sm:pb-24 min-h-screen">
-          <Container>
-            <div className="max-w-lg mx-auto text-center">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <CheckCircle className="w-8 h-8 text-green-600" />
-              </div>
-              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3">
-                Quote Request Submitted
-              </h1>
-              <p className="text-gray-500 text-lg mb-2">
-                Thank you, {form.name}! We&apos;ve received your project details
-                {files.length > 0 && ` and ${files.length} file${files.length !== 1 ? "s" : ""}`}.
-              </p>
-              <p className="text-gray-500 mb-8">
-                Our team will review your plans and follow up with a detailed scope and quote.
-              </p>
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <Button href="/" variant="secondary">
-                  Back to Home
-                </Button>
-                <Button href={BUSINESS.phoneHref} icon={<Phone className="w-4 h-4" />}>
-                  Call {BUSINESS.phone}
-                </Button>
-              </div>
-            </div>
-          </Container>
-        </section>
-      </PageTransition>
+      <div ref={successRef} tabIndex={-1} className="outline-none">
+        <PageHero
+          layout="compact"
+          title={done.title}
+          description={
+            <>
+              <p>{done.thanks(form.name, files.length)}</p>
+              <p className="mt-3">{done.next}</p>
+            </>
+          }
+          actions={
+            <>
+              <Button href={BUSINESS.phoneHref} size="lg" icon={<Phone className="size-5" />}>
+                Call {BUSINESS.phone}
+              </Button>
+              <Button href="/" variant="secondary" size="lg">
+                {done.home}
+              </Button>
+            </>
+          }
+        />
+      </div>
     );
   }
 
+  const editButton = (target: number) => (
+    <button
+      type="button"
+      onClick={() => goTo(target)}
+      className="inline-flex min-h-11 items-center px-1 text-sm font-semibold text-link underline-offset-[0.2em] hover:underline"
+    >
+      {R.edit}
+    </button>
+  );
+
+  const reviewRow = (term: string, value: ReactNode) => (
+    <div className="grid grid-cols-[7rem_1fr] gap-x-4 border-t border-rule py-2.5 text-[0.9375rem] sm:grid-cols-[9rem_1fr]">
+      <dt className="text-muted">{term}</dt>
+      <dd className="min-w-0 font-medium break-words text-fg">{value}</dd>
+    </div>
+  );
+
+  const reviewGroup = (title: string, target: number, children: ReactNode) => (
+    <section className="border-t border-fg/80 pt-3">
+      <div className="flex items-center justify-between gap-4">
+        <h3 className="label-tech text-fg">{title}</h3>
+        {editButton(target)}
+      </div>
+      {children}
+    </section>
+  );
+
+  const headingClass = "text-display-sm font-semibold text-fg outline-none";
+
   return (
-    <PageTransition>
+    <>
       <BuilderPortalIntro />
 
-      <section
+      <Section
         id="upload-plans"
-        className="pt-16 sm:pt-20 lg:pt-24 pb-16 sm:pb-24 bg-white scroll-mt-24"
+        tone="white"
+        labelledBy="upload-plans-heading"
+        className="scroll-mt-[calc(var(--nav-h)+1rem)]"
       >
         <Container>
-          <div className="max-w-2xl mx-auto">
-            {/* Header */}
-            <div className="text-center mb-8 sm:mb-12">
-              <span className="inline-block text-primary text-xs sm:text-sm font-semibold tracking-widest uppercase mb-3">
-                Submit your plans
-              </span>
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-gray-900 mb-3">
-                Send us your project
+          <div className="grid gap-y-12 lg:grid-cols-12 lg:gap-x-8">
+            {/* Header and what happens next */}
+            <div className="lg:col-span-4 lg:col-start-1 lg:row-start-1">
+              <Eyebrow className="mb-4">{COPY.overline}</Eyebrow>
+              <h2 id="upload-plans-heading" className="text-display-md text-fg">
+                {COPY.title}
               </h2>
-              <p className="text-gray-500 text-sm sm:text-base max-w-lg mx-auto">
-                Four short steps — contact info, project details, plans, then
-                review. We&apos;ll get back to you with a detailed scope and
-                quote.
-              </p>
+              <p className="mt-5 max-w-[48ch] text-lead text-body">{COPY.intro}</p>
             </div>
 
-            {/* Progress bar */}
-            <div className="flex items-center gap-1 mb-8 sm:mb-12">
-              {steps.map((s, i) => (
-                <div key={s.label} className="flex-1 flex items-center gap-1">
-                  <button
-                    onClick={() => i < step && setStep(i)}
-                    disabled={i > step}
-                    // The label is `hidden sm:inline`, so on mobile the button
-                    // is icon-only and has no accessible name without this.
-                    aria-label={s.label}
-                    aria-current={i === step ? "step" : undefined}
-                    className={cn(
-                      "flex items-center gap-1.5 px-2 sm:px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-colors w-full justify-center",
-                      i === step
-                        ? "bg-primary text-white"
-                        : i < step
-                          ? "bg-primary/10 text-primary cursor-pointer hover:bg-primary/20"
-                          : "bg-gray-100 text-gray-400"
-                    )}
-                  >
-                    {s.icon}
-                    <span className="hidden sm:inline">{s.label}</span>
-                  </button>
-                  {i < steps.length - 1 && (
-                    <ChevronRight className="w-3 h-3 text-gray-300 shrink-0" />
+            {/* What happens next: under the header beside the form on desktop, after the form on phones */}
+            <div className="order-3 border-t border-rule pt-10 lg:order-none lg:col-span-4 lg:col-start-1 lg:row-start-2 lg:border-t-0 lg:pt-0">
+              <h2 className="label-tech mb-6 flex items-center gap-2.5 text-accent">
+                <span className="joint" aria-hidden="true" />
+                {AFTER_SUBMIT.title}
+              </h2>
+              <Stepper
+                orientation="vertical"
+                label={AFTER_SUBMIT.title}
+                items={AFTER_SUBMIT.steps.map((s) => ({ label: s.title, description: s.description }))}
+              />
+            </div>
+
+            {/* The wizard */}
+            <div className="relative order-2 lg:order-none lg:col-span-7 lg:col-start-6 lg:row-span-2 lg:row-start-1 lg:self-start">
+              <FormPanel className="border border-steel-200 bg-white">
+                <WizardProgress
+                  steps={COPY.steps as unknown as string[]}
+                  current={step}
+                  label={COPY.progressLabel}
+                  onStepClick={goTo}
+                  className="mb-8 border-b border-steel-200 pb-6 sm:mb-10"
+                />
+
+                {/* Honeypot — hidden from real users. It sits outside the steps
+                    so it is in the page on every one of them. */}
+                <Honeypot value={form.website} onChange={(e) => update("website", e.target.value)} />
+
+                <div key={step} className="portal-step">
+                  {/* ── Step 0: Contact Info ── */}
+                  {step === 0 && (
+                    <div className="space-y-5">
+                      <h2 ref={stepHeadingRef} tabIndex={-1} className={headingClass}>
+                        {COPY.contact.title}
+                      </h2>
+                      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-x-6">
+                        <Field id={fid("name")} label={COPY.contact.name.label}>
+                          <Input
+                            preset="name"
+                            value={form.name}
+                            onChange={(e) => update("name", e.target.value)}
+                            placeholder={COPY.contact.name.placeholder}
+                          />
+                        </Field>
+                        <Field id={fid("company")} label={COPY.contact.company.label}>
+                          <Input
+                            autoComplete="organization"
+                            value={form.company}
+                            onChange={(e) => update("company", e.target.value)}
+                            placeholder={COPY.contact.company.placeholder}
+                          />
+                        </Field>
+                        <Field id={fid("email")} label={COPY.contact.email.label}>
+                          <Input
+                            preset="email"
+                            value={form.email}
+                            onChange={(e) => update("email", e.target.value)}
+                            placeholder={COPY.contact.email.placeholder}
+                          />
+                        </Field>
+                        <Field id={fid("phone")} label={COPY.contact.phone.label}>
+                          <Input
+                            preset="tel"
+                            value={form.phone}
+                            onChange={(e) => update("phone", e.target.value)}
+                            placeholder={COPY.contact.phone.placeholder}
+                          />
+                        </Field>
+                      </div>
+                    </div>
                   )}
-                </div>
-              ))}
-            </div>
 
-            {/* Honeypot — hidden from real users. It sits outside the steps
-                so it is in the page on every one of them. */}
-            <input
-              type="text"
-              name="website"
-              tabIndex={-1}
-              autoComplete="off"
-              aria-hidden="true"
-              value={form.website}
-              onChange={(e) => update("website", e.target.value)}
-              className="absolute -left-[9999px] w-px h-px opacity-0"
-            />
-
-            {/* Steps */}
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={step}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.2 }}
-              >
-                {/* ── Step 0: Contact Info ── */}
-                {step === 0 && (
-                  <div className="space-y-5">
-                    <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-6">
-                      Your Contact Information
-                    </h2>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                      <div>
-                        <label className={labelClass}>Full Name *</label>
-                        <input
-                          type="text"
-                          value={form.name}
-                          onChange={(e) => update("name", e.target.value)}
-                          placeholder="John Smith"
-                          className={inputClass}
+                  {/* ── Step 1: Project Details ── */}
+                  {step === 1 && (
+                    <div className="space-y-5">
+                      <h2 ref={stepHeadingRef} tabIndex={-1} className={headingClass}>
+                        {COPY.project.title}
+                      </h2>
+                      <Field id={fid("address")} label={COPY.project.address.label}>
+                        <Input
+                          autoComplete="street-address"
+                          value={form.address}
+                          onChange={(e) => update("address", e.target.value)}
+                          placeholder={COPY.project.address.placeholder}
                         />
-                      </div>
-                      <div>
-                        <label className={labelClass}>Company Name *</label>
-                        <input
-                          type="text"
-                          value={form.company}
-                          onChange={(e) => update("company", e.target.value)}
-                          placeholder="Smith Builders LLC"
-                          className={inputClass}
+                      </Field>
+                      <Field id={fid("community")} label={COPY.project.community.label}>
+                        <Input
+                          value={form.community}
+                          onChange={(e) => update("community", e.target.value)}
+                          placeholder={COPY.project.community.placeholder}
                         />
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                      <div>
-                        <label className={labelClass}>Email *</label>
-                        <input
-                          type="email"
-                          value={form.email}
-                          onChange={(e) => update("email", e.target.value)}
-                          placeholder="john@smithbuilders.com"
-                          className={inputClass}
-                        />
-                      </div>
-                      <div>
-                        <label className={labelClass}>Phone *</label>
-                        <input
-                          type="tel"
-                          value={form.phone}
-                          onChange={(e) => update("phone", e.target.value)}
-                          placeholder="(239) 555-0123"
-                          className={inputClass}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {/* ── Step 1: Project Details ── */}
-                {step === 1 && (
-                  <div className="space-y-5">
-                    <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-6">
-                      Project Details
-                    </h2>
-                    <div>
-                      <label className={labelClass}>Project Address *</label>
-                      <input
-                        type="text"
-                        value={form.address}
-                        onChange={(e) => update("address", e.target.value)}
-                        placeholder="123 Main St, Cape Coral, FL 33904"
-                        className={inputClass}
-                      />
-                    </div>
-                    <div>
-                      <label className={labelClass}>Community / Subdivision</label>
-                      <input
-                        type="text"
-                        value={form.community}
-                        onChange={(e) => update("community", e.target.value)}
-                        placeholder="e.g. Cape Coral Unit 42, or scattered lots"
-                        className={inputClass}
-                      />
-                    </div>
-                    <div>
-                      <label className={labelClass}>Project Type *</label>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        {projectTypes.map((type) => (
-                          <button
+                      </Field>
+                      <OptionGroup id={fid("type")} legend={COPY.project.projectType} columns={2}>
+                        {projectTypes.map((type, i) => (
+                          <OptionCard
                             key={type}
-                            type="button"
-                            onClick={() => update("projectType", type)}
-                            className={cn(
-                              "px-4 py-3 border rounded-xl text-sm font-medium text-left transition-all",
-                              form.projectType === type
-                                ? "border-primary bg-primary/5 text-primary"
-                                : "border-gray-200 text-gray-700 hover:border-gray-300"
-                            )}
-                          >
-                            {type}
-                          </button>
+                            id={fid(`type-${i}`)}
+                            name="projectType"
+                            value={type}
+                            title={type}
+                            checked={form.projectType === type}
+                            onChange={() => update("projectType", type)}
+                          />
                         ))}
+                      </OptionGroup>
+                      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-x-6">
+                        <Field id={fid("units")} label={COPY.project.units.label}>
+                          <Input
+                            type="number"
+                            inputMode="numeric"
+                            min={1}
+                            value={form.units}
+                            onChange={(e) => update("units", e.target.value)}
+                            placeholder={COPY.project.units.placeholder}
+                          />
+                        </Field>
+                        <Field id={fid("sqft")} label={COPY.project.sqft.label}>
+                          <Input
+                            inputMode="numeric"
+                            value={form.sqft}
+                            onChange={(e) => update("sqft", e.target.value)}
+                            placeholder={COPY.project.sqft.placeholder}
+                          />
+                        </Field>
+                        <Field id={fid("start")} label={COPY.project.startDate}>
+                          <Input
+                            type="date"
+                            value={form.startDate}
+                            onChange={(e) => update("startDate", e.target.value)}
+                          />
+                        </Field>
+                        <Field id={fid("budget")} label={COPY.project.budget.label}>
+                          <Select value={form.budget} onChange={(e) => update("budget", e.target.value)}>
+                            <option value="">{COPY.project.budget.placeholder}</option>
+                            {budgetRanges.map((b) => (
+                              <option key={b} value={b}>
+                                {b}
+                              </option>
+                            ))}
+                          </Select>
+                        </Field>
                       </div>
-                    </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                      <div>
-                        <label className={labelClass}>Number of Units</label>
-                        <input
-                          type="number"
-                          inputMode="numeric"
-                          min={1}
-                          value={form.units}
-                          onChange={(e) => update("units", e.target.value)}
-                          placeholder="e.g. 12"
-                          className={inputClass}
+                      <Field
+                        id={fid("description")}
+                        label={COPY.project.description.label}
+                        hint={COPY.project.description.hint}
+                      >
+                        <Textarea
+                          value={form.description}
+                          onChange={(e) => update("description", e.target.value)}
+                          placeholder={COPY.project.description.placeholder}
+                          rows={4}
                         />
-                      </div>
-                      <div>
-                        <label className={labelClass}>Approx. Square Footage</label>
-                        <input
-                          type="text"
-                          value={form.sqft}
-                          onChange={(e) => update("sqft", e.target.value)}
-                          placeholder="e.g. 2,500"
-                          className={inputClass}
-                        />
-                      </div>
+                      </Field>
                     </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                      <div>
-                        <label className={labelClass}>Target Start Date</label>
-                        <input
-                          type="date"
-                          value={form.startDate}
-                          onChange={(e) => update("startDate", e.target.value)}
-                          className={inputClass}
-                        />
-                      </div>
-                      <div>
-                        <label className={labelClass}>Budget Range</label>
-                        <select
-                          value={form.budget}
-                          onChange={(e) => update("budget", e.target.value)}
-                          className={inputClass}
-                        >
-                          <option value="">Select...</option>
-                          {budgetRanges.map((b) => (
-                            <option key={b} value={b}>
-                              {b}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                    </div>
-                    <div>
-                      <label className={labelClass}>Project Description *</label>
-                      <textarea
-                        value={form.description}
-                        onChange={(e) => update("description", e.target.value)}
-                        placeholder="Describe the scope of work, number of fixtures, any special requirements..."
-                        rows={4}
-                        className={inputClass}
+                  )}
+
+                  {/* ── Step 2: File Upload ── */}
+                  {step === 2 && (
+                    <div className="space-y-5">
+                      <h2 ref={stepHeadingRef} tabIndex={-1} className={headingClass}>
+                        {COPY.plans.title}
+                      </h2>
+                      <p className="max-w-[60ch] text-body">{COPY.plans.intro}</p>
+                      <FileUpload
+                        files={files}
+                        onChange={setFiles}
+                        maxTotalBytes={PLAN_SET_MAX_BYTES}
+                        largePlanSetEmail={BUSINESS.email}
                       />
-                      <p className="text-xs text-gray-400 mt-1">
-                        Minimum 10 characters
-                      </p>
                     </div>
-                  </div>
-                )}
+                  )}
 
-                {/* ── Step 2: File Upload ── */}
-                {step === 2 && (
-                  <div className="space-y-5">
-                    <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-2">
-                      Upload Plans &amp; Documents
-                    </h2>
-                    <p className="text-sm text-gray-500 mb-6">
-                      Upload blueprints, site plans, floor plans, or photos of existing
-                      conditions. This helps us provide a more accurate quote.
-                    </p>
-                    <FileUpload
-                      files={files}
-                      onChange={setFiles}
-                      maxTotalBytes={PLAN_SET_MAX_BYTES}
-                      largePlanSetEmail={BUSINESS.email}
-                    />
-                  </div>
-                )}
+                  {/* ── Step 3: Review ── */}
+                  {step === 3 && (
+                    <div className="space-y-8">
+                      <h2 ref={stepHeadingRef} tabIndex={-1} className={headingClass}>
+                        {R.title}
+                      </h2>
 
-                {/* ── Step 3: Review ── */}
-                {step === 3 && (
-                  <div className="space-y-6">
-                    <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-6">
-                      Review Your Submission
-                    </h2>
+                      {reviewGroup(
+                        R.contact,
+                        0,
+                        <dl className="mt-2">
+                          {reviewRow(R.name, form.name)}
+                          {reviewRow(R.company, form.company)}
+                          {reviewRow(R.email, form.email)}
+                          {reviewRow(R.phone, form.phone)}
+                        </dl>,
+                      )}
 
-                    {/* Contact */}
-                    <div className="bg-gray-50 border border-gray-200 rounded-xl p-5">
-                      <div className="flex items-center justify-between mb-3">
-                        <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wider">
-                          Contact Info
-                        </h3>
-                        <button
-                          type="button"
-                          onClick={() => setStep(0)}
-                          className="text-xs text-primary font-medium hover:underline"
-                        >
-                          Edit
-                        </button>
-                      </div>
-                      <div className="grid grid-cols-2 gap-y-2 text-sm">
-                        <span className="text-gray-500">Name</span>
-                        <span className="text-gray-900 font-medium">{form.name}</span>
-                        <span className="text-gray-500">Company</span>
-                        <span className="text-gray-900 font-medium">{form.company}</span>
-                        <span className="text-gray-500">Email</span>
-                        <span className="text-gray-900 font-medium">{form.email}</span>
-                        <span className="text-gray-500">Phone</span>
-                        <span className="text-gray-900 font-medium">{form.phone}</span>
-                      </div>
-                    </div>
+                      {reviewGroup(
+                        R.project,
+                        1,
+                        <dl className="mt-2">
+                          {reviewRow(R.address, form.address)}
+                          {form.community && reviewRow(R.community, form.community)}
+                          {reviewRow(R.type, form.projectType)}
+                          {form.units && reviewRow(R.units, form.units)}
+                          {form.sqft && reviewRow(R.sqft, form.sqft)}
+                          {form.startDate && reviewRow(R.startDate, form.startDate)}
+                          {form.budget && reviewRow(R.budget, form.budget)}
+                          <div className="border-t border-rule py-2.5 text-[0.9375rem]">
+                            <dt className="text-muted">{R.description}</dt>
+                            <dd className="mt-1 break-words text-fg">{form.description}</dd>
+                          </div>
+                        </dl>,
+                      )}
 
-                    {/* Project */}
-                    <div className="bg-gray-50 border border-gray-200 rounded-xl p-5">
-                      <div className="flex items-center justify-between mb-3">
-                        <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wider">
-                          Project Details
-                        </h3>
-                        <button
-                          type="button"
-                          onClick={() => setStep(1)}
-                          className="text-xs text-primary font-medium hover:underline"
-                        >
-                          Edit
-                        </button>
-                      </div>
-                      <div className="grid grid-cols-2 gap-y-2 text-sm">
-                        <span className="text-gray-500">Address</span>
-                        <span className="text-gray-900 font-medium">{form.address}</span>
-                        {form.community && (
-                          <>
-                            <span className="text-gray-500">Community</span>
-                            <span className="text-gray-900 font-medium">{form.community}</span>
-                          </>
-                        )}
-                        <span className="text-gray-500">Type</span>
-                        <span className="text-gray-900 font-medium">{form.projectType}</span>
-                        {form.units && (
-                          <>
-                            <span className="text-gray-500">Units</span>
-                            <span className="text-gray-900 font-medium">{form.units}</span>
-                          </>
-                        )}
-                        {form.sqft && (
-                          <>
-                            <span className="text-gray-500">Sq Ft</span>
-                            <span className="text-gray-900 font-medium">{form.sqft}</span>
-                          </>
-                        )}
-                        {form.startDate && (
-                          <>
-                            <span className="text-gray-500">Start Date</span>
-                            <span className="text-gray-900 font-medium">{form.startDate}</span>
-                          </>
-                        )}
-                        {form.budget && (
-                          <>
-                            <span className="text-gray-500">Budget</span>
-                            <span className="text-gray-900 font-medium">{form.budget}</span>
-                          </>
-                        )}
-                      </div>
-                      <div className="mt-3 pt-3 border-t border-gray-200">
-                        <span className="text-sm text-gray-500">Description</span>
-                        <p className="text-sm text-gray-900 mt-1">{form.description}</p>
-                      </div>
-                    </div>
-
-                    {/* Files */}
-                    <div className="bg-gray-50 border border-gray-200 rounded-xl p-5">
-                      <div className="flex items-center justify-between mb-3">
-                        <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wider">
-                          Uploaded Files
-                        </h3>
-                        <button
-                          type="button"
-                          onClick={() => setStep(2)}
-                          className="text-xs text-primary font-medium hover:underline"
-                        >
-                          Edit
-                        </button>
-                      </div>
-                      {files.length > 0 ? (
-                        <ul className="space-y-1.5 text-sm">
-                          {files.map((f, i) => (
-                            <li key={i} className="flex items-center gap-2 text-gray-700">
-                              <FileText className="w-3.5 h-3.5 text-gray-400" />
-                              <span className="truncate">{f.name}</span>
-                              <span className="text-gray-400 text-xs">
-                                ({formatSize(f.size)})
-                              </span>
-                            </li>
-                          ))}
-                        </ul>
-                      ) : (
-                        <p className="text-sm text-gray-400 italic">
-                          No files uploaded
-                        </p>
+                      {reviewGroup(
+                        R.files,
+                        2,
+                        files.length > 0 ? (
+                          <ul className="mt-2">
+                            {files.map((f, i) => (
+                              <li
+                                key={i}
+                                className="flex items-center gap-2 border-t border-rule py-2.5 text-[0.9375rem] text-fg"
+                              >
+                                <FileText className="size-4 shrink-0 text-muted" aria-hidden="true" />
+                                <span className="min-w-0 truncate">{f.name}</span>
+                                <span className="shrink-0 text-sm text-muted tabular-nums">({formatSize(f.size)})</span>
+                              </li>
+                            ))}
+                          </ul>
+                        ) : (
+                          <p className="mt-2 border-t border-rule py-2.5 text-[0.9375rem] text-muted">{R.noFiles}</p>
+                        ),
                       )}
                     </div>
-                  </div>
-                )}
-              </motion.div>
-            </AnimatePresence>
-
-            {/* Submit error — raised from the review step, cleared on a step change */}
-            {submitError && (
-              <p
-                role="alert"
-                className="mt-6 rounded-xl bg-red-50 border border-red-100 px-4 py-3 text-sm text-red-700"
-              >
-                {submitError}
-              </p>
-            )}
-
-            {/* Navigation */}
-            <div className="flex items-center justify-between mt-8 sm:mt-10 pt-6 border-t border-gray-200">
-              <button
-                type="button"
-                onClick={() => setStep((s) => Math.max(0, s - 1))}
-                disabled={step === 0}
-                className={cn(
-                  "flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-colors",
-                  step === 0
-                    ? "text-gray-300 cursor-not-allowed"
-                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
-                )}
-              >
-                <ChevronLeft className="w-4 h-4" />
-                Back
-              </button>
-
-              {step < steps.length - 1 ? (
-                <button
-                  type="button"
-                  onClick={() => setStep((s) => s + 1)}
-                  disabled={!canProceed()}
-                  className={cn(
-                    "flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-semibold transition-colors",
-                    canProceed()
-                      ? "bg-primary text-white hover:bg-primary/90"
-                      : "bg-gray-200 text-gray-400 cursor-not-allowed"
                   )}
-                >
-                  Continue
-                  <ChevronRight className="w-4 h-4" />
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  onClick={handleSubmit}
-                  disabled={submitting}
-                  className="flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-semibold bg-primary text-white hover:bg-primary/90 transition-colors disabled:opacity-50"
-                >
-                  {submitting ? (
-                    <>
-                      <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                      Submitting...
-                    </>
+                </div>
+
+                {/* Submit error — raised from the review step, cleared on a step change */}
+                {submitError && <FormStatus status="error" title={submitError} className="mt-6" />}
+
+                {/* Navigation */}
+                <div className="mt-8 flex items-center justify-between gap-4 border-t border-steel-200 pt-6 sm:mt-10">
+                  <Button
+                    variant="secondary"
+                    onClick={() => goTo(Math.max(0, step - 1))}
+                    disabled={step === 0}
+                    icon={<ChevronLeft className="size-5" />}
+                  >
+                    {COPY.back}
+                  </Button>
+
+                  {step < steps.length - 1 ? (
+                    <Button
+                      onClick={() => goTo(step + 1)}
+                      disabled={!canProceed()}
+                      iconRight={<ChevronRight className="size-5" />}
+                    >
+                      {COPY.next}
+                    </Button>
                   ) : (
-                    <>
-                      Submit Quote Request
-                      <CheckCircle className="w-4 h-4" />
-                    </>
+                    <Button onClick={handleSubmit} loading={submitting}>
+                      {submitting ? COPY.submitting : COPY.submit}
+                    </Button>
                   )}
-                </button>
-              )}
+                </div>
+              </FormPanel>
             </div>
           </div>
         </Container>
-      </section>
-
-      <WhatHappensNext
-        title="What happens after you submit"
-        steps={[
-          {
-            title: "Plans received",
-            description:
-              "You'll get a confirmation email immediately, and our office picks it up from there.",
-          },
-          {
-            title: "Takeoff & questions",
-            description:
-              "We work through the plumbing scope and reach out with any clarifying questions on fixtures, materials, or scheduling.",
-          },
-          {
-            title: "Written proposal",
-            description:
-              "Detailed written proposal — scope, materials, schedule, price, and warranty terms.",
-          },
-          {
-            title: "Kickoff scheduled",
-            description:
-              "Once approved, we lock in rough-in dates and coordinate with your other trades to keep the build on track.",
-          },
-        ]}
-      />
-    </PageTransition>
+      </Section>
+    </>
   );
 }
