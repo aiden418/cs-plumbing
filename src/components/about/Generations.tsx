@@ -1,112 +1,59 @@
-"use client";
-
-import Image from "next/image";
 import Container from "@/components/ui/Container";
+import Frame from "@/components/ui/Frame";
+import Reveal from "@/components/ui/Reveal";
+import Section from "@/components/ui/Section";
 import SectionHeading from "@/components/ui/SectionHeading";
-import StaggerChildren, {
-  staggerItem,
-} from "@/components/animations/StaggerChildren";
-import { motion } from "framer-motion";
+import { image } from "@/lib/media";
+import { ABOUT_GENERATIONS } from "@/content/about";
 
-type Generation = {
-  gen: string;
-  name: string;
-  label: string;
-  image?: string;
-  /** CSS object-position that keeps the face in frame inside the 4:3 card. */
-  imagePosition?: string;
-  note?: string;
-  body: string;
-};
-
-const GENERATIONS: Generation[] = [
-  {
-    gen: "First Generation",
-    name: "Samuel Pellechio Sr.",
-    label: "The Foundation",
-    image: "/images/team/sam-sr-office.jpg",
-    note: "In loving memory",
-    body: "A mason and general contractor in Philadelphia who built thousands of homes before moving the family to Cape Coral in 1984. He taught his sons that craftsmanship isn't a shortcut business — you do it right, and you stand behind it. Every standard C&S holds today traces back to him.",
-  },
-  {
-    gen: "Second Generation",
-    name: "Chris & Sam — Founders",
-    label: "Owner & Co-Founder: Samuel Pellechio Jr.",
-    image: "/images/team/chris-and-sam.jpg",
-    body: "Both Cape Coral High grads. Sam earned his plumbing license in December 1997 and, with his brother Chris and their father's backing, founded C&S Plumbing of Lee in Cape Coral in 1998 — C&S, for Chris and Sam. Sam has led it ever since: honest work, fair pricing, and treating every customer like family, growing C&S into one of Southwest Florida's most trusted plumbing companies.",
-  },
-  {
-    gen: "Third Generation",
-    name: "Aiden Pellechio",
-    label: "Office Manager, Estimating & Project Management",
-    image: "/images/team/aiden.jpg",
-    imagePosition: "50% 30%",
-    body: "Aiden grew up around C&S job sites and never really left. These days he runs the office, estimating and project management — and a little of everything else — while working toward his construction management degree at FGCU. The plan from there is to earn his GC license, then his plumbing license, and keep the name on the truck right where it's always been.",
-  },
-];
-
+/** Three generations side by side: a framed photo with the words below it. */
 export default function Generations() {
   return (
-    <section className="py-16 sm:py-24 lg:py-32 bg-surface">
+    <Section tone="shell" labelledBy="about-generations-title">
       <Container>
         <SectionHeading
-          overline="Three Generations"
-          title="One Name on Every Job"
-          subtitle="The trade, handed down father to son — and the people who carry it now."
+          id="about-generations-title"
+          align="left"
+          overline={ABOUT_GENERATIONS.overline}
+          title={ABOUT_GENERATIONS.title}
+          subtitle={ABOUT_GENERATIONS.subtitle}
         />
 
-        <StaggerChildren className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-          {GENERATIONS.map((g, i) => (
-            <motion.div
-              key={g.name}
-              variants={staggerItem}
-              className="group relative flex flex-col overflow-hidden rounded-3xl bg-white border border-gray-200 card-lift card-lift-hover"
-            >
-              <div className="relative aspect-[4/3] overflow-hidden bg-navy">
-                {g.image ? (
-                  <Image
-                    src={g.image}
-                    alt={g.name}
-                    fill
-                    className="object-cover object-top transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
-                    style={g.imagePosition ? { objectPosition: g.imagePosition } : undefined}
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                  />
-                ) : (
-                  <div className="absolute inset-0 grid place-items-center bg-gradient-to-br from-navy to-[#0f1a2f]">
-                    <div className="text-center">
-                      <div className="mx-auto mb-2 grid h-14 w-14 place-items-center rounded-full bg-gold/20 text-2xl font-black text-gold">
-                        {g.name.charAt(0)}
-                      </div>
-                      <p className="text-[11px] font-semibold uppercase tracking-wider text-white/50">
-                        Photo coming soon
-                      </p>
-                    </div>
-                  </div>
-                )}
-                <span className="absolute left-3 top-3 rounded-full bg-gold px-3 py-1 text-[11px] font-black uppercase tracking-wider text-navy">
-                  {`Gen ${i + 1}`}
-                </span>
-              </div>
-
-              <div className="flex flex-1 flex-col p-5 sm:p-6">
-                <span className="text-[11px] font-bold uppercase tracking-widest text-primary">
-                  {g.gen}
-                </span>
-                <h3 className="mt-1 text-lg sm:text-xl font-black text-gray-900">
-                  {g.name}
-                </h3>
-                <p className="mt-0.5 text-sm font-semibold text-gray-700">{g.label}</p>
-                {g.note && (
-                  <p className="mt-1 text-xs italic text-gray-400">{g.note}</p>
-                )}
-                <p className="mt-3 text-sm leading-relaxed text-gray-500">{g.body}</p>
-              </div>
-              <span className="absolute bottom-0 left-0 h-1 w-0 bg-gold transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:w-full" />
-            </motion.div>
-          ))}
-        </StaggerChildren>
+        {/* One hairline row per generation: photo, then who they are, then their story. */}
+        <ol className="border-b border-rule">
+          {ABOUT_GENERATIONS.items.map((g, i) => {
+            const media = g.image ? image(g.image, { alt: g.name }) : null;
+            return (
+              <Reveal
+                as="li"
+                key={g.name}
+                index={i}
+                className="grid grid-cols-1 gap-y-6 border-t border-rule py-10 sm:grid-cols-12 sm:gap-x-8"
+              >
+                <Frame
+                  media={media}
+                  aspect="4/3"
+                  position={g.imagePosition ?? "50% 0%"}
+                  sizes="(min-width: 1280px) 400px, (min-width: 640px) 40vw, 100vw"
+                  quality={75}
+                  className="sm:col-span-5 lg:col-span-4"
+                />
+                <div className="sm:col-span-7 lg:col-span-4">
+                  <p className="label-tech flex flex-wrap items-center gap-x-2 text-accent">
+                    <span>{g.tag}</span>
+                    <span aria-hidden="true" className="joint" />
+                    <span>{g.gen}</span>
+                  </p>
+                  <h3 className="mt-3 font-display text-display-sm font-bold text-fg [font-stretch:108%]">{g.name}</h3>
+                  <p className="mt-2 font-medium text-body">{g.label}</p>
+                  {g.note && <p className="mt-1 text-sm text-muted">{g.note}</p>}
+                </div>
+                <p className="max-w-[60ch] text-body sm:col-span-7 sm:col-start-6 lg:col-span-4 lg:col-start-9">{g.body}</p>
+              </Reveal>
+            );
+          })}
+        </ol>
       </Container>
-    </section>
+    </Section>
   );
 }
