@@ -2946,7 +2946,7 @@ export const BLOG_POSTS: BlogPost[] = [
 <p>Most homeowner's insurance policies in Florida cover slab leak repair, though coverage varies. Document the damage thoroughly before any repairs — photos and video of wet flooring, cracks, and water damage strengthen your claim significantly.</p>
 
 <h2>Don't Wait — Slab Leaks Get Worse Quickly</h2>
-<p>A small slab leak that costs $2,000 to repair today can become a $20,000+ foundation and mold remediation project in six months. The concrete and soil beneath your slab will erode faster than you expect once water starts flowing freely underground.</p> // claim-ok: illustrative comparison, not a published price
+<p>A small slab leak that costs $2,000 to repair today can become a $20,000+ foundation and mold remediation project in six months. The concrete and soil beneath your slab will erode faster than you expect once water starts flowing freely underground.</p>${/* claim-ok: illustrative comparison, not a published price */ ""}
 <p>If you've noticed any of the warning signs above, call <a href="${BUSINESS.phoneHref}">${BUSINESS.phone}</a> immediately. C&S Plumbing provides expert <a href="/services/leak-repair">leak detection and repair</a> throughout <a href="/areas/cape-coral">Cape Coral</a>, <a href="/areas/fort-myers">Fort Myers</a>, <a href="/areas/north-fort-myers">North Fort Myers</a>, <a href="/areas/bonita-springs">Bonita Springs</a>, and all of Lee County. <a href="/booking">Book a leak detection appointment</a> today — fast diagnosis is the difference between a minor repair and a major reconstruction.</p>`,
   },
   {
@@ -3174,7 +3174,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>4. Test Your Toilets for Running or Silent Leaks</h2>
 <p>A running toilet is one of the most common — and wasteful — plumbing problems in residential homes. A toilet that runs continuously can waste 200 gallons per day. The flapper valve is usually the culprit: it's a rubber seal that deteriorates over time, especially in Florida's chlorinated water.</p>
-<p>To check for a silent toilet leak, put a few drops of food coloring or a dye tablet in the tank and wait 15 minutes without flushing. If color appears in the bowl, the flapper is leaking. Replacing a flapper costs about $10 and takes 10 minutes — one of the few plumbing repairs genuinely worth doing yourself before calling a plumber.</p> // claim-ok: DIY part cost, not a C&S price
+<p>To check for a silent toilet leak, put a few drops of food coloring or a dye tablet in the tank and wait 15 minutes without flushing. If color appears in the bowl, the flapper is leaking. Replacing a flapper costs about $10 and takes 10 minutes — one of the few plumbing repairs genuinely worth doing yourself before calling a plumber.</p>${/* claim-ok: DIY part cost, not a C&S price */ ""}
 
 <h2>5. Inspect and Clear All Drains</h2>
 <p>Summer in Southwest Florida brings daily rainfall and heavy use of showers (everyone's sweating constantly). Make sure all drains are flowing freely before summer begins. Pour a bucket of water into floor drains in the garage, laundry room, and any utility areas — these drains sit unused for long periods and their water traps can evaporate, allowing sewer gas odors into the home.</p>
@@ -3379,13 +3379,13 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>Repipe Cost by Home Size (PEX)</h2>
 <p>These are C&S Plumbing's real working ranges for a complete hot-and-cold repipe in PEX, including materials, labor, the Lee County permit, final inspection, and drywall patching:</p>
-<p><strong>2-bed / 2-bath, up to 1,500 sq ft — ${rangeInline("repipe.pex2x2")}.</strong> Most condos and smaller slab homes. A North Fort Myers condo we repiped recently came in at $4,950, done in a single day so the unit could be re-rented that weekend.</p> // claim-ok: documented job
-<p><strong>3-bed / 2-bath, 1,800–2,400 sq ft — ${rangeInline("repipe.pex3x2")}.</strong> The typical Cape Coral and Fort Myers single-family home. A 1990 Cape Coral SE home with failing polybutylene ran $7,200, finished in a day and a half with nine access cuts, all patched.</p> // claim-ok: documented job
+<p><strong>2-bed / 2-bath, up to 1,500 sq ft — ${rangeInline("repipe.pex2x2")}.</strong> Most condos and smaller slab homes. A North Fort Myers condo we repiped recently came in at $4,950, done in a single day so the unit could be re-rented that weekend.</p>${/* claim-ok: documented job */ ""}
+<p><strong>3-bed / 2-bath, 1,800–2,400 sq ft — ${rangeInline("repipe.pex3x2")}.</strong> The typical Cape Coral and Fort Myers single-family home. A 1990 Cape Coral SE home with failing polybutylene ran $7,200, finished in a day and a half with nine access cuts, all patched.</p>${/* claim-ok: documented job */ ""}
 <p><strong>4-bed or larger, 2,500+ sq ft — ${rangeInline("repipe.pex4plus")}.</strong> Two-story layouts and bigger floor plans take more pipe, more openings, and more time.</p>
 
 <h2>PEX or Copper?</h2>
 <p>PEX is what we recommend for most Southwest Florida homes, and it's what the price brackets above assume. It doesn't corrode in our aggressive water, it tolerates minor slab movement, installs faster with fewer wall openings, and carries a manufacturer warranty on the pipe itself.</p>
-<p>Type-L copper is still the right call for some owners — often ahead of an appraisal or for personal preference — and adds <strong>${rangeInline("repipe.copperUpcharge")} over the PEX price</strong> plus roughly an extra day of install time. A 2,650 sq ft Fort Myers home we repiped in copper for resale came to $11,800 and passed the county final on the first inspection.</p> // claim-ok: documented job
+<p>Type-L copper is still the right call for some owners — often ahead of an appraisal or for personal preference — and adds <strong>${rangeInline("repipe.copperUpcharge")} over the PEX price</strong> plus roughly an extra day of install time. A 2,650 sq ft Fort Myers home we repiped in copper for resale came to $11,800 and passed the county final on the first inspection.</p>${/* claim-ok: documented job */ ""}
 
 <h2>The Polybutylene Factor</h2>
 <p>If your Cape Coral home was built between 1978 and 1995, there's a good chance it still has gray <a href="/blog/polybutylene-pipe-problems-cape-coral">polybutylene supply lines</a> — the pipe material that failed so widely it triggered a class-action settlement. Removing poly adds <strong>${rangeInline("repipe.polyRemoval")}</strong> to the job, and it's the single most common reason Cape Coral homes get repiped. Some Florida insurers now require poly replacement as a condition of coverage, which means the repipe often pays for itself in premiums and insurability.</p>
@@ -3440,12 +3440,12 @@ export const BLOG_POSTS: BlogPost[] = [
 <p><strong>5. It's simply old.</strong> Tank units in Southwest Florida realistically last <strong>8–12 years</strong>. Check the manufacture date on the data plate; if it starts with 201, you're on borrowed time.</p>
 
 <h2>Repair vs. Replace: The Rule We Use</h2>
-<p>Our techs apply a simple test on every call. <strong>Under 8 years old with a specific failed part</strong> — thermostat, element, T&P valve — repair it: <strong>${rangeInline("waterHeater.repair")}, usually same-day</strong>. <strong>Over 10 years old, or any tank leak</strong> — replace it. Between 8 and 10 is a judgment call we'll make honestly based on the unit's condition, because putting $400 into a 9-year-old tank only sometimes makes sense.</p> // claim-ok: illustrative repair, not a published price
+<p>Our techs apply a simple test on every call. <strong>Under 8 years old with a specific failed part</strong> — thermostat, element, T&P valve — repair it: <strong>${rangeInline("waterHeater.repair")}, usually same-day</strong>. <strong>Over 10 years old, or any tank leak</strong> — replace it. Between 8 and 10 is a judgment call we'll make honestly based on the unit's condition, because putting $400 into a 9-year-old tank only sometimes makes sense.</p>${/* claim-ok: illustrative repair, not a published price */ ""}
 
 <h2>What Replacement Actually Costs in SWFL</h2>
 <p>Real installed prices from our current price book — including haul-away of the old unit, code-compliant pan and fittings, and the Lee County permit:</p>
 <p><strong>40-gallon electric tank — ${rangeInline("waterHeater.tank40")}.</strong> The right size for 1–2 people.</p>
-<p><strong>50-gallon electric tank — ${rangeInline("waterHeater.tank50")}.</strong> The most common size for an SWFL family of four. When an 11-year-old tank in Fort Myers failed on a Friday at 5pm, this is what got installed by 7pm Saturday — $2,150, old unit hauled away same trip.</p> // claim-ok: documented job
+<p><strong>50-gallon electric tank — ${rangeInline("waterHeater.tank50")}.</strong> The most common size for an SWFL family of four. When an 11-year-old tank in Fort Myers failed on a Friday at 5pm, this is what got installed by 7pm Saturday — $2,150, old unit hauled away same trip.</p>${/* claim-ok: documented job */ ""}
 <p><strong>Heat-pump hybrid (50–80 gal) — ${rangeInline("waterHeater.hybrid")}.</strong> Cuts water-heating energy use dramatically — one Naples retrofit is running about 70% less than the old unit on the owner's FPL bill — and Florida utility rebates of up to ~${money(price("waterHeater.hybridRebate").max)} are often available.</p>
 <p><strong>Gas tankless (Rinnai/Navien) — ${rangeInline("waterHeater.tankless")}</strong> including gas line and venting. Endless hot water and a 20+ year service life with annual flushing; see our <a href="/blog/tankless-vs-traditional-water-heaters">tankless vs. tank comparison</a> for whether it fits your home.</p>
 
