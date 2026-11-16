@@ -400,7 +400,8 @@ function encodeToBudget(run, variant, geometry, source, workDir) {
   for (let attempt = 1; attempt <= MAX_ATTEMPTS + (byQuality ? 2 : 0); attempt += 1) {
     const out = path.join(workDir, `${label}.try${attempt}.mp4`);
     const args = ["encode", SOURCE, out, "--codec", variant.codec];
-    args.push(...(byQuality ? ["--quality", request.toFixed(3)] : ["--bitrate", String(Math.round(request))]));
+    // "auto" = the encoder's variable-bit-rate mode where it has one (macOS 26+ hardware encoders), else an average.
+    args.push(...(byQuality ? ["--quality", request.toFixed(3)] : ["--bitrate", String(Math.round(request)), "--rate-control", "auto"]));
     args.push("--size", `${geometry.width}x${geometry.height}`, "--fps", String(FPS), "--keyint", String(source.keyframeInterval));
     if (variant.encoder && variant.encoder !== "auto") args.push("--encoder", variant.encoder);
     if (geometry.crop) args.push("--crop", geometry.crop.join(","));

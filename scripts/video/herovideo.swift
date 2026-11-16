@@ -9,10 +9,14 @@
 //   herovideo probe    <file>
 //   herovideo frame    <file> --time <seconds> --out <png> [--crop x,y,w,h] [--size WxH]
 //   herovideo encode   <in> <out.mp4> --codec h264|hevc
-//                      --bitrate <bits/s> [--rate-control auto|variable|average]
+//                      --bitrate <bits/s> [--rate-control average|variable|auto]
 //                        or --quality <0-1>   (constant quality; size follows)
 //                      [--crop x,y,w,h] [--size WxH] [--fps 30] [--keyint 60]
 //                      [--encoder auto|hardware|software]
+//
+// Left to its defaults `encode` is plain: an average bit rate and a keyframe
+// every 60 frames. The driver asks for more where it measured better on the
+// hero clip (see the settings at the top of scripts/build-hero-video.mjs).
 //   herovideo compare  <reference> <test> [--crop x,y,w,h] [--fps 30] [--frames]
 //   herovideo encoders [--properties]
 //
@@ -524,15 +528,16 @@ enum Target {
 
 /// How a bit-rate target is held.
 enum RateControl: String {
-    /// `variable` where the encoder offers it, otherwise `average`.
-    case auto
+    /// The classic average-bit-rate target; works on every macOS and encoder.
+    /// The default.
+    case average
     /// VBR (macOS 26+, hardware encoders): the encoder may spend more on the
     /// hard parts of the clip and less on the easy ones. Measured on the hero
     /// clip at matched file size this is 0.6-1.2 dB better than `average`, and
     /// it lands much closer to the requested rate.
     case variable
-    /// The classic average-bit-rate target; works on every macOS and encoder.
-    case average
+    /// `variable` where the encoder offers it, otherwise `average`.
+    case auto
 }
 
 func encoderList() -> [[String: Any]] {
@@ -667,7 +672,7 @@ func removeWriterLeftovers(for output: URL) {
 func runEncode(_ raw: ArraySlice<String>) async throws {
     let usage =
         "usage: herovideo encode <in> <out.mp4> --codec h264|hevc (--bitrate <bits/s> [--rate-control "
-        + "auto|variable|average] | --quality <0-1>) [--crop x,y,w,h] [--size WxH] [--fps 30] [--keyint 60] "
+        + "average|variable|auto] | --quality <0-1>) [--crop x,y,w,h] [--size WxH] [--fps 30] [--keyint 60] "
         + "[--encoder auto|hardware|software]"
     let args = try Args(
         raw, options: ["codec", "bitrate", "quality", "crop", "size", "fps", "keyint", "encoder", "rate-control"])
@@ -676,8 +681,8 @@ func runEncode(_ raw: ArraySlice<String>) async throws {
     guard let mode = EncoderMode(rawValue: args.string("encoder") ?? "auto") else {
         throw ToolError("--encoder must be auto, hardware or software")
     }
-    guard let requestedRateControl = RateControl(rawValue: args.string("rate-control") ?? "auto") else {
-        throw ToolError("--rate-control must be auto, variable or average")
+    guard let requestedRateControl = RateControl(rawValue: args.string("rate-control") ?? "average") else {
+        throw ToolError("--rate-control must be average, variable or auto")
     }
     // Exactly one target: a bit rate, or a constant quality level.
     let target: Target
@@ -1063,7 +1068,7 @@ let usage = """
       herovideo probe    <file>
       herovideo frame    <file> --time <seconds> --out <png> [--crop x,y,w,h] [--size WxH]
       herovideo encode   <in> <out.mp4> --codec h264|hevc
-                         (--bitrate <bits/s> [--rate-control auto|variable|average] | --quality <0-1>)
+                         (--bitrate <bits/s> [--rate-control average|variable|auto] | --quality <0-1>)
                          [--crop x,y,w,h] [--size WxH] [--fps 30] [--keyint 60]
                          [--encoder auto|hardware|software]
       herovideo compare  <reference> <test> [--crop x,y,w,h] [--fps 30] [--frames]
