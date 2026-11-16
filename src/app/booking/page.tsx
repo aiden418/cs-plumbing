@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import BookingPage from "./BookingPage";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
+import { BOOKING } from "@/content/conversion";
+import NextSteps from "../contact/_parts/NextSteps";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/booking" },
@@ -27,6 +29,7 @@ export default function Page() {
     <>
       <BreadcrumbJsonLd items={[{ name: "Home", href: "/" }, { name: "Book a Service", href: "/booking" }]} />
       <BookingPage />
+      <NextSteps id="booking-next" heading={BOOKING.nextHeading} steps={BOOKING.nextSteps} tone="white" />
     </>
   );
 }

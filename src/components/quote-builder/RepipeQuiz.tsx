@@ -13,7 +13,9 @@ import type {
   QuoteResult,
 } from "@/lib/quote-types";
 import { calculateRepipe } from "@/lib/quote-pricing";
-import WizardShell from "./WizardShell";
+import WizardShell, { type SummaryRow } from "./WizardShell";
+import { Field, FormattedInput } from "@/components/forms";
+import { QUOTE } from "@/content/conversion";
 import OptionGrid from "./OptionGrid";
 
 interface RepipeQuizProps {
@@ -154,12 +156,14 @@ export default function RepipeQuiz({ onComplete }: RepipeQuizProps) {
     switch (step) {
       case 0:
         return (
-          <input
-            value={sel.address}
-            onChange={(e) => update("address", e.target.value)}
-            placeholder="123 Main St, Fort Myers, FL 33901"
-            className="w-full bg-white border border-gray-200 rounded-xl px-3 sm:px-4 py-2.5 sm:py-3 text-gray-900 text-sm outline-none focus:border-primary transition-colors"
-          />
+          <Field id="quote-address" label={QUOTE.addressLabel}>
+            <FormattedInput
+              preset="street-address"
+              value={sel.address}
+              onChange={(e) => update("address", e.target.value)}
+              placeholder="123 Main St, Fort Myers, FL 33901"
+            />
+          </Field>
         );
       case 1:
         return (
@@ -229,23 +233,33 @@ export default function RepipeQuiz({ onComplete }: RepipeQuizProps) {
     }
   };
 
+  const labelOf = (options: { id: string; label: string }[], id: string | null) =>
+    options.find((o) => o.id === id)?.label ?? "";
+  const summary: SummaryRow[] = [
+    { term: STEPS[0].label, value: sel.address.trim() },
+    { term: STEPS[1].label, value: labelOf(HOME_AGES, sel.homeAge) },
+    { term: STEPS[2].label, value: labelOf(PIPE_MATERIALS, sel.pipeMaterial) },
+    { term: STEPS[3].label, value: labelOf(BEDROOM_OPTIONS, sel.bedrooms) },
+    { term: STEPS[4].label, value: labelOf(BATHROOM_OPTIONS, sel.bathrooms) },
+    { term: STEPS[5].label, value: labelOf(STORY_OPTIONS, sel.stories) },
+    { term: STEPS[6].label, value: labelOf(HOSE_BIB_OPTIONS, sel.hoseBibs) },
+    { term: STEPS[7].label, value: labelOf(NEW_MATERIAL_OPTIONS, sel.newMaterial) },
+  ].filter((row) => row.value !== "");
+
   return (
     <WizardShell
       steps={STEPS}
       currentStep={step}
       onNext={handleNext}
       onPrev={handlePrev}
+      onStepClick={setStep}
       canProceed={canProceed()}
+      heading={STEP_HEADINGS[step]}
+      subtitle={STEP_SUBTITLES[step]}
+      errorMessage={step === 0 ? QUOTE.addressError : undefined}
+      summary={summary}
       nextLabel={step === 7 ? "See My Estimate" : undefined}
     >
-      <div className="mb-4 sm:mb-6">
-        <h2 className="text-lg sm:text-xl font-bold text-gray-900">
-          {STEP_HEADINGS[step]}
-        </h2>
-        <p className="text-xs sm:text-sm text-gray-500 mt-1">
-          {STEP_SUBTITLES[step]}
-        </p>
-      </div>
       {renderStep()}
     </WizardShell>
   );

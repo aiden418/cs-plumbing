@@ -1,6 +1,8 @@
 "use client";
 
+import { useId } from "react";
 import Image from "next/image";
+import { OptionCard } from "@/components/forms";
 import { cn } from "@/lib/utils";
 
 export interface ProductOption {
@@ -20,129 +22,53 @@ interface ProductCardProps {
   layout?: "row" | "grid";
 }
 
-export default function ProductCard({
-  options,
-  selected,
-  onSelect,
-  layout = "grid",
-}: ProductCardProps) {
+/**
+ * One choice per card (native radios, arrow keys move between them). A
+ * product picture, when the option has one, sits in a small white frame on
+ * the left; the price hint comes from the pricing data in the quiz files.
+ */
+export default function ProductCard({ options, selected, onSelect, layout = "grid" }: ProductCardProps) {
+  const name = useId();
   return (
     <div
       className={cn(
-        "gap-3 sm:gap-4",
-        layout === "row"
-          ? "flex flex-col"
-          : options.length === 2
-            ? "grid grid-cols-1 sm:grid-cols-2"
-            : "grid grid-cols-1 sm:grid-cols-3"
+        "grid grid-cols-1 gap-2",
+        layout === "grid" && (options.length === 2 || options.length === 4 ? "sm:grid-cols-2" : "sm:grid-cols-2 xl:grid-cols-3")
       )}
     >
-      {options.map((opt) => {
-        const isActive = selected === opt.id;
-        return (
-          <button
-            key={opt.id}
-            onClick={() => onSelect(opt.id)}
-            className={cn(
-              "relative group rounded-2xl border-2 text-left transition-all duration-300 overflow-hidden",
-              layout === "row" ? "flex items-center gap-4 p-4 sm:p-5" : "p-4 sm:p-5",
-              isActive
-                ? "border-primary bg-primary/5 shadow-md shadow-primary/10"
-                : "border-gray-200 bg-white hover:border-gray-300 hover:shadow-sm"
-            )}
-          >
-            {/* Badge */}
-            {opt.badge && (
-              <span
-                className={cn(
-                  "absolute top-2 right-2 text-[10px] sm:text-xs font-semibold px-2 py-0.5 rounded-full",
-                  isActive
-                    ? "bg-primary text-white"
-                    : "bg-gray-100 text-gray-500"
-                )}
-              >
-                {opt.badge}
+      {options.map((opt) => (
+        <OptionCard
+          key={opt.id}
+          id={`${name}-${opt.id}`}
+          name={name}
+          value={opt.id}
+          checked={selected === opt.id}
+          onChange={() => onSelect(opt.id)}
+          className="h-full"
+          media={
+            opt.image ? (
+              <span className="relative block size-16 overflow-hidden rounded-[0.5rem] border border-steel-200 bg-white sm:size-20">
+                <Image src={opt.image} alt={opt.label} fill className="object-contain p-1.5" sizes="80px" />
               </span>
-            )}
-
-            {/* Image or Icon */}
-            {opt.image ? (
-              <div
-                className={cn(
-                  "relative overflow-hidden rounded-xl bg-gray-50",
-                  layout === "row"
-                    ? "w-20 h-20 sm:w-24 sm:h-24 flex-shrink-0"
-                    : "w-full h-32 sm:h-40 mb-3"
-                )}
-              >
-                <Image
-                  src={opt.image}
-                  alt={opt.label}
-                  fill
-                  className="object-contain p-2"
-                  sizes="(max-width: 640px) 50vw, 200px"
-                />
-              </div>
-            ) : opt.icon ? (
-              <div
-                className={cn(
-                  "rounded-xl flex items-center justify-center transition-colors",
-                  layout === "row"
-                    ? "w-14 h-14 sm:w-16 sm:h-16 flex-shrink-0"
-                    : "w-full h-24 sm:h-32 mb-3",
-                  isActive
-                    ? "bg-primary/10 text-primary"
-                    : "bg-gray-50 text-gray-400 group-hover:text-gray-600"
-                )}
-              >
-                {opt.icon}
-              </div>
-            ) : null}
-
-            {/* Text */}
-            <div className={layout === "row" ? "flex-1 min-w-0" : ""}>
-              <span
-                className={cn(
-                  "font-semibold block text-sm sm:text-base",
-                  isActive ? "text-primary" : "text-gray-900"
-                )}
-              >
-                {opt.label}
-              </span>
-              {opt.description && (
-                <span className="text-xs sm:text-sm text-gray-500 block mt-0.5">
-                  {opt.description}
+            ) : undefined
+          }
+          title={
+            <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
+              <span>{opt.label}</span>
+              {opt.badge && (
+                <span className="label-tech rounded-chip border border-steel-300 px-2 py-0.5 text-[0.6875rem] text-steel-700">
+                  {opt.badge}
                 </span>
               )}
-              {opt.priceHint && (
-                <span
-                  className={cn(
-                    "text-xs font-medium block mt-1.5",
-                    isActive ? "text-primary/70" : "text-gray-400"
-                  )}
-                >
-                  {opt.priceHint}
-                </span>
-              )}
-            </div>
-
-            {/* Selection indicator */}
-            <div
-              className={cn(
-                "w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all duration-300",
-                layout === "row" ? "flex-shrink-0" : "absolute top-3 left-3",
-                isActive
-                  ? "border-primary bg-primary"
-                  : "border-gray-300"
-              )}
-            >
-              {isActive && (
-                <div className="w-2 h-2 rounded-full bg-white" />
-              )}
-            </div>
-          </button>
-        );
-      })}
+            </span>
+          }
+          description={opt.description}
+        >
+          {opt.priceHint && (
+            <span className="mt-2 block text-sm font-semibold text-ink tabular-nums">{opt.priceHint}</span>
+          )}
+        </OptionCard>
+      ))}
     </div>
   );
 }
