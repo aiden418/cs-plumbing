@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import PageHero from "@/components/ui/PageHero";
+import Button from "@/components/ui/Button";
+import { Phone } from "@/components/ui/icons";
+import { BUSINESS } from "@/lib/business";
 import Container from "@/components/ui/Container";
 import Section from "@/components/ui/Section";
 import { QUOTE } from "@/content/conversion";
@@ -34,28 +37,40 @@ export default function Page() {
           page copy are in the prerendered HTML. The quiz below reads
           ?service= and is client-only by design. */}
       <PageHero
-        layout="compact"
+        layout="plain"
+        size="sm"
         overline={QUOTE.hero.overline}
         title={QUOTE.hero.title}
         accent={QUOTE.hero.accent}
         description={QUOTE.hero.description}
-      >
-        {/* What happens next */}
-        <ol
-          aria-label={QUOTE.hero.stepsLabel}
-          className="mt-8 grid grid-cols-1 gap-y-3 text-sm text-body sm:flex sm:flex-wrap sm:items-center sm:gap-x-3"
-        >
-          {QUOTE.hero.steps.map((step, i) => (
-            <li key={step} className="flex items-center gap-3">
-              {i > 0 && <span aria-hidden="true" className="hidden h-px w-6 bg-rule sm:block" />}
-              <span className="label-tech text-accent tabular-nums">{String(i + 1).padStart(2, "0")}</span>
-              <span>{step}</span>
-            </li>
-          ))}
-        </ol>
-      </PageHero>
-      <Section tone="shell" spacing="sm">
+        media={
+          /* What happens next: beside the headline on desktop, under it on phones. */
+          <div className="lg:mt-6">
+            <ol aria-label={QUOTE.hero.stepsLabel} className="border-b border-rule">
+              {QUOTE.hero.steps.map((step, i) => (
+                <li key={step} className="flex items-center gap-4 border-t border-rule py-3.5 font-medium text-fg">
+                  <span aria-hidden="true" className="cv-num-disc">
+                    {i + 1}
+                  </span>
+                  <span>{step}</span>
+                </li>
+              ))}
+            </ol>
+            <Button
+              href={BUSINESS.phoneHref}
+              variant="secondary"
+              size="lg"
+              icon={<Phone aria-hidden="true" className="size-5" />}
+              className="mt-6 w-full sm:w-auto"
+            >
+              {`Call ${BUSINESS.phone}`}
+            </Button>
+          </div>
+        }
+      />
+      <Section tone="shell" spacing="none" className="py-8 sm:py-10 lg:py-12">
         <Container className="min-h-[20rem]">
+          <p className="mb-5 max-w-[60ch] text-lg text-body">{QUOTE.hero.descriptionMore}</p>
           <Suspense>
             <QuoteBuilderPage />
           </Suspense>

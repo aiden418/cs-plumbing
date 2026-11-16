@@ -165,8 +165,11 @@ export const QUOTE = {
     overline: "Instant Quote Builder",
     title: "Instant Plumbing Quote for",
     accent: "Water Heaters & Repiping in Lee County",
+    // The hero lead is split for version 2 (a lead of at most three lines):
+    // the first sentence stays in the hero, the second opens the section below.
     description:
-      "Answer a few questions and get an instant price range for water heater installation or whole-home repiping anywhere in Cape Coral, Fort Myers, and Lee County. Final price set after a free on-site inspection — no obligation, no pressure.",
+      "Answer a few questions and get an instant price range for water heater installation or whole-home repiping anywhere in Cape Coral, Fort Myers, and Lee County.",
+    descriptionMore: "Final price set after a free on-site inspection — no obligation, no pressure.",
     steps: ["Answer a few questions", "Get your instant range", "C&S confirms within 1 business day"],
     stepsLabel: "What happens next",
   },

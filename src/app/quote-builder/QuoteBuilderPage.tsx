@@ -68,11 +68,11 @@ export default function QuoteBuilderPage() {
     return (
       <div
         data-tone="white"
-        className="cv-step-panel rounded-frame border border-rule bg-white p-5 text-body sm:p-8 lg:p-10"
+        className="rounded-frame border border-rule bg-white p-5 text-body sm:p-8"
       >
         <h2 className="text-display-sm text-fg">{QUOTE.selectorHeading}</h2>
-        <p className="mt-2 text-body">{QUOTE.selectorLead}</p>
-        <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2">
+        <p className="mt-2 text-lg text-body">{QUOTE.selectorLead}</p>
+        <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
           {SERVICES.map((s) => (
             <button
               key={s}
@@ -80,17 +80,17 @@ export default function QuoteBuilderPage() {
               onClick={() => switchService(s)}
               className={cn(
                 "group flex min-h-24 items-center justify-between gap-4 rounded-control border border-steel-300 bg-white p-5 text-left sm:p-6",
-                "transition-[border-color,transform] duration-150 ease-enter hover:border-primary active:scale-[0.99]"
+                "transition-[border-color,background-color] duration-150 ease-enter hover:border-primary hover:bg-shell active:scale-[0.99]"
               )}
             >
               <span className="min-w-0">
-                <span className="block text-lg leading-snug font-semibold text-ink">{QUOTE.services[s].title}</span>
-                <span className="mt-1 block text-[0.9375rem] text-steel-600">{QUOTE.services[s].line}</span>
+                <span className="block text-xl leading-snug font-semibold text-ink">{QUOTE.services[s].title}</span>
+                <span className="mt-1 block text-steel-700">{QUOTE.services[s].line}</span>
               </span>
               <ArrowRight
                 aria-hidden="true"
                 strokeWidth={1.75}
-                className="size-6 shrink-0 text-primary-dark transition-transform duration-250 ease-settle group-hover:translate-x-0.5"
+                className="size-6 shrink-0 text-primary-dark"
               />
             </button>
           ))}
@@ -114,9 +114,9 @@ export default function QuoteBuilderPage() {
             <label
               key={s}
               className={cn(
-                "relative flex min-h-11 cursor-pointer items-center justify-center rounded-[0.5rem] px-3 text-center text-[0.9375rem] leading-tight font-semibold text-body",
+                "relative flex min-h-12 cursor-pointer items-center justify-center rounded-[0.5rem] px-3 text-center text-base leading-tight font-semibold text-body",
                 "transition-colors duration-150 ease-enter hover:text-fg",
-                "has-checked:bg-ink has-checked:text-white",
+                "has-checked:bg-primary has-checked:text-white",
                 "has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-focus"
               )}
             >

@@ -90,6 +90,7 @@ export default function Page() {
         posts={postsForHub("emergency")}
         heading="Emergency plumbing guides"
         description="What to do in the first ten minutes, and the after-storm checklist for SWFL homes."
+        tone="white"
       />
     </>
   );

@@ -97,24 +97,24 @@ export default function QuoteResult({ result, selections, onReset }: QuoteResult
   return (
     <div
       data-tone="white"
-      className="cv-step-panel grid grid-cols-1 gap-y-10 rounded-frame border border-rule bg-white p-5 text-body sm:p-8 lg:grid-cols-12 lg:gap-x-10 lg:p-10"
+      className="grid grid-cols-1 gap-y-10 rounded-frame border border-rule bg-white p-5 text-body sm:p-8 lg:grid-cols-12 lg:gap-x-10 lg:p-10"
     >
       {/* The estimate */}
       <div className="min-w-0 lg:col-span-7">
         <h2 className="text-display-sm text-fg">{T.heading}</h2>
-        <p className="mt-4 text-muted">{T.lead}</p>
+        <p className="mt-4 text-body">{T.lead}</p>
         <p className="mt-1 font-display text-display-md font-bold text-fg tabular-nums">
           {money(result.total.min)} – {money(result.total.max)}
         </p>
-        <p className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-success-ink">
+        <p className="mt-4 inline-flex items-center gap-2 font-semibold text-success-ink">
           <ShieldCheck aria-hidden="true" className="size-5" />
           {T.verification}
         </p>
 
-        <h3 className="label-tech mt-10 text-accent">{T.breakdown}</h3>
+        <h3 className="mt-8 text-lg font-semibold text-fg">{T.breakdown}</h3>
         <dl className="mt-3 border-b border-rule">
           {result.lineItems.map((item, i) => (
-            <div key={i} className="flex items-baseline justify-between gap-6 border-t border-rule py-3 text-[0.9375rem]">
+            <div key={i} className="flex items-baseline justify-between gap-6 border-t border-rule py-3">
               <dt className="text-body">{item.label}</dt>
               <dd className="shrink-0 font-semibold text-fg tabular-nums">
                 {item.range.min === item.range.max
@@ -129,7 +129,7 @@ export default function QuoteResult({ result, selections, onReset }: QuoteResult
         {result.notes.length > 0 && (
           <div className="mt-5 space-y-1">
             {result.notes.map((note, i) => (
-              <p key={i} className="text-sm text-muted">
+              <p key={i} className="text-[0.9375rem] text-body">
                 {note}
               </p>
             ))}
@@ -137,18 +137,18 @@ export default function QuoteResult({ result, selections, onReset }: QuoteResult
         )}
 
         {/* Disclaimer */}
-        <p className="mt-6 border-l-2 border-primary pl-4 text-[0.9375rem] leading-relaxed text-body">
+        <p className="mt-6 rounded-control bg-shell p-4 text-[0.9375rem] leading-relaxed text-body">
           {CLAIMS.estimateDisclaimer}
         </p>
       </div>
 
       {/* What's included + next step */}
       <div className="min-w-0 lg:col-span-5">
-        <h3 className="label-tech text-accent">{T.included}</h3>
+        <h3 className="text-lg font-semibold text-fg">{T.included}</h3>
         <ul className="mt-3 border-b border-rule">
           {QUOTE.included[result.service].map((item, i) => (
-            <li key={i} className="flex items-start gap-3 border-t border-rule py-3 text-[0.9375rem] leading-snug text-body">
-              <Check aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-success-ink" />
+            <li key={i} className="flex items-start gap-3 border-t border-rule py-3 leading-snug text-body">
+              <Check aria-hidden="true" className="mt-1 size-4 shrink-0 text-success-ink" />
               {item}
             </li>
           ))}

@@ -95,11 +95,11 @@ export default function WizardShell({
           onStepClick={onStepClick ? (i) => move(() => onStepClick(i)) : undefined}
           className="border-b border-rule pb-6"
         />
-        <p className="mt-5 text-sm text-muted">{QUOTE.reassurance}</p>
+        <p className="mt-5 text-[0.9375rem] text-body">{QUOTE.reassurance}</p>
 
         <fieldset
           key={currentStep}
-          className="cv-step-panel m-0 mt-7 min-h-[16rem] min-w-0 border-0 p-0"
+          className="m-0 mt-6 min-h-[16rem] min-w-0 border-0 p-0"
           aria-describedby={[showError ? errorId : "", subtitle ? hintId : ""].filter(Boolean).join(" ") || undefined}
         >
           <legend className="p-0">
@@ -142,21 +142,20 @@ export default function WizardShell({
 
       <aside className="hidden lg:col-span-4 lg:block" aria-labelledby="quote-summary">
         <div className="sticky top-[calc(var(--nav-h)+1.5rem)] border-t border-rule pt-6">
-          <h2 id="quote-summary" className="label-tech flex items-center gap-2.5 text-accent">
-            <span className="joint" aria-hidden="true" />
+          <h2 id="quote-summary" className="text-lg font-semibold text-fg">
             {QUOTE.summaryHeading}
           </h2>
           {summary.length > 0 ? (
             <dl className="mt-5 border-b border-rule">
               {summary.map((row) => (
                 <div key={row.term} className="flex items-baseline justify-between gap-4 border-t border-rule py-3">
-                  <dt className="text-sm text-muted">{row.term}</dt>
+                  <dt className="text-[0.9375rem] text-muted">{row.term}</dt>
                   <dd className="text-right font-semibold text-fg">{row.value}</dd>
                 </div>
               ))}
             </dl>
           ) : (
-            <p className="mt-5 text-sm text-muted">{QUOTE.summaryEmpty}</p>
+            <p className="mt-4 text-body">{QUOTE.summaryEmpty}</p>
           )}
         </div>
       </aside>

@@ -328,26 +328,23 @@ export default function BookingPage() {
   return (
     <>
       <PageHero
-        layout="compact"
+        layout="plain"
+        size="sm"
         overline={hero.overline}
         title={hero.title}
         accent={hero.accent}
         description={hero.description}
       >
         {/* Sticky CTA bar is hidden on /booking, so keep a call path above the fold */}
-        <p className="mt-5 text-sm text-muted">
-          {BOOKING.hero.preferToTalk}{" "}
-          <a
-            href={BUSINESS.phoneHref}
-            className="inline-flex min-h-11 items-center gap-1.5 font-semibold text-link underline-offset-[0.2em] hover:underline"
-          >
-            <Phone aria-hidden="true" className="size-4" />
+        <p className="mt-6 flex flex-col items-stretch gap-2 sm:flex-row sm:items-center sm:gap-4">
+          <span className="text-body">{BOOKING.hero.preferToTalk}</span>
+          <Button href={BUSINESS.phoneHref} variant="secondary" icon={<Phone aria-hidden="true" className="size-5" />}>
             Call {BUSINESS.phone}
-          </a>
+          </Button>
         </p>
       </PageHero>
 
-      <Section tone="shell" spacing="sm">
+      <Section tone="shell" spacing="none" className="py-8 sm:py-12 lg:py-14">
         <Container>
           <div className="grid grid-cols-1 gap-y-10 lg:grid-cols-12 lg:gap-x-8">
             <div className="min-w-0 lg:col-span-8">
@@ -359,9 +356,9 @@ export default function BookingPage() {
                     <label
                       key={type}
                       className={cn(
-                        "relative flex min-h-11 cursor-pointer items-center justify-center rounded-[0.5rem] px-3 text-center text-[0.9375rem] leading-tight font-semibold text-body",
+                        "relative flex min-h-12 cursor-pointer items-center justify-center rounded-[0.5rem] px-3 text-center text-base leading-tight font-semibold text-body",
                         "transition-colors duration-150 ease-enter hover:text-fg",
-                        "has-checked:bg-ink has-checked:text-white",
+                        "has-checked:bg-primary has-checked:text-white",
                         "has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-focus",
                         "has-disabled:cursor-not-allowed has-disabled:opacity-60"
                       )}
@@ -396,7 +393,7 @@ export default function BookingPage() {
                   />
                 )}
 
-                <div key={`${kind}-${step}`} className="cv-step-panel min-h-[14rem]">
+                <div key={`${kind}-${step}`} className="min-h-[14rem]">
                   {/* Step: Select Service */}
                   {isServiceStep && (
                     <OptionGroup
@@ -526,7 +523,7 @@ export default function BookingPage() {
                   {isInfoStep && !isConfirmStep && (
                     <div className="space-y-5">
                       <StepHeading headingRef={headingRef}>{BOOKING.infoHeading}</StepHeading>
-                      <p className="text-sm text-muted">{BOOKING.allRequired}</p>
+                      <p className="text-body">{BOOKING.allRequired}</p>
                       <Field id="booking-name" label={BOOKING.nameLabel} required error={errors.name}>
                         <FormattedInput
                           preset="name"
@@ -581,7 +578,7 @@ export default function BookingPage() {
                         {isEstimate ? BOOKING.confirmTitle.estimate : BOOKING.confirmTitle.booking}
                       </h2>
                       {confirmationId && (
-                        <p className="label-tech rounded-chip border border-rule px-3 py-1.5 text-fg tabular-nums">
+                        <p className="rounded-chip border border-rule px-3.5 py-1.5 text-[0.9375rem] font-semibold text-fg tabular-nums">
                           {BOOKING.confirmationPrefix}
                           {confirmationId}
                         </p>
@@ -635,23 +632,22 @@ export default function BookingPage() {
             {/* Summary */}
             <aside className="hidden lg:col-span-4 lg:block" aria-labelledby="booking-summary">
               <div className="sticky top-[calc(var(--nav-h)+1.5rem)] border-t border-rule pt-6">
-                <h2 id="booking-summary" className="label-tech flex items-center gap-2.5 text-accent">
-                  <span className="joint" aria-hidden="true" />
+                <h2 id="booking-summary" className="text-lg font-semibold text-fg">
                   {BOOKING.summaryHeading}
                 </h2>
                 {summary.length > 0 ? (
                   <dl className="mt-5 border-b border-rule">
                     {summary.map((row) => (
                       <div key={row.term} className="border-t border-rule py-3.5">
-                        <dt className="text-sm text-muted">{row.term}</dt>
+                        <dt className="text-[0.9375rem] text-muted">{row.term}</dt>
                         <dd className="mt-0.5 font-semibold text-fg first-letter:uppercase">{row.value}</dd>
                       </div>
                     ))}
                   </dl>
                 ) : (
-                  <p className="mt-5 text-sm text-muted">{BOOKING.summaryEmpty}</p>
+                  <p className="mt-4 text-body">{BOOKING.summaryEmpty}</p>
                 )}
-                <p className="mt-8 text-sm text-muted">{BOOKING.hero.preferToTalk}</p>
+                <p className="mt-8 text-body">{BOOKING.hero.preferToTalk}</p>
                 <Button
                   href={BUSINESS.phoneHref}
                   variant="secondary"
@@ -660,7 +656,7 @@ export default function BookingPage() {
                 >
                   Call {BUSINESS.phone}
                 </Button>
-                <p className="mt-3 text-sm text-muted">{CLAIMS.bookingConfirmation}</p>
+                <p className="mt-3 text-[0.9375rem] text-body">{CLAIMS.bookingConfirmation}</p>
               </div>
             </aside>
           </div>
