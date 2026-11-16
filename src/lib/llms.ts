@@ -62,7 +62,9 @@ export function buildLlmsTxt(): string {
   // the pages, the JSON-LD, or itself.
   const awardLine = AWARDS.map((a) => `${a.title} — ${a.category}`).join("; ");
   const awardBullets = AWARDS.map(
-    (a) => `- **Award (${a.year}):** ${a.title} — ${a.category}, voted by ${a.issuer} readers`,
+    (a) =>
+      `- **Award (${a.year}):** ${a.title} — ${a.category}, voted by ${a.issuer} readers` +
+      (a.citationUrl ? ` (the ${a.issuer}'s winners list: ${a.citationUrl})` : ""),
   ).join("\n");
   // Same list the JSON-LD `sameAs` uses, so an engine can tie every listing
   // to this one business.
