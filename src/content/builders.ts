@@ -100,10 +100,6 @@ export const BUILDER_SECTIONS = {
     overline: "Qualifications",
     title: "What your office will ask about",
     subtitle: "Insurance, safety, billing and how we staff the work.",
-    source: "Source:",
-    profile: "profile",
-    /** Followed by the date the ranking was checked and ")". */
-    checkedPrefix: "(third-party ranking, checked",
   },
   prequal: {
     overline: "Prequalification",

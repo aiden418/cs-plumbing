@@ -6,7 +6,7 @@ import {
   PREQUAL_STATUS_LABEL,
   QUALIFICATIONS,
 } from "@/lib/builder-program";
-import { BUSINESS, CONTRACTOR_RANKING, WARRANTY } from "@/lib/constants";
+import { BUSINESS, WARRANTY } from "@/lib/constants";
 import { COMPLETED_PROJECTS } from "@/lib/projects-data";
 import { projectStatusLabel } from "@/lib/projects";
 
@@ -44,10 +44,6 @@ export default function PrequalPacketPage() {
             <li key={q.id}>• {q.label}</li>
           ))}
         </ul>
-        <p className="mt-2 text-xs text-gray-500">
-          Ranking source: {CONTRACTOR_RANKING.source} contractor profile, {CONTRACTOR_RANKING.sourceUrl} (third-party
-          ranking, not a state-issued rating; checked {CONTRACTOR_RANKING.checkedOn}).
-        </p>
       </DocSection>
 
       <DocSection title="Warranty">

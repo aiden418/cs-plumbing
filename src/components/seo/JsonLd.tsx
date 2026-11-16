@@ -1,7 +1,6 @@
 import {
   BUSINESS,
   AWARDS,
-  CONTRACTOR_RANKING,
   LATEST_AWARD,
   PROFILES,
   SERVICE_AREAS_BY_COUNTY,
@@ -316,12 +315,6 @@ export default async function JsonLd() {
 
     /* ── Citations to Authoritative Sources ── */
     citation: [
-      {
-        "@type": "CreativeWork",
-        name: `${CONTRACTOR_RANKING.source} contractor profile — C&S Plumbing of Lee`,
-        url: CONTRACTOR_RANKING.sourceUrl,
-        description: `${CONTRACTOR_RANKING.quote} A third-party ranking by ${CONTRACTOR_RANKING.source}, not a state-issued rating. Checked ${CONTRACTOR_RANKING.checkedOn}.`,
-      },
       {
         "@type": "CreativeWork",
         name: `${LATEST_AWARD.program} — ${LATEST_AWARD.issuer}`,
