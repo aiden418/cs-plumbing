@@ -2,7 +2,6 @@ import { createOgImage, ogImageContentType, ogImageSize } from "@/lib/og";
 import { EMERGENCY_CLAIMS } from "@/lib/claims";
 import { BUSINESS } from "@/lib/business";
 
-export const runtime = "edge";
 export const size = ogImageSize;
 export const contentType = ogImageContentType;
 export const alt = "24/7 Emergency Plumber — C&S Plumbing of Lee";

@@ -1,4 +1,7 @@
-@import "tailwindcss";
+/* Class names are read from src/ only. Without source(), Tailwind scans the
+   whole repository, so class-like strings in tests, scripts and docs would
+   each add rules to the site's stylesheet. */
+@import "tailwindcss" source("..");
 
 /* ========================================
    C&S PLUMBING — DESIGN SYSTEM
