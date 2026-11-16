@@ -60,12 +60,15 @@ interface FormData {
   startDate: string;
   budget: string;
   description: string;
+  /** Honeypot: a person never sees it, so it stays empty. */
+  website: string;
 }
 
 export default function BuilderPortalPage() {
   const [step, setStep] = useState(0);
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [files, setFiles] = useState<File[]>([]);
   const [form, setForm] = useState<FormData>({
     name: "",
@@ -80,10 +83,16 @@ export default function BuilderPortalPage() {
     startDate: "",
     budget: "",
     description: "",
+    website: "",
   });
 
   const update = (field: keyof FormData, value: string) =>
     setForm((prev) => ({ ...prev, [field]: value }));
+
+  // A submit error belongs to the review step. Leaving that step (Back, Edit)
+  // clears it, so it is not still on screen while the builder fixes the cause.
+  // Adjusted during render rather than in an effect, as Navbar does.
+  if (submitError !== null && step !== steps.length - 1) setSubmitError(null);
 
   const canProceed = () => {
     switch (step) {
@@ -102,9 +111,10 @@ export default function BuilderPortalPage() {
 
   const handleSubmit = async () => {
     setSubmitting(true);
+    setSubmitError(null);
     try {
       const body = new FormData();
-      // Text fields
+      // Text fields, including the `website` honeypot
       Object.entries(form).forEach(([key, val]) => body.append(key, val));
       // Files
       files.forEach((file) => body.append("files", file));
@@ -114,15 +124,30 @@ export default function BuilderPortalPage() {
         body,
       });
 
-      if (!res.ok) throw new Error("Failed");
-      const data: { eventId?: string } = await res.json().catch(() => ({}));
+      // Not every failure is JSON: the platform answers a request body that is
+      // too large with a plain-text 413 before the route runs.
+      const result: {
+        success?: boolean;
+        eventId?: string;
+        error?: string;
+        code?: string;
+      } = await res.json().catch(() => ({}));
+      if (!res.ok || !result.success) {
+        throw Object.assign(new Error(result.error ?? "Submission failed"), { code: result.code });
+      }
       trackBuilderLead(
         { units: form.units, community: form.community, source: "builder-portal" },
-        { eventId: data.eventId, email: form.email }
+        { eventId: result.eventId, email: form.email }
       );
       setSubmitted(true);
-    } catch {
-      alert("Something went wrong. Please call us directly at 833-PLUMB-IT.");
+    } catch (err) {
+      // Attachment problems are explained by the server in customer-facing words.
+      const attachmentIssue = (err as { code?: string }).code === "attachments" && err instanceof Error;
+      setSubmitError(
+        attachmentIssue
+          ? err.message
+          : `Something went wrong. Please call us directly at ${BUSINESS.phone}.`
+      );
     } finally {
       setSubmitting(false);
     }
@@ -226,6 +251,19 @@ export default function BuilderPortalPage() {
                 </div>
               ))}
             </div>
+
+            {/* Honeypot — hidden from real users. It sits outside the steps
+                so it is in the page on every one of them. */}
+            <input
+              type="text"
+              name="website"
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden="true"
+              value={form.website}
+              onChange={(e) => update("website", e.target.value)}
+              className="absolute -left-[9999px] w-px h-px opacity-0"
+            />
 
             {/* Steps */}
             <AnimatePresence mode="wait">
@@ -540,6 +578,16 @@ export default function BuilderPortalPage() {
                 )}
               </motion.div>
             </AnimatePresence>
+
+            {/* Submit error (review step) */}
+            {submitError && (
+              <p
+                role="alert"
+                className="mt-6 rounded-xl bg-red-50 border border-red-100 px-4 py-3 text-sm text-red-700"
+              >
+                {submitError}
+              </p>
+            )}
 
             {/* Navigation */}
             <div className="flex items-center justify-between mt-8 sm:mt-10 pt-6 border-t border-gray-200">
