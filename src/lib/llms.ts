@@ -7,7 +7,6 @@ import {
   CONTRACTOR_RANKING,
   NEW_CONSTRUCTION_BENEFITS,
   WARRANTY,
-  COMPLETED_PROJECTS,
   EMERGENCY_CLAIMS,
   LATEST_AWARD,
   PROFILES,
@@ -17,6 +16,7 @@ import {
   countiesSentence,
 } from "./constants";
 import { FAQ_CATEGORIES } from "./faq-data";
+import { COMPLETED_PROJECTS } from "./projects-data";
 import { money, perFoot, price, rangeInline, spanInline, upchargeInline } from "./pricing";
 import { CLAIMS } from "./claims";
 import { INDEXED_LANDINGS } from "./landing-indexing";

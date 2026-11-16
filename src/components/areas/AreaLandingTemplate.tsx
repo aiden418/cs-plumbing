@@ -15,12 +15,14 @@ import FaqJsonLd from "@/components/seo/FaqJsonLd";
 import AreaServiceJsonLd from "@/components/seo/AreaServiceJsonLd";
 import { motion } from "framer-motion";
 import { BUSINESS, SERVICES, TRUST_PROOF_POINTS } from "@/lib/constants";
-import type { AreaLanding } from "@/lib/types";
+import type { AreaLanding, ProjectCardData } from "@/lib/types";
 
 export default function AreaLandingTemplate({
   landing,
+  proofProjects,
 }: {
   landing: AreaLanding;
+  proofProjects: ProjectCardData[];
 }) {
   const displayServices = SERVICES.filter(
     (s) => s.id !== "commercial" && s.id !== "new-construction"
@@ -145,7 +147,7 @@ export default function AreaLandingTemplate({
       </section>
 
       {/* Major-project proof for this city */}
-      <CityProofBlock cityName={landing.city} />
+      <CityProofBlock cityName={landing.city} projects={proofProjects} />
 
       {/* Service+city pages, builder page and city guides are rendered by the
           server component AreaServiceLinks in each /areas/<slug>/page.tsx so

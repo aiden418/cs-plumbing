@@ -9,9 +9,9 @@ import PageTransition from "@/components/layout/PageTransition";
 import PageHero from "@/components/ui/PageHero";
 import ScrollReveal from "@/components/animations/ScrollReveal";
 import { GALLERY_CATEGORIES } from "@/lib/constants";
-import { GALLERY_ITEMS } from "@/lib/gallery-data";
+import type { GalleryItem } from "@/lib/types";
 
-export default function GalleryPage() {
+export default function GalleryPage({ items: GALLERY_ITEMS }: { items: GalleryItem[] }) {
   const [activeFilter, setActiveFilter] = useState("all");
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 

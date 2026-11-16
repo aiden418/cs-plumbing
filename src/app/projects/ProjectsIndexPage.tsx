@@ -8,27 +8,27 @@ import Container from "@/components/ui/Container";
 import ProjectCard, { projectPhotoCount } from "@/components/projects/ProjectCard";
 import CountUp from "@/components/animations/CountUp";
 import CTASection from "@/components/home/CTASection";
-import { COMPLETED_PROJECTS } from "@/lib/constants";
+import type { ProjectCardData } from "@/lib/types";
 
-export default function ProjectsIndexPage() {
+export default function ProjectsIndexPage({ projects: COMPLETED_PROJECTS }: { projects: ProjectCardData[] }) {
   const totalPhotos = useMemo(
     () => COMPLETED_PROJECTS.reduce((n, p) => n + projectPhotoCount(p), 0),
-    []
+    [COMPLETED_PROJECTS]
   );
   const cityCount = useMemo(
     () => new Set(COMPLETED_PROJECTS.map((p) => p.location).filter(Boolean)).size,
-    []
+    [COMPLETED_PROJECTS]
   );
   const categories = useMemo(
     () => ["All", ...Array.from(new Set(COMPLETED_PROJECTS.map((p) => p.category)))],
-    []
+    [COMPLETED_PROJECTS]
   );
   const featured = useMemo(
     () =>
       [...COMPLETED_PROJECTS].sort(
         (a, b) => projectPhotoCount(b) - projectPhotoCount(a)
       )[0],
-    []
+    [COMPLETED_PROJECTS]
   );
 
   const [filter, setFilter] = useState("All");
@@ -37,7 +37,7 @@ export default function ProjectsIndexPage() {
     if (filter === "All")
       return COMPLETED_PROJECTS.filter((p) => p.slug !== featured.slug);
     return COMPLETED_PROJECTS.filter((p) => p.category === filter);
-  }, [filter, featured.slug]);
+  }, [COMPLETED_PROJECTS, filter, featured.slug]);
 
   const featuredPhotos = projectPhotoCount(featured);
 

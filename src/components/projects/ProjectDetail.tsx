@@ -18,7 +18,7 @@ import {
 import Container from "@/components/ui/Container";
 import ScrollReveal from "@/components/animations/ScrollReveal";
 import CaseStudyFacts from "@/components/projects/CaseStudyFacts";
-import { formatCompletedOn } from "@/lib/projects";
+import { formatCompletedOn } from "@/lib/project-format";
 import type { CompletedProject, ProjectImage } from "@/lib/types";
 
 export default function ProjectDetail({ project }: { project: CompletedProject }) {

@@ -6,11 +6,13 @@ import { motion } from "framer-motion";
 import { ArrowRight, Award, Hammer } from "lucide-react";
 import Container from "@/components/ui/Container";
 import ScrollReveal from "@/components/animations/ScrollReveal";
-import { COMPLETED_PROJECTS } from "@/lib/constants";
 import { BUSINESS } from "@/lib/business";
+import type { ProjectCardData } from "@/lib/types";
 
 interface CityProofBlockProps {
   cityName: string;
+  /** From cityProofProjects() in @/lib/projects-data, resolved by the server page. */
+  projects: ProjectCardData[];
 }
 
 /**
@@ -18,10 +20,7 @@ interface CityProofBlockProps {
  * city (location field includes city name) and renders 2–4 project tiles.
  * Falls back to a generic stat tile when no project matches yet.
  */
-export default function CityProofBlock({ cityName }: CityProofBlockProps) {
-  const projects = COMPLETED_PROJECTS.filter((p) =>
-    p.location?.toLowerCase().includes(cityName.toLowerCase())
-  ).slice(0, 3);
+export default function CityProofBlock({ cityName, projects }: CityProofBlockProps) {
 
   const hasProjects = projects.length > 0;
 

@@ -3,7 +3,7 @@ import PageTransition from "@/components/layout/PageTransition";
 import ProjectsIndexPage from "./ProjectsIndexPage";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import ProjectsListJsonLd from "@/components/seo/ProjectsListJsonLd";
-import { COMPLETED_PROJECTS } from "@/lib/constants";
+import { COMPLETED_PROJECTS, projectCardData } from "@/lib/projects-data";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/projects" },
@@ -35,7 +35,7 @@ export default function Page() {
         ]}
       />
       <ProjectsListJsonLd projects={COMPLETED_PROJECTS} />
-      <ProjectsIndexPage />
+      <ProjectsIndexPage projects={COMPLETED_PROJECTS.map(projectCardData)} />
     </PageTransition>
   );
 }

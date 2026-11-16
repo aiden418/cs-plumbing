@@ -36,6 +36,9 @@ export interface GalleryItem {
   category: "residential" | "commercial" | "new-construction" | "remodel";
   title: string;
   beforeSrc?: string;
+  /** Pixel size from the image manifest (src/generated/images-meta.json). */
+  width?: number;
+  height?: number;
 }
 
 export interface TimelineEvent {
@@ -290,6 +293,9 @@ export interface BuilderSpecSheet {
 export interface ProjectImage {
   src: string;
   alt: string;
+  /** Pixel size from the image manifest (src/generated/images-meta.json). */
+  width?: number;
+  height?: number;
 }
 
 export interface ProjectPhase {
@@ -374,3 +380,26 @@ export interface CompletedProject {
   metaTitle: string;
   metaDescription: string;
 }
+
+/**
+ * A project as typed in src/lib/constants.ts: everything but the photos.
+ * The photos (and the cover) are discovered from
+ * public/images/projects/<slug>/<phase.slug>/ by src/lib/projects-data.ts,
+ * which turns this into a CompletedProject.
+ */
+export type ProjectPhaseText = Omit<ProjectPhase, "images">;
+export type CompletedProjectText = Omit<CompletedProject, "coverImage" | "phases"> & {
+  phases: ProjectPhaseText[];
+};
+
+/**
+ * What a project card in a client component needs: no photo lists, only
+ * how many photos each phase has (so a page's data does not carry every
+ * phase photo to the browser).
+ */
+export type ProjectCardData = Pick<
+  CompletedProject,
+  "slug" | "name" | "client" | "category" | "timeline" | "description" | "location" | "coverImage"
+> & {
+  phases: { name: string; slug: string; photoCount: number }[];
+};

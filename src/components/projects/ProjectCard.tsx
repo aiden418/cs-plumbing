@@ -3,13 +3,13 @@
 import { motion } from "framer-motion";
 import { MapPin, ArrowUpRight, Camera, Layers, Check } from "lucide-react";
 import Image from "next/image";
-import type { CompletedProject } from "@/lib/types";
+import type { ProjectCardData } from "@/lib/types";
 
-export function projectPhotoCount(project: CompletedProject) {
-  return project.phases.reduce((n, p) => n + p.images.length, 0);
+export function projectPhotoCount(project: ProjectCardData) {
+  return project.phases.reduce((n, p) => n + p.photoCount, 0);
 }
 
-export default function ProjectCard({ project }: { project: CompletedProject }) {
+export default function ProjectCard({ project }: { project: ProjectCardData }) {
   const photoCount = projectPhotoCount(project);
   const phaseCount = project.phases.length;
   const live = /progress/i.test(project.timeline);
