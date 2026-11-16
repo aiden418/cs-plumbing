@@ -1,80 +1,61 @@
-"use client";
-
-import Image from "next/image";
 import Container from "@/components/ui/Container";
-import SectionHeading from "@/components/ui/SectionHeading";
-import ScrollReveal from "@/components/animations/ScrollReveal";
+import Eyebrow from "@/components/ui/Eyebrow";
+import Frame from "@/components/ui/Frame";
+import Section from "@/components/ui/Section";
+import Stepper, { type StepItem } from "@/components/ui/Stepper";
 import { TIMELINE_EVENTS } from "@/lib/constants";
+import { image } from "@/lib/media";
+import { ABOUT_TIMELINE } from "@/content/about";
 
+/**
+ * The company timeline as the connection line: a vertical Stepper whose
+ * joints are the years, each with its text and its historical photo in a
+ * small frame (some of these photos show an old phone number, so none is
+ * shown larger than before).
+ */
 export default function Timeline() {
-  return (
-    <section className="py-16 sm:py-24 lg:py-32 bg-white">
-      <Container size="narrow">
-        <SectionHeading
-          overline="Our Journey"
-          title="28+ Years of Excellence"
-          subtitle="From a single truck to Southwest Florida's most trusted plumbing team."
+  const items: StepItem[] = TIMELINE_EVENTS.map((event) => {
+    const media = event.image ? image(event.image, { alt: event.imageAlt ?? `C&S Plumbing — ${event.title}` }) : null;
+    const portrait = media ? media.height > media.width : false;
+    return {
+      meta: event.year,
+      label: <h3 className="text-xl leading-snug font-semibold text-fg">{event.title}</h3>,
+      description: <span className="block max-w-[56ch] text-base text-body">{event.description}</span>,
+      children: media ? (
+        <Frame
+          media={media}
+          aspect={portrait ? "4/5" : "3/2"}
+          sizes={portrait ? "(min-width: 1024px) 208px, (min-width: 640px) 224px, 60vw" : "(min-width: 1024px) 208px, (min-width: 640px) 352px, 85vw"}
+          quality={70}
+          className={portrait ? "w-[60%] max-w-56 lg:w-full lg:max-w-none" : "w-[85%] max-w-[22rem] lg:w-full lg:max-w-none"}
         />
+      ) : undefined,
+    };
+  });
 
-        <div className="relative">
-          {/* Vertical line */}
-          <div className="absolute left-5 sm:left-8 lg:left-1/2 top-0 bottom-0 w-px bg-gray-300 lg:-translate-x-px" />
+  return (
+    <Section tone="white" labelledBy="about-timeline-title">
+      <Container>
+        <div className="grid grid-cols-1 gap-y-12 lg:grid-cols-12 lg:gap-x-8">
+          <header className="lg:sticky lg:top-[calc(var(--nav-h)+2.5rem)] lg:col-span-4 lg:self-start">
+            <Eyebrow className="mb-4">{ABOUT_TIMELINE.overline}</Eyebrow>
+            <h2 id="about-timeline-title" className="text-display-md text-fg">
+              {ABOUT_TIMELINE.title}
+            </h2>
+            <p className="mt-5 max-w-[40ch] text-lead text-body">{ABOUT_TIMELINE.subtitle}</p>
+          </header>
 
-          <div className="space-y-8 sm:space-y-12">
-            {TIMELINE_EVENTS.map((event, i) => (
-              <ScrollReveal
-                key={event.year}
-                direction={i % 2 === 0 ? "left" : "right"}
-                delay={i * 0.1}
-              >
-                <div
-                  className={`relative flex items-start gap-4 sm:gap-8 ${
-                    i % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"
-                  }`}
-                >
-                  {/* Content */}
-                  <div
-                    className={`flex-1 ml-12 sm:ml-20 lg:ml-0 ${
-                      i % 2 === 0 ? "lg:text-right lg:pr-16" : "lg:pl-16"
-                    }`}
-                  >
-                    <span className="text-primary font-bold text-base sm:text-lg">
-                      {event.year}
-                    </span>
-                    <h3 className="text-lg sm:text-xl font-bold text-gray-900 mt-1 mb-1.5 sm:mb-2">
-                      {event.title}
-                    </h3>
-                    <p className="text-gray-500 text-xs sm:text-sm leading-relaxed">
-                      {event.description}
-                    </p>
-                    {event.image && (
-                      <div
-                        className={`relative mt-4 aspect-[3/2] w-full max-w-sm overflow-hidden rounded-xl border border-gray-200 ${
-                          i % 2 === 0 ? "lg:ml-auto" : ""
-                        }`}
-                      >
-                        <Image
-                          src={event.image}
-                          alt={event.imageAlt ?? `C&S Plumbing — ${event.title}`}
-                          fill
-                          className="object-cover"
-                          sizes="(max-width: 1024px) 90vw, 384px"
-                        />
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Dot */}
-                  <div className="absolute left-5 sm:left-8 lg:left-1/2 -translate-x-1/2 w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-primary border-[3px] sm:border-4 border-white z-10" />
-
-                  {/* Spacer for alternating layout */}
-                  <div className="hidden lg:block flex-1" />
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
+          <Stepper
+            orientation="vertical"
+            label={ABOUT_TIMELINE.label}
+            items={items}
+            current={items.length - 1}
+            // From 1024 px each photo sits beside its text (a third column)
+            // instead of under it, which halves the timeline's height.
+            className="lg:col-span-7 lg:col-start-6 lg:[&_li]:grid-cols-[1.5rem_1fr_13rem] lg:[&_li]:gap-x-6 lg:[&_li>div]:col-start-3 lg:[&_li>div]:row-start-1 lg:[&_li>div]:mt-0"
+          />
         </div>
       </Container>
-    </section>
+    </Section>
   );
 }

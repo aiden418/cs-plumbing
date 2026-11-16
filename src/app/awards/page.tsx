@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import PageTransition from "@/components/layout/PageTransition";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import FaqJsonLd from "@/components/seo/FaqJsonLd";
 import CTASection from "@/components/home/CTASection";
@@ -74,7 +73,7 @@ function AwardsJsonLd() {
 
 export default function Page() {
   return (
-    <PageTransition>
+    <>
       <BreadcrumbJsonLd
         items={[
           { name: "Home", href: "/" },
@@ -85,6 +84,6 @@ export default function Page() {
       <AwardsJsonLd />
       <AwardsPage />
       <CTASection />
-    </PageTransition>
+    </>
   );
 }

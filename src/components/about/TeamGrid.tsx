@@ -1,64 +1,46 @@
-"use client";
-
-import Image from "next/image";
-import { motion } from "framer-motion";
 import Container from "@/components/ui/Container";
+import Frame from "@/components/ui/Frame";
+import Reveal from "@/components/ui/Reveal";
+import Section from "@/components/ui/Section";
 import SectionHeading from "@/components/ui/SectionHeading";
-import StaggerChildren, {
-  staggerItem,
-} from "@/components/animations/StaggerChildren";
 import { TEAM_MEMBERS } from "@/lib/constants";
+import { image } from "@/lib/media";
+import { ABOUT_TEAM } from "@/content/about";
 
+/** The team: three portrait frames with name, role and bio below. Keeps the #team anchor. */
 export default function TeamGrid() {
   return (
-    <section id="team" className="scroll-mt-20 py-16 sm:py-24 lg:py-32">
+    <Section tone="white" id="team" labelledBy="about-team-title">
       <Container>
         <SectionHeading
-          overline="Our Team"
-          title="Meet the People Behind Every Job"
-          subtitle="The family and crew keeping Southwest Florida flowing."
+          id="about-team-title"
+          align="left"
+          overline={ABOUT_TEAM.overline}
+          title={ABOUT_TEAM.title}
+          subtitle={ABOUT_TEAM.subtitle}
         />
 
-        <StaggerChildren className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 max-w-4xl mx-auto">
-          {TEAM_MEMBERS.map((member) => (
-            <motion.div
-              key={member.name}
-              variants={staggerItem}
-              className="group text-center"
-            >
-              <div className="relative w-36 h-36 sm:w-40 sm:h-40 md:w-48 md:h-48 mx-auto mb-4 sm:mb-6 rounded-2xl overflow-hidden bg-gray-100 border border-gray-200 group-hover:border-primary/30 transition-all duration-500">
-                {member.image ? (
-                  <Image
-                    src={member.image}
-                    alt={member.name}
-                    fill
-                    className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
-                    style={member.imagePosition ? { objectPosition: member.imagePosition } : undefined}
-                    sizes="(max-width: 640px) 144px, (max-width: 768px) 160px, 192px"
-                  />
-                ) : (
-                  <div className="absolute inset-0 flex items-center justify-center text-gray-600">
-                    <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full bg-primary/10 flex items-center justify-center">
-                      <span className="text-primary font-bold text-lg sm:text-xl">
-                        {member.name.charAt(0)}
-                      </span>
-                    </div>
-                  </div>
-                )}
-              </div>
-              <h3 className="text-base sm:text-lg font-bold text-gray-900">{member.name}</h3>
-              <p className="text-primary text-sm font-medium mt-1">
-                {member.role}
-              </p>
-              {member.bio && (
-                <p className="text-gray-500 text-xs sm:text-sm mt-2 sm:mt-3 leading-relaxed px-2 sm:px-0">
-                  {member.bio}
-                </p>
-              )}
-            </motion.div>
-          ))}
-        </StaggerChildren>
+        <ul className="grid grid-cols-1 gap-y-14 sm:grid-cols-2 sm:gap-x-8 md:grid-cols-3">
+          {TEAM_MEMBERS.map((member, i) => {
+            const media = member.image ? image(member.image, { alt: member.name }) : null;
+            return (
+              <Reveal as="li" key={member.name} index={i}>
+                <Frame
+                  media={media}
+                  aspect="4/5"
+                  position={member.imagePosition ?? "50% 0%"}
+                  sizes="(min-width: 1280px) 400px, (min-width: 768px) 31vw, (min-width: 640px) 46vw, 100vw"
+                  quality={75}
+                  className="max-w-[26rem]"
+                />
+                <h3 className="mt-6 text-xl leading-snug font-semibold text-fg">{member.name}</h3>
+                <p className="mt-1 font-medium text-accent">{member.role}</p>
+                {member.bio && <p className="mt-4 max-w-[60ch] text-body">{member.bio}</p>}
+              </Reveal>
+            );
+          })}
+        </ul>
       </Container>
-    </section>
+    </Section>
   );
 }
