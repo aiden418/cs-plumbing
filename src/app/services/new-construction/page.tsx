@@ -31,11 +31,11 @@ const newConstructionFaqs = [
   },
   {
     question: "Do you pull permits for new construction plumbing in Lee County?",
-    answer: "Yes. C&S Plumbing manages all permit applications, inspections, and final sign-offs for every new construction project. Our license number is CFC1432485, issued by the Florida Department of Business and Professional Regulation.",
+    answer: `Yes. C&S Plumbing manages all permit applications, inspections, and final sign-offs for every new construction project. Our license number is ${BUSINESS.license}, issued by the Florida Department of Business and Professional Regulation.`,
   },
   {
     question: "How do I get C&S Plumbing on my new construction project as a builder?",
-    answer: "Contact us directly at 833-PLUMB-IT or through the Partner With Us form on our website. We work with builders of all sizes — from custom home builders to large-scale residential developers. We'll review your blueprints, provide a detailed scope and quote, and coordinate directly with your project schedule.",
+    answer: `Contact us directly at ${BUSINESS.phone} or through the Partner With Us form on our website. We work with builders of all sizes — from custom home builders to large-scale residential developers. We'll review your blueprints, provide a detailed scope and quote, and coordinate directly with your project schedule.`,
   },
   {
     question: "How far in advance should I schedule a plumber for new construction?",
@@ -141,7 +141,7 @@ export default function NewConstructionPage() {
               Partner With Us
             </Button>
             <Button
-              href={`tel:${BUSINESS.phoneRaw}`}
+              href={BUSINESS.phoneHref}
               variant="outline-light"
               size="lg"
               icon={<Phone className="w-5 h-5" />}

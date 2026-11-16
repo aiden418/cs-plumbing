@@ -8,7 +8,8 @@ import PageTransition from "@/components/layout/PageTransition";
 import ScrollReveal from "@/components/animations/ScrollReveal";
 import WhatHappensNext from "@/components/ui/WhatHappensNext";
 import FaqAccordion from "@/components/ui/FaqAccordion";
-import { BUSINESS, EMERGENCY_CLAIMS } from "@/lib/constants";
+import { BUSINESS } from "@/lib/business";
+import { EMERGENCY_CLAIMS } from "@/lib/claims";
 import { EMERGENCY_FAQS } from "./emergency-faqs";
 
 const emergencyTypes = [
@@ -74,7 +75,7 @@ export default function EmergencyPage({
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-              href={`tel:${BUSINESS.phoneRaw}`}
+              href={BUSINESS.phoneHref}
               className="inline-flex items-center gap-2 sm:gap-3 px-6 sm:px-10 py-4 sm:py-5 bg-emergency hover:bg-red-600 text-white text-base sm:text-xl font-bold rounded-xl sm:rounded-2xl transition-all duration-300 hover:shadow-[0_0_30px_rgba(255,59,48,0.3)] active:scale-[0.98]"
             >
               <Phone className="w-5 h-5 sm:w-6 sm:h-6" />
@@ -168,7 +169,7 @@ export default function EmergencyPage({
                 Remember: call us first, then take these steps.
               </p>
               <a
-                href={`tel:${BUSINESS.phoneRaw}`}
+                href={BUSINESS.phoneHref}
                 className="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-emergency hover:bg-red-600 text-white text-base sm:text-lg font-bold rounded-xl transition-all duration-300"
               >
                 <Phone className="w-4 h-4 sm:w-5 sm:h-5" />

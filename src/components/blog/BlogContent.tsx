@@ -5,7 +5,7 @@ import { Clock, ArrowLeft, Phone, Calendar } from "lucide-react";
 import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
 import FaqAccordion from "@/components/ui/FaqAccordion";
-import { BUSINESS } from "@/lib/constants";
+import { BUSINESS } from "@/lib/business";
 import type { BlogPost } from "@/lib/types";
 
 export default function BlogContent({ post }: { post: BlogPost }) {
@@ -107,7 +107,7 @@ export default function BlogContent({ post }: { post: BlogPost }) {
                   </p>
                   <div className="space-y-3">
                     <Button
-                      href={`tel:${BUSINESS.phoneRaw}`}
+                      href={BUSINESS.phoneHref}
                       variant="secondary"
                       size="sm"
                       icon={<Phone className="w-4 h-4" />}

@@ -7,6 +7,7 @@ import { ArrowRight, Award, Hammer } from "lucide-react";
 import Container from "@/components/ui/Container";
 import ScrollReveal from "@/components/animations/ScrollReveal";
 import { COMPLETED_PROJECTS } from "@/lib/constants";
+import { BUSINESS } from "@/lib/business";
 
 interface CityProofBlockProps {
   cityName: string;
@@ -143,7 +144,7 @@ export default function CityProofBlock({ cityName }: CityProofBlockProps) {
                   </p>
                 </div>
                 <p className="text-xs text-white/80 mt-6">
-                  CFC1432485
+                  {BUSINESS.license}
                 </p>
               </div>
             </div>

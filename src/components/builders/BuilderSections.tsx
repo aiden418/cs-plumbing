@@ -181,7 +181,7 @@ export function SchedulingPanel() {
               <h3 className="font-bold text-gray-900">Talk to estimating</h3>
             </div>
             <p className="mt-2 text-sm leading-relaxed text-gray-600">
-              <a href={`tel:${BUILDER_DESK.phoneRaw}`} className="font-medium text-primary hover:underline">
+              <a href={BUILDER_DESK.phoneHref} className="font-medium text-primary hover:underline">
                 {BUILDER_DESK.phone}
               </a>{" "}
               ·{" "}
@@ -343,7 +343,7 @@ export function BuilderDesk() {
             {BUILDER_DESK.email}
           </a>{" "}
           ·{" "}
-          <a href={`tel:${BUILDER_DESK.phoneRaw}`} className="font-medium text-navy underline underline-offset-2">
+          <a href={BUILDER_DESK.phoneHref} className="font-medium text-navy underline underline-offset-2">
             {BUILDER_DESK.phone}
           </a>
         </p>

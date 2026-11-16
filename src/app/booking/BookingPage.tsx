@@ -30,7 +30,7 @@ import Button from "@/components/ui/Button";
 import PageTransition from "@/components/layout/PageTransition";
 import PageHero from "@/components/ui/PageHero";
 import WhatHappensNext from "@/components/ui/WhatHappensNext";
-import { BUSINESS } from "@/lib/constants";
+import { BUSINESS } from "@/lib/business";
 import { cn } from "@/lib/utils";
 import { trackBooking, trackEstimateRequest } from "@/lib/pixel";
 
@@ -292,7 +292,7 @@ export default function BookingPage() {
         <p className="mt-4 text-sm text-white/60">
           Prefer to talk?{" "}
           <a
-            href={`tel:${BUSINESS.phoneRaw}`}
+            href={BUSINESS.phoneHref}
             className="inline-flex items-center gap-1.5 font-bold text-gold hover:underline"
           >
             <Phone className="w-3.5 h-3.5" />
@@ -628,7 +628,7 @@ export default function BookingPage() {
                     {!isEstimate && "."}
                   </p>
                   <Button
-                    href={`tel:${BUSINESS.phoneRaw}`}
+                    href={BUSINESS.phoneHref}
                     variant="secondary"
                     icon={<Phone className="w-4 h-4" />}
                   >
@@ -708,7 +708,7 @@ export default function BookingPage() {
           {
             title: "Clean, code-compliant work",
             description:
-              "Licensed under CFC1432485. Permits handled when required. We leave the worksite spotless.",
+              `Licensed under ${BUSINESS.license}. Permits handled when required. We leave the worksite spotless.`,
           },
         ]}
       />

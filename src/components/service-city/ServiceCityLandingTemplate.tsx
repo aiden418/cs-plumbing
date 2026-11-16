@@ -12,7 +12,7 @@ import StaggerChildren, {
 } from "@/components/animations/StaggerChildren";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { BUSINESS } from "@/lib/constants";
+import { BUSINESS } from "@/lib/business";
 import type { ServiceCityLanding } from "@/lib/types";
 
 const TRUST_ICONS = [Shield, Award, Star, Check];
@@ -38,7 +38,7 @@ export default function ServiceCityLandingTemplate({
         actions={
           <>
             <Button
-              href={`tel:${BUSINESS.phoneRaw}`}
+              href={BUSINESS.phoneHref}
               variant="gold"
               size="lg"
               icon={<Phone className="w-5 h-5" />}
@@ -65,7 +65,7 @@ export default function ServiceCityLandingTemplate({
           </p>
         )}
         <p className="mt-4 text-xs text-white/40">
-          Serving {landing.city} since 1998 · License #CFC1432485
+          Serving {landing.city}{` since 1998 · License #${BUSINESS.license}`}
         </p>
       </PageHero>
 

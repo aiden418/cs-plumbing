@@ -6,7 +6,7 @@ import { ShieldCheck, Phone, ArrowRight } from "lucide-react";
 import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
 import ScrollReveal from "@/components/animations/ScrollReveal";
-import { BUSINESS } from "@/lib/constants";
+import { BUSINESS } from "@/lib/business";
 import { perYear } from "@/lib/pricing";
 import { SEASON_COPY, type Season } from "@/lib/claims";
 
@@ -55,7 +55,7 @@ export default function CoastalComebackTeaser({ season = "departure" }: { season
                   See the Plans
                 </Button>
                 <Button
-                  href={`tel:${BUSINESS.phoneRaw}`}
+                  href={BUSINESS.phoneHref}
                   variant="secondary"
                   size="lg"
                   icon={<Phone className="w-5 h-5" />}

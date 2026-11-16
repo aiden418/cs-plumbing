@@ -11,7 +11,7 @@ import StaggerChildren, {
   staggerItem,
 } from "@/components/animations/StaggerChildren";
 import { motion, AnimatePresence } from "framer-motion";
-import { BUSINESS } from "@/lib/constants";
+import { BUSINESS } from "@/lib/business";
 import type { ServiceLanding } from "@/lib/types";
 
 // ============================================
@@ -117,7 +117,7 @@ export default function UEPServicePage({
               Book a Service
             </Button>
             <Button
-              href={`tel:${BUSINESS.phoneRaw}`}
+              href={BUSINESS.phoneHref}
               variant="outline-light"
               size="lg"
               icon={<Phone className="w-5 h-5" />}

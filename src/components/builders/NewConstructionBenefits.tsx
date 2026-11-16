@@ -53,7 +53,7 @@ export default function NewConstructionBenefits({
         <p className="mt-6 flex items-center justify-center gap-2 text-center text-sm text-gray-500">
           <Phone className="h-4 w-4 text-primary" />
           Request your visit:{" "}
-          <a href={`tel:${b.contactRaw}`} className="font-semibold text-primary hover:underline">
+          <a href={b.contactHref} className="font-semibold text-primary hover:underline">
             {b.contact}
           </a>
         </p>

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import type { Resend } from "resend";
+import { BUSINESS } from "../business";
 
 export { isTrustedOrigin } from "./origin";
 
@@ -98,4 +99,4 @@ export async function sendEmailBestEffort(
 export const SMS_TO = process.env.SMS_GATEWAY_TO ?? "";
 
 // Inquiries land in the office inbox unless ADMIN_EMAIL overrides it.
-export const ADMIN_EMAIL = process.env.ADMIN_EMAIL ?? "office@csplumbinglee.com";
+export const ADMIN_EMAIL = process.env.ADMIN_EMAIL ?? BUSINESS.email;

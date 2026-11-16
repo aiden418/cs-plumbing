@@ -105,7 +105,7 @@ export default function PrivacyPolicyPage() {
                 </a>{" "}
                 or calling{" "}
                 <a
-                  href={`tel:${BUSINESS.phoneRaw}`}
+                  href={BUSINESS.phoneHref}
                   className="text-primary hover:underline"
                 >
                   {BUSINESS.phone}
@@ -136,7 +136,7 @@ export default function PrivacyPolicyPage() {
                 <br />
                 Phone:{" "}
                 <a
-                  href={`tel:${BUSINESS.phoneRaw}`}
+                  href={BUSINESS.phoneHref}
                   className="text-primary hover:underline"
                 >
                   {BUSINESS.phone}

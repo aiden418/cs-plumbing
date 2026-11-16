@@ -12,7 +12,7 @@ import {
   CalendarCheck,
 } from "lucide-react";
 import Button from "@/components/ui/Button";
-import { BUSINESS } from "@/lib/constants";
+import { BUSINESS } from "@/lib/business";
 import { cn } from "@/lib/utils";
 import { trackQuoteBuilder } from "@/lib/pixel";
 import type {
@@ -257,7 +257,7 @@ export default function QuoteResult({
             Check your email. We&apos;ll be in touch shortly.
           </p>
           <Button
-            href={`tel:${BUSINESS.phoneRaw}`}
+            href={BUSINESS.phoneHref}
             variant="secondary"
             icon={<Phone className="w-4 h-4" />}
             size="sm"

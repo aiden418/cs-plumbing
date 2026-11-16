@@ -1,0 +1,63 @@
+{
+  "src/app/blog/BlogIndexPage.tsx": [
+    "src/lib/constants.ts"
+  ],
+  "src/app/builders/BuildersPage.tsx": [
+    "src/lib/constants.ts"
+  ],
+  "src/app/coastal-comeback-plan/CoastalComebackPlanPage.tsx": [
+    "src/lib/constants.ts"
+  ],
+  "src/app/gallery/GalleryPage.tsx": [
+    "src/lib/constants.ts"
+  ],
+  "src/app/partners/PartnersPage.tsx": [
+    "src/lib/constants.ts"
+  ],
+  "src/app/projects/ProjectsIndexPage.tsx": [
+    "src/lib/constants.ts"
+  ],
+  "src/components/about/TeamGrid.tsx": [
+    "src/lib/constants.ts"
+  ],
+  "src/components/about/Timeline.tsx": [
+    "src/lib/constants.ts"
+  ],
+  "src/components/areas/AreaLandingTemplate.tsx": [
+    "src/lib/constants.ts"
+  ],
+  "src/components/areas/CityProofBlock.tsx": [
+    "src/lib/constants.ts"
+  ],
+  "src/components/estimator/CostEstimator.tsx": [
+    "src/lib/constants.ts"
+  ],
+  "src/components/home/ServiceAreasSection.tsx": [
+    "src/lib/constants.ts"
+  ],
+  "src/components/home/ServiceHighlights.tsx": [
+    "src/lib/constants.ts"
+  ],
+  "src/components/home/ServiceMapTeaser.tsx": [
+    "src/lib/constants.ts"
+  ],
+  "src/components/home/StatsBar.tsx": [
+    "src/lib/constants.ts"
+  ],
+  "src/components/home/Testimonials.tsx": [
+    "src/lib/constants.ts"
+  ],
+  "src/components/layout/Footer.tsx": [
+    "src/lib/constants.ts"
+  ],
+  "src/components/layout/Navbar.tsx": [
+    "src/lib/constants.ts"
+  ],
+  "src/components/projects/ProjectDetail.tsx": [
+    "src/lib/projects.ts"
+  ],
+  "src/components/services/ServiceLandingTemplate.tsx": [
+    "src/lib/constants.ts",
+    "src/lib/landing-indexing.ts"
+  ]
+}

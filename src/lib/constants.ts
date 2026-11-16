@@ -1,105 +1,19 @@
-import type { Service, TeamMember, Testimonial, TimelineEvent, NavLink, Stat, ServiceLanding, AreaLanding, BlogPost, CompletedProject, Partner, Award } from "./types";
+import type { Service, TeamMember, Testimonial, TimelineEvent, NavLink, Stat, ServiceLanding, AreaLanding, BlogPost, CompletedProject, Partner } from "./types";
 import { composed, money, perFoot, price, range, rangeInline, span, spanInline, upcharge, upchargeInline } from "./pricing";
 import { CLAIMS, EMERGENCY_CLAIMS, LICENSE, licenseLine } from "./claims";
+import { BUSINESS } from "./business";
+import { AWARDS, AWARD_TRUST_LINE, LATEST_AWARD } from "./awards";
+import { UEP_STATUS } from "./uep-status";
 
 // Prices live in ./pricing, promises in ./claims; both are re-exported so
 // existing consumers keep importing them from here.
 export { EMERGENCY_CLAIMS, LICENSE, CLAIMS };
 
-// ============================================
-// BUSINESS INFO
-// ============================================
-
-export const BUSINESS = {
-  name: "C&S Plumbing",
-  fullName: "C&S Plumbing of Lee",
-  /** Contracting entity as stated by the owner (Aiden, 2026-11-03): Draft
-   *  Plumbing Corp, d/b/a C&S Plumbing of Lee, under license CFC1432485.
-   *  The public brand stays "C&S Plumbing of Lee"; the legal name goes on
-   *  the Terms, vendor paperwork and schema. An older Sunbiz record reads
-   *  "C & S PLUMBING OF LEE, INC."; confirm the W-9 matches this value. */
-  legalName: "Draft Plumbing Corp",
-  phone: "833-PLUMB-IT",
-  phoneRaw: "8337586248",
-  // "?&body=" works on both iOS and Android
-  smsHref:
-    "sms:+18337586248?&body=Hi%20C%26S%20Plumbing%2C%20I%20need%20help%20with%20",
-  email: "office@csplumbinglee.com",
-  /** Builder inquiries and prequal document requests. */
-  builderPhone: "833-PLUMB-IT ext. 0",
-  /** Owner line on the builder documents. 833-758-6248 is the company's only
-   *  line (Aiden, 2026-11-14): no direct cell numbers on any page or PDF. */
-  ownerPhone: "833-PLUMB-IT ext. 1",
-  address: "951 Pondella Rd",
-  city: "North Fort Myers",
-  state: "FL",
-  zip: "33903",
-  founded: 1998,
-  // Owner-supplied counts (Sep 2026). New construction homes completed, and
-  // residential whole-home repipes completed — keep them separate: a repipe
-  // claim must never borrow the new-construction number.
-  homesCompleted: 9500,
-  repipesCompleted: 3500,
-  // Public hours. The business runs 24/7 (Aiden, 2026-11-13), so every hours
-  // field on the site and on listings says so. `officeHours` is the staffed
-  // office schedule: the Terms "Office." clause prints it verbatim, so changing
-  // it is a Terms revision (docs/terms-on-documents.md §3).
-  hours: {
-    open: "Open 24 hours, 7 days a week",
-    emergency: "24/7 Emergency Service",
-  },
-  officeHours: {
-    weekday: "Mon–Fri: 7:30 AM – 4:30 PM",
-    saturday: "Sat: 9:00 AM – 3:00 PM",
-    emergency: "24/7 Emergency Service",
-  },
-  tagline: "Southwest Florida's Most Trusted Plumbing Team",
-  description:
-    "Family owned and operated since 1998. From emergency repairs to new construction, C&S Plumbing delivers excellence across Southwest Florida.",
-  /** The company's current Florida Certified Plumbing Contractor license,
-   *  in place since the 2023 reorganization as part of Draft Construction
-   *  (owner-stated 2026-11-03). Goes on every contract, proposal and invoice. */
-  license: LICENSE.company,
-  /** Samuel Pellechio's original license, still active; listed alongside the
-   *  company license on formal documents. */
-  license2: LICENSE.founder,
-  // DBPR "Search by License Number" form (search=LicNbr). Direct per-license
-  // detail links aren't possible — the DBPR site is session-coupled.
-  licenseLookupUrl:
-    "https://www.myfloridalicense.com/wl11.asp?mode=2&search=LicNbr&SID=&brd=&typ=",
-  rating: 5.0,
-  // Static fallback only. Google Maps showed 5.0 across 60 reviews on
-  // 2026-10-20 while the site was still telling crawlers 46. The live number
-  // comes from the Places API when GOOGLE_PLACES_API_KEY and GOOGLE_PLACE_ID
-  // are set in Vercel — set those so this stops drifting.
-  reviewCount: 60,
-  /** Permanent link to the Google Business Profile listing (by CID), not a
-   *  Maps search. Resolves to the 951 Pondella Rd listing. */
-  googleProfileUrl: "https://maps.google.com/?cid=5498090134012520413",
-  /** Google Place ID for the same listing (public identifier, found with
-   *  Google's Place ID Finder on 2026-10-20). Drives the write-a-review deep
-   *  link and the Places API lookup; only GOOGLE_PLACES_API_KEY is secret. */
-  googlePlaceId: "ChIJjeFQMQ9D24gR3WflxNgjTUw",
-  /**
-   * Where Google Maps pins 951 Pondella Rd (checked 2026-10-20; the Census
-   * geocoder agrees to within 150 ft). The previous value, 26.6695 /
-   * -81.8726, sat 2.8 miles east in a mobile home park off E North Shore Dr.
-   */
-  geo: { latitude: 26.6663678, longitude: -81.9171809 },
-  facebookUrl: "https://www.facebook.com/csplumbingoflc",
-  instagramUrl: "https://www.instagram.com/cs_plumbing_of_lee/",
-  // Current review profile (North Fort Myers office). An older Birdeye
-  // profile for the former Cape Coral office still exists; never link it.
-  birdeyeUrl: "https://reviews.birdeye.com/cs-plumbing-of-lee-172502710968475",
-  /**
-   * One-sentence identity statement for crawlers and AI engines. Directories
-   * still carry the former Cape Coral address (one marks it "permanently
-   * closed"), so every machine-readable surface states where the business
-   * actually is and that it is open.
-   */
-  locationNote:
-    "C&S Plumbing of Lee has one office, open and operating, at 951 Pondella Rd, North Fort Myers, FL 33903. Directory listings that show an older Cape Coral street address refer to the company's former office.",
-} as const;
+// Business facts live in ./business, awards in ./awards and the Cape Coral UEP
+// status in ./uep-status: small modules that next.config.ts and client
+// components can load without the page data in this file. They are re-exported
+// so existing server code keeps importing them from here.
+export { BUSINESS, AWARDS, LATEST_AWARD, AWARD_TRUST_LINE, UEP_STATUS };
 
 // Third-party contractor ranking. This is BuildZoom's score, not a state or
 // DBPR ranking, and every surface that cites it must say so and link the
@@ -150,8 +64,10 @@ export const WARRANTY = {
 // requested by the homeowner — it is not scheduled automatically.
 export const NEW_CONSTRUCTION_BENEFITS = {
   heading: "We’re here long after construction is complete.",
-  contact: "833-PLUMB-IT ext. 0",
-  contactRaw: "8337586248",
+  contact: `${BUSINESS.phone} ext. 0`,
+  contactRaw: BUSINESS.phoneRaw,
+  /** The benefits line is the company line; links dial this href. */
+  contactHref: BUSINESS.phoneHref,
   items: [
     {
       id: "lifetime-discount",
@@ -163,86 +79,13 @@ export const NEW_CONSTRUCTION_BENEFITS = {
       id: "first-year-visit",
       title: "Complimentary first-year visit",
       appliesTo: "New homes",
-      body: "New homeowners also receive one complimentary water heater flush and whole-home plumbing inspection during their home’s first year. Call 833-PLUMB-IT ext. 0 within 12 months of home completion to request and schedule your complimentary visit.",
+      body: `New homeowners also receive one complimentary water heater flush and whole-home plumbing inspection during their home’s first year. Call ${BUSINESS.phone} ext. 0 within 12 months of home completion to request and schedule your complimentary visit.`,
     },
   ],
   /** One-paragraph version for llms.txt and print. */
   summary:
-    "Homes and commercial properties with new-construction plumbing completed by C&S qualify for a lifetime discount on future plumbing service. New homeowners also receive one complimentary water heater flush and whole-home plumbing inspection during their home’s first year; the homeowner calls 833-PLUMB-IT ext. 0 within 12 months of home completion to request and schedule it.",
+    `Homes and commercial properties with new-construction plumbing completed by C&S qualify for a lifetime discount on future plumbing service. New homeowners also receive one complimentary water heater flush and whole-home plumbing inspection during their home’s first year; the homeowner calls ${BUSINESS.phone} ext. 0 within 12 months of home completion to request and schedule it.`,
 } as const;
-
-// City of Cape Coral Utilities Extension Project status, as the city's own
-// UEP pages stated it on `checkedOn`. The 180-day window and the plumber rule
-// come from the city's "How to Connect" page. Re-read capecoral.gov/uep before
-// changing any of this; every UEP surface (service page, Cape Coral landing,
-// llms.txt) reads from here so the story stays identical everywhere.
-const UEP_NORTH_1_WEST =
-  "North 1 West is substantially complete and the city has mailed its Notice of Availability letters, so the 180-day connection window there is already running.";
-const UEP_NORTH_1_EAST =
-  "North 1 East is under construction — contractors received Notice to Proceed in December 2025 and the city expects completion by the end of 2027.";
-const UEP_NORTH_3 =
-  "North 3, about 3 square miles of northwest Cape Coral, is in design; the city expects construction to start by the end of 2026 and run about two years.";
-export const UEP_STATUS = {
-  checkedOn: "2026-10-20",
-  checkedOnLabel: "October 2026",
-  sourceUrl: "https://www.capecoral.gov/uep/how_to_connect.php",
-  /** Days a homeowner has to connect after the city's Notice of Availability. */
-  connectionWindowDays: 180,
-  plumberRule:
-    "The city directs homeowners to a City of Cape Coral licensed plumber for the final connection, and that plumber is responsible for pulling the permits.",
-  north1West: UEP_NORTH_1_WEST,
-  north1East: UEP_NORTH_1_EAST,
-  north3: UEP_NORTH_3,
-  /** One-paragraph version for prose surfaces. */
-  summary: `${UEP_NORTH_1_WEST} ${UEP_NORTH_1_EAST} ${UEP_NORTH_3}`,
-} as const;
-
-// Single source of truth for awards, newest first. Every surface that names
-// an award — hero chips, nav strip, About, Credentials, WhyChooseUs, the
-// trust-badge arrays, JsonLd and llms.txt — reads from here for the same
-// reason EMERGENCY_CLAIMS exists: one consistent, verifiable story.
-export const AWARDS: Award[] = [
-  {
-    slug: "best-of-cape-coral-2026",
-    year: 2026,
-    title: "Best of Cape Coral 2026",
-    category: "Best Plumbing Contractor",
-    program: "Best of Cape Coral Readership Awards",
-    issuer: "Cape Coral Breeze",
-    issuerUrl: "https://www.capecoralbreeze.com",
-    // TODO: swap in the Breeze's 2026 winners listing URL once the Digital
-    // Winners Platform entry is live — it becomes the schema citation.
-    awardedOn: "2026-09-09",
-    badge: "/images/awards/best-of-cape-coral-2026.png",
-    badgeWidth: 2215,
-    badgeHeight: 1561,
-    summary:
-      "Voted Best Plumbing Contractor by Cape Coral Breeze readers in the 2026 Best of Cape Coral awards.",
-  },
-  {
-    slug: "best-of-cape-coral-2025",
-    year: 2025,
-    title: "Best of Cape Coral 2025",
-    category: "Plumbing",
-    program: "Best of Cape Coral Readership Awards",
-    issuer: "Cape Coral Breeze",
-    issuerUrl: "https://www.capecoralbreeze.com",
-    awardedOn: "2025-09",
-    badge: "/images/awards/best-of-cape-coral-2025.png",
-    badgeWidth: 793,
-    badgeHeight: 593,
-    summary:
-      "Voted Best of Cape Coral in the Plumbing category by Cape Coral Breeze readers in 2025.",
-  },
-];
-
-export const LATEST_AWARD = AWARDS[0];
-
-/** Flat line for the trust-badge string arrays on area and service-city pages. */
-export const AWARD_TRUST_LINE = `Best of Cape Coral ${[...AWARDS]
-  .map((a) => a.year)
-  .sort()
-  .join(" & ")}`;
 
 // ============================================
 // NAVIGATION
@@ -786,7 +629,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       `Aging pipes cause low water pressure, discolored water, and costly leaks. C&S Plumbing replaces your entire plumbing system with modern copper or PEX piping — backed by 3,500+ homes repiped and ${CLAIMS.warrantyInstallShort}.`,
     metaTitle: "Whole-Home Repiping | Cape Coral & Fort Myers",
     metaDescription:
-      `Whole-home repiping in Cape Coral, Fort Myers & SWFL. Copper & PEX, ${rangeInline("repipe.overall")}, 1-year labor & materials warranty. 3,500+ homes repiped. Call 833-PLUMB-IT.`,
+      `Whole-home repiping in Cape Coral, Fort Myers & SWFL. Copper & PEX, ${rangeInline("repipe.overall")}, 1-year labor & materials warranty. 3,500+ homes repiped. Call ${BUSINESS.phone}.`,
     keywords: [
       "repiping Cape Coral",
       "repipe Fort Myers",
@@ -848,7 +691,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       {
         question: "Do you pull permits for repiping in Lee County?",
         answer:
-          "Yes, every C&S Plumbing repipe job includes full permitting and final inspection by Lee County. This ensures your repiping is code-compliant and protects your home's value. Our license number is CFC1432485.",
+          `Yes, every C&S Plumbing repipe job includes full permitting and final inspection by Lee County. This ensures your repiping is code-compliant and protects your home's value. Our license number is ${BUSINESS.license}.`,
       },
       {
         question: "Will repiping damage my walls or floors?",
@@ -868,7 +711,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       "Copper & PEX options available",
       "Full permit & inspection included",
       "Minimal wall openings, patched and textured",
-      "Licensed & insured (CFC1432485)",
+      `Licensed & insured (${BUSINESS.license})`,
       "Free estimates with upfront pricing",
       CLAIMS.warrantyBullet,
       "Serving all of Southwest Florida",
@@ -931,7 +774,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       {
         question: "Do you pull permits for repiping?",
         answer: "Yes — permits and final inspection are included in every repipe.",
-        detail: "Every C&S repipe job includes Lee County permitting and final inspection. Our license number is CFC1432485. Skipping permits voids most homeowner insurance claims and creates problems at resale.",
+        detail: `Every C&S repipe job includes Lee County permitting and final inspection. Our license number is ${BUSINESS.license}. Skipping permits voids most homeowner insurance claims and creates problems at resale.`,
       },
     ],
   },
@@ -944,7 +787,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       "No hot water? Whether you need a quick repair or a full replacement, C&S Plumbing installs and services all types of water heaters — traditional tank, tankless, and hybrid systems.",
     metaTitle: "Water Heater Repair & Installation | Fort Myers & Cape Coral",
     metaDescription:
-      `Water heater repair ${rangeInline("waterHeater.repair")}, tank replacement ${spanInline("waterHeater.tank40", "waterHeater.tank50")} installed, tankless & hybrid options. Same-day service in Fort Myers, Cape Coral & North Fort Myers. Licensed CFC1432485. Call 833-PLUMB-IT.`,
+      `Water heater repair ${rangeInline("waterHeater.repair")}, tank replacement ${spanInline("waterHeater.tank40", "waterHeater.tank50")} installed, tankless & hybrid options. Same-day service in Fort Myers, Cape Coral & North Fort Myers. Licensed ${BUSINESS.license}. Call ${BUSINESS.phone}.`,
     keywords: [
       "water heater Cape Coral",
       "water heater installation Fort Myers",
@@ -1024,7 +867,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       "Tankless, tank & hybrid options",
       "Energy efficiency upgrades",
       "Upfront pricing, no surprises",
-      "Licensed & insured (CFC1432485)",
+      `Licensed & insured (${BUSINESS.license})`,
       "Free estimates",
       CLAIMS.warrantyBullet,
       "Serving Cape Coral, Fort Myers & SWFL",
@@ -1103,7 +946,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       "Endless hot water without a tank in the garage. C&S installs gas tankless systems from Rinnai, Navien and Noritz — gas line, venting and permit included — and repairs every major brand, usually the same day.",
     metaTitle: "Tankless Water Heater Installation & Repair | Fort Myers & Cape Coral",
     metaDescription:
-      `Tankless water heater installation & repair in Fort Myers, Cape Coral & SWFL. Rinnai, Navien & Noritz, ${rangeInline("waterHeater.tankless")} installed incl. gas line & venting. Same-day repair. Call 833-PLUMB-IT.`,
+      `Tankless water heater installation & repair in Fort Myers, Cape Coral & SWFL. Rinnai, Navien & Noritz, ${rangeInline("waterHeater.tankless")} installed incl. gas line & venting. Same-day repair. Call ${BUSINESS.phone}.`,
     keywords: [
       "tankless water heater installation Fort Myers",
       "tankless water heater installation Cape Coral",
@@ -1191,7 +1034,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       "Isolation valves for annual flushing",
       "Permit + Lee County final included",
       "Upfront written pricing",
-      "Licensed & insured (CFC1432485)",
+      `Licensed & insured (${BUSINESS.license})`,
       "Free estimates",
       CLAIMS.warrantyBullet,
     ],
@@ -1248,7 +1091,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       "Slow drains, recurring clogs, and sewage backups need professional attention. C&S Plumbing uses hydro-jetting and camera inspection technology to clear any blockage and keep your drains flowing.",
     metaTitle: "Drain Cleaning Services | Cape Coral & Fort Myers Plumber",
     metaDescription:
-      "Professional drain cleaning in Cape Coral, Fort Myers & SWFL. Hydro-jetting, camera inspection, root removal. Fast service, fair pricing. Call 833-PLUMB-IT.",
+      `Professional drain cleaning in Cape Coral, Fort Myers & SWFL. Hydro-jetting, camera inspection, root removal. Fast service, fair pricing. Call ${BUSINESS.phone}.`,
     keywords: [
       "drain cleaning Cape Coral",
       "drain cleaning Fort Myers",
@@ -1310,7 +1153,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       {
         question: "Do you offer emergency drain cleaning?",
         answer:
-          "Yes, we offer 24/7 emergency drain cleaning for sewage backups and critical drain failures. Call 833-PLUMB-IT any time and we'll dispatch a technician as quickly as possible.",
+          `Yes, we offer 24/7 emergency drain cleaning for sewage backups and critical drain failures. Call ${BUSINESS.phone} any time and we'll dispatch a technician as quickly as possible.`,
       },
       {
         question: "What is hydro-jetting and how does it work?",
@@ -1330,7 +1173,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       "Camera inspection included",
       "Root intrusion specialists",
       "All drain types serviced",
-      "Licensed & insured (CFC1432485)",
+      `Licensed & insured (${BUSINESS.license})`,
       "Upfront pricing",
       "Preventive maintenance plans",
       "24/7 emergency service",
@@ -1400,7 +1243,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       "Water leaks waste money and cause serious damage. C&S Plumbing finds and fixes leaks fast — from dripping faucets to hidden slab leaks — protecting your home and your wallet.",
     metaTitle: "Leak Detection & Repair | Cape Coral & Fort Myers",
     metaDescription:
-      "Expert leak detection & repair in Cape Coral, Fort Myers & SWFL. Slab leaks, pipe leaks, faucet repair. 24/7 emergency service. Call 833-PLUMB-IT.",
+      `Expert leak detection & repair in Cape Coral, Fort Myers & SWFL. Slab leaks, pipe leaks, faucet repair. 24/7 emergency service. Call ${BUSINESS.phone}.`,
     keywords: [
       "leak repair Cape Coral",
       "leak detection Fort Myers",
@@ -1457,7 +1300,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       {
         question: "How quickly can you respond to a water leak emergency?",
         answer:
-          "We offer 24/7 emergency service and typically arrive within 1-2 hours for active water leaks in the Cape Coral, Fort Myers, and North Fort Myers area. Call 833-PLUMB-IT immediately if you have an active leak.",
+          `We offer 24/7 emergency service and typically arrive within 1-2 hours for active water leaks in the Cape Coral, Fort Myers, and North Fort Myers area. Call ${BUSINESS.phone} immediately if you have an active leak.`,
       },
       {
         question: "Should I repair or reroute a slab leak?",
@@ -1472,7 +1315,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       {
         question: "What should I do if I find a leak in my home?",
         answer:
-          "First, shut off the water supply at the nearest valve or the main shutoff. Then contain the water with towels or buckets to minimize damage. Call C&S Plumbing at 833-PLUMB-IT for 24/7 emergency response — we typically arrive within 1-2 hours in our service area.",
+          `First, shut off the water supply at the nearest valve or the main shutoff. Then contain the water with towels or buckets to minimize damage. Call C&S Plumbing at ${BUSINESS.phone} for 24/7 emergency response — we typically arrive within 1-2 hours in our service area.`,
       },
     ],
     priceRange: range("leak.overall"),
@@ -1482,7 +1325,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       "Slab leak specialists",
       "Non-destructive methods",
       "Fast, same-day service",
-      "Licensed & insured (CFC1432485)",
+      `Licensed & insured (${BUSINESS.license})`,
       "Free estimates",
       "All pipe types repaired",
       "Serving Cape Coral, Fort Myers & SWFL",
@@ -1539,7 +1382,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       {
         question: "How fast can you respond to a leak emergency?",
         answer: `${EMERGENCY_CLAIMS.responseTimeSentence}`,
-        detail: "If you have water actively running where it shouldn't be, call 833-PLUMB-IT and shut off your main water valve. We'll dispatch a licensed plumber 24/7. While you wait, move valuables off the floor and document damage with photos for insurance.",
+        detail: `If you have water actively running where it shouldn't be, call ${BUSINESS.phone} and shut off your main water valve. We'll dispatch a licensed plumber 24/7. While you wait, move valuables off the floor and document damage with photos for insurance.`,
       },
     ],
   },
@@ -1552,7 +1395,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       "Southwest Florida's hard water damages pipes, appliances, and fixtures. C&S Plumbing installs whole-home water softeners and filtration systems to protect your home and improve your water quality.",
     metaTitle: "Water Softener Installation | Cape Coral & Fort Myers",
     metaDescription:
-      "Water softener & filtration installation in Cape Coral, Fort Myers & SWFL. Protect pipes, improve water quality. Free water testing. Call 833-PLUMB-IT.",
+      `Water softener & filtration installation in Cape Coral, Fort Myers & SWFL. Protect pipes, improve water quality. Free water testing. Call ${BUSINESS.phone}.`,
     keywords: [
       "water softener Cape Coral",
       "water softener Fort Myers",
@@ -1624,7 +1467,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       "Salt-based & salt-free options",
       "Reverse osmosis systems",
       "Protects pipes & appliances",
-      "Licensed & insured (CFC1432485)",
+      `Licensed & insured (${BUSINESS.license})`,
       "Maintenance plans available",
       "Upfront pricing",
       "Serving Cape Coral, Fort Myers & SWFL",
@@ -1666,7 +1509,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       "Remodeling your kitchen or bathroom? C&S Plumbing handles everything from pipe relocation to premium fixture installation — ensuring your remodel is done right the first time.",
     metaTitle: "Kitchen & Bath Plumbing Remodels | Cape Coral",
     metaDescription:
-      "Expert plumbing remodel services in Cape Coral, Fort Myers & SWFL. Kitchen & bathroom renovations, fixture upgrades, pipe relocation. Call 833-PLUMB-IT.",
+      `Expert plumbing remodel services in Cape Coral, Fort Myers & SWFL. Kitchen & bathroom renovations, fixture upgrades, pipe relocation. Call ${BUSINESS.phone}.`,
     keywords: [
       "plumbing remodel Cape Coral",
       "bathroom remodel plumber Fort Myers",
@@ -1738,7 +1581,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       "Pipe relocation services",
       "Code-compliant renovations",
       "Permit handling included",
-      "Licensed & insured (CFC1432485)",
+      `Licensed & insured (${BUSINESS.license})`,
       "Coordinates with contractors",
       "Free estimates",
       "Serving Cape Coral, Fort Myers & SWFL",
@@ -1767,7 +1610,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       {
         question: "Do I need permits to move plumbing in a remodel?",
         answer: "Yes — and we pull them for you.",
-        detail: "Relocating supply or drain lines in Lee County requires a permit and inspection. C&S handles the permit, the inspection, and code compliance (licensed CFC1432485), so your remodel never stalls on paperwork.",
+        detail: `Relocating supply or drain lines in Lee County requires a permit and inspection. C&S handles the permit, the inspection, and code compliance (licensed ${BUSINESS.license}), so your remodel never stalls on paperwork.`,
       },
     ],
   },
@@ -1781,7 +1624,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
     metaTitle:
       "UEP Hookup Cape Coral | Water, Sewer & Septic",
     metaDescription:
-      `Cape Coral UEP hookup: water ${perFoot("uep.waterPerFt")}, irrigation ${perFoot("uep.irrigationPerFt")}, sewer ${perFoot("uep.sewerPerFt")}, septic abandonment ${money(price("uep.septicAbandon").min)}. All permits included. Call 833-PLUMB-IT.`,
+      `Cape Coral UEP hookup: water ${perFoot("uep.waterPerFt")}, irrigation ${perFoot("uep.irrigationPerFt")}, sewer ${perFoot("uep.sewerPerFt")}, septic abandonment ${money(price("uep.septicAbandon").min)}. All permits included. Call ${BUSINESS.phone}.`,
     keywords: [
       "UEP Cape Coral",
       "UEP utilities hookup",
@@ -1862,7 +1705,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       "1–3 day installation",
       "Cape Coral UEP specialists",
       "Septic pump-out & abandonment included",
-      "Licensed & insured (CFC1432485)",
+      `Licensed & insured (${BUSINESS.license})`,
       "Free estimates with upfront pricing",
       "New shutoff valves & extras available",
       "Serving all Cape Coral UEP phases",
@@ -1883,7 +1726,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     state: "FL",
     metaTitle: "Plumber in Cape Coral, FL",
     metaDescription:
-      "Trusted plumber in Cape Coral, FL. Emergency plumbing, repiping, drain cleaning & water heaters. Family owned and operated since 1998. Call 833-PLUMB-IT.",
+      `Trusted plumber in Cape Coral, FL. Emergency plumbing, repiping, drain cleaning & water heaters. Family owned and operated since 1998. Call ${BUSINESS.phone}.`,
     keywords: [
       "plumber Cape Coral",
       "plumber Cape Coral FL",
@@ -1934,7 +1777,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
       {
         question: "Are you licensed to pull permits in Cape Coral?",
         answer:
-          "Yes. We're a Florida Certified Plumbing Contractor (CFC1432485), fully insured, and we pull every required City of Cape Coral permit and pass inspection — no exceptions.",
+          `Yes. We're a Florida Certified Plumbing Contractor (${BUSINESS.license}), fully insured, and we pull every required City of Cape Coral permit and pass inspection — no exceptions.`,
       },
     ],
     localContext:
@@ -1946,7 +1789,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     state: "FL",
     metaTitle: "Plumber in Fort Myers, FL",
     metaDescription:
-      "Expert plumber in Fort Myers, FL. Residential & commercial plumbing, emergency service, repiping, water heaters. 28+ years serving SWFL. Call 833-PLUMB-IT.",
+      `Expert plumber in Fort Myers, FL. Residential & commercial plumbing, emergency service, repiping, water heaters. 28+ years serving SWFL. Call ${BUSINESS.phone}.`,
     keywords: [
       "plumber Fort Myers",
       "plumber Fort Myers FL",
@@ -1997,7 +1840,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
       {
         question: "Are you licensed and insured in Fort Myers?",
         answer:
-          "Yes — a Florida Certified Plumbing Contractor (CFC1432485), fully insured, pulling every required Lee County permit.",
+          `Yes — a Florida Certified Plumbing Contractor (${BUSINESS.license}), fully insured, pulling every required Lee County permit.`,
       },
     ],
     localContext:
@@ -2009,7 +1852,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     state: "FL",
     metaTitle: "North Fort Myers Plumber — Our Hometown",
     metaDescription:
-      "North Fort Myers' hometown plumber since 1998, headquartered on Pondella Rd. Emergency service, repiping, drains & more. Call 833-PLUMB-IT.",
+      `North Fort Myers' hometown plumber since 1998, headquartered on Pondella Rd. Emergency service, repiping, drains & more. Call ${BUSINESS.phone}.`,
     keywords: [
       "plumber North Fort Myers",
       "plumber North Fort Myers FL",
@@ -2022,7 +1865,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     ],
     heroText: "North Fort Myers' Hometown Plumber Since 1998",
     description:
-      "C&S Plumbing is headquartered right here in North Fort Myers at 951 Pondella Rd. As your neighbors, we take extra pride in serving our hometown community with fast, reliable plumbing services.",
+      `C&S Plumbing is headquartered right here in North Fort Myers at ${BUSINESS.address}. As your neighbors, we take extra pride in serving our hometown community with fast, reliable plumbing services.`,
     neighborhoods: [
       "North Fort Myers",
       "Bayshore",
@@ -2037,7 +1880,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
       {
         question: "Where is C&S Plumbing located?",
         answer:
-          "We're based right here in North Fort Myers, at 951 Pondella Rd — it's our hometown. Being local means fast response times across North Fort Myers and the surrounding area.",
+          `We're based right here in North Fort Myers, at ${BUSINESS.address} — it's our hometown. Being local means fast response times across North Fort Myers and the surrounding area.`,
       },
       {
         question: "Do you service well and septic homes in North Fort Myers?",
@@ -2057,7 +1900,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
       {
         question: "Are you licensed and insured?",
         answer:
-          "Yes — a Florida Certified Plumbing Contractor (CFC1432485), fully insured, and family owned and operated since 1998.",
+          `Yes — a Florida Certified Plumbing Contractor (${BUSINESS.license}), fully insured, and family owned and operated since 1998.`,
       },
       {
         question: "How much does a septic-to-sewer conversion cost in North Fort Myers?",
@@ -2071,7 +1914,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
       },
     ],
     localContext:
-      "North Fort Myers is our home. C&S Plumbing's office is located at 951 Pondella Rd, and many of our team members live right here in the community. That means the fastest response times anywhere in our service area. We've plumbed hundreds of homes in North Fort Myers and understand the specific needs of properties in this area, from older homes near the river to newer construction east of I-75.\n\nPlumbing here is different from Cape Coral or Fort Myers proper. Many homes rely on private wells rather than municipal supply, which means high iron, a sulfur smell and hard-water scaling — and the well pumps, pressure tanks and whole-home treatment systems that go with them. North Fort Myers is also in the middle of a long-running septic-to-sewer conversion. Connecting to Lee County Utilities sewer takes a licensed plumber to abandon the old tank, run the new lateral and pass the county inspection, and C&S has completed dozens of these conversions start to finish, permits included.\n\nThe housing stock runs from 1960s–70s block homes in Bayshore and Hancock Bridge, many still on galvanized supply lines and cast iron drains, to manufactured homes in communities like Del Tura and Lochmoor Waterway Estates, where flexible water lines and brittle plastic drain fittings are the usual failure points. No travel fees in North Fort Myers — we're already here.",
+      `North Fort Myers is our home. C&S Plumbing's office is located at ${BUSINESS.address}, and many of our team members live right here in the community. That means the fastest response times anywhere in our service area. We've plumbed hundreds of homes in North Fort Myers and understand the specific needs of properties in this area, from older homes near the river to newer construction east of I-75.\n\nPlumbing here is different from Cape Coral or Fort Myers proper. Many homes rely on private wells rather than municipal supply, which means high iron, a sulfur smell and hard-water scaling — and the well pumps, pressure tanks and whole-home treatment systems that go with them. North Fort Myers is also in the middle of a long-running septic-to-sewer conversion. Connecting to Lee County Utilities sewer takes a licensed plumber to abandon the old tank, run the new lateral and pass the county inspection, and C&S has completed dozens of these conversions start to finish, permits included.\n\nThe housing stock runs from 1960s–70s block homes in Bayshore and Hancock Bridge, many still on galvanized supply lines and cast iron drains, to manufactured homes in communities like Del Tura and Lochmoor Waterway Estates, where flexible water lines and brittle plastic drain fittings are the usual failure points. No travel fees in North Fort Myers — we're already here.`,
     updatedAt: "2026-11-12",
   },
   {
@@ -2080,7 +1923,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     state: "FL",
     metaTitle: "Plumber in Naples, FL",
     metaDescription:
-      "Professional plumber in Naples, FL. Luxury home plumbing, repiping, water heaters, emergency service. Family-owned, 9,500+ homes plumbed. Call 833-PLUMB-IT.",
+      `Professional plumber in Naples, FL. Luxury home plumbing, repiping, water heaters, emergency service. Family-owned, 9,500+ homes plumbed. Call ${BUSINESS.phone}.`,
     keywords: [
       "plumber Naples",
       "plumber Naples FL",
@@ -2129,7 +1972,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
       {
         question: "Do you pull permits in Naples?",
         answer:
-          "Yes. We're a Florida Certified Plumbing Contractor (CFC1432485), fully insured, and we pull every required Collier County permit.",
+          `Yes. We're a Florida Certified Plumbing Contractor (${BUSINESS.license}), fully insured, and we pull every required Collier County permit.`,
       },
     ],
     localContext:
@@ -2141,7 +1984,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     state: "FL",
     metaTitle: "Plumber in Bonita Springs, FL",
     metaDescription:
-      "Reliable plumber in Bonita Springs, FL. Repiping, water heaters, drain cleaning, emergency service. 28+ years in SWFL. Call 833-PLUMB-IT.",
+      `Reliable plumber in Bonita Springs, FL. Repiping, water heaters, drain cleaning, emergency service. 28+ years in SWFL. Call ${BUSINESS.phone}.`,
     keywords: [
       "plumber Bonita Springs",
       "plumber Bonita Springs FL",
@@ -2189,7 +2032,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
       {
         question: "Are you licensed and insured?",
         answer:
-          "Yes — a Florida Certified Plumbing Contractor (CFC1432485), fully insured, family owned and operated since 1998.",
+          `Yes — a Florida Certified Plumbing Contractor (${BUSINESS.license}), fully insured, family owned and operated since 1998.`,
       },
     ],
     localContext:
@@ -2201,7 +2044,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     state: "FL",
     metaTitle: "Plumber in Lehigh Acres, FL",
     metaDescription:
-      "Trusted plumber in Lehigh Acres, FL. Emergency plumbing, repiping, drain cleaning and water heaters. Family owned and operated since 1998. Call 833-PLUMB-IT.",
+      `Trusted plumber in Lehigh Acres, FL. Emergency plumbing, repiping, drain cleaning and water heaters. Family owned and operated since 1998. Call ${BUSINESS.phone}.`,
     keywords: [
       "plumber Lehigh Acres",
       "plumber Lehigh Acres FL",
@@ -2250,7 +2093,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
       {
         question: "Are you licensed and insured in Lehigh Acres?",
         answer:
-          "Yes — a Florida Certified Plumbing Contractor (CFC1432485), fully insured, pulling every required Lee County permit.",
+          `Yes — a Florida Certified Plumbing Contractor (${BUSINESS.license}), fully insured, pulling every required Lee County permit.`,
       },
       {
         question: "Why do newer Lehigh Acres homes have plumbing problems?",
@@ -2278,7 +2121,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     state: "FL",
     metaTitle: "Plumber in Estero, FL",
     metaDescription:
-      "Professional plumber in Estero, FL. Repiping, water heaters, drain cleaning, emergency plumbing. Family-owned, 28+ years in SWFL. Call 833-PLUMB-IT.",
+      `Professional plumber in Estero, FL. Repiping, water heaters, drain cleaning, emergency plumbing. Family-owned, 28+ years in SWFL. Call ${BUSINESS.phone}.`,
     keywords: [
       "plumber Estero",
       "plumber Estero FL",
@@ -2327,7 +2170,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
       {
         question: "Are you licensed and insured?",
         answer:
-          "Yes — a Florida Certified Plumbing Contractor (CFC1432485), fully insured, family owned and operated since 1998.",
+          `Yes — a Florida Certified Plumbing Contractor (${BUSINESS.license}), fully insured, family owned and operated since 1998.`,
       },
       {
         question: "My Estero home is only 15 years old — can it already have pipe problems?",
@@ -2350,7 +2193,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     state: "FL",
     metaTitle: "Plumber on Sanibel Island, FL",
     metaDescription:
-      "Experienced plumber on Sanibel Island, FL. Emergency plumbing, repiping, water heaters, hurricane recovery. Family-owned, 28+ years in SWFL. Call 833-PLUMB-IT.",
+      `Experienced plumber on Sanibel Island, FL. Emergency plumbing, repiping, water heaters, hurricane recovery. Family-owned, 28+ years in SWFL. Call ${BUSINESS.phone}.`,
     keywords: [
       "plumber Sanibel Island",
       "plumber Sanibel FL",
@@ -2398,7 +2241,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
       {
         question: "Are you licensed and insured?",
         answer:
-          "Yes — a Florida Certified Plumbing Contractor (CFC1432485), fully insured, family owned and operated since 1998.",
+          `Yes — a Florida Certified Plumbing Contractor (${BUSINESS.license}), fully insured, family owned and operated since 1998.`,
       },
       {
         question: "How much does a plumber cost on Sanibel Island?",
@@ -2426,7 +2269,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     state: "FL",
     metaTitle: "Plumber in Fort Myers Beach, FL",
     metaDescription:
-      "Plumber on Fort Myers Beach, FL. Post-Ian rebuilds, elevated homes, repipes, water heaters & 24/7 emergencies. Family owned since 1998. Call 833-PLUMB-IT.",
+      `Plumber on Fort Myers Beach, FL. Post-Ian rebuilds, elevated homes, repipes, water heaters & 24/7 emergencies. Family owned since 1998. Call ${BUSINESS.phone}.`,
     keywords: [
       "plumber Fort Myers Beach",
       "Fort Myers Beach plumbing",
@@ -2480,7 +2323,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
       {
         question: "Are you licensed and insured?",
         answer:
-          "Yes — a Florida Certified Plumbing Contractor (CFC1432485), fully insured, family owned and operated since 1998.",
+          `Yes — a Florida Certified Plumbing Contractor (${BUSINESS.license}), fully insured, family owned and operated since 1998.`,
       },
     ],
     localContext:
@@ -2492,7 +2335,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     state: "FL",
     metaTitle: "Plumber in Punta Gorda, FL",
     metaDescription:
-      "Plumber in Punta Gorda, FL. Water heaters, emergency plumbing, repiping & drains across Charlotte County. Family owned since 1998. Call 833-PLUMB-IT.",
+      `Plumber in Punta Gorda, FL. Water heaters, emergency plumbing, repiping & drains across Charlotte County. Family owned since 1998. Call ${BUSINESS.phone}.`,
     keywords: [
       "plumber Punta Gorda",
       "plumber Punta Gorda FL",
@@ -2507,7 +2350,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     ],
     heroText: "Your Trusted Plumber in Punta Gorda, FL",
     description:
-      "C&S Plumbing brings 28+ years of Southwest Florida experience to Punta Gorda and Charlotte County. Water heater replacements, emergency repairs, repiping, and drain service — backed by 9,500+ homes plumbed and Florida Certified Plumbing Contractor license CFC1432485.",
+      `C&S Plumbing brings 28+ years of Southwest Florida experience to Punta Gorda and Charlotte County. Water heater replacements, emergency repairs, repiping, and drain service — backed by 9,500+ homes plumbed and Florida Certified Plumbing Contractor license ${BUSINESS.license}.`,
     neighborhoods: [
       "Punta Gorda Isles",
       "Burnt Store Isles",
@@ -2524,7 +2367,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
       {
         question: "Do you really service Punta Gorda from North Fort Myers?",
         answer:
-          "Yes. Our shop at 951 Pondella Rd in North Fort Myers is about 25–35 minutes from most of Punta Gorda via US-41 or I-75. We schedule Charlotte County work daily, and emergency calls are dispatched 24/7 — same as Lee County.", // claim-ok: drive time, not a response promise
+          `Yes. Our shop at ${BUSINESS.address} in North Fort Myers is about 25–35 minutes from most of Punta Gorda via US-41 or I-75. We schedule Charlotte County work daily, and emergency calls are dispatched 24/7 — same as Lee County.`, // claim-ok: drive time, not a response promise
       },
       {
         question: "Can you replace a water heater in Punta Gorda the same day?",
@@ -2539,12 +2382,12 @@ export const AREA_LANDINGS: AreaLanding[] = [
       {
         question: "Do you pull permits with Charlotte County?",
         answer:
-          "Yes. C&S Plumbing works under Florida Certified Plumbing Contractor license CFC1432485, and we pull permits and coordinate inspections with Charlotte County for water heaters, repipes, and remodel work. You never have to handle the paperwork yourself.",
+          `Yes. C&S Plumbing works under Florida Certified Plumbing Contractor license ${BUSINESS.license}, and we pull permits and coordinate inspections with Charlotte County for water heaters, repipes, and remodel work. You never have to handle the paperwork yourself.`,
       },
       {
         question: "Is your emergency service available in Punta Gorda?",
         answer:
-          "Yes — 24/7 emergency plumbing covers Punta Gorda and all of Charlotte County. Call 833-PLUMB-IT any hour — we answer and dispatch around the clock, every day of the week.",
+          `Yes — 24/7 emergency plumbing covers Punta Gorda and all of Charlotte County. Call ${BUSINESS.phone} any hour — we answer and dispatch around the clock, every day of the week.`,
       },
     ],
   },
@@ -2554,7 +2397,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     state: "FL",
     metaTitle: "Plumber in Port Charlotte, FL",
     metaDescription:
-      "Plumber in Port Charlotte, FL. Drain cleaning, water treatment, water heaters & emergency plumbing. Family owned and operated since 1998. Call 833-PLUMB-IT.",
+      `Plumber in Port Charlotte, FL. Drain cleaning, water treatment, water heaters & emergency plumbing. Family owned and operated since 1998. Call ${BUSINESS.phone}.`,
     keywords: [
       "plumber Port Charlotte",
       "plumber Port Charlotte FL",
@@ -2596,12 +2439,12 @@ export const AREA_LANDINGS: AreaLanding[] = [
       {
         question: "How fast can you get to Port Charlotte for an emergency?",
         answer:
-          "Our North Fort Myers shop is roughly 30–40 minutes from most of Port Charlotte via US-41 or I-75. The emergency line at 833-PLUMB-IT is answered 24/7, and a licensed plumber is dispatched — not an answering service promise.", // claim-ok: drive time, not a response promise
+          `Our North Fort Myers shop is roughly 30–40 minutes from most of Port Charlotte via US-41 or I-75. The emergency line at ${BUSINESS.phone} is answered 24/7, and a licensed plumber is dispatched — not an answering service promise.`, // claim-ok: drive time, not a response promise
       },
       {
         question: "Do you pull permits with Charlotte County?",
         answer:
-          "Yes. We work under Florida Certified Plumbing Contractor license CFC1432485 and handle Charlotte County permitting and inspections for water heaters, repipes, drain line replacements, and remodel plumbing.",
+          `Yes. We work under Florida Certified Plumbing Contractor license ${BUSINESS.license} and handle Charlotte County permitting and inspections for water heaters, repipes, drain line replacements, and remodel plumbing.`,
       },
       {
         question: "Can you replace a water heater in Port Charlotte?",
@@ -2646,7 +2489,7 @@ export const BLOG_POSTS: BlogPost[] = [
 <h2>Why it matters for your plumbing</h2>
 <p>A community vote is a lagging indicator. It reflects the work that was already done — the <a href="/services/water-heaters">water heaters</a> that got replaced the same day, the <a href="/services/repiping">repipes</a> that came in on the written price, the 2 a.m. <a href="/emergency">emergency calls</a> that got answered. If you're comparing plumbers in Cape Coral, an award like this is worth reading alongside the things you can check yourself:</p>
 <ul>
-<li>Our Florida Certified Plumbing Contractor license (CFC1432485) is verifiable on the DBPR's MyFloridaLicense.com.</li>
+<li>Our Florida Certified Plumbing Contractor license (${BUSINESS.license}) is verifiable on the DBPR's MyFloridaLicense.com.</li>
 <li>Our Google rating and reviews are public — see the <a href="/reviews">reviews page</a>.</li>
 <li>Our work is on the site, phase by phase, on the <a href="/projects">projects pages</a>.</li>
 </ul>
@@ -2702,7 +2545,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>What to Do Next</h2>
 <p>If you're experiencing any of these signs, don't wait for a catastrophic pipe failure. <a href="/services/repiping">Contact C&S Plumbing for a free repipe evaluation</a>. We offer both copper and PEX repiping options, complete most homes in 1-2 days, and handle all permits and inspections.</p>
-<p>Call <a href="tel:8337586248">833-PLUMB-IT</a> or <a href="/booking">book online</a> to schedule your free consultation.</p>`,
+<p>Call <a href="${BUSINESS.phoneHref}">${BUSINESS.phone}</a> or <a href="/booking">book online</a> to schedule your free consultation.</p>`,
   },
   {
     slug: "tankless-vs-traditional-water-heaters",
@@ -2762,7 +2605,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>Not Sure? We'll Help You Decide</h2>
 <p>Every home is different. <a href="/services/water-heaters">C&S Plumbing's water heater specialists</a> will evaluate your home's hot water needs, current setup, and budget to recommend the best option. We install all major brands including Rinnai, Navien, Rheem, and A.O. Smith.</p>
-<p>Call <a href="tel:8337586248">833-PLUMB-IT</a> or <a href="/booking">book a consultation</a> today.</p>`,
+<p>Call <a href="${BUSINESS.phoneHref}">${BUSINESS.phone}</a> or <a href="/booking">book a consultation</a> today.</p>`,
   },
   {
     slug: "plumbing-emergency-what-to-do",
@@ -2807,7 +2650,7 @@ export const BLOG_POSTS: BlogPost[] = [
 <p>Before you start major cleanup, take photos and video of the damage. Your homeowner's insurance will need documentation to process a claim. Photograph the source of the leak, any water damage to floors, walls, and belongings.</p>
 
 <h2>Step 6: Call C&S Plumbing</h2>
-<p>Once you've contained the immediate emergency, call <a href="tel:8337586248">833-PLUMB-IT</a> for 24/7 emergency plumbing service. We serve <a href="/areas/cape-coral">Cape Coral</a>, <a href="/areas/fort-myers">Fort Myers</a>, <a href="/areas/north-fort-myers">North Fort Myers</a>, and all of Southwest Florida with rapid emergency response.</p>
+<p>Once you've contained the immediate emergency, call <a href="${BUSINESS.phoneHref}">${BUSINESS.phone}</a> for 24/7 emergency plumbing service. We serve <a href="/areas/cape-coral">Cape Coral</a>, <a href="/areas/fort-myers">Fort Myers</a>, <a href="/areas/north-fort-myers">North Fort Myers</a>, and all of Southwest Florida with rapid emergency response.</p>
 <p>Our emergency team will:</p>
 <ul>
 <li>Arrive as quickly as possible (typically within 1-2 hours in our service area)</li>
@@ -2835,7 +2678,7 @@ export const BLOG_POSTS: BlogPost[] = [
     relatedLandings: ["emergency-plumber-cape-coral", "repiping-cape-coral", "plumbing-remodel-cape-coral"],
     content: `<h2>1. Verify Their License</h2>
 <p>Florida law requires plumbers to be licensed. A legitimate plumber will have a Certified Plumbing Contractor (CPC) or Registered Plumbing Contractor (RPC) license. You can verify any plumber's license at the <a href="https://www.myfloridalicense.com" target="_blank" rel="noopener noreferrer">Florida DBPR website</a>.</p>
-<p>At C&S Plumbing, our license number is CFC1432485 — we're happy to have you verify it.</p>
+<p>At C&S Plumbing, our license number is ${BUSINESS.license} — we're happy to have you verify it.</p>
 
 <h2>2. Check Google Reviews</h2>
 <p>Online reviews are the most reliable way to gauge a plumber's quality. Look for:</p>
@@ -2874,7 +2717,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>Ready to Experience the C&S Difference?</h2>
 <p>We've built our reputation on honest work, fair pricing, and treating every home like our own. With 9,500+ completed projects and a 5.0-star Google rating, we let our track record speak for itself.</p>
-<p>Call <a href="tel:8337586248">833-PLUMB-IT</a> or <a href="/booking">book online</a> to experience the difference a trusted, local plumber makes.</p>`,
+<p>Call <a href="${BUSINESS.phoneHref}">${BUSINESS.phone}</a> or <a href="/booking">book online</a> to experience the difference a trusted, local plumber makes.</p>`,
   },
   {
     slug: "hurricane-plumbing-preparation-swfl",
@@ -2918,14 +2761,14 @@ export const BLOG_POSTS: BlogPost[] = [
 <li>Turn the water on slowly and check for <a href="/services/leak-repair">leaks</a> at every fixture</li>
 <li>Have your water tested if your area experienced flooding</li>
 </ul>
-<p>If you discover damage, call <a href="tel:8337586248">833-PLUMB-IT</a> for emergency plumbing service. We prioritize <a href="/areas/sanibel">Sanibel</a>, <a href="/areas/fort-myers">Fort Myers</a>, <a href="/areas/cape-coral">Cape Coral</a>, and all SWFL communities after storms. <a href="/booking">Book an inspection</a> today to get ahead of hurricane season.</p>`,
+<p>If you discover damage, call <a href="${BUSINESS.phoneHref}">${BUSINESS.phone}</a> for emergency plumbing service. We prioritize <a href="/areas/sanibel">Sanibel</a>, <a href="/areas/fort-myers">Fort Myers</a>, <a href="/areas/cape-coral">Cape Coral</a>, and all SWFL communities after storms. <a href="/booking">Book an inspection</a> today to get ahead of hurricane season.</p>`,
   },
   {
     slug: "water-softener-vs-water-filter-lee-county",
     title: "Water Softener vs Water Filter: Which Does Your Lee County Home Need?",
     metaTitle: "Water Softener vs Water Filter — Which Does Your Home Need?",
     metaDescription:
-      "Water softener or water filter? Learn the difference and which system your Lee County home needs. Expert advice from C&S Plumbing. Call 833-PLUMB-IT.",
+      `Water softener or water filter? Learn the difference and which system your Lee County home needs. Expert advice from C&S Plumbing. Call ${BUSINESS.phone}.`,
     keywords: ["water softener vs water filter", "water softener Lee County", "water filter Cape Coral", "hard water Florida", "water treatment Fort Myers", "water quality SWFL"],
     excerpt:
       "Southwest Florida has some of the hardest water in the country. But do you need a water softener, a water filter, or both? Here's how to decide which system is right for your home.",
@@ -2972,14 +2815,14 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>Get a Free Water Test</h2>
 <p>Not sure what your water needs? C&S Plumbing offers free water testing and consultations. We'll test your water hardness and quality, then recommend the right system for your home and budget.</p>
-<p>Call <a href="tel:8337586248">833-PLUMB-IT</a> or <a href="/booking">book a free water consultation</a> to find out what's in your water and how to fix it.</p>`,
+<p>Call <a href="${BUSINESS.phoneHref}">${BUSINESS.phone}</a> or <a href="/booking">book a free water consultation</a> to find out what's in your water and how to fix it.</p>`,
   },
   {
     slug: "polybutylene-pipe-problems-cape-coral",
     title: "Why Cape Coral Homes Need Repiping: The Polybutylene Pipe Problem",
     metaTitle: "Polybutylene Pipes in Cape Coral: Why You Need to Repipe",
     metaDescription:
-      "Cape Coral homes built 1978-1995 likely have polybutylene pipes that are failing. Learn why repiping is urgent and how C&S Plumbing can help. Call 833-PLUMB-IT.",
+      `Cape Coral homes built 1978-1995 likely have polybutylene pipes that are failing. Learn why repiping is urgent and how C&S Plumbing can help. Call ${BUSINESS.phone}.`,
     keywords: ["polybutylene pipes Cape Coral", "poly-b pipe replacement", "repiping Cape Coral", "polybutylene pipe failure", "Cape Coral plumbing problems", "PEX repiping Cape Coral"],
     excerpt:
       "Thousands of Cape Coral homes were built with polybutylene pipes between 1978 and 1995. These pipes are now failing at alarming rates, causing leaks, water damage, and insurance problems for homeowners.",
@@ -3031,7 +2874,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>Don't Wait for a Catastrophic Failure</h2>
 <p>Every day you wait, your polybutylene pipes are deteriorating further. A proactive repipe on your schedule is far better than an emergency repair at 2 AM after a pipe bursts and floods your home.</p>
-<p>Call <a href="tel:8337586248">833-PLUMB-IT</a> or <a href="/booking">schedule a free repipe consultation</a> today. We'll inspect your pipes, explain your options, and provide an honest, upfront estimate.</p>`,
+<p>Call <a href="${BUSINESS.phoneHref}">${BUSINESS.phone}</a> or <a href="/booking">schedule a free repipe consultation</a> today. We'll inspect your pipes, explain your options, and provide an honest, upfront estimate.</p>`,
   },
   {
     slug: "slab-leak-detection-southwest-florida",
@@ -3104,7 +2947,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>Don't Wait — Slab Leaks Get Worse Quickly</h2>
 <p>A small slab leak that costs $2,000 to repair today can become a $20,000+ foundation and mold remediation project in six months. The concrete and soil beneath your slab will erode faster than you expect once water starts flowing freely underground.</p> // claim-ok: illustrative comparison, not a published price
-<p>If you've noticed any of the warning signs above, call <a href="tel:8337586248">833-PLUMB-IT</a> immediately. C&S Plumbing provides expert <a href="/services/leak-repair">leak detection and repair</a> throughout <a href="/areas/cape-coral">Cape Coral</a>, <a href="/areas/fort-myers">Fort Myers</a>, <a href="/areas/north-fort-myers">North Fort Myers</a>, <a href="/areas/bonita-springs">Bonita Springs</a>, and all of Lee County. <a href="/booking">Book a leak detection appointment</a> today — fast diagnosis is the difference between a minor repair and a major reconstruction.</p>`,
+<p>If you've noticed any of the warning signs above, call <a href="${BUSINESS.phoneHref}">${BUSINESS.phone}</a> immediately. C&S Plumbing provides expert <a href="/services/leak-repair">leak detection and repair</a> throughout <a href="/areas/cape-coral">Cape Coral</a>, <a href="/areas/fort-myers">Fort Myers</a>, <a href="/areas/north-fort-myers">North Fort Myers</a>, <a href="/areas/bonita-springs">Bonita Springs</a>, and all of Lee County. <a href="/booking">Book a leak detection appointment</a> today — fast diagnosis is the difference between a minor repair and a major reconstruction.</p>`,
   },
   {
     slug: "low-water-pressure-causes-fixes-swfl",
@@ -3159,7 +3002,7 @@ export const BLOG_POSTS: BlogPost[] = [
 <h2>When to Call a Plumber</h2>
 <p>A minor, isolated pressure problem at a single fixture is often a DIY fix — clean the aerator or showerhead and you're done. But when pressure is low throughout the house, developed suddenly, or is accompanied by other symptoms (discolored water, higher bills, wet spots on walls or floors), don't wait.</p>
 <p>At C&S Plumbing, we diagnose water pressure problems throughout <a href="/areas/cape-coral">Cape Coral</a>, <a href="/areas/fort-myers">Fort Myers</a>, <a href="/areas/bonita-springs">Bonita Springs</a>, <a href="/areas/north-fort-myers">North Fort Myers</a>, and all of Lee County. We identify the root cause quickly and provide upfront pricing before any work begins — no surprises.</p>
-<p>Call <a href="tel:8337586248">833-PLUMB-IT</a> or <a href="/booking">book an appointment online</a> to get your water pressure back where it belongs.</p>`,
+<p>Call <a href="${BUSINESS.phoneHref}">${BUSINESS.phone}</a> or <a href="/booking">book an appointment online</a> to get your water pressure back where it belongs.</p>`,
   },
   {
     slug: "clogged-drains-causes-fixes-swfl",
@@ -3221,14 +3064,14 @@ export const BLOG_POSTS: BlogPost[] = [
 <li>Water is backing up into a tub or floor drain when you run the dishwasher or washing machine</li>
 </ul>
 <p>C&S Plumbing provides professional drain cleaning throughout <a href="/areas/cape-coral">Cape Coral</a>, <a href="/areas/fort-myers">Fort Myers</a>, <a href="/areas/bonita-springs">Bonita Springs</a>, <a href="/areas/north-fort-myers">North Fort Myers</a>, and all of Lee County. We use professional-grade equipment and provide upfront pricing before any work begins.</p>
-<p>Call <a href="tel:8337586248">833-PLUMB-IT</a> or <a href="/booking">book a drain cleaning appointment online</a> today — we'll clear the clog and inspect the line so you know exactly what you're dealing with.</p>`,
+<p>Call <a href="${BUSINESS.phoneHref}">${BUSINESS.phone}</a> or <a href="/booking">book a drain cleaning appointment online</a> today — we'll clear the clog and inspect the line so you know exactly what you're dealing with.</p>`,
   },
   {
     slug: "septic-to-sewer-conversion-swfl",
     title: "Septic to Sewer: What Southwest Florida Homeowners Need to Know",
     metaTitle: "Septic to Sewer Conversion: What SWFL Homeowners Should Know",
     metaDescription:
-      "Switching from septic to sewer in Cape Coral or SWFL? Learn about the process, costs, and requirements. C&S Plumbing handles UEP connections. Call 833-PLUMB-IT.",
+      `Switching from septic to sewer in Cape Coral or SWFL? Learn about the process, costs, and requirements. C&S Plumbing handles UEP connections. Call ${BUSINESS.phone}.`,
     keywords: ["septic to sewer conversion", "septic to sewer Cape Coral", "UEP connection Cape Coral", "septic abandonment Florida", "sewer hookup cost SWFL", "septic to sewer cost"],
     excerpt:
       "As Cape Coral and other Southwest Florida communities expand their sewer systems, thousands of homeowners are transitioning from septic tanks to city sewer. Here's what you need to know about the process, costs, and requirements.",
@@ -3280,7 +3123,7 @@ export const BLOG_POSTS: BlogPost[] = [
 <p>Septic to sewer conversion requires a <a href="/blog/how-to-choose-a-plumber-cape-coral">licensed plumbing contractor</a> experienced with UEP projects. At C&S Plumbing, we've completed hundreds of UEP connections across Cape Coral and understand the specific requirements of the city's program. We handle all permitting, excavation, piping, septic abandonment, and final inspection.</p>
 
 <h2>Get Started</h2>
-<p>If you've received a UEP notice or are considering a voluntary septic to sewer conversion, call <a href="tel:8337586248">833-PLUMB-IT</a> or <a href="/booking">book a free consultation</a>. We'll visit your property, assess the scope, and provide an upfront estimate with no hidden costs. See our <a href="/services/uep-utilities">UEP services page</a> for more details and photos of our recent projects.</p>`,
+<p>If you've received a UEP notice or are considering a voluntary septic to sewer conversion, call <a href="${BUSINESS.phoneHref}">${BUSINESS.phone}</a> or <a href="/booking">book a free consultation</a>. We'll visit your property, assess the scope, and provide an upfront estimate with no hidden costs. See our <a href="/services/uep-utilities">UEP services page</a> for more details and photos of our recent projects.</p>`,
   },
   {
     slug: "spring-plumbing-maintenance-checklist-swfl",
@@ -3355,7 +3198,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>Get Your Plumbing Summer-Ready</h2>
 <p>Don't wait until your water heater fails in August or a slab leak floods your home in the middle of rainy season. A spring plumbing checkup is the best investment you can make to avoid a summer emergency.</p>
-<p>Call <a href="tel:8337586248">833-PLUMB-IT</a> or <a href="/booking">book a spring inspection online</a>. C&S Plumbing has been keeping Southwest Florida homes running smoothly for over 28 years — we'll make sure yours is ready for whatever summer throws at it.</p>`,
+<p>Call <a href="${BUSINESS.phoneHref}">${BUSINESS.phone}</a> or <a href="/booking">book a spring inspection online</a>. C&S Plumbing has been keeping Southwest Florida homes running smoothly for over 28 years — we'll make sure yours is ready for whatever summer throws at it.</p>`,
   },
   {
     slug: "plumbing-checklist-after-hurricane-swfl",
@@ -3395,7 +3238,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>When to Call Us</h2>
 <p>Spinning meter with the house off, sewage backing up, no water pressure, a flooded water heater, or any soggy-ground signs of a broken underground line — those are same-day calls. C&S Plumbing runs <a href="/emergency">24/7 storm-response crews</a> across Lee, Collier, and Charlotte counties, and after 28+ years of Southwest Florida storm seasons, we've triaged every one of these situations hundreds of times.</p>
-<p>Call <a href="tel:8337586248">833-PLUMB-IT</a> — or if lines are jammed after a major storm, <a href="/booking">book online</a> and dispatch will call you back in priority order.</p>`,
+<p>Call <a href="${BUSINESS.phoneHref}">${BUSINESS.phone}</a> — or if lines are jammed after a major storm, <a href="/booking">book online</a> and dispatch will call you back in priority order.</p>`,
   },
   {
     slug: "storm-surge-canal-home-plumbing-cape-coral",
@@ -3429,7 +3272,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>What to Do Before the Next Storm</h2>
 <p>Know where your main shutoff is and exercise it twice a year. Photograph your plumbing fixtures and water heater data plate now — it makes insurance claims dramatically easier. And if your home flooded in a past storm and you never had the plumbing inspected, get ahead of it: corrosion damage compounds quietly. Our full <a href="/blog/hurricane-plumbing-preparation-swfl">hurricane prep guide</a> covers the pre-storm checklist, and our <a href="/blog/plumbing-checklist-after-hurricane-swfl">post-storm checklist</a> covers the aftermath.</p>
-<p>C&S Plumbing has worked Cape Coral's canal neighborhoods — from Tarpon Point to Burnt Store — since 1998. Call <a href="tel:8337586248">833-PLUMB-IT</a> or <a href="/booking">book an inspection online</a>.</p>`,
+<p>C&S Plumbing has worked Cape Coral's canal neighborhoods — from Tarpon Point to Burnt Store — since 1998. Call <a href="${BUSINESS.phoneHref}">${BUSINESS.phone}</a> or <a href="/booking">book an inspection online</a>.</p>`,
   },
   {
     slug: "slab-leak-insurance-florida",
@@ -3465,7 +3308,7 @@ export const BLOG_POSTS: BlogPost[] = [
 <p>If your home has had two or more slab or pinhole leaks, insurers take notice — some carriers non-renew policies on homes with recurring leak claims. At that point a <a href="/repiping-cape-coral">whole-home repipe</a> often costs less than the combination of repeated repairs, rising premiums, and a potential non-renewal. We'll always tell you honestly which side of that line your home is on.</p>
 
 <h2>Suspect a Slab Leak Right Now?</h2>
-<p>Shut off the main, note your meter reading, and call <a href="tel:8337586248">833-PLUMB-IT</a>. C&S Plumbing provides same-day <a href="/leak-repair-cape-coral">leak detection across Southwest Florida</a>, with written documentation you can hand straight to your adjuster.</p>`,
+<p>Shut off the main, note your meter reading, and call <a href="${BUSINESS.phoneHref}">${BUSINESS.phone}</a>. C&S Plumbing provides same-day <a href="/leak-repair-cape-coral">leak detection across Southwest Florida</a>, with written documentation you can hand straight to your adjuster.</p>`,
   },
   {
     slug: "water-heater-hurricane-prep-florida",
@@ -3499,7 +3342,7 @@ export const BLOG_POSTS: BlogPost[] = [
 <p>If your garage has taken water before, two upgrades are worth discussing when your current unit ages out. Raising a replacement tank on a code-compliant stand buys you protection from shallow flooding. And wall-mounted <a href="/blog/tankless-vs-traditional-water-heaters">tankless units</a> sit several feet off the floor by design — one reason they've become popular in flood-prone <a href="/areas/cape-coral">Cape Coral</a> and coastal <a href="/areas/fort-myers">Fort Myers</a> neighborhoods.</p>
 
 <h2>Need It Assessed?</h2>
-<p>Whether it's pre-season peace of mind or a post-storm evaluation, C&S Plumbing services every make of gas, electric, and tankless water heater across Southwest Florida. Call <a href="tel:8337586248">833-PLUMB-IT</a> or <a href="/booking">book online</a> — and stay safe out there this season.</p>`,
+<p>Whether it's pre-season peace of mind or a post-storm evaluation, C&S Plumbing services every make of gas, electric, and tankless water heater across Southwest Florida. Call <a href="${BUSINESS.phoneHref}">${BUSINESS.phone}</a> or <a href="/booking">book online</a> — and stay safe out there this season.</p>`,
   },
   {
     slug: "whole-home-repipe-cost-cape-coral",
@@ -3554,7 +3397,7 @@ export const BLOG_POSTS: BlogPost[] = [
 <p>Most repipes are done in <strong>1–2 days</strong>. We run the new PEX first, then switch your home over — so water is typically only off for a few hours, and you don't need to move out. See <a href="/blog/signs-you-need-a-repipe">the warning signs that it's time</a> if you're still deciding.</p>
 
 <h2>Get Your Home's Actual Number</h2>
-<p>Our <a href="/quote-builder?service=repipe">instant repipe quote builder</a> gives you a real range for your home's size and pipe choice in about a minute, no phone call required. Prefer eyes on the job? <a href="/booking">Book a free estimate</a> or call <a href="tel:8337586248">833-PLUMB-IT</a> — C&S Plumbing has repiped <a href="/repiping-cape-coral">Cape Coral</a> homes since 1998, with 5.0 stars across our Google reviews.</p>`,
+<p>Our <a href="/quote-builder?service=repipe">instant repipe quote builder</a> gives you a real range for your home's size and pipe choice in about a minute, no phone call required. Prefer eyes on the job? <a href="/booking">Book a free estimate</a> or call <a href="${BUSINESS.phoneHref}">${BUSINESS.phone}</a> — C&S Plumbing has repiped <a href="/repiping-cape-coral">Cape Coral</a> homes since 1998, with 5.0 stars across our Google reviews.</p>`,
   },
   {
     slug: "water-heater-replacement-signs-cost-swfl",
@@ -3608,7 +3451,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>Don't Wait for the Flood</h2>
 <p>Most water heaters sit in the garage or an interior closet, and a tank that fails wet dumps its entire capacity onto the floor. If your unit is showing two or more of the signs above, replacing it on your schedule beats replacing it at 2am — and if a storm is coming, read our guide on <a href="/blog/water-heater-hurricane-prep-florida">water heaters and hurricanes</a> first.</p>
-<p>Get a real number in about a minute with the <a href="/quote-builder?service=water-heater">instant water heater quote builder</a>, <a href="/booking">book same-day service</a>, or call <a href="tel:8337586248">833-PLUMB-IT</a>. C&S Plumbing installs and services <a href="/water-heater-repair-cape-coral">every brand across Cape Coral</a>, Fort Myers, and all of Southwest Florida.</p>`,
+<p>Get a real number in about a minute with the <a href="/quote-builder?service=water-heater">instant water heater quote builder</a>, <a href="/booking">book same-day service</a>, or call <a href="${BUSINESS.phoneHref}">${BUSINESS.phone}</a>. C&S Plumbing installs and services <a href="/water-heater-repair-cape-coral">every brand across Cape Coral</a>, Fort Myers, and all of Southwest Florida.</p>`,
   },
   {
     slug: "how-long-does-drain-cleaning-take",
@@ -3658,7 +3501,7 @@ export const BLOG_POSTS: BlogPost[] = [
 <p>Our rule: <strong>the second time the same line clogs within a year, it's a jetting-and-camera conversation.</strong> One Lehigh Acres customer had been paying another plumber three times a year to cable the same kitchen line. We jetted it, scoped it, found a low spot trapping grease — it hasn't backed up in 14 months. Cheaper than the fourth cabling would have been. More on causes and prevention in our <a href="/blog/clogged-drains-causes-fixes-swfl">clogged drains guide</a>.</p>
 
 <h2>Same-Day Service, Honest Clock</h2>
-<p>Most drain calls across <a href="/drain-cleaning-cape-coral">Cape Coral</a>, Fort Myers, and Lehigh Acres get same-day service in regular hours, and we handle 24/7 emergencies when every drain in the house is backing up. After-hours work carries a ${EMERGENCY_CLAIMS.afterHoursSurcharge} surcharge — which we aim to never charge, because most jobs fit in business hours. Call <a href="tel:8337586248">833-PLUMB-IT</a> or <a href="/booking">book online</a>, and see full pricing on our <a href="/services/drain-cleaning">drain cleaning page</a>.</p>`,
+<p>Most drain calls across <a href="/drain-cleaning-cape-coral">Cape Coral</a>, Fort Myers, and Lehigh Acres get same-day service in regular hours, and we handle 24/7 emergencies when every drain in the house is backing up. After-hours work carries a ${EMERGENCY_CLAIMS.afterHoursSurcharge} surcharge — which we aim to never charge, because most jobs fit in business hours. Call <a href="${BUSINESS.phoneHref}">${BUSINESS.phone}</a> or <a href="/booking">book online</a>, and see full pricing on our <a href="/services/drain-cleaning">drain cleaning page</a>.</p>`,
   },
 ];
 
@@ -4495,6 +4338,6 @@ export const COASTAL_COMEBACK_FAQS = [
   {
     question: "How is this different from a home watch service?",
     answer:
-      "Home watch services are great generalists — they look for obvious problems. We're licensed plumbers (CFC1432485), so we actually shut down, drain, inspect, and fix the plumbing system. Many of our snowbird customers use both: a home watch service for general property checks, and the Coastal Comeback Plan specifically for plumbing.",
+      `Home watch services are great generalists — they look for obvious problems. We're licensed plumbers (${BUSINESS.license}), so we actually shut down, drain, inspect, and fix the plumbing system. Many of our snowbird customers use both: a home watch service for general property checks, and the Coastal Comeback Plan specifically for plumbing.`,
   },
 ];

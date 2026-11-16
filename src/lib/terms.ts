@@ -840,7 +840,7 @@ export const TERMS_SECTIONS: readonly TermsSection[] = [
         heading: "Office.",
         text: `${BUSINESS.legalName}, doing business as ${BUSINESS.fullName}, Florida Certified Plumbing Contractor ${BUSINESS.license}. ${OFFICE}. ${BUSINESS.officeHours.weekday}; ${BUSINESS.officeHours.saturday}; ${BUSINESS.officeHours.emergency.toLowerCase()}.`,
         links: [
-          { label: BUSINESS.phone, href: `tel:${BUSINESS.phoneRaw}` },
+          { label: BUSINESS.phone, href: BUSINESS.phoneHref },
           { label: BUSINESS.email, href: `mailto:${BUSINESS.email}` },
         ],
       },

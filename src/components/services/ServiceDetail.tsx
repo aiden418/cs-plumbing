@@ -10,7 +10,7 @@ import StaggerChildren, {
   staggerItem,
 } from "@/components/animations/StaggerChildren";
 import { motion } from "framer-motion";
-import { BUSINESS } from "@/lib/constants";
+import { BUSINESS } from "@/lib/business";
 import type { Service } from "@/lib/types";
 
 interface ServiceDetailProps {
@@ -68,7 +68,7 @@ export default function ServiceDetail({
               Book a Service
             </Button>
             <Button
-              href={`tel:${BUSINESS.phoneRaw}`}
+              href={BUSINESS.phoneHref}
               variant="outline-light"
               size="lg"
               icon={<Phone className="w-5 h-5" />}

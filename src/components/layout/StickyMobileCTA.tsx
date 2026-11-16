@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Phone, Calendar, MessageSquareText } from "lucide-react";
-import { BUSINESS } from "@/lib/constants";
+import { BUSINESS } from "@/lib/business";
 import { trackTextClick } from "@/lib/pixel";
 
 const HIDDEN_PATHS = ["/booking", "/contact", "/quote-builder"];
@@ -32,7 +32,7 @@ export default function StickyMobileCTA() {
       >
       <div className="grid grid-cols-3 gap-2 p-2">
         <a
-          href={`tel:${BUSINESS.phoneRaw}`}
+          href={BUSINESS.phoneHref}
           className="flex items-center justify-center gap-1.5 h-12 rounded-xl bg-primary text-white text-sm font-bold shadow-sm active:bg-primary-dark active:scale-[0.97] transition-transform"
           aria-label={`Call Now: ${BUSINESS.phone}`}
         >

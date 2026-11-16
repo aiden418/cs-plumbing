@@ -10,6 +10,7 @@ import FaqJsonLd from "@/components/seo/FaqJsonLd";
 import RelatedPosts from "@/components/blog/RelatedPosts";
 import { latestPosts } from "@/lib/internal-links";
 import { season } from "@/lib/claims";
+import { BUSINESS } from "@/lib/business";
 
 // The snowbird teaser flips between arrival (Nov–Apr) and departure copy;
 // daily revalidation means the flip needs no deploy.
@@ -40,7 +41,7 @@ export const metadata: Metadata = {
   // old title plus the layout template ran 81 characters.
   title: { absolute: "Plumber in Cape Coral & Fort Myers, FL | C&S Plumbing of Lee" },
   description:
-    "Licensed Florida plumbing contractor (CFC1432485) serving Cape Coral, Fort Myers & SWFL since 1998. Repairs, repipes, water heaters and remodels for homeowners; new construction plumbing for builders. 5.0-star rated.",
+    `Licensed Florida plumbing contractor (${BUSINESS.license}) serving Cape Coral, Fort Myers & SWFL since 1998. Repairs, repipes, water heaters and remodels for homeowners; new construction plumbing for builders. 5.0-star rated.`,
   keywords: [
     "new construction plumber SWFL",
     "new construction plumbing Cape Coral",

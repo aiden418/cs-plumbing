@@ -13,7 +13,7 @@ import Button from "@/components/ui/Button";
 import SectionHeading from "@/components/ui/SectionHeading";
 import BuilderLogoImage from "@/components/ui/BuilderLogoImage";
 import ScrollReveal from "@/components/animations/ScrollReveal";
-import { BUSINESS } from "@/lib/constants";
+import { BUSINESS } from "@/lib/business";
 import { BUILDERS } from "@/lib/builders-data";
 
 const WHY_CS = [
@@ -39,7 +39,7 @@ const WHY_CS = [
     icon: <ShieldCheck className="w-6 h-6" />,
     title: "Code-compliant from day one",
     description:
-      "Florida Certified Plumbing Contractor license CFC1432485; co-founder Samuel Pellechio also holds CFC057076. Every fixture, slope, and vent meets current FL Building Code.",
+      `Florida Certified Plumbing Contractor license ${BUSINESS.license}; co-founder Samuel Pellechio also holds ${BUSINESS.license2}. Every fixture, slope, and vent meets current FL Building Code.`,
   },
 ];
 
@@ -103,9 +103,7 @@ export default function BuilderPortalIntro() {
             </h1>
             <p className="text-base sm:text-lg text-white/70 leading-relaxed mb-3">
               C&amp;S Plumbing has been the underground-to-trim partner for Lee
-              County builders since 1998. <strong className="text-white">9,500+ homes plumbed</strong>,
-              Florida Certified Plumbing Contractor license CFC1432485, and a 5.0 rating from the GCs and custom
-              home builders we work with every week.
+              County builders since 1998. <strong className="text-white">9,500+ homes plumbed</strong>{`, Florida Certified Plumbing Contractor license ${BUSINESS.license}, and a 5.0 rating from the GCs and custom home builders we work with every week.`}
             </p>
             <p className="text-base sm:text-lg text-white/70 leading-relaxed mb-8 sm:mb-10">
               Upload your plans below. We&apos;ll come back with a detailed takeoff
@@ -117,7 +115,7 @@ export default function BuilderPortalIntro() {
                 <ArrowRight className="w-4 h-4" />
               </Button>
               <Button
-                href={`tel:${BUSINESS.phoneRaw}`}
+                href={BUSINESS.phoneHref}
                 variant="outline-light"
                 size="lg"
                 icon={<Phone className="w-5 h-5" />}
@@ -126,7 +124,7 @@ export default function BuilderPortalIntro() {
               </Button>
             </div>
             <p className="mt-5 text-xs text-white/40">
-              License #CFC1432485 · #CFC057076 · Family owned and operated since 1998
+              {`License #${BUSINESS.license} · #${BUSINESS.license2} · Family owned and operated since 1998`}
             </p>
           </div>
         </Container>

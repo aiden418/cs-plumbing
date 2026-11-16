@@ -8,7 +8,7 @@ import PageHero from "@/components/ui/PageHero";
 import ScrollReveal from "@/components/animations/ScrollReveal";
 import WhatHappensNext from "@/components/ui/WhatHappensNext";
 import ServiceRequestForm from "@/components/services/ServiceRequestForm";
-import { BUSINESS } from "@/lib/constants";
+import { BUSINESS } from "@/lib/business";
 
 export default function ContactPage() {
   return (
@@ -34,7 +34,7 @@ export default function ContactPage() {
 
                 <div className="space-y-5 sm:space-y-6">
                   <a
-                    href={`tel:${BUSINESS.phoneRaw}`}
+                    href={BUSINESS.phoneHref}
                     className="flex items-start gap-3 sm:gap-4 group"
                   >
                     <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary flex-shrink-0 group-hover:bg-primary/20 transition-colors">
@@ -125,7 +125,7 @@ export default function ContactPage() {
           {
             title: "Reply within 1 business day",
             description:
-              `${CLAIMS.bookingConfirmation} Urgent? Call 833-PLUMB-IT.`,
+              `${CLAIMS.bookingConfirmation} Urgent? Call ${BUSINESS.phone}.`,
           },
           {
             title: "Free site visit if needed",
