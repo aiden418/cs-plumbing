@@ -1,66 +1,73 @@
-import { BadgePercent, CalendarCheck, Phone } from "lucide-react";
 import Container from "@/components/ui/Container";
+import Section, { type Tone } from "@/components/ui/Section";
 import SectionHeading from "@/components/ui/SectionHeading";
+import { Phone } from "@/components/ui/icons";
 import { NEW_CONSTRUCTION_BENEFITS } from "@/lib/constants";
-import { cn } from "@/lib/utils";
-
-const ICONS: Record<string, React.ReactNode> = {
-  "lifetime-discount": <BadgePercent className="h-6 w-6" />,
-  "first-year-visit": <CalendarCheck className="h-6 w-6" />,
-};
 
 /**
  * C&S New Construction Customer Benefits. Shared by the builder pages, the
  * homeowner new-construction / residential pages and the capability
  * statement. Wording comes from NEW_CONSTRUCTION_BENEFITS verbatim — it is
  * deliberately separate from warranty terms.
+ *
+ * An editorial list: each benefit is a hairline-ruled row with who it applies
+ * to as the plan label, the title and the terms. `#customer-benefits` stays.
  */
 export default function NewConstructionBenefits({
   tone = "white",
   overline = "After the build",
 }: {
-  tone?: "white" | "surface";
+  /** The section's surface; "surface" is the legacy name of shell. */
+  tone?: Tone | "surface";
   overline?: string;
 }) {
   const b = NEW_CONSTRUCTION_BENEFITS;
   return (
-    <section
+    <Section
       id="customer-benefits"
-      className={cn("scroll-mt-24 py-16 sm:py-24", tone === "surface" ? "bg-[#F5F5F7]" : "bg-white")}
+      tone={tone === "surface" ? "shell" : tone}
+      divider={tone === "white"}
+      labelledBy="customer-benefits-heading"
+      className="scroll-mt-[calc(var(--nav-h)+0.75rem)]"
     >
       <Container>
-        <SectionHeading overline={overline} title={b.heading} />
-        <div className="mx-auto grid max-w-4xl grid-cols-1 gap-6 md:grid-cols-2">
-          {b.items.map((item) => (
-            <div
-              key={item.id}
-              className={cn(
-                "rounded-2xl border border-gray-200 p-6 sm:p-7",
-                tone === "surface" ? "bg-white" : "bg-[#F5F5F7]"
-              )}
-            >
-              <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                {ICONS[item.id]}
-              </div>
-              <span className="text-xs font-bold uppercase tracking-widest text-navy">
-                {item.appliesTo}
-              </span>
-              <h3 className="mt-1 text-lg font-bold text-gray-900">{item.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-gray-600">{item.body}</p>
-            </div>
-          ))}
+        <div className="grid gap-y-10 lg:grid-cols-12 lg:gap-x-8">
+          <SectionHeading
+            id="customer-benefits-heading"
+            overline={overline}
+            title={b.heading}
+            align="left"
+            className="mb-0 lg:col-span-5"
+          />
+          <div className="lg:col-span-7">
+            <ul className="border-b border-rule">
+              {b.items.map((item) => (
+                <li key={item.id} className="grid gap-y-2 border-t border-rule py-6 sm:grid-cols-[11rem_1fr] sm:gap-x-8 sm:py-8">
+                  <p className="label-tech flex items-start gap-2.5 pt-1 text-accent">
+                    <span className="joint mt-[0.1em]" aria-hidden="true" />
+                    <span>{item.appliesTo}</span>
+                  </p>
+                  <div>
+                    <h3 className="text-xl leading-snug font-semibold text-fg">{item.title}</h3>
+                    <p className="mt-2 max-w-[60ch] text-body">{item.body}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-6 flex flex-wrap items-center gap-x-2 gap-y-1 text-body">
+              <Phone className="size-5 shrink-0 text-accent" />
+              Request your visit:{" "}
+              <a
+                href={b.contactHref}
+                className="inline-flex min-h-11 items-center font-semibold text-link underline-offset-[0.2em] hover:underline"
+              >
+                {b.contact}
+              </a>
+            </p>
+            <p className="mt-1 text-sm text-muted">Customer benefits are separate from warranty terms.</p>
+          </div>
         </div>
-        <p className="mt-6 flex items-center justify-center gap-2 text-center text-sm text-gray-500">
-          <Phone className="h-4 w-4 text-primary" />
-          Request your visit:{" "}
-          <a href={b.contactHref} className="font-semibold text-primary hover:underline">
-            {b.contact}
-          </a>
-        </p>
-        <p className="mt-2 text-center text-xs text-gray-500">
-          Customer benefits are separate from warranty terms.
-        </p>
       </Container>
-    </section>
+    </Section>
   );
 }
