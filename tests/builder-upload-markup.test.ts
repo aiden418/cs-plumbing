@@ -22,9 +22,8 @@ const PLATFORM_BODY_LIMIT_MB = 4.5;
 const PLAN_SET_MB = PLAN_SET_MAX_BYTES / MB;
 
 const noop = () => {};
-/** The line under "Drag & drop files here". */
-const hintOf = (html: string) =>
-  html.match(/<p class="text-xs sm:text-sm text-gray-500 mt-1">(.*?)<\/p>/)?.[1] ?? "";
+/** The line under "Drag & drop files here", found by its text so restyling does not matter. */
+const hintOf = (html: string) => html.match(/PDF, JPG, PNG[^<]*/)?.[0] ?? "";
 
 test("the upload hint on a builder form states the combined cap", () => {
   const html = renderToStaticMarkup(
