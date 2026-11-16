@@ -1,6 +1,5 @@
 import { createOgImage, ogImageContentType, ogImageSize } from "@/lib/og";
 
-export const runtime = "edge";
 export const size = ogImageSize;
 export const contentType = ogImageContentType;
 export const alt = "C&S Plumbing of Lee — Southwest Florida's Most Trusted Plumber";
