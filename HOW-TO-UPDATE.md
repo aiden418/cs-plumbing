@@ -242,11 +242,21 @@ request. When it looks right, merge the pull request; the live site updates a
 few minutes later. Everything needs this step, even a one-word change. If an
 old photo still shows, reload with Cmd+Shift+R.
 
+**Bing is told automatically.** A few minutes after each merge, GitHub runs
+"Tell Bing what changed" (the Actions tab of the repository). It reads the
+live pages and sends Bing the addresses of the ones whose words changed.
+ChatGPT and Copilot read Bing's copy of the site, so this is what keeps their
+answers current. There is nothing to run. To send one page yourself:
+`npm run indexnow -- https://www.csplumbinglee.com/services/water-heaters`.
+Add `--dry-run` to see what would be sent without sending it.
+
 ## What not to touch
 
 `src/app/`, `src/components/`, `src/generated/`, `scripts/`, `tests/`,
-`public/videos/hero/`, `package.json`, `next.config.ts`, `vercel.json`, and any
-file whose name starts with `.env`. Do not type the phone number anywhere
+`public/videos/hero/`, `.github/`, `package.json`, `next.config.ts`,
+`vercel.json`, the one `.txt` file in `public/` with a long name of letters and
+numbers (Bing checks it before it accepts a notice), and any file whose name
+starts with `.env`. Do not type the phone number anywhere
 except `src/lib/business.ts`. `images.json` files can be read by anyone on the
 internet: no private notes in them.
 
