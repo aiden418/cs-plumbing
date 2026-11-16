@@ -120,7 +120,7 @@ export default function Footer() {
           {/* Contact first: the lockup, the family line, how to reach the office */}
           <div className="grid gap-6 md:grid-cols-2 md:gap-x-10 lg:col-span-4 lg:grid-cols-1">
             <div>
-              <LogoLockup size="md" surface="light" />
+              <LogoLockup size="lg" surface="light" wordmark={false} />
               <p className="mt-4 max-w-[44ch] text-base leading-relaxed text-steel-800">{BUSINESS.description}</p>
               <ul className="mt-3 flex flex-wrap gap-x-5">
                 {footerProfiles.map((p) => (

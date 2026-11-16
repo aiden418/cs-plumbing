@@ -171,13 +171,13 @@ export default function SiteHeader() {
   return (
     <HeaderController
       sheet={
-        <MobileNavSheet label="Menu" logo={<LogoLockup size="sm" surface="light" className="header-logo" />}>
+        <MobileNavSheet label="Menu" logo={<LogoLockup size="sm" surface="light" wordmark={false} className="header-logo" />}>
           <MobileMenu />
         </MobileNavSheet>
       }
     >
       <Container size="wide" className="header-bar max-w-none">
-        <LogoLockup size="sm" surface="light" preload className="header-logo" />
+        <LogoLockup size="sm" surface="light" wordmark={false} preload className="header-logo" />
 
         <nav aria-label="Main" className="header-nav">
           <ul data-intro-in="" className="header-nav-list">

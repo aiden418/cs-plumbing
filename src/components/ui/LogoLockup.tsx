@@ -29,13 +29,14 @@ const suffixColor: Record<LockupSurface, string> = {
 };
 
 const heights: Record<LockupSize, string> = {
-  // the header: 34 px on phones, 40 px from the nav breakpoint
-  sm: "h-[34px] nav:h-10",
+  // the header: 44 px on phones, 56 px from the nav breakpoint (the logo
+  // stands alone there, without the name beside it)
+  sm: "h-11 nav:h-14",
   md: "h-14",
   // 120 px from 40rem; 80 px on phones so the lockup fits a 320 px screen
   lg: "h-20 sm:h-[120px]",
 };
-const pixelHeight: Record<LockupSize, number> = { sm: 40, md: 56, lg: 120 };
+const pixelHeight: Record<LockupSize, number> = { sm: 56, md: 56, lg: 120 };
 
 const wordSizes: Record<LockupSize, string> = {
   sm: "text-[1.125rem] nav:text-[1.25rem]",
