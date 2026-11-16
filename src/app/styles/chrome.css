@@ -180,3 +180,19 @@
     display: none !important;
   }
 }
+
+/* On a photo hero's first screen the floating Request button stays out of the
+   picture (it would sit on the film's Pause button and on the photograph). It
+   arrives with the first scroll, when the header turns white. */
+@layer components {
+  .request-fab {
+    transition: opacity var(--dur-2) var(--ease-enter), visibility var(--dur-2);
+  }
+
+  @media (scripting: enabled) {
+    body:has([data-hero-photo]):has(.site-header:not([data-scrolled])) .request-fab {
+      visibility: hidden;
+      opacity: 0;
+    }
+  }
+}
