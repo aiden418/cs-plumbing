@@ -48,7 +48,6 @@
   "src/components/home/BuilderShowcase.tsx": { "gray-200": 1, "card-lift": 1, "card-lift-hover-subtle": 1, "animate-marquee-reverse": 1, "marquee-pausable": 1, "--ease-out-expo": 1 },
   "src/components/home/CoastalComebackTeaser.tsx": { "gray-200": 2, "gray-500": 3, "gray-900": 3, "[#F5F5F7]": 2, "card-lift": 1, "card-lift-hover-subtle": 1 },
   "src/components/home/EmergencyBand.tsx": { "gold": 2, "section-py": 1 },
-  "src/components/home/Hero.tsx": { "gray-900": 1, "gold": 4, "animate-hero-in": 8, "word-mask": 1, "word-mask-inner": 2, "animate-underline-in": 1, "logo-aura": 1 },
   "src/components/home/HomeFaq.tsx": { "gray-500": 1, "gray-900": 1 },
   "src/components/home/ServiceAreasSection.tsx": { "gray-200": 1, "gray-300": 1, "gray-500": 1, "gray-700": 1, "gray-800": 1, "gold": 1, "surface": 1, "[#F5F5F7]": 1, "card-lift": 1, "card-lift-hover": 1, "--ease-out-expo": 2 },
   "src/components/home/ServiceHighlights.tsx": { "gray-200": 1, "gray-700": 1, "gray-900": 1, "card-lift": 1, "card-lift-hover": 1 },

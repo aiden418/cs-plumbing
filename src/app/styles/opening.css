@@ -1,4 +1,214 @@
-/* opening styles. Imported by ../globals.css.
-   Put rules inside @layer components { ... } so utility classes can still
-   override them; use the design tokens (var(--color-*), var(--tone-*),
-   var(--ease-*), var(--dur-*)) rather than raw values. */
+/* The homepage hero and the Opening (chrome-and-opening.md section 8).
+   Imported by ../globals.css.
+
+   The settled hero is the only layout. The Opening is a state on
+   <html data-intro="wait|play|skip"> (plus data-intro-settle while the frame
+   settles), set by the head script in src/lib/intro.ts. Everything that
+   moves is inside prefers-reduced-motion: no-preference and animates
+   transform and opacity only, so layout never shifts (CLS 0).
+
+   Elements that arrive after the beat carry [data-intro-in] (hero copy here;
+   the desktop navigation, "Get a quote", "Book a Service" and the menu
+   button in the header). The header logo, the header Call button and the
+   phone dock carry nothing and stay visible and usable throughout. */
+
+@layer components {
+  /* Hero -------------------------------------------------------------------- */
+
+  .cs-hero {
+    padding-top: calc(var(--nav-h) + clamp(2rem, 5vw, 4.5rem));
+    padding-bottom: var(--spacing-section-sm);
+  }
+
+  /* The frame keeps its aspect and is never taller than the space between
+     the header and the phone dock. */
+  .cs-hero-figure {
+    --hero-aspect: 1.25;
+    width: min(100%, calc((100svh - var(--nav-h) - var(--dock-h) - 2.5rem) * var(--hero-aspect)));
+    margin-inline: auto;
+  }
+
+  .cs-hero-frame {
+    position: relative;
+    aspect-ratio: 5 / 4;
+    overflow: hidden;
+    border-radius: var(--radius-frame);
+    transform-origin: 50% 50%;
+  }
+
+  .cs-hero-still,
+  .cs-hero-film {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .cs-hero-still {
+    object-position: var(--hero-pos, 50% 50%);
+  }
+
+  .cs-hero-film {
+    object-position: 50% 50%;
+    opacity: 0;
+    /* dissolving back to the still at the end of the film */
+    transition: opacity var(--dur-4) var(--ease-move);
+  }
+
+  /* The film dissolves in over the still once it has a frame to show. */
+  .cs-hero-frame[data-film="on"] .cs-hero-film {
+    opacity: 1;
+    transition: opacity 400ms var(--ease-enter);
+  }
+
+  @media (max-width: 47.9375rem) and (orientation: portrait) {
+    .cs-hero-figure {
+      --hero-aspect: 0.8;
+    }
+
+    .cs-hero-frame {
+      aspect-ratio: 4 / 5;
+    }
+
+    .cs-hero-still {
+      object-position: var(--hero-pos-phone, 50% 50%);
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .cs-hero-figure {
+      margin-inline: auto 0;
+    }
+  }
+
+  /* Film controls: always shown on touch; on a mouse, on hover or focus. */
+  @media (hover: hover) and (pointer: fine) {
+    .cs-hero-controls {
+      opacity: 0;
+      transition: opacity var(--dur-2) var(--ease-move);
+    }
+
+    .cs-hero-frame:hover .cs-hero-controls,
+    .cs-hero-controls:focus-within {
+      opacity: 1;
+    }
+  }
+
+  /* The Opening's title card: not rendered unless the Opening runs. */
+  .cs-intro {
+    display: none;
+  }
+
+  @media print {
+    .cs-intro,
+    .cs-hero-controls {
+      display: none !important;
+    }
+  }
+}
+
+/* The Opening ------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  html[data-intro] {
+    --intro-card-h: 4rem;
+  }
+
+  /* An ink stage over the page, under the header (z 50) and the dock (z 40). */
+  html[data-intro] .cs-intro {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 30;
+    background-color: var(--color-ink);
+  }
+
+  /* Where the frame is held during the beat: between the header and the
+     title card, 20 px clear of every edge. Measured by the frame script. */
+  .cs-intro-stage {
+    position: absolute;
+    top: calc(var(--nav-h) + 1.25rem);
+    bottom: calc(var(--dock-h) + var(--intro-card-h, 4rem) + 2.25rem);
+    left: calc(1.25rem + env(safe-area-inset-left, 0px));
+    right: calc(1.25rem + env(safe-area-inset-right, 0px));
+    pointer-events: none;
+  }
+
+  .cs-intro-card {
+    position: absolute;
+    left: calc(var(--spacing-gutter) + env(safe-area-inset-left, 0px));
+    right: calc(var(--spacing-gutter) + env(safe-area-inset-right, 0px));
+    bottom: calc(var(--dock-h) + 1.25rem);
+    height: var(--intro-card-h, 4rem);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  /* wait / play: the frame on the stage, above the title card's ink. */
+  html[data-intro] .cs-hero-frame {
+    z-index: 31;
+    transform: translate3d(var(--intro-x, 0px), var(--intro-y, 0px), 0) scale(var(--intro-k, 1));
+  }
+
+  html[data-intro] [data-intro-in],
+  html[data-intro] .cs-hero-controls {
+    visibility: hidden;
+  }
+
+  /* The header's items arrive with the lead line. */
+  html[data-intro] header [data-intro-in] {
+    --intro-i: 2;
+  }
+
+  /* play → settle: the frame moves into its place while the copy arrives. */
+  html[data-intro][data-intro-settle] .cs-hero-frame {
+    transform: none;
+    transition: transform var(--dur-4) var(--ease-move);
+  }
+
+  html[data-intro][data-intro-settle] [data-intro-in] {
+    visibility: visible;
+    animation: cs-intro-arrive var(--dur-3) var(--ease-enter) both;
+    animation-delay: calc(var(--intro-i, 0) * 70ms);
+  }
+
+  html[data-intro][data-intro-settle] .cs-intro {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--dur-3) var(--ease-exit);
+  }
+
+  /* skip: everything to the settled layout within 200 ms. The frame's target
+     is an identity transform written differently from "none", so a settle
+     already under way restarts with the short duration. */
+  html[data-intro="skip"] .cs-hero-frame {
+    transform: translate3d(0, 0, 0);
+    transition: transform var(--dur-1) var(--ease-exit);
+  }
+
+  html[data-intro="skip"] [data-intro-in] {
+    visibility: visible;
+    animation: cs-intro-arrive var(--dur-1) var(--ease-enter) both;
+  }
+
+  html[data-intro="skip"] .cs-intro {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--dur-1) var(--ease-exit);
+  }
+
+  @keyframes cs-intro-arrive {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 0.75rem, 0);
+    }
+
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
