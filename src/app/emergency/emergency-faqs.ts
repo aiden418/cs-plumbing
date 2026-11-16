@@ -1,4 +1,4 @@
-import { EMERGENCY_CLAIMS } from "@/lib/constants";
+import { EMERGENCY_CLAIMS } from "@/lib/claims";
 import type { FAQ } from "@/lib/types";
 
 // Co-located route FAQs (same pattern as builders/builder-faqs.ts).

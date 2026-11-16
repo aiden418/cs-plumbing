@@ -38,6 +38,17 @@ export function parseSource(file: string): ts.SourceFile {
   );
 }
 
+/** True when the file opens with the "use client" directive. */
+export function isClientModule(source: ts.SourceFile): boolean {
+  const first = source.statements[0];
+  return (
+    first !== undefined &&
+    ts.isExpressionStatement(first) &&
+    ts.isStringLiteral(first.expression) &&
+    first.expression.text === "use client"
+  );
+}
+
 export interface ModuleImport {
   specifier: string;
   /** `import type …`, `export type … from`, or only `type` specifiers: erased at build time. */

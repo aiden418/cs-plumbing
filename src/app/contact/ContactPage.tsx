@@ -8,7 +8,7 @@ import PageHero from "@/components/ui/PageHero";
 import ScrollReveal from "@/components/animations/ScrollReveal";
 import WhatHappensNext from "@/components/ui/WhatHappensNext";
 import ServiceRequestForm from "@/components/services/ServiceRequestForm";
-import { BUSINESS } from "@/lib/constants";
+import { BUSINESS } from "@/lib/business";
 
 export default function ContactPage() {
   return (

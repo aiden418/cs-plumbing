@@ -5,7 +5,7 @@ import { Phone, Calendar } from "lucide-react";
 import Button from "@/components/ui/Button";
 import Container from "@/components/ui/Container";
 import ScrollReveal from "@/components/animations/ScrollReveal";
-import { BUSINESS } from "@/lib/constants";
+import { BUSINESS } from "@/lib/business";
 
 export default function CTASection() {
   return (

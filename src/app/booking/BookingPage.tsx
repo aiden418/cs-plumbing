@@ -30,7 +30,7 @@ import Button from "@/components/ui/Button";
 import PageTransition from "@/components/layout/PageTransition";
 import PageHero from "@/components/ui/PageHero";
 import WhatHappensNext from "@/components/ui/WhatHappensNext";
-import { BUSINESS } from "@/lib/constants";
+import { BUSINESS } from "@/lib/business";
 import { cn } from "@/lib/utils";
 import { trackBooking, trackEstimateRequest } from "@/lib/pixel";
 

@@ -11,7 +11,7 @@ import StaggerChildren, {
   staggerItem,
 } from "@/components/animations/StaggerChildren";
 import { motion, AnimatePresence } from "framer-motion";
-import { BUSINESS } from "@/lib/constants";
+import { BUSINESS } from "@/lib/business";
 import type { ServiceLanding } from "@/lib/types";
 
 // ============================================

@@ -7,7 +7,8 @@ import StaggerChildren, {
   staggerItem,
 } from "@/components/animations/StaggerChildren";
 import { motion } from "framer-motion";
-import { BUSINESS, LATEST_AWARD } from "@/lib/constants";
+import { BUSINESS } from "@/lib/business";
+import { LATEST_AWARD } from "@/lib/awards";
 
 const reasons = [
   {

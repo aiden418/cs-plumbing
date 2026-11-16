@@ -13,7 +13,7 @@ import Button from "@/components/ui/Button";
 import SectionHeading from "@/components/ui/SectionHeading";
 import BuilderLogoImage from "@/components/ui/BuilderLogoImage";
 import ScrollReveal from "@/components/animations/ScrollReveal";
-import { BUSINESS } from "@/lib/constants";
+import { BUSINESS } from "@/lib/business";
 import { BUILDERS } from "@/lib/builders-data";
 
 const WHY_CS = [

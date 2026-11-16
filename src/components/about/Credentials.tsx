@@ -4,7 +4,8 @@ import { ShieldCheck, Award, FileCheck, Users, Building2 } from "lucide-react";
 import Container from "@/components/ui/Container";
 import ScrollReveal from "@/components/animations/ScrollReveal";
 import Link from "next/link";
-import { BUSINESS, AWARDS } from "@/lib/constants";
+import { BUSINESS } from "@/lib/business";
+import { AWARDS } from "@/lib/awards";
 
 const STATS = [
   { value: "28+", label: "Years in business" },

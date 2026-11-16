@@ -8,7 +8,8 @@ import PageTransition from "@/components/layout/PageTransition";
 import ScrollReveal from "@/components/animations/ScrollReveal";
 import WhatHappensNext from "@/components/ui/WhatHappensNext";
 import FaqAccordion from "@/components/ui/FaqAccordion";
-import { BUSINESS, EMERGENCY_CLAIMS } from "@/lib/constants";
+import { BUSINESS } from "@/lib/business";
+import { EMERGENCY_CLAIMS } from "@/lib/claims";
 import { EMERGENCY_FAQS } from "./emergency-faqs";
 
 const emergencyTypes = [

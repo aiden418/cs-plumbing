@@ -12,7 +12,7 @@ import StaggerChildren, {
 } from "@/components/animations/StaggerChildren";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { BUSINESS } from "@/lib/constants";
+import { BUSINESS } from "@/lib/business";
 import type { ServiceCityLanding } from "@/lib/types";
 
 const TRUST_ICONS = [Shield, Award, Star, Check];

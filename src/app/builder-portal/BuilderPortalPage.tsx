@@ -19,7 +19,7 @@ import PageTransition from "@/components/layout/PageTransition";
 import FileUpload from "@/components/builder-portal/FileUpload";
 import BuilderPortalIntro from "@/components/builder-portal/BuilderPortalIntro";
 import WhatHappensNext from "@/components/ui/WhatHappensNext";
-import { BUSINESS } from "@/lib/constants";
+import { BUSINESS } from "@/lib/business";
 import { cn } from "@/lib/utils";
 import { trackBuilderLead } from "@/lib/pixel";
 

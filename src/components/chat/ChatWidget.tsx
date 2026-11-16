@@ -8,7 +8,7 @@ import {
   Phone,
   MessageSquareText,
 } from "lucide-react";
-import { BUSINESS } from "@/lib/constants";
+import { BUSINESS } from "@/lib/business";
 import { trackTextClick } from "@/lib/pixel";
 import ServiceRequestForm from "@/components/services/ServiceRequestForm";
 

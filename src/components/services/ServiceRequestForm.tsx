@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { CLAIMS } from "@/lib/claims";
 import { useId, useRef, useState } from "react";
-import { BUSINESS } from "@/lib/constants";
+import { BUSINESS } from "@/lib/business";
 import { serviceRequestSchema, SERVICE_REQUEST_OPTIONS } from "@/lib/service-request";
 import { trackContactForm } from "@/lib/pixel";
 import FileUpload from "@/components/builder-portal/FileUpload";

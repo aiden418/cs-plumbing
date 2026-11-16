@@ -7,7 +7,8 @@ import { motion } from "framer-motion";
 import { ArrowRight, ChevronDown, HardHat, Home, Phone, Star } from "lucide-react";
 import Container from "@/components/ui/Container";
 import HeroVideo from "@/components/home/HeroVideo";
-import { BUSINESS, LATEST_AWARD } from "@/lib/constants";
+import { BUSINESS } from "@/lib/business";
+import { LATEST_AWARD } from "@/lib/awards";
 import { registerGSAP, gsap } from "@/lib/gsap";
 import { breakpoints } from "@/hooks/useMediaQuery";
 

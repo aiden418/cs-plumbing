@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Phone, Calendar, MessageSquareText } from "lucide-react";
-import { BUSINESS } from "@/lib/constants";
+import { BUSINESS } from "@/lib/business";
 import { trackTextClick } from "@/lib/pixel";
 
 const HIDDEN_PATHS = ["/booking", "/contact", "/quote-builder"];

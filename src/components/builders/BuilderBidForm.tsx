@@ -5,7 +5,7 @@ import Link from "next/link";
 import { CheckCircle, Send } from "lucide-react";
 import FileUpload from "@/components/builder-portal/FileUpload";
 import { trackBuilderLead } from "@/lib/pixel";
-import { BUSINESS } from "@/lib/constants";
+import { BUSINESS } from "@/lib/business";
 
 /**
  * Short "Submit plans for a bid" form for /builders and the new-construction

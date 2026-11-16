@@ -12,7 +12,7 @@ import {
   CalendarCheck,
 } from "lucide-react";
 import Button from "@/components/ui/Button";
-import { BUSINESS } from "@/lib/constants";
+import { BUSINESS } from "@/lib/business";
 import { cn } from "@/lib/utils";
 import { trackQuoteBuilder } from "@/lib/pixel";
 import type {
