@@ -4,7 +4,7 @@ import Container from "@/components/ui/Container";
 import PageHero from "@/components/ui/PageHero";
 import Section from "@/components/ui/Section";
 import { ExternalLink, PenLine, Phone } from "@/components/ui/icons";
-import Stars from "@/components/about/Stars";
+import Stars from "@/components/ui/Stars";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import CTASection from "@/components/home/CTASection";
 import { BUSINESS } from "@/lib/business";

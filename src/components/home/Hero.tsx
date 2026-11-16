@@ -4,7 +4,8 @@ import { getImageProps } from "next/image";
 import Link from "next/link";
 import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
-import { ArrowRight, Phone, Star } from "@/components/ui/icons";
+import Stars from "@/components/ui/Stars";
+import { ArrowRight, Phone } from "@/components/ui/icons";
 import HeroController from "@/components/home/HeroController";
 import { BUSINESS } from "@/lib/business";
 import { fetchPlaceData } from "@/lib/google-reviews";
@@ -116,11 +117,7 @@ export default async function Hero() {
 
       <Container className="home-hero-body">
         <p className="home-hero-rating">
-          <span className="inline-flex gap-0.5" role="img" aria-label={`${rating.toFixed(1)} out of 5 stars`}>
-            {Array.from({ length: 5 }).map((_, i) => (
-              <Star key={i} strokeWidth={1.5} className="size-[1.125rem] fill-current text-brass-300" />
-            ))}
-          </span>
+          <Stars rating={rating} label={`${rating.toFixed(1)} out of 5 stars`} className="size-[1.125rem]" />
           <span>{`${rating.toFixed(1)} ${proof.ratingSuffix} · ${total}+ ${proof.reviewsSuffix}`}</span>
         </p>
         <h1 id="hero-title" className="home-hero-title">

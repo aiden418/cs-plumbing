@@ -1,25 +1,10 @@
 import Button from "@/components/ui/Button";
 import Container from "@/components/ui/Container";
 import Section, { type Tone } from "@/components/ui/Section";
-import { ExternalLink, Star } from "@/components/ui/icons";
+import Stars from "@/components/ui/Stars";
+import { ExternalLink } from "@/components/ui/icons";
 import { BUSINESS } from "@/lib/business";
 import { fetchPlaceData } from "@/lib/google-reviews";
-import { cn } from "@/lib/utils";
-
-function Stars({ rating, className = "size-4" }: { rating: number; className?: string }) {
-  const filled = Math.round(rating);
-  return (
-    <span className="inline-flex gap-0.5" role="img" aria-label={`${rating} out of 5 stars`}>
-      {Array.from({ length: 5 }).map((_, i) => (
-        <Star
-          key={i}
-          strokeWidth={1.5}
-          className={cn(className, i < filled ? "fill-current text-accent" : "text-rule")}
-        />
-      ))}
-    </span>
-  );
-}
 
 /** Google's "G", so the source of the rating is recognisable at a glance. */
 function GoogleMark({ className }: { className?: string }) {

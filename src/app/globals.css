@@ -59,6 +59,8 @@
   --color-brass-600: #A8884C;
   --color-brass-300: #D4BC8A;
   --color-bronze: #7A6235;         /* brass for text on light surfaces */
+  --color-star: #E8A427;           /* review stars: the one gold fill */
+  --color-star-edge: #C98A1B;      /* a star's outline, so it holds its shape on white */
   --color-shell: #F4F6F9;          /* cool light gray for alternate sections */
   --color-shell-200: #E9EDF2;
   --color-shell-300: #D9DFE7;      /* hairline on shell */
