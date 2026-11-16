@@ -63,7 +63,8 @@ export default function BuildersPage() {
               {COPY.hero.bidAction}
             </Button>
             <Button href={BUILDER_DESK.phoneHref} variant="onPhoto" size="lg" icon={<Phone className="size-5" />}>
-              {COPY.hero.call} {BUILDER_DESK.phone}
+              <span className="max-[359px]:sr-only">{COPY.hero.call} </span>
+              <span className="whitespace-nowrap">{BUILDER_DESK.phone}</span>
             </Button>
             {/* Plain <a>: a PDF isn't a route, so next/link would try a client navigation first. */}
             <a

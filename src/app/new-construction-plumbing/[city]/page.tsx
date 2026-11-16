@@ -120,7 +120,8 @@ export default async function Page({ params }: { params: Promise<{ city: string 
               {COPY.bidAction}
             </Button>
             <Button href={BUILDER_DESK.phoneHref} variant="onPhoto" size="lg" icon={<Phone className="size-5" />}>
-              {COPY.call} {BUILDER_DESK.phone}
+              <span className="max-[359px]:sr-only">{COPY.call} </span>
+              <span className="whitespace-nowrap">{BUILDER_DESK.phone}</span>
             </Button>
             {/* Plain <a>: a PDF isn't a route, so next/link would try a client navigation first. */}
             <a href={CAPABILITY_STATEMENT_PDF} download className={buttonClasses({ variant: "ghost", size: "md", className: "self-start sm:self-auto sm:px-2" })}>
