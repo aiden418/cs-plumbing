@@ -33,6 +33,7 @@ import WhatHappensNext from "@/components/ui/WhatHappensNext";
 import { BUSINESS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { trackBooking, trackEstimateRequest } from "@/lib/pixel";
+import { localIsoDate } from "@/lib/local-date";
 
 const serviceCategories = [
   { id: "residential", label: "Residential", icon: <Home className="w-6 h-6" /> },
@@ -260,7 +261,9 @@ export default function BookingPage() {
     const d = new Date();
     d.setDate(d.getDate() + i + 1);
     return {
-      value: d.toISOString().split("T")[0],
+      // Local year, month and day, so the value names the day on the label.
+      // The UTC date is already tomorrow from early evening in Florida.
+      value: localIsoDate(d),
       label: d.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" }),
     };
   });
