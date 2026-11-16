@@ -112,12 +112,12 @@ export const metadata: Metadata = {
       },
     ],
   },
+  // Card type only. With no title, description or image here, Next fills each
+  // page's Twitter card from that page's own Open Graph data (its title, its
+  // description, its share image) instead of repeating the homepage's on
+  // every URL.
   twitter: {
     card: "summary_large_image",
-    title: "C&S Plumbing of Lee | Southwest Florida's Most Trusted Plumber",
-    description:
-      "Family owned and operated since 1998, 9,500+ homes plumbed. New construction for builders; service for homeowners across SWFL.",
-    images: ["/images/logos/logo-512.png"],
   },
   alternates: {},
   verification: {

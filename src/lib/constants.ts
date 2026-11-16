@@ -944,7 +944,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
     heroText: "Tankless Water Heater Installation & Repair in Fort Myers & Cape Coral",
     description:
       "Endless hot water without a tank in the garage. C&S installs gas tankless systems from Rinnai, Navien and Noritz — gas line, venting and permit included — and repairs every major brand, usually the same day.",
-    metaTitle: "Tankless Water Heater Installation & Repair | Fort Myers & Cape Coral",
+    metaTitle: "Tankless Water Heater Installation | Fort Myers & Cape Coral",
     metaDescription:
       `Tankless water heater installation & repair in Fort Myers, Cape Coral & SWFL. Rinnai, Navien & Noritz, ${rangeInline("waterHeater.tankless")} installed incl. gas line & venting. Same-day repair. Call ${BUSINESS.phone}.`,
     keywords: [

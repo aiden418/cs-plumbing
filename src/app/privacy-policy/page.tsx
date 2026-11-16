@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import Container from "@/components/ui/Container";
 import PageHero from "@/components/ui/PageHero";
 import Section from "@/components/ui/Section";
@@ -9,11 +10,22 @@ export const metadata: Metadata = {
   title: "Privacy Policy",
   description: `Privacy policy for ${BUSINESS.fullName}. Learn how we collect, use, and protect your personal information.`,
   alternates: { canonical: "/privacy-policy" },
+  openGraph: {
+    title: `Privacy Policy | ${BUSINESS.fullName}`,
+    description: `Privacy policy for ${BUSINESS.fullName}. Learn how we collect, use, and protect your personal information.`,
+    url: "https://www.csplumbinglee.com/privacy-policy",
+  },
 };
 
 export default function PrivacyPolicyPage() {
   return (
     <>
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", href: "/" },
+          { name: "Privacy Policy", href: "/privacy-policy" },
+        ]}
+      />
       <PageHero layout="plain" size="sm" overline={PRIVACY.overline} title={PRIVACY.title} />
       <Section tone="white" spacing="none" className="pt-6 pb-14 sm:pt-10 sm:pb-20">
         <Container>

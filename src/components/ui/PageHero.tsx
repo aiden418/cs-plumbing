@@ -90,7 +90,7 @@ function Headline({
     <h1 className={className}>
       {accent && accentPosition === "block" ? (
         <>
-          {title}
+          {title}{" "}
           <br />
           {accent}
         </>

@@ -6,6 +6,7 @@ import ServiceCard from "@/components/services/ServiceCard";
 import CostEstimator from "@/components/estimator/CostEstimator";
 import SectionHeading from "@/components/ui/SectionHeading";
 import CTASection from "@/components/home/CTASection";
+import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import { HeroActions, servicePhoto } from "@/components/services/ServiceLandingTemplate";
 import { SERVICES, ESTIMATOR_SERVICES } from "@/lib/constants";
 import { picture } from "@/lib/media";
@@ -52,6 +53,12 @@ export default function ServicesPage() {
 
   return (
     <>
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", href: "/" },
+          { name: "Services", href: "/services" },
+        ]}
+      />
       <PageHero
         layout="photo"
         frame={frame}
