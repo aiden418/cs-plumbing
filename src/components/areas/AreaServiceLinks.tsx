@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { LinkGrid, LinkSection } from "@/components/links/LinkGrid";
+import { AREA_COPY } from "@/content/areas";
 import {
   landingsForCity,
   newConstructionCityFor,
@@ -7,12 +8,13 @@ import {
 } from "@/lib/internal-links";
 import type { AreaLanding } from "@/lib/types";
 
+const copy = AREA_COPY.links;
+
 /**
  * Server-rendered links under each area hub: every service-city landing for
  * the city, the builder-door city page where one exists, and the blog
- * guides that point at this city. Lived inside the client
- * AreaLandingTemplate before, which shipped the whole landing data set to
- * the browser; here it costs no client JS and every link is in the HTML.
+ * guides that point at this city. Costs no client JS and every link is in
+ * the HTML.
  */
 export default function AreaServiceLinks({ landing }: { landing: AreaLanding }) {
   const cityPages = landingsForCity(landing.city);
@@ -25,15 +27,15 @@ export default function AreaServiceLinks({ landing }: { landing: AreaLanding }) 
 
   return (
     <LinkSection
-      overline="Local pricing & FAQs"
+      overline={copy.eyebrow}
       heading={
         cityPages.length > 0
-          ? `Popular Services in ${landing.city}`
-          : `Plumbing resources for ${landing.city}`
+          ? copy.heading(landing.city)
+          : copy.headingNoPages(landing.city)
       }
       description={
         cityPages.length > 0
-          ? `Dedicated pages with local pricing, FAQs, and details for ${landing.city} homeowners.`
+          ? copy.description(landing.city)
           : undefined
       }
       headingId="area-service-links-heading"
@@ -43,28 +45,28 @@ export default function AreaServiceLinks({ landing }: { landing: AreaLanding }) 
           links={cityPages.map((p) => ({
             href: `/${p.slug}`,
             label: p.h1,
-            meta: p.priceRange ? `Typical range ${p.priceRange}` : undefined,
+            meta: p.priceRange ? `${copy.rangePrefix} ${p.priceRange}` : undefined,
           }))}
         />
       )}
 
       {builderCity && (
-        <p className="mt-8 text-sm text-gray-600">
-          Building in {landing.city}? See{" "}
+        <p className="mt-8 max-w-[68ch] text-body">
+          {copy.builderBefore(landing.city)}
           <Link
             href={`/new-construction-plumbing/${builderCity.slug}`}
-            className="font-semibold text-primary hover:underline"
+            className="font-semibold text-link underline underline-offset-[0.2em] decoration-1 hover:decoration-2"
           >
-            new construction plumbing for builders and GCs in {builderCity.city}
+            {copy.builderLink(builderCity.city)}
           </Link>
           .
         </p>
       )}
 
       {posts.length > 0 && (
-        <div className="mt-10">
-          <h3 className="mb-4 text-lg font-bold text-gray-900">
-            Guides for {landing.city} homeowners
+        <div className="mt-12">
+          <h3 className="mb-5 text-lg leading-snug font-semibold text-fg">
+            {copy.guidesHeading(landing.city)}
           </h3>
           <LinkGrid
             links={posts.map((p) => ({

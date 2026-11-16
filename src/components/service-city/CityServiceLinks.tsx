@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { LinkGrid, LinkSection } from "@/components/links/LinkGrid";
+import { SERVICE_CITY_COPY } from "@/content/areas";
 import {
   areaForCity,
   hubForLanding,
@@ -7,6 +8,9 @@ import {
   landingsForHub,
 } from "@/lib/internal-links";
 import type { ServiceCityLanding } from "@/lib/types";
+
+const copy = SERVICE_CITY_COPY.links;
+const LINK_CLASS = "font-semibold text-link underline underline-offset-[0.2em] decoration-1 hover:decoration-2";
 
 /**
  * Cross-links under every service-city landing: the other service pages for
@@ -31,8 +35,9 @@ export default function CityServiceLinks({
   return (
     <LinkSection
       overline={`${landing.city}, ${landing.state}`}
-      heading={`More plumbing help in ${landing.city}`}
-      description={`Every ${landing.city} service page has local pricing, FAQs and the neighborhoods we cover.`}
+      heading={copy.heading(landing.city)}
+      description={copy.description(landing.city)}
+      tone="shell"
       headingId="city-service-links-heading"
     >
       {cityPages.length > 0 && (
@@ -40,15 +45,15 @@ export default function CityServiceLinks({
           links={cityPages.map((p) => ({
             href: `/${p.slug}`,
             label: p.h1,
-            meta: p.priceRange ? `Typical range ${p.priceRange}` : undefined,
+            meta: p.priceRange ? `${copy.rangePrefix} ${p.priceRange}` : undefined,
           }))}
         />
       )}
 
       {hub && hubPages.length > 0 && (
-        <div className={cityPages.length > 0 ? "mt-10" : undefined}>
-          <h3 className="mb-4 text-lg font-bold text-gray-900">
-            {hub.title} in other Southwest Florida cities
+        <div className={cityPages.length > 0 ? "mt-12" : undefined}>
+          <h3 className="mb-5 text-lg leading-snug font-semibold text-fg">
+            {copy.hubHeading(hub.title)}
           </h3>
           <LinkGrid
             links={hubPages.map((p) => ({
@@ -61,23 +66,23 @@ export default function CityServiceLinks({
       )}
 
       {(area || hub) && (
-        <p className="mt-8 text-sm text-gray-600">
-          See{" "}
+        <p className="mt-8 max-w-[68ch] text-body">
+          {copy.seePrefix}
           {area && (
             <Link
               href={`/areas/${area.slug}`}
-              className="font-semibold text-primary hover:underline"
+              className={LINK_CLASS}
             >
-              all plumbing services in {area.city}, {area.state}
+              {copy.areaLink(area.city, area.state)}
             </Link>
           )}
-          {area && hub && " or "}
+          {area && hub && copy.or}
           {hub && (
             <Link
               href={hub.href}
-              className="font-semibold text-primary hover:underline"
+              className={LINK_CLASS}
             >
-              {hub.title} across Southwest Florida
+              {copy.hubLink(hub.title)}
             </Link>
           )}
           .
