@@ -231,7 +231,11 @@ export function digest(raw, page) {
     }
   };
   const cdpType = new Map();
-  for (const request of page.requests) cdpType.set(request.url, request.type);
+  const cdpInitiator = new Map();
+  for (const request of page.requests) {
+    cdpType.set(request.url, request.type);
+    if (!cdpInitiator.has(request.url)) cdpInitiator.set(request.url, request.initiator);
+  }
 
   const firstParty = emptyBuckets();
   const thirdParty = emptyBuckets();
@@ -243,19 +247,19 @@ export function digest(raw, page) {
   };
   if (raw.navigation) tally(firstParty, "document", raw.navigation);
   const sized = [];
-  // JavaScript requested before the load event: what the page itself needs,
-  // as opposed to widgets and route prefetches that start once it is idle.
-  const jsByLoad = { count: 0, transferSize: 0, encodedBodySize: 0 };
-  const loadEnd = raw.navigation?.loadEventEnd || Infinity;
+  // JavaScript the HTML itself references (scripts the parser found), as
+  // opposed to chunks that scripts request later: deferred widgets, code for
+  // prefetched routes. Unlike "before the load event" this does not depend on timing.
+  const jsInDocument = { count: 0, transferSize: 0, encodedBodySize: 0 };
   for (const resource of raw.resources) {
     const bucket = bucketOf(resource.name, cdpType.get(resource.name));
     const mine = isFirstParty(resource.name);
     tally(mine ? firstParty : thirdParty, bucket === "document" ? "other" : bucket, resource);
     sized.push({ url: local(resource.name), bucket, firstParty: mine, transferSize: resource.transferSize, encodedBodySize: resource.encodedBodySize });
-    if (mine && bucket === "js" && resource.startTime <= loadEnd) {
-      jsByLoad.count += 1;
-      jsByLoad.transferSize += resource.transferSize ?? 0;
-      jsByLoad.encodedBodySize += resource.encodedBodySize ?? 0;
+    if (mine && bucket === "js" && ["parser", "preload"].includes(cdpInitiator.get(resource.name))) {
+      jsInDocument.count += 1;
+      jsInDocument.transferSize += resource.transferSize ?? 0;
+      jsInDocument.encodedBodySize += resource.encodedBodySize ?? 0;
     }
   }
   const firstScreenImages = raw.firstScreenImages.map((img) => {
@@ -324,7 +328,7 @@ export function digest(raw, page) {
       totalMs: tasks.reduce((sum, t) => sum + t.duration, 0),
       sumOver50Ms: tasks.reduce((sum, t) => sum + Math.max(0, t.duration - 50), 0),
     },
-    resources: { firstParty, thirdParty, firstPartyTotal: total(firstParty), thirdPartyTotal: total(thirdParty), jsByLoad },
+    resources: { firstParty, thirdParty, firstPartyTotal: total(firstParty), thirdPartyTotal: total(thirdParty), jsInDocument },
     firstScreenImages,
     wire: { firstParty: wireBytes(wire.firstParty), thirdParty: wireBytes(wire.thirdParty) },
     largest: sized
@@ -411,8 +415,9 @@ const METRICS = {
   lcpTransfer: (r) => r.lcp?.resource?.transferSize,
   firstScreenImageLoaded: (r) => r.firstScreenImages[0]?.responseEnd,
   firstScreenImageTransfer: (r) => r.firstScreenImages[0]?.transferSize,
-  jsByLoadTransfer: (r) => r.resources.jsByLoad.transferSize,
-  jsByLoadCount: (r) => r.resources.jsByLoad.count,
+  jsInDocumentTransfer: (r) => r.resources.jsInDocument.transferSize,
+  jsInDocumentEncoded: (r) => r.resources.jsInDocument.encodedBodySize,
+  jsInDocumentCount: (r) => r.resources.jsInDocument.count,
   domElements: (r) => r.domElements,
   requests: (r) => r.resources.firstPartyTotal.count,
   transfer: (r) => r.resources.firstPartyTotal.transferSize,
@@ -503,11 +508,11 @@ function markdown(report) {
         add(`| \`${cell(r.route)}\` | ${ms(m.ttfb)} | ${ms(m.fcp)} | ${ms(m.lcp)} | ${shift(m.cls)} | ${ms(m.dcl)} | ${ms(m.load)} | ${count(m.longTaskCount)} | ${ms(m.longTaskMaxMs)} | ${ms(m.longTaskSumOver50Ms)} |`);
       }
       add();
-      add("| Route | Requests | Total KB | HTML | JS | JS files | JS by load | JS files by load | CSS | Font | Img | Video | Other | 3rd-party KB | DOM elements |");
+      add("| Route | Requests | Total KB | HTML | JS | JS files | JS in HTML | JS files in HTML | CSS | Font | Img | Video | Other | 3rd-party KB | DOM elements |");
       add("|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|");
       for (const r of rows) {
         const m = r.metrics;
-        add(`| \`${cell(r.route)}\` | ${count(m.requests)} | ${size(m.transfer)} | ${size(m.documentTransfer)} | ${size(m.jsTransfer)} | ${count(m.jsCount)} | ${size(m.jsByLoadTransfer)} | ${count(m.jsByLoadCount)} | ${size(m.cssTransfer)} | ${size(m.fontTransfer)} | ${size(m.imgTransfer)} | ${size(m.videoTransfer)} | ${size(m.otherTransfer)} | ${size(m.thirdPartyTransfer)} | ${count(m.domElements)} |`);
+        add(`| \`${cell(r.route)}\` | ${count(m.requests)} | ${size(m.transfer)} | ${size(m.documentTransfer)} | ${size(m.jsTransfer)} | ${count(m.jsCount)} | ${size(m.jsInDocumentTransfer)} | ${count(m.jsInDocumentCount)} | ${size(m.cssTransfer)} | ${size(m.fontTransfer)} | ${size(m.imgTransfer)} | ${size(m.videoTransfer)} | ${size(m.otherTransfer)} | ${size(m.thirdPartyTransfer)} | ${count(m.domElements)} |`);
       }
       add();
       add("| Route | LCP element | LCP size (px²) | LCP resource KB | Largest image on the first screen | …loaded at | …KB | Hero | Intro |");
@@ -526,7 +531,7 @@ function markdown(report) {
     for (const r of failed) add(`- \`${r.route}\` ${r.profile} ${r.kind} #${r.index}: ${cell(r.error)}`);
     add();
   }
-  add("\"JS by load\" is the JavaScript requested before the load event; \"JS\" also counts what arrives afterwards (deferred widgets, chunks for prefetched routes) until the page is read.");
+  add("\"JS in HTML\" is the JavaScript the document itself references (the scripts the parser finds); \"JS\" also counts the chunks scripts request afterwards (deferred widgets, code for prefetched routes) until the page is read.");
   add("LCP is Chrome's final largest-contentful-paint entry. Chrome does not count an image that fills the whole viewport, so the largest image on the first screen is listed beside it with the time its download finished.");
   add("Long tasks: \"Over 50 ms\" is the sum of the part of each long task beyond 50 ms (what blocks input).");
   add("CLS: the largest burst of layout shifts (under 1 s apart, 5 s at most); the JSON also has the plain total and the shifting elements.");
