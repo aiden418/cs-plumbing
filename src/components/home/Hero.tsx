@@ -1,300 +1,245 @@
-"use client";
-
-import { useRef, useEffect } from "react";
-import Image from "next/image";
+import type { CSSProperties } from "react";
+import { preload } from "react-dom";
+import Image, { getImageProps } from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { ArrowRight, ChevronDown, HardHat, Home, Phone, Star } from "lucide-react";
 import Container from "@/components/ui/Container";
-import HeroVideo from "@/components/home/HeroVideo";
+import Eyebrow from "@/components/ui/Eyebrow";
+import Button from "@/components/ui/Button";
+import LogoLockup from "@/components/ui/LogoLockup";
+import { InlineScript } from "@/components/ui/InlineScript";
+import { ArrowRight, HardHat, Home, Phone, Star } from "@/components/ui/icons";
+import HeroController from "@/components/home/HeroController";
 import { BUSINESS } from "@/lib/business";
 import { LATEST_AWARD } from "@/lib/awards";
-import { registerGSAP, gsap } from "@/lib/gsap";
-import { breakpoints } from "@/hooks/useMediaQuery";
+import { slot } from "@/lib/media";
+import { PHONE_MEDIA } from "@/lib/hero-controller";
+import { HERO_SOURCES, frameScript } from "@/lib/intro";
+import { hero, heroInterim } from "@/content/home";
 
-// Three lines, kept as semantic arrays so the per-word clip-path reveal
-// stays readable. Real DOM text remains literal — SEO/screen-readers see
-// the full sentence.
-const HEADLINE_LINES: string[][] = [
-  ["Southwest", "Florida's"],
-  ["Most", "Trusted"],
-  ["Plumbing", "Team"],
-];
+/**
+ * One `sizes` for both art directions. It covers the Opening's stage (the
+ * frame centred and enlarged, about 60% of a desktop window), which is the
+ * largest the photograph is ever shown; the settled frame is smaller.
+ */
+const SIZES = "(min-width: 64rem) 62vw, 100vw";
+const QUALITY = 75;
 
+/** The still: <picture> with the phone crop for upright phones, preloaded once per art direction. */
+function HeroStill() {
+  const media = slot("home.hero");
+  if (!media) return null;
+  const common = { alt: media.alt, sizes: SIZES, quality: QUALITY, loading: "eager", fetchPriority: "high" } as const;
+  const { props: desktop } = getImageProps({
+    ...common,
+    src: media.desktop.src,
+    width: media.desktop.width,
+    height: media.desktop.height,
+  });
+  const phone = media.mobile
+    ? getImageProps({ ...common, src: media.mobile.src, width: media.mobile.width, height: media.mobile.height }).props
+    : null;
+
+  if (phone?.srcSet) {
+    preload(phone.src, { as: "image", imageSrcSet: phone.srcSet, imageSizes: SIZES, fetchPriority: "high", media: PHONE_MEDIA });
+    preload(desktop.src, {
+      as: "image",
+      imageSrcSet: desktop.srcSet,
+      imageSizes: SIZES,
+      fetchPriority: "high",
+      media: `not all and ${PHONE_MEDIA}`,
+    });
+  } else {
+    preload(desktop.src, { as: "image", imageSrcSet: desktop.srcSet, imageSizes: SIZES, fetchPriority: "high" });
+  }
+
+  const { style: _style, ...img } = desktop;
+  void _style;
+  return (
+    <picture>
+      {phone?.srcSet && (
+        <source media={PHONE_MEDIA} srcSet={phone.srcSet} sizes={SIZES} width={phone.width} height={phone.height} />
+      )}
+      {/* Props from getImageProps: art direction needs a plain <picture>. */}
+      <img {...img} alt={media.alt} className="cs-hero-still" />
+    </picture>
+  );
+}
+
+function frameStyle(): CSSProperties {
+  const media = slot("home.hero");
+  return {
+    backgroundColor: media?.desktop.color,
+    "--hero-pos": media?.desktop.position ?? "50% 50%",
+    "--hero-pos-phone": media?.mobile?.position ?? "50% 50%",
+  } as CSSProperties;
+}
+
+/**
+ * The homepage hero: the settled layout is the only layout. The Opening
+ * (first visit) is a CSS state on <html data-intro> set by the head script
+ * in src/lib/intro.ts; see src/app/styles/opening.css.
+ */
 export default function Hero() {
-  const heroRef = useRef<HTMLDivElement>(null);
-
-  // Parallax + scale on background — driven by GSAP ScrollTrigger.
-  useEffect(() => {
-    registerGSAP();
-    if (!heroRef.current) return;
-
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
-    if (prefersReducedMotion) return;
-    // Scrubbed parallax is per-frame scroll work — skip it on touch devices
-    if (window.matchMedia(breakpoints.coarse).matches) return;
-
-    const ctx = gsap.context(() => {
-      const bg = heroRef.current!.querySelector(".hero-bg");
-      if (!bg) return;
-      gsap.to(bg, {
-        y: 240,
-        scale: 1.05,
-        ease: "none",
-        scrollTrigger: {
-          trigger: heroRef.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: true,
-        },
-      });
-    }, heroRef);
-
-    return () => ctx.revert();
-  }, []);
-
-  let wordIndex = 0;
+  const arrive = (i: number) => ({ "--intro-i": i }) as CSSProperties;
 
   return (
-    <section
-      ref={heroRef}
-      className="relative min-h-screen overflow-hidden flex flex-col"
-    >
-      {/* Background — single dim + radial vignette */}
-      <div className="hero-bg absolute inset-0 lg:will-change-transform">
-        <Image
-          src="/images/hero/drone-construction.jpg"
-          alt="C&S Plumbing new construction site aerial view"
-          fill
-          className="object-cover object-center"
-          priority
-          // 75 is visually identical on a drone photo and ~30% smaller at the
-          // mobile widths where this is the LCP image.
-          quality={75}
-        />
-        <HeroVideo />
-        <div className="absolute inset-0 bg-gray-900/40" />
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background:
-              "radial-gradient(ellipse 80% 60% at 30% 50%, rgba(0,0,0,0) 0%, rgba(0,0,0,0.45) 100%)",
-          }}
-        />
-      </div>
-
-      <Container className="relative z-10 pt-28 sm:pt-32 pb-24 sm:pb-28 my-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-[1.6fr_1fr] gap-12 lg:gap-12 items-center">
-          {/* Left: Text */}
-          <div>
-            {/* Trust pill. Entrance animations in this hero are CSS-only
-                (animate-hero-in) so the text paints before hydration —
-                framer's opacity:0 initial state made the hero paragraph the
-                LCP element and pushed LCP past 10s on mobile. */}
-            <div className="animate-hero-in inline-flex items-center gap-2 bg-white/8 backdrop-blur-sm border border-white/15 rounded-full px-4 py-2 mb-6 sm:mb-8">
-              <div className="flex gap-0.5">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-3.5 h-3.5 fill-yellow-400 text-yellow-400" />
-                ))}
-              </div>
-              <span className="text-white/90 text-xs sm:text-sm font-medium">
-                {BUSINESS.rating.toFixed(1)} Stars · {BUSINESS.reviewCount}+ Reviews
-              </span>
+    <>
+      <section data-tone="ink" aria-labelledby="hero-title" className="cs-hero relative bg-canvas text-body">
+        {/* The Opening's title card. Shown only while <html data-intro> is set. */}
+        <div className="cs-intro">
+          <div id="cs-intro-stage" className="cs-intro-stage" />
+          <div className="cs-intro-card">
+            <div aria-hidden="true" className="flex min-w-0 items-center gap-3 nav:gap-4">
+              <LogoLockup size="sm" wordmark={false} href={null} />
+              <p className="text-display-sm font-display font-bold text-white [font-stretch:108%]">{hero.kicker}</p>
             </div>
-
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[4.5rem] xl:text-[5.25rem] font-black text-white leading-[0.95] tracking-tight">
-              {HEADLINE_LINES.map((line, lineIdx) => {
-                const isAccentLine = lineIdx === 1;
-                return (
-                  <span
-                    key={lineIdx}
-                    className={isAccentLine ? "relative block" : "block"}
-                  >
-                    {line.map((word) => {
-                      const i = wordIndex++;
-                      return (
-                        <span
-                          key={`${lineIdx}-${word}-${i}`}
-                          className="word-mask mr-[0.18em]"
-                        >
-                          {/* CSS keyframe reveal (see word-mask-inner in
-                              globals.css): runs from first paint instead of
-                              waiting on a post-hydration state flip. */}
-                          <span
-                            className="word-mask-inner"
-                            style={{ animationDelay: `${i * 60}ms` }}
-                          >
-                            {word}
-                          </span>
-                        </span>
-                      );
-                    })}
-                    {isAccentLine && (
-                      <span
-                        aria-hidden
-                        className="animate-underline-in absolute left-0 -bottom-1 h-[5px] sm:h-[6px] lg:h-[8px] w-full bg-gold origin-left rounded-full"
-                      />
-                    )}
-                  </span>
-                );
-              })}
-            </h1>
-
-            <p
-              className="animate-hero-in mt-6 sm:mt-8 text-base sm:text-lg text-white/70 max-w-lg leading-relaxed"
-              style={{ animationDelay: "320ms" }}
-            >
-              Family owned and operated since 1998, with 9,500+ homes plumbed. New
-              construction for builders, and repairs, repipes and remodels
-              for homeowners across Cape Coral, Fort Myers and Southwest
-              Florida.
-            </p>
-
-            {/* Two doors: builders/GCs and homeowners/service. Emergency is a
-                line under them, not the headline identity. */}
-            <div
-              data-pipe-node="hero-cta"
-              className="animate-hero-in mt-8 sm:mt-10 grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 max-w-2xl"
-              style={{ animationDelay: "440ms" }}
-            >
-              <Link
-                href="/builders"
-                className="group rounded-2xl border border-white/20 bg-white/10 backdrop-blur-sm p-5 transition-all duration-300 hover:bg-white/15 hover:border-gold/60"
-              >
-                <span className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-gold">
-                  <HardHat className="w-4 h-4" /> Builders &amp; GCs
-                </span>
-                <span className="mt-2 block text-lg font-bold text-white leading-snug">
-                  New construction, slab to final
-                </span>
-                <span className="mt-1 block text-sm text-white/65">
-                  Scope by phase, prequal packet, submit plans for a bid.
-                </span>
-                <span className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-white">
-                  Builder services
-                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                </span>
-              </Link>
-              <Link
-                href="/booking"
-                className="group rounded-2xl border border-white/20 bg-primary/90 p-5 transition-all duration-300 hover:bg-primary"
-              >
-                <span className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-white/80">
-                  <Home className="w-4 h-4" /> Homeowners / Service
-                </span>
-                <span className="mt-2 block text-lg font-bold text-white leading-snug">
-                  Repairs, repipes &amp; remodels
-                </span>
-                <span className="mt-1 block text-sm text-white/75">
-                  Water heaters, leaks, drains, fixtures, whole-home repipes.
-                </span>
-                <span className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-white">
-                  Book a service
-                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                </span>
-              </Link>
-            </div>
-
-            <p
-              className="animate-hero-in mt-4 text-sm text-white/60"
-              style={{ animationDelay: "520ms" }}
-            >
-              Plumbing emergency?{" "}
-              <a
-                href={BUSINESS.phoneHref}
-                className="inline-flex items-center gap-1 font-semibold text-white hover:text-gold"
-              >
-                <Phone className="w-3.5 h-3.5" />
-                {BUSINESS.phone}
-              </a>{" "}
-              · <Link href="/emergency" className="underline-offset-2 hover:underline">24/7 service</Link>
-            </p>
-
-            {/* Trust indicators */}
-            <div
-              className="animate-hero-in mt-8 sm:mt-10 flex flex-wrap gap-x-6 gap-y-2 text-xs sm:text-sm text-white/50"
-              style={{ animationDelay: "600ms" }}
-            >
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-green-400" />
-                Licensed & Insured
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-blue-400" />
-                9,500+ Homes Plumbed
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-blue-400" />
-                Free Estimates
-              </div>
-            </div>
-          </div>
-
-          {/* Right: Logo + Award (desktop only) */}
-          <div
-            className="animate-hero-in hidden lg:flex flex-col items-center justify-center"
-            style={{ animationDelay: "300ms" }}
-          >
-            <div className="relative w-72 h-72 xl:w-80 xl:h-80">
-              {/* Radial primary-tinted aura behind the logo */}
-              <div
-                aria-hidden
-                className="absolute inset-[-25%] logo-aura rounded-full pointer-events-none"
-                style={{
-                  background:
-                    "radial-gradient(circle, rgba(0,119,204,0.35) 0%, rgba(0,119,204,0) 70%)",
-                }}
-              />
-              {/* No `priority`: this column is display:none below lg, and a
-                  preloaded image is still fetched on phones that never show
-                  it. Lazy loading skips hidden images and, on desktop, the
-                  logo is in the viewport so it loads immediately anyway. */}
-              <Image
-                src="/images/logos/logo-new.png"
-                alt="C&S Plumbing of Lee"
-                fill
-                className="relative object-contain"
-                sizes="320px"
-                quality={85}
-              />
-            </div>
-            <Link
-              href="/awards"
-              className="mt-6 flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-2xl px-5 py-3 border border-white/15 hover:bg-white/15 transition-colors"
-            >
-              <Image
-                src={LATEST_AWARD.badge}
-                alt={`${LATEST_AWARD.title} — ${LATEST_AWARD.category}`}
-                // Display size, not the file's 2215x1561: the attribute ratio then
-                // matches the rendered box (the hidden twin is measured by attributes).
-                width={54}
-                height={38}
-                sizes="54px"
-                className="h-[38px] w-[54px]"
-              />
-              <div className="text-left">
-                <p className="text-sm font-bold text-white leading-tight">
-                  {LATEST_AWARD.title}
-                </p>
-                <p className="text-xs text-white/60">
-                  Voted {LATEST_AWARD.category}
-                </p>
-              </div>
-            </Link>
+            <Button variant="inverse" size="sm" data-intro-skip="" className="shrink-0">
+              {hero.skipLabel}
+            </Button>
           </div>
         </div>
 
-        {/* Mobile award badge */}
-        <div
-          className="animate-hero-in mt-10 flex justify-center lg:hidden"
-          style={{ animationDelay: "520ms" }}
-        >
-          <Link
-            href="/awards"
-            className="flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-2xl px-5 py-3 border border-white/15"
-          >
+        <Container className="cs-hero-body">
+          <div className="grid grid-cols-1 gap-y-10 lg:grid-cols-12 lg:items-center lg:gap-x-8">
+            <div className="lg:col-span-5">
+              <div data-intro-in="" style={arrive(0)}>
+                <Eyebrow>{hero.kicker}</Eyebrow>
+              </div>
+              <h1 id="hero-title" data-intro-in="" style={arrive(1)} className="mt-5 text-display-lg text-fg display-normal">
+                {hero.headline}
+              </h1>
+              <p data-intro-in="" style={arrive(2)} className="mt-6 max-w-[48ch] text-lead text-body">
+                {hero.lead}
+              </p>
+              <div data-intro-in="" style={arrive(3)} className="mt-8 flex flex-wrap items-center gap-3">
+                <Button
+                  href={BUSINESS.phoneHref}
+                  size="lg"
+                  icon={<Phone className="size-5" />}
+                  data-intro-focus=""
+                  className="max-sm:w-full"
+                >
+                  {`Call ${BUSINESS.phone}`}
+                </Button>
+                <Button href="/booking" variant="inverse" size="lg" className="max-sm:w-full">
+                  {hero.bookLabel}
+                </Button>
+                <Button href="/quote-builder" variant="ghost" size="lg" className="max-sm:mt-1">
+                  {hero.quoteLabel}
+                </Button>
+              </div>
+              <p data-intro-in="" style={arrive(4)} className="mt-8 text-sm text-muted">
+                <span>{`${hero.licensePrefix} · ${BUSINESS.license}`}</span>
+                <span aria-hidden="true"> · </span>
+                <Link href="/awards" className="text-link underline-offset-[0.2em] hover:underline">
+                  {LATEST_AWARD.title}
+                </Link>
+              </p>
+            </div>
+
+            <figure className="cs-hero-figure lg:col-span-7">
+              <div id="cs-hero-frame" className="cs-hero-frame" style={frameStyle()} suppressHydrationWarning>
+                <HeroStill />
+                <video
+                  id="cs-hero-video"
+                  className="cs-hero-film"
+                  muted
+                  playsInline
+                  preload="none"
+                  disablePictureInPicture
+                  loop={hero.mode === "loop"}
+                  aria-hidden="true"
+                  tabIndex={-1}
+                />
+                <InlineScript html={frameScript(HERO_SOURCES)} />
+                <HeroController
+                  sources={HERO_SOURCES}
+                  mode={hero.mode}
+                  labels={{ pause: hero.pauseLabel, play: hero.playLabel, replay: hero.replayLabel }}
+                />
+              </div>
+              <figcaption data-intro-in="" style={arrive(5)} className="label-tech mt-3 text-muted">
+                {hero.caption}
+              </figcaption>
+            </figure>
+          </div>
+        </Container>
+      </section>
+
+      <HeroInterim />
+    </>
+  );
+}
+
+/**
+ * Interim: what the old hero showed that the new hero does not place. The
+ * Home team replaces this block with the doors and the proof strip.
+ */
+function HeroInterim() {
+  const [builders, homeowners] = heroInterim.doors;
+  const icons = { [builders.href]: HardHat, [homeowners.href]: Home };
+
+  return (
+    <section data-tone="ink" className="relative border-t border-rule bg-canvas pt-section-sm pb-section-sm text-body">
+      <Container>
+        <div data-pipe-node="hero-cta" className="grid grid-cols-1 border-t border-rule md:grid-cols-2">
+          {heroInterim.doors.map((door, i) => {
+            const Icon = icons[door.href];
+            return (
+              <Link
+                key={door.href}
+                href={door.href}
+                className={`group block border-b border-rule py-6 md:py-8 ${i === 0 ? "md:border-r md:pr-8" : "md:pl-8"}`}
+              >
+                <span className="label-tech flex items-center gap-2 text-accent">
+                  <Icon className="size-5" />
+                  {door.label}
+                </span>
+                <span className="mt-3 block text-display-sm font-display font-bold text-fg">{door.title}</span>
+                <span className="mt-2 block text-body">{door.body}</span>
+                <span className="mt-4 inline-flex items-center gap-1.5 font-semibold text-fg">
+                  {door.cta}
+                  <ArrowRight className="size-5 transition-transform duration-250 ease-settle group-hover:translate-x-0.5" />
+                </span>
+              </Link>
+            );
+          })}
+        </div>
+
+        <div className="mt-8 flex flex-col gap-6 md:flex-row md:flex-wrap md:items-center md:justify-between">
+          <div className="flex flex-col gap-3">
+            <p className="flex items-center gap-2 text-sm text-body">
+              <span className="flex gap-0.5 text-brass" aria-hidden="true">
+                {Array.from({ length: 5 }, (_, i) => (
+                  <Star key={i} className="size-4 fill-current" />
+                ))}
+              </span>
+              <span>
+                {`${BUSINESS.rating.toFixed(1)} ${heroInterim.ratingSuffix} · ${BUSINESS.reviewCount}+ ${heroInterim.reviewsSuffix}`}
+              </span>
+            </p>
+            <ul className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted">
+              {heroInterim.trust.map((item) => (
+                <li key={item} className="flex items-center gap-2">
+                  <span className="joint text-accent" aria-hidden="true" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <p className="text-sm text-muted">
+              {heroInterim.emergencyLead}{" "}
+              <a href={BUSINESS.phoneHref} className="inline-flex min-h-11 items-center gap-1 font-semibold text-fg hover:underline">
+                <Phone className="size-4" />
+                {BUSINESS.phone}
+              </a>{" "}
+              ·{" "}
+              <Link href={heroInterim.emergencyLink.href} className="inline-flex min-h-11 items-center text-link hover:underline">
+                {heroInterim.emergencyLink.label}
+              </Link>
+            </p>
+          </div>
+
+          <Link href="/awards" className="flex items-center gap-3 self-start rounded-control border border-rule px-4 py-3 md:self-auto">
             <Image
               src={LATEST_AWARD.badge}
               alt={`${LATEST_AWARD.title} — ${LATEST_AWARD.category}`}
@@ -302,34 +247,14 @@ export default function Hero() {
               height={38}
               sizes="54px"
               className="h-[38px] w-[54px]"
-              priority
             />
-            <div className="text-left">
-              <p className="text-sm font-bold text-white leading-tight">
-                {LATEST_AWARD.title}
-              </p>
-              <p className="text-xs text-white/60">
-                Voted {LATEST_AWARD.category}
-              </p>
-            </div>
+            <span className="text-left">
+              <span className="block text-sm font-semibold leading-tight text-fg">{LATEST_AWARD.title}</span>
+              <span className="block text-sm text-muted">{`${heroInterim.awardPrefix} ${LATEST_AWARD.category}`}</span>
+            </span>
           </Link>
         </div>
       </Container>
-
-      {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.8 }}
-        className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2"
-      >
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <ChevronDown className="w-5 h-5 sm:w-6 sm:h-6 text-white/40" />
-        </motion.div>
-      </motion.div>
     </section>
   );
 }
