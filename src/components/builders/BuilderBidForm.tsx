@@ -37,8 +37,14 @@ export default function BuilderBidForm({
     files.forEach((f) => body.append("files", f));
     try {
       const res = await fetch("/api/builder-portal", { method: "POST", body });
-      const data: { eventId?: string; error?: string } = await res.json().catch(() => ({}));
-      if (!res.ok) throw new Error(data.error ?? "Failed");
+      // Not every failure is JSON: the platform answers a request body that is
+      // too large with a plain-text 413 before the route runs.
+      const data: { success?: boolean; eventId?: string; error?: string; code?: string } = await res
+        .json()
+        .catch(() => ({}));
+      if (!res.ok || !data.success) {
+        throw Object.assign(new Error(data.error ?? "Submission failed"), { code: data.code });
+      }
       trackBuilderLead(
         {
           units: String(body.get("units") ?? ""),
@@ -49,8 +55,10 @@ export default function BuilderBidForm({
       );
       setSubmitted(true);
     } catch (err) {
+      // Attachment problems are explained by the server in customer-facing words.
+      const attachmentIssue = (err as { code?: string }).code === "attachments" && err instanceof Error;
       setError(
-        err instanceof Error && err.message !== "Failed"
+        attachmentIssue
           ? err.message
           : `Something went wrong. Please call ${BUSINESS.phone} or email your plans to ${BUSINESS.email}.`
       );
