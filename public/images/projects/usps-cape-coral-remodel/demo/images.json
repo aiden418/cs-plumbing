@@ -1,0 +1,30 @@
+{
+  "photo-1.jpg": {
+    "alt": "Restroom demo with the floor-mount toilet pulled, closet flange exposed, lavatory removed and ADA grab bars in place",
+    "order": 1
+  },
+  "photo-2.jpg": {
+    "alt": "Demo with wall tile chased open, old supply stubs exposed and the slab cut for new below-slab drains",
+    "order": 2
+  },
+  "photo-3.jpg": {
+    "alt": "Gutted USPS Cape Coral restroom with fixtures pulled, tile chased to the block and slab trenched for drains",
+    "order": 3
+  },
+  "photo-4.jpg": {
+    "alt": "Wall-hung urinals and tank toilet pulled and staged during demo, with capped supply stubs and the slab opened",
+    "order": 4
+  },
+  "photo-5.jpg": {
+    "alt": "Demo in progress with lavatories removed, wall chases opened and a slab trench cut along the block wall",
+    "order": 5
+  },
+  "photo-6.jpg": {
+    "alt": "Tile chased open exposing old supply stubs above a slab cut and the existing PVC drain stub",
+    "order": 6
+  },
+  "photo-7.jpg": {
+    "alt": "Block wall chase opened at the lavatory wall showing existing PVC vent and supply lines above the trench",
+    "order": 7
+  }
+}

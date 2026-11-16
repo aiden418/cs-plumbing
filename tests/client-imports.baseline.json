@@ -14,9 +14,6 @@
   "src/app/partners/PartnersPage.tsx": [
     "src/lib/constants.ts"
   ],
-  "src/app/projects/ProjectsIndexPage.tsx": [
-    "src/lib/constants.ts"
-  ],
   "src/components/about/TeamGrid.tsx": [
     "src/lib/constants.ts"
   ],
@@ -24,9 +21,6 @@
     "src/lib/constants.ts"
   ],
   "src/components/areas/AreaLandingTemplate.tsx": [
-    "src/lib/constants.ts"
-  ],
-  "src/components/areas/CityProofBlock.tsx": [
     "src/lib/constants.ts"
   ],
   "src/components/estimator/CostEstimator.tsx": [
@@ -46,9 +40,6 @@
   ],
   "src/components/layout/Navbar.tsx": [
     "src/lib/constants.ts"
-  ],
-  "src/components/projects/ProjectDetail.tsx": [
-    "src/lib/projects.ts"
   ],
   "src/components/services/ServiceLandingTemplate.tsx": [
     "src/lib/constants.ts",

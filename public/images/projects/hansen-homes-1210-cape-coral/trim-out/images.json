@@ -1,0 +1,47 @@
+{
+  "photo-1.jpg": {
+    "alt": "Ruud electric tank water heater in the garage with CPVC supply lines, ball valve and T&P relief valve",
+    "order": 1,
+    "cover": true
+  },
+  "photo-2.jpg": {
+    "alt": "Plumber connecting the drain under a freestanding laundry tub with a two-handle chrome utility faucet",
+    "order": 2
+  },
+  "photo-3.jpg": {
+    "alt": "White two-piece elongated toilet set in a small water closet with tile floor on a Hansen Homes build",
+    "order": 3
+  },
+  "photo-4.jpg": {
+    "alt": "Brushed nickel tub and shower trim with spout, valve and shower head beside a glass mosaic tile niche",
+    "order": 4
+  },
+  "photo-5.jpg": {
+    "alt": "Undermount bathroom sink with brushed nickel single-handle lavatory faucet and pop-up drain in a quartz vanity top",
+    "order": 5
+  },
+  "photo-6.jpg": {
+    "alt": "Plumber hooking up an undermount stainless kitchen sink with pull-down faucet in a new Cape Coral home",
+    "order": 6
+  },
+  "photo-7.jpg": {
+    "alt": "Two-piece elongated toilet with WaterSense label installed in a water closet with marble-look tile floor",
+    "order": 7
+  },
+  "photo-8.jpg": {
+    "alt": "Rectangular undermount lavatory sink with brushed nickel faucet and pop-up drain under an open medicine cabinet mirror",
+    "order": 8
+  },
+  "photo-9.jpg": {
+    "alt": "Undermount vanity sink with brushed nickel single-handle faucet on a quartz countertop before final cleanup",
+    "order": 9
+  },
+  "photo-10.jpg": {
+    "alt": "Brushed nickel handheld shower head on wall bracket with hose and single-handle valve trim in a tiled shower",
+    "order": 10
+  },
+  "photo-11.jpg": {
+    "alt": "Tiled shower with brushed nickel handheld shower head and valve trim beside a vertical glass mosaic niche",
+    "order": 11
+  }
+}

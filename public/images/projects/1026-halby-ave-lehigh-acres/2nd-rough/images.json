@@ -1,0 +1,51 @@
+{
+  "photo-1.jpg": {
+    "alt": "Wood-stud partition framing with red and blue PEX runs and a PVC vent stack beneath roof trusses",
+    "order": 1,
+    "cover": true
+  },
+  "photo-2.jpg": {
+    "alt": "Red and blue PEX supply stub-outs on stud blocking beside a PVC drain riser through the slab",
+    "order": 2
+  },
+  "photo-3.jpg": {
+    "alt": "Red and blue PEX branches and a PVC drain tee with vent riser roughed through a stud partition",
+    "order": 3
+  },
+  "photo-4.jpg": {
+    "alt": "PEX trunk lines along truss bottom chords with a PVC vent elbow above a block wall doorway",
+    "order": 4
+  },
+  "photo-5.jpg": {
+    "alt": "PEX supply loops and a PVC vent routed through top plates and trusses beside insulated flex duct",
+    "order": 5
+  },
+  "photo-6.jpg": {
+    "alt": "Washing machine outlet box with PEX supplies, PVC standpipe trap and dryer duct roughed in a laundry wall",
+    "order": 6
+  },
+  "photo-7.jpg": {
+    "alt": "Blue PEX cold line strapped along a truss chord above furred block walls and window openings",
+    "order": 7
+  },
+  "photo-8.jpg": {
+    "alt": "PVC drain elbow stubbed up through a slab cutout below the bottom plate of a framed knee wall",
+    "order": 8
+  },
+  "photo-9.jpg": {
+    "alt": "Two PVC drain stub-ups in a slab cutout beneath a copper stub-out and blue PEX line",
+    "order": 9
+  },
+  "photo-10.jpg": {
+    "alt": "Single blue PEX drop strapped to a furred block wall ending at a copper stub-out",
+    "order": 10
+  },
+  "photo-11.jpg": {
+    "alt": "Blue PEX cold line dropped through framed partition studs to a recessed supply box near the slab",
+    "order": 11
+  },
+  "photo-12.jpg": {
+    "alt": "Blue PEX line strapped down an exterior block wall to a copper stub-out beside stacked lumber",
+    "order": 12
+  }
+}

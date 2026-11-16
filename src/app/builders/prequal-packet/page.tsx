@@ -6,7 +6,8 @@ import {
   PREQUAL_STATUS_LABEL,
   QUALIFICATIONS,
 } from "@/lib/builder-program";
-import { BUSINESS, COMPLETED_PROJECTS, CONTRACTOR_RANKING, WARRANTY } from "@/lib/constants";
+import { BUSINESS, CONTRACTOR_RANKING, WARRANTY } from "@/lib/constants";
+import { COMPLETED_PROJECTS } from "@/lib/projects-data";
 import { projectStatusLabel } from "@/lib/projects";
 
 // Source for public/downloads/cs-plumbing-prequal-packet.pdf.
