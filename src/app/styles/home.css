@@ -223,6 +223,7 @@
   /* ---- Logo strips ---------------------------------------------------------- */
   .home-strip {
     display: grid;
+    grid-template-columns: minmax(0, 1fr);
     gap: 1.25rem;
   }
 
@@ -248,63 +249,139 @@
     }
   }
 
-  .home-brands {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 1.25rem 1.5rem;
-    align-items: center;
+  /* ---- Logo carousel (components/ui/LogoCarousel.tsx) ----------------------
+     One row of white tiles that glides sideways and loops: the track holds the
+     list twice and moves by half its width. It pauses on hover, on focus and
+     while touched; under reduced motion it is a plain scrollable strip. The
+     row clips itself, so the page never scrolls sideways. On phones it runs
+     from edge to edge of the screen. */
+  .logo-carousel {
+    --logo-carousel-gap: 1rem;
+    --logo-carousel-fade: 2rem;
+    --logo-carousel-bleed: calc(var(--spacing-gutter) + env(safe-area-inset-left, 0px));
+    min-width: 0;
+    margin-inline: calc(-1 * var(--logo-carousel-bleed));
+    padding-block: 0.25rem;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, transparent, black var(--logo-carousel-fade), black calc(100% - var(--logo-carousel-fade)), transparent);
+    mask-image: linear-gradient(to right, transparent, black var(--logo-carousel-fade), black calc(100% - var(--logo-carousel-fade)), transparent);
+    border-radius: 0.75rem;
   }
 
-  .home-brands > li {
-    position: relative;
-    height: 2rem;
+  .logo-carousel:focus-visible {
+    outline: 2px solid var(--tone-focus);
+    outline-offset: -2px;
   }
 
-  @media (min-width: 48rem) {
-    .home-brands {
-      grid-template-columns: repeat(8, minmax(0, 1fr));
-      gap: 2rem;
-    }
-  }
-
-  /* Builders: one row that scrolls sideways on phones, wrapped from 1024 px. */
-  .home-builders {
+  .logo-carousel-track {
     display: flex;
-    gap: 0.75rem;
-    margin-inline: calc(-1 * (var(--spacing-gutter) + env(safe-area-inset-left, 0px)));
-    padding-inline: calc(var(--spacing-gutter) + env(safe-area-inset-left, 0px));
-    overflow-x: auto;
-    overscroll-behavior-x: contain;
-    scrollbar-width: none;
+    width: max-content;
   }
 
-  .home-builders::-webkit-scrollbar {
-    display: none;
+  .logo-carousel-list {
+    display: flex;
+    flex: none;
+    gap: var(--logo-carousel-gap);
+    padding-inline-end: var(--logo-carousel-gap);
   }
 
-  .home-builders > li {
+  .logo-carousel-tile {
     display: flex;
     flex: none;
     align-items: center;
     justify-content: center;
-    width: 8.5rem;
-    height: 4rem;
-    padding: 0.625rem;
+    width: 9rem;
+    height: 5rem;
+    padding: 0.75rem 1rem;
     border: 1px solid var(--color-steel-200);
-    border-radius: 0.75rem;
+    border-radius: 0.875rem;
+    background-color: var(--color-white);
+  }
+
+  .logo-carousel-tile[data-tone="navy"] {
+    border-color: var(--tone-canvas);
     background-color: var(--tone-canvas);
   }
 
-  @media (min-width: 64rem) {
-    .home-builders {
-      flex-wrap: wrap;
-      margin-inline: 0;
-      padding-inline: 0;
-      overflow: visible;
+  /* The logo area: 56 px tall on phones, 64 px from 1024 px. */
+  .logo-carousel-logo {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 3.5rem;
+  }
+
+  .logo-carousel-img {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 3.5rem;
+    object-fit: contain;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .logo-carousel-track {
+      animation: logo-carousel-glide var(--logo-carousel-duration, 45s) linear infinite;
     }
 
-    .home-builders > li {
-      width: calc((100% - 8 * 0.75rem) / 9);
+    .logo-carousel[data-reverse] .logo-carousel-track {
+      animation-direction: reverse;
     }
+
+    .logo-carousel:hover .logo-carousel-track,
+    .logo-carousel:active .logo-carousel-track,
+    .logo-carousel:focus-within .logo-carousel-track {
+      animation-play-state: paused;
+    }
+  }
+
+  /* Reduced motion: no animation, the copy goes, the row scrolls by hand.
+     The padding lets the first and last tile scroll clear of the fades. */
+  @media (prefers-reduced-motion: reduce) {
+    .logo-carousel {
+      padding-inline: var(--logo-carousel-fade);
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scrollbar-width: none;
+    }
+
+    .logo-carousel::-webkit-scrollbar {
+      display: none;
+    }
+
+    .logo-carousel-list[aria-hidden="true"] {
+      display: none;
+    }
+
+    .logo-carousel-list {
+      padding-inline-end: 0;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .logo-carousel {
+      --logo-carousel-gap: 1.25rem;
+      --logo-carousel-fade: 4rem;
+      margin-inline: 0;
+    }
+
+    .logo-carousel-tile {
+      width: 10.5rem;
+      height: 5.5rem;
+    }
+
+    .logo-carousel-logo {
+      height: 4rem;
+    }
+
+    .logo-carousel-img {
+      max-height: 4rem;
+    }
+  }
+}
+
+@keyframes logo-carousel-glide {
+  to {
+    transform: translate3d(-50%, 0, 0);
   }
 }

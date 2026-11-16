@@ -3,6 +3,7 @@ import Link from "next/link";
 import BuilderLogoImage from "@/components/ui/BuilderLogoImage";
 import Button from "@/components/ui/Button";
 import Container from "@/components/ui/Container";
+import LogoCarousel from "@/components/ui/LogoCarousel";
 import { ArrowRight, Phone, ShieldCheck } from "@/components/ui/icons";
 import { BUSINESS } from "@/lib/business";
 import { BUILDERS } from "@/lib/builders-data";
@@ -14,7 +15,7 @@ import { ArrowLink, HomeHeading } from "./HomeHeading";
 
 /**
  * A see-through logo drawn in white (its dominant colour is pure white)
- * would vanish on a white cell: that one is set on a navy chip instead.
+ * would vanish on a white tile: that one is set on a navy tile instead.
  */
 function whiteLogo(path: string) {
   const meta = imageMeta(path);
@@ -24,7 +25,7 @@ function whiteLogo(path: string) {
 /**
  * On white: the seasonal Coastal Comeback plan as one compact card (the
  * teaser beside the three annual plans), then the brands we install and the
- * builders who trust C&S as one logo strip each. The teaser flips between
+ * builders who trust C&S as one gliding logo carousel each. The teaser flips between
  * arrival and departure wording by season.
  */
 export default function CoastalComebackTeaser({ season = "departure" }: { season?: Season }) {
@@ -88,13 +89,20 @@ export default function CoastalComebackTeaser({ season = "departure" }: { season
               size="sm"
               className="home-strip-head"
             />
-            <ul className="home-brands">
-              {brands.items.map((brand) => (
-                <li key={brand.name}>
-                  <Image src={brand.logo} alt={`${brand.name} logo`} fill sizes="112px" className="object-contain" />
-                </li>
-              ))}
-            </ul>
+            {/* Eager: a lazy logo would not load until it slid into view,
+                so tiles would arrive blank. The files are small. */}
+            <LogoCarousel
+              labelledBy="home-brands-title"
+              seconds={40}
+              items={brands.items.map((brand) => ({
+                key: brand.name,
+                logo: (
+                  <span className="logo-carousel-logo">
+                    <Image src={brand.logo} alt={`${brand.name} logo`} fill sizes="128px" loading="eager" className="object-contain" />
+                  </span>
+                ),
+              }))}
+            />
           </div>
 
           <div aria-labelledby="home-builders-title" role="group" className="home-strip">
@@ -111,13 +119,16 @@ export default function CoastalComebackTeaser({ season = "departure" }: { season
                 {builders.link.label}
               </ArrowLink>
             </div>
-            <ul className="home-builders">
-              {BUILDERS.map((builder) => (
-                <li key={builder.name} data-tone={whiteLogo(builder.logo) ? "navy" : undefined}>
-                  <BuilderLogoImage builder={builder} sizes="140px" className="h-9 w-auto max-w-full object-contain lg:h-10" />
-                </li>
-              ))}
-            </ul>
+            <LogoCarousel
+              labelledBy="home-builders-title"
+              seconds={50}
+              reverse
+              items={BUILDERS.map((builder) => ({
+                key: builder.name,
+                dark: whiteLogo(builder.logo),
+                logo: <BuilderLogoImage builder={builder} sizes="144px" loading="eager" className="logo-carousel-img" />,
+              }))}
+            />
           </div>
         </div>
       </Container>
