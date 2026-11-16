@@ -257,7 +257,7 @@ export default function QuoteResult({
             Check your email. We&apos;ll be in touch shortly.
           </p>
           <Button
-            href={`tel:${BUSINESS.phoneRaw}`}
+            href={BUSINESS.phoneHref}
             variant="secondary"
             icon={<Phone className="w-4 h-4" />}
             size="sm"

@@ -40,7 +40,7 @@ export default function EmergencyBand() {
         <div className="relative mt-10 sm:mt-12 inline-flex flex-col items-center">
           <RadarPulse />
           <a
-            href={`tel:${BUSINESS.phoneRaw}`}
+            href={BUSINESS.phoneHref}
             className="relative z-10 inline-flex items-center gap-3 sm:gap-4 text-3xl sm:text-5xl lg:text-6xl font-black text-gold hover:text-white transition-colors duration-300 tabular-nums tracking-tight"
           >
             <Phone className="w-7 h-7 sm:w-10 sm:h-10 shrink-0" />

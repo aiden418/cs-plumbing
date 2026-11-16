@@ -91,7 +91,7 @@ export default function ServiceRequestForm({
       <div role="status" className="rounded-2xl border border-green-200 bg-green-50 p-6 text-center">
         <h3 className="text-lg font-bold text-gray-900">Request sent!</h3>
         <p className="mt-2 text-sm text-gray-600">Our office will contact you using the details you provided. {CLAIMS.bookingConfirmation} Your appointment is confirmed only after we contact you.</p>
-        <p className="mt-3 text-sm text-gray-600">For urgent service, call <a className="font-semibold text-primary underline" href={`tel:${BUSINESS.phoneRaw}`}>{BUSINESS.phone}</a>.</p>
+        <p className="mt-3 text-sm text-gray-600">For urgent service, call <a className="font-semibold text-primary underline" href={BUSINESS.phoneHref}>{BUSINESS.phone}</a>.</p>
       </div>
     );
   }

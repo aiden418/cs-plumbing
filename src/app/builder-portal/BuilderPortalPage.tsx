@@ -161,7 +161,7 @@ export default function BuilderPortalPage() {
                 <Button href="/" variant="secondary">
                   Back to Home
                 </Button>
-                <Button href={`tel:${BUSINESS.phoneRaw}`} icon={<Phone className="w-4 h-4" />}>
+                <Button href={BUSINESS.phoneHref} icon={<Phone className="w-4 h-4" />}>
                   Call {BUSINESS.phone}
                 </Button>
               </div>

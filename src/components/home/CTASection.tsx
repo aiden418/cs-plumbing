@@ -46,7 +46,7 @@ export default function CTASection() {
                 Book a Service
               </Button>
               <Button
-                href={`tel:${BUSINESS.phoneRaw}`}
+                href={BUSINESS.phoneHref}
                 variant="secondary"
                 size="lg"
                 icon={<Phone className="w-5 h-5" />}

@@ -81,7 +81,7 @@ const tiers = [
     period: "for Quote",
     tagline: "Custom plans for multi-property owners, estates & STR managers.",
     cta: `Call ${BUSINESS.phone}`,
-    href: `tel:${BUSINESS.phoneRaw}`,
+    href: BUSINESS.phoneHref,
     variant: "secondary" as const,
     highlight: false,
     inclusions: [
@@ -149,7 +149,7 @@ export default function CoastalComebackPlanPage({ season = "departure" }: { seas
               See the Plans
             </Button>
             <Button
-              href={`tel:${BUSINESS.phoneRaw}`}
+              href={BUSINESS.phoneHref}
               variant="outline-light"
               size="lg"
               icon={<Phone className="w-5 h-5" />}
@@ -379,7 +379,7 @@ export default function CoastalComebackPlanPage({ season = "departure" }: { seas
                 Enroll Now
               </Button>
               <Button
-                href={`tel:${BUSINESS.phoneRaw}`}
+                href={BUSINESS.phoneHref}
                 variant="secondary"
                 size="lg"
                 icon={<Phone className="w-5 h-5" />}

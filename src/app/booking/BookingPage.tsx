@@ -292,7 +292,7 @@ export default function BookingPage() {
         <p className="mt-4 text-sm text-white/60">
           Prefer to talk?{" "}
           <a
-            href={`tel:${BUSINESS.phoneRaw}`}
+            href={BUSINESS.phoneHref}
             className="inline-flex items-center gap-1.5 font-bold text-gold hover:underline"
           >
             <Phone className="w-3.5 h-3.5" />
@@ -628,7 +628,7 @@ export default function BookingPage() {
                     {!isEstimate && "."}
                   </p>
                   <Button
-                    href={`tel:${BUSINESS.phoneRaw}`}
+                    href={BUSINESS.phoneHref}
                     variant="secondary"
                     icon={<Phone className="w-4 h-4" />}
                   >

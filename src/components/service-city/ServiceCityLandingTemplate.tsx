@@ -38,7 +38,7 @@ export default function ServiceCityLandingTemplate({
         actions={
           <>
             <Button
-              href={`tel:${BUSINESS.phoneRaw}`}
+              href={BUSINESS.phoneHref}
               variant="gold"
               size="lg"
               icon={<Phone className="w-5 h-5" />}

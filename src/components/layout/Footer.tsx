@@ -79,7 +79,7 @@ export default function Footer() {
             </p>
             <div className="flex flex-col gap-3 text-sm">
               <a
-                href={`tel:${BUSINESS.phoneRaw}`}
+                href={BUSINESS.phoneHref}
                 className="flex items-center gap-2 text-gray-600 hover:text-primary transition-colors"
               >
                 <Phone className="w-4 h-4 text-primary flex-shrink-0" />

@@ -62,7 +62,7 @@ export default function FAQPage() {
             </Link>{" "}
             or call{" "}
             <a
-              href={`tel:${BUSINESS.phoneRaw}`}
+              href={BUSINESS.phoneHref}
               className="text-gold font-semibold hover:underline"
             >
               833-PLUMB-IT
@@ -137,7 +137,7 @@ export default function FAQPage() {
               Get an Instant Quote
             </Link>
             <a
-              href={`tel:${BUSINESS.phoneRaw}`}
+              href={BUSINESS.phoneHref}
               className="inline-flex items-center justify-center px-6 py-3 text-white/80 font-semibold hover:text-white transition-colors"
             >
               Call 833-PLUMB-IT

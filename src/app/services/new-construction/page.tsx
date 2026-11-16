@@ -141,7 +141,7 @@ export default function NewConstructionPage() {
               Partner With Us
             </Button>
             <Button
-              href={`tel:${BUSINESS.phoneRaw}`}
+              href={BUSINESS.phoneHref}
               variant="outline-light"
               size="lg"
               icon={<Phone className="w-5 h-5" />}

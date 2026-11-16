@@ -123,7 +123,7 @@ export async function POST(request: Request) {
           <div style="padding: 20px; background: #f9f9f9;">
             <p>Hi ${safe.name},</p>
             <p>Thanks for contacting C&S Plumbing of Lee about <strong>${safe.service}</strong>. ${CLAIMS.bookingConfirmation}</p>${attachments.length > 0 ? `<p>We received ${attachments.length} photo${attachments.length === 1 ? "" : "s"} with your request.</p>` : ""}
-            <p>Your appointment is confirmed only once we have spoken with you. For urgent service, call <a href="tel:${BUSINESS.phoneRaw}" style="color: #0099FF;">${BUSINESS.phone}</a> any time.</p>
+            <p>Your appointment is confirmed only once we have spoken with you. For urgent service, call <a href="${BUSINESS.phoneHref}" style="color: #0099FF;">${BUSINESS.phone}</a> any time.</p>
             <p style="color: #999; font-size: 12px; margin-top: 20px;">${BUSINESS.fullName} · ${BUSINESS.address}, ${BUSINESS.city}, ${BUSINESS.state} ${BUSINESS.zip}</p>
           </div>
         </div>

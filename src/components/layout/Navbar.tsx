@@ -117,7 +117,7 @@ export default function Navbar() {
                   {LATEST_AWARD.title}
                 </Link>
                 <a
-                  href={`tel:${BUSINESS.phoneRaw}`}
+                  href={BUSINESS.phoneHref}
                   className="flex items-center gap-1.5 font-bold hover:underline"
                 >
                   <Phone className="w-3.5 h-3.5" />
@@ -218,7 +218,7 @@ export default function Navbar() {
             {/* CTA Buttons */}
             <div className="hidden lg:flex items-center gap-3">
               <a
-                href={`tel:${BUSINESS.phoneRaw}`}
+                href={BUSINESS.phoneHref}
                 className={cn(
                   "flex items-center gap-2 px-3.5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300",
                   isScrolled || !isHomepage
@@ -379,7 +379,7 @@ export default function Navbar() {
 
               <div className="mt-auto py-8 flex flex-col gap-3 shrink-0">
                 <a
-                  href={`tel:${BUSINESS.phoneRaw}`}
+                  href={BUSINESS.phoneHref}
                   className="flex items-center justify-center gap-2 py-4 text-xl font-bold text-gray-900"
                 >
                   <Phone className="w-5 h-5" />

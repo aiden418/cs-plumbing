@@ -117,7 +117,7 @@ export default function BuilderPortalIntro() {
                 <ArrowRight className="w-4 h-4" />
               </Button>
               <Button
-                href={`tel:${BUSINESS.phoneRaw}`}
+                href={BUSINESS.phoneHref}
                 variant="outline-light"
                 size="lg"
                 icon={<Phone className="w-5 h-5" />}

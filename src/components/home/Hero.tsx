@@ -202,7 +202,7 @@ export default function Hero() {
             >
               Plumbing emergency?{" "}
               <a
-                href={`tel:${BUSINESS.phoneRaw}`}
+                href={BUSINESS.phoneHref}
                 className="inline-flex items-center gap-1 font-semibold text-white hover:text-gold"
               >
                 <Phone className="w-3.5 h-3.5" />

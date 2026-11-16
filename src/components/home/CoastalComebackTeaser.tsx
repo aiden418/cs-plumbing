@@ -55,7 +55,7 @@ export default function CoastalComebackTeaser({ season = "departure" }: { season
                   See the Plans
                 </Button>
                 <Button
-                  href={`tel:${BUSINESS.phoneRaw}`}
+                  href={BUSINESS.phoneHref}
                   variant="secondary"
                   size="lg"
                   icon={<Phone className="w-5 h-5" />}

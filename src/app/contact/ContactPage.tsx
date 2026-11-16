@@ -34,7 +34,7 @@ export default function ContactPage() {
 
                 <div className="space-y-5 sm:space-y-6">
                   <a
-                    href={`tel:${BUSINESS.phoneRaw}`}
+                    href={BUSINESS.phoneHref}
                     className="flex items-start gap-3 sm:gap-4 group"
                   >
                     <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary flex-shrink-0 group-hover:bg-primary/20 transition-colors">

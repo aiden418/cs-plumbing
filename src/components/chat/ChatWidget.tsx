@@ -71,7 +71,7 @@ export default function ChatWidget() {
                   {/* Quick Actions */}
                   <div className="mt-3 grid grid-cols-2 gap-1.5 sm:gap-2">
                     <a
-                      href={`tel:${BUSINESS.phoneRaw}`}
+                      href={BUSINESS.phoneHref}
                       className="flex items-center justify-center gap-1.5 p-2.5 rounded-xl bg-primary/10 text-primary text-xs font-medium hover:bg-primary/20 transition-colors"
                     >
                       <Phone className="w-3.5 h-3.5" />

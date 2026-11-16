@@ -107,7 +107,7 @@ export default function BlogContent({ post }: { post: BlogPost }) {
                   </p>
                   <div className="space-y-3">
                     <Button
-                      href={`tel:${BUSINESS.phoneRaw}`}
+                      href={BUSINESS.phoneHref}
                       variant="secondary"
                       size="sm"
                       icon={<Phone className="w-4 h-4" />}

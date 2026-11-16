@@ -203,7 +203,7 @@ export async function POST(request: Request) {
               <p style="margin: 4px 0;"><strong>Files received:</strong> ${fileCount}</p>
             </div>
             <p style="color: #666; font-size: 14px;">
-              Questions? Call us at <a href="tel:${BUSINESS.phoneRaw}" style="color: #0099FF;">${BUSINESS.phone}</a>.
+              Questions? Call us at <a href="${BUSINESS.phoneHref}" style="color: #0099FF;">${BUSINESS.phone}</a>.
             </p>
             <p style="color: #999; font-size: 12px; margin-top: 20px;">
               ${BUSINESS.fullName} &middot; ${BUSINESS.address}, ${BUSINESS.city}, ${BUSINESS.state} ${BUSINESS.zip}

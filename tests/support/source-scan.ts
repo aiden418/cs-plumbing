@@ -5,7 +5,7 @@
  *
  * Not a test itself: `npm test` only runs files named *.test.ts.
  */
-import { existsSync, readFileSync, statSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
@@ -15,6 +15,18 @@ export const SRC = path.join(ROOT, "src");
 
 /** Repo-relative path with forward slashes, for messages and baselines. */
 export const rel = (file: string): string => path.relative(ROOT, file).split(path.sep).join("/");
+
+/** Every .ts / .tsx file under `dir` (declaration files excluded), sorted. */
+export function listSourceFiles(dir: string = SRC): string[] {
+  const out: string[] = [];
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    if (entry.name === "node_modules" || entry.name.startsWith(".")) continue;
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) out.push(...listSourceFiles(full));
+    else if (/\.(ts|tsx|mts)$/.test(entry.name) && !entry.name.endsWith(".d.ts")) out.push(full);
+  }
+  return out.sort();
+}
 
 export function parseSource(file: string): ts.SourceFile {
   return ts.createSourceFile(
@@ -104,4 +116,42 @@ export function resolveImport(fromFile: string, specifier: string): string | nul
     if (existsSync(candidate) && statSync(candidate).isFile()) return candidate;
   }
   return "unresolved";
+}
+
+export interface TextNode {
+  kind: "string" | "template" | "jsx-text";
+  /** The node's source text as written (quotes, escapes and `${` included). */
+  raw: string;
+  line: number;
+}
+
+/**
+ * Every node that holds literal text: quoted strings, the literal parts of
+ * template strings, and JSX text. Comments are not nodes, so text that only
+ * appears in a comment never shows up here.
+ */
+export function textNodes(source: ts.SourceFile): TextNode[] {
+  const out: TextNode[] = [];
+  const visit = (node: ts.Node) => {
+    let kind: TextNode["kind"] | undefined;
+    if (ts.isStringLiteral(node)) kind = "string";
+    else if (
+      node.kind === ts.SyntaxKind.NoSubstitutionTemplateLiteral ||
+      node.kind === ts.SyntaxKind.TemplateHead ||
+      node.kind === ts.SyntaxKind.TemplateMiddle ||
+      node.kind === ts.SyntaxKind.TemplateTail
+    ) {
+      kind = "template";
+    } else if (node.kind === ts.SyntaxKind.JsxText) kind = "jsx-text";
+    if (kind) {
+      out.push({
+        kind,
+        raw: node.getText(source),
+        line: source.getLineAndCharacterOfPosition(node.getStart(source)).line + 1,
+      });
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  return out;
 }

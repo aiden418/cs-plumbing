@@ -48,7 +48,7 @@ export default function NotFound() {
           </Link>
           <span className="hidden sm:inline text-white/30">·</span>
           <a
-            href={`tel:${BUSINESS.phoneRaw}`}
+            href={BUSINESS.phoneHref}
             className="text-white/60 hover:text-white transition-colors"
           >
             Call {BUSINESS.phone}

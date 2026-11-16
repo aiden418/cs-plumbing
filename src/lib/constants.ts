@@ -2545,7 +2545,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>What to Do Next</h2>
 <p>If you're experiencing any of these signs, don't wait for a catastrophic pipe failure. <a href="/services/repiping">Contact C&S Plumbing for a free repipe evaluation</a>. We offer both copper and PEX repiping options, complete most homes in 1-2 days, and handle all permits and inspections.</p>
-<p>Call <a href="tel:8337586248">833-PLUMB-IT</a> or <a href="/booking">book online</a> to schedule your free consultation.</p>`,
+<p>Call <a href="${BUSINESS.phoneHref}">833-PLUMB-IT</a> or <a href="/booking">book online</a> to schedule your free consultation.</p>`,
   },
   {
     slug: "tankless-vs-traditional-water-heaters",
@@ -2605,7 +2605,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>Not Sure? We'll Help You Decide</h2>
 <p>Every home is different. <a href="/services/water-heaters">C&S Plumbing's water heater specialists</a> will evaluate your home's hot water needs, current setup, and budget to recommend the best option. We install all major brands including Rinnai, Navien, Rheem, and A.O. Smith.</p>
-<p>Call <a href="tel:8337586248">833-PLUMB-IT</a> or <a href="/booking">book a consultation</a> today.</p>`,
+<p>Call <a href="${BUSINESS.phoneHref}">833-PLUMB-IT</a> or <a href="/booking">book a consultation</a> today.</p>`,
   },
   {
     slug: "plumbing-emergency-what-to-do",
@@ -2650,7 +2650,7 @@ export const BLOG_POSTS: BlogPost[] = [
 <p>Before you start major cleanup, take photos and video of the damage. Your homeowner's insurance will need documentation to process a claim. Photograph the source of the leak, any water damage to floors, walls, and belongings.</p>
 
 <h2>Step 6: Call C&S Plumbing</h2>
-<p>Once you've contained the immediate emergency, call <a href="tel:8337586248">833-PLUMB-IT</a> for 24/7 emergency plumbing service. We serve <a href="/areas/cape-coral">Cape Coral</a>, <a href="/areas/fort-myers">Fort Myers</a>, <a href="/areas/north-fort-myers">North Fort Myers</a>, and all of Southwest Florida with rapid emergency response.</p>
+<p>Once you've contained the immediate emergency, call <a href="${BUSINESS.phoneHref}">833-PLUMB-IT</a> for 24/7 emergency plumbing service. We serve <a href="/areas/cape-coral">Cape Coral</a>, <a href="/areas/fort-myers">Fort Myers</a>, <a href="/areas/north-fort-myers">North Fort Myers</a>, and all of Southwest Florida with rapid emergency response.</p>
 <p>Our emergency team will:</p>
 <ul>
 <li>Arrive as quickly as possible (typically within 1-2 hours in our service area)</li>
@@ -2717,7 +2717,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>Ready to Experience the C&S Difference?</h2>
 <p>We've built our reputation on honest work, fair pricing, and treating every home like our own. With 9,500+ completed projects and a 5.0-star Google rating, we let our track record speak for itself.</p>
-<p>Call <a href="tel:8337586248">833-PLUMB-IT</a> or <a href="/booking">book online</a> to experience the difference a trusted, local plumber makes.</p>`,
+<p>Call <a href="${BUSINESS.phoneHref}">833-PLUMB-IT</a> or <a href="/booking">book online</a> to experience the difference a trusted, local plumber makes.</p>`,
   },
   {
     slug: "hurricane-plumbing-preparation-swfl",
@@ -2761,7 +2761,7 @@ export const BLOG_POSTS: BlogPost[] = [
 <li>Turn the water on slowly and check for <a href="/services/leak-repair">leaks</a> at every fixture</li>
 <li>Have your water tested if your area experienced flooding</li>
 </ul>
-<p>If you discover damage, call <a href="tel:8337586248">833-PLUMB-IT</a> for emergency plumbing service. We prioritize <a href="/areas/sanibel">Sanibel</a>, <a href="/areas/fort-myers">Fort Myers</a>, <a href="/areas/cape-coral">Cape Coral</a>, and all SWFL communities after storms. <a href="/booking">Book an inspection</a> today to get ahead of hurricane season.</p>`,
+<p>If you discover damage, call <a href="${BUSINESS.phoneHref}">833-PLUMB-IT</a> for emergency plumbing service. We prioritize <a href="/areas/sanibel">Sanibel</a>, <a href="/areas/fort-myers">Fort Myers</a>, <a href="/areas/cape-coral">Cape Coral</a>, and all SWFL communities after storms. <a href="/booking">Book an inspection</a> today to get ahead of hurricane season.</p>`,
   },
   {
     slug: "water-softener-vs-water-filter-lee-county",
@@ -2815,7 +2815,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>Get a Free Water Test</h2>
 <p>Not sure what your water needs? C&S Plumbing offers free water testing and consultations. We'll test your water hardness and quality, then recommend the right system for your home and budget.</p>
-<p>Call <a href="tel:8337586248">833-PLUMB-IT</a> or <a href="/booking">book a free water consultation</a> to find out what's in your water and how to fix it.</p>`,
+<p>Call <a href="${BUSINESS.phoneHref}">833-PLUMB-IT</a> or <a href="/booking">book a free water consultation</a> to find out what's in your water and how to fix it.</p>`,
   },
   {
     slug: "polybutylene-pipe-problems-cape-coral",
@@ -2874,7 +2874,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>Don't Wait for a Catastrophic Failure</h2>
 <p>Every day you wait, your polybutylene pipes are deteriorating further. A proactive repipe on your schedule is far better than an emergency repair at 2 AM after a pipe bursts and floods your home.</p>
-<p>Call <a href="tel:8337586248">833-PLUMB-IT</a> or <a href="/booking">schedule a free repipe consultation</a> today. We'll inspect your pipes, explain your options, and provide an honest, upfront estimate.</p>`,
+<p>Call <a href="${BUSINESS.phoneHref}">833-PLUMB-IT</a> or <a href="/booking">schedule a free repipe consultation</a> today. We'll inspect your pipes, explain your options, and provide an honest, upfront estimate.</p>`,
   },
   {
     slug: "slab-leak-detection-southwest-florida",
@@ -2947,7 +2947,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>Don't Wait — Slab Leaks Get Worse Quickly</h2>
 <p>A small slab leak that costs $2,000 to repair today can become a $20,000+ foundation and mold remediation project in six months. The concrete and soil beneath your slab will erode faster than you expect once water starts flowing freely underground.</p> // claim-ok: illustrative comparison, not a published price
-<p>If you've noticed any of the warning signs above, call <a href="tel:8337586248">833-PLUMB-IT</a> immediately. C&S Plumbing provides expert <a href="/services/leak-repair">leak detection and repair</a> throughout <a href="/areas/cape-coral">Cape Coral</a>, <a href="/areas/fort-myers">Fort Myers</a>, <a href="/areas/north-fort-myers">North Fort Myers</a>, <a href="/areas/bonita-springs">Bonita Springs</a>, and all of Lee County. <a href="/booking">Book a leak detection appointment</a> today — fast diagnosis is the difference between a minor repair and a major reconstruction.</p>`,
+<p>If you've noticed any of the warning signs above, call <a href="${BUSINESS.phoneHref}">833-PLUMB-IT</a> immediately. C&S Plumbing provides expert <a href="/services/leak-repair">leak detection and repair</a> throughout <a href="/areas/cape-coral">Cape Coral</a>, <a href="/areas/fort-myers">Fort Myers</a>, <a href="/areas/north-fort-myers">North Fort Myers</a>, <a href="/areas/bonita-springs">Bonita Springs</a>, and all of Lee County. <a href="/booking">Book a leak detection appointment</a> today — fast diagnosis is the difference between a minor repair and a major reconstruction.</p>`,
   },
   {
     slug: "low-water-pressure-causes-fixes-swfl",
@@ -3002,7 +3002,7 @@ export const BLOG_POSTS: BlogPost[] = [
 <h2>When to Call a Plumber</h2>
 <p>A minor, isolated pressure problem at a single fixture is often a DIY fix — clean the aerator or showerhead and you're done. But when pressure is low throughout the house, developed suddenly, or is accompanied by other symptoms (discolored water, higher bills, wet spots on walls or floors), don't wait.</p>
 <p>At C&S Plumbing, we diagnose water pressure problems throughout <a href="/areas/cape-coral">Cape Coral</a>, <a href="/areas/fort-myers">Fort Myers</a>, <a href="/areas/bonita-springs">Bonita Springs</a>, <a href="/areas/north-fort-myers">North Fort Myers</a>, and all of Lee County. We identify the root cause quickly and provide upfront pricing before any work begins — no surprises.</p>
-<p>Call <a href="tel:8337586248">833-PLUMB-IT</a> or <a href="/booking">book an appointment online</a> to get your water pressure back where it belongs.</p>`,
+<p>Call <a href="${BUSINESS.phoneHref}">833-PLUMB-IT</a> or <a href="/booking">book an appointment online</a> to get your water pressure back where it belongs.</p>`,
   },
   {
     slug: "clogged-drains-causes-fixes-swfl",
@@ -3064,7 +3064,7 @@ export const BLOG_POSTS: BlogPost[] = [
 <li>Water is backing up into a tub or floor drain when you run the dishwasher or washing machine</li>
 </ul>
 <p>C&S Plumbing provides professional drain cleaning throughout <a href="/areas/cape-coral">Cape Coral</a>, <a href="/areas/fort-myers">Fort Myers</a>, <a href="/areas/bonita-springs">Bonita Springs</a>, <a href="/areas/north-fort-myers">North Fort Myers</a>, and all of Lee County. We use professional-grade equipment and provide upfront pricing before any work begins.</p>
-<p>Call <a href="tel:8337586248">833-PLUMB-IT</a> or <a href="/booking">book a drain cleaning appointment online</a> today — we'll clear the clog and inspect the line so you know exactly what you're dealing with.</p>`,
+<p>Call <a href="${BUSINESS.phoneHref}">833-PLUMB-IT</a> or <a href="/booking">book a drain cleaning appointment online</a> today — we'll clear the clog and inspect the line so you know exactly what you're dealing with.</p>`,
   },
   {
     slug: "septic-to-sewer-conversion-swfl",
@@ -3123,7 +3123,7 @@ export const BLOG_POSTS: BlogPost[] = [
 <p>Septic to sewer conversion requires a <a href="/blog/how-to-choose-a-plumber-cape-coral">licensed plumbing contractor</a> experienced with UEP projects. At C&S Plumbing, we've completed hundreds of UEP connections across Cape Coral and understand the specific requirements of the city's program. We handle all permitting, excavation, piping, septic abandonment, and final inspection.</p>
 
 <h2>Get Started</h2>
-<p>If you've received a UEP notice or are considering a voluntary septic to sewer conversion, call <a href="tel:8337586248">833-PLUMB-IT</a> or <a href="/booking">book a free consultation</a>. We'll visit your property, assess the scope, and provide an upfront estimate with no hidden costs. See our <a href="/services/uep-utilities">UEP services page</a> for more details and photos of our recent projects.</p>`,
+<p>If you've received a UEP notice or are considering a voluntary septic to sewer conversion, call <a href="${BUSINESS.phoneHref}">833-PLUMB-IT</a> or <a href="/booking">book a free consultation</a>. We'll visit your property, assess the scope, and provide an upfront estimate with no hidden costs. See our <a href="/services/uep-utilities">UEP services page</a> for more details and photos of our recent projects.</p>`,
   },
   {
     slug: "spring-plumbing-maintenance-checklist-swfl",
@@ -3198,7 +3198,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>Get Your Plumbing Summer-Ready</h2>
 <p>Don't wait until your water heater fails in August or a slab leak floods your home in the middle of rainy season. A spring plumbing checkup is the best investment you can make to avoid a summer emergency.</p>
-<p>Call <a href="tel:8337586248">833-PLUMB-IT</a> or <a href="/booking">book a spring inspection online</a>. C&S Plumbing has been keeping Southwest Florida homes running smoothly for over 28 years — we'll make sure yours is ready for whatever summer throws at it.</p>`,
+<p>Call <a href="${BUSINESS.phoneHref}">833-PLUMB-IT</a> or <a href="/booking">book a spring inspection online</a>. C&S Plumbing has been keeping Southwest Florida homes running smoothly for over 28 years — we'll make sure yours is ready for whatever summer throws at it.</p>`,
   },
   {
     slug: "plumbing-checklist-after-hurricane-swfl",
@@ -3238,7 +3238,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>When to Call Us</h2>
 <p>Spinning meter with the house off, sewage backing up, no water pressure, a flooded water heater, or any soggy-ground signs of a broken underground line — those are same-day calls. C&S Plumbing runs <a href="/emergency">24/7 storm-response crews</a> across Lee, Collier, and Charlotte counties, and after 28+ years of Southwest Florida storm seasons, we've triaged every one of these situations hundreds of times.</p>
-<p>Call <a href="tel:8337586248">833-PLUMB-IT</a> — or if lines are jammed after a major storm, <a href="/booking">book online</a> and dispatch will call you back in priority order.</p>`,
+<p>Call <a href="${BUSINESS.phoneHref}">833-PLUMB-IT</a> — or if lines are jammed after a major storm, <a href="/booking">book online</a> and dispatch will call you back in priority order.</p>`,
   },
   {
     slug: "storm-surge-canal-home-plumbing-cape-coral",
@@ -3272,7 +3272,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>What to Do Before the Next Storm</h2>
 <p>Know where your main shutoff is and exercise it twice a year. Photograph your plumbing fixtures and water heater data plate now — it makes insurance claims dramatically easier. And if your home flooded in a past storm and you never had the plumbing inspected, get ahead of it: corrosion damage compounds quietly. Our full <a href="/blog/hurricane-plumbing-preparation-swfl">hurricane prep guide</a> covers the pre-storm checklist, and our <a href="/blog/plumbing-checklist-after-hurricane-swfl">post-storm checklist</a> covers the aftermath.</p>
-<p>C&S Plumbing has worked Cape Coral's canal neighborhoods — from Tarpon Point to Burnt Store — since 1998. Call <a href="tel:8337586248">833-PLUMB-IT</a> or <a href="/booking">book an inspection online</a>.</p>`,
+<p>C&S Plumbing has worked Cape Coral's canal neighborhoods — from Tarpon Point to Burnt Store — since 1998. Call <a href="${BUSINESS.phoneHref}">833-PLUMB-IT</a> or <a href="/booking">book an inspection online</a>.</p>`,
   },
   {
     slug: "slab-leak-insurance-florida",
@@ -3308,7 +3308,7 @@ export const BLOG_POSTS: BlogPost[] = [
 <p>If your home has had two or more slab or pinhole leaks, insurers take notice — some carriers non-renew policies on homes with recurring leak claims. At that point a <a href="/repiping-cape-coral">whole-home repipe</a> often costs less than the combination of repeated repairs, rising premiums, and a potential non-renewal. We'll always tell you honestly which side of that line your home is on.</p>
 
 <h2>Suspect a Slab Leak Right Now?</h2>
-<p>Shut off the main, note your meter reading, and call <a href="tel:8337586248">833-PLUMB-IT</a>. C&S Plumbing provides same-day <a href="/leak-repair-cape-coral">leak detection across Southwest Florida</a>, with written documentation you can hand straight to your adjuster.</p>`,
+<p>Shut off the main, note your meter reading, and call <a href="${BUSINESS.phoneHref}">833-PLUMB-IT</a>. C&S Plumbing provides same-day <a href="/leak-repair-cape-coral">leak detection across Southwest Florida</a>, with written documentation you can hand straight to your adjuster.</p>`,
   },
   {
     slug: "water-heater-hurricane-prep-florida",
@@ -3342,7 +3342,7 @@ export const BLOG_POSTS: BlogPost[] = [
 <p>If your garage has taken water before, two upgrades are worth discussing when your current unit ages out. Raising a replacement tank on a code-compliant stand buys you protection from shallow flooding. And wall-mounted <a href="/blog/tankless-vs-traditional-water-heaters">tankless units</a> sit several feet off the floor by design — one reason they've become popular in flood-prone <a href="/areas/cape-coral">Cape Coral</a> and coastal <a href="/areas/fort-myers">Fort Myers</a> neighborhoods.</p>
 
 <h2>Need It Assessed?</h2>
-<p>Whether it's pre-season peace of mind or a post-storm evaluation, C&S Plumbing services every make of gas, electric, and tankless water heater across Southwest Florida. Call <a href="tel:8337586248">833-PLUMB-IT</a> or <a href="/booking">book online</a> — and stay safe out there this season.</p>`,
+<p>Whether it's pre-season peace of mind or a post-storm evaluation, C&S Plumbing services every make of gas, electric, and tankless water heater across Southwest Florida. Call <a href="${BUSINESS.phoneHref}">833-PLUMB-IT</a> or <a href="/booking">book online</a> — and stay safe out there this season.</p>`,
   },
   {
     slug: "whole-home-repipe-cost-cape-coral",
@@ -3397,7 +3397,7 @@ export const BLOG_POSTS: BlogPost[] = [
 <p>Most repipes are done in <strong>1–2 days</strong>. We run the new PEX first, then switch your home over — so water is typically only off for a few hours, and you don't need to move out. See <a href="/blog/signs-you-need-a-repipe">the warning signs that it's time</a> if you're still deciding.</p>
 
 <h2>Get Your Home's Actual Number</h2>
-<p>Our <a href="/quote-builder?service=repipe">instant repipe quote builder</a> gives you a real range for your home's size and pipe choice in about a minute, no phone call required. Prefer eyes on the job? <a href="/booking">Book a free estimate</a> or call <a href="tel:8337586248">833-PLUMB-IT</a> — C&S Plumbing has repiped <a href="/repiping-cape-coral">Cape Coral</a> homes since 1998, with 5.0 stars across our Google reviews.</p>`,
+<p>Our <a href="/quote-builder?service=repipe">instant repipe quote builder</a> gives you a real range for your home's size and pipe choice in about a minute, no phone call required. Prefer eyes on the job? <a href="/booking">Book a free estimate</a> or call <a href="${BUSINESS.phoneHref}">833-PLUMB-IT</a> — C&S Plumbing has repiped <a href="/repiping-cape-coral">Cape Coral</a> homes since 1998, with 5.0 stars across our Google reviews.</p>`,
   },
   {
     slug: "water-heater-replacement-signs-cost-swfl",
@@ -3451,7 +3451,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>Don't Wait for the Flood</h2>
 <p>Most water heaters sit in the garage or an interior closet, and a tank that fails wet dumps its entire capacity onto the floor. If your unit is showing two or more of the signs above, replacing it on your schedule beats replacing it at 2am — and if a storm is coming, read our guide on <a href="/blog/water-heater-hurricane-prep-florida">water heaters and hurricanes</a> first.</p>
-<p>Get a real number in about a minute with the <a href="/quote-builder?service=water-heater">instant water heater quote builder</a>, <a href="/booking">book same-day service</a>, or call <a href="tel:8337586248">833-PLUMB-IT</a>. C&S Plumbing installs and services <a href="/water-heater-repair-cape-coral">every brand across Cape Coral</a>, Fort Myers, and all of Southwest Florida.</p>`,
+<p>Get a real number in about a minute with the <a href="/quote-builder?service=water-heater">instant water heater quote builder</a>, <a href="/booking">book same-day service</a>, or call <a href="${BUSINESS.phoneHref}">833-PLUMB-IT</a>. C&S Plumbing installs and services <a href="/water-heater-repair-cape-coral">every brand across Cape Coral</a>, Fort Myers, and all of Southwest Florida.</p>`,
   },
   {
     slug: "how-long-does-drain-cleaning-take",
@@ -3501,7 +3501,7 @@ export const BLOG_POSTS: BlogPost[] = [
 <p>Our rule: <strong>the second time the same line clogs within a year, it's a jetting-and-camera conversation.</strong> One Lehigh Acres customer had been paying another plumber three times a year to cable the same kitchen line. We jetted it, scoped it, found a low spot trapping grease — it hasn't backed up in 14 months. Cheaper than the fourth cabling would have been. More on causes and prevention in our <a href="/blog/clogged-drains-causes-fixes-swfl">clogged drains guide</a>.</p>
 
 <h2>Same-Day Service, Honest Clock</h2>
-<p>Most drain calls across <a href="/drain-cleaning-cape-coral">Cape Coral</a>, Fort Myers, and Lehigh Acres get same-day service in regular hours, and we handle 24/7 emergencies when every drain in the house is backing up. After-hours work carries a ${EMERGENCY_CLAIMS.afterHoursSurcharge} surcharge — which we aim to never charge, because most jobs fit in business hours. Call <a href="tel:8337586248">833-PLUMB-IT</a> or <a href="/booking">book online</a>, and see full pricing on our <a href="/services/drain-cleaning">drain cleaning page</a>.</p>`,
+<p>Most drain calls across <a href="/drain-cleaning-cape-coral">Cape Coral</a>, Fort Myers, and Lehigh Acres get same-day service in regular hours, and we handle 24/7 emergencies when every drain in the house is backing up. After-hours work carries a ${EMERGENCY_CLAIMS.afterHoursSurcharge} surcharge — which we aim to never charge, because most jobs fit in business hours. Call <a href="${BUSINESS.phoneHref}">833-PLUMB-IT</a> or <a href="/booking">book online</a>, and see full pricing on our <a href="/services/drain-cleaning">drain cleaning page</a>.</p>`,
   },
 ];
 
