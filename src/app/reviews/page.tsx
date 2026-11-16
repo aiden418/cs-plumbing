@@ -87,7 +87,7 @@ export default async function ReviewsPage() {
           </>
         }
       >
-        <div className="mt-8 flex flex-col gap-x-6 gap-y-2 border-t border-rule pt-6 sm:flex-row sm:flex-wrap sm:items-center">
+        <div className="mt-6 flex flex-col gap-x-6 gap-y-1 border-t border-rule pt-5 sm:flex-row sm:flex-wrap sm:items-center">
           <div className="flex items-center gap-3">
             <span className="font-display text-display-md leading-none font-bold text-fg tabular-nums">{rating.toFixed(1)}</span>
             <Stars rating={rating} className="size-6" />
@@ -113,16 +113,16 @@ export default async function ReviewsPage() {
         <Container>
           <ul aria-label={REVIEWS_PAGE.listLabel} className="sm:columns-2 sm:gap-x-10 lg:columns-3">
             {cards.map((r, i) => (
-              <li key={i} className="break-inside-avoid border-t border-rule pt-5 pb-7 first:border-t-0 first:pt-0 sm:first:border-t sm:first:pt-5">
+              <li key={i} className="break-inside-avoid border-t border-rule pt-4 pb-5 first:border-t-0 first:pt-0 sm:pb-7 sm:first:border-t sm:first:pt-4">
                 <figure>
                   <div className="flex items-center justify-between gap-4">
                     <Stars rating={r.rating} />
                     <span className="text-[0.9375rem] text-body">{r.when}</span>
                   </div>
-                  <blockquote className="mt-3 text-fg">
+                  <blockquote className="mt-2 text-fg">
                     <p>&ldquo;{r.text}&rdquo;</p>
                   </blockquote>
-                  <figcaption className="mt-3 font-semibold text-body">— {r.name}</figcaption>
+                  <figcaption className="mt-2 font-semibold text-body">— {r.name}</figcaption>
                 </figure>
               </li>
             ))}
