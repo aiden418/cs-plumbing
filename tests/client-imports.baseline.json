@@ -38,13 +38,7 @@
   "src/components/home/ServiceHighlights.tsx": [
     "src/lib/constants.ts"
   ],
-  "src/components/home/ServiceMapTeaser.tsx": [
-    "src/lib/constants.ts"
-  ],
   "src/components/home/StatsBar.tsx": [
-    "src/lib/constants.ts"
-  ],
-  "src/components/home/Testimonials.tsx": [
     "src/lib/constants.ts"
   ],
   "src/components/layout/Footer.tsx": [
