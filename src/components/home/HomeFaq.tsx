@@ -1,5 +1,8 @@
-import Container from "@/components/ui/Container";
-import SectionHeading from "@/components/ui/SectionHeading";
+import Link from "next/link";
+import Eyebrow from "@/components/ui/Eyebrow";
+import FaqAccordion from "@/components/ui/FaqAccordion";
+import { ArrowRight } from "@/components/ui/icons";
+import { faq } from "@/content/home";
 import type { FAQ } from "@/lib/types";
 import { BUSINESS } from "@/lib/business";
 
@@ -36,28 +39,25 @@ export const HOME_FAQS: FAQ[] = [
   },
 ];
 
+/** The home FAQ as a native accordion: every answer is in the HTML. The FAQPage JSON-LD stays in page.tsx. */
 export default function HomeFaq() {
   return (
-    <section className="py-16 sm:py-24 lg:py-28 bg-white">
-      <Container>
-        <SectionHeading
-          overline="FAQ"
-          title="Common Questions"
-          subtitle="Quick answers about service, coverage, and what to expect from C&S Plumbing of Lee."
-        />
-        <div className="mx-auto mt-10 grid max-w-4xl gap-x-10 gap-y-7 sm:grid-cols-2 sm:mt-12">
-          {HOME_FAQS.map((f) => (
-            <div key={f.question}>
-              <h3 className="text-base sm:text-lg font-bold text-gray-900">
-                {f.question}
-              </h3>
-              <p className="mt-2 text-sm sm:text-base leading-relaxed text-gray-500">
-                {f.answer}
-              </p>
-            </div>
-          ))}
-        </div>
-      </Container>
-    </section>
+    <div>
+      <Eyebrow className="mb-4">{faq.overline}</Eyebrow>
+      <h2 id="home-faq-title" className="font-display text-display-sm font-bold text-fg [font-stretch:108%]">
+        {faq.title}
+      </h2>
+      <p className="mt-4 max-w-[56ch] text-body">{faq.subtitle}</p>
+      <FaqAccordion faqs={HOME_FAQS} name="home-faq" className="mt-8" />
+      <p className="mt-6">
+        <Link
+          href={faq.allLink.href}
+          className="group inline-flex min-h-11 items-center gap-2 font-semibold text-link underline-offset-[0.2em] hover:underline"
+        >
+          {faq.allLink.label}
+          <ArrowRight className="size-5 transition-transform duration-250 ease-settle group-hover:translate-x-0.5" />
+        </Link>
+      </p>
+    </div>
   );
 }
