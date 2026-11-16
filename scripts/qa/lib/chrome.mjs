@@ -1351,6 +1351,18 @@ class Page {
     const child = new Session(this.browser.connection, sessionId);
     this.childSessions.set(sessionId, child);
     const label = `${targetInfo.type}:${targetInfo.url}`.slice(0, 200);
+    if (targetInfo.type === "iframe") {
+      // A cross-origin frame's document request starts in this page's session
+      // and finishes in the frame's own; stop waiting for it here.
+      for (const k of [...this.inflight]) {
+        const record = this.byRequestKey.get(k);
+        if (record && record.type === "Document" && record.frameId === targetInfo.targetId) {
+          record.handedOff = true;
+          this.inflight.delete(k);
+          this.lastNetworkActivity = Date.now();
+        }
+      }
+    }
     try {
       this.#trackNetwork(child, label);
       child.on("Target.attachedToTarget", (event) => {
