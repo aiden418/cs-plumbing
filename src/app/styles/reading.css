@@ -2,3 +2,72 @@
    Put rules inside @layer components { ... } so utility classes can still
    override them; use the design tokens (var(--color-*), var(--tone-*),
    var(--ease-*), var(--dur-*)) rather than raw values. */
+
+/* Blog articles and the privacy policy (version 2): the shared `rich-text`
+   column, a little tighter so the page is no longer than the current site,
+   with solid blue bullets instead of rings. In the utilities layer (where
+   `rich-text` lives) with one more class, so these win over it. */
+@layer utilities {
+  .post-body.rich-text {
+    line-height: 1.6;
+  }
+
+  .post-body.rich-text > * + * {
+    margin-top: 1em;
+  }
+
+  .post-body.rich-text h2 {
+    margin-top: 1.4em;
+    margin-bottom: 0.4em;
+  }
+
+  .post-body.rich-text h3 {
+    margin-top: 1.3em;
+    margin-bottom: 0.3em;
+  }
+
+  .post-body.rich-text > :first-child {
+    margin-top: 0;
+  }
+
+  .post-body.rich-text li + li {
+    margin-top: 0.35em;
+  }
+
+  .post-body.rich-text ul > li::before {
+    top: 0.62em;
+    width: 0.375em;
+    height: 0.375em;
+    border: 0;
+    background: var(--tone-accent);
+  }
+
+  /* Wide tables scroll inside the column instead of widening the page. */
+  .post-body.rich-text table {
+    display: block;
+    overflow-x: auto;
+  }
+
+  /* The privacy policy in two columns on wide screens; a heading stays with
+     the text under it. */
+  @media (min-width: 64rem) {
+    .legal-columns {
+      column-count: 2;
+      column-gap: 4rem;
+      max-width: none;
+    }
+
+    .legal-columns > h2 {
+      break-after: avoid;
+    }
+
+    .legal-columns > p,
+    .legal-columns > ul > li {
+      break-inside: avoid;
+    }
+
+    .legal-columns > :first-child {
+      margin-top: 0;
+    }
+  }
+}

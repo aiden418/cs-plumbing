@@ -32,17 +32,21 @@ export default function Page() {
   return (
     <>
       <PageHero
-        layout="editorial"
-        align="center"
+        layout="plain"
         overline={BLOG_INDEX.overline}
         title={BLOG_INDEX.title}
         accent={BLOG_INDEX.accent}
         description={BLOG_INDEX.description}
       />
 
-      <Section tone="white" spacing="sm">
+      <Section tone="white" spacing="none" className="pb-12 sm:pb-16">
         <Container>
-          <ul aria-label={BLOG_INDEX.listLabel} className="grid grid-cols-1 gap-x-12 border-b border-rule lg:grid-cols-2 xl:gap-x-16">
+          {/* Hairline rows: one column on phones, two from lg, three from xl.
+              The first rows' line sits on the hero's bottom line (-mt-px). */}
+          <ul
+            aria-label={BLOG_INDEX.listLabel}
+            className="-mt-px grid grid-cols-1 gap-x-10 lg:grid-cols-2 xl:grid-cols-3"
+          >
             {posts.map((post) => (
               <li key={post.slug}>
                 <BlogCard post={post} />

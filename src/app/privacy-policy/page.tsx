@@ -14,11 +14,12 @@ export const metadata: Metadata = {
 export default function PrivacyPolicyPage() {
   return (
     <>
-      <PageHero layout="compact" overline={PRIVACY.overline} title={PRIVACY.title} />
-      <Section tone="white" spacing="sm">
+      <PageHero layout="plain" size="sm" overline={PRIVACY.overline} title={PRIVACY.title} />
+      <Section tone="white" spacing="none" className="pt-6 pb-14 sm:pt-10 sm:pb-20">
         <Container>
-          <div className="max-w-[46rem]">
-            <div className="rich-text">
+          <div>
+            {/* One reading column on phones, two from lg (reading.css). */}
+            <div className="rich-text post-body legal-columns">
               <p>
                 <strong>Last updated:</strong> March 10, 2026
               </p>

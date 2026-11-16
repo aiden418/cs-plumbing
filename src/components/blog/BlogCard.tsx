@@ -14,30 +14,31 @@ export function formatPostDate(iso: string): string {
 }
 
 /**
- * One post on the blog index as an editorial row: date, category and read
- * time on a label line, the title, the excerpt and a "Read More" line. The
- * whole row is one link. Server component.
+ * One post on the blog index as a plain row with a hairline above it: the
+ * category (blue), date and read time, the title, the excerpt and "Read
+ * More". The whole row is one link. On phones the excerpt shows three lines
+ * (the full text stays in the HTML). Server component.
  */
 export default function BlogCard({ post }: { post: BlogPost }) {
   return (
     <Link
       href={`/blog/${post.slug}`}
-      className="group flex h-full flex-col border-t border-rule py-8 sm:py-10"
+      className="group flex h-full flex-col border-t border-rule py-6 sm:py-8"
     >
-      <p className="label-tech flex flex-wrap items-center gap-x-3 gap-y-1 text-muted">
-        <time dateTime={post.publishDate}>{formatPostDate(post.publishDate)}</time>
+      <p className="flex flex-wrap items-center gap-x-2 text-sm text-muted">
+        <span className="font-semibold text-accent">{post.category}</span>
         <span aria-hidden="true">·</span>
-        <span className="text-accent">{post.category}</span>
+        <time dateTime={post.publishDate}>{formatPostDate(post.publishDate)}</time>
         <span aria-hidden="true">·</span>
         <span>{post.readTime}</span>
       </p>
-      <h2 className="display-normal mt-4 max-w-[30ch] text-display-sm text-fg transition-colors duration-150 group-hover:text-link">
+      <h2 className="mt-2 text-[1.375rem] leading-tight font-bold text-fg group-hover:text-link sm:text-2xl">
         {post.title}
       </h2>
-      <p className="mt-3 max-w-[60ch] text-body">{post.excerpt}</p>
-      <span className="mt-auto inline-flex items-center gap-2 pt-5 font-semibold text-link underline-offset-[0.2em] group-hover:underline">
+      <p className="mt-2 line-clamp-3 text-body sm:line-clamp-none">{post.excerpt}</p>
+      <span className="mt-auto inline-flex items-center gap-2 pt-3 font-semibold text-link underline-offset-[0.2em] group-hover:underline">
         {BLOG_INDEX.readMore}
-        <ArrowRight className="size-5 transition-transform duration-250 ease-settle group-hover:translate-x-0.5" />
+        <ArrowRight className="size-5 transition-transform duration-150 group-hover:translate-x-0.5" />
       </span>
     </Link>
   );

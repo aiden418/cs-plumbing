@@ -1,17 +1,17 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import CTASection from "@/components/home/CTASection";
-import { LinkGrid } from "@/components/links/LinkGrid";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import Button from "@/components/ui/Button";
 import Container from "@/components/ui/Container";
 import PageHero from "@/components/ui/PageHero";
-import Reveal from "@/components/ui/Reveal";
 import Section from "@/components/ui/Section";
 import { Calendar, Phone } from "@/components/ui/icons";
 import { SERVICE_MAP } from "@/content/reading";
 import { BUSINESS } from "@/lib/business";
 import { SERVICE_AREAS_BY_COUNTY } from "@/lib/constants";
 import { areaForCity } from "@/lib/internal-links";
+import { cn } from "@/lib/utils";
 
 /** The area pages that exist, grouped by county in the order of SERVICE_AREAS_BY_COUNTY. */
 const COUNTIES = Object.entries(SERVICE_AREAS_BY_COUNTY)
@@ -49,7 +49,7 @@ export default function ServiceMapPage() {
   return (
     <>
       <PageHero
-        layout="type-led"
+        layout="plain"
         overline={SERVICE_MAP.overline}
         title={SERVICE_MAP.title}
         accent={SERVICE_MAP.accent}
@@ -71,41 +71,55 @@ export default function ServiceMapPage() {
         }
       />
 
-      {/* Map Embed: a third-party Google My Maps frame, lazy-loaded as before. */}
-      <Section tone="white" spacing="sm">
+      {/* The map (a third-party Google My Maps frame, lazy-loaded exactly as
+          before) and, beside it from lg, the area pages by county. */}
+      <Section tone="white" spacing="none" className="pt-6 pb-12 sm:pt-10 sm:pb-20">
         <Container>
-          <Reveal>
-            <div className="overflow-hidden rounded-frame border border-rule bg-shell">
-              <iframe
-                src={SERVICE_MAP.map.src}
-                width="100%"
-                height="600"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                title={SERVICE_MAP.map.title}
-                className="block w-full min-h-[400px] sm:min-h-[500px] lg:min-h-[600px]"
-              />
-            </div>
-          </Reveal>
-        </Container>
-      </Section>
-
-      <Section tone="shell" spacing="sm" labelledBy="service-map-areas-heading">
-        <Container>
-          <h2 id="service-map-areas-heading" className="mb-10 text-display-md text-fg">
-            {SERVICE_MAP.areas.heading}
-          </h2>
-          <div className="space-y-10">
-            {COUNTIES.map((group) => (
-              <div key={group.county} className="grid grid-cols-1 gap-y-4 lg:grid-cols-12 lg:gap-x-8">
-                <h3 className="self-start text-lg text-fg lg:col-span-3 lg:flex lg:min-h-14 lg:items-center">
-                  {group.county}
-                  {SERVICE_MAP.areas.countySuffix}
-                </h3>
-                <LinkGrid links={group.links} columns={3} className="lg:col-span-9" />
+          <div className="grid grid-cols-1 gap-y-8 lg:grid-cols-12 lg:gap-x-12">
+            <div className="lg:col-span-7 xl:col-span-8">
+              <div className="overflow-hidden rounded-frame border border-rule bg-shell">
+                <iframe
+                  src={SERVICE_MAP.map.src}
+                  width="100%"
+                  height="600"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  title={SERVICE_MAP.map.title}
+                  className="block w-full min-h-[400px] sm:min-h-[500px] lg:min-h-[600px]"
+                />
               </div>
-            ))}
+            </div>
+
+            <section aria-labelledby="service-map-areas-heading" className="lg:col-span-5 xl:col-span-4">
+              <h2 id="service-map-areas-heading" className="text-display-sm text-fg">
+                {SERVICE_MAP.areas.heading}
+              </h2>
+              {/* A county with more than two towns spans both columns and lists
+                  them in two; the small counties sit side by side. */}
+              <div className="mt-4 grid grid-cols-2 gap-x-6 gap-y-5">
+                {COUNTIES.map((group) => (
+                  <div key={group.county} className={group.links.length > 2 ? "col-span-2" : undefined}>
+                    <h3 className="border-b border-rule pb-2 text-lg text-fg">
+                      {group.county}
+                      {SERVICE_MAP.areas.countySuffix}
+                    </h3>
+                    <ul className={cn("mt-1 grid gap-x-6", group.links.length > 2 && "grid-cols-2")}>
+                      {group.links.map((link) => (
+                        <li key={link.href}>
+                          <Link
+                            href={link.href}
+                            className="flex min-h-11 items-center font-medium text-link underline-offset-4 hover:underline"
+                          >
+                            {link.label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </section>
           </div>
         </Container>
       </Section>
