@@ -2,3 +2,23 @@
    Put rules inside @layer components { ... } so utility classes can still
    override them; use the design tokens (var(--color-*), var(--tone-*),
    var(--ease-*), var(--dur-*)) rather than raw values. */
+
+/* The portal wizard: a new step settles into place (a short rise, no fade,
+   so nothing is ever invisible). Reduced motion keeps it still. */
+@keyframes portal-step-in {
+  from {
+    transform: translate3d(0, 0.5rem, 0);
+  }
+
+  to {
+    transform: none;
+  }
+}
+
+@layer components {
+  @media (prefers-reduced-motion: no-preference) {
+    .portal-step {
+      animation: portal-step-in var(--dur-2) var(--ease-enter) both;
+    }
+  }
+}

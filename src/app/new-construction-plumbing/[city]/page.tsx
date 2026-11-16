@@ -1,19 +1,22 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowRight, Download, Landmark, MapPin } from "lucide-react";
-import PageTransition from "@/components/layout/PageTransition";
 import PageHero from "@/components/ui/PageHero";
 import Container from "@/components/ui/Container";
+import Section from "@/components/ui/Section";
 import SectionHeading from "@/components/ui/SectionHeading";
-import Button from "@/components/ui/Button";
+import Eyebrow from "@/components/ui/Eyebrow";
+import Reveal from "@/components/ui/Reveal";
+import Button, { buttonClasses } from "@/components/ui/Button";
+import { ArrowRight, Download } from "@/components/ui/icons";
+import { LinkGrid } from "@/components/links/LinkGrid";
 import FaqAccordionList from "@/components/builders/FaqList";
-import BuilderBidForm from "@/components/builders/BuilderBidForm";
 import NewConstructionBenefits from "@/components/builders/NewConstructionBenefits";
-import { ConstructionPhases, SchedulingPanel } from "@/components/builders/BuilderSections";
+import { BidSplit, ConstructionPhases, SchedulingPanel } from "@/components/builders/BuilderSections";
 import RelatedProjects from "@/components/projects/RelatedProjects";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import FaqJsonLd from "@/components/seo/FaqJsonLd";
+import { NC_CITY as COPY } from "@/content/builders";
 import {
   BUILDER_PROOF,
   CAPABILITY_STATEMENT_PDF,
@@ -21,6 +24,7 @@ import {
   NEW_CONSTRUCTION_CITIES,
   getNewConstructionCity,
 } from "@/lib/builder-program";
+import { picture } from "@/lib/media";
 import { projectsForCity } from "@/lib/projects";
 
 const BASE = "https://www.csplumbinglee.com";
@@ -60,6 +64,8 @@ export default async function Page({ params }: { params: Promise<{ city: string 
     { name: `New Construction Plumbing — ${page.city}`, href: path },
   ];
   const projects = projectsForCity(page.city, { hub: "new-construction", limit: 3 });
+  // A real C&S photograph from this city when the media map has one; otherwise the type-led header.
+  const hero = picture(`area.header.${page.slug}`);
 
   const serviceSchema = {
     "@context": "https://schema.org",
@@ -87,7 +93,7 @@ export default async function Page({ params }: { params: Promise<{ city: string 
   };
 
   return (
-    <PageTransition>
+    <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
@@ -96,118 +102,128 @@ export default async function Page({ params }: { params: Promise<{ city: string 
       <BreadcrumbJsonLd items={breadcrumb} />
 
       <PageHero
-        overline={`For builders & GCs · ${page.city}, FL`}
-        title="New Construction Plumbing in"
-        accent={`${page.city}, FL`}
+        layout={hero ? "split" : "type-led"}
+        frame={hero}
+        overline={COPY.overline(page.city)}
+        title={COPY.title}
+        accent={COPY.accent(page.city)}
         breadcrumb={breadcrumb}
         description={`${BUILDER_PROOF.headline}. ${page.intro}`}
         actions={
           <>
-            <Button href="#bid" variant="gold" size="lg" icon={<ArrowRight className="w-5 h-5" />}>
-              Submit Plans for a Bid
+            <Button href="#bid" iconRight={<ArrowRight className="size-5" />}>
+              {COPY.bidAction}
             </Button>
-            <a
-              href={CAPABILITY_STATEMENT_PDF}
-              download
-              className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/30 px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-white/10 sm:px-8 sm:py-4 sm:text-base"
-            >
-              <Download className="w-5 h-5" />
-              Capability Statement
+            {/* Plain <a>: a PDF isn't a route, so next/link would try a client navigation first. */}
+            <a href={CAPABILITY_STATEMENT_PDF} download className={buttonClasses({ variant: "ghost", size: "md", className: "group sm:px-2" })}>
+              <Download className="size-5" aria-hidden="true" />
+              <span>{COPY.capabilityAction}</span>
             </a>
           </>
         }
       />
 
       {/* Local conditions */}
-      <section className="py-16 sm:py-24">
+      <Section tone="white" labelledBy="nc-conditions-heading">
         <Container>
-          <SectionHeading
-            overline={`${page.city} site conditions`}
-            title={`What changes the plumbing in ${page.city}`}
-          />
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {page.localConditions.map((c) => (
-              <div key={c.title} className="rounded-2xl border border-gray-200 bg-white p-6 sm:p-7">
-                <h3 className="text-lg font-bold text-gray-900">{c.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-gray-600">{c.body}</p>
-              </div>
-            ))}
+          <div className="grid gap-y-10 lg:grid-cols-12 lg:gap-x-8">
+            <div className="lg:col-span-5">
+              <SectionHeading
+                id="nc-conditions-heading"
+                overline={COPY.conditionsOverline(page.city)}
+                title={COPY.conditionsTitle(page.city)}
+                align="left"
+                className="mb-0"
+              />
+              <p className="mt-8 max-w-[44ch] border-l border-rule pl-5 text-body">
+                {COPY.permitsPrefix(page.city)} {page.permitAuthority}.
+              </p>
+            </div>
+            <ul className="border-b border-rule lg:col-span-7">
+              {page.localConditions.map((c, i) => (
+                <Reveal
+                  as="li"
+                  index={i}
+                  key={c.title}
+                  className="border-t border-rule py-7"
+                >
+                  <div>
+                    <h3 className="text-xl leading-snug font-semibold text-fg">{c.title}</h3>
+                    <p className="mt-2 max-w-[60ch] text-body">{c.body}</p>
+                  </div>
+                </Reveal>
+              ))}
+            </ul>
           </div>
-          <p className="mt-8 flex items-start justify-center gap-2 text-center text-sm text-gray-500">
-            <Landmark className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-            Permits and inspections in {page.city}: {page.permitAuthority}.
-          </p>
         </Container>
-      </section>
+      </Section>
 
-      <ConstructionPhases />
+      <ConstructionPhases tone="shell" />
 
       <RelatedProjects
         projects={projects}
-        overline="Documented builds"
-        heading={`Our work in ${page.city}`}
-        description={`Jobs we've photographed phase by phase in ${page.city}.`}
+        overline={COPY.projectsOverline}
+        heading={COPY.projectsHeading(page.city)}
+        description={COPY.projectsDescription(page.city)}
       />
 
-      <SchedulingPanel />
-      <NewConstructionBenefits overline="What your buyers get" />
+      <SchedulingPanel tone={projects.length > 0 ? "shell" : "white"} />
+      <NewConstructionBenefits tone="white" overline="What your buyers get" />
 
-      {/* Bid form */}
-      <section id="bid" className="scroll-mt-24 py-16 sm:py-24">
-        <Container>
-          <div className="mx-auto max-w-3xl">
-            <BuilderBidForm
-              source={`nc-city:${page.slug}`}
-              heading={`Submit ${page.city} plans for a bid`}
-            />
-            <p className="mt-6 text-center text-sm text-gray-500">
-              Need our license, COI or W-9 first?{" "}
-              <Link href="/builders#prequal" className="font-medium text-primary hover:underline">
-                See the prequal packet
-              </Link>
-              .
-            </p>
-          </div>
-        </Container>
-      </section>
+      <BidSplit
+        source={`nc-city:${page.slug}`}
+        heading={COPY.bidHeading(page.city)}
+        tone="shell"
+        note={
+          <p className="mt-6 text-sm text-muted">
+            {COPY.prequalQuestion}{" "}
+            <Link
+              href="/builders#prequal"
+              className="inline-flex min-h-11 items-center font-semibold text-link underline-offset-[0.2em] hover:underline"
+            >
+              {COPY.prequalLink}
+            </Link>
+            .
+          </p>
+        }
+      />
 
       {/* FAQ */}
-      <section className="bg-[#F5F5F7] py-16 sm:py-24">
+      <Section tone="white" labelledBy="nc-faq-heading">
         <Container>
-          <SectionHeading overline="FAQ" title={`${page.city} new construction questions`} />
-          <FaqAccordionList faqs={page.faqs} />
-        </Container>
-      </section>
-
-      {/* Cross-links */}
-      <section className="py-12 sm:py-16">
-        <Container>
-          <div className="flex flex-wrap justify-center gap-3">
-            <Link href="/builders" className="rounded-full border border-gray-200 px-4 py-2 text-sm font-medium text-gray-700 hover:border-primary hover:text-primary">
-              All builder services
-            </Link>
-            {page.areaHref && (
-              <Link href={page.areaHref} className="rounded-full border border-gray-200 px-4 py-2 text-sm font-medium text-gray-700 hover:border-primary hover:text-primary">
-                {page.city} service area
-              </Link>
-            )}
-            {page.related.map((r) => (
-              <Link key={r.href} href={r.href} className="rounded-full border border-gray-200 px-4 py-2 text-sm font-medium text-gray-700 hover:border-primary hover:text-primary">
-                {r.label}
-              </Link>
-            ))}
-            {NEW_CONSTRUCTION_CITIES.filter((c) => c.slug !== page.slug).map((c) => (
-              <Link
-                key={c.slug}
-                href={`/new-construction-plumbing/${c.slug}`}
-                className="inline-flex items-center gap-1 rounded-full border border-gray-200 px-4 py-2 text-sm font-medium text-gray-700 hover:border-primary hover:text-primary"
-              >
-                <MapPin className="h-3.5 w-3.5" /> {c.city}
-              </Link>
-            ))}
+          <div className="grid gap-y-10 lg:grid-cols-12 lg:gap-x-8">
+            <SectionHeading
+              id="nc-faq-heading"
+              overline={COPY.faqOverline}
+              title={COPY.faqTitle(page.city)}
+              align="left"
+              className="mb-0 lg:col-span-4"
+            />
+            <FaqAccordionList faqs={page.faqs} className="lg:col-span-8" />
           </div>
         </Container>
-      </section>
-    </PageTransition>
+      </Section>
+
+      {/* Cross-links */}
+      <Section tone="shell" spacing="sm" labelledBy="nc-links-heading">
+        <Container>
+          <Eyebrow as="div" className="mb-8" id="nc-links-heading">
+            {COPY.linksOverline}
+          </Eyebrow>
+          <LinkGrid
+            columns={3}
+            links={[
+              { href: "/builders", label: COPY.allBuilderServices },
+              ...(page.areaHref ? [{ href: page.areaHref, label: COPY.serviceArea(page.city) }] : []),
+              ...page.related.map((r) => ({ href: r.href, label: r.label })),
+              ...NEW_CONSTRUCTION_CITIES.filter((c) => c.slug !== page.slug).map((c) => ({
+                href: `/new-construction-plumbing/${c.slug}`,
+                label: c.city,
+              })),
+            ]}
+          />
+        </Container>
+      </Section>
+    </>
   );
 }
