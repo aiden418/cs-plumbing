@@ -42,6 +42,7 @@ const OUT_URL = "/videos/hero";
 const MANIFEST = path.join(OUT_DIR, "variants.json");
 const TOOL_SOURCE = path.join(ROOT, "scripts", "video", "herovideo.swift");
 const STILLS_DIR = path.join(os.tmpdir(), "cs-hero-video");
+const CHECK_STILLS_DIR = path.join(STILLS_DIR, "encode-check");
 
 // ───────────────────────────── settings ─────────────────────────────
 
@@ -360,7 +361,7 @@ function writeReviewStills(run, source, chosenCenter) {
 
 /** The encode and the matching piece of the original, as stills, at 1 s and 6 s. */
 function writeCheckStills(run, file, label, geometry, source) {
-  const dir = path.join(STILLS_DIR, "encode-check");
+  const dir = CHECK_STILLS_DIR;
   fs.mkdirSync(dir, { recursive: true });
   const size = `${geometry.width}x${geometry.height}`;
   for (const time of [1, 6].filter((t) => t < source.durationSeconds)) {
@@ -574,6 +575,8 @@ function build(options) {
     return;
   }
 
+  // Stills from an earlier run (perhaps of another clip) would only mislead.
+  fs.rmSync(CHECK_STILLS_DIR, { recursive: true, force: true });
   const workDir = fs.mkdtempSync(path.join(os.tmpdir(), "cs-hero-encode-"));
   const rows = [];
   const entries = [];
