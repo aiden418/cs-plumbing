@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Archivo, Inter, Montserrat } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/layout/Navbar";
+import SiteHeader from "@/components/layout/SiteHeader";
 import Footer from "@/components/layout/Footer";
 import StickyMobileCTA from "@/components/layout/StickyMobileCTA";
 import DeferredWidgets from "@/components/layout/DeferredWidgets";
@@ -9,7 +9,8 @@ import JsonLd from "@/components/seo/JsonLd";
 import MetaPixel from "@/components/analytics/MetaPixel";
 import OpenAIPixel from "@/components/analytics/OpenAIPixel";
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
-import SmoothScrollProvider from "@/components/providers/SmoothScrollProvider";
+import PreviewRibbon from "@/components/layout/PreviewRibbon";
+import IntroHead from "@/components/home/IntroHead";
 import RevealObserver from "@/components/ui/RevealObserver";
 
 // Font budget: at most 100 KB of fonts preloaded. Archivo (the display face,
@@ -130,8 +131,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${archivo.variable} ${montserrat.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${archivo.variable} ${montserrat.variable}`}>
       <head>
+        <IntroHead />
         <JsonLd />
       </head>
       <body className="antialiased">
@@ -141,14 +143,13 @@ export default function RootLayout({
         >
           Skip to content
         </a>
-        <Navbar />
-        <SmoothScrollProvider>
-          <main id="main" className="min-h-screen">{children}</main>
-          <Footer />
-        </SmoothScrollProvider>
+        <SiteHeader />
+        <main id="main" className="min-h-screen">{children}</main>
+        <Footer />
         <StickyMobileCTA />
         <RevealObserver />
         <DeferredWidgets />
+        <PreviewRibbon />
         <MetaPixel />
         <OpenAIPixel />
         <GoogleAnalytics />
