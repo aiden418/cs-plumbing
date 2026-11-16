@@ -1,0 +1,35 @@
+{
+  "aerial-1.jpg": {
+    "alt": "Drone view of mini excavator cutting underground plumbing trenches inside the block stem wall before the slab pour",
+    "order": 1,
+    "cover": true
+  },
+  "aerial-2.jpg": {
+    "alt": "Top-down aerial of stem wall footprint with sewer trench lines and PVC stub-ups being set in Cape Coral",
+    "order": 2
+  },
+  "aerial-3.jpg": {
+    "alt": "Street-side drone view of C&S Plumbing service truck at a Hansen Homes lot with block stem wall behind",
+    "order": 3
+  },
+  "aerial-4.jpg": {
+    "alt": "Low aerial from the street of plumbing and builder trucks at the lot with a mini excavator behind",
+    "order": 4
+  },
+  "aerial-5.jpg": {
+    "alt": "Wide drone view of the L-shaped block stem wall and underground trench layout with neighboring homes beyond",
+    "order": 5
+  },
+  "aerial-6.jpg": {
+    "alt": "Close aerial of underground DWV trench with white PVC stub-ups and fittings inside the stem wall before backfill",
+    "order": 6
+  },
+  "aerial-7.jpg": {
+    "alt": "Straight-down aerial of the full Cape Coral lot showing stem wall outline and plumbing trench lines between neighbors",
+    "order": 7
+  },
+  "aerial-8.jpg": {
+    "alt": "Overhead drone view of the block stem wall with underground sewer trench crossing the future slab",
+    "order": 8
+  }
+}
