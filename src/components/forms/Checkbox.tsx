@@ -44,7 +44,7 @@ export function Checkbox({ id, label, hint, error, className, wrapperClassName, 
             aria-invalid={rest["aria-invalid"] ?? (hasError ? true : undefined)}
             className={cn(
               "peer m-0 size-6 cursor-[inherit] appearance-none rounded-[0.375rem] border border-steel-400 bg-white",
-              "transition-[border-color,background-color,outline-color] duration-150 ease-enter",
+              "transition-[border-color,background-color] duration-150 ease-enter",
               "group-hover:border-steel-700",
               "checked:border-primary checked:bg-primary group-hover:checked:border-primary-dark group-hover:checked:bg-primary-dark",
               // Focus: the global 2 px ring (a 20% ring is too faint on a 24 px box).

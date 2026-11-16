@@ -160,7 +160,7 @@ export function FileUpload<F extends FileLike = File>({
           id={`${id}-button`}
           htmlFor={id}
           className={cn(
-            "inline-flex min-h-12 cursor-pointer items-center justify-center gap-2 rounded-control border border-steel-300 bg-white px-5",
+            "inline-flex min-h-12 shrink-0 cursor-pointer items-center justify-center gap-2 rounded-control border border-steel-300 bg-white px-5 whitespace-nowrap",
             "text-base font-semibold text-ink transition-[border-color,transform] duration-150 ease-enter",
             "hover:border-steel-700 active:scale-[0.98]",
             "peer-focus-visible:border-primary peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-focus",
@@ -170,7 +170,7 @@ export function FileUpload<F extends FileLike = File>({
           <Upload aria-hidden="true" strokeWidth={1.75} className="size-5 shrink-0" />
           {buttonLabel}
         </label>
-        <span className="hidden text-center text-sm text-steel-500 sm:inline sm:text-left" aria-hidden="true">
+        <span className="hidden min-w-0 text-sm text-steel-500 sm:inline" aria-hidden="true">
           {dropLabel}
         </span>
       </div>

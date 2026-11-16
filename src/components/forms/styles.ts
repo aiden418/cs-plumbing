@@ -14,7 +14,7 @@
 export const controlBase = [
   "block w-full min-w-0 rounded-control border border-steel-300 bg-white px-4",
   "font-sans text-base leading-6 text-ink placeholder:text-steel-500",
-  "transition-[border-color,outline-color] duration-150 ease-enter",
+  "transition-[border-color] duration-150 ease-enter",
   "hover:border-steel-500",
   "focus:border-primary focus:outline-3 focus:outline-offset-0 focus:outline-primary/20",
   "aria-[invalid=true]:border-emergency aria-[invalid=true]:hover:border-emergency-dark aria-[invalid=true]:focus:outline-emergency/20",
