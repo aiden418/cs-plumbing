@@ -7,15 +7,16 @@ import type { GalleryGridItem } from "@/components/gallery/GalleryGrid";
 import LightboxProvider from "@/components/lightbox/LightboxProvider";
 import { BUSINESS } from "@/lib/business";
 import { GALLERY_CATEGORIES } from "@/lib/constants";
-import { image } from "@/lib/media";
+import { image, picture } from "@/lib/media";
 import type { GalleryItem } from "@/lib/types";
 import { GALLERY_PAGE, PROJECTS_ACTIONS } from "@/content/projects";
 import GalleryCards from "./GalleryCards";
 
 /**
- * /gallery (v2-bright.md "Inner pages"): the first gallery photograph fills
- * the hero behind the headline, then every gallery photo as a card with its
- * title under it, behind the existing category chips. Each photo opens the
+ * /gallery (v2-bright.md "Inner pages"): the aerial job-site photograph the
+ * current gallery header shows fills the hero behind the headline, then
+ * every gallery photo as a card with its title under it, behind the
+ * existing category chips. Each photo opens the
  * lightbox with its title as the caption. Server component: the pictures
  * are resolved here and handed to the grid as MediaRef props; without
  * JavaScript every photo shows and links to its file.
@@ -27,7 +28,8 @@ export default function GalleryPage({ items }: { items: GalleryItem[] }) {
     if (media) photos.push({ media, category: item.category });
   }
   const categories = GALLERY_CATEGORIES.map(({ id, label }) => ({ id, label }));
-  const hero = photos[0]?.media ?? null;
+  // The aerial job-site photograph the current gallery header shows.
+  const hero = picture("home.hero") ?? photos[0]?.media ?? null;
 
   return (
     <>
