@@ -110,12 +110,13 @@ const VARIANTS = [
   { name: "hero-portrait", codec: "h264", audience: "portrait-phone", shape: "portrait", bitrate: 950_000, maxBytes: 1_250_000 },
   { name: "hero-mid", codec: "hevc", audience: "up-to-1023", shape: "full", width: 1280, bitrate: 700_000, control: "quality", encoder: "software" },
   { name: "hero-mid", codec: "h264", audience: "up-to-1023", shape: "full", width: 1280, bitrate: 1_100_000 },
-  // No 1920-wide HEVC copy for desktop. Tried at about 1.3 Mbps (1.59 MB, 30%
-  // smaller than the original): visibly softer than the original in the first
-  // second and while the camera pushes in (PSNR 35.4 dB, SSIM 0.93 against it).
-  // A re-encode at the original's own size still only reaches 37.3 dB, so there
-  // is no size at which it is both as good and clearly smaller. Desktop keeps
-  // the original file.
+  // No 1920-wide HEVC copy for desktop. Tried with the same recipe as the HEVC
+  // copies above: at 1.61 MB (29% smaller than the original) the sand and soil
+  // are visibly softer than in the original when enlarged (PSNR 35.8 dB, SSIM
+  // 0.942 against it); 1.86 MB (18% smaller) reaches 36.5 dB and 2.10 MB (7%
+  // smaller) 37.3 dB. The hardware encoder did worse (35.4 dB at 1.59 MB). The
+  // original is itself heavily compressed, so a second encode is never both as
+  // good and clearly smaller. Desktop keeps the original file.
 ];
 
 const AUDIENCES = ["portrait-phone", "up-to-1023", "desktop"];
