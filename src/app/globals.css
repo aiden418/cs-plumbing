@@ -852,6 +852,15 @@
   }
 }
 
+/* On a phone the packet tables are wider than the screen. The document
+   scrolls sideways inside itself there instead of the whole page. Paper is
+   not affected. */
+@media not print {
+  .print-doc {
+    overflow-x: auto;
+  }
+}
+
 /* The Terms were typeset inside the old page gutter (1.5rem at paper width).
    The printed line length, and with it the pagination and the "Page X of Y"
    footers, depends on that gutter, so paper keeps it. */
