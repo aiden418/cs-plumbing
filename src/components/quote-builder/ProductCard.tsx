@@ -56,7 +56,7 @@ export default function ProductCard({ options, selected, onSelect, layout = "gri
             <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
               <span>{opt.label}</span>
               {opt.badge && (
-                <span className="label-tech rounded-chip border border-steel-300 px-2 py-0.5 text-[0.6875rem] text-steel-700">
+                <span className="rounded-chip bg-shell px-2.5 py-0.5 text-[0.8125rem] font-semibold text-primary-dark">
                   {opt.badge}
                 </span>
               )}
