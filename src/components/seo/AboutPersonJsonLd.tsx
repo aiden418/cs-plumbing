@@ -1,4 +1,5 @@
 import { BUSINESS } from "@/lib/business";
+import { licenseRecordFacts } from "@/lib/license-schema";
 
 export default function AboutPersonJsonLd() {
   const BASE = "https://www.csplumbinglee.com";
@@ -23,6 +24,7 @@ export default function AboutPersonJsonLd() {
         "@type": "EducationalOccupationalCredential",
         credentialCategory: "Professional License",
         name: `Certified Plumbing Contractor — ${BUSINESS.license}`,
+        ...licenseRecordFacts("company"),
         recognizedBy: {
           "@type": "GovernmentOrganization",
           name: "Florida Department of Business and Professional Regulation",

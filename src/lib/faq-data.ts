@@ -1,5 +1,5 @@
 import { rangeInline, spanInline } from "./pricing";
-import { CLAIMS, EMERGENCY_CLAIMS } from "./claims";
+import { CLAIMS, EMERGENCY_CLAIMS, LICENSE_STATUS_SENTENCE } from "./claims";
 import { BUSINESS } from "./business";
 
 export interface FaqCategory {
@@ -22,7 +22,7 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
       {
         question: "Is C&S Plumbing licensed and insured?",
         answer:
-          `Yes. C&S Plumbing holds a Florida Certified Plumbing Contractor license (${BUSINESS.license}) issued by the Florida Department of Business and Professional Regulation. We are fully insured and bonded.`,
+          `Yes. C&S Plumbing holds a Florida Certified Plumbing Contractor license (${BUSINESS.license}) issued by the Florida Department of Business and Professional Regulation. ${LICENSE_STATUS_SENTENCE} Anyone can confirm it on the state's license lookup at MyFloridaLicense.com. We are fully insured and bonded.`,
       },
       {
         question: "Do you offer free estimates?",

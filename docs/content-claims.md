@@ -21,7 +21,7 @@ Edit `CLAIMS` or `EMERGENCY_CLAIMS` in `src/lib/claims.ts`. Call sites: booking,
 | Approved prices | The service-page tables (`costBreakdown`), now in `PRICES`. Chris and Sam to confirm each entry once (`checked`). |
 | Repipe restoration | Patch + texture included; painting by others. Terms rev. 2026-11-12 says the same. |
 | Installation warranty | One year labor + one year materials supplied by C&S; manufacturer warranties pass through. No "lifetime" or "25-year" claims. |
-| Licenses | CFC1432485 only on marketing surfaces; both licenses on Terms, prequal packet, capability statement, builder print documents and the JSON-LD credential list. |
+| Licenses | CFC1432485 only on marketing surfaces; both licenses on Terms, prequal packet, capability statement, builder print documents and the JSON-LD credential list. What the state's record showed for each (status, renewal date, the record's address) is `LICENSE_RECORD`, read on the DBPR site 2026-11-16; pages state it as a dated check, and `tests/license-record.test.ts` asks for a fresh look once the renewal date passes. |
 | Service-call fee | No amount published: free estimates on installations, repipes and water heaters; repair visits carry a diagnostic fee quoted at booking. |
 | Booking confirmation | Within 1 business day, usually the same day — same sentence in every form and customer email. Builder bids: acknowledged within 1 business day; no takeoff turnaround promised. |
 | Response time | Typically 30–60 minutes in Cape Coral, Fort Myers and North Fort Myers; same-day elsewhere. No per-city minute claims. |

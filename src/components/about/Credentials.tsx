@@ -2,7 +2,9 @@ import Link from "next/link";
 import Container from "@/components/ui/Container";
 import Eyebrow from "@/components/ui/Eyebrow";
 import Section, { type Tone } from "@/components/ui/Section";
+import { ExternalLink } from "@/components/ui/icons";
 import { BUSINESS } from "@/lib/business";
+import { LICENSE_STATUS_SENTENCE } from "@/lib/claims";
 import { AWARDS } from "@/lib/awards";
 import { ABOUT_CREDENTIALS } from "@/content/about";
 
@@ -18,7 +20,9 @@ const STATS = [
 const credentials: { title: string; body: string; href?: string; hrefLabel?: string }[] = [
   {
     title: "State-Licensed Plumbing Contractors",
-    body: `Florida Certified Plumbing Contractor, license ${BUSINESS.license}. Verifiable on the DBPR (MyFloridaLicense.com). We pull every required permit and pass every Lee County inspection — no exceptions.`,
+    body: `Florida Certified Plumbing Contractor, license ${BUSINESS.license}. ${LICENSE_STATUS_SENTENCE} We pull every required permit and pass every Lee County inspection — no exceptions.`,
+    href: BUSINESS.licenseRecordUrl,
+    hrefLabel: "See the state record on MyFloridaLicense.com",
   },
   {
     title: "Fully Insured & Bonded",
@@ -72,7 +76,18 @@ export default function Credentials({ tone = "shell" }: { tone?: Tone }) {
               <dt className="text-lg leading-snug font-semibold text-fg lg:col-span-4">{c.title}</dt>
               <dd className="max-w-[68ch] text-body lg:col-span-8">
                 <p>{c.body}</p>
-                {c.href && (
+                {c.href && /^https?:/.test(c.href) && (
+                  <a
+                    href={c.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-1 inline-flex min-h-11 items-center gap-1.5 font-semibold text-link underline-offset-4 hover:underline"
+                  >
+                    {c.hrefLabel}
+                    <ExternalLink className="size-4 shrink-0" aria-hidden="true" />
+                  </a>
+                )}
+                {c.href && !/^https?:/.test(c.href) && (
                   <Link
                     href={c.href}
                     className="group mt-1 inline-flex min-h-11 items-center gap-1.5 font-semibold text-link underline-offset-4 hover:underline"

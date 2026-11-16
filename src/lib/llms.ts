@@ -17,7 +17,7 @@ import {
 import { FAQ_CATEGORIES } from "./faq-data";
 import { COMPLETED_PROJECTS } from "./projects-data";
 import { money, perFoot, price, rangeInline, spanInline, upchargeInline } from "./pricing";
-import { CLAIMS } from "./claims";
+import { CLAIMS, LICENSE_RECORD, LICENSE_RECORD_DATES } from "./claims";
 import { INDEXED_LANDINGS } from "./landing-indexing";
 import { SERVICE_HUBS, getServiceHub } from "./service-hubs";
 import { isProjectComplete, projectPhotoCount, projectStatusLabel } from "./projects";
@@ -66,6 +66,8 @@ export function buildLlmsTxt(): string {
       `- **Award (${a.year}):** ${a.title} — ${a.category}, voted by ${a.issuer} readers` +
       (a.citationUrl ? ` (the ${a.issuer}'s winners list: ${a.citationUrl})` : ""),
   ).join("\n");
+  // The dated check of the two state records, in one sentence.
+  const licenseStatus = `Both licenses were ${LICENSE_RECORD.status} on the Florida DBPR's records when checked on ${LICENSE_RECORD_DATES.checkedOn}; the state lists both through ${LICENSE_RECORD_DATES.activeThrough}. Anyone can confirm either number at ${LICENSE_RECORD.lookupUrl} (Search by License Number).`;
   // Same list the JSON-LD `sameAs` uses, so an engine can tie every listing
   // to this one business.
   const profileBullets = PROFILES.map((p) => `- **${p.label}:** ${p.url}`).join("\n");
@@ -88,6 +90,9 @@ export function buildLlmsTxt(): string {
 - **Founded:** 1998 in Cape Coral by brothers Chris and Sam Pellechio with their father
 - **Ownership:** Family owned and operated, three generations
 - **Florida Contractor Licenses:** ${BUSINESS.license} (the company's Florida Certified Plumbing Contractor license since its 2023 reorganization as part of Draft Construction); ${BUSINESS.license2} (co-founder Samuel Pellechio's license). Both issued by DBPR
+- **License status:** ${licenseStatus}
+- **State record, ${BUSINESS.license}:** ${LICENSE_RECORD.company.recordUrl}
+- **State record, ${BUSINESS.license2}:** ${LICENSE_RECORD.founder.recordUrl}
 ${awardBullets}
 - **Awards page:** ${BASE}/awards
 - **Google Rating:** ${BUSINESS.rating.toFixed(1)} stars across ${BUSINESS.reviewCount}+ Google reviews
@@ -189,8 +194,9 @@ ${NEW_CONSTRUCTION_CITIES.map((c) => `- ${c.city}, FL (permits: ${c.permitAuthor
 
   const credentials = `## Credentials and Trust Signals
 
-- **Florida Certified Plumbing Contractor License:** ${BUSINESS.license} (verified via Florida DBPR)
-- **Florida Certified Plumbing Contractor License:** ${BUSINESS.license2} (verified via Florida DBPR)
+- **Florida Certified Plumbing Contractor License:** ${BUSINESS.license} (verified via Florida DBPR: ${LICENSE_RECORD.company.recordUrl})
+- **Florida Certified Plumbing Contractor License:** ${BUSINESS.license2} (verified via Florida DBPR: ${LICENSE_RECORD.founder.recordUrl})
+- **License status:** ${licenseStatus}
 - **In Business Since:** ${BUSINESS.founded} (28 years serving Southwest Florida as of 2026)
 ${awardBullets}
 - **Google Rating:** ${BUSINESS.rating.toFixed(1)} stars across ${BUSINESS.reviewCount}+ reviews

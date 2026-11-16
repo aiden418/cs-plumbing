@@ -11,7 +11,7 @@
  * path: no page data, no .tsx, no Node APIs. src/lib/constants.ts re-exports
  * BUSINESS so existing server code keeps importing it from there.
  */
-import { LICENSE } from "./claims";
+import { LICENSE, LICENSE_RECORD } from "./claims";
 
 // The company has one phone line (Aiden, 2026-11-14). It is typed here twice,
 // as digits and as the vanity spelling; every other form is derived from
@@ -95,10 +95,13 @@ export const BUSINESS = {
   /** Samuel Pellechio's original license, still active; listed alongside the
    *  company license on formal documents. */
   license2: LICENSE.founder,
-  // DBPR "Search by License Number" form (search=LicNbr). Direct per-license
-  // detail links aren't possible — the DBPR site is session-coupled.
-  licenseLookupUrl:
-    "https://www.myfloridalicense.com/wl11.asp?mode=2&search=LicNbr&SID=&brd=&typ=",
+  /** The state's license search page, for text that says "search either
+   *  number". The old wl11.asp address stopped loading when the DBPR moved to
+   *  its new portal (found 2026-11-16). */
+  licenseLookupUrl: LICENSE_RECORD.lookupUrl,
+  /** The state's own record for the company license: status, renewal date
+   *  and address, no typing needed. Where a link says "verify", use this. */
+  licenseRecordUrl: LICENSE_RECORD.company.recordUrl,
   rating: 5.0,
   // Static fallback only. Google Maps showed 5.0 across 64 reviews on
   // 2026-11-16 (60 on 2026-10-20). The live number

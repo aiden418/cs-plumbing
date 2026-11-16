@@ -203,6 +203,13 @@ it: `PHONE_DIGITS` (ten digits), `PHONE_VANITY` (how customers read it) and
 page, the Google data and `/llms.txt` all follow. Then refresh the two builder
 PDFs (below). Email, address and license are in the same file.
 
+**License check:** the site says what the state's own record showed on a
+named day ("current and active through August 31, 2028, record checked
+November 16, 2026"). After a renewal, open the two record links in
+`src/lib/claims.ts` (`LICENSE_RECORD`), then update `checkedOn`, `status` and
+`activeThrough` there. The About page, the FAQ, the footer link, the Google
+data and `/llms.txt` all follow.
+
 **Hours:** in `src/lib/business.ts`, under `hours`. `open` is the line
 customers read ("Open 24 hours, 7 days a week"). `schema` just below it is the
 same hours as Google reads them (days, `opens`, `closes`). Change both together.

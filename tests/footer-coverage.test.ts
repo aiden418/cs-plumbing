@@ -32,6 +32,10 @@ function normalize(href: string): string {
     const query = scheme === "sms:" && h.includes("?") ? h.slice(h.indexOf("?")) : "";
     return `${scheme}${who}${query}`;
   }
+  // The license link is compared as "the state's license site": the DBPR
+  // retired the frozen wl11.asp address in 2026 (it no longer loads), so the
+  // footer now opens the license's own record on the state's new portal.
+  if (/^https:\/\/www\.myfloridalicense\.com\//.test(h)) return "https://www.myfloridalicense.com (license record)";
   if (/^https?:\/\//.test(h)) return h.replace(/\/$/, "");
   return h;
 }
@@ -54,6 +58,14 @@ test("every footer link of the site before the redesign is still in the footer",
   const produced = hrefsIn(await renderFooter());
   const missing = fixture.hrefs.filter((href) => !produced.has(normalize(href)));
   assert.deepEqual(missing, [], `footer lost links: ${missing.join(", ")}`);
+});
+
+test("the footer's license link opens the state's record for the company license", async () => {
+  const html = await renderFooter();
+  const href = [...html.matchAll(/<a\b[^>]*\bhref="([^"]*)"/g)]
+    .map((m) => m[1].replace(/&amp;/g, "&"))
+    .find((h) => h.includes("myfloridalicense.com"));
+  assert.equal(href, BUSINESS.licenseRecordUrl);
 });
 
 test("the footer is the no-JavaScript menu target and is not a client component", async () => {
