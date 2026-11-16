@@ -223,7 +223,7 @@ export default function BuilderPortalPage() {
 
   const reviewRow = (term: string, value: ReactNode) => (
     <div className="grid grid-cols-[7rem_1fr] gap-x-4 border-t border-rule py-2.5 text-[0.9375rem] sm:grid-cols-[9rem_1fr]">
-      <dt className="text-muted">{term}</dt>
+      <dt className="text-steel-600">{term}</dt>
       <dd className="min-w-0 font-medium break-words text-fg">{value}</dd>
     </div>
   );
@@ -231,7 +231,7 @@ export default function BuilderPortalPage() {
   const reviewGroup = (title: string, target: number, children: ReactNode) => (
     <section className="border-t border-fg/80 pt-3">
       <div className="flex items-center justify-between gap-4">
-        <h3 className="label-tech text-fg">{title}</h3>
+        <h3 className="text-base font-semibold text-fg">{title}</h3>
         {editButton(target)}
       </div>
       {children}
@@ -247,11 +247,12 @@ export default function BuilderPortalPage() {
       <Section
         id="upload-plans"
         tone="white"
+        spacing="sm"
         labelledBy="upload-plans-heading"
         className="scroll-mt-[calc(var(--nav-h)+1rem)]"
       >
         <Container>
-          <div className="grid grid-cols-[minmax(0,1fr)] gap-y-12 lg:grid-cols-12 lg:gap-x-8">
+          <div className="grid grid-cols-[minmax(0,1fr)] gap-y-10 lg:grid-cols-12 lg:gap-x-12">
             {/* Header and what happens next */}
             <div className="lg:col-span-4 lg:col-start-1 lg:row-start-1">
               <Eyebrow className="mb-4">{COPY.overline}</Eyebrow>
@@ -262,13 +263,11 @@ export default function BuilderPortalPage() {
             </div>
 
             {/* What happens next: under the header beside the form on desktop, after the form on phones */}
-            <div className="order-3 border-t border-rule pt-10 lg:order-none lg:col-span-4 lg:col-start-1 lg:row-start-2 lg:border-t-0 lg:pt-0">
-              <h2 className="label-tech mb-6 flex items-center gap-2.5 text-accent">
-                <span className="joint" aria-hidden="true" />
-                {AFTER_SUBMIT.title}
-              </h2>
+            <div className="order-3 border-t border-rule pt-8 lg:order-none lg:col-span-4 lg:col-start-1 lg:row-start-2 lg:border-t-0 lg:pt-0">
+              <h2 className="mb-5 text-xl leading-snug font-semibold text-fg">{AFTER_SUBMIT.title}</h2>
               <Stepper
                 orientation="vertical"
+                className="[&_li]:pb-6 [&_li:last-child]:pb-0"
                 label={AFTER_SUBMIT.title}
                 items={AFTER_SUBMIT.steps.map((s) => ({ label: s.title, description: s.description }))}
               />

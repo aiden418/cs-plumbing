@@ -19,6 +19,8 @@ export const BUILDERS_HUB = {
     leadPrefix: "New construction plumbing for builders and GCs across Lee and Charlotte counties, from slab layout to final.",
     bidAction: "Submit Plans for a Bid",
     capabilityAction: "Capability Statement",
+    /** Followed by the builder desk's phone number. */
+    call: "Call",
   },
   logoWall: {
     overline: "Trusted By",
@@ -77,6 +79,8 @@ export const BUILDER_SECTIONS = {
     phase: "Phase",
     weDo: "What we do",
     weNeed: "What we need from the framer / GC",
+    /** The toggle that opens a phase's two lists on phones. */
+    detailsToggle: "What we do and what we need",
   },
   swfl: {
     overline: "Built for Southwest Florida",
@@ -112,6 +116,8 @@ export const BUILDER_SECTIONS = {
     request: "Request",
     requestsGoTo: "Document requests go to",
     requestsNote: ". Tell us the project and any certificate-holder or additional-insured wording.",
+    /** The toggle that opens the document list on phones. */
+    showAll: (count: number) => `Show all ${count} documents`,
   },
   desk: {
     overline: "Your point of contact",
@@ -156,6 +162,8 @@ export const NC_CITY = {
   breadcrumb: (city: string) => `New Construction Plumbing — ${city}`,
   bidAction: "Submit Plans for a Bid",
   capabilityAction: "Capability Statement",
+  /** Followed by the builder desk's phone number. */
+  call: "Call",
   conditionsOverline: (city: string) => `${city} site conditions`,
   conditionsTitle: (city: string) => `What changes the plumbing in ${city}`,
   /** "Permits and inspections in {city}: {authority}." */

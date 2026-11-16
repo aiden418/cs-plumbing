@@ -23,44 +23,48 @@ export default function BuilderReviewPage() {
   return (
     <>
       <PageHero
-        layout="compact"
+        layout="plain"
+        size="sm"
         overline={COPY.overline}
         title={COPY.title}
         accent={COPY.accent}
         description={COPY.description}
+        actions={
+          <Button href={reviewUrl} target="_blank" size="lg" iconRight={<ExternalLink className="size-5" />}>
+            {COPY.writeReview}
+          </Button>
+        }
       />
 
-      <Section tone="white" labelledBy="builder-review-prompts">
-        <Container size="narrow">
-          <h2 id="builder-review-prompts" className="text-display-sm text-fg">
-            {COPY.promptsTitle}
-          </h2>
-          <p className="mt-3 text-body">{COPY.promptsNote}</p>
-          <ul className="mt-8 border-b border-rule">
-            {BUILDER_REVIEW_PROMPTS.map((q) => (
-              <li key={q} className="border-t border-rule py-5 text-lg text-fg">
-                {q}
-              </li>
-            ))}
-          </ul>
+      <Section tone="white" spacing="sm" labelledBy="builder-review-prompts">
+        <Container>
+          <div className="grid gap-y-8 lg:grid-cols-12 lg:gap-x-12">
+            <div className="lg:col-span-7">
+              <h2 id="builder-review-prompts" className="text-display-sm text-fg">
+                {COPY.promptsTitle}
+              </h2>
+              <p className="mt-3 text-body">{COPY.promptsNote}</p>
+              <ul className="mt-6 border-b border-rule">
+                {BUILDER_REVIEW_PROMPTS.map((q) => (
+                  <li key={q} className="border-t border-rule py-4 text-lg leading-snug text-fg">
+                    {q}
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-          <div className="mt-10">
-            <Button href={reviewUrl} target="_blank" size="lg" iconRight={<ExternalLink className="size-5" />}>
-              {COPY.writeReview}
-            </Button>
+            <p className="border-t border-rule pt-5 text-body lg:col-span-5 lg:mt-1 lg:border-t-0 lg:pt-0">
+              {COPY.fixPrefix}{" "}
+              <a
+                href={`mailto:${BUILDER_DESK.email}`}
+                className="inline-flex min-h-11 items-center gap-1.5 font-semibold text-link underline-offset-[0.2em] hover:underline"
+              >
+                <Mail className="size-4" aria-hidden="true" />
+                {BUILDER_DESK.email}
+              </a>
+              {COPY.fixSuffix}
+            </p>
           </div>
-
-          <p className="mt-12 border-t border-rule pt-6 text-sm text-muted">
-            {COPY.fixPrefix}{" "}
-            <a
-              href={`mailto:${BUILDER_DESK.email}`}
-              className="inline-flex min-h-11 items-center gap-1.5 font-semibold text-link underline-offset-[0.2em] hover:underline"
-            >
-              <Mail className="size-4" aria-hidden="true" />
-              {BUILDER_DESK.email}
-            </a>
-            {COPY.fixSuffix}
-          </p>
         </Container>
       </Section>
     </>
