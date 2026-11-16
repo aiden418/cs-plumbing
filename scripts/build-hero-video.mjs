@@ -67,12 +67,13 @@ const FPS = 30;
  * "like-original" = no further apart than in the original, within 2 to 10
  * seconds. The shipped clip has keyframes at frames 0 and 250, so its copies get
  * exactly those two. Measured on that clip against a keyframe every 60 frames
- * (the tool's own default) at the same file size: 0.7-1.1 dB better on average,
- * 1-2 dB better in the hardest part (the push-in at the end), and none of the
- * sharpen-then-soften pulse every 2 seconds that the 60-frame version shows at
- * 720p, where those extra keyframes ate 28-45% of each file. The clip plays
- * from its first frame and replays from its first frame, so nothing needs the
- * extra starting points; the original has been served this way all along.
+ * (the tool's own default) at the same file size: the H.264 copies come out
+ * 0.7-1.1 dB better and the 720p HEVC copy 1.7 dB better (34.6 against 32.9 dB),
+ * because four extra keyframes take roughly a third of a file this small. With
+ * the hardware encoders each of them also showed as a sharpen-then-soften
+ * pulse, every 2 seconds. The clip plays from its first frame and replays from
+ * its first frame, so nothing needs the extra starting points, and the
+ * original has been served with this layout all along.
  *
  * Put a number here (for example 60) to force a fixed spacing instead.
  */
