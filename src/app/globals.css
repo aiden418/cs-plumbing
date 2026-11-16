@@ -1026,6 +1026,16 @@
   }
 }
 
+/* The Terms were typeset inside the old page gutter (1.5rem at paper width).
+   The printed line length, and with it the pagination and the "Page X of Y"
+   footers, depends on that gutter, so paper keeps it. */
+@media print {
+  div:has(> .terms-doc) {
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+  }
+}
+
 /* 7. REDUCED MOTION ----------------------------------------------------------- */
 
 @media (prefers-reduced-motion: reduce) {
