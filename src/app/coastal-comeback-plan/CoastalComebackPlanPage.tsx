@@ -92,9 +92,7 @@ export default function CoastalComebackPlanPage({ season = "departure" }: { seas
                 className={cn(
                   "relative flex flex-col border-b border-rule py-8 md:border-b-0 md:px-6 md:py-10 lg:px-8",
                   i > 0 && "md:border-l",
-                  i === 0 && "md:pl-0",
-                  i === COASTAL.plans.tiers.length - 1 && "md:pr-0",
-                  tier.highlight && "md:bg-raised md:pl-6 md:pr-6 lg:pl-8 lg:pr-8"
+                  tier.highlight && "md:bg-raised"
                 )}
               >
                 {tier.highlight && (

@@ -36,7 +36,7 @@ export default function EmergencyPage({
               variant="emergency"
               size="lg"
               icon={<Phone className="size-6" />}
-              className="min-h-16 px-8 text-xl sm:min-h-[4.5rem] sm:px-10 sm:text-2xl"
+              className="min-h-16 px-5 text-lg whitespace-nowrap min-[360px]:text-xl sm:min-h-[4.5rem] sm:px-10 sm:text-2xl"
             >
               {`Call ${BUSINESS.phone}`}
             </Button>
