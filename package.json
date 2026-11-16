@@ -12,7 +12,7 @@
     "test": "node --import tsx --test \"tests/**/*.test.ts\"",
     "check:claims": "node scripts/check-content-claims.mjs --strict",
     "check:legacy": "node scripts/check-legacy-classes.mjs --strict",
-    "prebuild": "node scripts/build-image-manifest.mjs && npm run check:claims && node scripts/check-images.mjs --gate",
+    "prebuild": "node scripts/check-deploy-env.mjs && node scripts/build-image-manifest.mjs && npm run check:claims && node scripts/check-images.mjs --gate",
     "preview:review": "NEXT_PUBLIC_ANALYTICS=off NEXT_PUBLIC_GA_MEASUREMENT_ID=off npm run build && OPENAI_ADS_CONVERSIONS_API_KEY= SMS_GATEWAY_TO= npm run start:capture -- -p 3100",
     "video:build": "node scripts/build-hero-video.mjs",
     "video:check": "node scripts/build-hero-video.mjs --check",
