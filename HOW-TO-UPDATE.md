@@ -143,6 +143,7 @@ nobody sees the old one from a cache.
 | Homepage photo | `public/images/hero/drone-construction.jpg` | landscape, 2400 x 1800 |
 | Logo (header and footer) | `public/images/logos/logo-new.png` | 2048 x 2048 PNG, see-through background, emblem in the same place |
 | Team photos | `public/images/team/aiden.jpg` and the others there | same shape as the one you replace |
+| Family photo on the homepage | `public/images/team/sam-and-aiden.jpg` | upright, 4 wide by 5 tall (for example 1280 x 1600). It is shown whole, so nobody is cut off |
 | Service photos | the file named for that service in `src/content/media.json` | same size as the one you replace |
 
 The phone version of the homepage photo is cut automatically. After replacing
@@ -154,6 +155,22 @@ spot (for example `"service.header.tankless-water-heaters"` is the top photo of
 the tankless page, and `"home.service.repiping"` the repiping card on
 `/services`), and change `"image"` to another photo's path, such as
 `"/images/services/project-6.jpg"`. Change its `"alt"` to match.
+
+## Add or replace a builder logo
+
+Builder logos show in the gliding row on the homepage and on the Builders page.
+
+1. Save the logo in `public/images/builders/` (PNG, SVG, WebP or JPG; a
+   see-through background looks best).
+2. Open `src/lib/builders-data.ts`. The list at the top has one line per
+   builder. Copy a line and change the name, the file name, and `logoWidth` /
+   `logoHeight` to the picture's size in pixels (in Finder: Get Info).
+3. If the logo is drawn in white on a see-through background, add
+   `darkTile: true` to its line. It then sits on a navy tile instead of
+   vanishing on white. If you forget, `npm test` stops and names the builder.
+
+To replace a logo, save the new file under a **new name** and change the file
+name in that builder's line, so nobody sees the old one from a cache.
 
 ## Replace the homepage film
 
