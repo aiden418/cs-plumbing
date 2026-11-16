@@ -58,9 +58,9 @@ test("palette: every colour of the design system, with its value", () => {
     "brass-300": "#D4BC8A",
     "brass-600": "#A8884C",
     bronze: "#7A6235",
-    shell: "#F5F2EC",
-    "shell-200": "#EAE6DC",
-    "shell-300": "#DCD6C8",
+    shell: "#F4F6F9",
+    "shell-200": "#E9EDF2",
+    "shell-300": "#D9DFE7",
     "steel-50": "#F6F7F9",
     "steel-100": "#ECEEF2",
     "steel-200": "#D9DDE3",
@@ -106,7 +106,7 @@ test("tones: white, shell, navy and ink each define every tone colour, and the u
   assert.equal(cascade(`[data-tone="navy"]`).get("--tone-canvas"), "var(--color-navy)");
   assert.equal(cascade(`[data-tone="ink"]`).get("--tone-canvas"), "var(--color-ink)");
   assert.equal(cascade(`[data-tone="ink"]`).get("--tone-accent"), "var(--color-brass)", "brass on dark");
-  assert.equal(cascade(`[data-tone="white"]`).get("--tone-accent"), "var(--color-bronze)", "bronze on light");
+  assert.equal(cascade(`[data-tone="white"]`).get("--tone-accent"), "var(--color-primary-dark)", "brand blue on light");
   assert.equal(cascade(`[data-tone="shell"]`).get("--tone-link"), "var(--color-primary-dark)", "links on shell are primary-dark");
   assert.equal(cascade(`[data-tone="ink"]`).get("--tone-link"), "var(--color-primary-300)");
 });
@@ -117,8 +117,8 @@ test("type scale: the sizes the specification lists", () => {
     "--text-display-lg": [34, 64],
     "--text-display-md": [28, 48],
     "--text-display-sm": [22, 32],
-    "--text-lead": [18, 22],
-    "--text-label": [12, 13],
+    "--text-lead": [19, 22],
+    "--text-label": [13, 14],
   };
   for (const [name, [min, max]] of Object.entries(sizes)) {
     const size = fluid(name);
@@ -168,7 +168,7 @@ test("type: Archivo for h1 and h2 at 108% width, Inter for everything else", () 
   const label = block("@utility label-tech");
   assert.equal(label.get("text-transform"), "uppercase");
   assert.equal(label.get("font-size"), "var(--text-label)");
-  assert.equal(label.get("font-family"), "var(--font-display)");
+  assert.equal(label.get("font-family"), "var(--font-sans)");
 });
 
 test("space, shape and elevation", () => {
