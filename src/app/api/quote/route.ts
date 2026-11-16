@@ -173,7 +173,7 @@ export async function POST(request: Request) {
             </p>
 
             <p style="color: #999; font-size: 12px; margin-top: 20px;">
-              C&S Plumbing of Lee · License #CFC1432485 · 951 Pondella Rd, North Fort Myers, FL 33903
+              C&S Plumbing of Lee · License #${BUSINESS.license} · ${BUSINESS.address}, ${BUSINESS.city}, ${BUSINESS.state} ${BUSINESS.zip}
             </p>
             <p style="color: #999; font-size: 12px; margin-top: 8px;">
               Estimates are subject to our Terms &amp; Conditions (rev. ${TERMS_VERSION}):

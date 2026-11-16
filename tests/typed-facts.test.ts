@@ -43,12 +43,9 @@ const SOURCE_OF_TRUTH = ["src/lib/business.ts", "src/lib/claims.ts"];
  * and lower or delete its entry.
  */
 const STILL_TYPED: Record<string, { max: number; what: string }> = {
-  // Form routes: the dial link reads BUSINESS.phoneHref; the rest of each
-  // email and response still has its typed copies.
-  "src/app/api/quote/route.ts": { max: 2, what: "license number and street address in the customer email footer" },
-  "src/app/api/builder-portal/route.ts": { max: 2, what: "phone number in the two error responses" },
+  // Where contact-form leads are delivered is an operational setting, not the
+  // public email: it stays typed so changing BUSINESS.email cannot reroute leads.
   "src/app/api/contact/route.ts": { max: 1, what: "office email as the recipient of the lead email" },
-  "src/app/builder-portal/BuilderPortalPage.tsx": { max: 1, what: "phone number in the submit-failure alert" },
 };
 
 interface Hit {

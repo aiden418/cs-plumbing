@@ -72,7 +72,7 @@ export async function POST(request: Request) {
     if (!process.env.RESEND_API_KEY) {
       console.error("RESEND_API_KEY is not configured");
       return NextResponse.json(
-        { error: "Email service unavailable. Please call 833-PLUMB-IT." },
+        { error: `Email service unavailable. Please call ${BUSINESS.phone}.` },
         { status: 500 }
       );
     }
@@ -224,7 +224,7 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error("Builder portal error:", error);
     return NextResponse.json(
-      { error: "Failed to submit. Please call 833-PLUMB-IT." },
+      { error: `Failed to submit. Please call ${BUSINESS.phone}.` },
       { status: 500 }
     );
   }
