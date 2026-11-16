@@ -56,13 +56,4 @@
   }
 }
 
-/* Project page hero: a project name runs to about 60 characters and shares
-   the row with the cover, so it is set one step down (display-md) instead of
-   the page-H1 size PageHero gives names under 65 characters. Unlayered on
-   purpose: it has to win over the text-display-lg utility. Same words, same
-   element; only the size changes. */
-.project-hero h1 {
-  font-size: var(--text-display-md);
-  line-height: var(--text-display-md--line-height);
-  letter-spacing: var(--text-display-md--letter-spacing);
-}
+

@@ -180,7 +180,11 @@ export default function PageHero({
   const centered = align === "center" && (editorial || layout === "compact");
 
   const h1Text = headlineText(title, accent);
-  const { width, stepDown } = headlineWidth(h1Text);
+  const { width, stepDown: longest } = headlineWidth(h1Text);
+  // Beside a photograph the headline has half the page: a title past about
+  // 40 characters would run to five lines at full size, so it steps down too.
+  const besidePhoto = layout === "split" || layout === "cinema";
+  const stepDown = longest || (besidePhoto && h1Text.length > 40);
   const h1Size = compact
     ? stepDown
       ? "text-display-sm"
