@@ -100,11 +100,11 @@ export const BUSINESS = {
   licenseLookupUrl:
     "https://www.myfloridalicense.com/wl11.asp?mode=2&search=LicNbr&SID=&brd=&typ=",
   rating: 5.0,
-  // Static fallback only. Google Maps showed 5.0 across 60 reviews on
-  // 2026-10-20 while the site was still telling crawlers 46. The live number
+  // Static fallback only. Google Maps showed 5.0 across 64 reviews on
+  // 2026-11-16 (60 on 2026-10-20). The live number
   // comes from the Places API when GOOGLE_PLACES_API_KEY and GOOGLE_PLACE_ID
   // are set in Vercel — set those so this stops drifting.
-  reviewCount: 60,
+  reviewCount: 64,
   /** Permanent link to the Google Business Profile listing (by CID), not a
    *  Maps search. Resolves to the 951 Pondella Rd listing. */
   googleProfileUrl: "https://maps.google.com/?cid=5498090134012520413",
