@@ -10,6 +10,8 @@
 
 /** /services */
 export const SERVICES_INDEX = {
+  /** The hero photograph: a named position in media.json (an aerial of a C&S underground layout). */
+  heroPhoto: "service.header.new-construction",
   hero: {
     overline: "Our Services",
     title: "Every Plumbing Solution",
@@ -107,6 +109,19 @@ export const SERVICE_PAGE = {
     cityPages: "Get local pricing",
   },
 } as const;
+
+/**
+ * The header photograph of a service page that has no named header position
+ * (service.header.<slug>) yet: a real C&S job photo from that page's own job
+ * gallery. The services index uses the same photo for the service's tile when
+ * home.service.<slug> is empty. A named position, once filled, wins.
+ */
+export const SERVICE_PHOTO_FALLBACK: Readonly<Record<string, { src: string; position?: string }>> = {
+  repiping: { src: "/images/gallery/attic-pex-repipe.jpg", position: "50% 45%" },
+  "drain-cleaning": { src: "/images/gallery/residential-sewer-excavation.jpg", position: "50% 60%" },
+  "leak-repair": { src: "/images/gallery/residential-excavation.jpg", position: "50% 55%" },
+  "water-softeners": { src: "/images/gallery/water-filtration-system.jpg", position: "50% 40%" },
+};
 
 /**
  * Job photos shown when a service lists fewer than three of its own

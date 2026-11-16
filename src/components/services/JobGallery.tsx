@@ -1,7 +1,6 @@
 import Container from "@/components/ui/Container";
-import Section from "@/components/ui/Section";
+import Section, { type Tone } from "@/components/ui/Section";
 import Eyebrow from "@/components/ui/Eyebrow";
-import Reveal from "@/components/ui/Reveal";
 import Filmstrip from "@/components/explorer/Filmstrip";
 import LightboxProvider from "@/components/lightbox/LightboxProvider";
 import { image } from "@/lib/media";
@@ -41,14 +40,16 @@ interface Props {
   title?: string;
   /** false: show every listed photo, no default set. */
   fallback?: boolean;
+  /** The section surface (white or shell, alternating with its neighbours). */
+  tone?: Tone;
 }
 
 /**
- * Real job photos as a filmstrip on ink, with the lightbox. The captions
- * follow the rail as a numbered legend (they used to be printed on the
- * photos; text never sits on a photograph now).
+ * Real job photos as a compact filmstrip with the lightbox, on a light
+ * section. Each photo's caption is its alt text and the lightbox title; the
+ * caption list stays in the page for search engines and screen readers.
  */
-export default function JobGallery({ id, photos, serviceTitle, title, fallback = true }: Props) {
+export default function JobGallery({ id, photos, serviceTitle, title, fallback = true, tone = "white" }: Props) {
   const items = resolveJobPhotos(photos, serviceTitle, fallback);
   if (items.length === 0) return null;
   const captions = items.map((m) => m.caption).filter(Boolean);
@@ -56,27 +57,25 @@ export default function JobGallery({ id, photos, serviceTitle, title, fallback =
   const heading = title ?? (serviceTitle ? `${COPY.titleBefore}${serviceTitle}${COPY.titleAfter}` : COPY.titleFallback);
 
   return (
-    <Section tone="ink" labelledBy={headingId}>
+    <Section tone={tone} spacing="sm" labelledBy={headingId}>
       <Container>
-        <Reveal className="mb-10 max-w-3xl sm:mb-12">
-          {!title && <Eyebrow className="mb-4">{COPY.overline}</Eyebrow>}
+        <div className="mb-6 max-w-3xl sm:mb-8">
+          {!title && <Eyebrow className="mb-3">{COPY.overline}</Eyebrow>}
           <h2 id={headingId} className="text-display-md text-fg">
             {heading}
           </h2>
-          {!title && <p className="mt-4 max-w-[56ch] text-lead text-body">{COPY.description}</p>}
-        </Reveal>
+          {!title && <p className="mt-3 max-w-[60ch] text-body">{COPY.description}</p>}
+        </div>
       </Container>
       <LightboxProvider>
-        <Filmstrip id={id} items={items} name={heading} showName={false} />
+        <Filmstrip id={id} items={items} name={heading} showName={false} className="job-filmstrip" />
       </LightboxProvider>
       {captions.length > 0 && (
-        <Container>
-          <ol className="job-legend mt-8 grid grid-cols-1 gap-x-8 text-sm text-body sm:grid-cols-2 lg:grid-cols-3">
-            {items.map((m) => (
-              <li key={m.path}>{m.caption ?? m.alt}</li>
-            ))}
-          </ol>
-        </Container>
+        <ol className="sr-only">
+          {items.map((m) => (
+            <li key={m.path}>{m.caption ?? m.alt}</li>
+          ))}
+        </ol>
       )}
     </Section>
   );

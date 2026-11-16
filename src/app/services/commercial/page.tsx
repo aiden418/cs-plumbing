@@ -205,7 +205,7 @@ export default function CommercialPage() {
         description="City pages for property managers and business owners in Cape Coral, Fort Myers and Naples."
       />
       {/* FAQ */}
-      <Section tone="shell" labelledBy="commercial-faq-heading">
+      <Section tone="shell" spacing="sm" labelledBy="commercial-faq-heading">
         <Container>
           <Chapter id="commercial-faq-heading" overline={COPY.faqOverline} title={COPY.faqTitle}>
             <FaqAccordion faqs={commercialFaqs} />

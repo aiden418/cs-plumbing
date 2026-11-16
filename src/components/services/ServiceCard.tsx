@@ -6,22 +6,22 @@ import type { MediaRef } from "@/lib/media-types";
 import type { Service } from "@/lib/types";
 
 /**
- * A service tile (design-system.md "Tiles"): a portrait frame with the title,
- * the service's line and its feature list below it, never on it. The whole
- * tile is one link; hover lifts the frame 2 px and nudges the arrow.
+ * A service tile (v2-bright.md): a white card with the photograph on top and
+ * the service's name under it; the whole card is one link. The service's line
+ * shows from md (on a phone, two tiles a row, it would be too long) and its
+ * feature list stays in the page for search engines and screen readers.
  *
- * `media` is resolved by the server page (picture("home.service.<slug>"));
- * without one the tile is type-led: no frame and no stand-in picture, the
- * words under a hairline.
+ * `media` is resolved by the server page; without one the card shows its
+ * words only.
  *
- * "door": the frame sits beside the words (a wide tile for a short group).
+ * "wide": a landscape photograph (a short group of two).
  */
 interface ServiceCardProps {
   service: Service;
   media: MediaRef | null;
   more: string;
-  layout?: "tile" | "door";
-  /** Real layout widths of the frame. */
+  layout?: "tile" | "wide";
+  /** Real layout widths of the photograph. */
   sizes: string;
   titleAs?: "h3" | "h4";
   className?: string;
@@ -36,39 +36,42 @@ export default function ServiceCard({
   titleAs: Title = "h4",
   className,
 }: ServiceCardProps) {
-  const door = layout === "door";
-  const lift = "transition-[transform,box-shadow] duration-250 ease-settle group-hover:-translate-y-0.5 group-hover:shadow-lift";
-  const frame = media ? (
-    <Frame media={media} alt="" aspect="4/5" sizes={sizes} quality={70} frameClassName={lift} />
-  ) : null;
-
+  const wide = layout === "wide";
   return (
     <Link
       href={service.href}
       className={cn(
-        "service-tile group flex h-full flex-col rounded-frame",
-        door && frame && "grid grid-cols-[minmax(0,5fr)_minmax(0,7fr)] items-start gap-5 sm:gap-8",
-        !frame && "rounded-none border-t border-rule pt-6",
+        "group flex h-full flex-col overflow-hidden rounded-2xl border border-steel-200 bg-white transition-colors duration-150 hover:border-steel-300",
+        wide && media && "sm:grid sm:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]",
         className,
       )}
     >
-      {frame}
-      <div className={cn("flex flex-1 flex-col", !door && frame && "mt-5")}>
-        <Title className="text-lg leading-snug font-semibold text-fg sm:text-xl">
-          <span className="underline-offset-4 group-hover:underline group-hover:decoration-1">{service.title}</span>
+      {media && (
+        <Frame
+          media={media}
+          alt=""
+          aspect="4/3"
+          sizes={sizes}
+          quality={70}
+          frameClassName={cn("rounded-none", wide && "aspect-video sm:aspect-auto sm:h-full sm:min-h-44")}
+        />
+      )}
+      <div className="flex flex-1 flex-col p-4 sm:p-5">
+        <Title className="flex items-start justify-between gap-2 text-[1.0625rem] leading-snug font-semibold text-fg sm:text-lg">
+          <span className="group-hover:text-primary-dark">{service.title}</span>
+          <ArrowRight className="mt-0.5 size-5 shrink-0 text-accent" aria-hidden="true" />
         </Title>
-        <p className="mt-2 text-sm leading-relaxed text-muted">{service.description}</p>
+        <p className={cn("mt-2 text-base leading-normal text-body", !wide && "sr-only md:not-sr-only")}>
+          {service.description}
+        </p>
         {service.features && service.features.length > 0 && (
-          <ul className="service-tile-features mt-4 text-sm text-body">
+          <ul className="sr-only">
             {service.features.slice(0, 4).map((feature) => (
               <li key={feature}>{feature}</li>
             ))}
           </ul>
         )}
-        <span className="mt-auto inline-flex min-h-6 items-center gap-1.5 pt-4 text-sm font-semibold text-link">
-          {more}
-          <ArrowRight className="size-4 transition-transform duration-250 ease-settle group-hover:translate-x-0.5" />
-        </span>
+        <span className="sr-only">{more}</span>
       </div>
     </Link>
   );

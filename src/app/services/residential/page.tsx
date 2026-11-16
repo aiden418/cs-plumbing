@@ -114,7 +114,7 @@ export default function ResidentialPage() {
       />
       {/* Owners of homes C&S plumbed as new construction */}
       <NewConstructionBenefits overline="Did C&S plumb your new home?" />
-      <Section tone="shell" labelledBy="residential-faq-heading">
+      <Section tone="shell" spacing="sm" labelledBy="residential-faq-heading">
         <Container>
           <Chapter id="residential-faq-heading" title={COPY.faqTitle} description={COPY.faqDescription}>
             <FaqAccordion faqs={RESIDENTIAL_FAQS} />

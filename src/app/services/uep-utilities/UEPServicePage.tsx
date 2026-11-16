@@ -9,6 +9,7 @@ import {
   OfferList,
   PointList,
   PriceLine,
+  splitLead,
 } from "@/components/services/ServiceLandingTemplate";
 import { picture } from "@/lib/media";
 import { SERVICE_PAGE, UEP_PAGE } from "@/content/services";
@@ -73,11 +74,12 @@ export default function UEPServicePage({
   landing: ServiceLanding;
 }) {
   const frame = picture("service.header.uep-utilities");
+  const { lead, rest } = splitLead(landing.description);
   return (
     <>
       {/* Hero */}
       <PageHero
-        layout={frame ? "split" : "type-led"}
+        layout="photo"
         frame={frame}
         breadcrumb={[
           { name: "Home", href: "/" },
@@ -86,15 +88,16 @@ export default function UEPServicePage({
         ]}
         overline={landing.title}
         title={landing.heroText}
-        description={landing.description}
+        description={lead}
         actions={<HeroActions second={{ label: SERVICE_PAGE.book, href: "/booking" }} />}
       >
         {landing.priceRange && <PriceLine label={SERVICE_PAGE.typicalPriceRange} range={landing.priceRange} />}
       </PageHero>
 
       {/* Features */}
-      <Section tone="white" labelledBy="offer-heading">
+      <Section tone="white" spacing="sm" labelledBy="offer-heading">
         <Container>
+          {rest && <p className="mb-10 max-w-[60ch] text-lead text-body sm:mb-12">{rest}</p>}
           <Chapter id="offer-heading" title={SERVICE_PAGE.offer} stacked>
             <OfferList items={landing.features} columns={2} />
           </Chapter>
@@ -102,10 +105,10 @@ export default function UEPServicePage({
       </Section>
 
       {/* Gallery */}
-      <JobGallery id="uep-work" photos={UEP_IMAGES} title={UEP_PAGE.galleryTitle} fallback={false} />
+      <JobGallery id="uep-work" photos={UEP_IMAGES} title={UEP_PAGE.galleryTitle} fallback={false} tone="shell" />
 
       {/* Highlights */}
-      <Section tone="shell" labelledBy="why-heading">
+      <Section tone="white" spacing="sm" labelledBy="why-heading">
         <Container>
           <Chapter id="why-heading" title={`${SERVICE_PAGE.whyBefore}${landing.title}`} stacked>
             <PointList items={landing.highlights} columns={3} />
@@ -114,7 +117,7 @@ export default function UEPServicePage({
       </Section>
 
       {/* FAQ */}
-      <Section tone="white" labelledBy="faq-heading">
+      <Section tone="shell" spacing="sm" labelledBy="faq-heading">
         <Container>
           <Chapter id="faq-heading" title={SERVICE_PAGE.faq}>
             <FaqAccordion faqs={landing.faqs} />

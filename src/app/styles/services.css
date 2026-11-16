@@ -4,81 +4,49 @@
    var(--ease-*), var(--dur-*)) rather than raw values. */
 
 @layer components {
-  /* A tile's feature list: short hairline rows, each led by a joint. */
-  .service-tile-features > li {
-    display: flex;
-    align-items: baseline;
-    gap: 0.625rem;
-    border-top: 1px solid var(--tone-rule);
-    padding-block: 0.4375rem;
-    line-height: 1.35;
-  }
-
-  .service-tile-features > li::before {
-    content: "";
-    flex: none;
-    width: 0.4375rem;
-    height: 0.4375rem;
-    border: 1.5px solid var(--tone-accent);
-    border-radius: 999px;
-    transform: translateY(-0.0625rem);
-  }
-
-  /* The estimator's step settles in (transform only; nothing fades). */
-  @media (prefers-reduced-motion: no-preference) {
-    .estimator-step {
-      animation: enter-rise var(--dur-2) var(--ease-enter) both;
-    }
-  }
-
-  /* Highlights ("Why choose"): one line each, led by a joint. */
+  /* "Why choose": one line each, led by a check, a 1 px line between rows. */
   .service-points > li {
     display: flex;
-    align-items: baseline;
+    align-items: flex-start;
     gap: 0.75rem;
     border-top: 1px solid var(--tone-rule);
-    padding-block: 0.875rem;
+    padding-block: 0.8125rem;
     color: var(--tone-fg);
     font-weight: 500;
     line-height: 1.4;
   }
 
-  .service-points > li::before {
-    content: "";
+  .service-points > li > svg {
     flex: none;
-    width: 0.5rem;
-    height: 0.5rem;
-    border: 1.5px solid var(--tone-accent);
-    border-radius: 999px;
-    transform: translateY(-0.0625rem);
+    margin-top: 0.0625rem;
   }
 
-  /* The photo legend under a filmstrip: numbered like the rail's counter. */
-  .job-legend {
-    counter-reset: job;
-  }
-
-  .job-legend > li {
-    counter-increment: job;
+  /* A service's feature list: short lines led by a small check, no rules. */
+  .service-checks > li {
     display: flex;
-    gap: 0.75rem;
-    border-top: 1px solid var(--tone-rule);
-    padding-block: 0.625rem;
-    line-height: 1.35;
+    align-items: flex-start;
+    gap: 0.5rem;
+    color: var(--tone-body);
+    font-size: 1rem;
+    line-height: 1.45;
   }
 
-  .job-legend > li::before {
-    content: counter(job, decimal-leading-zero);
+  .service-checks > li > svg {
     flex: none;
-    min-width: 1.75rem;
-    color: var(--tone-accent);
-    font-family: var(--font-display);
-    font-stretch: 112%;
-    font-weight: 600;
-    font-size: var(--text-label);
-    letter-spacing: 0.14em;
-    font-variant-numeric: tabular-nums;
-    line-height: 1.6;
+    margin-top: 0.1875rem;
+  }
+
+  /* Services index, two cards a row on phones: an odd last card takes the
+     whole row, its photo landscape, so no gap is left beside it. */
+  @media (width < 48rem) {
+    .service-grid > li:last-child:nth-child(odd) {
+      grid-column: span 2;
+    }
+  }
+
+  /* The job photos: a shorter rail than a project page's. */
+  .filmstrip.job-filmstrip {
+    --rail-h: clamp(13rem, 30vh, 21rem);
   }
 
   /* The request form beside the page from lg: it stays in view while the
@@ -92,6 +60,15 @@
       max-height: calc(100svh - var(--nav-h) - 2rem);
       overflow-y: auto;
       scrollbar-width: thin;
+    }
+  }
+}
+
+/* In the utilities layer so it outranks the frame's own aspect class. */
+@layer utilities {
+  @media (width < 48rem) {
+    .service-grid > li:last-child:nth-child(odd) .aspect-\[4\/3\] {
+      aspect-ratio: 16 / 9;
     }
   }
 }
