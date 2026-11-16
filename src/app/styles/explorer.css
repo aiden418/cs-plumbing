@@ -2,3 +2,710 @@
    Put rules inside @layer components { ... } so utility classes can still
    override them; use the design tokens (var(--color-*), var(--tone-*),
    var(--ease-*), var(--dur-*)) rather than raw values. */
+
+/* "Walk the job": filmstrip, phase line, featured projects, lightbox,
+   gallery grid and project cards (spec: .redesign/spec/explorer.md).
+   Components live in src/components/{explorer,lightbox,gallery}.
+
+   Page-grid alignment without measuring: a filmstrip, the phase bar and the
+   featured block are full-width containers (container-type: inline-size), so
+   their children can compute where the page grid starts with 100cqw:
+   (container width - 80rem) / 2 + gutter, the same edge as <Container>. */
+
+@layer components {
+  /* Filmstrip ---------------------------------------------------------------- */
+
+  .filmstrip {
+    container-type: inline-size;
+    --rail-h: clamp(17rem, 52vh, 34rem);
+  }
+
+  .filmstrip > * {
+    --rail-start: calc(max(0px, (100cqw - 80rem) / 2) + var(--spacing-gutter) + env(safe-area-inset-left, 0px));
+    --rail-end: calc(max(0px, (100cqw - 80rem) / 2) + var(--spacing-gutter) + env(safe-area-inset-right, 0px));
+  }
+
+  /* In a column that already bleeds right (FeaturedProjects). */
+  .filmstrip--column > * {
+    --rail-start: 0px;
+    --rail-end: calc(var(--spacing-gutter) + env(safe-area-inset-right, 0px));
+  }
+
+  .filmstrip-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem 2rem;
+    padding-inline: var(--rail-start) var(--rail-end);
+    margin-bottom: 1.25rem;
+  }
+
+  @media (min-width: 48rem) {
+    .filmstrip-head {
+      margin-bottom: 1.75rem;
+    }
+  }
+
+  .filmstrip-title {
+    font-size: var(--text-display-sm);
+    line-height: var(--text-display-sm--line-height);
+    letter-spacing: var(--text-display-sm--letter-spacing);
+  }
+
+  .filmstrip-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-left: auto;
+  }
+
+  .filmstrip-arrows {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  /* Touch-only screens swipe; the buttons would only take room. */
+  @media (hover: none) and (pointer: coarse) {
+    .filmstrip-arrows {
+      display: none;
+    }
+  }
+
+  .filmstrip-arrow {
+    display: inline-flex;
+    width: 2.75rem;
+    height: 2.75rem;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--tone-fg);
+    border-radius: var(--radius-control);
+    color: var(--tone-fg);
+    background: transparent;
+    transition:
+      background-color var(--dur-1) var(--ease-enter),
+      transform var(--dur-1) var(--ease-enter),
+      opacity var(--dur-1) var(--ease-enter);
+  }
+
+  .filmstrip-arrow:hover:not(:disabled) {
+    background: color-mix(in oklab, var(--tone-fg) 7%, transparent);
+  }
+
+  .filmstrip-arrow:active:not(:disabled) {
+    transform: scale(0.96);
+  }
+
+  .filmstrip-arrow:disabled {
+    opacity: 0.3;
+  }
+
+  .filmstrip-rail {
+    display: flex;
+    gap: 0.75rem;
+    margin: 0;
+    padding: 0.25rem var(--rail-end) 0.75rem var(--rail-start);
+    list-style: none;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
+    scroll-padding-inline: var(--rail-start) var(--rail-end);
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in oklab, var(--tone-fg) 28%, transparent) transparent;
+  }
+
+  @media (pointer: coarse) {
+    .filmstrip-rail {
+      scrollbar-width: none;
+    }
+
+    .filmstrip-rail::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .filmstrip-item {
+    flex: none;
+    scroll-snap-align: start;
+  }
+
+  .filmstrip-photo {
+    display: block;
+    border-radius: var(--radius-frame);
+    cursor: zoom-in;
+  }
+
+  /* One height for the whole rail, each photo at its own aspect ratio. On a
+     phone a wide photo is capped so the next one peeks in (cropped centre). */
+  .filmstrip-frame {
+    position: relative;
+    display: block;
+    height: var(--rail-h);
+    width: min(calc(var(--rail-h) * var(--ar, 0.75)), 86cqw);
+    overflow: hidden;
+    border-radius: var(--radius-frame);
+    transition: transform var(--dur-2) var(--ease-settle);
+  }
+
+  @media (hover: hover) {
+    .filmstrip-photo:hover .filmstrip-frame {
+      transform: translateY(-2px);
+    }
+  }
+
+  /* Project page: phases ------------------------------------------------------ */
+
+  .explorer-phase {
+    padding-block: clamp(2.5rem, 1.5rem + 3vw, 4.5rem);
+    /* Clear the sticky phase bar under the header. */
+    scroll-margin-top: 4.25rem;
+  }
+
+  .explorer-phase + .explorer-phase {
+    border-top: 1px solid var(--tone-rule);
+  }
+
+  /* The connection line ------------------------------------------------------- */
+
+  .phase-nav {
+    container-type: inline-size;
+    position: sticky;
+    top: var(--nav-h);
+    z-index: 30;
+    background: var(--tone-canvas);
+    color: var(--tone-body);
+    border-bottom: 1px solid var(--tone-rule);
+  }
+
+  .phase-nav-list {
+    display: flex;
+    align-items: center;
+    min-height: 4rem;
+    margin: 0;
+    padding: 0.5rem calc(max(0px, (100cqw - 80rem) / 2) + var(--spacing-gutter) + env(safe-area-inset-right, 0px)) 0.5rem
+      calc(max(0px, (100cqw - 80rem) / 2) + var(--spacing-gutter) + env(safe-area-inset-left, 0px));
+    list-style: none;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+  }
+
+  .phase-nav-list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .phase-nav-item {
+    display: flex;
+    flex: none;
+    align-items: center;
+  }
+
+  /* The run of pipe between two joints. */
+  .phase-nav-pipe {
+    width: clamp(1.25rem, 4cqw, 3.5rem);
+    height: 1px;
+    margin-inline: 0.75rem;
+    background: var(--tone-accent);
+    opacity: 0.6;
+  }
+
+  .phase-nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    min-height: 2.75rem;
+    padding-inline: 0.375rem;
+    border-radius: var(--radius-control);
+    white-space: nowrap;
+  }
+
+  .phase-nav-name {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    text-underline-offset: 0.25em;
+    transition: color var(--dur-1) var(--ease-enter);
+  }
+
+  .phase-nav-link:hover .phase-nav-name {
+    color: var(--tone-fg);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+  }
+
+  .phase-nav-joint,
+  .featured-step-joint {
+    position: relative;
+    z-index: 1;
+    flex: none;
+    width: 0.75rem;
+    height: 0.75rem;
+    border: 1.5px solid var(--tone-accent);
+    border-radius: 999px;
+    background: var(--tone-canvas);
+    transition:
+      background-color var(--dur-2) var(--ease-enter),
+      border-color var(--dur-2) var(--ease-enter),
+      box-shadow var(--dur-2) var(--ease-enter);
+  }
+
+  .phase-nav-link.is-current .phase-nav-joint,
+  .featured-step.is-selected .featured-step-joint {
+    border-color: var(--color-primary-300);
+    background: var(--color-primary-300);
+    box-shadow: 0 0 0 4px color-mix(in oklab, var(--color-primary-300) 22%, transparent);
+  }
+
+  .phase-nav-link.is-current .phase-nav-name {
+    color: var(--tone-fg);
+  }
+
+  /* Featured projects (homepage) ------------------------------------------- */
+
+  .featured {
+    container-type: inline-size;
+  }
+
+  .featured > * {
+    --inset: calc(max(0px, (100cqw - 80rem) / 2) + var(--spacing-gutter) + env(safe-area-inset-left, 0px));
+    --content: calc(min(100cqw, 80rem) - 2 * var(--spacing-gutter));
+  }
+
+  /* Phones and tablets, one column in this order: project switch, phase
+     steps, rail, the line about the phase, the link. The side column's
+     children join the grid (display: contents) so the rail can sit between
+     them without repeating any markup. */
+  .featured-grid {
+    display: flex;
+    flex-direction: column;
+    padding-left: var(--inset);
+  }
+
+  .featured-side {
+    display: contents;
+  }
+
+  .featured-side > * {
+    margin-right: var(--inset);
+  }
+
+  .featured-stage {
+    order: 3;
+    margin-top: 2rem;
+  }
+
+  .featured-line {
+    order: 4;
+  }
+
+  .featured-link {
+    order: 5;
+    align-self: flex-start;
+  }
+
+  @media (min-width: 64rem) {
+    .featured-grid {
+      display: grid;
+      /* 4 of 12 columns (2rem gaps) for the switch; the rail runs from the
+         5th column to the right edge of the screen. */
+      grid-template-columns: calc((var(--content) - 22rem) / 3 + 6rem) minmax(0, 1fr);
+      column-gap: 2rem;
+      align-items: start;
+    }
+
+    .featured-side {
+      display: block;
+    }
+
+    .featured-side > * {
+      margin-right: 0;
+    }
+
+    .featured-stage {
+      margin-top: 0;
+    }
+  }
+
+  .featured-projects {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.5rem;
+  }
+
+  @media (min-width: 40rem) {
+    .featured-projects {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .featured-projects {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0;
+      border-top: 1px solid var(--tone-rule);
+    }
+  }
+
+  .featured-project {
+    display: block;
+    min-height: 2.75rem;
+    padding: 0.875rem 0 0.875rem 1rem;
+    border-left: 2px solid var(--tone-rule);
+    text-align: left;
+    transition: border-color var(--dur-2) var(--ease-enter);
+  }
+
+  @media (min-width: 64rem) {
+    .featured-project {
+      padding-block: 1.25rem;
+      border-bottom: 1px solid var(--tone-rule);
+    }
+  }
+
+  .featured-project.is-selected {
+    border-left-color: var(--color-brass);
+  }
+
+  .featured-project-name {
+    display: block;
+    margin-top: 0.5rem;
+    color: var(--tone-muted);
+    font-family: var(--font-display);
+    font-stretch: 108%;
+    font-weight: 700;
+    font-size: clamp(1.125rem, 0.95rem + 0.9vw, 1.75rem);
+    line-height: 1.12;
+    letter-spacing: -0.012em;
+    transition: color var(--dur-2) var(--ease-enter);
+  }
+
+  .featured-project:hover .featured-project-name,
+  .featured-project.is-selected .featured-project-name {
+    color: var(--tone-fg);
+  }
+
+  /* Phase steps: horizontal on phones, a vertical connection line from 64rem. */
+  .featured-steps {
+    display: flex;
+    margin-top: 1.75rem;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+  }
+
+  .featured-steps::-webkit-scrollbar {
+    display: none;
+  }
+
+  .featured-step {
+    position: relative;
+    display: flex;
+    flex: none;
+    flex-direction: column;
+    gap: 0.625rem;
+    min-height: 2.75rem;
+    padding: 0.5rem 1.75rem 0.5rem 0;
+    text-align: left;
+  }
+
+  .featured-step:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    top: calc(0.5rem + 0.375rem);
+    left: calc(0.75rem + 0.5rem);
+    right: 0.5rem;
+    height: 1px;
+    background: var(--tone-accent);
+    opacity: 0.6;
+  }
+
+  .featured-step-text {
+    display: block;
+  }
+
+  .featured-step-name {
+    display: block;
+    color: var(--tone-body);
+    font-weight: 600;
+    line-height: 1.3;
+    white-space: nowrap;
+    text-underline-offset: 0.25em;
+  }
+
+  .featured-step:hover .featured-step-name {
+    color: var(--tone-fg);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+  }
+
+  .featured-step.is-selected .featured-step-name {
+    color: var(--tone-fg);
+  }
+
+  @media (min-width: 64rem) {
+    .featured-steps {
+      flex-direction: column;
+      overflow: visible;
+    }
+
+    .featured-step {
+      flex-direction: row;
+      gap: 1rem;
+      padding: 0.625rem 0;
+    }
+
+    .featured-step-joint {
+      margin-top: 0.3rem;
+    }
+
+    .featured-step:not(:last-child)::after {
+      top: calc(0.625rem + 0.3rem + 0.75rem + 0.25rem);
+      bottom: calc(-0.625rem - 0.3rem + 0.25rem);
+      left: calc(0.375rem - 0.5px);
+      right: auto;
+      width: 1px;
+      height: auto;
+    }
+
+    .featured-step-name {
+      white-space: normal;
+    }
+  }
+
+  .featured-line {
+    max-width: 44ch;
+    margin-top: 1.5rem;
+    color: var(--tone-body);
+  }
+
+  .featured-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 2.75rem;
+    margin-top: 1rem;
+    color: var(--tone-link);
+    font-weight: 600;
+    text-underline-offset: 0.2em;
+  }
+
+  .featured-link:hover {
+    text-decoration: underline;
+  }
+
+  .featured-panel[hidden] {
+    display: none;
+  }
+
+  /* Lightbox ------------------------------------------------------------------ */
+
+  .lightbox-track {
+    position: relative;
+    display: flex;
+    height: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .lightbox-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .lightbox-track:focus {
+    outline: none;
+  }
+
+  /* The photo and its caption sit together in the middle of the stage. */
+  .lightbox-slide {
+    /* Room for the photo: the screen less the top bar (3.75rem), the slide's
+       padding and the caption with its "Continue" link. */
+    --lightbox-max-h: calc(100dvh - 3.75rem - 1.75rem - 7.5rem - env(safe-area-inset-bottom, 0px));
+    display: flex;
+    flex: 0 0 100%;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    margin: 0;
+    padding: 1rem calc(var(--spacing-gutter) + env(safe-area-inset-right, 0px)) calc(0.75rem + env(safe-area-inset-bottom, 0px))
+      calc(var(--spacing-gutter) + env(safe-area-inset-left, 0px));
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+  }
+
+  @media (pointer: fine) and (min-width: 48rem) {
+    .lightbox-slide {
+      padding-inline: 5rem;
+    }
+  }
+
+  .lightbox-photo {
+    display: flex;
+    flex: none;
+    justify-content: center;
+  }
+
+  /* object-fit: contain by geometry (lightboxImageStyle sets the width from
+     the aspect ratio, the file's own width and --lightbox-max-h): never
+     larger than the stage, never upscaled. */
+  .lightbox-photo img {
+    display: block;
+    max-width: 100%;
+    border-radius: 0.375rem;
+    object-fit: contain;
+  }
+
+  .lightbox-caption {
+    flex: none;
+    width: 100%;
+    max-width: 68ch;
+    margin-inline: auto;
+    padding-top: 0.875rem;
+    color: var(--tone-body);
+    font-size: var(--text-sm);
+    line-height: 1.5;
+    text-align: center;
+  }
+
+  .lightbox-arrow {
+    position: absolute;
+    top: 50%;
+    display: none;
+    width: 3rem;
+    height: 3rem;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid color-mix(in oklab, var(--tone-fg) 45%, transparent);
+    border-radius: var(--radius-control);
+    color: var(--tone-fg);
+    background: var(--tone-canvas);
+    transform: translateY(-50%);
+    transition:
+      background-color var(--dur-1) var(--ease-enter),
+      opacity var(--dur-1) var(--ease-enter);
+  }
+
+  @media (pointer: fine) {
+    .lightbox-arrow {
+      display: inline-flex;
+    }
+  }
+
+  .lightbox-arrow:hover:not(:disabled) {
+    background: var(--tone-raised);
+  }
+
+  .lightbox-arrow:disabled {
+    opacity: 0.3;
+  }
+
+  /* Gallery ------------------------------------------------------------------- */
+
+  .gallery-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .gallery-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 2.75rem;
+    padding-inline: 1rem;
+    border: 1px solid color-mix(in oklab, var(--tone-fg) 32%, transparent);
+    border-radius: var(--radius-chip);
+    color: var(--tone-fg);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    transition:
+      background-color var(--dur-1) var(--ease-enter),
+      border-color var(--dur-1) var(--ease-enter),
+      transform var(--dur-1) var(--ease-enter);
+  }
+
+  .gallery-chip:hover {
+    border-color: var(--tone-fg);
+  }
+
+  .gallery-chip:active {
+    transform: scale(0.98);
+  }
+
+  .gallery-chip.is-pressed {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    color: var(--color-white);
+  }
+
+  .gallery-chip-count {
+    color: var(--tone-muted);
+    font-size: 0.8125rem;
+  }
+
+  .gallery-chip.is-pressed .gallery-chip-count {
+    color: rgb(255 255 255 / 0.85);
+  }
+
+  /* Justified rows: every item grows by its aspect ratio from its width at
+     the row height, so a row shares one height; the spacer at the end keeps
+     the last row at about the row height instead of stretching it. */
+  .gallery-grid {
+    --row-h: 170px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .gallery-grid::after {
+    content: "";
+    flex: 1000000 1 0px;
+  }
+
+  @media (min-width: 48rem) {
+    .gallery-grid {
+      --row-h: 260px;
+      gap: 0.75rem;
+    }
+  }
+
+  .gallery-item {
+    flex-grow: var(--grow, 100);
+    flex-basis: calc(var(--row-h) * var(--ar, 1));
+    min-width: 0;
+  }
+
+  .gallery-item[hidden] {
+    display: none;
+  }
+
+  .gallery-photo {
+    display: block;
+    width: 100%;
+    aspect-ratio: var(--ar, 1);
+    border-radius: var(--radius-frame);
+    cursor: zoom-in;
+  }
+
+  .gallery-frame {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: var(--radius-frame);
+    transition: transform var(--dur-2) var(--ease-settle);
+  }
+
+  @media (hover: hover) {
+    .gallery-photo:hover .gallery-frame {
+      transform: translateY(-2px);
+    }
+  }
+}
