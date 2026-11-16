@@ -14,6 +14,8 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     // Local Claude Code worktree checkouts (git-excluded); not part of the site.
     ".claude/**",
+    // Written by scripts/build-image-manifest.mjs (git-ignored).
+    "src/generated/**",
   ]),
 ]);
 
