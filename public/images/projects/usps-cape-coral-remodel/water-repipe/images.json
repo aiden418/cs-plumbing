@@ -1,7 +1,8 @@
 {
   "photo-1.jpg": {
     "alt": "Copper press fittings, elbows, tees and reducers laid out on the tile floor ahead of the water repipe",
-    "order": 1
+    "order": 1,
+    "featured": true
   },
   "photo-2.jpg": {
     "alt": "Copper pipe lengths and press fittings staged on the floor for the USPS Cape Coral water repipe",
@@ -9,11 +10,13 @@
   },
   "photo-3.jpg": {
     "alt": "Corroded copper supply lines with green verdigris at soldered tees and a ball valve, replaced in the repipe",
-    "order": 3
+    "order": 3,
+    "featured": true
   },
   "photo-4.jpg": {
     "alt": "Brass ball valve on the copper water service stub-up with a copper sleeve through the exterior block wall",
-    "order": 4
+    "order": 4,
+    "featured": true
   },
   "photo-5.jpg": {
     "alt": "Plumber on a scissor lift running copper water main above the ceiling grid under the metal roof deck",
@@ -25,6 +28,7 @@
   },
   "photo-7.jpg": {
     "alt": "Plumber on a scissor lift installing overhead copper water line above the ceiling grid at the USPS facility",
-    "order": 7
+    "order": 7,
+    "featured": true
   }
 }

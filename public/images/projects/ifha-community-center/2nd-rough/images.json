@@ -17,7 +17,8 @@
   },
   "photo-11.jpg": {
     "alt": "PVC vent and drain lines with hangers routed through open roof trusses and wall framing",
-    "order": 5
+    "order": 5,
+    "featured": true
   },
   "photo-12.jpg": {
     "alt": "Overhead PVC and CPVC piping run through roof trusses beside insulated HVAC ducts",
@@ -49,7 +50,8 @@
   },
   "photo-19.jpg": {
     "alt": "Restroom rough-in with PVC drain stub-ups for flush-valve toilets, vent risers and capped CPVC supplies",
-    "order": 13
+    "order": 13,
+    "featured": true
   },
   "photo-20.jpg": {
     "alt": "Second-rough PVC drain and vent piping with red test caps in metal stud restroom walls",
@@ -61,7 +63,8 @@
   },
   "photo-22.jpg": {
     "alt": "PVC drain stub-up in the slab with CPVC supply drops on the block wall and vent lines overhead",
-    "order": 16
+    "order": 16,
+    "featured": true
   },
   "photo-23.jpg": {
     "alt": "Looking up at PVC vent piping and a CPVC riser through trusses above a marked CMU wall",
@@ -73,11 +76,13 @@
   },
   "photo-25.jpg": {
     "alt": "PVC vent riser and CPVC supply line strapped up a wood-framed wall into the roof trusses",
-    "order": 19
+    "order": 19,
+    "featured": true
   },
   "photo-26.jpg": {
     "alt": "Single-fixture rough-in with a PVC vent riser, CPVC supply drop and red-capped stub-out on blocking",
-    "order": 20
+    "order": 20,
+    "featured": true
   },
   "photo-27.jpg": {
     "alt": "Lavatory bank rough-in with three PVC vent risers, drain arms and capped CPVC stub-outs in wood framing",
@@ -109,6 +114,7 @@
   },
   "photo-34.jpg": {
     "alt": "Close-up of a pressure test gauge and blue-handle valve on a CPVC supply line during rough-in",
-    "order": 28
+    "order": 28,
+    "featured": true
   }
 }

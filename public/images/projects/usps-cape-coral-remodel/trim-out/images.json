@@ -2,7 +2,8 @@
   "photo-1.jpg": {
     "alt": "Wall-hung toilets with chrome flushometer valves and wall-hung lavatories trimmed out in the USPS Cape Coral restroom",
     "order": 1,
-    "cover": true
+    "cover": true,
+    "featured": true
   },
   "photo-2.jpg": {
     "alt": "Wall-hung urinal, wall-hung toilet and two lavatories with chrome faucets and flushometers trimmed out above a floor drain",

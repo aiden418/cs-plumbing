@@ -25,6 +25,7 @@
   },
   "photo-7.jpg": {
     "alt": "Block wall chase opened at the lavatory wall showing existing PVC vent and supply lines above the trench",
-    "order": 7
+    "order": 7,
+    "featured": true
   }
 }

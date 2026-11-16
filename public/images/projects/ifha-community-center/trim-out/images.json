@@ -1,7 +1,8 @@
 {
   "photo-0.jpg": {
     "alt": "Elkay stainless steel drop-in sink with single-handle faucet trimmed out on a laminate counter",
-    "order": 1
+    "order": 1,
+    "featured": true
   },
   "photo-1.jpg": {
     "alt": "Stainless single-bowl sink with basket strainer and single-lever faucet on a marble-look laminate top",
@@ -9,7 +10,8 @@
   },
   "photo-2.jpg": {
     "alt": "Double-bowl stainless kitchen sink with gooseneck faucet and wrist-blade handles at IFHA Community Center",
-    "order": 3
+    "order": 3,
+    "featured": true
   },
   "photo-3.jpg": {
     "alt": "Floor-mount flush-valve toilet with the Sloan flushometer still boxed for protection in a tiled restroom",
@@ -37,7 +39,8 @@
   },
   "photo-36.jpg": {
     "alt": "Two Kohler wall-hung urinals with exposed flush valves and a privacy screen in a tiled restroom",
-    "order": 10
+    "order": 10,
+    "featured": true
   },
   "photo-37.jpg": {
     "alt": "Oval lavatory with single-hole faucet trimmed on an accessible vanity beneath a mirror",
@@ -61,7 +64,8 @@
   },
   "photo-42.jpg": {
     "alt": "Floor-mount flush-valve toilet with open-front seat and stainless grab bars in an accessible stall",
-    "order": 16
+    "order": 16,
+    "featured": true
   },
   "photo-43.jpg": {
     "alt": "Flush-valve toilet installed inside a partitioned stall with gray tile walls and floor",
@@ -77,7 +81,8 @@
   },
   "photo-46.jpg": {
     "alt": "PVC P-trap and end-outlet continuous waste with braided supplies under a double-bowl sink cabinet",
-    "order": 20
+    "order": 20,
+    "featured": true
   },
   "photo-47.jpg": {
     "alt": "Electric water heater on a wall bracket with CPVC piping, expansion tank and T&P discharge line",
@@ -85,6 +90,7 @@
   },
   "photo-48.jpg": {
     "alt": "Precast mop sink with wall-mount service faucet and water heater relief line terminating above the basin",
-    "order": 22
+    "order": 22,
+    "featured": true
   }
 }

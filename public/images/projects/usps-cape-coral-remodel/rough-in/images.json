@@ -9,11 +9,13 @@
   },
   "photo-3.jpg": {
     "alt": "Lavatory bank rough-in with copper supply stub-outs and PVC drain stub-outs capped through mold-resistant drywall",
-    "order": 3
+    "order": 3,
+    "featured": true
   },
   "photo-4.jpg": {
     "alt": "Close-up of copper hot and cold stub-outs and a PVC drain stub-out roughed for a wall-hung lavatory",
-    "order": 4
+    "order": 4,
+    "featured": true
   },
   "photo-5.jpg": {
     "alt": "In-wall rough on furred block wall with copper stub-outs on blocking, PVC drain with sanitary tee and cleanout",
@@ -21,7 +23,8 @@
   },
   "photo-6.jpg": {
     "alt": "PVC DWV risers with sanitary tees and copper stub-outs on the chased block wall above the slab trench",
-    "order": 6
+    "order": 6,
+    "featured": true
   },
   "photo-7.jpg": {
     "alt": "Copper stub-outs, PVC drain stubs and wood blocking for wall-hung fixtures, floor drain set in the open slab",
