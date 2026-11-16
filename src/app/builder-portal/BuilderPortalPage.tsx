@@ -251,7 +251,7 @@ export default function BuilderPortalPage() {
         className="scroll-mt-[calc(var(--nav-h)+1rem)]"
       >
         <Container>
-          <div className="grid gap-y-12 lg:grid-cols-12 lg:gap-x-8">
+          <div className="grid grid-cols-[minmax(0,1fr)] gap-y-12 lg:grid-cols-12 lg:gap-x-8">
             {/* Header and what happens next */}
             <div className="lg:col-span-4 lg:col-start-1 lg:row-start-1">
               <Eyebrow className="mb-4">{COPY.overline}</Eyebrow>

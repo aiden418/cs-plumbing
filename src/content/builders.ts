@@ -229,7 +229,8 @@ export const BUILDER_PORTAL = {
   },
   process: {
     overline: "Our process",
-    title: "Plan to inspection — no surprises",
+    // A no-break space keeps the dash from starting a line.
+    title: "Plan to inspection — no surprises",
     subtitle: "The same playbook we've run on 9,500+ homes.",
     steps: [
       { title: "Plans uploaded", description: "Submit prints, scope notes, and target dates via the form below." },

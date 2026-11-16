@@ -54,11 +54,11 @@ export default function BuildersPage() {
         description={`${COPY.hero.leadPrefix} ${BUILDER_PROOF.subline}`}
         actions={
           <>
-            <Button href="#bid" size="lg" iconRight={<ArrowRight className="size-5" />}>
+            <Button href="#bid" iconRight={<ArrowRight className="size-5" />}>
               {COPY.hero.bidAction}
             </Button>
             {/* Plain <a>: a PDF isn't a route, so next/link would try a client navigation first. */}
-            <a href={CAPABILITY_STATEMENT_PDF} download className={buttonClasses({ variant: "secondary", size: "lg" })}>
+            <a href={CAPABILITY_STATEMENT_PDF} download className={buttonClasses({ variant: "ghost", size: "md", className: "group sm:px-2" })}>
               <Download className="size-5" aria-hidden="true" />
               <span>{COPY.hero.capabilityAction}</span>
             </a>

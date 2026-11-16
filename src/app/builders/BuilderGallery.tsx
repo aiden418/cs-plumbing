@@ -49,16 +49,16 @@ export default function BuilderGallery({
         label={filterLabel}
         controls={gridId}
       />
-      <ul id={gridId} className="mt-8 grid grid-cols-1 gap-x-6 gap-y-10 min-[30rem]:grid-cols-2 lg:grid-cols-4 lg:gap-x-8">
+      <ul id={gridId} className="mt-8 grid grid-cols-2 gap-x-4 gap-y-8 sm:gap-x-6 sm:gap-y-10 lg:grid-cols-4 lg:gap-x-8">
         {items.map((item) => (
           <li key={item.id} hidden={active !== "all" && item.category !== active}>
             <Frame
               media={item.media}
               aspect="4/5"
-              sizes="(min-width: 1280px) 290px, (min-width: 1024px) 23vw, (min-width: 480px) 46vw, 100vw"
+              sizes="(min-width: 1280px) 290px, (min-width: 1024px) 23vw, 46vw"
             />
-            <p className="label-tech mt-4 text-accent">{item.categoryLabel}</p>
-            <p className="mt-1.5 leading-snug font-medium text-fg">{item.caption}</p>
+            <p className="label-tech mt-3 text-accent sm:mt-4">{item.categoryLabel}</p>
+            <p className="mt-1.5 text-[0.9375rem] leading-snug font-medium text-fg sm:text-base">{item.caption}</p>
           </li>
         ))}
       </ul>

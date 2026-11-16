@@ -233,7 +233,7 @@ export function ConstructionPhases({ tone = "white", className }: { tone?: Tone;
             <li
               key={phase.id}
               id={`phase-${phase.id}`}
-              className={cn(ANCHOR_OFFSET, "border-b border-rule py-12 sm:py-16")}
+              className={cn(ANCHOR_OFFSET, "border-b border-rule py-12 last:border-b-0 last:pb-0 sm:py-16 lg:border-b-0 lg:pb-0")}
             >
               <PhaseDetail phase={phase} index={index} />
             </li>
@@ -288,6 +288,7 @@ export function SwflExpertise({ tone = "shell" }: { tone?: Tone }) {
 
 /** Scheduling & coverage. Owner-approved wording; no capacity numbers. */
 export function SchedulingPanel({ tone = "white", divider = false }: { tone?: Tone; divider?: boolean }) {
+  const inlineLink = "font-semibold text-link underline-offset-[0.2em] hover:underline";
   return (
     <Section
       id="scheduling"
@@ -298,46 +299,40 @@ export function SchedulingPanel({ tone = "white", divider = false }: { tone?: To
       className={ANCHOR_OFFSET}
     >
       <Container>
-        <SplitChapter
-          heading={
-            <SectionHeading
-              id="scheduling-heading"
-              overline={COPY.scheduling.overline}
-              title={COPY.scheduling.title}
-              subtitle={SCHEDULING_NOTE}
-              align="left"
-              className="mb-0"
-            />
-          }
-        >
-          <dl className="border-b border-rule lg:mt-2">
-            <div className="grid gap-y-1 border-t border-rule py-6 sm:grid-cols-[12rem_1fr] sm:gap-x-8">
-              <dt>
-                <h3 className="label-tech pt-1 text-accent">{COPY.scheduling.whereWeWork}</h3>
-              </dt>
-              <dd className="text-lg text-fg">{SERVICE_COVERAGE}.</dd>
-            </div>
-            <div className="grid gap-y-1 border-t border-rule py-6 sm:grid-cols-[12rem_1fr] sm:gap-x-8">
-              <dt>
-                <h3 className="label-tech pt-1 text-accent">{COPY.scheduling.talkToEstimating}</h3>
-              </dt>
-              <dd className="text-lg text-body">
-                <a href={BUILDER_DESK.phoneHref} className={cn(textLink, "tabular-nums")}>
-                  {BUILDER_DESK.phone}
-                </a>{" "}
-                ·{" "}
-                <a href={`mailto:${BUILDER_DESK.email}`} className={cn(textLink, "break-all")}>
-                  {BUILDER_DESK.email}
-                </a>
-                {COPY.scheduling.orSend}
-                <a href="#bid" className={textLink}>
-                  {COPY.scheduling.sendPlans}
-                </a>
-                .
-              </dd>
-            </div>
-          </dl>
-        </SplitChapter>
+        <SectionHeading
+          id="scheduling-heading"
+          overline={COPY.scheduling.overline}
+          title={COPY.scheduling.title}
+          subtitle={SCHEDULING_NOTE}
+          align="left"
+        />
+        <dl className="grid border-t border-rule md:grid-cols-12 md:gap-x-8">
+          <div className="border-b border-rule py-6 md:col-span-5 md:border-b-0">
+            <dt>
+              <h3 className="label-tech text-accent">{COPY.scheduling.whereWeWork}</h3>
+            </dt>
+            <dd className="mt-3 text-lg text-fg">{SERVICE_COVERAGE}.</dd>
+          </div>
+          <div className="py-6 md:col-span-7 md:border-l md:border-rule md:pl-8">
+            <dt>
+              <h3 className="label-tech text-accent">{COPY.scheduling.talkToEstimating}</h3>
+            </dt>
+            <dd className="mt-3 text-lg leading-relaxed text-body">
+              <a href={BUILDER_DESK.phoneHref} className={cn(inlineLink, "whitespace-nowrap tabular-nums")}>
+                {BUILDER_DESK.phone}
+              </a>{" "}
+              ·{" "}
+              <a href={`mailto:${BUILDER_DESK.email}`} className={cn(inlineLink, "break-all")}>
+                {BUILDER_DESK.email}
+              </a>
+              {COPY.scheduling.orSend}
+              <a href="#bid" className={inlineLink}>
+                {COPY.scheduling.sendPlans}
+              </a>
+              .
+            </dd>
+          </div>
+        </dl>
       </Container>
     </Section>
   );
@@ -360,7 +355,7 @@ export function Qualifications({ tone = "navy" }: { tone?: Tone }) {
             />
           }
         >
-          <ul className="grid border-b border-rule sm:grid-cols-2 sm:gap-x-10">
+          <ul className="border-b border-rule">
             {QUALIFICATIONS.map((q) => (
               <li key={q.id} className="flex gap-3 border-t border-rule py-5 text-fg">
                 <JointBullet />
@@ -485,49 +480,31 @@ export function BuilderDesk({ tone = "shell" }: { tone?: Tone }) {
   return (
     <Section tone={tone} labelledBy="desk-heading">
       <Container>
-        <SplitChapter
-          heading={
-            <>
-              <SectionHeading
-                id="desk-heading"
-                overline={COPY.desk.overline}
-                title={COPY.desk.title}
-                subtitle={COPY.desk.subtitle}
-                align="left"
-                className="mb-0"
-              />
-              <p className="mt-8 max-w-[44ch] text-sm text-muted">
-                {COPY.desk.bidsAndScheduling} {BUILDER_DESK.contactName}, {BUILDER_DESK.contactRole} ·{" "}
-                <a
-                  href={`mailto:${BUILDER_DESK.email}`}
-                  className="font-medium text-link underline underline-offset-2"
-                >
-                  {BUILDER_DESK.email}
-                </a>{" "}
-                ·{" "}
-                <a href={BUILDER_DESK.phoneHref} className="font-medium text-link underline underline-offset-2">
-                  {BUILDER_DESK.phone}
-                </a>
-              </p>
-            </>
-          }
-        >
-          <ol className="border-b border-rule">
-            {BUILDER_DESK.functions.map((f, i) => (
-              <Reveal
-                as="li"
-                index={i}
-                key={f.title}
-                className="border-t border-rule py-6"
-              >
-                <div>
-                  <h3 className="text-xl leading-snug font-semibold text-fg">{f.title}</h3>
-                  <p className="mt-2 max-w-[60ch] text-body">{f.body}</p>
-                </div>
-              </Reveal>
-            ))}
-          </ol>
-        </SplitChapter>
+        <SectionHeading
+          id="desk-heading"
+          overline={COPY.desk.overline}
+          title={COPY.desk.title}
+          subtitle={COPY.desk.subtitle}
+          align="left"
+        />
+        <ul className="grid gap-x-8 sm:grid-cols-2 lg:grid-cols-4">
+          {BUILDER_DESK.functions.map((f, i) => (
+            <Reveal as="li" index={i} key={f.title} className="border-t border-fg/70 pt-5 pb-8">
+              <h3 className="text-lg leading-snug font-semibold text-fg">{f.title}</h3>
+              <p className="mt-2 text-[0.9375rem] text-body">{f.body}</p>
+            </Reveal>
+          ))}
+        </ul>
+        <p className="mt-6 max-w-[68ch] border-t border-rule pt-6 text-sm text-muted">
+          {COPY.desk.bidsAndScheduling} {BUILDER_DESK.contactName}, {BUILDER_DESK.contactRole} ·{" "}
+          <a href={`mailto:${BUILDER_DESK.email}`} className="font-medium text-link underline underline-offset-2">
+            {BUILDER_DESK.email}
+          </a>{" "}
+          ·{" "}
+          <a href={BUILDER_DESK.phoneHref} className="font-medium text-link underline underline-offset-2">
+            {BUILDER_DESK.phone}
+          </a>
+        </p>
       </Container>
     </Section>
   );
@@ -568,7 +545,7 @@ export function BidSplit({
   return (
     <Section id="bid" tone={tone} className={ANCHOR_OFFSET}>
       <Container>
-        <div className="grid gap-y-12 lg:grid-cols-12 lg:gap-x-8">
+        <div className="grid grid-cols-[minmax(0,1fr)] gap-y-12 lg:grid-cols-12 lg:gap-x-8">
           <div className="lg:col-span-7 lg:col-start-6 lg:row-start-1">
             <BuilderBidForm source={source} heading={heading} />
             {note}
