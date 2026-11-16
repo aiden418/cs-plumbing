@@ -142,16 +142,38 @@ export const VIEWPORTS = {
   mobile: { width: 390, height: 844, deviceScaleFactor: 2, mobile: true, touch: true },
 };
 
-/** Viewport for an arbitrary width: phone emulation below 768 px, desktop otherwise. */
-export function viewportForWidth(width, { height, deviceScaleFactor = 1 } = {}) {
-  const phone = width < 768;
+/**
+ * Viewport for an arbitrary size. Below 768 px wide, or with a short side under
+ * 500 px (a phone held sideways), it is emulated as a phone: mobile viewport,
+ * touch, 2x pixels unless told otherwise.
+ */
+export function viewportForWidth(width, { height, deviceScaleFactor } = {}) {
+  const phone = width < 768 || (height !== undefined && height < 500);
   return {
     width,
     height: height ?? (phone ? 812 : 900),
-    deviceScaleFactor,
+    deviceScaleFactor: deviceScaleFactor ?? (phone ? 2 : 1),
     mobile: phone,
     touch: phone,
   };
+}
+
+/**
+ * Resolve viewport names and sizes to { label, ...viewport }:
+ * "desktop", "mobile", "1280" (a width) or "844x390" (width x height).
+ */
+export function resolveViewports(specs, { height, deviceScaleFactor } = {}) {
+  return specs.map((spec) => {
+    const text = String(spec).trim();
+    if (VIEWPORTS[text]) {
+      return { label: text, ...VIEWPORTS[text], ...(deviceScaleFactor ? { deviceScaleFactor } : {}) };
+    }
+    const m = /^(\d+)(?:x(\d+))?$/.exec(text);
+    if (!m) throw new Error(`Unknown viewport "${text}" (use ${Object.keys(VIEWPORTS).join(", ")}, a width like 1280, or WIDTHxHEIGHT)`);
+    const w = Number(m[1]);
+    const h = m[2] ? Number(m[2]) : height;
+    return { label: m[2] ? `${w}x${m[2]}` : `w${w}`, ...viewportForWidth(w, { height: h, deviceScaleFactor }) };
+  });
 }
 
 export const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -420,6 +442,7 @@ class Browser {
     this.blockMode = null;
     this.killed = false;
     this.helper = null;
+    this.stitching = Promise.resolve();
   }
 
   stderrTail() {
@@ -571,7 +594,14 @@ class Browser {
    *
    * @returns {{ buffer: Buffer, width: number, height: number }}
    */
-  async stitch(tiles, { rowsPerTile, format, quality }) {
+  stitch(tiles, options) {
+    // One at a time: every stitch uses the same helper page.
+    const run = this.stitching.then(() => this.#stitch(tiles, options));
+    this.stitching = run.catch(() => {});
+    return run;
+  }
+
+  async #stitch(tiles, { rowsPerTile, format, quality }) {
     if (!this.helper) this.helper = await this.newPage({ width: 400, height: 300 });
     const helper = this.helper;
     await helper.evaluate(() => {

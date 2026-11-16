@@ -19,7 +19,7 @@
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
-import { cli, readJson } from "./lib/util.mjs";
+import { cli, readJson, run, UsageError } from "./lib/util.mjs";
 
 /** Framework-internal entries that are not addressable pages. */
 const INTERNAL = new Set(["/_not-found", "/_global-error", "/_error", "/404", "/500"]);
@@ -41,7 +41,7 @@ export function loadRoutes(nextDir = ".next") {
   const dir = path.resolve(nextDir);
   const file = (name) => path.join(dir, name);
   if (!existsSync(file("prerender-manifest.json")) || !existsSync(file("routes-manifest.json"))) {
-    throw new Error(`No build manifests in ${dir}. Run "next build" first, or pass --next-dir.`);
+    throw new UsageError(`No build manifests in ${dir}. Run "next build" first, or pass --next-dir.`);
   }
   const prerender = readJson(file("prerender-manifest.json"));
   const routesManifest = readJson(file("routes-manifest.json"));
@@ -153,4 +153,4 @@ function main() {
   for (const r of routes.redirects) out(`  ${r.statusCode} ${r.source} -> ${r.destination}${r.internal ? "  (framework)" : ""}`);
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) main();
+if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) run(main);

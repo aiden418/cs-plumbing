@@ -27,6 +27,34 @@ export function readJsonIfExists(file) {
   return existsSync(file) ? readJson(file) : null;
 }
 
+/** A mistake in how a script was called: reported without a stack trace, exit code 2. */
+export class UsageError extends Error {}
+
+/**
+ * Run a script's main(): a UsageError prints its message and exits 2, anything
+ * else prints the stack and exits 1. A number returned by main() is the exit code.
+ */
+export function run(main) {
+  // `script | head` closes the pipe early; that is not an error.
+  process.stdout.on("error", (err) => {
+    if (err.code === "EPIPE") process.exit(0);
+    throw err;
+  });
+  Promise.resolve()
+    .then(main)
+    .then((code) => {
+      if (typeof code === "number") process.exit(code);
+    })
+    .catch((err) => {
+      if (err instanceof UsageError) {
+        process.stderr.write(`${err.message}\n`);
+        process.exit(2);
+      }
+      process.stderr.write(`${err?.stack ?? err}\n`);
+      process.exit(1);
+    });
+}
+
 /**
  * parseArgs wrapper: prints `usage` and exits on --help or a bad flag.
  * Every option may also be passed as `multiple` to collect repeats.
@@ -61,15 +89,20 @@ export function listArg(value) {
 export function intArg(value, name, fallback) {
   if (value === undefined) return fallback;
   const n = Number(value);
-  if (!Number.isFinite(n)) throw new Error(`--${name} needs a number, got "${value}"`);
+  if (!Number.isFinite(n)) throw new UsageError(`--${name} needs a number, got "${value}"`);
   return n;
 }
 
 /** "http://localhost:3111/" -> "http://localhost:3111"; throws on anything that is not an http(s) origin. */
 export function normalizeBase(base) {
-  if (!base) throw new Error("--base is required, e.g. --base http://localhost:3111");
-  const url = new URL(base);
-  if (url.protocol !== "http:" && url.protocol !== "https:") throw new Error(`--base must be http(s): ${base}`);
+  if (!base) throw new UsageError("--base is required, e.g. --base http://localhost:3111");
+  let url;
+  try {
+    url = new URL(base);
+  } catch {
+    throw new UsageError(`--base is not a URL: ${base}`);
+  }
+  if (url.protocol !== "http:" && url.protocol !== "https:") throw new UsageError(`--base must be http(s): ${base}`);
   return url.origin;
 }
 
@@ -126,6 +159,44 @@ export function hostFacts() {
     cpus: os.cpus().length,
     loadavg: os.loadavg().map((n) => Math.round(n * 100) / 100),
   };
+}
+
+/** Pixel size of a PNG or JPEG read from its header bytes; null when it is neither. */
+export function imageSize(buffer) {
+  if (buffer.length > 24 && buffer.readUInt32BE(0) === 0x89504e47) {
+    return { type: "png", width: buffer.readUInt32BE(16), height: buffer.readUInt32BE(20) };
+  }
+  if (buffer.length > 4 && buffer[0] === 0xff && buffer[1] === 0xd8) {
+    let i = 2;
+    while (i + 9 < buffer.length) {
+      if (buffer[i] !== 0xff) {
+        i += 1;
+        continue;
+      }
+      const marker = buffer[i + 1];
+      if (marker === 0xff) {
+        i += 1; // fill byte
+      } else if (marker >= 0xd0 && marker <= 0xd9) {
+        i += 2; // markers without a length
+      } else if (marker >= 0xc0 && marker <= 0xcf && marker !== 0xc4 && marker !== 0xc8 && marker !== 0xcc) {
+        return { type: "jpeg", width: buffer.readUInt16BE(i + 7), height: buffer.readUInt16BE(i + 5) }; // start of frame
+      } else {
+        i += 2 + buffer.readUInt16BE(i + 2);
+      }
+    }
+  }
+  return null;
+}
+
+/** "a=1,b=two" and repeated flags -> { a: "1", b: "two" }. */
+export function pairsArg(value, name) {
+  const out = {};
+  for (const item of listArg(value)) {
+    const at = item.indexOf("=");
+    if (at < 1) throw new UsageError(`--${name} needs key=value, got "${item}"`);
+    out[item.slice(0, at)] = item.slice(at + 1);
+  }
+  return out;
 }
 
 export function kb(bytes, digits = 1) {

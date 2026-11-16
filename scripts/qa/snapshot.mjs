@@ -22,7 +22,7 @@
 import { execFileSync } from "node:child_process";
 import { launchChrome, tagHostFor } from "./lib/chrome.mjs";
 import { extractContent } from "./lib/extract.mjs";
-import { cli, hostFacts, intArg, listArg, mapPool, normalizeBase, progress, sha256, writeJson } from "./lib/util.mjs";
+import { cli, hostFacts, intArg, listArg, mapPool, normalizeBase, progress, run, sha256, UsageError, writeJson } from "./lib/util.mjs";
 import { loadRoutes } from "./routes.mjs";
 
 const USAGE = `
@@ -138,8 +138,8 @@ async function main() {
     "no-og-images": { type: "boolean" },
     concurrency: { type: "string" },
   });
-  if (!values.out) throw new Error("--out is required");
-  if (!["auto", "all", "none"].includes(values.rendered)) throw new Error("--rendered must be auto, all or none");
+  if (!values.out) throw new UsageError("--out is required");
+  if (!["auto", "all", "none"].includes(values.rendered)) throw new UsageError("--rendered must be auto, all or none");
   const base = normalizeBase(values.base);
   const concurrency = intArg(values.concurrency, "concurrency", 6);
   const siteOrigins = [...new Set([...(listArg(values.site).length ? listArg(values.site) : ["https://www.csplumbinglee.com"]), base])];
@@ -148,7 +148,7 @@ async function main() {
   const only = listArg(values.routes);
   const pages = only.length ? built.pages.filter((p) => only.includes(p.path)) : built.pages;
   const unknown = only.filter((r) => !built.pages.some((p) => p.path === r));
-  if (unknown.length) throw new Error(`Not a built page: ${unknown.join(", ")}`);
+  if (unknown.length) throw new UsageError(`Not a built page: ${unknown.join(", ")}`);
   const warnings = [];
   const warn = (message) => {
     warnings.push(message);
@@ -347,7 +347,4 @@ async function main() {
   );
 }
 
-main().catch((err) => {
-  process.stderr.write(`${err.stack ?? err}\n`);
-  process.exit(1);
-});
+run(main);
