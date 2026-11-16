@@ -11,7 +11,7 @@ export const BUILDERS: Builder[] = [
   { name: "Stellar Development", logo: "/images/builders/stellar-development.jpg", logoWidth: 2400, logoHeight: 1800 },
   { name: "Engelke Construction Solutions", logo: "/images/builders/engelke.png", logoWidth: 800, logoHeight: 208 },
   { name: "Itasca Construction Associates", logo: "/images/builders/itasca.png", logoWidth: 684, logoHeight: 44 },
-  { name: "Decker Homes", logo: "/images/builders/decker-homes.png", logoWidth: 2500, logoHeight: 1200 },
+  { name: "Decker Homes", logo: "/images/builders/decker-homes.png", logoWidth: 2500, logoHeight: 1200, darkTile: true },
   { name: "Douglas Brooke Homes", logo: "/images/builders/douglas-brooke-homes.png", logoWidth: 918, logoHeight: 328, website: "https://douglasbrookehomes.com" },
   { name: "Hansen Homes", logo: "/images/builders/hansen-homes.png", logoWidth: 222, logoHeight: 108, website: "https://www.hansenhomes.net" },
   { name: "Sposen Signature Homes", logo: "/images/builders/sposen-signature-homes.png", logoWidth: 978, logoHeight: 400, website: "https://sposenhomes.com" },

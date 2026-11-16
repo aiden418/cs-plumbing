@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 
 /**
  * The builders who work with C&S as a hairline grid of logos on white cells
+ * (a logo drawn in white sits on a navy cell)
  * (4 columns at every width; the names print from 40rem and stay in the HTML on phones). Static: no marquee, no hover effects
  * on the logos. Client-safe (no picture registry), so the portal wizard can
  * render it too.
@@ -30,7 +31,11 @@ export default function BuilderLogoWall({
       {BUILDERS.map((builder) => (
         <li
           key={builder.name}
-          className="flex min-h-22 flex-col items-center justify-center gap-3 bg-white px-2 py-4 sm:min-h-32 sm:px-6 sm:py-6"
+          className={cn(
+            "flex min-h-22 flex-col items-center justify-center gap-3 px-2 py-4 sm:min-h-32 sm:px-6 sm:py-6",
+            // A white see-through logo would vanish on a white cell: it gets a navy one.
+            builder.darkTile ? "bg-navy" : "bg-white",
+          )}
         >
           <span className="flex h-9 items-center justify-center sm:h-12">
             <BuilderLogoImage
@@ -40,7 +45,11 @@ export default function BuilderLogoWall({
               className="h-7 w-auto max-w-[68px] object-contain sm:h-10 sm:max-w-[140px]"
             />
           </span>
-          {showNames && <span className="sr-only text-center text-[0.9375rem] font-medium text-steel-700 sm:not-sr-only">{builder.name}</span>}
+          {showNames && (
+            <span className={cn("sr-only text-center text-[0.9375rem] font-medium sm:not-sr-only", builder.darkTile ? "text-white" : "text-steel-700")}>
+              {builder.name}
+            </span>
+          )}
         </li>
       ))}
     </ul>

@@ -254,6 +254,9 @@ export interface Builder {
    *  full-size source (these render 24–32px tall). */
   logoWidth: number;
   logoHeight: number;
+  /** A see-through logo drawn in white: it is set on a navy tile instead of a
+   *  white one, where it would vanish. A test checks this against the file. */
+  darkTile?: boolean;
   website?: string;
 }
 

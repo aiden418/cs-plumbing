@@ -125,7 +125,7 @@ export default function CoastalComebackTeaser({ season = "departure" }: { season
               reverse
               items={BUILDERS.map((builder) => ({
                 key: builder.name,
-                dark: whiteLogo(builder.logo),
+                dark: builder.darkTile ?? whiteLogo(builder.logo),
                 logo: <BuilderLogoImage builder={builder} sizes="144px" loading="eager" className="logo-carousel-img" />,
               }))}
             />
