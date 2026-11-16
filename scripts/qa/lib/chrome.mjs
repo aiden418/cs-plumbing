@@ -519,11 +519,13 @@ class Browser {
     const conn = this.connection;
     const ownsContext = !opts.browserContextId;
     const browserContextId = opts.browserContextId ?? (await this.newContext());
+    // A window of its own: a second tab in a context's existing window cannot be given a size.
     const { targetId } = await conn.send("Target.createTarget", {
       url: "about:blank",
       browserContextId,
       width: opts.width,
       height: opts.height,
+      newWindow: true,
     });
     const { sessionId } = await conn.send("Target.attachToTarget", { targetId, flatten: true });
     const page = new Page(this, { targetId, browserContextId, ownsContext, session: new Session(conn, sessionId), opts });
