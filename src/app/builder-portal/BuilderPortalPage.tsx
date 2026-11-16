@@ -89,10 +89,17 @@ export default function BuilderPortalPage() {
   const update = (field: keyof FormData, value: string) =>
     setForm((prev) => ({ ...prev, [field]: value }));
 
-  // A submit error belongs to the review step. Leaving that step (Back, Edit)
-  // clears it, so it is not still on screen while the builder fixes the cause.
+  // Changing step (Back, Edit, the progress bar) clears a submit error, so it
+  // is not still on screen while the builder fixes the cause. It is keyed to
+  // the change, not to the step on screen: Back and Edit stay usable while a
+  // submit is in flight, and a failure that comes back after the builder has
+  // already left the review step must still be shown.
   // Adjusted during render rather than in an effect, as Navbar does.
-  if (submitError !== null && step !== steps.length - 1) setSubmitError(null);
+  const [lastStep, setLastStep] = useState(step);
+  if (step !== lastStep) {
+    setLastStep(step);
+    setSubmitError(null);
+  }
 
   const canProceed = () => {
     switch (step) {
@@ -579,7 +586,7 @@ export default function BuilderPortalPage() {
               </motion.div>
             </AnimatePresence>
 
-            {/* Submit error (review step) */}
+            {/* Submit error — raised from the review step, cleared on a step change */}
             {submitError && (
               <p
                 role="alert"
