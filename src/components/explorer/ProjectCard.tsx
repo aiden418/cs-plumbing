@@ -21,6 +21,8 @@ interface ProjectCardProps {
   /** Real layout widths of the cover. */
   sizes?: string;
   as?: "h2" | "h3" | "h4";
+  /** Adds a quiet line with the client and the number of photos (the projects index). */
+  details?: boolean;
   className?: string;
 }
 
@@ -29,11 +31,14 @@ export default function ProjectCard({
   aspect = "responsive",
   sizes = "(min-width: 1024px) 30vw, (min-width: 768px) 45vw, 90vw",
   as: Title = "h3",
+  details = false,
   className,
 }: ProjectCardProps) {
   const cover = project.coverImage ? image(project.coverImage) : null;
   const city = projectCity(project);
   const inProgress = !isProjectComplete(project);
+  const photoCount = project.phases.reduce((total, phase) => total + phase.images.length, 0);
+  const detailLine = [project.client, photoCount > 0 ? `${photoCount} photos` : null].filter(Boolean).join(" · ");
 
   return (
     <Link href={`/projects/${project.slug}`} className={cn("project-card group block rounded-frame", className)}>
@@ -56,6 +61,7 @@ export default function ProjectCard({
           <ArrowRight className="mt-[0.2em] size-5 shrink-0 text-accent transition-transform duration-250 ease-settle group-hover:translate-x-0.5" />
         </Title>
         <span className="mt-1.5 line-clamp-2 text-sm text-muted">{project.description}</span>
+        {details && detailLine && <span className="mt-2 block text-sm text-body">{detailLine}</span>}
         {inProgress && (
           <span className="label-tech mt-3 inline-flex items-center gap-2 text-fg">
             <span className="joint text-primary" aria-hidden="true" />

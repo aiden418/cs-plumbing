@@ -33,7 +33,20 @@ export default function WizardProgress({ steps, current, label = "Progress", onS
       <p className="label-tech mb-3 text-accent" aria-live="polite">
         {stepOfLabel(current, steps.length)}
       </p>
-      <Stepper items={items} current={current} label={label} />
+      {/* Phones: the name of the step on screen and a segmented line. The full
+          connection line needs more width than a phone has, and a strip that
+          scrolls sideways hides the later steps. */}
+      <div className="sm:hidden">
+        <p className="text-base font-semibold text-fg">{steps[Math.min(Math.max(current, 0), steps.length - 1)]}</p>
+        <div className="mt-3 flex gap-1.5" aria-hidden="true">
+          {steps.map((name, i) => (
+            <span key={name} className={cn("h-0.5 flex-1 rounded-full", i <= current ? "bg-primary" : "bg-rule")} />
+          ))}
+        </div>
+      </div>
+      <div className="max-sm:hidden">
+        <Stepper items={items} current={current} label={label} />
+      </div>
     </div>
   );
 }

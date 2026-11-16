@@ -41,6 +41,7 @@ export default function ProjectsIndexPage({ projects }: { projects: CompletedPro
       <ProjectCard
         project={project}
         as="h2"
+        details
         sizes="(min-width: 1280px) 25rem, (min-width: 1024px) 30vw, (min-width: 768px) 45vw, 92vw"
       />
     ),
