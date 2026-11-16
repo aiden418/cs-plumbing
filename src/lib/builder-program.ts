@@ -52,6 +52,8 @@ export const BUILDER_DESK = {
   email: BUSINESS.email,
   phone: BUSINESS.builderPhone,
   phoneRaw: BUSINESS.phoneRaw,
+  /** The builder desk shares the company line; links dial this href. */
+  phoneHref: BUSINESS.phoneHref,
   functions: [
     { title: "Takeoffs & bid scopes", body: "Fixture counts, pipe runs and material lists off your plans, returned as a written scope with inclusions and exclusions spelled out." },
     { title: "Phase scheduling", body: "Underground, top-out and trim dates set against your schedule, not ours, and adjusted when the slab or framing moves." },

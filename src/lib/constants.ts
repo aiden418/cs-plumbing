@@ -1,105 +1,19 @@
-import type { Service, TeamMember, Testimonial, TimelineEvent, NavLink, Stat, ServiceLanding, AreaLanding, BlogPost, CompletedProject, Partner, Award } from "./types";
+import type { Service, TeamMember, Testimonial, TimelineEvent, NavLink, Stat, ServiceLanding, AreaLanding, BlogPost, CompletedProject, Partner } from "./types";
 import { composed, money, perFoot, price, range, rangeInline, span, spanInline, upcharge, upchargeInline } from "./pricing";
 import { CLAIMS, EMERGENCY_CLAIMS, LICENSE, licenseLine } from "./claims";
+import { BUSINESS } from "./business";
+import { AWARDS, AWARD_TRUST_LINE, LATEST_AWARD } from "./awards";
+import { UEP_STATUS } from "./uep-status";
 
 // Prices live in ./pricing, promises in ./claims; both are re-exported so
 // existing consumers keep importing them from here.
 export { EMERGENCY_CLAIMS, LICENSE, CLAIMS };
 
-// ============================================
-// BUSINESS INFO
-// ============================================
-
-export const BUSINESS = {
-  name: "C&S Plumbing",
-  fullName: "C&S Plumbing of Lee",
-  /** Contracting entity as stated by the owner (Aiden, 2026-11-03): Draft
-   *  Plumbing Corp, d/b/a C&S Plumbing of Lee, under license CFC1432485.
-   *  The public brand stays "C&S Plumbing of Lee"; the legal name goes on
-   *  the Terms, vendor paperwork and schema. An older Sunbiz record reads
-   *  "C & S PLUMBING OF LEE, INC."; confirm the W-9 matches this value. */
-  legalName: "Draft Plumbing Corp",
-  phone: "833-PLUMB-IT",
-  phoneRaw: "8337586248",
-  // "?&body=" works on both iOS and Android
-  smsHref:
-    "sms:+18337586248?&body=Hi%20C%26S%20Plumbing%2C%20I%20need%20help%20with%20",
-  email: "office@csplumbinglee.com",
-  /** Builder inquiries and prequal document requests. */
-  builderPhone: "833-PLUMB-IT ext. 0",
-  /** Owner line on the builder documents. 833-758-6248 is the company's only
-   *  line (Aiden, 2026-11-14): no direct cell numbers on any page or PDF. */
-  ownerPhone: "833-PLUMB-IT ext. 1",
-  address: "951 Pondella Rd",
-  city: "North Fort Myers",
-  state: "FL",
-  zip: "33903",
-  founded: 1998,
-  // Owner-supplied counts (Sep 2026). New construction homes completed, and
-  // residential whole-home repipes completed — keep them separate: a repipe
-  // claim must never borrow the new-construction number.
-  homesCompleted: 9500,
-  repipesCompleted: 3500,
-  // Public hours. The business runs 24/7 (Aiden, 2026-11-13), so every hours
-  // field on the site and on listings says so. `officeHours` is the staffed
-  // office schedule: the Terms "Office." clause prints it verbatim, so changing
-  // it is a Terms revision (docs/terms-on-documents.md §3).
-  hours: {
-    open: "Open 24 hours, 7 days a week",
-    emergency: "24/7 Emergency Service",
-  },
-  officeHours: {
-    weekday: "Mon–Fri: 7:30 AM – 4:30 PM",
-    saturday: "Sat: 9:00 AM – 3:00 PM",
-    emergency: "24/7 Emergency Service",
-  },
-  tagline: "Southwest Florida's Most Trusted Plumbing Team",
-  description:
-    "Family owned and operated since 1998. From emergency repairs to new construction, C&S Plumbing delivers excellence across Southwest Florida.",
-  /** The company's current Florida Certified Plumbing Contractor license,
-   *  in place since the 2023 reorganization as part of Draft Construction
-   *  (owner-stated 2026-11-03). Goes on every contract, proposal and invoice. */
-  license: LICENSE.company,
-  /** Samuel Pellechio's original license, still active; listed alongside the
-   *  company license on formal documents. */
-  license2: LICENSE.founder,
-  // DBPR "Search by License Number" form (search=LicNbr). Direct per-license
-  // detail links aren't possible — the DBPR site is session-coupled.
-  licenseLookupUrl:
-    "https://www.myfloridalicense.com/wl11.asp?mode=2&search=LicNbr&SID=&brd=&typ=",
-  rating: 5.0,
-  // Static fallback only. Google Maps showed 5.0 across 60 reviews on
-  // 2026-10-20 while the site was still telling crawlers 46. The live number
-  // comes from the Places API when GOOGLE_PLACES_API_KEY and GOOGLE_PLACE_ID
-  // are set in Vercel — set those so this stops drifting.
-  reviewCount: 60,
-  /** Permanent link to the Google Business Profile listing (by CID), not a
-   *  Maps search. Resolves to the 951 Pondella Rd listing. */
-  googleProfileUrl: "https://maps.google.com/?cid=5498090134012520413",
-  /** Google Place ID for the same listing (public identifier, found with
-   *  Google's Place ID Finder on 2026-10-20). Drives the write-a-review deep
-   *  link and the Places API lookup; only GOOGLE_PLACES_API_KEY is secret. */
-  googlePlaceId: "ChIJjeFQMQ9D24gR3WflxNgjTUw",
-  /**
-   * Where Google Maps pins 951 Pondella Rd (checked 2026-10-20; the Census
-   * geocoder agrees to within 150 ft). The previous value, 26.6695 /
-   * -81.8726, sat 2.8 miles east in a mobile home park off E North Shore Dr.
-   */
-  geo: { latitude: 26.6663678, longitude: -81.9171809 },
-  facebookUrl: "https://www.facebook.com/csplumbingoflc",
-  instagramUrl: "https://www.instagram.com/cs_plumbing_of_lee/",
-  // Current review profile (North Fort Myers office). An older Birdeye
-  // profile for the former Cape Coral office still exists; never link it.
-  birdeyeUrl: "https://reviews.birdeye.com/cs-plumbing-of-lee-172502710968475",
-  /**
-   * One-sentence identity statement for crawlers and AI engines. Directories
-   * still carry the former Cape Coral address (one marks it "permanently
-   * closed"), so every machine-readable surface states where the business
-   * actually is and that it is open.
-   */
-  locationNote:
-    "C&S Plumbing of Lee has one office, open and operating, at 951 Pondella Rd, North Fort Myers, FL 33903. Directory listings that show an older Cape Coral street address refer to the company's former office.",
-} as const;
+// Business facts live in ./business, awards in ./awards and the Cape Coral UEP
+// status in ./uep-status: small modules that next.config.ts and client
+// components can load without the page data in this file. They are re-exported
+// so existing server code keeps importing them from here.
+export { BUSINESS, AWARDS, LATEST_AWARD, AWARD_TRUST_LINE, UEP_STATUS };
 
 // Third-party contractor ranking. This is BuildZoom's score, not a state or
 // DBPR ranking, and every surface that cites it must say so and link the
@@ -151,7 +65,9 @@ export const WARRANTY = {
 export const NEW_CONSTRUCTION_BENEFITS = {
   heading: "We’re here long after construction is complete.",
   contact: "833-PLUMB-IT ext. 0",
-  contactRaw: "8337586248",
+  contactRaw: BUSINESS.phoneRaw,
+  /** The benefits line is the company line; links dial this href. */
+  contactHref: BUSINESS.phoneHref,
   items: [
     {
       id: "lifetime-discount",
@@ -170,79 +86,6 @@ export const NEW_CONSTRUCTION_BENEFITS = {
   summary:
     "Homes and commercial properties with new-construction plumbing completed by C&S qualify for a lifetime discount on future plumbing service. New homeowners also receive one complimentary water heater flush and whole-home plumbing inspection during their home’s first year; the homeowner calls 833-PLUMB-IT ext. 0 within 12 months of home completion to request and schedule it.",
 } as const;
-
-// City of Cape Coral Utilities Extension Project status, as the city's own
-// UEP pages stated it on `checkedOn`. The 180-day window and the plumber rule
-// come from the city's "How to Connect" page. Re-read capecoral.gov/uep before
-// changing any of this; every UEP surface (service page, Cape Coral landing,
-// llms.txt) reads from here so the story stays identical everywhere.
-const UEP_NORTH_1_WEST =
-  "North 1 West is substantially complete and the city has mailed its Notice of Availability letters, so the 180-day connection window there is already running.";
-const UEP_NORTH_1_EAST =
-  "North 1 East is under construction — contractors received Notice to Proceed in December 2025 and the city expects completion by the end of 2027.";
-const UEP_NORTH_3 =
-  "North 3, about 3 square miles of northwest Cape Coral, is in design; the city expects construction to start by the end of 2026 and run about two years.";
-export const UEP_STATUS = {
-  checkedOn: "2026-10-20",
-  checkedOnLabel: "October 2026",
-  sourceUrl: "https://www.capecoral.gov/uep/how_to_connect.php",
-  /** Days a homeowner has to connect after the city's Notice of Availability. */
-  connectionWindowDays: 180,
-  plumberRule:
-    "The city directs homeowners to a City of Cape Coral licensed plumber for the final connection, and that plumber is responsible for pulling the permits.",
-  north1West: UEP_NORTH_1_WEST,
-  north1East: UEP_NORTH_1_EAST,
-  north3: UEP_NORTH_3,
-  /** One-paragraph version for prose surfaces. */
-  summary: `${UEP_NORTH_1_WEST} ${UEP_NORTH_1_EAST} ${UEP_NORTH_3}`,
-} as const;
-
-// Single source of truth for awards, newest first. Every surface that names
-// an award — hero chips, nav strip, About, Credentials, WhyChooseUs, the
-// trust-badge arrays, JsonLd and llms.txt — reads from here for the same
-// reason EMERGENCY_CLAIMS exists: one consistent, verifiable story.
-export const AWARDS: Award[] = [
-  {
-    slug: "best-of-cape-coral-2026",
-    year: 2026,
-    title: "Best of Cape Coral 2026",
-    category: "Best Plumbing Contractor",
-    program: "Best of Cape Coral Readership Awards",
-    issuer: "Cape Coral Breeze",
-    issuerUrl: "https://www.capecoralbreeze.com",
-    // TODO: swap in the Breeze's 2026 winners listing URL once the Digital
-    // Winners Platform entry is live — it becomes the schema citation.
-    awardedOn: "2026-09-09",
-    badge: "/images/awards/best-of-cape-coral-2026.png",
-    badgeWidth: 2215,
-    badgeHeight: 1561,
-    summary:
-      "Voted Best Plumbing Contractor by Cape Coral Breeze readers in the 2026 Best of Cape Coral awards.",
-  },
-  {
-    slug: "best-of-cape-coral-2025",
-    year: 2025,
-    title: "Best of Cape Coral 2025",
-    category: "Plumbing",
-    program: "Best of Cape Coral Readership Awards",
-    issuer: "Cape Coral Breeze",
-    issuerUrl: "https://www.capecoralbreeze.com",
-    awardedOn: "2025-09",
-    badge: "/images/awards/best-of-cape-coral-2025.png",
-    badgeWidth: 793,
-    badgeHeight: 593,
-    summary:
-      "Voted Best of Cape Coral in the Plumbing category by Cape Coral Breeze readers in 2025.",
-  },
-];
-
-export const LATEST_AWARD = AWARDS[0];
-
-/** Flat line for the trust-badge string arrays on area and service-city pages. */
-export const AWARD_TRUST_LINE = `Best of Cape Coral ${[...AWARDS]
-  .map((a) => a.year)
-  .sort()
-  .join(" & ")}`;
 
 // ============================================
 // NAVIGATION
