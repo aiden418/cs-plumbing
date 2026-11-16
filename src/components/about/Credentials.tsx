@@ -81,10 +81,14 @@ export default function Credentials({ tone = "shell" }: { tone?: Tone }) {
                     href={c.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-1 inline-flex min-h-11 items-center gap-1.5 font-semibold text-link underline-offset-4 hover:underline"
+                    className="mt-1 inline-block py-2.5 font-semibold text-link underline-offset-4 hover:underline"
                   >
                     {c.hrefLabel}
-                    <ExternalLink className="size-4 shrink-0" aria-hidden="true" />
+                    {/* A no-break space keeps the icon beside the last word when the label wraps. */}
+                    <span className="whitespace-nowrap">
+                      &nbsp;
+                      <ExternalLink className="inline size-4 align-[-0.125em]" aria-hidden="true" />
+                    </span>
                   </a>
                 )}
                 {c.href && !/^https?:/.test(c.href) && (

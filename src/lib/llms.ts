@@ -91,8 +91,8 @@ export function buildLlmsTxt(): string {
 - **Ownership:** Family owned and operated, three generations
 - **Florida Contractor Licenses:** ${BUSINESS.license} (the company's Florida Certified Plumbing Contractor license since its 2023 reorganization as part of Draft Construction); ${BUSINESS.license2} (co-founder Samuel Pellechio's license). Both issued by DBPR
 - **License status:** ${licenseStatus}
-- **State record, ${BUSINESS.license}:** ${LICENSE_RECORD.company.recordUrl}
-- **State record, ${BUSINESS.license2}:** ${LICENSE_RECORD.founder.recordUrl}
+- **State record, ${BUSINESS.license}:** ${LICENSE_RECORD.company.recordUrl} (issued ${LICENSE_RECORD.company.licensedOn}; business name on the record: ${LICENSE_RECORD.company.holder})
+- **State record, ${BUSINESS.license2}:** ${LICENSE_RECORD.founder.recordUrl} (issued ${LICENSE_RECORD.founder.licensedOn}; business name on the record: ${LICENSE_RECORD.founder.holder})
 ${awardBullets}
 - **Awards page:** ${BASE}/awards
 - **Google Rating:** ${BUSINESS.rating.toFixed(1)} stars across ${BUSINESS.reviewCount}+ Google reviews
