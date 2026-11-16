@@ -99,14 +99,14 @@ function inspectPrint() {
 }
 
 /**
- * Pages with nothing on them. A line that is on every page of a document of
- * three or more pages (numbers aside) is a running header or footer, and a
- * page that holds nothing else counts as blank.
+ * Pages with nothing on them. A line that is on every page of a document
+ * (numbers aside) is a running header or footer, and a page that holds
+ * nothing else counts as blank.
  */
 function findBlankPages(pageText) {
   const key = (line) => line.replace(/\d+/g, "#").replace(/\s+/g, "");
   const running = new Set();
-  if (pageText.length >= 3) {
+  if (pageText.length >= 2) {
     const pagesWith = new Map();
     for (const lines of pageText) for (const k of new Set(lines.map(key))) pagesWith.set(k, (pagesWith.get(k) ?? 0) + 1);
     for (const [k, n] of pagesWith) if (n === pageText.length) running.add(k);
