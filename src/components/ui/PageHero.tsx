@@ -1,82 +1,152 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ChevronRight } from "lucide-react";
+import type { CSSProperties, ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import Container from "@/components/ui/Container";
-import { type ReactNode } from "react";
+import PlanMotif from "@/components/ui/PlanMotif";
+import type { MediaRef } from "@/lib/media-types";
+import {
+  frameOrientation,
+  headlineText,
+  headlineWidth,
+  isMediaRef,
+  resolveHeroLayout,
+  type PageHeroImage,
+  type PageHeroLayout,
+} from "@/lib/hero-images";
+
+export type { PageHeroImage, PageHeroLayout };
 
 type PageHeroSize = "sm" | "md" | "lg";
 
-export interface PageHeroImage {
-  src: string;
-  /** Decorative by default — the H1 carries the meaning. */
-  alt?: string;
-  /** CSS object-position, e.g. "center 30%" to keep faces/skylines in frame. */
-  position?: string;
-}
-
-/** Jobsite photo used when a page doesn't supply its own. */
-export const DEFAULT_HERO_IMAGE: PageHeroImage = {
-  src: "/images/hero/drone-construction.jpg",
-  alt: "",
-  position: "center 40%",
-};
-
 interface PageHeroProps {
-  /** navy = showpiece treatment (default); light = legacy flat surface escape hatch */
+  /** Which composition. Left out, it follows from the other props (see resolveHeroLayout). */
+  layout?: PageHeroLayout;
+  /**
+   * The header photograph, resolved on the server (heroFrame() from
+   * "@/lib/hero-frame", or image()/slot() from "@/lib/media"). Shown in a
+   * frame beside the text (split, cinema) or below it (editorial); never
+   * behind text.
+   */
+  frame?: MediaRef | null;
+  /** Legacy: the hero is always on ink now. Accepted and ignored. */
   variant?: "navy" | "light";
-  /** emergency swaps the gold ambient orb for a red one (emergency page identity) */
+  /** "emergency" gives the urgent layout when no layout is named. */
   accentTone?: "gold" | "emergency";
   overline?: string;
+  /** Small icon before the eyebrow label (decorative). */
   overlineIcon?: ReactNode;
-  /** Plain words of the H1 (rendered white on navy). Keep SEO copy identical. */
+  /** The H1 words, exactly as written in the data. */
   title: string;
-  /** Words of the H1 rendered in the gold gradient span */
+  /** Appended to the title after a space (or a line break with accentPosition "block"), same colour. */
   accent?: string;
-  /** inline = accent continues the sentence; block = accent on its own line (about-style) */
   accentPosition?: "inline" | "block";
   description?: ReactNode;
   align?: "left" | "center";
-  /** sm = compact band for templates/app pages, md = default, lg = index pages */
+  /** "sm" gives compact proportions (smaller paddings and headline). */
   size?: PageHeroSize;
-  /** Visible breadcrumb trail — JSON-LD stays in the page.tsx via BreadcrumbJsonLd */
+  /** Visible trail; the JSON-LD stays in the page file. */
   breadcrumb?: { name: string; href: string }[];
-  /** CTA row (Buttons / tel links) */
+  /** CTA row: stacked full width on phones, inline from sm. */
   actions?: ReactNode;
-  /** Optional right column (image / rating panel) — switches to a 2-col grid */
+  /** Legacy right column (a node the caller built). Gives the split layout. */
   media?: ReactNode;
   /**
-   * Photo behind the navy treatment. Defaults to a jobsite shot; pass a
-   * city or service photo to make the page feel local, or null for the
-   * plain navy surface.
+   * Legacy header photo path. PageHero is rendered by client components, so
+   * it cannot read the picture registry: a path alone gives the type-led
+   * layout. Resolve it on the server with heroFrame() and pass `frame`
+   * instead. An already-resolved MediaRef is framed as is.
    */
-  image?: PageHeroImage | null;
-  /** Extra rows below the actions: rating blocks, award chips, trust dots */
+  image?: PageHeroImage | MediaRef | string | null;
+  /** Rows under the actions: rating, award, trust lines. */
   children?: ReactNode;
   className?: string;
 }
 
-const sizePadding: Record<PageHeroSize, string> = {
-  sm: "pt-28 pb-10 sm:pt-32 sm:pb-12",
-  md: "pt-28 pb-14 sm:pt-32 sm:pb-20",
-  lg: "pt-32 pb-16 sm:pt-40 sm:pb-24",
+const enterStyle = (i: number) => ({ "--enter-i": i }) as CSSProperties;
+
+const TOP_PADDING = "pt-[calc(var(--nav-h)+clamp(2rem,5vw,4.5rem))]";
+const TOP_PADDING_COMPACT = "pt-[calc(var(--nav-h)+clamp(1.5rem,4vw,3rem))]";
+
+const BOTTOM_PADDING: Record<PageHeroLayout, string> = {
+  cinema: "pb-section",
+  split: "pb-section-sm",
+  "type-led": "pb-section-sm",
+  editorial: "pb-section-sm",
+  urgent: "pb-section-sm",
+  compact: "pb-10 sm:pb-12",
 };
 
-const sizeTitle: Record<PageHeroSize, string> = {
-  sm: "text-3xl sm:text-4xl lg:text-5xl",
-  md: "text-4xl sm:text-5xl lg:text-6xl",
-  lg: "text-4xl sm:text-6xl lg:text-7xl",
+/** Text column on the 12-column grid (≥ 1024 px). */
+const TEXT_COLUMN: Record<PageHeroLayout, string> = {
+  cinema: "lg:col-span-5",
+  split: "lg:col-span-6",
+  "type-led": "lg:col-span-8",
+  urgent: "lg:col-span-8",
+  compact: "lg:col-span-9",
+  editorial: "",
 };
+
+const WIDTH_CLASS = {
+  "display-wide": "display-wide",
+  default: "",
+  "display-normal": "display-normal",
+  "display-tight": "display-tight",
+} as const;
+
+function HeroFrame({ media, layout }: { media: MediaRef; layout: "split" | "cinema" | "editorial" }) {
+  const portrait = frameOrientation(media) === "portrait";
+  const aspect = portrait
+    ? "aspect-[4/5]"
+    : layout === "editorial"
+      ? "aspect-[4/3] sm:aspect-[16/9]"
+      : "aspect-[4/3] lg:aspect-[3/2]";
+  const sizes =
+    layout === "editorial"
+      ? portrait
+        ? "(min-width: 768px) 46rem, 100vw"
+        : "(min-width: 1280px) 1216px, 100vw"
+      : layout === "cinema"
+        ? "(min-width: 1280px) 710px, (min-width: 1024px) 56vw, 100vw"
+        : portrait
+          ? "(min-width: 1280px) 500px, (min-width: 1024px) 40vw, 100vw"
+          : "(min-width: 1280px) 600px, (min-width: 1024px) 48vw, 100vw";
+  return (
+    <figure
+      className={cn(
+        "relative w-full overflow-hidden rounded-frame bg-ink-700",
+        aspect,
+        // Never taller than the screen below the header on desktop.
+        "lg:max-h-[calc(100svh-var(--nav-h)-6rem)]"
+      )}
+      style={media.color ? { backgroundColor: media.color } : undefined}
+    >
+      <Image
+        src={media.src}
+        alt={media.alt}
+        fill
+        preload
+        sizes={sizes}
+        quality={75}
+        className="object-cover"
+        style={{ objectPosition: media.position ?? "center" }}
+      />
+    </figure>
+  );
+}
 
 /**
- * Shared page hero carrying the About-page showpiece language: navy surface,
- * blurred ambient orbs, gold overline, gradient accent headline. Server-safe —
- * entrance animation is CSS-only (animate-hero-in), so LCP text stays
- * server-rendered and the component works inside both server pages and
- * client templates.
+ * The page header: always on ink, under the transparent site header.
+ * Rows: breadcrumb → eyebrow → h1 → lead → actions → children. Six layouts
+ * (cinema, split, type-led, editorial, compact, urgent); a photograph is only
+ * ever shown in a frame beside or below the words.
+ *
+ * Server-safe and client-safe: it imports no picture data, so the client
+ * page templates that render it keep working.
  */
 export default function PageHero({
-  variant = "navy",
+  layout: layoutProp,
+  frame,
   accentTone = "gold",
   overline,
   overlineIcon,
@@ -89,113 +159,146 @@ export default function PageHero({
   breadcrumb,
   actions,
   media,
-  image = DEFAULT_HERO_IMAGE,
+  image,
   children,
   className,
 }: PageHeroProps) {
-  const navy = variant === "navy";
-  const centered = align === "center" && !media;
-  const photo = navy ? image : null;
+  const photo: MediaRef | null = frame ?? (isMediaRef(image) ? image : null);
+  const layout = resolveHeroLayout({
+    layout: layoutProp,
+    hasFrame: Boolean(photo),
+    hasMedia: Boolean(media),
+    hasImage: Boolean(image),
+    size,
+    align,
+    accentTone,
+  });
+  const compact = layout === "compact" || size === "sm";
+  const urgent = layout === "urgent";
+  const editorial = layout === "editorial";
+  // Centring only where nothing sits beside the words.
+  const centered = align === "center" && (editorial || layout === "compact");
+
+  const h1Text = headlineText(title, accent);
+  const { width, stepDown } = headlineWidth(h1Text);
+  const h1Size = compact
+    ? stepDown
+      ? "text-display-sm"
+      : "text-display-md"
+    : stepDown
+      ? "text-display-md"
+      : "text-display-lg";
+
+  const framed = photo && (layout === "split" || layout === "cinema" || editorial) ? photo : null;
+  const aside: ReactNode = media ? (
+    media
+  ) : framed && !editorial ? (
+    <HeroFrame media={framed} layout={layout === "cinema" ? "cinema" : "split"} />
+  ) : layout === "type-led" || urgent ? (
+    <PlanMotif seed={h1Text} className="ml-auto w-full max-w-[22rem]" />
+  ) : null;
+
+  const asideColumn = media
+    ? "lg:col-span-6 lg:col-start-7"
+    : framed
+      ? layout === "cinema"
+        ? "lg:col-span-7 lg:col-start-6"
+        : frameOrientation(framed) === "portrait"
+          ? "lg:col-span-5 lg:col-start-8"
+          : "lg:col-span-6 lg:col-start-7"
+      : // the plan motif: decoration, desktop only
+        "hidden lg:block lg:col-span-4 lg:col-start-9 lg:self-end";
 
   const rows = (
-    <div className={cn(centered && "mx-auto max-w-3xl text-center")}>
+    <div
+      className={cn(
+        centered ? "mx-auto max-w-[46rem] text-center lg:col-span-12" : editorial ? "mx-auto max-w-[46rem]" : TEXT_COLUMN[layout]
+      )}
+    >
       {breadcrumb && breadcrumb.length > 0 && (
-        <nav
-          aria-label="Breadcrumb"
-          className={cn(
-            "animate-hero-in mb-5 flex flex-wrap items-center gap-1.5 text-xs sm:text-sm",
-            centered && "justify-center",
-            navy ? "text-white/70" : "text-gray-500"
-          )}
-        >
-          {breadcrumb.map((crumb, i) => {
-            const last = i === breadcrumb.length - 1;
-            return (
-              <span key={crumb.href} className="inline-flex items-center gap-1.5">
-                {last ? (
-                  <span className={navy ? "text-white/80" : "text-gray-900"}>
-                    {crumb.name}
-                  </span>
-                ) : (
-                  <>
+        <nav aria-label="Breadcrumb" className="enter mb-6 text-sm text-muted" style={enterStyle(0)}>
+          <ol className={cn("flex flex-wrap items-center gap-x-2 gap-y-1", centered && "justify-center")}>
+            {breadcrumb.map((crumb, i) => {
+              const last = i === breadcrumb.length - 1;
+              return (
+                <li key={`${crumb.href}-${i}`} className="inline-flex items-center gap-2">
+                  {i > 0 && (
+                    <span aria-hidden="true" className="opacity-70">
+                      /
+                    </span>
+                  )}
+                  {last ? (
+                    <span aria-current="page" className="text-body">
+                      {crumb.name}
+                    </span>
+                  ) : (
                     <Link
                       href={crumb.href}
-                      className={cn(
-                        "transition-colors",
-                        navy ? "hover:text-white" : "hover:text-gray-900"
-                      )}
+                      className="relative underline-offset-4 transition-colors duration-150 after:absolute after:-inset-x-1 after:-inset-y-3 after:content-[''] hover:text-fg hover:underline"
                     >
                       {crumb.name}
                     </Link>
-                    <ChevronRight className="h-3.5 w-3.5 opacity-60" />
-                  </>
-                )}
-              </span>
-            );
-          })}
+                  )}
+                </li>
+              );
+            })}
+          </ol>
         </nav>
       )}
 
       {overline && (
-        <span
-          className={cn(
-            "animate-hero-in mb-4 inline-flex items-center gap-2 text-xs sm:text-sm font-bold uppercase tracking-[0.2em]",
-            navy ? "text-gold" : "text-primary"
-          )}
+        <p
+          className={cn("enter label-tech mb-5 flex items-center gap-2.5 text-accent", centered && "justify-center")}
+          style={enterStyle(0)}
         >
-          {overlineIcon}
-          {overline}
-        </span>
+          <span className={cn("joint", urgent && "text-emergency-300")} aria-hidden="true" />
+          {urgent && <span className="h-px w-8 bg-emergency-300" aria-hidden="true" />}
+          {overlineIcon && (
+            <span className="inline-flex shrink-0 [&>svg]:h-3.5 [&>svg]:w-3.5" aria-hidden="true">
+              {overlineIcon}
+            </span>
+          )}
+          <span>{overline}</span>
+        </p>
       )}
 
-      <h1
-        className={cn(
-          "animate-hero-in font-black leading-[1.05]",
-          sizeTitle[size],
-          navy ? "text-white" : "text-gray-900"
-        )}
-        style={{ animationDelay: "80ms" }}
-      >
-        {title}
-        {accent && (
+      <h1 className={cn("enter text-fg", h1Size, WIDTH_CLASS[width])} style={enterStyle(1)}>
+        {accent && accentPosition === "block" ? (
           <>
-            {accentPosition === "block" ? <br /> : " "}
-            <span className={navy ? "text-gold-gradient" : "text-gradient"}>
-              {accent}
-            </span>
+            {title}
+            <br />
+            {accent}
           </>
+        ) : (
+          h1Text
         )}
       </h1>
 
-      {description && (
-        <p
-          className={cn(
-            "animate-hero-in mt-5 max-w-xl text-base sm:text-lg leading-relaxed",
-            centered && "mx-auto",
-            navy ? "text-white/80" : "text-gray-500"
-          )}
-          style={{ animationDelay: "160ms" }}
-        >
-          {description}
-        </p>
-      )}
+      {description &&
+        (typeof description === "string" ? (
+          <p className={cn("enter mt-5 max-w-[52ch] text-lead text-body", centered && "mx-auto")} style={enterStyle(2)}>
+            {description}
+          </p>
+        ) : (
+          <div className={cn("enter mt-5 max-w-[52ch] text-lead text-body", centered && "mx-auto")} style={enterStyle(2)}>
+            {description}
+          </div>
+        ))}
 
       {actions && (
         <div
           className={cn(
-            // Phones get full-width stacked CTAs (easier thumb targets);
-            // sm+ returns to the inline pill row
-            "animate-hero-in mt-7 flex flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center",
+            "enter mt-8 flex flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center",
             centered && "sm:justify-center"
           )}
-          style={{ animationDelay: "240ms" }}
+          style={enterStyle(3)}
         >
           {actions}
         </div>
       )}
 
       {children && (
-        <div className="animate-hero-in" style={{ animationDelay: "320ms" }}>
+        <div className="enter" style={enterStyle(3)}>
           {children}
         </div>
       )}
@@ -204,68 +307,46 @@ export default function PageHero({
 
   return (
     <section
+      data-tone="ink"
+      data-header="overlay"
+      data-hero-layout={layout}
       className={cn(
-        "relative overflow-hidden",
-        navy ? "bg-navy" : "bg-surface",
-        sizePadding[size],
+        "relative w-full bg-canvas",
+        compact ? TOP_PADDING_COMPACT : TOP_PADDING,
+        compact && layout !== "cinema" ? BOTTOM_PADDING.compact : BOTTOM_PADDING[layout],
         className
       )}
     >
-      {photo && (
-        <div className="pointer-events-none absolute inset-0" aria-hidden={photo.alt ? undefined : true}>
-          <Image
-            src={photo.src}
-            alt={photo.alt ?? ""}
-            fill
-            priority
-            sizes="100vw"
-            quality={60}
-            className="object-cover"
-            style={{ objectPosition: photo.position ?? "center" }}
-          />
-          {/* Scrim. Phones: one even veil, since the copy spans the full
-              width. Desktop, left-aligned: solid navy under the copy with the
-              photo showing through on the far side. Desktop, centered: a
-              lighter veil plus a navy glow behind the headline. */}
-          <div className="absolute inset-0 bg-navy/75 sm:hidden" />
-          <div
-            className={cn(
-              "absolute inset-0 hidden sm:block",
-              centered
-                ? "bg-navy/50"
-                : "bg-gradient-to-r from-navy via-navy/80 to-navy/35"
-            )}
-          />
-          {centered && (
-            <div className="absolute inset-0 hidden sm:block bg-[radial-gradient(ellipse_55%_75%_at_50%_50%,rgba(27,43,75,0.85)_0%,rgba(27,43,75,0.1)_100%)]" />
-          )}
-          {/* Settle the photo under the navbar and melt it into the page. */}
-          <div className="absolute inset-0 bg-gradient-to-b from-navy/60 via-transparent to-navy/90" />
-          {/* Gold hairline where the hero meets the page — the brand's one warm note. */}
-          <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-gold/60 to-transparent" />
-        </div>
-      )}
-      {navy && (
-        <>
-          <div className="pointer-events-none absolute -top-32 left-1/3 h-[480px] w-[480px] -translate-x-1/2 rounded-full bg-primary/25 blur-[120px]" />
-          <div
-            className={cn(
-              "pointer-events-none absolute bottom-0 right-0 h-72 w-72 rounded-full blur-[100px]",
-              accentTone === "emergency" ? "bg-emergency/15" : "bg-gold/15"
-            )}
-          />
-        </>
-      )}
-      <Container className="relative">
-        {media ? (
-          <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16">
+      <Container>
+        {editorial ? (
+          <>
             {rows}
-            <div className="animate-hero-in" style={{ animationDelay: "200ms" }}>
-              {media}
-            </div>
-          </div>
+            {framed && (
+              <div
+                className={cn(
+                  "enter mt-12 lg:mt-16",
+                  frameOrientation(framed) === "portrait" && "mx-auto max-w-[46rem]"
+                )}
+                style={enterStyle(3)}
+              >
+                <HeroFrame media={framed} layout="editorial" />
+              </div>
+            )}
+          </>
         ) : (
-          rows
+          <div
+            className={cn(
+              "grid grid-cols-1 gap-y-10 lg:grid-cols-12 lg:gap-x-8",
+              layout === "type-led" || urgent || layout === "compact" ? "lg:items-end" : "lg:items-center"
+            )}
+          >
+            {rows}
+            {aside && (
+              <div className={cn("enter", asideColumn)} style={enterStyle(3)}>
+                {aside}
+              </div>
+            )}
+          </div>
         )}
       </Container>
     </section>
