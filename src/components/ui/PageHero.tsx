@@ -117,7 +117,7 @@ function HeroFrame({ media, layout }: { media: MediaRef; layout: "split" | "cine
         "relative w-full overflow-hidden rounded-frame bg-ink-700",
         aspect,
         // Never taller than the screen below the header on desktop.
-        "lg:max-h-[calc(100svh-var(--nav-h)-4rem)]"
+        "lg:max-h-[calc(100svh-var(--nav-h)-6rem)]"
       )}
       style={media.color ? { backgroundColor: media.color } : undefined}
     >
@@ -207,7 +207,7 @@ export default function PageHero({
           ? "lg:col-span-5 lg:col-start-8"
           : "lg:col-span-6 lg:col-start-7"
       : // the plan motif: decoration, desktop only
-        "hidden lg:block lg:col-span-3 lg:col-start-10 lg:self-end";
+        "hidden lg:block lg:col-span-4 lg:col-start-9 lg:self-end";
 
   const rows = (
     <div
