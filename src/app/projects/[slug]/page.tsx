@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import PageTransition from "@/components/layout/PageTransition";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import ProjectDetail from "@/components/projects/ProjectDetail";
 import ProjectCrossLinks from "@/components/projects/ProjectCrossLinks";
@@ -63,7 +62,7 @@ export default async function Page({
   if (!project) notFound();
 
   return (
-    <PageTransition>
+    <>
       <BreadcrumbJsonLd
         items={[
           { name: "Home", href: "/" },
@@ -75,6 +74,6 @@ export default async function Page({
       <ProjectDetail project={project} />
       <ProjectCrossLinks project={project} />
       <CTASection />
-    </PageTransition>
+    </>
   );
 }

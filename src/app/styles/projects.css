@@ -2,3 +2,67 @@
    Put rules inside @layer components { ... } so utility classes can still
    override them; use the design tokens (var(--color-*), var(--tone-*),
    var(--ease-*), var(--dur-*)) rather than raw values. */
+
+@layer components {
+  /* /projects: the filter row sits on a hairline under the spotlight. */
+  .projects-filter-bar {
+    padding-top: 2rem;
+    border-top: 1px solid var(--tone-rule);
+    margin-bottom: 2.5rem;
+  }
+
+  /* Large project cards: one column on phones (4:5 covers), two from 48rem,
+     three from 64rem (4:3 covers). */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 3rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 48rem) {
+    .projects-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 1.5rem;
+      row-gap: 3.5rem;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .projects-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      column-gap: 2rem;
+      row-gap: 4rem;
+    }
+  }
+
+  .projects-grid > li[hidden] {
+    display: none;
+  }
+
+  /* Project page: editorial lists (scope, permits, materials). */
+  .project-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--tone-rule);
+  }
+
+  .project-list > li {
+    padding-block: 0.75rem;
+    border-bottom: 1px solid var(--tone-rule);
+  }
+}
+
+/* Project page hero: a project name runs to about 60 characters and shares
+   the row with the cover, so it is set one step down (display-md) instead of
+   the page-H1 size PageHero gives names under 65 characters. Unlayered on
+   purpose: it has to win over the text-display-lg utility. Same words, same
+   element; only the size changes. */
+.project-hero h1 {
+  font-size: var(--text-display-md);
+  line-height: var(--text-display-md--line-height);
+  letter-spacing: var(--text-display-md--letter-spacing);
+}

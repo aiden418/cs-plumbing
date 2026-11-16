@@ -1,95 +1,108 @@
-import { Briefcase, CalendarClock, ClipboardCheck, HardHat, Home, Layers, MapPin, Wrench } from "lucide-react";
 import Container from "@/components/ui/Container";
+import Eyebrow from "@/components/ui/Eyebrow";
+import Section from "@/components/ui/Section";
 import type { CompletedProject } from "@/lib/types";
+import { PROJECT_PAGE } from "@/content/projects";
+
+const T = PROJECT_PAGE.glance;
 
 /**
  * Builder case-study template: builder (with permission), location, home
  * type, fixtures, phases, schedule vs. plan, inspections, and one field
  * problem solved. Renders only the facts that are filled in, and nothing at
- * all when the project has no `caseStudy`.
+ * all when the project has no `caseStudy`. Facts are a definition list with
+ * hairlines (design-system "Data rows").
  */
 export default function CaseStudyFacts({ project }: { project: CompletedProject }) {
   const cs = project.caseStudy;
   if (!cs) return null;
 
-  const facts: { icon: React.ReactNode; label: string; value: React.ReactNode }[] = [];
-  if (cs.builder?.permission) facts.push({ icon: <HardHat className="h-4 w-4" />, label: "Builder", value: cs.builder.name });
-  if (project.location) facts.push({ icon: <MapPin className="h-4 w-4" />, label: "Location", value: project.location });
-  if (cs.homeType) facts.push({ icon: <Home className="h-4 w-4" />, label: "Home type", value: cs.homeType });
-  if (cs.projectType) facts.push({ icon: <Home className="h-4 w-4" />, label: "Project type", value: cs.projectType });
-  if (cs.fixtureCount != null) facts.push({ icon: <Wrench className="h-4 w-4" />, label: "Fixtures", value: cs.fixtureCount });
-  if (cs.phasesPerformed?.length)
-    facts.push({ icon: <Layers className="h-4 w-4" />, label: "Phases performed", value: cs.phasesPerformed.join(" → ") });
-  if (cs.projectManagement)
-    facts.push({ icon: <Briefcase className="h-4 w-4" />, label: "Estimating & PM", value: cs.projectManagement });
+  const facts: { label: string; value: React.ReactNode }[] = [];
+  if (cs.builder?.permission) facts.push({ label: T.builder, value: cs.builder.name });
+  if (project.location) facts.push({ label: T.location, value: project.location });
+  if (cs.homeType) facts.push({ label: T.homeType, value: cs.homeType });
+  if (cs.projectType) facts.push({ label: T.projectType, value: cs.projectType });
+  if (cs.fixtureCount != null) facts.push({ label: T.fixtures, value: cs.fixtureCount });
+  if (cs.phasesPerformed?.length) facts.push({ label: T.phasesPerformed, value: cs.phasesPerformed.join(" → ") });
+  if (cs.projectManagement) facts.push({ label: T.projectManagement, value: cs.projectManagement });
   if (cs.schedule && (cs.schedule.planned || cs.schedule.actual))
     facts.push({
-      icon: <CalendarClock className="h-4 w-4" />,
-      label: "Schedule vs. plan",
+      label: T.schedule,
       value: (
         <>
-          {cs.schedule.planned && <span className="block">Planned: {cs.schedule.planned}</span>}
-          {cs.schedule.actual && <span className="block">Actual: {cs.schedule.actual}</span>}
-          {cs.schedule.note && <span className="mt-1 block text-gray-500">{cs.schedule.note}</span>}
+          {cs.schedule.planned && (
+            <span className="block">
+              {T.planned} {cs.schedule.planned}
+            </span>
+          )}
+          {cs.schedule.actual && (
+            <span className="block">
+              {T.actual} {cs.schedule.actual}
+            </span>
+          )}
+          {cs.schedule.note && <span className="mt-1 block font-normal text-muted">{cs.schedule.note}</span>}
         </>
       ),
     });
 
+  const hasInspections = Boolean(cs.inspections && cs.inspections.length > 0);
+
   return (
-    <section className="border-b border-gray-200 bg-white py-12 sm:py-16" aria-labelledby="case-study-facts">
+    <Section tone="white" labelledBy="case-study-facts">
       <Container>
-        <span className="mb-3 inline-block text-xs font-semibold uppercase tracking-widest text-primary sm:text-sm">
-          Builder case study
-        </span>
-        <h2 id="case-study-facts" className="mb-8 text-2xl font-bold text-gray-900 sm:text-3xl">
-          The job at a glance
-        </h2>
+        <div className="grid grid-cols-1 gap-y-10 lg:grid-cols-12 lg:gap-x-8">
+          <div className="lg:col-span-4">
+            <Eyebrow className="mb-4">{T.overline}</Eyebrow>
+            <h2 id="case-study-facts" className="text-display-md text-fg">
+              {T.heading}
+            </h2>
+          </div>
 
-        {facts.length > 0 && (
-          <dl className="grid max-w-5xl grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {facts.map((f) => (
-              <div key={f.label} className="rounded-2xl border border-gray-200 bg-[#F5F5F7] p-5">
-                <dt className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-gray-500">
-                  <span className="text-primary">{f.icon}</span>
-                  {f.label}
-                </dt>
-                <dd className="mt-1.5 text-sm font-semibold text-gray-900">{f.value}</dd>
-              </div>
-            ))}
-          </dl>
-        )}
-
-        <div className="mt-6 grid max-w-5xl grid-cols-1 gap-6 lg:grid-cols-2">
-          {cs.inspections && cs.inspections.length > 0 && (
-            <div className="rounded-2xl border border-gray-200 p-6">
-              <h3 className="mb-3 flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-gray-900">
-                <ClipboardCheck className="h-4 w-4 text-primary" /> Inspection results
-              </h3>
-              <ul className="divide-y divide-gray-100 text-sm">
-                {cs.inspections.map((i) => (
-                  <li key={i.phase} className="flex justify-between gap-4 py-2">
-                    <span className="text-gray-500">{i.phase}</span>
-                    <span className="font-semibold text-gray-900">{i.result}</span>
-                  </li>
+          <div className="lg:col-span-8">
+            {facts.length > 0 && (
+              <dl className="grid grid-cols-1 gap-x-8 sm:grid-cols-2">
+                {facts.map((f) => (
+                  <div key={f.label} className="border-t border-rule py-4">
+                    <dt className="text-sm text-muted">{f.label}</dt>
+                    <dd className="mt-1.5 font-semibold text-fg tabular-nums">{f.value}</dd>
+                  </div>
                 ))}
-              </ul>
-            </div>
-          )}
-          {cs.fieldProblem && (
-            <div className="rounded-2xl border border-gray-200 p-6">
-              <h3 className="mb-3 text-sm font-bold uppercase tracking-wider text-gray-900">
-                Field problem solved
-              </h3>
-              <p className="text-sm leading-relaxed text-gray-600">
-                <strong className="text-gray-900">Problem:</strong> {cs.fieldProblem.problem}
-              </p>
-              <p className="mt-2 text-sm leading-relaxed text-gray-600">
-                <strong className="text-gray-900">Solution:</strong> {cs.fieldProblem.solution}
-              </p>
-            </div>
-          )}
+              </dl>
+            )}
+
+            {(hasInspections || cs.fieldProblem) && (
+              <div className="mt-10 grid grid-cols-1 gap-y-10 sm:grid-cols-2 sm:gap-x-8">
+                {hasInspections && (
+                  <div>
+                    <h3 className="mb-4 text-lg font-semibold text-fg">{T.inspections}</h3>
+                    <dl className="border-t border-rule">
+                      {cs.inspections!.map((i) => (
+                        <div key={i.phase} className="flex justify-between gap-4 border-b border-rule py-3">
+                          <dt className="text-muted">{i.phase}</dt>
+                          <dd className="text-right font-semibold text-fg">{i.result}</dd>
+                        </div>
+                      ))}
+                    </dl>
+                  </div>
+                )}
+                {cs.fieldProblem && (
+                  <div>
+                    <h3 className="mb-4 text-lg font-semibold text-fg">{T.fieldProblem}</h3>
+                    <div className="border-t border-rule pt-4">
+                      <p className="text-body">
+                        <strong className="font-semibold text-fg">{T.problem}</strong> {cs.fieldProblem.problem}
+                      </p>
+                      <p className="mt-3 text-body">
+                        <strong className="font-semibold text-fg">{T.solution}</strong> {cs.fieldProblem.solution}
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
         </div>
       </Container>
-    </section>
+    </Section>
   );
 }
