@@ -86,7 +86,7 @@ export default function ServicesPage() {
                   className={
                     wide
                       ? "grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-5 lg:gap-6"
-                      : "grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-3 lg:grid-cols-4 lg:gap-6"
+                      : "service-grid grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-3 lg:grid-cols-4 lg:gap-6"
                   }
                 >
                   {group.services.map((service) => (
@@ -98,7 +98,7 @@ export default function ServicesPage() {
                         layout={wide ? "wide" : "tile"}
                         sizes={
                           wide
-                            ? "(min-width: 1280px) 600px, (min-width: 640px) 48vw, 92vw"
+                            ? "(min-width: 1280px) 240px, (min-width: 640px) 20vw, 92vw"
                             : "(min-width: 1280px) 290px, (min-width: 1024px) 23vw, (min-width: 768px) 31vw, 46vw"
                         }
                       />

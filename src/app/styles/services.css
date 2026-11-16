@@ -36,6 +36,14 @@
     margin-top: 0.1875rem;
   }
 
+  /* Services index, two cards a row on phones: an odd last card takes the
+     whole row, its photo landscape, so no gap is left beside it. */
+  @media (width < 48rem) {
+    .service-grid > li:last-child:nth-child(odd) {
+      grid-column: span 2;
+    }
+  }
+
   /* The job photos: a shorter rail than a project page's. */
   .filmstrip.job-filmstrip {
     --rail-h: clamp(13rem, 30vh, 21rem);
@@ -52,6 +60,15 @@
       max-height: calc(100svh - var(--nav-h) - 2rem);
       overflow-y: auto;
       scrollbar-width: thin;
+    }
+  }
+}
+
+/* In the utilities layer so it outranks the frame's own aspect class. */
+@layer utilities {
+  @media (width < 48rem) {
+    .service-grid > li:last-child:nth-child(odd) .aspect-\[4\/3\] {
+      aspect-ratio: 16 / 9;
     }
   }
 }

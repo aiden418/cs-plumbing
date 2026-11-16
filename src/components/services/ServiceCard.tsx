@@ -42,6 +42,7 @@ export default function ServiceCard({
       href={service.href}
       className={cn(
         "group flex h-full flex-col overflow-hidden rounded-2xl border border-steel-200 bg-white transition-colors duration-150 hover:border-steel-300",
+        wide && media && "sm:grid sm:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]",
         className,
       )}
     >
@@ -49,10 +50,10 @@ export default function ServiceCard({
         <Frame
           media={media}
           alt=""
-          aspect={wide ? "16/9" : "4/3"}
+          aspect="4/3"
           sizes={sizes}
           quality={70}
-          frameClassName="rounded-none"
+          frameClassName={cn("rounded-none", wide && "aspect-video sm:aspect-auto sm:h-full sm:min-h-44")}
         />
       )}
       <div className="flex flex-1 flex-col p-4 sm:p-5">
