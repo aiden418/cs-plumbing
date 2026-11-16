@@ -2,3 +2,87 @@
    Put rules inside @layer components { ... } so utility classes can still
    override them; use the design tokens (var(--color-*), var(--tone-*),
    var(--ease-*), var(--dur-*)) rather than raw values. */
+
+@layer components {
+  /* A long secondary list (other cities, guides) closed on phones behind a
+     "Show all" row, open as plain columns from 64rem. Only where
+     ::details-content can be styled; elsewhere it stays a working
+     disclosure on every width. The links are in the HTML either way. */
+  .area-more-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 3.5rem;
+    border-block: 1px solid var(--tone-rule);
+    cursor: pointer;
+    list-style: none;
+    font-weight: 600;
+    color: var(--tone-link);
+  }
+
+  .area-more-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .area-more-icon {
+    flex: none;
+    transition: transform var(--dur-2) var(--ease-move);
+  }
+
+  .area-more[open] .area-more-icon {
+    transform: rotate(180deg);
+  }
+
+  .area-more[open] > .area-more-summary {
+    border-bottom-color: transparent;
+  }
+
+  @media (min-width: 64rem) {
+    @supports selector(::details-content) {
+      .area-more::details-content {
+        content-visibility: visible;
+      }
+
+      .area-more > .area-more-summary {
+        display: none;
+      }
+    }
+  }
+
+  /* Project tiles: a sideways row on phones (the next tile peeks in), a grid
+     from 40rem. */
+  .area-tiles {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: min(82%, 20rem);
+    gap: 1rem;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 0.75rem;
+    scrollbar-width: thin;
+  }
+
+  .area-tiles > li {
+    scroll-snap-align: start;
+  }
+
+  @media (min-width: 40rem) {
+    .area-tiles {
+      grid-auto-flow: row;
+      grid-auto-columns: auto;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 2.5rem 1.5rem;
+      overflow: visible;
+      padding-bottom: 0;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .area-tiles {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      column-gap: 2rem;
+    }
+  }
+}

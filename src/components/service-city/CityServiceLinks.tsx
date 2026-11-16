@@ -1,5 +1,7 @@
 import Link from "next/link";
-import { LinkGrid, LinkSection } from "@/components/links/LinkGrid";
+import { LinkGrid } from "@/components/links/LinkGrid";
+import SplitLinkSection from "@/components/areas/SplitLinkSection";
+import MoreOnPhones from "@/components/areas/MoreOnPhones";
 import { SERVICE_CITY_COPY } from "@/content/areas";
 import {
   areaForCity,
@@ -32,16 +34,28 @@ export default function CityServiceLinks({
     return null;
   }
 
+  const hubGrid = (
+    <LinkGrid
+      columns={2}
+      links={hubPages.map((p) => ({
+        href: `/${p.slug}`,
+        label: p.h1,
+        meta: `${p.city}, ${p.state}`,
+      }))}
+    />
+  );
+
   return (
-    <LinkSection
+    <SplitLinkSection
       overline={`${landing.city}, ${landing.state}`}
       heading={copy.heading(landing.city)}
       description={copy.description(landing.city)}
-      tone="shell"
+      tone="white"
       headingId="city-service-links-heading"
     >
       {cityPages.length > 0 && (
         <LinkGrid
+          columns={2}
           links={cityPages.map((p) => ({
             href: `/${p.slug}`,
             label: p.h1,
@@ -51,22 +65,20 @@ export default function CityServiceLinks({
       )}
 
       {hub && hubPages.length > 0 && (
-        <div className={cityPages.length > 0 ? "mt-12" : undefined}>
-          <h3 className="mb-5 text-lg leading-snug font-semibold text-fg">
+        <div className={cityPages.length > 0 ? "mt-10" : undefined}>
+          <h3 className="mb-4 text-xl leading-snug font-semibold text-fg">
             {copy.hubHeading(hub.title)}
           </h3>
-          <LinkGrid
-            links={hubPages.map((p) => ({
-              href: `/${p.slug}`,
-              label: p.h1,
-              meta: `${p.city}, ${p.state}`,
-            }))}
-          />
+          {hubPages.length > 3 ? (
+            <MoreOnPhones summary={copy.showCities(hubPages.length)}>{hubGrid}</MoreOnPhones>
+          ) : (
+            hubGrid
+          )}
         </div>
       )}
 
       {(area || hub) && (
-        <p className="mt-8 max-w-[68ch] text-body">
+        <p className="mt-6 max-w-[68ch] text-body">
           {copy.seePrefix}
           {area && (
             <Link
@@ -88,6 +100,6 @@ export default function CityServiceLinks({
           .
         </p>
       )}
-    </LinkSection>
+    </SplitLinkSection>
   );
 }

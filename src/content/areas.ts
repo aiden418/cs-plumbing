@@ -22,6 +22,8 @@ export const AREA_COPY = {
   local: {
     heading: (city: string) => `Serving ${city} Since 1998`,
     neighborhoodsHeading: (city: string) => `Neighborhoods We Serve in ${city}`,
+    /** Phone-only row that opens the rest of the local story. */
+    more: "Read more",
   },
   proof: {
     eyebrow: "Local proof",
@@ -57,6 +59,8 @@ export const AREA_COPY = {
     builderBefore: (city: string) => `Building in ${city}? See `,
     builderLink: (city: string) => `new construction plumbing for builders and GCs in ${city}`,
     guidesHeading: (city: string) => `Guides for ${city} homeowners`,
+    /** Phone-only row over the guides list. */
+    showGuides: (count: number) => `Show all ${count} guides`,
   },
 } as const;
 
@@ -74,6 +78,8 @@ export const SERVICE_CITY_COPY = {
   description: {
     /** Used when a landing has no hand-written section heading. */
     fallbackHeading: (city: string, state: string) => `Plumbing services in ${city}, ${state}`,
+    /** Phone-only row that opens the rest of the description. */
+    more: "Read more",
   },
   features: {
     heading: (city: string) => `What We Offer in ${city}`,
@@ -101,6 +107,8 @@ export const SERVICE_CITY_COPY = {
     areaLink: (city: string, state: string) => `all plumbing services in ${city}, ${state}`,
     or: " or ",
     hubLink: (hubTitle: string) => `${hubTitle} across Southwest Florida`,
+    /** Phone-only row over the same service in other cities. */
+    showCities: (count: number) => `Show all ${count} cities`,
   },
 } as const;
 
