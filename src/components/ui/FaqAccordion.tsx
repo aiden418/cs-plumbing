@@ -22,7 +22,8 @@ interface FaqAccordionProps {
  * server page or inside a client component.
  */
 export default function FaqAccordion({ faqs, className, name }: FaqAccordionProps) {
-  const fallbackName = `faq${useId().replace(/[^a-zA-Z0-9_-]/g, "")}`;
+  // Any characters are fine in a name attribute.
+  const fallbackName = `faq-${useId()}`;
   const group = name ?? fallbackName;
   return (
     <div className={cn("border-b border-rule", className)}>
@@ -32,9 +33,11 @@ export default function FaqAccordion({ faqs, className, name }: FaqAccordionProp
           name={group}
           className={cn(
             "group border-t border-rule [interpolate-size:allow-keywords]",
-            "[&::details-content]:[block-size:0][&::details-content]:overflow-clip",
+            "[&::details-content]:[block-size:0] [&::details-content]:overflow-clip",
             "[&::details-content]:transition-[block-size,content-visibility] [&::details-content]:duration-250 [&::details-content]:ease-move [&::details-content]:[transition-behavior:allow-discrete]",
             "open:[&::details-content]:[block-size:auto]",
+            // The global reduced-motion rule matches elements, not this pseudo-element.
+            "motion-reduce:[&::details-content]:transition-none",
           )}
         >
           <summary

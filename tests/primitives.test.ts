@@ -80,7 +80,7 @@ test("the stepper is nav > ol with aria-current on the current step only", () =>
   const html = renderToStaticMarkup(
     createElement(Stepper, { label: "Phases", current: 1, items: [{ label: "A" }, { label: "B", href: "#b" }, { label: "C" }] }),
   );
-  assert.match(html, /^<nav aria-label="Phases"><ol/);
+  assert.match(html, /^<nav aria-label="Phases"[^>]*><ol/);
   assert.equal(html.match(/aria-current="step"/g)?.length, 1);
   assert.ok(/<a[^>]*href="#b"[^>]*aria-current="step"|<a[^>]*aria-current="step"[^>]*href="#b"/.test(html));
 });

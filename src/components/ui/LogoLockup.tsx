@@ -20,14 +20,15 @@ const heights: Record<LockupSize, string> = {
   // the header: 34 px on phones, 40 px from the nav breakpoint
   sm: "h-[34px] nav:h-10",
   md: "h-14",
-  lg: "h-[120px]",
+  // 120 px from 40rem; 80 px on phones so the lockup fits a 320 px screen
+  lg: "h-20 sm:h-[120px]",
 };
 const pixelHeight: Record<LockupSize, number> = { sm: 40, md: 56, lg: 120 };
 
 const wordSizes: Record<LockupSize, string> = {
   sm: "text-[1.0625rem] nav:text-[1.1875rem]",
-  md: "text-2xl",
-  lg: "text-[2.5rem]",
+  md: "text-xl sm:text-2xl",
+  lg: "text-xl sm:text-[2.5rem]",
 };
 
 /** "of Lee": the part of the full name after the short name. */

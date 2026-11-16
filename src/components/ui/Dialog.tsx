@@ -125,7 +125,7 @@ export default function Dialog({
         "overflow-hidden bg-canvas p-0 text-body",
         "transition-[opacity,transform,display,overlay] duration-250 ease-enter [transition-behavior:allow-discrete]",
         "backdrop:opacity-0 backdrop:transition-[opacity,display,overlay] backdrop:duration-250 backdrop:[transition-behavior:allow-discrete]",
-        "open:backdrop:opacity-100 starting:open:backdrop:opacity-0",
+        "open:backdrop:opacity-100 starting:open:backdrop:opacity-0 motion-reduce:backdrop:transition-none",
         panel[variant],
         className,
       )}

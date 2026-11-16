@@ -159,7 +159,10 @@ export default function Stepper({
   }
 
   return (
-    <nav aria-label={label} className={className}>
+    // contain: inline-size keeps the row's width out of the parent's
+    // min-content, so a stepper inside a grid or flex cell scrolls instead of
+    // widening the page.
+    <nav aria-label={label} className={cn("[contain:inline-size]", className)}>
       <ol className="flex snap-x snap-proximity overflow-x-auto overscroll-x-contain pb-2 [scrollbar-width:thin]">
         {items.map((item, i) => {
           const last = i === items.length - 1;
@@ -169,7 +172,7 @@ export default function Stepper({
               key={item.id ?? i}
               id={item.id}
               className={cn(
-                "relative min-w-[11rem] flex-1 shrink-0 snap-start pr-6",
+                "relative min-w-[8.5rem] flex-1 shrink-0 snap-start pr-6 last:pr-0",
                 // On a phone the step in progress starts in view (where the
                 // browser supports scroll-initial-target).
                 state === "current" && "[scroll-initial-target:nearest]",
