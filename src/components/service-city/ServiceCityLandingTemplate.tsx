@@ -1,22 +1,31 @@
-"use client";
-
-import { Check, Phone, Calendar, MapPin, Shield, Star, Award, ArrowRight } from "lucide-react";
-import Container from "@/components/ui/Container";
-import Button from "@/components/ui/Button";
-import PageHero from "@/components/ui/PageHero";
-import { serviceHeroImage } from "@/lib/hero-images";
-import FaqAccordion from "@/components/ui/FaqAccordion";
-import ScrollReveal from "@/components/animations/ScrollReveal";
-import StaggerChildren, {
-  staggerItem,
-} from "@/components/animations/StaggerChildren";
-import { motion } from "framer-motion";
 import Link from "next/link";
+import Button from "@/components/ui/Button";
+import Container from "@/components/ui/Container";
+import Eyebrow from "@/components/ui/Eyebrow";
+import FaqAccordion from "@/components/ui/FaqAccordion";
+import PageHero from "@/components/ui/PageHero";
+import Reveal from "@/components/ui/Reveal";
+import Section from "@/components/ui/Section";
+import { Calendar, MapPin, Phone } from "@/components/ui/icons";
+import { LinkGrid } from "@/components/links/LinkGrid";
+import NeighborhoodList from "@/components/areas/NeighborhoodList";
+import { SERVICE_CITY_COPY, countyLabel } from "@/content/areas";
 import { BUSINESS } from "@/lib/business";
+import { SERVICE_AREAS_BY_COUNTY } from "@/lib/constants";
+import { areaForCity } from "@/lib/internal-links";
+import { picture } from "@/lib/media";
 import type { ServiceCityLanding } from "@/lib/types";
 
-const TRUST_ICONS = [Shield, Award, Star, Check];
+const copy = SERVICE_CITY_COPY;
 
+/**
+ * A /<service>-<city> landing (pages.md, "service-city pages"): hero with the
+ * price line and trust row, the service description, what we offer, the
+ * service area with its neighborhoods, FAQ and related services. The city
+ * links, local projects, reviews and closing band follow in the page file.
+ *
+ * Server component: every sentence and link is in the HTML.
+ */
 export default function ServiceCityLandingTemplate({
   landing,
   areaHubHref,
@@ -25,212 +34,186 @@ export default function ServiceCityLandingTemplate({
   /** /areas/<slug> for this landing's city, when a hub exists. */
   areaHubHref?: string;
 }) {
+  // The city's header photograph (a real C&S job there), else type-led.
+  const area = areaForCity(landing.city);
+  const frame = area ? picture(`area.header.${area.slug}`) : null;
+  const county = countyLabel(landing.city, SERVICE_AREAS_BY_COUNTY);
+  const paragraphs = landing.serviceDescription.split("\n\n");
+
   return (
     <>
-      {/* Hero — Above the Fold */}
       <PageHero
-        size="sm"
-        image={serviceHeroImage(landing.serviceSlug, landing.image)}
+        layout={frame ? "split" : "type-led"}
+        frame={frame}
         overline={`${landing.city}, ${landing.state}`}
-        overlineIcon={<MapPin className="w-3.5 h-3.5" />}
+        overlineIcon={<MapPin />}
         title={landing.h1}
         description={landing.heroSubtext}
         actions={
           <>
-            <Button
-              href={BUSINESS.phoneHref}
-              variant="gold"
-              size="lg"
-              icon={<Phone className="w-5 h-5" />}
-            >
-              Call Now — {BUSINESS.phone}
+            <Button href={BUSINESS.phoneHref} size="lg" icon={<Phone className="size-5" />}>
+              {copy.hero.call} {BUSINESS.phone}
             </Button>
-            <Button
-              href="/booking"
-              variant="outline-light"
-              size="lg"
-              icon={<Calendar className="w-5 h-5" />}
-            >
-              Book Online
+            <Button href="/booking" variant="secondary" size="lg" icon={<Calendar className="size-5" />}>
+              {copy.hero.book}
             </Button>
           </>
         }
       >
-        {landing.priceRange && (
-          <p className="mt-5 text-sm text-white/60">
-            Typical price range:{" "}
-            <span className="text-white font-semibold">
-              {landing.priceRange}
-            </span>
+        <div className="mt-8 border-t border-rule pt-5">
+          {landing.priceRange && (
+            <p className="text-body">
+              {copy.hero.priceLabel}{" "}
+              <span className="font-semibold text-fg tabular-nums">{landing.priceRange}</span>
+            </p>
+          )}
+          <p className="mt-2 text-sm text-muted">
+            {copy.hero.servingPrefix} {landing.city}
+            {`${copy.hero.since}${BUSINESS.license}`}
           </p>
-        )}
-        <p className="mt-4 text-xs text-white/40">
-          Serving {landing.city}{` since 1998 · License #${BUSINESS.license}`}
-        </p>
+          {county && <p className="label-tech mt-5 text-accent">{county}</p>}
+        </div>
       </PageHero>
 
-      {/* Trust Block */}
-      <section className="py-6 sm:py-8 border-b border-gray-100">
+      {/* Trust row */}
+      <Section tone="white" spacing="none" className="border-b border-rule">
         <Container>
-          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-8">
-            {landing.trustBadges.map((badge, i) => {
-              const Icon = TRUST_ICONS[i % TRUST_ICONS.length];
-              return (
-                <div
-                  key={badge}
-                  className="flex items-center gap-2 text-sm text-gray-600"
-                >
-                  <Icon className="w-4 h-4 text-primary flex-shrink-0" />
-                  <span>{badge}</span>
-                </div>
-              );
-            })}
-          </div>
+          <ul className="grid grid-cols-1 sm:grid-cols-2 lg:flex lg:flex-wrap lg:justify-between lg:gap-x-8">
+            {landing.trustBadges.map((badge) => (
+              <li
+                key={badge}
+                className="flex items-center gap-3 border-rule py-4 text-[0.9375rem] font-medium text-fg max-sm:border-b max-sm:last:border-b-0"
+              >
+                <span className="joint text-accent" aria-hidden="true" />
+                {badge}
+              </li>
+            ))}
+          </ul>
         </Container>
-      </section>
+      </Section>
 
-      {/* Service Description — Main SEO Content Block */}
-      <section className="py-16 sm:py-24 lg:py-32">
+      {/* Service description: the main content block */}
+      <Section tone="white" labelledBy="service-city-description-heading">
         <Container>
-          <ScrollReveal>
-            <div className="max-w-3xl mx-auto">
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-6 sm:mb-8">
-                {landing.sectionHeading ??
-                  `Plumbing services in ${landing.city}, ${landing.state}`}
-              </h2>
-              <div className="prose prose-gray max-w-none">
-                {landing.serviceDescription.split("\n\n").map((paragraph, i) => (
-                  <p
-                    key={i}
-                    className="text-gray-500 text-sm sm:text-base leading-relaxed mb-4 sm:mb-6"
-                  >
-                    {paragraph}
-                  </p>
-                ))}
+          <div className="grid grid-cols-1 gap-y-8 lg:grid-cols-12 lg:gap-x-8">
+            <div className="lg:col-span-5">
+              {/* The heading stays in view beside the long description. */}
+              <div className="lg:sticky lg:top-[calc(var(--nav-h)+2.5rem)]">
+                <Eyebrow className="mb-4">{copy.description.eyebrow}</Eyebrow>
+                <h2 id="service-city-description-heading" className="text-display-md text-fg">
+                  {landing.sectionHeading ??
+                    copy.description.fallbackHeading(landing.city, landing.state)}
+                </h2>
               </div>
             </div>
-          </ScrollReveal>
+            <Reveal className="lg:col-span-7 lg:pt-10">
+              <div className="max-w-[68ch] space-y-5 text-body">
+                {paragraphs.map((paragraph, i) => (
+                  <p key={i}>{paragraph}</p>
+                ))}
+              </div>
+            </Reveal>
+          </div>
         </Container>
-      </section>
+      </Section>
 
-      {/* Features Grid */}
-      <section className="py-16 sm:py-24 lg:py-32 bg-[#F5F5F7]">
+      {/* What we offer */}
+      <Section tone="shell" labelledBy="service-city-features-heading">
         <Container>
-          <ScrollReveal>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-8 sm:mb-12">
-              What We Offer in {landing.city}
+          <Reveal className="mb-10 max-w-2xl sm:mb-12">
+            <Eyebrow className="mb-4">{copy.features.eyebrow}</Eyebrow>
+            <h2 id="service-city-features-heading" className="text-display-md text-fg">
+              {copy.features.heading(landing.city)}
             </h2>
-          </ScrollReveal>
-
-          <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-            {landing.features.map((feature) => (
-              <motion.div
+          </Reveal>
+          <ol className="grid grid-cols-1 gap-x-10 md:grid-cols-2">
+            {landing.features.map((feature, i) => (
+              <li
                 key={feature.title}
-                variants={staggerItem}
-                className="bg-white rounded-2xl border border-gray-200 p-5 sm:p-6 lg:p-8 card-lift card-lift-hover-subtle hover:border-primary/30"
+                className="-mt-px grid grid-cols-[2.75rem_minmax(0,1fr)] border-y border-rule py-6 sm:grid-cols-[3.5rem_minmax(0,1fr)]"
               >
-                <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-500 text-xs sm:text-sm leading-relaxed">
-                  {feature.description}
-                </p>
-              </motion.div>
+                <span className="label-tech pt-1 text-accent tabular-nums" aria-hidden="true">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <div>
+                  <h3 className="text-lg leading-snug font-semibold text-fg">{feature.title}</h3>
+                  <p className="mt-2 max-w-[60ch] text-[0.9375rem] leading-relaxed text-body">
+                    {feature.description}
+                  </p>
+                </div>
+              </li>
             ))}
-          </StaggerChildren>
+          </ol>
         </Container>
-      </section>
+      </Section>
 
-      {/* Neighborhoods / Service Area */}
-      <section className="py-16 sm:py-24 lg:py-32">
+      {/* Service area and neighborhoods */}
+      <Section tone="white" labelledBy="service-city-area-heading">
         <Container>
-          <ScrollReveal>
-            <div className="max-w-3xl mx-auto">
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-6 sm:mb-8">
-                Serving All of {landing.city}, {landing.state}
+          <div className="grid grid-cols-1 gap-y-10 lg:grid-cols-12 lg:gap-x-8">
+            <Reveal className="lg:col-span-7">
+              <Eyebrow className="mb-4">{copy.area.eyebrow}</Eyebrow>
+              <h2 id="service-city-area-heading" className="text-display-md text-fg">
+                {copy.area.heading(landing.city, landing.state)}
               </h2>
               {/* One sentence instead of the same two-line boilerplate on all
                   54 landings, plus a real link up to the city hub. */}
-              <p className="text-gray-500 text-sm sm:text-base leading-relaxed mb-8">
-                Licensed plumbers covering all of {landing.city}, {landing.state},
-                including every neighborhood listed below.
+              <p className="mt-6 max-w-[56ch] text-lead text-body">
+                {copy.area.sentence(landing.city, landing.state)}
                 {areaHubHref && (
                   <>
                     {" "}
                     <Link
                       href={areaHubHref}
-                      className="font-semibold text-primary hover:underline"
+                      className="font-semibold text-link underline underline-offset-[0.2em] decoration-1 hover:decoration-2"
                     >
-                      See everything we do in {landing.city}
+                      {copy.area.hubLink(landing.city)}
                     </Link>
                     .
                   </>
                 )}
               </p>
-
-              {landing.neighborhoods.length > 0 && (
-                <>
-                  <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-4">
-                    Neighborhoods We Serve in {landing.city}
-                  </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {landing.neighborhoods.map((neighborhood) => (
-                      <span
-                        key={neighborhood}
-                        className="px-3 py-1.5 bg-[#F5F5F7] rounded-full text-xs sm:text-sm text-gray-600 border border-gray-200"
-                      >
-                        {neighborhood}
-                      </span>
-                    ))}
-                  </div>
-                </>
-              )}
-            </div>
-          </ScrollReveal>
+            </Reveal>
+            {landing.neighborhoods.length > 0 && (
+              <Reveal className="lg:col-span-12">
+                <NeighborhoodList
+                  heading={copy.area.neighborhoodsHeading(landing.city)}
+                  names={landing.neighborhoods}
+                  columns={4}
+                />
+              </Reveal>
+            )}
+          </div>
         </Container>
-      </section>
+      </Section>
 
-      {/* FAQ Accordion */}
-      <section className="py-16 sm:py-24 lg:py-32 bg-[#F5F5F7]">
+      {/* FAQ */}
+      <Section tone="shell" labelledBy="service-city-faq-heading">
         <Container>
-          <ScrollReveal>
-            <div className="max-w-3xl mx-auto">
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-8 sm:mb-12 text-center">
-                Frequently Asked Questions
+          <div className="grid grid-cols-1 gap-y-10 lg:grid-cols-12 lg:gap-x-8">
+            <Reveal className="lg:col-span-4">
+              <Eyebrow className="mb-4">{copy.faq.eyebrow}</Eyebrow>
+              <h2 id="service-city-faq-heading" className="text-display-md text-fg">
+                {copy.faq.heading}
               </h2>
-              <FaqAccordion faqs={landing.faqs} />
+            </Reveal>
+            <div className="lg:col-span-8">
+              <FaqAccordion faqs={landing.faqs} name={`faq-${landing.slug}`} />
             </div>
-          </ScrollReveal>
+          </div>
         </Container>
-      </section>
+      </Section>
 
-      {/* Related Pages */}
+      {/* Related pages */}
       {landing.relatedPages.length > 0 && (
-        <section className="py-16 sm:py-24 lg:py-32">
+        <Section tone="white" spacing="sm" labelledBy="service-city-related-heading">
           <Container>
-            <ScrollReveal>
-              <div className="max-w-3xl mx-auto">
-                <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6">
-                  Related Services
-                </h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-                  {landing.relatedPages.map((page) => (
-                    <a
-                      key={page.href}
-                      href={page.href}
-                      className="flex items-center justify-between gap-3 bg-[#F5F5F7] rounded-xl border border-gray-200 p-4 hover:border-primary/30 hover:shadow-sm transition-all duration-300 group"
-                    >
-                      <span className="text-sm font-medium text-gray-900 group-hover:text-primary transition-colors">
-                        {page.label}
-                      </span>
-                      <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-primary transition-colors flex-shrink-0" />
-                    </a>
-                  ))}
-                </div>
-              </div>
-            </ScrollReveal>
+            <h2 id="service-city-related-heading" className="mb-8 text-display-sm text-fg">
+              {copy.related.heading}
+            </h2>
+            <LinkGrid links={landing.relatedPages.map((page) => ({ href: page.href, label: page.label }))} />
           </Container>
-        </section>
+        </Section>
       )}
     </>
   );

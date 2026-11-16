@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import PageTransition from "@/components/layout/PageTransition";
 import ServiceCityLandingTemplate from "@/components/service-city/ServiceCityLandingTemplate";
 import CityServiceLinks from "@/components/service-city/CityServiceLinks";
 import ServiceCityJsonLd from "@/components/seo/ServiceCityJsonLd";
@@ -60,7 +59,7 @@ export default async function Page({
   const area = areaForCity(landing.city);
 
   return (
-    <PageTransition>
+    <>
       <ServiceCityJsonLd landing={landing} />
       <FaqJsonLd faqs={landing.faqs} />
       <BreadcrumbJsonLd
@@ -86,6 +85,6 @@ export default async function Page({
       />
       <GoogleReviews />
       <CTASection />
-    </PageTransition>
+    </>
   );
 }
