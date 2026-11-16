@@ -7,14 +7,17 @@ import { family } from "@/content/home";
 import { ArrowLink, HomeHeading } from "./HomeHeading";
 
 /**
- * Why C&S, on shell: the family photograph beside a short list of six
- * reasons in two columns (on phones the titles; each description stays in
- * the HTML and is shown from 768 px), and the link to
- * the story. The early-2000s job-site inset joins the photograph from 1024 px.
+ * Why C&S, on shell: the family portrait, a short list of six reasons in two
+ * columns (on phones the titles; each description stays in the HTML and is
+ * shown from 768 px), and the link to the story.
+ *
+ * The portrait is always shown whole, in its own 4:5 shape: it is a picture
+ * of two people, and any wider frame cuts through their faces. On phones it
+ * sits under the heading; from 640 px beside the heading; from 1024 px the
+ * heading runs across the top with the portrait and the list side by side.
  */
 export default function FamilyStory() {
-  const main = picture("home.family");
-  const inset = picture("home.family.inset");
+  const portrait = picture("home.family");
   const r = family.reasons;
   const reasons = [
     r.family,
@@ -31,30 +34,22 @@ export default function FamilyStory() {
   return (
     <section data-tone="shell" aria-labelledby="home-family-title" className="relative bg-canvas py-10 text-body md:py-14 lg:py-20">
       <Container>
-        <div className="grid grid-cols-1 gap-y-8 lg:grid-cols-12 lg:gap-x-12">
-          <div className="lg:col-span-5">
-            <HomeHeading id="home-family-title" eyebrow={family.overline} title={family.title} subtitle={family.subtitle} subtitleHidden="phone" />
-            {main && (
-              <div className="relative mt-8 max-md:hidden lg:mt-10 lg:mr-10 lg:mb-10">
-                <Frame
-                  media={main}
-                  aspect="16/9"
-                  sizes="(min-width: 80rem) 460px, (min-width: 64rem) 36vw, 92vw"
-                  className="max-md:aspect-[2/1] lg:aspect-[4/3]"
-                />
-                {inset && (
-                  <Frame
-                    media={inset}
-                    aspect="3/2"
-                    sizes="220px"
-                    className="absolute -right-10 -bottom-10 w-[52%] rounded-[calc(var(--radius-frame)+6px)] border-[6px] border-canvas max-lg:hidden"
-                  />
-                )}
-              </div>
-            )}
-          </div>
-
-          <div className="lg:col-span-7 lg:pt-2">
+        <div className="grid grid-cols-1 gap-y-8 sm:grid-cols-12 sm:items-center sm:gap-x-8 lg:items-start lg:gap-x-12 lg:gap-y-10">
+          <HomeHeading
+            id="home-family-title"
+            eyebrow={family.overline}
+            title={family.title}
+            subtitle={family.subtitle}
+            subtitleHidden="phone"
+            className={portrait ? "sm:col-span-7 sm:col-start-6 sm:row-start-1 lg:col-span-12 lg:col-start-1" : "sm:col-span-12"}
+          />
+          <Frame
+            media={portrait}
+            aspect="4/5"
+            sizes="(min-width: 80rem) 465px, (min-width: 40rem) 38vw, min(92vw, 416px)"
+            className="max-w-[26rem] sm:col-span-5 sm:col-start-1 sm:row-start-1 sm:max-w-none lg:row-start-2"
+          />
+          <div className={portrait ? "sm:col-span-12 lg:col-span-7 lg:col-start-6 lg:row-start-2" : "sm:col-span-12"}>
             <ul className="grid grid-cols-2 gap-x-4 md:gap-x-10">
               {reasons.map((reason) => (
                 <li key={reason.title} className="border-t border-rule py-3 md:py-5">

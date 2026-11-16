@@ -107,12 +107,7 @@
     "home.family": {
       "image": "/images/team/sam-and-aiden.jpg",
       "alt": "Sam Pellechio Jr. with a young Aiden — the family trade passed down by hand",
-      "position": "50% 50%"
-    },
-    "home.family.inset": {
-      "image": "/images/history/sam-working-2002.jpg",
-      "alt": "Sam Pellechio Jr. running underground plumbing on a job site in the early 2000s",
-      "position": "50% 50%"
+      "position": "50% 15%"
     },
     "about.lead": {
       "image": "/images/gallery/aerial-waterfront-newbuild.jpg",
