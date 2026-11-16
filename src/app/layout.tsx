@@ -1,5 +1,5 @@
-import type { Metadata } from "next";
-import { Inter, Montserrat } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Archivo, Inter, Montserrat } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -11,19 +11,47 @@ import OpenAIPixel from "@/components/analytics/OpenAIPixel";
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
 import SmoothScrollProvider from "@/components/providers/SmoothScrollProvider";
 
+// Font budget: at most 100 KB of fonts preloaded. Archivo (the display face,
+// with its width axis) is the one preloaded file. Its fallback metrics are
+// hand-tuned in globals.css ("Archivo Fallback", measured by
+// scripts/fonts/measure-fallback.mjs), so Next's automatic fallback is off.
+// Turbopack in Next 16.4 ignores `adjustFontFallback: false` for Google fonts
+// and still writes its own "Archivo Fallback"; naming our family in `fallback`
+// is what actually stops it, and puts the family right after Archivo.
+const archivo = Archivo({
+  variable: "--font-archivo",
+  subsets: ["latin"],
+  axes: ["wdth"],
+  display: "swap",
+  fallback: ["Archivo Fallback"],
+  adjustFontFallback: false,
+});
+
+// Reading face. Not preloaded: Next's metric-matched "Inter Fallback" holds
+// the layout until it arrives.
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
   display: "swap",
+  preload: false,
 });
 
+// Only the printed builder documents and the Terms still use Montserrat
+// (.print-doc / .terms-doc in globals.css). Not preloaded, so no other page
+// downloads it.
 const montserrat = Montserrat({
   variable: "--font-montserrat",
   subsets: ["latin"],
   // 800 dropped — nothing uses extrabold; one fewer font file on first load
   weight: ["700", "900"],
   display: "swap",
+  preload: false,
 });
+
+export const viewport: Viewport = {
+  viewportFit: "cover",
+  themeColor: "#0A1730",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.csplumbinglee.com"),
@@ -101,11 +129,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${inter.variable} ${archivo.variable} ${montserrat.variable}`}>
       <head>
         <JsonLd />
       </head>
-      <body className={`${inter.variable} ${montserrat.variable} antialiased`}>
+      <body className="antialiased">
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:bg-primary focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:font-semibold"
