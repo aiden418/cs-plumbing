@@ -1,42 +1,21 @@
-import { cn } from "@/lib/utils";
 import { type ReactNode } from "react";
+import Section from "@/components/ui/Section";
 
 interface NavySectionProps {
-  /** Ambient blurred orbs — keep max 2 navy surfaces per viewport for GPU cost */
+  /** Accepted for pages not yet rebuilt and ignored: the design has no glow orbs. */
   orbs?: boolean;
+  /** "lg" = the full chapter spacing, "md" (default) = the smaller one. */
   padding?: "md" | "lg";
   id?: string;
   className?: string;
   children: ReactNode;
 }
 
-/**
- * Mid-page premium band in the About-page navy treatment. Use at most one
- * per page (plus the PageHero) so the showpiece look stays special.
- */
-export default function NavySection({
-  orbs = true,
-  padding = "md",
-  id,
-  className,
-  children,
-}: NavySectionProps) {
+/** A navy chapter. At most one per page. A thin wrapper around Section. */
+export default function NavySection({ padding = "md", id, className, children }: NavySectionProps) {
   return (
-    <section
-      id={id}
-      className={cn(
-        "relative overflow-hidden bg-navy",
-        padding === "lg" ? "section-py" : "py-16 sm:py-24",
-        className
-      )}
-    >
-      {orbs && (
-        <>
-          <div className="pointer-events-none absolute -top-24 left-1/4 h-96 w-96 -translate-x-1/2 rounded-full bg-primary/20 blur-[120px]" />
-          <div className="pointer-events-none absolute bottom-0 right-0 h-64 w-64 rounded-full bg-gold/10 blur-[100px]" />
-        </>
-      )}
-      <div className="relative">{children}</div>
-    </section>
+    <Section tone="navy" spacing={padding === "lg" ? "default" : "sm"} id={id} className={className}>
+      {children}
+    </Section>
   );
 }

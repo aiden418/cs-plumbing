@@ -10,5 +10,10 @@
       }
     }
   },
-  "crops": {}
+  "crops": {
+    "logo.emblem": {
+      "image": "/images/logos/logo-new.png",
+      "box": { "left": 0, "top": 53, "width": 2033, "height": 1643 }
+    }
+  }
 }

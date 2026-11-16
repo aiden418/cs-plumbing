@@ -1,27 +1,23 @@
-"use client";
-
-import { motion } from "framer-motion";
 import { type ReactNode } from "react";
+import Reveal from "@/components/ui/Reveal";
 
 interface StaggerChildrenProps {
   children: ReactNode;
+  /** Accepted and ignored: the group reveals as one block. */
   staggerDelay?: number;
+  /** Seconds before the group reveals once it scrolls in. */
   delay?: number;
   className?: string;
+  /** Accepted and ignored. */
   once?: boolean;
 }
 
-const container = (staggerDelay: number, delay: number) => ({
-  hidden: { opacity: 1 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: staggerDelay,
-      delayChildren: delay,
-    },
-  },
-});
-
+/**
+ * Legacy item variants. Still imported by pages not yet rebuilt, which pass
+ * them to their own motion elements; outside a StaggerChildren motion parent
+ * those elements simply render in place. Kept as a plain object until its
+ * last importer is gone.
+ */
 export const staggerItem = {
   hidden: { opacity: 0, y: 40 },
   visible: {
@@ -34,22 +30,15 @@ export const staggerItem = {
   },
 };
 
-export default function StaggerChildren({
-  children,
-  staggerDelay = 0.1,
-  delay = 0,
-  className,
-  once = true,
-}: StaggerChildrenProps) {
+/**
+ * Legacy wrapper: the group reveals as one block (lists longer than six are
+ * never staggered item by item). Deleted at cleanup.
+ */
+export default function StaggerChildren({ children, delay = 0, className }: StaggerChildrenProps) {
+  const seconds = Number.isFinite(delay) && delay > 0 ? Math.min(delay, 0.6) : 0;
   return (
-    <motion.div
-      variants={container(staggerDelay, delay)}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once, margin: "-50px" }}
-      className={className}
-    >
+    <Reveal className={className} style={seconds > 0 ? { transitionDelay: `${seconds}s` } : undefined}>
       {children}
-    </motion.div>
+    </Reveal>
   );
 }
