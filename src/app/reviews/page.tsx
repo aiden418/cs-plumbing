@@ -1,14 +1,17 @@
 import type { Metadata } from "next";
-import { Star, ExternalLink, PenLine } from "lucide-react";
+import Button from "@/components/ui/Button";
 import Container from "@/components/ui/Container";
-import PageTransition from "@/components/layout/PageTransition";
 import PageHero from "@/components/ui/PageHero";
-import NavySection from "@/components/ui/NavySection";
-import ScrollReveal from "@/components/animations/ScrollReveal";
+import Reveal from "@/components/ui/Reveal";
+import Section from "@/components/ui/Section";
+import { ExternalLink, PenLine } from "@/components/ui/icons";
+import Stars from "@/components/about/Stars";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import CTASection from "@/components/home/CTASection";
-import { BUSINESS, TESTIMONIALS } from "@/lib/constants";
+import { BUSINESS } from "@/lib/business";
+import { TESTIMONIALS } from "@/lib/constants";
 import { fetchPlaceData, getWriteReviewUrl } from "@/lib/google-reviews";
+import { REVIEWS_PAGE } from "@/content/about";
 
 export const metadata: Metadata = {
   title: "Reviews — 5.0-Star Rated SWFL Plumber",
@@ -28,36 +31,6 @@ export const metadata: Metadata = {
   },
   alternates: { canonical: "https://www.csplumbinglee.com/reviews" },
 };
-
-function Stars({
-  rating,
-  className = "w-4 h-4",
-  onNavy = false,
-}: {
-  rating: number;
-  className?: string;
-  onNavy?: boolean;
-}) {
-  const filled = Math.round(rating);
-  return (
-    <span className="inline-flex gap-0.5" role="img" aria-label={`${rating} out of 5 stars`}>
-      {Array.from({ length: 5 }).map((_, i) => (
-        <Star
-          key={i}
-          className={`${className} ${
-            i < filled
-              ? onNavy
-                ? "fill-gold text-gold"
-                : "fill-amber-400 text-amber-400"
-              : onNavy
-                ? "text-white/25"
-                : "text-gray-300"
-          }`}
-        />
-      ))}
-    </span>
-  );
-}
 
 export default async function ReviewsPage() {
   const live = await fetchPlaceData(5);
@@ -84,7 +57,7 @@ export default async function ReviewsPage() {
         }));
 
   return (
-    <PageTransition>
+    <>
       <BreadcrumbJsonLd
         items={[
           { name: "Home", href: "/" },
@@ -93,111 +66,103 @@ export default async function ReviewsPage() {
       />
 
       <PageHero
+        layout="editorial"
         align="center"
-        size="lg"
-        overline="Reviews"
-        title="What Your Neighbors"
-        accent="Say"
+        overline={REVIEWS_PAGE.overline}
+        title={REVIEWS_PAGE.title}
+        accent={REVIEWS_PAGE.accent}
         actions={
           <>
-            <a
+            <Button
               href={writeReviewUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-gold text-navy text-sm sm:text-base font-bold hover:bg-gold-dark transition-colors active:scale-[0.98]"
+              variant="brass"
+              icon={<PenLine className="size-5" />}
             >
-              <PenLine className="w-4 h-4" />
-              Leave Us a Review
-            </a>
-            <a
+              {REVIEWS_PAGE.writeReviewLabel}
+            </Button>
+            <Button
               href={profileUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full border border-white/30 text-white text-sm sm:text-base font-bold hover:bg-white/10 transition-all active:scale-[0.98]"
+              variant="secondary"
+              iconRight={<ExternalLink className="size-5" />}
             >
-              Read All on Google
-              <ExternalLink className="w-4 h-4" />
-            </a>
+              {REVIEWS_PAGE.readAllLabel}
+            </Button>
           </>
         }
       >
-        <div className="mt-8 flex items-center justify-center gap-3">
-          <span className="text-4xl sm:text-5xl font-black text-white">
-            {rating.toFixed(1)}
-          </span>
-          <Stars rating={rating} className="w-6 h-6 sm:w-7 sm:h-7" onNavy />
+        <div className="mx-auto mt-10 max-w-md border-t border-rule pt-8">
+          <div className="flex items-center justify-center gap-4">
+            <span className="text-display-lg leading-none text-fg tabular-nums">{rating.toFixed(1)}</span>
+            <Stars rating={rating} className="size-6 sm:size-7" />
+          </div>
+          <p className="mt-3 text-muted">
+            {REVIEWS_PAGE.basedOnPrefix} {total}
+            {REVIEWS_PAGE.basedOnSuffix}
+          </p>
         </div>
-        <p className="mt-2 text-white/60">
-          Based on {total}+ verified Google reviews across Southwest Florida
-        </p>
       </PageHero>
 
-      {/* Review cards */}
-      <section className="py-12 sm:py-16">
+      {/* The quotes as an editorial list: hairline rows, two newspaper columns on desktop. */}
+      <Section tone="white">
         <Container>
-          <ScrollReveal>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-6xl mx-auto">
-              {cards.map((r, i) => (
-                <article
-                  key={i}
-                  className="bg-white border border-gray-200 rounded-2xl p-5 sm:p-6 shadow-sm card-lift card-lift-hover hover:border-gold/40"
-                >
-                  <div className="flex items-center justify-between mb-3">
+          <ul aria-label={REVIEWS_PAGE.listLabel} className="lg:columns-2 lg:gap-x-16">
+            {cards.map((r, i) => (
+              <li key={i} className="break-inside-avoid border-t border-rule pt-6 pb-10">
+                <figure>
+                  <div className="flex items-center justify-between gap-4">
                     <Stars rating={r.rating} />
-                    <span className="text-xs text-gray-400">{r.when}</span>
+                    <span className="text-sm text-muted">{r.when}</span>
                   </div>
-                  <p className="text-sm sm:text-base text-gray-600 leading-relaxed mb-4">
-                    &ldquo;{r.text}&rdquo;
-                  </p>
-                  <p className="text-xs sm:text-sm text-gray-500 font-semibold">
-                    — {r.name}
-                  </p>
-                </article>
-              ))}
-            </div>
-          </ScrollReveal>
-          <p className="text-center text-xs text-gray-400 mt-8">
-            Reviews shown are from our public Google Business Profile.
-          </p>
+                  <blockquote className="mt-4 max-w-[60ch] text-lg leading-relaxed text-fg">
+                    <p>&ldquo;{r.text}&rdquo;</p>
+                  </blockquote>
+                  <figcaption className="mt-4 text-sm font-semibold text-body">— {r.name}</figcaption>
+                </figure>
+              </li>
+            ))}
+          </ul>
+          <p className="border-t border-rule pt-6 text-sm text-muted">{REVIEWS_PAGE.sourceNote}</p>
         </Container>
-      </section>
+      </Section>
 
       {/* Why the rating holds up */}
-      <NavySection>
+      <Section tone="navy">
         <Container>
-          <ScrollReveal>
-            <div className="max-w-3xl mx-auto text-center">
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4 sm:mb-6">
-                A 5.0 Rating{" "}
-                <span className="text-gold-gradient">Isn&apos;t Luck</span>
-              </h2>
-              <p className="text-white/70 leading-relaxed mb-4">
-                We&apos;ve been family-owned since {BUSINESS.founded}, with{" "}
-                {BUSINESS.homesCompleted.toLocaleString()}+ homes plumbed across
-                Southwest Florida. Every job is done under two active Florida
-                Certified Plumbing Contractor licenses ({BUSINESS.license} and{" "}
-                {BUSINESS.license2}), and the person answering the phone is a
-                dispatcher at our North Fort Myers shop — not a call center.
-              </p>
-              <p className="text-white/70 leading-relaxed">
-                Had us out recently? A quick Google review helps your neighbors
-                find a plumber they can trust — and it means a lot to our family.
-              </p>
-              <a
-                href={writeReviewUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-8 inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-gold text-navy text-sm sm:text-base font-bold hover:bg-gold-dark transition-colors active:scale-[0.98]"
-              >
-                <PenLine className="w-4 h-4" />
-                Share Your Experience
-              </a>
+          <Reveal className="grid grid-cols-1 gap-y-8 lg:grid-cols-12 lg:gap-x-8">
+            <h2 className="text-display-md text-fg lg:col-span-5">
+              {REVIEWS_PAGE.ratingTitle} <span className="text-accent">{REVIEWS_PAGE.ratingAccent}</span>
+            </h2>
+            <div className="lg:col-span-6 lg:col-start-7">
+            <p className="max-w-[62ch] text-body">
+              We&apos;ve been family-owned since {BUSINESS.founded}, with{" "}
+              {BUSINESS.homesCompleted.toLocaleString()}+ homes plumbed across
+              Southwest Florida. Every job is done under two active Florida
+              Certified Plumbing Contractor licenses ({BUSINESS.license} and{" "}
+              {BUSINESS.license2}), and the person answering the phone is a
+              dispatcher at our North Fort Myers shop — not a call center.
+            </p>
+            <p className="mt-4 max-w-[62ch] text-body">{REVIEWS_PAGE.shareBody}</p>
+            <Button
+              href={writeReviewUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              variant="brass"
+              size="lg"
+              icon={<PenLine className="size-5" />}
+              className="mt-9"
+            >
+              {REVIEWS_PAGE.shareLabel}
+            </Button>
             </div>
-          </ScrollReveal>
+          </Reveal>
         </Container>
-      </NavySection>
+      </Section>
 
       <CTASection />
-    </PageTransition>
+    </>
   );
 }
