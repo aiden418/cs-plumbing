@@ -22,6 +22,8 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     // Local Claude Code worktree checkouts (git-excluded); not part of the site.
     ".claude/**",
+    // Local redesign review artifacts and helper scripts (git-ignored).
+    ".redesign/**",
   ]),
 ]);
 
