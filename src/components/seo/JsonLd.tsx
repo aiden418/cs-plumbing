@@ -7,6 +7,7 @@ import {
   areaServedCities,
 } from "@/lib/constants";
 import { fetchPlaceData } from "@/lib/google-reviews";
+import { licenseRecordFacts } from "@/lib/license-schema";
 import { BUILDER_DESK, CONSTRUCTION_PHASES } from "@/lib/builder-program";
 
 export default async function JsonLd() {
@@ -165,6 +166,7 @@ export default async function JsonLd() {
         "@type": "EducationalOccupationalCredential",
         credentialCategory: "Professional License",
         name: `Florida Certified Plumbing Contractor — ${BUSINESS.license}`,
+        ...licenseRecordFacts("company"),
         recognizedBy: {
           "@type": "GovernmentOrganization",
           name: "Florida Department of Business and Professional Regulation",
@@ -175,6 +177,7 @@ export default async function JsonLd() {
         "@type": "EducationalOccupationalCredential",
         credentialCategory: "Professional License",
         name: `Florida Certified Plumbing Contractor — ${BUSINESS.license2}`,
+        ...licenseRecordFacts("founder"),
         recognizedBy: {
           "@type": "GovernmentOrganization",
           name: "Florida Department of Business and Professional Regulation",
@@ -346,7 +349,7 @@ export default async function JsonLd() {
       {
         "@type": "CreativeWork",
         name: "Florida DBPR — Verify a Contractor License",
-        url: BUSINESS.licenseLookupUrl,
+        url: BUSINESS.licenseRecordUrl,
         description:
           `C&S Plumbing's Certified Plumbing Contractor license (${BUSINESS.license}) can be verified through the Florida DBPR.`,
       },

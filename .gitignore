@@ -70,3 +70,6 @@ photo-inbox/_done/
 
 # written at the project root by `next dev`; local only
 /AGENTS.md
+
+# page fingerprints saved by a local `npm run indexnow -- changed`
+.indexnow/

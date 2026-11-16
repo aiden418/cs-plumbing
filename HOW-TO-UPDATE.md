@@ -203,6 +203,13 @@ it: `PHONE_DIGITS` (ten digits), `PHONE_VANITY` (how customers read it) and
 page, the Google data and `/llms.txt` all follow. Then refresh the two builder
 PDFs (below). Email, address and license are in the same file.
 
+**License check:** the site says what the state's own record showed on a
+named day ("current and active through August 31, 2028, record checked
+November 16, 2026"). After a renewal, open the two record links in
+`src/lib/claims.ts` (`LICENSE_RECORD`), then update `checkedOn`, `status` and
+`activeThrough` there. The About page, the FAQ, the footer link, the Google
+data and `/llms.txt` all follow.
+
 **Hours:** in `src/lib/business.ts`, under `hours`. `open` is the line
 customers read ("Open 24 hours, 7 days a week"). `schema` just below it is the
 same hours as Google reads them (days, `opens`, `closes`). Change both together.
@@ -235,11 +242,21 @@ request. When it looks right, merge the pull request; the live site updates a
 few minutes later. Everything needs this step, even a one-word change. If an
 old photo still shows, reload with Cmd+Shift+R.
 
+**Bing is told automatically.** A few minutes after each merge, GitHub runs
+"Tell Bing what changed" (the Actions tab of the repository). It reads the
+live pages and sends Bing the addresses of the ones whose words changed.
+ChatGPT and Copilot read Bing's copy of the site, so this is what keeps their
+answers current. There is nothing to run. To send one page yourself:
+`npm run indexnow -- https://www.csplumbinglee.com/services/water-heaters`.
+Add `--dry-run` to see what would be sent without sending it.
+
 ## What not to touch
 
 `src/app/`, `src/components/`, `src/generated/`, `scripts/`, `tests/`,
-`public/videos/hero/`, `package.json`, `next.config.ts`, `vercel.json`, and any
-file whose name starts with `.env`. Do not type the phone number anywhere
+`public/videos/hero/`, `.github/`, `package.json`, `next.config.ts`,
+`vercel.json`, the one `.txt` file in `public/` with a long name of letters and
+numbers (Bing checks it before it accepts a notice), and any file whose name
+starts with `.env`. Do not type the phone number anywhere
 except `src/lib/business.ts`. `images.json` files can be read by anyone on the
 internet: no private notes in them.
 

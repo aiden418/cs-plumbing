@@ -1,0 +1,87 @@
+name: Tell Bing what changed
+
+# After each production deploy this reads the live pages, compares them with
+# the fingerprints saved by the last run, and sends Bing (through IndexNow)
+# only the pages whose content changed. ChatGPT and Copilot read Bing's copy
+# of the site, so this is what keeps their answers current.
+#
+# No secrets are used: the IndexNow key is public by design (it is the file
+# public/<key>.txt). The job can only read this repository.
+# How it works, and how to run it by hand: scripts/indexnow.mjs.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      send:
+        description: What to send to Bing
+        type: choice
+        default: changed pages
+        options:
+          - changed pages
+          - every page
+          - nothing (dry run)
+
+permissions:
+  contents: read
+  deployments: read
+  actions: read
+
+# One run at a time, in order. A run that is waiting is replaced by a newer
+# one, which compares against the same saved fingerprints, so nothing is lost.
+concurrency:
+  group: indexnow
+  cancel-in-progress: false
+
+jobs:
+  notify:
+    name: Notify Bing
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Get the page fingerprints saved by the last run
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          mkdir -p "$RUNNER_TEMP/indexnow/previous"
+          for id in $(gh run list --workflow indexnow.yml --branch main --status success --limit 30 --json databaseId --jq '.[].databaseId'); do
+            if [ "$id" = "$GITHUB_RUN_ID" ]; then continue; fi
+            if gh run download "$id" --name indexnow-state --dir "$RUNNER_TEMP/indexnow/previous" 2>/dev/null; then
+              echo "Using the fingerprints saved by run $id."
+              break
+            fi
+          done
+          if [ ! -f "$RUNNER_TEMP/indexnow/previous/state.json" ]; then
+            echo "No saved fingerprints yet: this run sends every page once."
+          fi
+
+      - name: Wait for the deploy, compare the live pages, notify Bing
+        id: notify
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          SEND: ${{ inputs.send }}
+        run: |
+          export INDEXNOW_STATE_DIR="$RUNNER_TEMP/indexnow"
+          export INDEXNOW_PREVIOUS="$RUNNER_TEMP/indexnow/previous/state.json"
+          case "$SEND" in
+            "changed pages") node scripts/indexnow.mjs changed --no-wait ;;
+            "every page") node scripts/indexnow.mjs all ;;
+            "nothing (dry run)") node scripts/indexnow.mjs changed --no-wait --dry-run ;;
+            *) node scripts/indexnow.mjs changed ;;
+          esac
+
+      - name: Save the fingerprints for the next run
+        if: steps.notify.outputs.saved == 'true'
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: indexnow-state
+          path: ${{ runner.temp }}/indexnow/state.json
+          retention-days: 90
+          if-no-files-found: error

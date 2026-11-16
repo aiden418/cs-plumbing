@@ -16,6 +16,65 @@ export const LICENSE = {
   founder: "CFC057076",
 } as const;
 
+const DBPR = "https://www.myfloridalicense.com/portalsearches/VerifyLicensee";
+
+/**
+ * What the Florida DBPR's own record showed for each license on the day it
+ * was last read. Pages state it as a dated check ("the state lists it as
+ * current and active through …, record checked …"), which stays true after
+ * the renewal date; tests/license-record.test.ts starts failing once that
+ * date has passed, so someone reads the two records again and updates this.
+ *
+ * To re-check: open each `recordUrl` (or `lookupUrl` → "Search by License
+ * Number") and copy Status, Expires and Licensure Date. The 32-character ID
+ * in a record address is the state's own id for the license; it survived the
+ * state's 2026 move from wl11.asp / LicenseDetail.asp to this portal.
+ */
+export const LICENSE_RECORD = {
+  /** The day both records were last read on myfloridalicense.com. */
+  checkedOn: "2026-11-16",
+  /** "Current, Active" on both records that day. */
+  status: "current and active",
+  /** The "Expires" date on both records (Florida renews these every two years). */
+  activeThrough: "2028-08-31",
+  /** The state's search page: choose "Search by License Number", type either number. */
+  lookupUrl: DBPR,
+  company: {
+    number: LICENSE.company,
+    /** DBA name on the record; the qualifier is Samuel Anthony Pellechio Jr. */
+    holder: "Draft Plumbing Corp",
+    licensedOn: "2023-11-07",
+    recordUrl: `${DBPR}/LicenseDetail?ID=09FEC798BD5E37B9CA24456AC823D2CB`,
+  },
+  founder: {
+    number: LICENSE.founder,
+    /** DBA name on the record; the qualifier is Samuel Anthony Pellechio Jr. */
+    holder: "C & S Plumbing of Lee Inc",
+    licensedOn: "1997-12-08",
+    recordUrl: `${DBPR}/LicenseDetail?ID=B19539BA5281E9409E5B9B7292C33574`,
+  },
+} as const;
+
+/** "August 31, 2028" from "2028-08-31", without a time zone shifting the day. */
+function longDate(iso: string): string {
+  const [year, month, day] = iso.split("-").map(Number);
+  const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  return `${months[month - 1]} ${day}, ${year}`;
+}
+
+/** The two dates as customers read them. */
+export const LICENSE_RECORD_DATES = {
+  checkedOn: longDate(LICENSE_RECORD.checkedOn),
+  activeThrough: longDate(LICENSE_RECORD.activeThrough),
+} as const;
+
+/**
+ * The dated check, ready to follow a license number in a sentence:
+ * "The state lists it as current and active through August 31, 2028 (record
+ * checked November 16, 2026)."
+ */
+export const LICENSE_STATUS_SENTENCE = `The state lists it as ${LICENSE_RECORD.status} through ${LICENSE_RECORD_DATES.activeThrough} (record checked ${LICENSE_RECORD_DATES.checkedOn}).`;
+
 /**
  * Marketing surfaces (pages, footer, FAQs, city landings) show the company
  * license only. Formal documents (Terms, prequal packet, capability

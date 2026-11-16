@@ -212,7 +212,7 @@ export default function Footer() {
               <span className="whitespace-nowrap">
                 FL Licensed:{" "}
                 <a
-                  href={BUSINESS.licenseLookupUrl}
+                  href={BUSINESS.licenseRecordUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="-my-3 inline-block py-3 font-semibold text-navy underline decoration-steel-300 underline-offset-[0.25em] hover:text-primary-dark hover:decoration-primary-dark"

@@ -19,8 +19,10 @@ export const AWARDS: Award[] = [
     program: "Best of Cape Coral Readership Awards",
     issuer: "Cape Coral Breeze",
     issuerUrl: "https://www.capecoralbreeze.com",
-    // TODO: swap in the Breeze's 2026 winners listing URL once the Digital
-    // Winners Platform entry is live — it becomes the schema citation.
+    // The C&S entry on the Breeze's 2026 winners list (seen 2026-11-16: marked
+    // Winner, in Home Improvement & Services → "Plumbing Company", which is
+    // the list's own name for the category).
+    citationUrl: "https://www.capecoralbreeze.com/promo/?pid=8792#/gallery/561913873",
     awardedOn: "2026-09-09",
     badge: "/images/awards/best-of-cape-coral-2026.png",
     badgeWidth: 2215,
