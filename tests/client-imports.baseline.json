@@ -35,12 +35,6 @@
   "src/components/home/StatsBar.tsx": [
     "src/lib/constants.ts"
   ],
-  "src/components/layout/Footer.tsx": [
-    "src/lib/constants.ts"
-  ],
-  "src/components/layout/Navbar.tsx": [
-    "src/lib/constants.ts"
-  ],
   "src/components/services/ServiceLandingTemplate.tsx": [
     "src/lib/constants.ts",
     "src/lib/landing-indexing.ts"
