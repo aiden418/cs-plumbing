@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { CLAIMS } from "@/lib/claims";
 import { perYear } from "@/lib/pricing";
 import FileUpload from "@/components/builder-portal/FileUpload";
@@ -34,6 +34,7 @@ import { BUSINESS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { trackBooking, trackEstimateRequest } from "@/lib/pixel";
 import { localIsoDate } from "@/lib/local-date";
+import useLocationSearch from "@/hooks/useLocationSearch";
 
 const serviceCategories = [
   { id: "residential", label: "Residential", icon: <Home className="w-6 h-6" /> },
@@ -115,8 +116,16 @@ export default function BookingPage() {
   });
 
   // Pre-fill from URL params: ?plan=... (Coastal), ?service=..., ?urgency=...
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
+  // The page is prerendered without its query string, so that arrives right
+  // after hydration (see useLocationSearch). It is applied once, the first
+  // time it is known, so a later change to the address bar cannot overwrite
+  // what the customer has picked since. Adjusted during render rather than
+  // in an effect, as Navbar does.
+  const search = useLocationSearch();
+  const [prefilled, setPrefilled] = useState(false);
+  if (search !== null && !prefilled) {
+    setPrefilled(true);
+    const params = new URLSearchParams(search);
     const plan = params.get("plan");
     const serviceParam = params.get("service");
     const urgencyParam = params.get("urgency");
@@ -142,7 +151,7 @@ export default function BookingPage() {
       return next;
     });
     if (urgencyParam === "emergency") setRequestType("booking");
-  }, []);
+  }
 
   const isEstimate = requestType === "estimate";
   const steps = isEstimate ? estimateSteps : bookingSteps;
