@@ -57,8 +57,8 @@ export function Panel({ group, lookup = picture }: { group: NavGroup; lookup?: (
   const columnCount = group.columns.length;
 
   return (
-    <Container size="wide">
-      <div className="grid grid-cols-12 gap-x-8 pt-8 pb-9">
+    <Container size="wide" className="max-w-none">
+      <div className="grid max-w-[84rem] grid-cols-12 gap-x-8 pt-8 pb-9">
         <div className={cn(linkSpan, "grid gap-x-8")} style={{ gridTemplateColumns: `repeat(${columnCount}, minmax(0, 1fr))` }}>
           {group.columns.map((column, i) => (
             <div key={column.title ?? i} className="min-w-0">
@@ -173,7 +173,7 @@ export default function SiteHeader() {
         </MobileNavSheet>
       }
     >
-      <Container size="wide" className="header-bar">
+      <Container size="wide" className="header-bar max-w-none">
         <LogoLockup size="sm" preload className="header-logo" />
 
         <nav aria-label="Main" className="header-nav">
