@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Fragment, type ReactNode } from "react";
+import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
@@ -7,24 +7,53 @@ import PageHero from "@/components/ui/PageHero";
 import Section, { type Tone } from "@/components/ui/Section";
 import Eyebrow from "@/components/ui/Eyebrow";
 import FaqAccordion from "@/components/ui/FaqAccordion";
-import Reveal from "@/components/ui/Reveal";
-import { ArrowRight, Phone } from "@/components/ui/icons";
-import { LinkGrid } from "@/components/links/LinkGrid";
+import { ArrowRight, Check, Phone } from "@/components/ui/icons";
 import ServiceRequestForm from "@/components/services/ServiceRequestForm";
 import JobGallery from "@/components/services/JobGallery";
 import { SERVICE_LANDINGS, AREA_LANDINGS } from "@/lib/constants";
 import { BUSINESS } from "@/lib/business";
 import { INDEXED_LANDINGS } from "@/lib/landing-indexing";
-import { picture } from "@/lib/media";
-import { SERVICE_PAGE as COPY } from "@/content/services";
+import { image, picture } from "@/lib/media";
+import type { MediaRef } from "@/lib/media-types";
+import { SERVICE_PAGE as COPY, SERVICE_PHOTO_FALLBACK } from "@/content/services";
 import type { ServiceLanding } from "@/lib/types";
 
 /* --------------------------------------------------------------------------
    Shared parts of the service pages (also used by ServiceDetail and the
    hand-built pages: commercial, residential, new construction, UEP).
+   Version 2 ("Bright and clear"): white and shell sections, plain rows with
+   a 1 px line between them, body-size text, no numbering or joints.
    -------------------------------------------------------------------------- */
 
 export type Crumb = { name: string; href: string };
+
+/**
+ * The header photograph of a service page: its named position
+ * (service.header.<slug>), else a real job photo from its own gallery
+ * (SERVICE_PHOTO_FALLBACK). Null: the plain white hero.
+ */
+export function servicePhoto(slug: string, position: "service.header" | "home.service" = "service.header"): MediaRef | null {
+  const named = picture(`${position}.${slug}`);
+  if (named) return named;
+  const fallback = SERVICE_PHOTO_FALLBACK[slug];
+  return fallback ? image(fallback.src, fallback.position ? { position: fallback.position } : {}) : null;
+}
+
+/**
+ * A long hero lead is cut after its first sentence or two (about three lines
+ * on desktop); the rest, word for word, opens the first section below.
+ */
+export function splitLead(text: string, max = 180): { lead: string; rest: string } {
+  if (text.length <= max) return { lead: text, rest: "" };
+  const sentences = text.match(/[^.!?]+[.!?]+(?:["')\]]+)?(?:\s+|$)|[^.!?]+$/g) ?? [text];
+  let lead = sentences[0];
+  let i = 1;
+  while (i < sentences.length && (lead + sentences[i]).trim().length <= max) {
+    lead += sentences[i];
+    i += 1;
+  }
+  return { lead: lead.trim(), rest: sentences.slice(i).join("").trim() };
+}
 
 /** The two hero actions: the call first (the primary action), then booking or the form. */
 export function HeroActions({ second }: { second: { label: string; href: string } }) {
@@ -51,16 +80,16 @@ export function PriceLine({
   link?: { label: string; href: string };
 }) {
   return (
-    <p className="mt-8 flex max-w-[34rem] flex-wrap items-baseline gap-x-4 gap-y-1 border-t border-rule pt-5">
-      <span className="text-sm text-muted">{label}</span>
-      <span className="text-lg font-semibold text-fg tabular-nums sm:text-xl">{range}</span>
+    <p className="mt-6 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+      <span className="text-base text-body">{label}</span>
+      <span className="text-xl font-semibold text-fg tabular-nums">{range}</span>
       {link && (
         <Link
           href={link.href}
-          className="group inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-link underline-offset-4 hover:underline"
+          className="inline-flex min-h-11 items-center gap-1.5 text-base font-semibold text-link underline underline-offset-4 hover:decoration-2"
         >
           {link.label}
-          <ArrowRight className="size-4 transition-transform duration-250 ease-settle group-hover:translate-x-0.5" />
+          <ArrowRight className="size-4" />
         </Link>
       )}
     </p>
@@ -68,9 +97,9 @@ export function PriceLine({
 }
 
 /**
- * A chapter's header and body. "wide": the header in the left third of the
- * 12-column grid and the body beside it (≥ 1024); otherwise stacked (inside
- * the column next to the request form, and on phones).
+ * A chapter's header and body. "wide": the header in the left third from lg
+ * and the body beside it; otherwise (stacked, or inside the column next to
+ * the request form, and on phones) the header sits above the body.
  */
 export function Chapter({
   id,
@@ -86,26 +115,26 @@ export function Chapter({
   title: string;
   description?: ReactNode;
   wide?: boolean;
-  /** Header above a full-width body even when wide (varies the rhythm of a long page). */
+  /** Header above a full-width body even when wide. */
   stacked?: boolean;
   children: ReactNode;
 }) {
   const wide = wideProp && !stacked;
   return (
-    <div className={cn("grid grid-cols-1 gap-y-8", wide && "lg:grid-cols-12 lg:gap-x-8", stacked && "gap-y-10")}>
-      <Reveal className={cn(wide && "lg:col-span-4", stacked && "max-w-3xl")}>
-        {overline && <Eyebrow className="mb-4">{overline}</Eyebrow>}
+    <div className={cn("grid grid-cols-1 gap-y-6 sm:gap-y-8", wide && "lg:grid-cols-12 lg:gap-x-10")}>
+      <div className={cn(wide ? "lg:col-span-4" : "max-w-3xl")}>
+        {overline && <Eyebrow className="mb-3">{overline}</Eyebrow>}
         <h2 id={id} className="text-display-md text-fg">
           {title}
         </h2>
         {description && <p className="mt-4 max-w-[48ch] text-body">{description}</p>}
-      </Reveal>
-      <div className={cn("min-w-0", wide && "lg:col-span-7 lg:col-start-6")}>{children}</div>
+      </div>
+      <div className={cn("min-w-0", wide && "lg:col-span-8")}>{children}</div>
     </div>
   );
 }
 
-/** Feature rows: number, title, one or two lines; an optional list under each. */
+/** What we offer: plain rows (title and a line or two), two columns from md where there is room. */
 export function OfferList({
   items,
   columns = 1,
@@ -115,53 +144,45 @@ export function OfferList({
   columns?: 1 | 2;
 }) {
   return (
-    <ol className={cn(columns === 2 ? "grid grid-cols-1 gap-x-8 md:grid-cols-2" : "border-b border-rule")}>
-      {items.map((item, i) => (
-        <Reveal
-          as="li"
-          key={item.title}
-          index={items.length <= 6 ? i : undefined}
-          className={cn(
-            "grid grid-cols-[2.5rem_minmax(0,1fr)] gap-x-3 border-t border-rule py-6 sm:grid-cols-[3.5rem_minmax(0,1fr)] sm:py-7",
-            columns === 2 && "-mb-px border-b",
+    <ul className={cn("grid grid-cols-1 border-b border-rule", columns === 2 && "md:grid-cols-2 md:gap-x-10")}>
+      {items.map((item) => (
+        <li key={item.title} className={cn("border-t border-rule py-5 sm:py-6", columns === 2 && "md:-mb-px md:border-b")}>
+          <h3 className="text-lg leading-snug font-semibold text-fg sm:text-xl">{item.title}</h3>
+          <p className="mt-1.5 max-w-[62ch] text-body">{item.description}</p>
+          {item.features && item.features.length > 0 && (
+            <ul className="service-checks mt-3 grid grid-cols-1 gap-x-6 gap-y-1 sm:grid-cols-2">
+              {item.features.map((feature) => (
+                <li key={feature}>
+                  <Check className="size-4 text-accent" aria-hidden="true" />
+                  {feature}
+                </li>
+              ))}
+            </ul>
           )}
-        >
-          <span className="label-tech pt-1.5 text-accent tabular-nums">{String(i + 1).padStart(2, "0")}</span>
-          <div>
-            <h3 className="text-lg leading-snug font-semibold text-fg sm:text-xl">{item.title}</h3>
-            <p className="mt-2 max-w-[62ch] text-body">{item.description}</p>
-            {item.features && item.features.length > 0 && (
-              <ul className={cn("service-tile-features mt-4 grid max-w-[44rem] gap-x-8 text-sm text-body", columns === 1 && "sm:grid-cols-2")}>
-                {item.features.map((feature) => (
-                  <li key={feature}>{feature}</li>
-                ))}
-              </ul>
-            )}
-          </div>
-        </Reveal>
+        </li>
       ))}
-    </ol>
+    </ul>
   );
 }
 
-/** "Why choose": short lines, each led by a joint, in two columns from sm. */
+/** "Why choose": one short line each with a check, in two columns from sm (three from lg when wide). */
 export function PointList({ items, columns = 2 }: { items: readonly string[]; columns?: 2 | 3 }) {
   return (
-    <Reveal
-      as="ul"
-      className={cn("service-points grid border-b border-rule sm:grid-cols-2 sm:gap-x-8", columns === 3 && "lg:grid-cols-3")}
-    >
+    <ul className={cn("service-points grid grid-cols-1 gap-x-8 sm:grid-cols-2", columns === 3 && "lg:grid-cols-3")}>
       {items.map((item) => (
-        <li key={item}>{item}</li>
+        <li key={item}>
+          <Check className="size-5 text-accent" aria-hidden="true" />
+          <span>{item}</span>
+        </li>
       ))}
-    </Reveal>
+    </ul>
   );
 }
 
 /** Adjacent sections alternate white and shell; a forced tone equal to its neighbour gets a hairline. */
 export function toneSequence(
   wants: readonly (Tone | "auto")[],
-  previous: Tone = "ink",
+  previous: Tone = "shell",
 ): { tone: Tone; divider: boolean }[] {
   let last = previous;
   return wants.map((want) => {
@@ -170,6 +191,27 @@ export function toneSequence(
     last = tone;
     return { tone, divider };
   });
+}
+
+/** Related links as compact pills that wrap (no tall rows). */
+function LinkPills({ title, links }: { title: ReactNode; links: { href: string; label: string }[] }) {
+  return (
+    <div>
+      <h3 className="mb-3 text-lg leading-snug font-semibold text-fg">{title}</h3>
+      <ul className="flex flex-wrap gap-2">
+        {links.map((link) => (
+          <li key={link.href}>
+            <Link
+              href={link.href}
+              className="inline-flex min-h-11 items-center rounded-full border border-steel-300 bg-white px-4 py-2 text-[0.9375rem] leading-snug font-medium text-navy transition-colors duration-150 hover:border-primary hover:text-primary-dark"
+            >
+              {link.label}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 }
 
 /* --------------------------------------------------------------------------
@@ -193,7 +235,8 @@ export default function ServiceLandingTemplate({
         ? "repipe"
         : "";
   const bookHref = requestService ? "#request-service" : `/booking?service=${encodeURIComponent(landing.slug)}`;
-  const frame = picture(`service.header.${landing.slug}`);
+  const frame = servicePhoto(landing.slug);
+  const { lead, rest } = splitLead(landing.description);
   const trail = breadcrumb ?? [
     { name: "Home", href: "/" },
     { name: "Services", href: "/services" },
@@ -213,255 +256,217 @@ export default function ServiceLandingTemplate({
   const hasCases = Boolean(landing.caseStudies && landing.caseStudies.length > 0);
   const hasLinks = relatedServices.length > 0 || relatedAreas.length > 0 || cityPages.length > 0;
 
-  /* The opening chapters. On the form pages they share one white section
-     with the request form beside them; elsewhere each is its own section. */
-  const opening = (wide: boolean) =>
-    [
-      hasAnswers && {
-        key: "answers",
-        node: (
-          <Chapter id="quick-answers-heading" overline={COPY.answers.overline} title={COPY.answers.title} wide={wide}>
-            <div className="border-b border-rule">
-              {landing.answerBlocks!.map((block, i) => (
-                <Reveal key={block.question} index={i} className="border-t border-rule py-6">
-                  <h3 className="text-lg leading-snug font-semibold text-fg sm:text-xl">{block.question}</h3>
-                  <p className="mt-2 max-w-[62ch] text-body">
-                    <span className="font-semibold text-fg">{block.answer}</span>
-                    {block.detail ? <span> {block.detail}</span> : null}
-                  </p>
-                </Reveal>
-              ))}
-            </div>
-          </Chapter>
-        ),
-      },
-      {
-        key: "offer",
-        node: (
-          <Chapter id="offer-heading" title={COPY.offer} wide={wide} stacked={wide}>
-            <OfferList items={landing.features} columns={wide ? 2 : 1} />
-          </Chapter>
-        ),
-      },
-      landing.highlights.length > 0 && {
-        key: "why",
-        node: (
-          <Chapter id="why-heading" title={`${COPY.whyBefore}${landing.title}`} wide={wide} stacked={wide}>
-            <PointList items={landing.highlights} columns={wide ? 3 : 2} />
-          </Chapter>
-        ),
-      },
-      hasCost && {
-        key: "cost",
-        node: (
-          <Chapter id="cost-heading" title={COPY.cost.title} description={COPY.cost.description} wide={wide}>
-            <Reveal>
-              <dl className="border-b border-rule">
-                {landing.costBreakdown!.map((item) => (
-                  <div
-                    key={item.label}
-                    className="grid grid-cols-1 gap-x-6 gap-y-1 border-t border-rule py-4 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-baseline sm:py-5"
-                  >
-                    <dt>
-                      <span className="block font-semibold text-fg">{item.label}</span>
-                      {item.note && <span className="mt-0.5 block text-sm text-muted">{item.note}</span>}
-                    </dt>
-                    <dd className="font-semibold whitespace-nowrap text-fg tabular-nums sm:text-right sm:text-lg">
-                      {item.range}
-                    </dd>
-                  </div>
-                ))}
-              </dl>
-              <div className="mt-8">
-                <Button href={bookHref} variant="primary" size="lg">
-                  {COPY.cost.cta}
-                </Button>
-              </div>
-            </Reveal>
-          </Chapter>
-        ),
-      },
-    ].filter((c): c is { key: string; node: React.JSX.Element } => Boolean(c));
+  /** The rest of the hero's lead, word for word, at the top of the first section. */
+  const restOfLead = rest ? <p className="mb-10 max-w-[60ch] text-lead text-body sm:mb-12">{rest}</p> : null;
 
-  const later: { key: string; want: Tone | "auto"; node: (tone: Tone) => ReactNode }[] = [];
-  if (hasCases) {
-    later.push({
-      key: "cases",
-      want: "auto",
-      node: () => (
-        <Container>
-          <Reveal className="mb-10 max-w-3xl sm:mb-12">
-            <h2 id="cases-heading" className="text-display-md text-fg">
-              {COPY.casesBefore}
+  const answers = hasAnswers && (
+    <FaqAccordion
+      name="quick-answers"
+      faqs={landing.answerBlocks!.map((block) => ({
+        question: block.question,
+        answer: block.detail ? `${block.answer} ${block.detail}` : block.answer,
+      }))}
+    />
+  );
+
+  const costRows = hasCost && (
+    <>
+      <dl className="border-b border-rule">
+        {landing.costBreakdown!.map((item) => (
+          <div
+            key={item.label}
+            className="grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-x-4 gap-y-0.5 border-t border-rule py-4"
+          >
+            <dt className="font-semibold text-fg">{item.label}</dt>
+            <dd className="text-right font-semibold whitespace-nowrap text-fg tabular-nums sm:text-lg">{item.range}</dd>
+            {item.note && <dd className="col-span-2 text-[0.9375rem] text-body">{item.note}</dd>}
+          </div>
+        ))}
+      </dl>
+      <div className="mt-7">
+        <Button href={bookHref} variant="primary" size="lg">
+          {COPY.cost.cta}
+        </Button>
+      </div>
+    </>
+  );
+
+  const offer = (wide: boolean) => (
+    <Chapter id="offer-heading" title={COPY.offer} wide={wide} stacked={wide}>
+      <OfferList items={landing.features} columns={wide ? 2 : 1} />
+    </Chapter>
+  );
+
+  const why = (wide: boolean) =>
+    landing.highlights.length > 0 && (
+      <Chapter id="why-heading" title={`${COPY.whyBefore}${landing.title}`} wide={wide} stacked={wide}>
+        <PointList items={landing.highlights} columns={wide ? 3 : 2} />
+      </Chapter>
+    );
+
+  const cost = (wide: boolean) =>
+    hasCost && (
+      <Chapter id="cost-heading" title={COPY.cost.title} description={COPY.cost.description} wide={wide}>
+        {costRows}
+      </Chapter>
+    );
+
+  const cases = hasCases && (
+    <div>
+      <h2 id="cases-heading" className="text-display-sm text-fg">
+        {COPY.casesBefore}
+        {landing.title}
+        {COPY.casesAfter}
+      </h2>
+      <ul className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-6">
+        {landing.caseStudies!.map((cs) => (
+          <li key={cs.title}>
+            <article className="h-full rounded-2xl border border-steel-200 bg-white p-5 sm:p-6">
+              <p className="text-xl font-semibold text-fg tabular-nums">{cs.cost}</p>
+              <h3 className="mt-2 text-lg leading-snug font-semibold text-fg">{cs.title}</h3>
+              <p className="mt-1 text-[0.9375rem] font-semibold text-accent">{cs.location}</p>
+              <p className="mt-3 text-body">{cs.summary}</p>
+            </article>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+
+  const links = hasLinks && (
+    <div className="grid grid-cols-1 gap-x-10 gap-y-8 lg:grid-cols-3">
+      {relatedServices.length > 0 && (
+        <LinkPills
+          title={COPY.related.services}
+          links={relatedServices.map((s) => ({ href: `/services/${s.slug}`, label: s.title }))}
+        />
+      )}
+      {relatedAreas.length > 0 && (
+        <LinkPills
+          title={
+            <>
               {landing.title}
-              {COPY.casesAfter}
-            </h2>
-          </Reveal>
-          <div className="grid grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-3">
-            {landing.caseStudies!.map((cs, i) => (
-              <Reveal as="article" key={cs.title} index={i} className="border-t border-rule pt-6">
-                <p className="text-lg font-semibold text-fg tabular-nums">{cs.cost}</p>
-                <h3 className="mt-3 text-lg leading-snug font-semibold text-fg">{cs.title}</h3>
-                <p className="label-tech mt-2 text-accent">{cs.location}</p>
-                <p className="mt-4 text-body">{cs.summary}</p>
-              </Reveal>
-            ))}
-          </div>
-        </Container>
-      ),
-    });
-  }
-  later.push({
-    key: "gallery",
-    want: "ink",
-    node: () => <JobGallery id={`jobs-${landing.slug}`} photos={landing.gallery} serviceTitle={landing.title} />,
-  });
-  later.push({
-    key: "faq",
-    want: "shell",
-    node: () => (
-      <Container>
-        <Chapter id="faq-heading" title={COPY.faq}>
-          <FaqAccordion faqs={landing.faqs} />
-        </Chapter>
-      </Container>
-    ),
-  });
-  if (hasLinks) {
-    later.push({
-      key: "links",
-      want: "white",
-      node: () => (
-        <Container>
-          <div className="grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2 lg:grid-cols-3">
-            {relatedServices.length > 0 && (
-              <div>
-                <h3 className="mb-4 text-lg leading-snug font-semibold text-fg">
-                  {COPY.related.services}
-                </h3>
-                <LinkGrid
-                  columns={2}
-                  className="sm:grid-cols-1"
-                  links={relatedServices.map((s) => ({ href: `/services/${s.slug}`, label: s.title }))}
-                />
-              </div>
-            )}
-            {relatedAreas.length > 0 && (
-              <div>
-                <h3 className="mb-4 text-lg leading-snug font-semibold text-fg">
-                  {landing.title}
-                  {COPY.related.areasAfter}
-                </h3>
-                <LinkGrid
-                  columns={2}
-                  className="sm:grid-cols-1"
-                  links={relatedAreas.map((a) => ({ href: `/areas/${a.slug}`, label: `${a.city}, ${a.state}` }))}
-                />
-              </div>
-            )}
-            {cityPages.length > 0 && (
-              <div>
-                <h3 className="mb-4 text-lg leading-snug font-semibold text-fg">
-                  {COPY.related.cityPages}
-                </h3>
-                <LinkGrid
-                  columns={2}
-                  className="sm:grid-cols-1"
-                  links={cityPages.map((p) => ({ href: `/${p.slug}`, label: p.h1 }))}
-                />
-              </div>
-            )}
-          </div>
-        </Container>
-      ),
-    });
-  }
+              {COPY.related.areasAfter}
+            </>
+          }
+          links={relatedAreas.map((a) => ({ href: `/areas/${a.slug}`, label: `${a.city}, ${a.state}` }))}
+        />
+      )}
+      {cityPages.length > 0 && (
+        <LinkPills title={COPY.related.cityPages} links={cityPages.map((p) => ({ href: `/${p.slug}`, label: p.h1 }))} />
+      )}
+    </div>
+  );
 
   const formTitle = `${COPY.requestForm.titleBefore}${
     landing.slug === "repiping" ? COPY.requestForm.titleRepipe : COPY.requestForm.titleWaterHeater
   }`;
 
-  const openingChapters = opening(!requestService);
-  const openingTones = toneSequence(requestService ? ["white"] : openingChapters.map(() => "auto"));
-  const laterTones = toneSequence(
-    later.map((s) => s.want),
-    openingTones[openingTones.length - 1]?.tone ?? "ink",
-  );
+  /* Sections after the hero, each white or shell, alternating. */
+  type Block = { key: string; labelledBy?: string; node: ReactNode };
+  const blocks: Block[] = [];
+
+  if (requestService) {
+    // One white section: the form beside the reading column (sticky from lg),
+    // right under the intro on phones.
+    blocks.push({
+      key: "opening",
+      node: (
+        <>
+          {restOfLead}
+          <div className="grid grid-cols-1 gap-y-14 lg:grid-cols-12 lg:gap-x-10">
+            <aside
+              id="request-service"
+              aria-labelledby="request-service-title"
+              className="scroll-mt-28 lg:col-span-5 lg:col-start-8 lg:row-start-1 xl:col-span-4 xl:col-start-9"
+            >
+              <div className="service-request-panel rounded-2xl border border-steel-200 bg-white p-5 shadow-[0_8px_30px_-12px_rgb(10_23_48/0.18)] sm:p-7">
+                <h2 id="request-service-title" className="text-display-sm text-fg">
+                  {formTitle}
+                </h2>
+                <p className="mt-2 mb-5 text-[0.9375rem] text-body">{COPY.requestForm.intro}</p>
+                <ServiceRequestForm defaultService={requestService} source="service-page" compact />
+              </div>
+            </aside>
+            <div className="min-w-0 space-y-14 sm:space-y-16 lg:col-span-7 lg:row-start-1 xl:col-span-8 xl:pr-6">
+              {hasAnswers && (
+                <Chapter id="quick-answers-heading" overline={COPY.answers.overline} title={COPY.answers.title} wide={false}>
+                  {answers}
+                </Chapter>
+              )}
+              {offer(false)}
+              {why(false)}
+              {cost(false)}
+            </div>
+          </div>
+        </>
+      ),
+    });
+  } else {
+    blocks.push({
+      key: "answers",
+      labelledBy: hasAnswers ? "quick-answers-heading" : "offer-heading",
+      node: (
+        <>
+          {restOfLead}
+          {hasAnswers ? (
+            <Chapter id="quick-answers-heading" overline={COPY.answers.overline} title={COPY.answers.title}>
+              {answers}
+            </Chapter>
+          ) : (
+            offer(true)
+          )}
+        </>
+      ),
+    });
+    if (hasAnswers) blocks.push({ key: "offer", labelledBy: "offer-heading", node: offer(true) });
+    if (landing.highlights.length > 0) blocks.push({ key: "why", labelledBy: "why-heading", node: why(true) });
+    if (hasCost) blocks.push({ key: "cost", labelledBy: "cost-heading", node: cost(true) });
+  }
+  if (hasCases) blocks.push({ key: "cases", labelledBy: "cases-heading", node: cases });
+
+  const tones = toneSequence([...blocks.map(() => "auto" as const), "auto", "auto", ...(hasLinks ? ["auto" as const] : [])]);
+  const galleryTone = tones[blocks.length].tone;
+  const faqTone = tones[blocks.length + 1].tone;
+  const linksTone = hasLinks ? tones[blocks.length + 2].tone : "white";
 
   return (
     <>
       <PageHero
-        layout={frame ? "split" : "type-led"}
+        layout="photo"
         frame={frame}
         breadcrumb={trail}
         overline={landing.title}
         title={landing.heroText}
-        description={landing.description}
-        actions={
-          <HeroActions second={{ label: requestService ? COPY.request : COPY.book, href: bookHref }} />
-        }
+        description={lead}
+        actions={<HeroActions second={{ label: requestService ? COPY.request : COPY.book, href: bookHref }} />}
       >
         {landing.priceRange && (
-          <PriceLine
-            label={COPY.typicalRange}
-            range={landing.priceRange}
-            link={{ label: COPY.getQuote, href: bookHref }}
-          />
+          <PriceLine label={COPY.typicalRange} range={landing.priceRange} link={{ label: COPY.getQuote, href: bookHref }} />
         )}
       </PageHero>
 
-      {requestService ? (
-        <Section tone="white">
-          <Container>
-            <div className="grid grid-cols-1 gap-y-section-sm lg:grid-cols-12 lg:gap-x-8">
-              {/* First in the document: right under the intro on phones, beside the column from lg. */}
-              <aside
-                id="request-service"
-                aria-labelledby="request-service-title"
-                className="scroll-mt-28 lg:col-span-5 lg:col-start-8 lg:row-start-1 xl:col-span-4 xl:col-start-9"
-              >
-                <div
-                  data-tone="shell"
-                  className="service-request-panel rounded-frame border border-rule bg-canvas p-5 text-body sm:p-8"
-                >
-                  <h2 id="request-service-title" className="text-display-sm text-fg">
-                    {formTitle}
-                  </h2>
-                  <p className="mt-3 mb-6 text-sm text-muted">{COPY.requestForm.intro}</p>
-                  <ServiceRequestForm defaultService={requestService} source="service-page" compact />
-                </div>
-              </aside>
-              <div className="min-w-0 lg:col-span-6 lg:row-start-1 xl:col-span-7">
-                {openingChapters.map((chapter, i) => (
-                  <div
-                    key={chapter.key}
-                    className={i > 0 ? "mt-section" : undefined}
-                  >
-                    {chapter.node}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </Container>
+      {blocks.map((block, i) => (
+        <Section key={block.key} tone={tones[i].tone} spacing="sm" labelledBy={block.labelledBy}>
+          <Container>{block.node}</Container>
         </Section>
-      ) : (
-        openingChapters.map((chapter, i) => (
-          <Section key={chapter.key} tone={openingTones[i].tone} divider={openingTones[i].divider}>
-            <Container>{chapter.node}</Container>
-          </Section>
-        ))
-      )}
+      ))}
 
-      {later.map((section, i) => {
-        const { tone, divider } = laterTones[i];
-        // The gallery draws its own ink section.
-        if (section.key === "gallery") return <Fragment key={section.key}>{section.node(tone)}</Fragment>;
-        return (
-          <Section key={section.key} tone={tone} divider={divider} spacing={section.key === "links" ? "sm" : "default"}>
-            {section.node(tone)}
-          </Section>
-        );
-      })}
+      <JobGallery id={`jobs-${landing.slug}`} photos={landing.gallery} serviceTitle={landing.title} tone={galleryTone} />
+
+      <Section tone={faqTone} spacing="sm" labelledBy="faq-heading">
+        <Container>
+          <Chapter id="faq-heading" title={COPY.faq}>
+            <FaqAccordion faqs={landing.faqs} />
+          </Chapter>
+        </Container>
+      </Section>
+
+      {hasLinks && (
+        <Section tone={linksTone} spacing="sm">
+          <Container>{links}</Container>
+        </Section>
+      )}
     </>
   );
 }

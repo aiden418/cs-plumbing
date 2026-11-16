@@ -6,6 +6,7 @@ import {
   HeroActions,
   OfferList,
   PointList,
+  splitLead,
   type Crumb,
 } from "@/components/services/ServiceLandingTemplate";
 import { SERVICE_PAGE as COPY } from "@/content/services";
@@ -25,9 +26,9 @@ interface ServiceDetailProps {
 }
 
 /**
- * The hand-written service pages (residential, commercial): hero, the
- * services as numbered rows with their feature lists, and "why choose" as
- * short joint-led lines.
+ * The hand-written service pages (residential, commercial): the photo hero,
+ * the services as plain rows (two columns from md) with their feature lists,
+ * and "why choose" as short checked lines.
  */
 export default function ServiceDetail({
   title,
@@ -38,20 +39,22 @@ export default function ServiceDetail({
   frame,
   breadcrumb,
 }: ServiceDetailProps) {
+  const { lead, rest } = splitLead(description);
   return (
     <>
       <PageHero
-        layout={frame ? "split" : "type-led"}
+        layout="photo"
         frame={frame}
         breadcrumb={breadcrumb}
         overline={title}
         title={heroText}
-        description={description}
+        description={lead}
         actions={<HeroActions second={{ label: COPY.book, href: "/booking" }} />}
       />
 
-      <Section tone="white" labelledBy="offer-heading">
+      <Section tone="white" spacing="sm" labelledBy="offer-heading">
         <Container>
+          {rest && <p className="mb-10 max-w-[60ch] text-lead text-body sm:mb-12">{rest}</p>}
           <Chapter id="offer-heading" title={COPY.offer} stacked>
             <OfferList items={services} columns={2} />
           </Chapter>
@@ -59,7 +62,7 @@ export default function ServiceDetail({
       </Section>
 
       {highlights && (
-        <Section tone="shell" labelledBy="why-heading">
+        <Section tone="shell" spacing="sm" labelledBy="why-heading">
           <Container>
             <Chapter id="why-heading" title={`${COPY.whyBefore}${title}`} stacked>
               <PointList items={highlights} columns={3} />

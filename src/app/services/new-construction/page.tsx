@@ -3,7 +3,7 @@ import Container from "@/components/ui/Container";
 import PageHero from "@/components/ui/PageHero";
 import Section from "@/components/ui/Section";
 import Stepper from "@/components/ui/Stepper";
-import Reveal from "@/components/ui/Reveal";
+import { Check } from "@/components/ui/icons";
 import SectionHeading from "@/components/ui/SectionHeading";
 import FaqAccordion from "@/components/ui/FaqAccordion";
 import CTASection from "@/components/home/CTASection";
@@ -115,7 +115,7 @@ export default function NewConstructionPage() {
     <>
       {/* Hero */}
       <PageHero
-        layout={frame ? "split" : "type-led"}
+        layout="photo"
         frame={frame}
         breadcrumb={[
           { name: "Home", href: "/" },
@@ -133,29 +133,29 @@ export default function NewConstructionPage() {
       <Section tone="white" spacing="sm">
         <Container>
           <div className="grid grid-cols-1 items-end gap-y-10 lg:grid-cols-12 lg:gap-x-8">
-            <Reveal className="lg:col-span-6">
+            <div className="lg:col-span-6">
               <p className="font-display text-display-xl font-bold text-fg tabular-nums [font-stretch:108%]">
                 {COPY.bigNumber}
               </p>
               <p className="mt-3 max-w-[32ch] text-lead text-body">{COPY.bigNumberCaption}</p>
-            </Reveal>
-            <Reveal as="ul" className="grid grid-cols-2 border-b border-rule lg:col-span-6">
+            </div>
+            <ul className="grid grid-cols-2 border-b border-rule lg:col-span-6">
               {advantages.map((adv, i) => (
                 <li
                   key={adv.text}
-                  className={`flex min-h-16 items-center gap-3 border-t border-rule py-4 font-semibold text-fg ${i % 2 === 1 ? "pl-5 border-l" : "pr-5"}`}
+                  className={`flex min-h-16 items-center gap-2.5 border-t border-rule py-4 font-semibold text-fg ${i % 2 === 1 ? "pl-4 border-l sm:pl-5" : "pr-4 sm:pr-5"}`}
                 >
-                  <span className="joint text-accent" aria-hidden="true" />
+                  <Check className="size-5 shrink-0 text-accent" aria-hidden="true" />
                   {adv.text}
                 </li>
               ))}
-            </Reveal>
+            </ul>
           </div>
         </Container>
       </Section>
 
       {/* Process */}
-      <Section tone="shell" labelledBy="process-heading">
+      <Section tone="shell" spacing="sm" labelledBy="process-heading">
         <Container>
           <SectionHeading
             align="left"
@@ -163,7 +163,7 @@ export default function NewConstructionPage() {
             overline={COPY.processOverline}
             title={COPY.processTitle}
           />
-          <Reveal>
+          <div>
             <Stepper
               label={COPY.processTitle}
               items={process.map((step) => ({
@@ -173,7 +173,7 @@ export default function NewConstructionPage() {
               }))}
               className="[&_li]:min-w-[15rem] lg:[&_li]:min-w-0"
             />
-          </Reveal>
+          </div>
         </Container>
       </Section>
 
@@ -189,7 +189,7 @@ export default function NewConstructionPage() {
       />
 
       {/* FAQ */}
-      <Section tone="white" labelledBy="new-construction-faq-heading">
+      <Section tone="white" spacing="sm" labelledBy="new-construction-faq-heading">
         <Container>
           <Chapter id="new-construction-faq-heading" overline={COPY.faqOverline} title={COPY.faqTitle}>
             <FaqAccordion faqs={newConstructionFaqs} />
