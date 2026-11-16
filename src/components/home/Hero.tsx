@@ -118,7 +118,7 @@ export default async function Hero() {
         <p className="home-hero-rating">
           <span className="inline-flex gap-0.5" role="img" aria-label={`${rating.toFixed(1)} out of 5 stars`}>
             {Array.from({ length: 5 }).map((_, i) => (
-              <Star key={i} strokeWidth={1.5} className="size-[1.125rem] fill-current" />
+              <Star key={i} strokeWidth={1.5} className="size-[1.125rem] fill-current text-brass-300" />
             ))}
           </span>
           <span>{`${rating.toFixed(1)} ${proof.ratingSuffix} · ${total}+ ${proof.reviewsSuffix}`}</span>

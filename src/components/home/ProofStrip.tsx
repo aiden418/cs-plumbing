@@ -44,7 +44,7 @@ export default function ProofStrip() {
           })}
         </dl>
 
-        <p className="mt-8 border-t border-rule pt-6 lg:mt-10">
+        <p className="mt-8 border-t border-rule pt-6 max-md:sr-only lg:mt-10">
           <Link href="/awards" className="group inline-flex items-center gap-4">
             <Image
               src={LATEST_AWARD.badge}

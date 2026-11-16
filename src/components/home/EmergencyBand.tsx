@@ -17,8 +17,8 @@ export default function EmergencyBand() {
       <Container>
         <div className="grid grid-cols-1 gap-y-7 lg:grid-cols-12 lg:items-center lg:gap-x-8">
           <div className="lg:col-span-7">
-            <p className="text-sm font-semibold text-emergency-300">{emergency.overline}</p>
-            <h2 className="mt-3 font-display text-[clamp(1.75rem,1.3rem+1.9vw,2.75rem)] leading-[1.08] font-bold text-white">
+            <p className="text-sm font-semibold text-emergency-300 max-md:sr-only">{emergency.overline}</p>
+            <h2 className="font-display md:mt-3 text-[clamp(1.75rem,1.3rem+1.9vw,2.75rem)] leading-[1.08] font-bold text-white">
               {emergency.title}
             </h2>
             <p className="mt-4 max-w-[52ch] text-[1.0625rem] text-white/90 lg:text-lg">
@@ -35,7 +35,7 @@ export default function EmergencyBand() {
             >
               {BUSINESS.phone}
             </Button>
-            <p className="mt-3 text-white/90">{emergency.callLine}</p>
+            <p className="mt-3 text-white/90 max-md:sr-only">{emergency.callLine}</p>
             <p className="mt-1 text-sm text-white/80 max-md:sr-only">{`${emergency.licensePrefix} · ${BUSINESS.license}`}</p>
             <p className="mt-2 flex flex-wrap items-center gap-x-2 text-white/90">
               <span>{proof.emergencyLead}</span>

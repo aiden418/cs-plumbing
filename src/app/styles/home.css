@@ -65,8 +65,9 @@
      A photograph beside a label, a title, one line and an arrow. */
   .home-door {
     display: grid;
-    grid-template-columns: 7rem minmax(0, 1fr);
+    grid-template-columns: 5.5rem minmax(0, 1fr);
     column-gap: 1rem;
+    align-items: center;
     height: 100%;
     padding: 0.75rem;
     border: 1px solid var(--color-steel-200);
@@ -225,9 +226,10 @@
     gap: 1.25rem;
   }
 
-  /* The strips' eyebrows repeat their headings: kept for search, hidden on phones. */
+  /* On phones the eyebrows (they repeat their headings) stay in the HTML but
+     are not shown, except the seasonal one on the Coastal Comeback card. */
   @media (max-width: 47.9375rem) {
-    .home-strip .home-eyebrow {
+    .home-eyebrow:not(.home-card .home-eyebrow) {
       position: absolute;
       width: 1px;
       height: 1px;
