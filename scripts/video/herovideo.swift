@@ -737,14 +737,14 @@ func runEncode(_ raw: ArraySlice<String>) async throws {
         compression[key] = quality
         rateControl = "quality"
     case .bitrate(let bitrate):
-        // VBR when the encoder has it, the plain average target otherwise.
+        // VBR when the encoder has it, the plain average target otherwise. The
+        // three properties are kVTCompressionPropertyKey_VariableBitRate,
+        // _VBVMaxBitRate and _VBVBufferDuration, public since macOS 26; they are
+        // spelled out so this file still compiles against an older SDK, where
+        // the encoder simply will not list them.
         var variableKeys: (rate: String, ceiling: String, window: String)?
         if #available(macOS 26.0, *) {
-            let keys = (
-                rate: kVTCompressionPropertyKey_VariableBitRate as String,
-                ceiling: kVTCompressionPropertyKey_VBVMaxBitRate as String,
-                window: kVTCompressionPropertyKey_VBVBufferDuration as String
-            )
+            let keys = (rate: "VariableBitRate", ceiling: "VBVMaxBitRate", window: "VBVBufferDuration")
             if [keys.rate, keys.ceiling, keys.window].allSatisfy(encoder.properties.contains) { variableKeys = keys }
         }
         if requestedRateControl == .variable, variableKeys == nil {
