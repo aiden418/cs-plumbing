@@ -132,9 +132,9 @@ export default function Hero() {
                   {hero.quoteLabel}
                 </Button>
               </div>
-              <p data-intro-in="" style={arrive(4)} className="mt-8 flex flex-wrap gap-x-3 gap-y-1 text-sm text-muted max-lg:order-6">
+              <p data-intro-in="" style={arrive(4)} className="mt-6 flex flex-wrap items-center gap-x-3 text-sm text-muted max-lg:order-6">
                 <span>{`${hero.licensePrefix} · ${BUSINESS.license}`}</span>
-                <Link href="/awards" className="whitespace-nowrap text-link underline-offset-[0.2em] hover:underline">
+                <Link href="/awards" className="inline-flex min-h-11 items-center whitespace-nowrap text-link underline-offset-[0.2em] hover:underline">
                   {LATEST_AWARD.title}
                 </Link>
               </p>

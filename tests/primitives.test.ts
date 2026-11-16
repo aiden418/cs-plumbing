@@ -10,7 +10,7 @@ import WizardProgress from "../src/components/ui/WizardProgress";
 import Reveal, { REVEAL_MAX_STAGGER, revealIndex, startsBelowFold } from "../src/components/ui/Reveal";
 import FaqAccordion from "../src/components/ui/FaqAccordion";
 import Breadcrumbs from "../src/components/ui/Breadcrumbs";
-import CTASection from "../src/components/home/CTASection";
+import { installMediaStubs } from "./fixtures/media-stubs";
 import { BUSINESS } from "../src/lib/business";
 
 // Button --------------------------------------------------------------------
@@ -142,7 +142,10 @@ test("breadcrumbs mark the last crumb as the current page", () => {
   assert.ok(html.includes('href="/services"'));
 });
 
-test("CTASection keeps its words and links", () => {
+test("CTASection keeps its words and links", async () => {
+  // The band shows a photograph from the picture system, which plain Node cannot import.
+  installMediaStubs();
+  const { default: CTASection } = await import("../src/components/home/CTASection");
   const html = renderToStaticMarkup(createElement(CTASection));
   assert.ok(html.includes("Ready to Get Started?"));
   assert.ok(html.includes("Southwest Florida&#x27;s most trusted plumbing company."));

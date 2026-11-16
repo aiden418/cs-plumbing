@@ -1,4 +1,5 @@
 import CtaBand from "@/components/ui/CtaBand";
+import { picture } from "@/lib/media";
 
 /**
  * The closing band used by 35 pages. A thin wrapper around CtaBand with the
@@ -13,6 +14,7 @@ export default function CTASection() {
       secondary={{ label: "Book a Service", href: "/booking" }}
       showHours={false}
       note="Free estimates · No hidden fees · Satisfaction guaranteed"
+      media={picture("contact.band")}
     />
   );
 }

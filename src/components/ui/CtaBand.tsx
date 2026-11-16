@@ -4,9 +4,11 @@ import { BUSINESS } from "@/lib/business";
 import Button from "@/components/ui/Button";
 import Container from "@/components/ui/Container";
 import Eyebrow from "@/components/ui/Eyebrow";
+import Frame from "@/components/ui/Frame";
 import Reveal from "@/components/ui/Reveal";
 import Section from "@/components/ui/Section";
 import { Calendar, Phone } from "@/components/ui/icons";
+import type { MediaRef } from "@/lib/media-types";
 
 export interface CtaAction {
   label: string;
@@ -30,6 +32,11 @@ interface CtaBandProps {
   /** A small line under the buttons, after the hours. */
   note?: ReactNode;
   align?: "left" | "center";
+  /**
+   * A photograph shown in a frame beside the words from lg up, where the
+   * words then align left. Phones and tablets keep the plain band.
+   */
+  media?: MediaRef | null;
   id?: string;
   headingId?: string;
   className?: string;
@@ -51,11 +58,13 @@ export default function CtaBand({
   showHours = true,
   note,
   align = "center",
+  media,
   id,
   headingId,
   className,
 }: CtaBandProps) {
   const center = align === "center";
+  const split = Boolean(media);
   const call: CtaAction = primary ?? {
     label: `Call ${BUSINESS.phone}`,
     href: BUSINESS.phoneHref,
@@ -64,14 +73,15 @@ export default function CtaBand({
   return (
     <Section tone="ink" id={id} labelledBy={headingId} className={className}>
       <Container>
-        <Reveal className={cn("max-w-3xl", center && "mx-auto text-center")}>
-          {eyebrow && <Eyebrow className={cn("mb-5", center && "justify-center")}>{eyebrow}</Eyebrow>}
+        <div className={cn(split && "lg:grid lg:grid-cols-12 lg:items-center lg:gap-x-8")}>
+        <Reveal className={cn("max-w-3xl", center && "mx-auto text-center", split && "lg:col-span-6 lg:mx-0 lg:text-left")}>
+          {eyebrow && <Eyebrow className={cn("mb-5", center && "justify-center", split && "lg:justify-start")}>{eyebrow}</Eyebrow>}
           <h2 id={headingId} className="text-display-md text-fg">
             {title}
             {accent && <> {accent}</>}
           </h2>
-          {body && <p className={cn("mt-5 max-w-[56ch] text-lead text-body", center && "mx-auto")}>{body}</p>}
-          <div className={cn("mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap", center && "sm:justify-center")}>
+          {body && <p className={cn("mt-5 max-w-[56ch] text-lead text-body", center && "mx-auto", split && "lg:mx-0")}>{body}</p>}
+          <div className={cn("mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap", center && "sm:justify-center", split && "lg:justify-start")}>
             <Button href={call.href} size="lg" icon={call.icon} className="w-full sm:w-auto">
               {call.label}
             </Button>
@@ -94,6 +104,12 @@ export default function CtaBand({
             </div>
           )}
         </Reveal>
+        {media && (
+          <div className="hidden lg:col-span-5 lg:col-start-8 lg:block">
+            <Frame media={media} aspect="3/2" sizes="(min-width: 1024px) 40vw, 1px" />
+          </div>
+        )}
+        </div>
       </Container>
     </Section>
   );
