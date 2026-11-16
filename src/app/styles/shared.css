@@ -24,11 +24,10 @@
 }
 
 @layer components {
-  /* Photo hero (PageHero layout "photo"). The words are white on a navy
-     scrim that is darkest where they sit (bottom-left) and lets the rest of
-     the photograph show; a light band at the top keeps the transparent site
-     header readable. Measured: H1 and lead at 4.5:1 or better on the lightest
-     pixel behind them (see the v2-shared report). */
+  /* Photo hero (PageHero layout "photo"). The words are white on a deep
+     blue scrim that sits where they sit and lets the rest of the photograph
+     show. Measured: every word at 4.5:1 or better on the lightest pixel
+     behind it, at phone, tablet, laptop and wide-screen widths. */
   section[data-hero-photo] {
     --tone-canvas: var(--color-ink);
     --tone-raised: var(--color-ink-700);
@@ -42,40 +41,42 @@
     color: var(--tone-body);
   }
 
-  /* Phones and tablets: the words run the full width and most of the
-     height, so the scrim is darkest at the bottom and never under 56% where
-     white text can sit (below that, a white pixel would drop under 4.5:1). */
+  /* The scrim is a deep brand blue (between ink and the darker brand blue):
+     over a sunlit job-site photograph a blue-black ink turns grey and murky,
+     this stays blue. Its density is set by measurement, not by eye: at 64%
+     or more, a pure white pixel behind white text still gives 4.5:1, so any
+     photograph dropped into a header slot stays readable.
+
+     Phones and tablets: the words run the full width and most of the height,
+     so the whole picture carries it, a little denser towards the bottom. */
   .hero-scrim {
+    --scrim: 9 38 84;
     background: linear-gradient(
       to top,
-      color-mix(in srgb, var(--color-ink) 90%, transparent) 0%,
-      color-mix(in srgb, var(--color-ink) 80%, transparent) 35%,
-      color-mix(in srgb, var(--color-ink) 68%, transparent) 62%,
-      color-mix(in srgb, var(--color-ink) 58%, transparent) 82%,
-      color-mix(in srgb, var(--color-ink) 56%, transparent) 100%
+      rgb(var(--scrim) / 0.76) 0%,
+      rgb(var(--scrim) / 0.7) 45%,
+      rgb(var(--scrim) / 0.66) 100%
     );
   }
 
-  /* Desktop: the words keep to the left half, so the scrim fades out
-     towards the right and the photograph shows there unwashed. */
+  /* Desktop: the words keep to a 46rem column on the left. The scrim is tied
+     to that column's real right edge, not to a share of the window, so it is
+     at full strength under the words at every window width (at 1024 px the
+     column is three quarters of the window) and fades out after it: there
+     the photograph shows unwashed. The site header brings its own band. */
   @media (min-width: 64rem) {
     .hero-scrim {
+      --hero-text-end: calc(max(0px, (100vw - 80rem) / 2) + var(--spacing-gutter) + 46rem);
       background:
         linear-gradient(
           to right,
-          color-mix(in srgb, var(--color-ink) 82%, transparent) 0%,
-          color-mix(in srgb, var(--color-ink) 70%, transparent) 40%,
-          color-mix(in srgb, var(--color-ink) 56%, transparent) 56%,
-          color-mix(in srgb, var(--color-ink) 18%, transparent) 74%,
-          transparent 90%
+          rgb(var(--scrim) / 0.78) 0,
+          rgb(var(--scrim) / 0.7) calc(var(--hero-text-end) - 16rem),
+          rgb(var(--scrim) / 0.66) var(--hero-text-end),
+          rgb(var(--scrim) / 0.18) calc(var(--hero-text-end) + 9rem),
+          rgb(var(--scrim) / 0) calc(var(--hero-text-end) + 18rem)
         ),
-        linear-gradient(
-          to top,
-          color-mix(in srgb, var(--color-ink) 50%, transparent) 0%,
-          color-mix(in srgb, var(--color-ink) 10%, transparent) 45%,
-          transparent 70%,
-          color-mix(in srgb, var(--color-ink) 40%, transparent) 100%
-        );
+        linear-gradient(to top, rgb(var(--scrim) / 0.3) 0%, rgb(var(--scrim) / 0) 50%);
     }
   }
 

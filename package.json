@@ -22,6 +22,7 @@
     "qa:vitals": "node scripts/qa/vitals.mjs",
     "qa:capture": "node scripts/qa/capture.mjs",
     "qa:print": "node scripts/qa/print-check.mjs",
+    "qa:hero-contrast": "node scripts/qa/hero-contrast.mjs",
     "images:manifest": "node scripts/build-image-manifest.mjs",
     "photos": "node scripts/ingest-project-photos.mjs && node scripts/ingest-gallery-photos.mjs && node scripts/build-image-manifest.mjs",
     "photos:ingest": "node scripts/ingest-project-photos.mjs",
