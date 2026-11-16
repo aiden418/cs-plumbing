@@ -6,8 +6,8 @@ import { ArrowLeft, ArrowRight } from "@/components/ui/icons";
 /**
  * The services rail below 1024 px: the server-rendered tiles in a native
  * scroll-snap row, with previous/next buttons. From 1024 px the same list is
- * a 3 × 3 grid and the buttons are hidden (CSS only). The list itself is
- * focusable, so the arrow keys scroll it natively.
+ * a 3 × 3 grid and the buttons are hidden (CSS only). Keyboard users move
+ * with the buttons, or Tab through the tiles (each scrolls into view).
  */
 export default function ServicesRail({
   children,
@@ -39,7 +39,7 @@ export default function ServicesRail({
 
   return (
     <>
-      <div ref={ref} className="home-services-rail" tabIndex={0} role="region" aria-label={label}>
+      <div ref={ref} className="home-services-rail" role="group" aria-label={label}>
         {children}
       </div>
       <div className="mt-6 flex items-center justify-between gap-4 lg:mt-10">

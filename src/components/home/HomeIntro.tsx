@@ -27,7 +27,7 @@ export default async function HomeIntro() {
   return (
     <section data-tone="ink" aria-label={proof.label} className="relative bg-canvas pb-section-sm text-body">
       <Container>
-        <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
+        <ul className="grid grid-cols-1 gap-4 md:gap-6 lg:grid-cols-2">
           {doors.map((door) => {
             const media = picture(door.slot);
             return (
