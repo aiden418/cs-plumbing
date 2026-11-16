@@ -1,76 +1,33 @@
-"use client";
-
-import { motion, type Variants } from "framer-motion";
 import { type ReactNode } from "react";
-
-type Direction = "up" | "down" | "left" | "right" | "none";
+import Reveal from "@/components/ui/Reveal";
 
 interface ScrollRevealProps {
   children: ReactNode;
-  direction?: Direction;
+  /** Accepted and ignored: every reveal is the same 16 px rise. */
+  direction?: "up" | "down" | "left" | "right" | "none";
+  /** Seconds before this element reveals once it scrolls in. */
   delay?: number;
+  /** Accepted and ignored (reveals take 450 ms). */
   duration?: number;
+  /** Accepted and ignored. */
   distance?: number;
+  /** Accepted and ignored: a reveal happens once. */
   once?: boolean;
   className?: string;
+  /** Accepted and ignored. */
   scale?: number;
 }
 
-const getVariants = (
-  direction: Direction,
-  distance: number,
-  scale: number
-): Variants => {
-  const directionMap: Record<Direction, { x: number; y: number }> = {
-    up: { x: 0, y: distance },
-    down: { x: 0, y: -distance },
-    left: { x: distance, y: 0 },
-    right: { x: -distance, y: 0 },
-    none: { x: 0, y: 0 },
-  };
-
-  const { x, y } = directionMap[direction];
-
-  return {
-    hidden: {
-      opacity: 0,
-      x,
-      y,
-      scale,
-    },
-    visible: {
-      opacity: 1,
-      x: 0,
-      y: 0,
-      scale: 1,
-    },
-  };
-};
-
-export default function ScrollReveal({
-  children,
-  direction = "up",
-  delay = 0,
-  duration = 0.7,
-  distance = 60,
-  once = true,
-  className,
-  scale = 1,
-}: ScrollRevealProps) {
+/**
+ * Legacy wrapper kept for pages not yet rebuilt: a <Reveal> with the old
+ * props. Only `delay` and `className` still have an effect. Deleted at
+ * cleanup.
+ */
+export default function ScrollReveal({ children, delay = 0, className }: ScrollRevealProps) {
+  const seconds = Number.isFinite(delay) && delay > 0 ? Math.min(delay, 0.6) : 0;
   return (
-    <motion.div
-      variants={getVariants(direction, distance, scale)}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once, margin: "-80px" }}
-      transition={{
-        duration,
-        delay,
-        ease: [0.16, 1, 0.3, 1],
-      }}
-      className={className}
-    >
+    <Reveal className={className} style={seconds > 0 ? { transitionDelay: `${seconds}s` } : undefined}>
       {children}
-    </motion.div>
+    </Reveal>
   );
 }

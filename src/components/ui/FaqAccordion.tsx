@@ -1,59 +1,58 @@
-"use client";
-
-import { useState } from "react";
-import { ChevronDown } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useId } from "react";
 import { cn } from "@/lib/utils";
 
 interface FaqAccordionProps {
   faqs: { question: string; answer: string }[];
   className?: string;
+  /**
+   * Group name for the native exclusive accordion: opening one answer closes
+   * the others with the same name. Defaults to one group per accordion.
+   */
+  name?: string;
 }
 
 /**
- * Shared FAQ accordion — extracted from ServiceLandingTemplate so the faq
- * page and all landing templates render the same interaction. FAQ JSON-LD
- * stays in the server page.tsx (FaqJsonLd); this is presentation only.
+ * Questions and answers as native <details name> rows. Every answer is in
+ * the server HTML (search engines and Find in page see it; it works without
+ * JavaScript). Hairline rows, a plus that turns into a minus. Where the
+ * browser supports ::details-content and interpolate-size the answer slides
+ * open; elsewhere it opens instantly. The FAQPage JSON-LD stays in the page.
+ *
+ * No hooks besides useId and no handlers, so it renders the same HTML from a
+ * server page or inside a client component.
  */
-export default function FaqAccordion({ faqs, className }: FaqAccordionProps) {
-  const [openFaq, setOpenFaq] = useState<number | null>(null);
-
+export default function FaqAccordion({ faqs, className, name }: FaqAccordionProps) {
+  const fallbackName = `faq${useId().replace(/[^a-zA-Z0-9_-]/g, "")}`;
+  const group = name ?? fallbackName;
   return (
-    <div className={cn("space-y-3", className)}>
+    <div className={cn("border-b border-rule", className)}>
       {faqs.map((faq, index) => (
-        <div
+        <details
           key={index}
-          className="bg-white rounded-xl border border-gray-200 overflow-hidden"
+          name={group}
+          className={cn(
+            "group border-t border-rule [interpolate-size:allow-keywords]",
+            "[&::details-content]:[block-size:0][&::details-content]:overflow-clip",
+            "[&::details-content]:transition-[block-size,content-visibility] [&::details-content]:duration-250 [&::details-content]:ease-move [&::details-content]:[transition-behavior:allow-discrete]",
+            "open:[&::details-content]:[block-size:auto]",
+          )}
         >
-          <button
-            onClick={() => setOpenFaq(openFaq === index ? null : index)}
-            className="w-full flex items-center justify-between p-4 sm:p-5 text-left hover:bg-gray-50 transition-colors"
-            aria-expanded={openFaq === index}
-          >
-            <span className="text-sm sm:text-base font-semibold text-gray-900 pr-4">
-              {faq.question}
-            </span>
-            <ChevronDown
-              className={`w-4 h-4 sm:w-5 sm:h-5 text-primary flex-shrink-0 transition-transform duration-300 ${
-                openFaq === index ? "rotate-180" : ""
-              }`}
-            />
-          </button>
-          <AnimatePresence>
-            {openFaq === index && (
-              <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <p className="px-4 sm:px-5 pb-4 sm:pb-5 text-gray-600 text-sm leading-relaxed">
-                  {faq.answer}
-                </p>
-              </motion.div>
+          <summary
+            className={cn(
+              "flex min-h-14 cursor-pointer list-none items-center justify-between gap-6 py-4 text-left [&::-webkit-details-marker]:hidden",
+              "text-[1.0625rem] leading-snug font-semibold text-fg hover:text-link",
             )}
-          </AnimatePresence>
-        </div>
+          >
+            <span>{faq.question}</span>
+            <span aria-hidden="true" className="relative size-5 shrink-0 text-accent">
+              <span className="absolute top-1/2 left-0 h-[1.5px] w-full -translate-y-1/2 bg-current" />
+              <span className="absolute top-0 left-1/2 h-full w-[1.5px] -translate-x-1/2 bg-current transition-transform duration-250 ease-move group-open:scale-y-0" />
+            </span>
+          </summary>
+          <div className="max-w-[68ch] pr-11 pb-6 text-body">
+            <p>{faq.answer}</p>
+          </div>
+        </details>
       ))}
     </div>
   );

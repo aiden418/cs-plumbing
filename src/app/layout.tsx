@@ -10,6 +10,7 @@ import MetaPixel from "@/components/analytics/MetaPixel";
 import OpenAIPixel from "@/components/analytics/OpenAIPixel";
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
 import SmoothScrollProvider from "@/components/providers/SmoothScrollProvider";
+import RevealObserver from "@/components/ui/RevealObserver";
 
 // Font budget: at most 100 KB of fonts preloaded. Archivo (the display face,
 // with its width axis) is the one preloaded file. Its fallback metrics are
@@ -146,6 +147,7 @@ export default function RootLayout({
           <Footer />
         </SmoothScrollProvider>
         <StickyMobileCTA />
+        <RevealObserver />
         <DeferredWidgets />
         <MetaPixel />
         <OpenAIPixel />

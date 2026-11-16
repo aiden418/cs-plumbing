@@ -1,91 +1,230 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { type ReactNode } from "react";
+import { ArrowRight } from "@/components/ui/icons";
+import { type AriaAttributes, type MouseEventHandler, type ReactNode } from "react";
 
-type ButtonVariant =
+/**
+ * The site's button and button-styled link (design-system.md section 4).
+ *
+ * Server-safe: no hooks and no handler of its own, so a server page can
+ * render it; a client component may pass `onClick`. Colours come from the
+ * section tone where the variant depends on it (secondary, ghost).
+ */
+
+export type ButtonVariant =
   | "primary"
   | "secondary"
   | "ghost"
   | "emergency"
-  | "gold"
+  | "brass"
   | "inverse"
+  /** Legacy name of `brass`. */
+  | "gold"
+  /** Legacy: the secondary outline on a dark band that has no data-tone. */
   | "outline-light";
 
-interface ButtonBaseProps {
+export type ButtonSize = "sm" | "md" | "lg";
+
+/** How an href is rendered: next/link for pages of this site, a plain <a> for the rest. */
+export type HrefKind = "internal" | "tel" | "sms" | "mailto" | "external" | "other";
+
+export function classifyHref(href: string): HrefKind {
+  const h = href.trim();
+  if (h.startsWith("//")) return "external";
+  if (h.startsWith("/") || h.startsWith("#") || h.startsWith("?")) return "internal";
+  const scheme = /^([a-z][a-z0-9+.-]*):/i.exec(h)?.[1]?.toLowerCase();
+  if (scheme === "tel") return "tel";
+  if (scheme === "sms") return "sms";
+  if (scheme === "mailto") return "mailto";
+  if (scheme === "http" || scheme === "https") return "external";
+  if (scheme) return "other";
+  // A relative path ("services/drain-cleaning") stays inside the site.
+  return "internal";
+}
+
+/** rel for a plain <a>: only an external link opened in a new tab gets noopener noreferrer. */
+export function relFor(kind: HrefKind, target: string | undefined, rel: string | undefined): string | undefined {
+  if (rel) return rel;
+  if (kind === "external" && target === "_blank") return "noopener noreferrer";
+  return undefined;
+}
+
+const variants: Record<ButtonVariant, string> = {
+  primary: "bg-primary text-white hover:bg-primary-dark",
+  secondary: "border border-fg bg-transparent text-fg hover:bg-fg/[0.06]",
+  ghost: "min-h-11 bg-transparent px-0 text-link underline-offset-[0.2em] hover:underline",
+  emergency: "bg-emergency text-white hover:bg-emergency-dark",
+  brass: "bg-brass text-ink hover:bg-brass-300",
+  gold: "bg-brass text-ink hover:bg-brass-300",
+  inverse: "bg-white text-ink hover:bg-shell",
+  "outline-light": "border border-white bg-transparent text-white hover:bg-white/10",
+};
+
+const sizes: Record<ButtonSize, string> = {
+  sm: "min-h-11 px-4 text-[0.9375rem]",
+  md: "min-h-12 px-5 text-base",
+  lg: "min-h-14 px-7 text-[1.0625rem]",
+};
+
+/** The class list for a button look, for the rare control that cannot use <Button>. */
+export function buttonClasses({
+  variant = "primary",
+  size = "md",
+  fullWidth = false,
+  className,
+}: {
   variant?: ButtonVariant;
-  size?: "sm" | "md" | "lg";
+  size?: ButtonSize;
+  fullWidth?: boolean;
+  className?: string;
+} = {}): string {
+  return cn(
+    "group/button relative inline-flex select-none items-center justify-center gap-2 rounded-control font-sans font-semibold leading-tight normal-case",
+    "transition-[background-color,border-color,color,transform] duration-150 ease-enter active:scale-[0.98]",
+    "aria-disabled:cursor-not-allowed aria-disabled:opacity-60 aria-disabled:active:scale-100 disabled:cursor-not-allowed disabled:opacity-60 disabled:active:scale-100",
+    "aria-busy:cursor-progress aria-busy:active:scale-100",
+    sizes[size],
+    variants[variant],
+    variant === "ghost" && "px-0",
+    "leading-tight",
+    fullWidth && "w-full",
+    className,
+  );
+}
+
+type DataAttributes = { [key: `data-${string}`]: string | number | boolean | undefined };
+
+interface ButtonBaseProps extends AriaAttributes, DataAttributes {
+  variant?: ButtonVariant;
+  size?: ButtonSize;
   children: ReactNode;
   className?: string;
+  /** Leading icon (an element from @/components/ui/icons). */
   icon?: ReactNode;
+  /** Trailing icon. A ghost button gets an arrow when none is given. */
+  iconRight?: ReactNode;
+  /** Shows a spinner, sets aria-busy and ignores clicks. The label stays. */
+  loading?: boolean;
+  disabled?: boolean;
+  fullWidth?: boolean;
+  id?: string;
+  title?: string;
 }
 
 interface ButtonAsButton extends ButtonBaseProps {
-  href?: never;
-  onClick?: () => void;
-  type?: "button" | "submit";
+  href?: undefined;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
+  type?: "button" | "submit" | "reset";
+  form?: string;
+  name?: string;
+  value?: string;
+  target?: never;
+  rel?: never;
+  download?: never;
 }
 
 interface ButtonAsLink extends ButtonBaseProps {
   href: string;
-  /* e.g. analytics on tel:/booking links */
-  onClick?: () => void;
+  /** e.g. analytics on a booking link. Never put a handler on a tel: link. */
+  onClick?: MouseEventHandler<HTMLAnchorElement>;
   type?: never;
+  target?: "_blank" | "_self";
+  rel?: string;
+  download?: boolean | string;
 }
 
-type ButtonProps = ButtonAsButton | ButtonAsLink;
+export type ButtonProps = ButtonAsButton | ButtonAsLink;
 
-const variants: Record<ButtonVariant, string> = {
-  primary:
-    "bg-primary hover:bg-primary-dark text-white shadow-sm hover:shadow-md active:scale-[0.98]",
-  secondary:
-    "bg-transparent border border-gray-300 text-gray-700 hover:border-primary hover:text-primary active:scale-[0.98]",
-  ghost:
-    "bg-transparent text-gray-500 hover:text-gray-900 hover:bg-gray-100 active:scale-[0.98]",
-  emergency:
-    "bg-emergency hover:bg-red-600 text-white shadow-sm hover:shadow-md active:scale-[0.98]",
-  /* Dark-surface variants — for use on bg-navy sections */
-  gold: "bg-gold hover:bg-gold-dark text-navy font-bold shadow-sm hover:shadow-md active:scale-[0.98]",
-  inverse: "bg-white hover:bg-white/90 text-navy font-bold active:scale-[0.98]",
-  "outline-light":
-    "bg-transparent border border-white/30 text-white hover:bg-white/10 active:scale-[0.98]",
-};
+function Spinner() {
+  return (
+    <span
+      aria-hidden="true"
+      className="size-[1.1em] shrink-0 animate-spin rounded-full border-2 border-current border-r-transparent"
+    />
+  );
+}
 
-const sizes: Record<string, string> = {
-  sm: "px-4 py-2 text-sm",
-  md: "px-5 sm:px-6 py-2.5 sm:py-3 text-sm",
-  lg: "px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 text-sm sm:text-base lg:text-lg",
-};
+export default function Button(props: ButtonProps) {
+  const {
+    variant = "primary",
+    size = "md",
+    children,
+    className,
+    icon,
+    iconRight,
+    loading = false,
+    disabled = false,
+    fullWidth = false,
+    ...rest
+  } = props;
 
-export default function Button({
-  variant = "primary",
-  size = "md",
-  children,
-  className,
-  icon,
-  href,
-  onClick,
-  ...rest
-}: ButtonProps) {
-  const classes = cn(
-    "inline-flex items-center justify-center gap-2 font-semibold rounded-xl transition-all duration-300 cursor-pointer",
-    variants[variant],
-    sizes[size],
-    className
+  const classes = buttonClasses({ variant, size, fullWidth, className });
+  const trailing =
+    iconRight ??
+    (variant === "ghost" ? (
+      <ArrowRight className="size-5 transition-transform duration-250 ease-settle group-hover/button:translate-x-0.5" />
+    ) : null);
+  const content = (
+    <>
+      {loading ? <Spinner /> : icon}
+      <span>{children}</span>
+      {trailing}
+    </>
   );
 
-  if (href) {
+  if (rest.href !== undefined) {
+    const { href, onClick, target, rel, download, ...attrs } = rest;
+    const blocked = loading || disabled;
+    if (blocked) {
+      // An inert link: no href, so it cannot be followed or focused.
+      return (
+        <a
+          {...attrs}
+          aria-disabled={loading ? undefined : "true"}
+          aria-busy={loading || undefined}
+          role="link"
+          className={classes}
+        >
+          {content}
+        </a>
+      );
+    }
+    const kind = classifyHref(href);
+    if (kind === "internal") {
+      return (
+        <Link {...attrs} href={href} onClick={onClick} target={target} rel={rel} className={classes}>
+          {content}
+        </Link>
+      );
+    }
     return (
-      <Link href={href} onClick={onClick} className={classes}>
-        {icon}
-        {children}
-      </Link>
+      <a
+        {...attrs}
+        href={href}
+        onClick={onClick}
+        target={target}
+        rel={relFor(kind, target, rel)}
+        download={download}
+        className={classes}
+      >
+        {content}
+      </a>
     );
   }
 
+  const { onClick, type = "button", ...attrs } = rest as ButtonAsButton;
   return (
-    <button className={classes} onClick={onClick} {...rest}>
-      {icon}
-      {children}
+    <button
+      {...attrs}
+      // While loading the button keeps focus and its label but does nothing:
+      // no handler, and a submit button stops submitting.
+      type={loading && type === "submit" ? "button" : type}
+      onClick={loading ? undefined : onClick}
+      disabled={disabled || undefined}
+      aria-busy={loading || undefined}
+      className={classes}
+    >
+      {content}
     </button>
   );
 }
