@@ -1,105 +1,19 @@
-import type { Service, TeamMember, Testimonial, TimelineEvent, NavLink, Stat, ServiceLanding, AreaLanding, BlogPost, CompletedProject, Partner, Award } from "./types";
+import type { Service, TeamMember, Testimonial, TimelineEvent, NavLink, Stat, ServiceLanding, AreaLanding, BlogPost, CompletedProjectText, Partner } from "./types";
 import { composed, money, perFoot, price, range, rangeInline, span, spanInline, upcharge, upchargeInline } from "./pricing";
 import { CLAIMS, EMERGENCY_CLAIMS, LICENSE, licenseLine } from "./claims";
+import { BUSINESS } from "./business";
+import { AWARDS, AWARD_TRUST_LINE, LATEST_AWARD } from "./awards";
+import { UEP_STATUS } from "./uep-status";
 
 // Prices live in ./pricing, promises in ./claims; both are re-exported so
 // existing consumers keep importing them from here.
 export { EMERGENCY_CLAIMS, LICENSE, CLAIMS };
 
-// ============================================
-// BUSINESS INFO
-// ============================================
-
-export const BUSINESS = {
-  name: "C&S Plumbing",
-  fullName: "C&S Plumbing of Lee",
-  /** Contracting entity as stated by the owner (Aiden, 2026-11-03): Draft
-   *  Plumbing Corp, d/b/a C&S Plumbing of Lee, under license CFC1432485.
-   *  The public brand stays "C&S Plumbing of Lee"; the legal name goes on
-   *  the Terms, vendor paperwork and schema. An older Sunbiz record reads
-   *  "C & S PLUMBING OF LEE, INC."; confirm the W-9 matches this value. */
-  legalName: "Draft Plumbing Corp",
-  phone: "833-PLUMB-IT",
-  phoneRaw: "8337586248",
-  // "?&body=" works on both iOS and Android
-  smsHref:
-    "sms:+18337586248?&body=Hi%20C%26S%20Plumbing%2C%20I%20need%20help%20with%20",
-  email: "office@csplumbinglee.com",
-  /** Builder inquiries and prequal document requests. */
-  builderPhone: "833-PLUMB-IT ext. 0",
-  /** Owner line on the builder documents. 833-758-6248 is the company's only
-   *  line (Aiden, 2026-11-14): no direct cell numbers on any page or PDF. */
-  ownerPhone: "833-PLUMB-IT ext. 1",
-  address: "951 Pondella Rd",
-  city: "North Fort Myers",
-  state: "FL",
-  zip: "33903",
-  founded: 1998,
-  // Owner-supplied counts (Sep 2026). New construction homes completed, and
-  // residential whole-home repipes completed — keep them separate: a repipe
-  // claim must never borrow the new-construction number.
-  homesCompleted: 9500,
-  repipesCompleted: 3500,
-  // Public hours. The business runs 24/7 (Aiden, 2026-11-13), so every hours
-  // field on the site and on listings says so. `officeHours` is the staffed
-  // office schedule: the Terms "Office." clause prints it verbatim, so changing
-  // it is a Terms revision (docs/terms-on-documents.md §3).
-  hours: {
-    open: "Open 24 hours, 7 days a week",
-    emergency: "24/7 Emergency Service",
-  },
-  officeHours: {
-    weekday: "Mon–Fri: 7:30 AM – 4:30 PM",
-    saturday: "Sat: 9:00 AM – 3:00 PM",
-    emergency: "24/7 Emergency Service",
-  },
-  tagline: "Southwest Florida's Most Trusted Plumbing Team",
-  description:
-    "Family owned and operated since 1998. From emergency repairs to new construction, C&S Plumbing delivers excellence across Southwest Florida.",
-  /** The company's current Florida Certified Plumbing Contractor license,
-   *  in place since the 2023 reorganization as part of Draft Construction
-   *  (owner-stated 2026-11-03). Goes on every contract, proposal and invoice. */
-  license: LICENSE.company,
-  /** Samuel Pellechio's original license, still active; listed alongside the
-   *  company license on formal documents. */
-  license2: LICENSE.founder,
-  // DBPR "Search by License Number" form (search=LicNbr). Direct per-license
-  // detail links aren't possible — the DBPR site is session-coupled.
-  licenseLookupUrl:
-    "https://www.myfloridalicense.com/wl11.asp?mode=2&search=LicNbr&SID=&brd=&typ=",
-  rating: 5.0,
-  // Static fallback only. Google Maps showed 5.0 across 60 reviews on
-  // 2026-10-20 while the site was still telling crawlers 46. The live number
-  // comes from the Places API when GOOGLE_PLACES_API_KEY and GOOGLE_PLACE_ID
-  // are set in Vercel — set those so this stops drifting.
-  reviewCount: 60,
-  /** Permanent link to the Google Business Profile listing (by CID), not a
-   *  Maps search. Resolves to the 951 Pondella Rd listing. */
-  googleProfileUrl: "https://maps.google.com/?cid=5498090134012520413",
-  /** Google Place ID for the same listing (public identifier, found with
-   *  Google's Place ID Finder on 2026-10-20). Drives the write-a-review deep
-   *  link and the Places API lookup; only GOOGLE_PLACES_API_KEY is secret. */
-  googlePlaceId: "ChIJjeFQMQ9D24gR3WflxNgjTUw",
-  /**
-   * Where Google Maps pins 951 Pondella Rd (checked 2026-10-20; the Census
-   * geocoder agrees to within 150 ft). The previous value, 26.6695 /
-   * -81.8726, sat 2.8 miles east in a mobile home park off E North Shore Dr.
-   */
-  geo: { latitude: 26.6663678, longitude: -81.9171809 },
-  facebookUrl: "https://www.facebook.com/csplumbingoflc",
-  instagramUrl: "https://www.instagram.com/cs_plumbing_of_lee/",
-  // Current review profile (North Fort Myers office). An older Birdeye
-  // profile for the former Cape Coral office still exists; never link it.
-  birdeyeUrl: "https://reviews.birdeye.com/cs-plumbing-of-lee-172502710968475",
-  /**
-   * One-sentence identity statement for crawlers and AI engines. Directories
-   * still carry the former Cape Coral address (one marks it "permanently
-   * closed"), so every machine-readable surface states where the business
-   * actually is and that it is open.
-   */
-  locationNote:
-    "C&S Plumbing of Lee has one office, open and operating, at 951 Pondella Rd, North Fort Myers, FL 33903. Directory listings that show an older Cape Coral street address refer to the company's former office.",
-} as const;
+// Business facts live in ./business, awards in ./awards and the Cape Coral UEP
+// status in ./uep-status: small modules that next.config.ts and client
+// components can load without the page data in this file. They are re-exported
+// so existing server code keeps importing them from here.
+export { BUSINESS, AWARDS, LATEST_AWARD, AWARD_TRUST_LINE, UEP_STATUS };
 
 // Third-party contractor ranking. This is BuildZoom's score, not a state or
 // DBPR ranking, and every surface that cites it must say so and link the
@@ -150,8 +64,10 @@ export const WARRANTY = {
 // requested by the homeowner — it is not scheduled automatically.
 export const NEW_CONSTRUCTION_BENEFITS = {
   heading: "We’re here long after construction is complete.",
-  contact: "833-PLUMB-IT ext. 0",
-  contactRaw: "8337586248",
+  contact: `${BUSINESS.phone} ext. 0`,
+  contactRaw: BUSINESS.phoneRaw,
+  /** The benefits line is the company line; links dial this href. */
+  contactHref: BUSINESS.phoneHref,
   items: [
     {
       id: "lifetime-discount",
@@ -163,86 +79,13 @@ export const NEW_CONSTRUCTION_BENEFITS = {
       id: "first-year-visit",
       title: "Complimentary first-year visit",
       appliesTo: "New homes",
-      body: "New homeowners also receive one complimentary water heater flush and whole-home plumbing inspection during their home’s first year. Call 833-PLUMB-IT ext. 0 within 12 months of home completion to request and schedule your complimentary visit.",
+      body: `New homeowners also receive one complimentary water heater flush and whole-home plumbing inspection during their home’s first year. Call ${BUSINESS.phone} ext. 0 within 12 months of home completion to request and schedule your complimentary visit.`,
     },
   ],
   /** One-paragraph version for llms.txt and print. */
   summary:
-    "Homes and commercial properties with new-construction plumbing completed by C&S qualify for a lifetime discount on future plumbing service. New homeowners also receive one complimentary water heater flush and whole-home plumbing inspection during their home’s first year; the homeowner calls 833-PLUMB-IT ext. 0 within 12 months of home completion to request and schedule it.",
+    `Homes and commercial properties with new-construction plumbing completed by C&S qualify for a lifetime discount on future plumbing service. New homeowners also receive one complimentary water heater flush and whole-home plumbing inspection during their home’s first year; the homeowner calls ${BUSINESS.phone} ext. 0 within 12 months of home completion to request and schedule it.`,
 } as const;
-
-// City of Cape Coral Utilities Extension Project status, as the city's own
-// UEP pages stated it on `checkedOn`. The 180-day window and the plumber rule
-// come from the city's "How to Connect" page. Re-read capecoral.gov/uep before
-// changing any of this; every UEP surface (service page, Cape Coral landing,
-// llms.txt) reads from here so the story stays identical everywhere.
-const UEP_NORTH_1_WEST =
-  "North 1 West is substantially complete and the city has mailed its Notice of Availability letters, so the 180-day connection window there is already running.";
-const UEP_NORTH_1_EAST =
-  "North 1 East is under construction — contractors received Notice to Proceed in December 2025 and the city expects completion by the end of 2027.";
-const UEP_NORTH_3 =
-  "North 3, about 3 square miles of northwest Cape Coral, is in design; the city expects construction to start by the end of 2026 and run about two years.";
-export const UEP_STATUS = {
-  checkedOn: "2026-10-20",
-  checkedOnLabel: "October 2026",
-  sourceUrl: "https://www.capecoral.gov/uep/how_to_connect.php",
-  /** Days a homeowner has to connect after the city's Notice of Availability. */
-  connectionWindowDays: 180,
-  plumberRule:
-    "The city directs homeowners to a City of Cape Coral licensed plumber for the final connection, and that plumber is responsible for pulling the permits.",
-  north1West: UEP_NORTH_1_WEST,
-  north1East: UEP_NORTH_1_EAST,
-  north3: UEP_NORTH_3,
-  /** One-paragraph version for prose surfaces. */
-  summary: `${UEP_NORTH_1_WEST} ${UEP_NORTH_1_EAST} ${UEP_NORTH_3}`,
-} as const;
-
-// Single source of truth for awards, newest first. Every surface that names
-// an award — hero chips, nav strip, About, Credentials, WhyChooseUs, the
-// trust-badge arrays, JsonLd and llms.txt — reads from here for the same
-// reason EMERGENCY_CLAIMS exists: one consistent, verifiable story.
-export const AWARDS: Award[] = [
-  {
-    slug: "best-of-cape-coral-2026",
-    year: 2026,
-    title: "Best of Cape Coral 2026",
-    category: "Best Plumbing Contractor",
-    program: "Best of Cape Coral Readership Awards",
-    issuer: "Cape Coral Breeze",
-    issuerUrl: "https://www.capecoralbreeze.com",
-    // TODO: swap in the Breeze's 2026 winners listing URL once the Digital
-    // Winners Platform entry is live — it becomes the schema citation.
-    awardedOn: "2026-09-09",
-    badge: "/images/awards/best-of-cape-coral-2026.png",
-    badgeWidth: 2215,
-    badgeHeight: 1561,
-    summary:
-      "Voted Best Plumbing Contractor by Cape Coral Breeze readers in the 2026 Best of Cape Coral awards.",
-  },
-  {
-    slug: "best-of-cape-coral-2025",
-    year: 2025,
-    title: "Best of Cape Coral 2025",
-    category: "Plumbing",
-    program: "Best of Cape Coral Readership Awards",
-    issuer: "Cape Coral Breeze",
-    issuerUrl: "https://www.capecoralbreeze.com",
-    awardedOn: "2025-09",
-    badge: "/images/awards/best-of-cape-coral-2025.png",
-    badgeWidth: 793,
-    badgeHeight: 593,
-    summary:
-      "Voted Best of Cape Coral in the Plumbing category by Cape Coral Breeze readers in 2025.",
-  },
-];
-
-export const LATEST_AWARD = AWARDS[0];
-
-/** Flat line for the trust-badge string arrays on area and service-city pages. */
-export const AWARD_TRUST_LINE = `Best of Cape Coral ${[...AWARDS]
-  .map((a) => a.year)
-  .sort()
-  .join(" & ")}`;
 
 // ============================================
 // NAVIGATION
@@ -786,7 +629,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       `Aging pipes cause low water pressure, discolored water, and costly leaks. C&S Plumbing replaces your entire plumbing system with modern copper or PEX piping — backed by 3,500+ homes repiped and ${CLAIMS.warrantyInstallShort}.`,
     metaTitle: "Whole-Home Repiping | Cape Coral & Fort Myers",
     metaDescription:
-      `Whole-home repiping in Cape Coral, Fort Myers & SWFL. Copper & PEX, ${rangeInline("repipe.overall")}, 1-year labor & materials warranty. 3,500+ homes repiped. Call 833-PLUMB-IT.`,
+      `Whole-home repiping in Cape Coral, Fort Myers & SWFL. Copper & PEX, ${rangeInline("repipe.overall")}, 1-year labor & materials warranty. 3,500+ homes repiped. Call ${BUSINESS.phone}.`,
     keywords: [
       "repiping Cape Coral",
       "repipe Fort Myers",
@@ -848,7 +691,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       {
         question: "Do you pull permits for repiping in Lee County?",
         answer:
-          "Yes, every C&S Plumbing repipe job includes full permitting and final inspection by Lee County. This ensures your repiping is code-compliant and protects your home's value. Our license number is CFC1432485.",
+          `Yes, every C&S Plumbing repipe job includes full permitting and final inspection by Lee County. This ensures your repiping is code-compliant and protects your home's value. Our license number is ${BUSINESS.license}.`,
       },
       {
         question: "Will repiping damage my walls or floors?",
@@ -868,7 +711,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       "Copper & PEX options available",
       "Full permit & inspection included",
       "Minimal wall openings, patched and textured",
-      "Licensed & insured (CFC1432485)",
+      `Licensed & insured (${BUSINESS.license})`,
       "Free estimates with upfront pricing",
       CLAIMS.warrantyBullet,
       "Serving all of Southwest Florida",
@@ -931,7 +774,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       {
         question: "Do you pull permits for repiping?",
         answer: "Yes — permits and final inspection are included in every repipe.",
-        detail: "Every C&S repipe job includes Lee County permitting and final inspection. Our license number is CFC1432485. Skipping permits voids most homeowner insurance claims and creates problems at resale.",
+        detail: `Every C&S repipe job includes Lee County permitting and final inspection. Our license number is ${BUSINESS.license}. Skipping permits voids most homeowner insurance claims and creates problems at resale.`,
       },
     ],
   },
@@ -944,7 +787,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       "No hot water? Whether you need a quick repair or a full replacement, C&S Plumbing installs and services all types of water heaters — traditional tank, tankless, and hybrid systems.",
     metaTitle: "Water Heater Repair & Installation | Fort Myers & Cape Coral",
     metaDescription:
-      `Water heater repair ${rangeInline("waterHeater.repair")}, tank replacement ${spanInline("waterHeater.tank40", "waterHeater.tank50")} installed, tankless & hybrid options. Same-day service in Fort Myers, Cape Coral & North Fort Myers. Licensed CFC1432485. Call 833-PLUMB-IT.`,
+      `Water heater repair ${rangeInline("waterHeater.repair")}, tank replacement ${spanInline("waterHeater.tank40", "waterHeater.tank50")} installed, tankless & hybrid options. Same-day service in Fort Myers, Cape Coral & North Fort Myers. Licensed ${BUSINESS.license}. Call ${BUSINESS.phone}.`,
     keywords: [
       "water heater Cape Coral",
       "water heater installation Fort Myers",
@@ -1024,7 +867,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       "Tankless, tank & hybrid options",
       "Energy efficiency upgrades",
       "Upfront pricing, no surprises",
-      "Licensed & insured (CFC1432485)",
+      `Licensed & insured (${BUSINESS.license})`,
       "Free estimates",
       CLAIMS.warrantyBullet,
       "Serving Cape Coral, Fort Myers & SWFL",
@@ -1103,7 +946,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       "Endless hot water without a tank in the garage. C&S installs gas tankless systems from Rinnai, Navien and Noritz — gas line, venting and permit included — and repairs every major brand, usually the same day.",
     metaTitle: "Tankless Water Heater Installation & Repair | Fort Myers & Cape Coral",
     metaDescription:
-      `Tankless water heater installation & repair in Fort Myers, Cape Coral & SWFL. Rinnai, Navien & Noritz, ${rangeInline("waterHeater.tankless")} installed incl. gas line & venting. Same-day repair. Call 833-PLUMB-IT.`,
+      `Tankless water heater installation & repair in Fort Myers, Cape Coral & SWFL. Rinnai, Navien & Noritz, ${rangeInline("waterHeater.tankless")} installed incl. gas line & venting. Same-day repair. Call ${BUSINESS.phone}.`,
     keywords: [
       "tankless water heater installation Fort Myers",
       "tankless water heater installation Cape Coral",
@@ -1191,7 +1034,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       "Isolation valves for annual flushing",
       "Permit + Lee County final included",
       "Upfront written pricing",
-      "Licensed & insured (CFC1432485)",
+      `Licensed & insured (${BUSINESS.license})`,
       "Free estimates",
       CLAIMS.warrantyBullet,
     ],
@@ -1248,7 +1091,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       "Slow drains, recurring clogs, and sewage backups need professional attention. C&S Plumbing uses hydro-jetting and camera inspection technology to clear any blockage and keep your drains flowing.",
     metaTitle: "Drain Cleaning Services | Cape Coral & Fort Myers Plumber",
     metaDescription:
-      "Professional drain cleaning in Cape Coral, Fort Myers & SWFL. Hydro-jetting, camera inspection, root removal. Fast service, fair pricing. Call 833-PLUMB-IT.",
+      `Professional drain cleaning in Cape Coral, Fort Myers & SWFL. Hydro-jetting, camera inspection, root removal. Fast service, fair pricing. Call ${BUSINESS.phone}.`,
     keywords: [
       "drain cleaning Cape Coral",
       "drain cleaning Fort Myers",
@@ -1310,7 +1153,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       {
         question: "Do you offer emergency drain cleaning?",
         answer:
-          "Yes, we offer 24/7 emergency drain cleaning for sewage backups and critical drain failures. Call 833-PLUMB-IT any time and we'll dispatch a technician as quickly as possible.",
+          `Yes, we offer 24/7 emergency drain cleaning for sewage backups and critical drain failures. Call ${BUSINESS.phone} any time and we'll dispatch a technician as quickly as possible.`,
       },
       {
         question: "What is hydro-jetting and how does it work?",
@@ -1330,7 +1173,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       "Camera inspection included",
       "Root intrusion specialists",
       "All drain types serviced",
-      "Licensed & insured (CFC1432485)",
+      `Licensed & insured (${BUSINESS.license})`,
       "Upfront pricing",
       "Preventive maintenance plans",
       "24/7 emergency service",
@@ -1400,7 +1243,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       "Water leaks waste money and cause serious damage. C&S Plumbing finds and fixes leaks fast — from dripping faucets to hidden slab leaks — protecting your home and your wallet.",
     metaTitle: "Leak Detection & Repair | Cape Coral & Fort Myers",
     metaDescription:
-      "Expert leak detection & repair in Cape Coral, Fort Myers & SWFL. Slab leaks, pipe leaks, faucet repair. 24/7 emergency service. Call 833-PLUMB-IT.",
+      `Expert leak detection & repair in Cape Coral, Fort Myers & SWFL. Slab leaks, pipe leaks, faucet repair. 24/7 emergency service. Call ${BUSINESS.phone}.`,
     keywords: [
       "leak repair Cape Coral",
       "leak detection Fort Myers",
@@ -1457,7 +1300,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       {
         question: "How quickly can you respond to a water leak emergency?",
         answer:
-          "We offer 24/7 emergency service and typically arrive within 1-2 hours for active water leaks in the Cape Coral, Fort Myers, and North Fort Myers area. Call 833-PLUMB-IT immediately if you have an active leak.",
+          `We offer 24/7 emergency service and typically arrive within 1-2 hours for active water leaks in the Cape Coral, Fort Myers, and North Fort Myers area. Call ${BUSINESS.phone} immediately if you have an active leak.`,
       },
       {
         question: "Should I repair or reroute a slab leak?",
@@ -1472,7 +1315,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       {
         question: "What should I do if I find a leak in my home?",
         answer:
-          "First, shut off the water supply at the nearest valve or the main shutoff. Then contain the water with towels or buckets to minimize damage. Call C&S Plumbing at 833-PLUMB-IT for 24/7 emergency response — we typically arrive within 1-2 hours in our service area.",
+          `First, shut off the water supply at the nearest valve or the main shutoff. Then contain the water with towels or buckets to minimize damage. Call C&S Plumbing at ${BUSINESS.phone} for 24/7 emergency response — we typically arrive within 1-2 hours in our service area.`,
       },
     ],
     priceRange: range("leak.overall"),
@@ -1482,7 +1325,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       "Slab leak specialists",
       "Non-destructive methods",
       "Fast, same-day service",
-      "Licensed & insured (CFC1432485)",
+      `Licensed & insured (${BUSINESS.license})`,
       "Free estimates",
       "All pipe types repaired",
       "Serving Cape Coral, Fort Myers & SWFL",
@@ -1539,7 +1382,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       {
         question: "How fast can you respond to a leak emergency?",
         answer: `${EMERGENCY_CLAIMS.responseTimeSentence}`,
-        detail: "If you have water actively running where it shouldn't be, call 833-PLUMB-IT and shut off your main water valve. We'll dispatch a licensed plumber 24/7. While you wait, move valuables off the floor and document damage with photos for insurance.",
+        detail: `If you have water actively running where it shouldn't be, call ${BUSINESS.phone} and shut off your main water valve. We'll dispatch a licensed plumber 24/7. While you wait, move valuables off the floor and document damage with photos for insurance.`,
       },
     ],
   },
@@ -1552,7 +1395,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       "Southwest Florida's hard water damages pipes, appliances, and fixtures. C&S Plumbing installs whole-home water softeners and filtration systems to protect your home and improve your water quality.",
     metaTitle: "Water Softener Installation | Cape Coral & Fort Myers",
     metaDescription:
-      "Water softener & filtration installation in Cape Coral, Fort Myers & SWFL. Protect pipes, improve water quality. Free water testing. Call 833-PLUMB-IT.",
+      `Water softener & filtration installation in Cape Coral, Fort Myers & SWFL. Protect pipes, improve water quality. Free water testing. Call ${BUSINESS.phone}.`,
     keywords: [
       "water softener Cape Coral",
       "water softener Fort Myers",
@@ -1624,7 +1467,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       "Salt-based & salt-free options",
       "Reverse osmosis systems",
       "Protects pipes & appliances",
-      "Licensed & insured (CFC1432485)",
+      `Licensed & insured (${BUSINESS.license})`,
       "Maintenance plans available",
       "Upfront pricing",
       "Serving Cape Coral, Fort Myers & SWFL",
@@ -1666,7 +1509,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       "Remodeling your kitchen or bathroom? C&S Plumbing handles everything from pipe relocation to premium fixture installation — ensuring your remodel is done right the first time.",
     metaTitle: "Kitchen & Bath Plumbing Remodels | Cape Coral",
     metaDescription:
-      "Expert plumbing remodel services in Cape Coral, Fort Myers & SWFL. Kitchen & bathroom renovations, fixture upgrades, pipe relocation. Call 833-PLUMB-IT.",
+      `Expert plumbing remodel services in Cape Coral, Fort Myers & SWFL. Kitchen & bathroom renovations, fixture upgrades, pipe relocation. Call ${BUSINESS.phone}.`,
     keywords: [
       "plumbing remodel Cape Coral",
       "bathroom remodel plumber Fort Myers",
@@ -1738,7 +1581,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       "Pipe relocation services",
       "Code-compliant renovations",
       "Permit handling included",
-      "Licensed & insured (CFC1432485)",
+      `Licensed & insured (${BUSINESS.license})`,
       "Coordinates with contractors",
       "Free estimates",
       "Serving Cape Coral, Fort Myers & SWFL",
@@ -1767,7 +1610,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       {
         question: "Do I need permits to move plumbing in a remodel?",
         answer: "Yes — and we pull them for you.",
-        detail: "Relocating supply or drain lines in Lee County requires a permit and inspection. C&S handles the permit, the inspection, and code compliance (licensed CFC1432485), so your remodel never stalls on paperwork.",
+        detail: `Relocating supply or drain lines in Lee County requires a permit and inspection. C&S handles the permit, the inspection, and code compliance (licensed ${BUSINESS.license}), so your remodel never stalls on paperwork.`,
       },
     ],
   },
@@ -1781,7 +1624,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
     metaTitle:
       "UEP Hookup Cape Coral | Water, Sewer & Septic",
     metaDescription:
-      `Cape Coral UEP hookup: water ${perFoot("uep.waterPerFt")}, irrigation ${perFoot("uep.irrigationPerFt")}, sewer ${perFoot("uep.sewerPerFt")}, septic abandonment ${money(price("uep.septicAbandon").min)}. All permits included. Call 833-PLUMB-IT.`,
+      `Cape Coral UEP hookup: water ${perFoot("uep.waterPerFt")}, irrigation ${perFoot("uep.irrigationPerFt")}, sewer ${perFoot("uep.sewerPerFt")}, septic abandonment ${money(price("uep.septicAbandon").min)}. All permits included. Call ${BUSINESS.phone}.`,
     keywords: [
       "UEP Cape Coral",
       "UEP utilities hookup",
@@ -1862,7 +1705,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       "1–3 day installation",
       "Cape Coral UEP specialists",
       "Septic pump-out & abandonment included",
-      "Licensed & insured (CFC1432485)",
+      `Licensed & insured (${BUSINESS.license})`,
       "Free estimates with upfront pricing",
       "New shutoff valves & extras available",
       "Serving all Cape Coral UEP phases",
@@ -1883,7 +1726,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     state: "FL",
     metaTitle: "Plumber in Cape Coral, FL",
     metaDescription:
-      "Trusted plumber in Cape Coral, FL. Emergency plumbing, repiping, drain cleaning & water heaters. Family owned and operated since 1998. Call 833-PLUMB-IT.",
+      `Trusted plumber in Cape Coral, FL. Emergency plumbing, repiping, drain cleaning & water heaters. Family owned and operated since 1998. Call ${BUSINESS.phone}.`,
     keywords: [
       "plumber Cape Coral",
       "plumber Cape Coral FL",
@@ -1934,7 +1777,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
       {
         question: "Are you licensed to pull permits in Cape Coral?",
         answer:
-          "Yes. We're a Florida Certified Plumbing Contractor (CFC1432485), fully insured, and we pull every required City of Cape Coral permit and pass inspection — no exceptions.",
+          `Yes. We're a Florida Certified Plumbing Contractor (${BUSINESS.license}), fully insured, and we pull every required City of Cape Coral permit and pass inspection — no exceptions.`,
       },
     ],
     localContext:
@@ -1946,7 +1789,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     state: "FL",
     metaTitle: "Plumber in Fort Myers, FL",
     metaDescription:
-      "Expert plumber in Fort Myers, FL. Residential & commercial plumbing, emergency service, repiping, water heaters. 28+ years serving SWFL. Call 833-PLUMB-IT.",
+      `Expert plumber in Fort Myers, FL. Residential & commercial plumbing, emergency service, repiping, water heaters. 28+ years serving SWFL. Call ${BUSINESS.phone}.`,
     keywords: [
       "plumber Fort Myers",
       "plumber Fort Myers FL",
@@ -1997,7 +1840,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
       {
         question: "Are you licensed and insured in Fort Myers?",
         answer:
-          "Yes — a Florida Certified Plumbing Contractor (CFC1432485), fully insured, pulling every required Lee County permit.",
+          `Yes — a Florida Certified Plumbing Contractor (${BUSINESS.license}), fully insured, pulling every required Lee County permit.`,
       },
     ],
     localContext:
@@ -2009,7 +1852,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     state: "FL",
     metaTitle: "North Fort Myers Plumber — Our Hometown",
     metaDescription:
-      "North Fort Myers' hometown plumber since 1998, headquartered on Pondella Rd. Emergency service, repiping, drains & more. Call 833-PLUMB-IT.",
+      `North Fort Myers' hometown plumber since 1998, headquartered on Pondella Rd. Emergency service, repiping, drains & more. Call ${BUSINESS.phone}.`,
     keywords: [
       "plumber North Fort Myers",
       "plumber North Fort Myers FL",
@@ -2022,7 +1865,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     ],
     heroText: "North Fort Myers' Hometown Plumber Since 1998",
     description:
-      "C&S Plumbing is headquartered right here in North Fort Myers at 951 Pondella Rd. As your neighbors, we take extra pride in serving our hometown community with fast, reliable plumbing services.",
+      `C&S Plumbing is headquartered right here in North Fort Myers at ${BUSINESS.address}. As your neighbors, we take extra pride in serving our hometown community with fast, reliable plumbing services.`,
     neighborhoods: [
       "North Fort Myers",
       "Bayshore",
@@ -2037,7 +1880,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
       {
         question: "Where is C&S Plumbing located?",
         answer:
-          "We're based right here in North Fort Myers, at 951 Pondella Rd — it's our hometown. Being local means fast response times across North Fort Myers and the surrounding area.",
+          `We're based right here in North Fort Myers, at ${BUSINESS.address} — it's our hometown. Being local means fast response times across North Fort Myers and the surrounding area.`,
       },
       {
         question: "Do you service well and septic homes in North Fort Myers?",
@@ -2057,7 +1900,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
       {
         question: "Are you licensed and insured?",
         answer:
-          "Yes — a Florida Certified Plumbing Contractor (CFC1432485), fully insured, and family owned and operated since 1998.",
+          `Yes — a Florida Certified Plumbing Contractor (${BUSINESS.license}), fully insured, and family owned and operated since 1998.`,
       },
       {
         question: "How much does a septic-to-sewer conversion cost in North Fort Myers?",
@@ -2071,7 +1914,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
       },
     ],
     localContext:
-      "North Fort Myers is our home. C&S Plumbing's office is located at 951 Pondella Rd, and many of our team members live right here in the community. That means the fastest response times anywhere in our service area. We've plumbed hundreds of homes in North Fort Myers and understand the specific needs of properties in this area, from older homes near the river to newer construction east of I-75.\n\nPlumbing here is different from Cape Coral or Fort Myers proper. Many homes rely on private wells rather than municipal supply, which means high iron, a sulfur smell and hard-water scaling — and the well pumps, pressure tanks and whole-home treatment systems that go with them. North Fort Myers is also in the middle of a long-running septic-to-sewer conversion. Connecting to Lee County Utilities sewer takes a licensed plumber to abandon the old tank, run the new lateral and pass the county inspection, and C&S has completed dozens of these conversions start to finish, permits included.\n\nThe housing stock runs from 1960s–70s block homes in Bayshore and Hancock Bridge, many still on galvanized supply lines and cast iron drains, to manufactured homes in communities like Del Tura and Lochmoor Waterway Estates, where flexible water lines and brittle plastic drain fittings are the usual failure points. No travel fees in North Fort Myers — we're already here.",
+      `North Fort Myers is our home. C&S Plumbing's office is located at ${BUSINESS.address}, and many of our team members live right here in the community. That means the fastest response times anywhere in our service area. We've plumbed hundreds of homes in North Fort Myers and understand the specific needs of properties in this area, from older homes near the river to newer construction east of I-75.\n\nPlumbing here is different from Cape Coral or Fort Myers proper. Many homes rely on private wells rather than municipal supply, which means high iron, a sulfur smell and hard-water scaling — and the well pumps, pressure tanks and whole-home treatment systems that go with them. North Fort Myers is also in the middle of a long-running septic-to-sewer conversion. Connecting to Lee County Utilities sewer takes a licensed plumber to abandon the old tank, run the new lateral and pass the county inspection, and C&S has completed dozens of these conversions start to finish, permits included.\n\nThe housing stock runs from 1960s–70s block homes in Bayshore and Hancock Bridge, many still on galvanized supply lines and cast iron drains, to manufactured homes in communities like Del Tura and Lochmoor Waterway Estates, where flexible water lines and brittle plastic drain fittings are the usual failure points. No travel fees in North Fort Myers — we're already here.`,
     updatedAt: "2026-11-12",
   },
   {
@@ -2080,7 +1923,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     state: "FL",
     metaTitle: "Plumber in Naples, FL",
     metaDescription:
-      "Professional plumber in Naples, FL. Luxury home plumbing, repiping, water heaters, emergency service. Family-owned, 9,500+ homes plumbed. Call 833-PLUMB-IT.",
+      `Professional plumber in Naples, FL. Luxury home plumbing, repiping, water heaters, emergency service. Family-owned, 9,500+ homes plumbed. Call ${BUSINESS.phone}.`,
     keywords: [
       "plumber Naples",
       "plumber Naples FL",
@@ -2129,7 +1972,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
       {
         question: "Do you pull permits in Naples?",
         answer:
-          "Yes. We're a Florida Certified Plumbing Contractor (CFC1432485), fully insured, and we pull every required Collier County permit.",
+          `Yes. We're a Florida Certified Plumbing Contractor (${BUSINESS.license}), fully insured, and we pull every required Collier County permit.`,
       },
     ],
     localContext:
@@ -2141,7 +1984,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     state: "FL",
     metaTitle: "Plumber in Bonita Springs, FL",
     metaDescription:
-      "Reliable plumber in Bonita Springs, FL. Repiping, water heaters, drain cleaning, emergency service. 28+ years in SWFL. Call 833-PLUMB-IT.",
+      `Reliable plumber in Bonita Springs, FL. Repiping, water heaters, drain cleaning, emergency service. 28+ years in SWFL. Call ${BUSINESS.phone}.`,
     keywords: [
       "plumber Bonita Springs",
       "plumber Bonita Springs FL",
@@ -2189,7 +2032,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
       {
         question: "Are you licensed and insured?",
         answer:
-          "Yes — a Florida Certified Plumbing Contractor (CFC1432485), fully insured, family owned and operated since 1998.",
+          `Yes — a Florida Certified Plumbing Contractor (${BUSINESS.license}), fully insured, family owned and operated since 1998.`,
       },
     ],
     localContext:
@@ -2201,7 +2044,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     state: "FL",
     metaTitle: "Plumber in Lehigh Acres, FL",
     metaDescription:
-      "Trusted plumber in Lehigh Acres, FL. Emergency plumbing, repiping, drain cleaning and water heaters. Family owned and operated since 1998. Call 833-PLUMB-IT.",
+      `Trusted plumber in Lehigh Acres, FL. Emergency plumbing, repiping, drain cleaning and water heaters. Family owned and operated since 1998. Call ${BUSINESS.phone}.`,
     keywords: [
       "plumber Lehigh Acres",
       "plumber Lehigh Acres FL",
@@ -2250,7 +2093,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
       {
         question: "Are you licensed and insured in Lehigh Acres?",
         answer:
-          "Yes — a Florida Certified Plumbing Contractor (CFC1432485), fully insured, pulling every required Lee County permit.",
+          `Yes — a Florida Certified Plumbing Contractor (${BUSINESS.license}), fully insured, pulling every required Lee County permit.`,
       },
       {
         question: "Why do newer Lehigh Acres homes have plumbing problems?",
@@ -2278,7 +2121,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     state: "FL",
     metaTitle: "Plumber in Estero, FL",
     metaDescription:
-      "Professional plumber in Estero, FL. Repiping, water heaters, drain cleaning, emergency plumbing. Family-owned, 28+ years in SWFL. Call 833-PLUMB-IT.",
+      `Professional plumber in Estero, FL. Repiping, water heaters, drain cleaning, emergency plumbing. Family-owned, 28+ years in SWFL. Call ${BUSINESS.phone}.`,
     keywords: [
       "plumber Estero",
       "plumber Estero FL",
@@ -2327,7 +2170,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
       {
         question: "Are you licensed and insured?",
         answer:
-          "Yes — a Florida Certified Plumbing Contractor (CFC1432485), fully insured, family owned and operated since 1998.",
+          `Yes — a Florida Certified Plumbing Contractor (${BUSINESS.license}), fully insured, family owned and operated since 1998.`,
       },
       {
         question: "My Estero home is only 15 years old — can it already have pipe problems?",
@@ -2350,7 +2193,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     state: "FL",
     metaTitle: "Plumber on Sanibel Island, FL",
     metaDescription:
-      "Experienced plumber on Sanibel Island, FL. Emergency plumbing, repiping, water heaters, hurricane recovery. Family-owned, 28+ years in SWFL. Call 833-PLUMB-IT.",
+      `Experienced plumber on Sanibel Island, FL. Emergency plumbing, repiping, water heaters, hurricane recovery. Family-owned, 28+ years in SWFL. Call ${BUSINESS.phone}.`,
     keywords: [
       "plumber Sanibel Island",
       "plumber Sanibel FL",
@@ -2398,7 +2241,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
       {
         question: "Are you licensed and insured?",
         answer:
-          "Yes — a Florida Certified Plumbing Contractor (CFC1432485), fully insured, family owned and operated since 1998.",
+          `Yes — a Florida Certified Plumbing Contractor (${BUSINESS.license}), fully insured, family owned and operated since 1998.`,
       },
       {
         question: "How much does a plumber cost on Sanibel Island?",
@@ -2426,7 +2269,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     state: "FL",
     metaTitle: "Plumber in Fort Myers Beach, FL",
     metaDescription:
-      "Plumber on Fort Myers Beach, FL. Post-Ian rebuilds, elevated homes, repipes, water heaters & 24/7 emergencies. Family owned since 1998. Call 833-PLUMB-IT.",
+      `Plumber on Fort Myers Beach, FL. Post-Ian rebuilds, elevated homes, repipes, water heaters & 24/7 emergencies. Family owned since 1998. Call ${BUSINESS.phone}.`,
     keywords: [
       "plumber Fort Myers Beach",
       "Fort Myers Beach plumbing",
@@ -2480,7 +2323,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
       {
         question: "Are you licensed and insured?",
         answer:
-          "Yes — a Florida Certified Plumbing Contractor (CFC1432485), fully insured, family owned and operated since 1998.",
+          `Yes — a Florida Certified Plumbing Contractor (${BUSINESS.license}), fully insured, family owned and operated since 1998.`,
       },
     ],
     localContext:
@@ -2492,7 +2335,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     state: "FL",
     metaTitle: "Plumber in Punta Gorda, FL",
     metaDescription:
-      "Plumber in Punta Gorda, FL. Water heaters, emergency plumbing, repiping & drains across Charlotte County. Family owned since 1998. Call 833-PLUMB-IT.",
+      `Plumber in Punta Gorda, FL. Water heaters, emergency plumbing, repiping & drains across Charlotte County. Family owned since 1998. Call ${BUSINESS.phone}.`,
     keywords: [
       "plumber Punta Gorda",
       "plumber Punta Gorda FL",
@@ -2507,7 +2350,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     ],
     heroText: "Your Trusted Plumber in Punta Gorda, FL",
     description:
-      "C&S Plumbing brings 28+ years of Southwest Florida experience to Punta Gorda and Charlotte County. Water heater replacements, emergency repairs, repiping, and drain service — backed by 9,500+ homes plumbed and Florida Certified Plumbing Contractor license CFC1432485.",
+      `C&S Plumbing brings 28+ years of Southwest Florida experience to Punta Gorda and Charlotte County. Water heater replacements, emergency repairs, repiping, and drain service — backed by 9,500+ homes plumbed and Florida Certified Plumbing Contractor license ${BUSINESS.license}.`,
     neighborhoods: [
       "Punta Gorda Isles",
       "Burnt Store Isles",
@@ -2524,7 +2367,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
       {
         question: "Do you really service Punta Gorda from North Fort Myers?",
         answer:
-          "Yes. Our shop at 951 Pondella Rd in North Fort Myers is about 25–35 minutes from most of Punta Gorda via US-41 or I-75. We schedule Charlotte County work daily, and emergency calls are dispatched 24/7 — same as Lee County.", // claim-ok: drive time, not a response promise
+          `Yes. Our shop at ${BUSINESS.address} in North Fort Myers is about 25–35 minutes from most of Punta Gorda via US-41 or I-75. We schedule Charlotte County work daily, and emergency calls are dispatched 24/7 — same as Lee County.`, // claim-ok: drive time, not a response promise
       },
       {
         question: "Can you replace a water heater in Punta Gorda the same day?",
@@ -2539,12 +2382,12 @@ export const AREA_LANDINGS: AreaLanding[] = [
       {
         question: "Do you pull permits with Charlotte County?",
         answer:
-          "Yes. C&S Plumbing works under Florida Certified Plumbing Contractor license CFC1432485, and we pull permits and coordinate inspections with Charlotte County for water heaters, repipes, and remodel work. You never have to handle the paperwork yourself.",
+          `Yes. C&S Plumbing works under Florida Certified Plumbing Contractor license ${BUSINESS.license}, and we pull permits and coordinate inspections with Charlotte County for water heaters, repipes, and remodel work. You never have to handle the paperwork yourself.`,
       },
       {
         question: "Is your emergency service available in Punta Gorda?",
         answer:
-          "Yes — 24/7 emergency plumbing covers Punta Gorda and all of Charlotte County. Call 833-PLUMB-IT any hour — we answer and dispatch around the clock, every day of the week.",
+          `Yes — 24/7 emergency plumbing covers Punta Gorda and all of Charlotte County. Call ${BUSINESS.phone} any hour — we answer and dispatch around the clock, every day of the week.`,
       },
     ],
   },
@@ -2554,7 +2397,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     state: "FL",
     metaTitle: "Plumber in Port Charlotte, FL",
     metaDescription:
-      "Plumber in Port Charlotte, FL. Drain cleaning, water treatment, water heaters & emergency plumbing. Family owned and operated since 1998. Call 833-PLUMB-IT.",
+      `Plumber in Port Charlotte, FL. Drain cleaning, water treatment, water heaters & emergency plumbing. Family owned and operated since 1998. Call ${BUSINESS.phone}.`,
     keywords: [
       "plumber Port Charlotte",
       "plumber Port Charlotte FL",
@@ -2596,12 +2439,12 @@ export const AREA_LANDINGS: AreaLanding[] = [
       {
         question: "How fast can you get to Port Charlotte for an emergency?",
         answer:
-          "Our North Fort Myers shop is roughly 30–40 minutes from most of Port Charlotte via US-41 or I-75. The emergency line at 833-PLUMB-IT is answered 24/7, and a licensed plumber is dispatched — not an answering service promise.", // claim-ok: drive time, not a response promise
+          `Our North Fort Myers shop is roughly 30–40 minutes from most of Port Charlotte via US-41 or I-75. The emergency line at ${BUSINESS.phone} is answered 24/7, and a licensed plumber is dispatched — not an answering service promise.`, // claim-ok: drive time, not a response promise
       },
       {
         question: "Do you pull permits with Charlotte County?",
         answer:
-          "Yes. We work under Florida Certified Plumbing Contractor license CFC1432485 and handle Charlotte County permitting and inspections for water heaters, repipes, drain line replacements, and remodel plumbing.",
+          `Yes. We work under Florida Certified Plumbing Contractor license ${BUSINESS.license} and handle Charlotte County permitting and inspections for water heaters, repipes, drain line replacements, and remodel plumbing.`,
       },
       {
         question: "Can you replace a water heater in Port Charlotte?",
@@ -2646,7 +2489,7 @@ export const BLOG_POSTS: BlogPost[] = [
 <h2>Why it matters for your plumbing</h2>
 <p>A community vote is a lagging indicator. It reflects the work that was already done — the <a href="/services/water-heaters">water heaters</a> that got replaced the same day, the <a href="/services/repiping">repipes</a> that came in on the written price, the 2 a.m. <a href="/emergency">emergency calls</a> that got answered. If you're comparing plumbers in Cape Coral, an award like this is worth reading alongside the things you can check yourself:</p>
 <ul>
-<li>Our Florida Certified Plumbing Contractor license (CFC1432485) is verifiable on the DBPR's MyFloridaLicense.com.</li>
+<li>Our Florida Certified Plumbing Contractor license (${BUSINESS.license}) is verifiable on the DBPR's MyFloridaLicense.com.</li>
 <li>Our Google rating and reviews are public — see the <a href="/reviews">reviews page</a>.</li>
 <li>Our work is on the site, phase by phase, on the <a href="/projects">projects pages</a>.</li>
 </ul>
@@ -2702,7 +2545,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>What to Do Next</h2>
 <p>If you're experiencing any of these signs, don't wait for a catastrophic pipe failure. <a href="/services/repiping">Contact C&S Plumbing for a free repipe evaluation</a>. We offer both copper and PEX repiping options, complete most homes in 1-2 days, and handle all permits and inspections.</p>
-<p>Call <a href="tel:8337586248">833-PLUMB-IT</a> or <a href="/booking">book online</a> to schedule your free consultation.</p>`,
+<p>Call <a href="${BUSINESS.phoneHref}">${BUSINESS.phone}</a> or <a href="/booking">book online</a> to schedule your free consultation.</p>`,
   },
   {
     slug: "tankless-vs-traditional-water-heaters",
@@ -2762,7 +2605,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>Not Sure? We'll Help You Decide</h2>
 <p>Every home is different. <a href="/services/water-heaters">C&S Plumbing's water heater specialists</a> will evaluate your home's hot water needs, current setup, and budget to recommend the best option. We install all major brands including Rinnai, Navien, Rheem, and A.O. Smith.</p>
-<p>Call <a href="tel:8337586248">833-PLUMB-IT</a> or <a href="/booking">book a consultation</a> today.</p>`,
+<p>Call <a href="${BUSINESS.phoneHref}">${BUSINESS.phone}</a> or <a href="/booking">book a consultation</a> today.</p>`,
   },
   {
     slug: "plumbing-emergency-what-to-do",
@@ -2807,7 +2650,7 @@ export const BLOG_POSTS: BlogPost[] = [
 <p>Before you start major cleanup, take photos and video of the damage. Your homeowner's insurance will need documentation to process a claim. Photograph the source of the leak, any water damage to floors, walls, and belongings.</p>
 
 <h2>Step 6: Call C&S Plumbing</h2>
-<p>Once you've contained the immediate emergency, call <a href="tel:8337586248">833-PLUMB-IT</a> for 24/7 emergency plumbing service. We serve <a href="/areas/cape-coral">Cape Coral</a>, <a href="/areas/fort-myers">Fort Myers</a>, <a href="/areas/north-fort-myers">North Fort Myers</a>, and all of Southwest Florida with rapid emergency response.</p>
+<p>Once you've contained the immediate emergency, call <a href="${BUSINESS.phoneHref}">${BUSINESS.phone}</a> for 24/7 emergency plumbing service. We serve <a href="/areas/cape-coral">Cape Coral</a>, <a href="/areas/fort-myers">Fort Myers</a>, <a href="/areas/north-fort-myers">North Fort Myers</a>, and all of Southwest Florida with rapid emergency response.</p>
 <p>Our emergency team will:</p>
 <ul>
 <li>Arrive as quickly as possible (typically within 1-2 hours in our service area)</li>
@@ -2835,7 +2678,7 @@ export const BLOG_POSTS: BlogPost[] = [
     relatedLandings: ["emergency-plumber-cape-coral", "repiping-cape-coral", "plumbing-remodel-cape-coral"],
     content: `<h2>1. Verify Their License</h2>
 <p>Florida law requires plumbers to be licensed. A legitimate plumber will have a Certified Plumbing Contractor (CPC) or Registered Plumbing Contractor (RPC) license. You can verify any plumber's license at the <a href="https://www.myfloridalicense.com" target="_blank" rel="noopener noreferrer">Florida DBPR website</a>.</p>
-<p>At C&S Plumbing, our license number is CFC1432485 — we're happy to have you verify it.</p>
+<p>At C&S Plumbing, our license number is ${BUSINESS.license} — we're happy to have you verify it.</p>
 
 <h2>2. Check Google Reviews</h2>
 <p>Online reviews are the most reliable way to gauge a plumber's quality. Look for:</p>
@@ -2874,7 +2717,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>Ready to Experience the C&S Difference?</h2>
 <p>We've built our reputation on honest work, fair pricing, and treating every home like our own. With 9,500+ completed projects and a 5.0-star Google rating, we let our track record speak for itself.</p>
-<p>Call <a href="tel:8337586248">833-PLUMB-IT</a> or <a href="/booking">book online</a> to experience the difference a trusted, local plumber makes.</p>`,
+<p>Call <a href="${BUSINESS.phoneHref}">${BUSINESS.phone}</a> or <a href="/booking">book online</a> to experience the difference a trusted, local plumber makes.</p>`,
   },
   {
     slug: "hurricane-plumbing-preparation-swfl",
@@ -2918,14 +2761,14 @@ export const BLOG_POSTS: BlogPost[] = [
 <li>Turn the water on slowly and check for <a href="/services/leak-repair">leaks</a> at every fixture</li>
 <li>Have your water tested if your area experienced flooding</li>
 </ul>
-<p>If you discover damage, call <a href="tel:8337586248">833-PLUMB-IT</a> for emergency plumbing service. We prioritize <a href="/areas/sanibel">Sanibel</a>, <a href="/areas/fort-myers">Fort Myers</a>, <a href="/areas/cape-coral">Cape Coral</a>, and all SWFL communities after storms. <a href="/booking">Book an inspection</a> today to get ahead of hurricane season.</p>`,
+<p>If you discover damage, call <a href="${BUSINESS.phoneHref}">${BUSINESS.phone}</a> for emergency plumbing service. We prioritize <a href="/areas/sanibel">Sanibel</a>, <a href="/areas/fort-myers">Fort Myers</a>, <a href="/areas/cape-coral">Cape Coral</a>, and all SWFL communities after storms. <a href="/booking">Book an inspection</a> today to get ahead of hurricane season.</p>`,
   },
   {
     slug: "water-softener-vs-water-filter-lee-county",
     title: "Water Softener vs Water Filter: Which Does Your Lee County Home Need?",
     metaTitle: "Water Softener vs Water Filter — Which Does Your Home Need?",
     metaDescription:
-      "Water softener or water filter? Learn the difference and which system your Lee County home needs. Expert advice from C&S Plumbing. Call 833-PLUMB-IT.",
+      `Water softener or water filter? Learn the difference and which system your Lee County home needs. Expert advice from C&S Plumbing. Call ${BUSINESS.phone}.`,
     keywords: ["water softener vs water filter", "water softener Lee County", "water filter Cape Coral", "hard water Florida", "water treatment Fort Myers", "water quality SWFL"],
     excerpt:
       "Southwest Florida has some of the hardest water in the country. But do you need a water softener, a water filter, or both? Here's how to decide which system is right for your home.",
@@ -2972,14 +2815,14 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>Get a Free Water Test</h2>
 <p>Not sure what your water needs? C&S Plumbing offers free water testing and consultations. We'll test your water hardness and quality, then recommend the right system for your home and budget.</p>
-<p>Call <a href="tel:8337586248">833-PLUMB-IT</a> or <a href="/booking">book a free water consultation</a> to find out what's in your water and how to fix it.</p>`,
+<p>Call <a href="${BUSINESS.phoneHref}">${BUSINESS.phone}</a> or <a href="/booking">book a free water consultation</a> to find out what's in your water and how to fix it.</p>`,
   },
   {
     slug: "polybutylene-pipe-problems-cape-coral",
     title: "Why Cape Coral Homes Need Repiping: The Polybutylene Pipe Problem",
     metaTitle: "Polybutylene Pipes in Cape Coral: Why You Need to Repipe",
     metaDescription:
-      "Cape Coral homes built 1978-1995 likely have polybutylene pipes that are failing. Learn why repiping is urgent and how C&S Plumbing can help. Call 833-PLUMB-IT.",
+      `Cape Coral homes built 1978-1995 likely have polybutylene pipes that are failing. Learn why repiping is urgent and how C&S Plumbing can help. Call ${BUSINESS.phone}.`,
     keywords: ["polybutylene pipes Cape Coral", "poly-b pipe replacement", "repiping Cape Coral", "polybutylene pipe failure", "Cape Coral plumbing problems", "PEX repiping Cape Coral"],
     excerpt:
       "Thousands of Cape Coral homes were built with polybutylene pipes between 1978 and 1995. These pipes are now failing at alarming rates, causing leaks, water damage, and insurance problems for homeowners.",
@@ -3031,7 +2874,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>Don't Wait for a Catastrophic Failure</h2>
 <p>Every day you wait, your polybutylene pipes are deteriorating further. A proactive repipe on your schedule is far better than an emergency repair at 2 AM after a pipe bursts and floods your home.</p>
-<p>Call <a href="tel:8337586248">833-PLUMB-IT</a> or <a href="/booking">schedule a free repipe consultation</a> today. We'll inspect your pipes, explain your options, and provide an honest, upfront estimate.</p>`,
+<p>Call <a href="${BUSINESS.phoneHref}">${BUSINESS.phone}</a> or <a href="/booking">schedule a free repipe consultation</a> today. We'll inspect your pipes, explain your options, and provide an honest, upfront estimate.</p>`,
   },
   {
     slug: "slab-leak-detection-southwest-florida",
@@ -3103,8 +2946,8 @@ export const BLOG_POSTS: BlogPost[] = [
 <p>Most homeowner's insurance policies in Florida cover slab leak repair, though coverage varies. Document the damage thoroughly before any repairs — photos and video of wet flooring, cracks, and water damage strengthen your claim significantly.</p>
 
 <h2>Don't Wait — Slab Leaks Get Worse Quickly</h2>
-<p>A small slab leak that costs $2,000 to repair today can become a $20,000+ foundation and mold remediation project in six months. The concrete and soil beneath your slab will erode faster than you expect once water starts flowing freely underground.</p> // claim-ok: illustrative comparison, not a published price
-<p>If you've noticed any of the warning signs above, call <a href="tel:8337586248">833-PLUMB-IT</a> immediately. C&S Plumbing provides expert <a href="/services/leak-repair">leak detection and repair</a> throughout <a href="/areas/cape-coral">Cape Coral</a>, <a href="/areas/fort-myers">Fort Myers</a>, <a href="/areas/north-fort-myers">North Fort Myers</a>, <a href="/areas/bonita-springs">Bonita Springs</a>, and all of Lee County. <a href="/booking">Book a leak detection appointment</a> today — fast diagnosis is the difference between a minor repair and a major reconstruction.</p>`,
+<p>A small slab leak that costs $2,000 to repair today can become a $20,000+ foundation and mold remediation project in six months. The concrete and soil beneath your slab will erode faster than you expect once water starts flowing freely underground.</p>${/* claim-ok: illustrative comparison, not a published price */ ""}
+<p>If you've noticed any of the warning signs above, call <a href="${BUSINESS.phoneHref}">${BUSINESS.phone}</a> immediately. C&S Plumbing provides expert <a href="/services/leak-repair">leak detection and repair</a> throughout <a href="/areas/cape-coral">Cape Coral</a>, <a href="/areas/fort-myers">Fort Myers</a>, <a href="/areas/north-fort-myers">North Fort Myers</a>, <a href="/areas/bonita-springs">Bonita Springs</a>, and all of Lee County. <a href="/booking">Book a leak detection appointment</a> today — fast diagnosis is the difference between a minor repair and a major reconstruction.</p>`,
   },
   {
     slug: "low-water-pressure-causes-fixes-swfl",
@@ -3159,7 +3002,7 @@ export const BLOG_POSTS: BlogPost[] = [
 <h2>When to Call a Plumber</h2>
 <p>A minor, isolated pressure problem at a single fixture is often a DIY fix — clean the aerator or showerhead and you're done. But when pressure is low throughout the house, developed suddenly, or is accompanied by other symptoms (discolored water, higher bills, wet spots on walls or floors), don't wait.</p>
 <p>At C&S Plumbing, we diagnose water pressure problems throughout <a href="/areas/cape-coral">Cape Coral</a>, <a href="/areas/fort-myers">Fort Myers</a>, <a href="/areas/bonita-springs">Bonita Springs</a>, <a href="/areas/north-fort-myers">North Fort Myers</a>, and all of Lee County. We identify the root cause quickly and provide upfront pricing before any work begins — no surprises.</p>
-<p>Call <a href="tel:8337586248">833-PLUMB-IT</a> or <a href="/booking">book an appointment online</a> to get your water pressure back where it belongs.</p>`,
+<p>Call <a href="${BUSINESS.phoneHref}">${BUSINESS.phone}</a> or <a href="/booking">book an appointment online</a> to get your water pressure back where it belongs.</p>`,
   },
   {
     slug: "clogged-drains-causes-fixes-swfl",
@@ -3221,14 +3064,14 @@ export const BLOG_POSTS: BlogPost[] = [
 <li>Water is backing up into a tub or floor drain when you run the dishwasher or washing machine</li>
 </ul>
 <p>C&S Plumbing provides professional drain cleaning throughout <a href="/areas/cape-coral">Cape Coral</a>, <a href="/areas/fort-myers">Fort Myers</a>, <a href="/areas/bonita-springs">Bonita Springs</a>, <a href="/areas/north-fort-myers">North Fort Myers</a>, and all of Lee County. We use professional-grade equipment and provide upfront pricing before any work begins.</p>
-<p>Call <a href="tel:8337586248">833-PLUMB-IT</a> or <a href="/booking">book a drain cleaning appointment online</a> today — we'll clear the clog and inspect the line so you know exactly what you're dealing with.</p>`,
+<p>Call <a href="${BUSINESS.phoneHref}">${BUSINESS.phone}</a> or <a href="/booking">book a drain cleaning appointment online</a> today — we'll clear the clog and inspect the line so you know exactly what you're dealing with.</p>`,
   },
   {
     slug: "septic-to-sewer-conversion-swfl",
     title: "Septic to Sewer: What Southwest Florida Homeowners Need to Know",
     metaTitle: "Septic to Sewer Conversion: What SWFL Homeowners Should Know",
     metaDescription:
-      "Switching from septic to sewer in Cape Coral or SWFL? Learn about the process, costs, and requirements. C&S Plumbing handles UEP connections. Call 833-PLUMB-IT.",
+      `Switching from septic to sewer in Cape Coral or SWFL? Learn about the process, costs, and requirements. C&S Plumbing handles UEP connections. Call ${BUSINESS.phone}.`,
     keywords: ["septic to sewer conversion", "septic to sewer Cape Coral", "UEP connection Cape Coral", "septic abandonment Florida", "sewer hookup cost SWFL", "septic to sewer cost"],
     excerpt:
       "As Cape Coral and other Southwest Florida communities expand their sewer systems, thousands of homeowners are transitioning from septic tanks to city sewer. Here's what you need to know about the process, costs, and requirements.",
@@ -3280,7 +3123,7 @@ export const BLOG_POSTS: BlogPost[] = [
 <p>Septic to sewer conversion requires a <a href="/blog/how-to-choose-a-plumber-cape-coral">licensed plumbing contractor</a> experienced with UEP projects. At C&S Plumbing, we've completed hundreds of UEP connections across Cape Coral and understand the specific requirements of the city's program. We handle all permitting, excavation, piping, septic abandonment, and final inspection.</p>
 
 <h2>Get Started</h2>
-<p>If you've received a UEP notice or are considering a voluntary septic to sewer conversion, call <a href="tel:8337586248">833-PLUMB-IT</a> or <a href="/booking">book a free consultation</a>. We'll visit your property, assess the scope, and provide an upfront estimate with no hidden costs. See our <a href="/services/uep-utilities">UEP services page</a> for more details and photos of our recent projects.</p>`,
+<p>If you've received a UEP notice or are considering a voluntary septic to sewer conversion, call <a href="${BUSINESS.phoneHref}">${BUSINESS.phone}</a> or <a href="/booking">book a free consultation</a>. We'll visit your property, assess the scope, and provide an upfront estimate with no hidden costs. See our <a href="/services/uep-utilities">UEP services page</a> for more details and photos of our recent projects.</p>`,
   },
   {
     slug: "spring-plumbing-maintenance-checklist-swfl",
@@ -3331,7 +3174,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>4. Test Your Toilets for Running or Silent Leaks</h2>
 <p>A running toilet is one of the most common — and wasteful — plumbing problems in residential homes. A toilet that runs continuously can waste 200 gallons per day. The flapper valve is usually the culprit: it's a rubber seal that deteriorates over time, especially in Florida's chlorinated water.</p>
-<p>To check for a silent toilet leak, put a few drops of food coloring or a dye tablet in the tank and wait 15 minutes without flushing. If color appears in the bowl, the flapper is leaking. Replacing a flapper costs about $10 and takes 10 minutes — one of the few plumbing repairs genuinely worth doing yourself before calling a plumber.</p> // claim-ok: DIY part cost, not a C&S price
+<p>To check for a silent toilet leak, put a few drops of food coloring or a dye tablet in the tank and wait 15 minutes without flushing. If color appears in the bowl, the flapper is leaking. Replacing a flapper costs about $10 and takes 10 minutes — one of the few plumbing repairs genuinely worth doing yourself before calling a plumber.</p>${/* claim-ok: DIY part cost, not a C&S price */ ""}
 
 <h2>5. Inspect and Clear All Drains</h2>
 <p>Summer in Southwest Florida brings daily rainfall and heavy use of showers (everyone's sweating constantly). Make sure all drains are flowing freely before summer begins. Pour a bucket of water into floor drains in the garage, laundry room, and any utility areas — these drains sit unused for long periods and their water traps can evaporate, allowing sewer gas odors into the home.</p>
@@ -3355,7 +3198,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>Get Your Plumbing Summer-Ready</h2>
 <p>Don't wait until your water heater fails in August or a slab leak floods your home in the middle of rainy season. A spring plumbing checkup is the best investment you can make to avoid a summer emergency.</p>
-<p>Call <a href="tel:8337586248">833-PLUMB-IT</a> or <a href="/booking">book a spring inspection online</a>. C&S Plumbing has been keeping Southwest Florida homes running smoothly for over 28 years — we'll make sure yours is ready for whatever summer throws at it.</p>`,
+<p>Call <a href="${BUSINESS.phoneHref}">${BUSINESS.phone}</a> or <a href="/booking">book a spring inspection online</a>. C&S Plumbing has been keeping Southwest Florida homes running smoothly for over 28 years — we'll make sure yours is ready for whatever summer throws at it.</p>`,
   },
   {
     slug: "plumbing-checklist-after-hurricane-swfl",
@@ -3395,7 +3238,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>When to Call Us</h2>
 <p>Spinning meter with the house off, sewage backing up, no water pressure, a flooded water heater, or any soggy-ground signs of a broken underground line — those are same-day calls. C&S Plumbing runs <a href="/emergency">24/7 storm-response crews</a> across Lee, Collier, and Charlotte counties, and after 28+ years of Southwest Florida storm seasons, we've triaged every one of these situations hundreds of times.</p>
-<p>Call <a href="tel:8337586248">833-PLUMB-IT</a> — or if lines are jammed after a major storm, <a href="/booking">book online</a> and dispatch will call you back in priority order.</p>`,
+<p>Call <a href="${BUSINESS.phoneHref}">${BUSINESS.phone}</a> — or if lines are jammed after a major storm, <a href="/booking">book online</a> and dispatch will call you back in priority order.</p>`,
   },
   {
     slug: "storm-surge-canal-home-plumbing-cape-coral",
@@ -3429,7 +3272,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>What to Do Before the Next Storm</h2>
 <p>Know where your main shutoff is and exercise it twice a year. Photograph your plumbing fixtures and water heater data plate now — it makes insurance claims dramatically easier. And if your home flooded in a past storm and you never had the plumbing inspected, get ahead of it: corrosion damage compounds quietly. Our full <a href="/blog/hurricane-plumbing-preparation-swfl">hurricane prep guide</a> covers the pre-storm checklist, and our <a href="/blog/plumbing-checklist-after-hurricane-swfl">post-storm checklist</a> covers the aftermath.</p>
-<p>C&S Plumbing has worked Cape Coral's canal neighborhoods — from Tarpon Point to Burnt Store — since 1998. Call <a href="tel:8337586248">833-PLUMB-IT</a> or <a href="/booking">book an inspection online</a>.</p>`,
+<p>C&S Plumbing has worked Cape Coral's canal neighborhoods — from Tarpon Point to Burnt Store — since 1998. Call <a href="${BUSINESS.phoneHref}">${BUSINESS.phone}</a> or <a href="/booking">book an inspection online</a>.</p>`,
   },
   {
     slug: "slab-leak-insurance-florida",
@@ -3465,7 +3308,7 @@ export const BLOG_POSTS: BlogPost[] = [
 <p>If your home has had two or more slab or pinhole leaks, insurers take notice — some carriers non-renew policies on homes with recurring leak claims. At that point a <a href="/repiping-cape-coral">whole-home repipe</a> often costs less than the combination of repeated repairs, rising premiums, and a potential non-renewal. We'll always tell you honestly which side of that line your home is on.</p>
 
 <h2>Suspect a Slab Leak Right Now?</h2>
-<p>Shut off the main, note your meter reading, and call <a href="tel:8337586248">833-PLUMB-IT</a>. C&S Plumbing provides same-day <a href="/leak-repair-cape-coral">leak detection across Southwest Florida</a>, with written documentation you can hand straight to your adjuster.</p>`,
+<p>Shut off the main, note your meter reading, and call <a href="${BUSINESS.phoneHref}">${BUSINESS.phone}</a>. C&S Plumbing provides same-day <a href="/leak-repair-cape-coral">leak detection across Southwest Florida</a>, with written documentation you can hand straight to your adjuster.</p>`,
   },
   {
     slug: "water-heater-hurricane-prep-florida",
@@ -3499,7 +3342,7 @@ export const BLOG_POSTS: BlogPost[] = [
 <p>If your garage has taken water before, two upgrades are worth discussing when your current unit ages out. Raising a replacement tank on a code-compliant stand buys you protection from shallow flooding. And wall-mounted <a href="/blog/tankless-vs-traditional-water-heaters">tankless units</a> sit several feet off the floor by design — one reason they've become popular in flood-prone <a href="/areas/cape-coral">Cape Coral</a> and coastal <a href="/areas/fort-myers">Fort Myers</a> neighborhoods.</p>
 
 <h2>Need It Assessed?</h2>
-<p>Whether it's pre-season peace of mind or a post-storm evaluation, C&S Plumbing services every make of gas, electric, and tankless water heater across Southwest Florida. Call <a href="tel:8337586248">833-PLUMB-IT</a> or <a href="/booking">book online</a> — and stay safe out there this season.</p>`,
+<p>Whether it's pre-season peace of mind or a post-storm evaluation, C&S Plumbing services every make of gas, electric, and tankless water heater across Southwest Florida. Call <a href="${BUSINESS.phoneHref}">${BUSINESS.phone}</a> or <a href="/booking">book online</a> — and stay safe out there this season.</p>`,
   },
   {
     slug: "whole-home-repipe-cost-cape-coral",
@@ -3536,13 +3379,13 @@ export const BLOG_POSTS: BlogPost[] = [
 
 <h2>Repipe Cost by Home Size (PEX)</h2>
 <p>These are C&S Plumbing's real working ranges for a complete hot-and-cold repipe in PEX, including materials, labor, the Lee County permit, final inspection, and drywall patching:</p>
-<p><strong>2-bed / 2-bath, up to 1,500 sq ft — ${rangeInline("repipe.pex2x2")}.</strong> Most condos and smaller slab homes. A North Fort Myers condo we repiped recently came in at $4,950, done in a single day so the unit could be re-rented that weekend.</p> // claim-ok: documented job
-<p><strong>3-bed / 2-bath, 1,800–2,400 sq ft — ${rangeInline("repipe.pex3x2")}.</strong> The typical Cape Coral and Fort Myers single-family home. A 1990 Cape Coral SE home with failing polybutylene ran $7,200, finished in a day and a half with nine access cuts, all patched.</p> // claim-ok: documented job
+<p><strong>2-bed / 2-bath, up to 1,500 sq ft — ${rangeInline("repipe.pex2x2")}.</strong> Most condos and smaller slab homes. A North Fort Myers condo we repiped recently came in at $4,950, done in a single day so the unit could be re-rented that weekend.</p>${/* claim-ok: documented job */ ""}
+<p><strong>3-bed / 2-bath, 1,800–2,400 sq ft — ${rangeInline("repipe.pex3x2")}.</strong> The typical Cape Coral and Fort Myers single-family home. A 1990 Cape Coral SE home with failing polybutylene ran $7,200, finished in a day and a half with nine access cuts, all patched.</p>${/* claim-ok: documented job */ ""}
 <p><strong>4-bed or larger, 2,500+ sq ft — ${rangeInline("repipe.pex4plus")}.</strong> Two-story layouts and bigger floor plans take more pipe, more openings, and more time.</p>
 
 <h2>PEX or Copper?</h2>
 <p>PEX is what we recommend for most Southwest Florida homes, and it's what the price brackets above assume. It doesn't corrode in our aggressive water, it tolerates minor slab movement, installs faster with fewer wall openings, and carries a manufacturer warranty on the pipe itself.</p>
-<p>Type-L copper is still the right call for some owners — often ahead of an appraisal or for personal preference — and adds <strong>${rangeInline("repipe.copperUpcharge")} over the PEX price</strong> plus roughly an extra day of install time. A 2,650 sq ft Fort Myers home we repiped in copper for resale came to $11,800 and passed the county final on the first inspection.</p> // claim-ok: documented job
+<p>Type-L copper is still the right call for some owners — often ahead of an appraisal or for personal preference — and adds <strong>${rangeInline("repipe.copperUpcharge")} over the PEX price</strong> plus roughly an extra day of install time. A 2,650 sq ft Fort Myers home we repiped in copper for resale came to $11,800 and passed the county final on the first inspection.</p>${/* claim-ok: documented job */ ""}
 
 <h2>The Polybutylene Factor</h2>
 <p>If your Cape Coral home was built between 1978 and 1995, there's a good chance it still has gray <a href="/blog/polybutylene-pipe-problems-cape-coral">polybutylene supply lines</a> — the pipe material that failed so widely it triggered a class-action settlement. Removing poly adds <strong>${rangeInline("repipe.polyRemoval")}</strong> to the job, and it's the single most common reason Cape Coral homes get repiped. Some Florida insurers now require poly replacement as a condition of coverage, which means the repipe often pays for itself in premiums and insurability.</p>
@@ -3554,7 +3397,7 @@ export const BLOG_POSTS: BlogPost[] = [
 <p>Most repipes are done in <strong>1–2 days</strong>. We run the new PEX first, then switch your home over — so water is typically only off for a few hours, and you don't need to move out. See <a href="/blog/signs-you-need-a-repipe">the warning signs that it's time</a> if you're still deciding.</p>
 
 <h2>Get Your Home's Actual Number</h2>
-<p>Our <a href="/quote-builder?service=repipe">instant repipe quote builder</a> gives you a real range for your home's size and pipe choice in about a minute, no phone call required. Prefer eyes on the job? <a href="/booking">Book a free estimate</a> or call <a href="tel:8337586248">833-PLUMB-IT</a> — C&S Plumbing has repiped <a href="/repiping-cape-coral">Cape Coral</a> homes since 1998, with 5.0 stars across our Google reviews.</p>`,
+<p>Our <a href="/quote-builder?service=repipe">instant repipe quote builder</a> gives you a real range for your home's size and pipe choice in about a minute, no phone call required. Prefer eyes on the job? <a href="/booking">Book a free estimate</a> or call <a href="${BUSINESS.phoneHref}">${BUSINESS.phone}</a> — C&S Plumbing has repiped <a href="/repiping-cape-coral">Cape Coral</a> homes since 1998, with 5.0 stars across our Google reviews.</p>`,
   },
   {
     slug: "water-heater-replacement-signs-cost-swfl",
@@ -3597,18 +3440,18 @@ export const BLOG_POSTS: BlogPost[] = [
 <p><strong>5. It's simply old.</strong> Tank units in Southwest Florida realistically last <strong>8–12 years</strong>. Check the manufacture date on the data plate; if it starts with 201, you're on borrowed time.</p>
 
 <h2>Repair vs. Replace: The Rule We Use</h2>
-<p>Our techs apply a simple test on every call. <strong>Under 8 years old with a specific failed part</strong> — thermostat, element, T&P valve — repair it: <strong>${rangeInline("waterHeater.repair")}, usually same-day</strong>. <strong>Over 10 years old, or any tank leak</strong> — replace it. Between 8 and 10 is a judgment call we'll make honestly based on the unit's condition, because putting $400 into a 9-year-old tank only sometimes makes sense.</p> // claim-ok: illustrative repair, not a published price
+<p>Our techs apply a simple test on every call. <strong>Under 8 years old with a specific failed part</strong> — thermostat, element, T&P valve — repair it: <strong>${rangeInline("waterHeater.repair")}, usually same-day</strong>. <strong>Over 10 years old, or any tank leak</strong> — replace it. Between 8 and 10 is a judgment call we'll make honestly based on the unit's condition, because putting $400 into a 9-year-old tank only sometimes makes sense.</p>${/* claim-ok: illustrative repair, not a published price */ ""}
 
 <h2>What Replacement Actually Costs in SWFL</h2>
 <p>Real installed prices from our current price book — including haul-away of the old unit, code-compliant pan and fittings, and the Lee County permit:</p>
 <p><strong>40-gallon electric tank — ${rangeInline("waterHeater.tank40")}.</strong> The right size for 1–2 people.</p>
-<p><strong>50-gallon electric tank — ${rangeInline("waterHeater.tank50")}.</strong> The most common size for an SWFL family of four. When an 11-year-old tank in Fort Myers failed on a Friday at 5pm, this is what got installed by 7pm Saturday — $2,150, old unit hauled away same trip.</p> // claim-ok: documented job
+<p><strong>50-gallon electric tank — ${rangeInline("waterHeater.tank50")}.</strong> The most common size for an SWFL family of four. When an 11-year-old tank in Fort Myers failed on a Friday at 5pm, this is what got installed by 7pm Saturday — $2,150, old unit hauled away same trip.</p>${/* claim-ok: documented job */ ""}
 <p><strong>Heat-pump hybrid (50–80 gal) — ${rangeInline("waterHeater.hybrid")}.</strong> Cuts water-heating energy use dramatically — one Naples retrofit is running about 70% less than the old unit on the owner's FPL bill — and Florida utility rebates of up to ~${money(price("waterHeater.hybridRebate").max)} are often available.</p>
 <p><strong>Gas tankless (Rinnai/Navien) — ${rangeInline("waterHeater.tankless")}</strong> including gas line and venting. Endless hot water and a 20+ year service life with annual flushing; see our <a href="/blog/tankless-vs-traditional-water-heaters">tankless vs. tank comparison</a> for whether it fits your home.</p>
 
 <h2>Don't Wait for the Flood</h2>
 <p>Most water heaters sit in the garage or an interior closet, and a tank that fails wet dumps its entire capacity onto the floor. If your unit is showing two or more of the signs above, replacing it on your schedule beats replacing it at 2am — and if a storm is coming, read our guide on <a href="/blog/water-heater-hurricane-prep-florida">water heaters and hurricanes</a> first.</p>
-<p>Get a real number in about a minute with the <a href="/quote-builder?service=water-heater">instant water heater quote builder</a>, <a href="/booking">book same-day service</a>, or call <a href="tel:8337586248">833-PLUMB-IT</a>. C&S Plumbing installs and services <a href="/water-heater-repair-cape-coral">every brand across Cape Coral</a>, Fort Myers, and all of Southwest Florida.</p>`,
+<p>Get a real number in about a minute with the <a href="/quote-builder?service=water-heater">instant water heater quote builder</a>, <a href="/booking">book same-day service</a>, or call <a href="${BUSINESS.phoneHref}">${BUSINESS.phone}</a>. C&S Plumbing installs and services <a href="/water-heater-repair-cape-coral">every brand across Cape Coral</a>, Fort Myers, and all of Southwest Florida.</p>`,
   },
   {
     slug: "how-long-does-drain-cleaning-take",
@@ -3658,7 +3501,7 @@ export const BLOG_POSTS: BlogPost[] = [
 <p>Our rule: <strong>the second time the same line clogs within a year, it's a jetting-and-camera conversation.</strong> One Lehigh Acres customer had been paying another plumber three times a year to cable the same kitchen line. We jetted it, scoped it, found a low spot trapping grease — it hasn't backed up in 14 months. Cheaper than the fourth cabling would have been. More on causes and prevention in our <a href="/blog/clogged-drains-causes-fixes-swfl">clogged drains guide</a>.</p>
 
 <h2>Same-Day Service, Honest Clock</h2>
-<p>Most drain calls across <a href="/drain-cleaning-cape-coral">Cape Coral</a>, Fort Myers, and Lehigh Acres get same-day service in regular hours, and we handle 24/7 emergencies when every drain in the house is backing up. After-hours work carries a ${EMERGENCY_CLAIMS.afterHoursSurcharge} surcharge — which we aim to never charge, because most jobs fit in business hours. Call <a href="tel:8337586248">833-PLUMB-IT</a> or <a href="/booking">book online</a>, and see full pricing on our <a href="/services/drain-cleaning">drain cleaning page</a>.</p>`,
+<p>Most drain calls across <a href="/drain-cleaning-cape-coral">Cape Coral</a>, Fort Myers, and Lehigh Acres get same-day service in regular hours, and we handle 24/7 emergencies when every drain in the house is backing up. After-hours work carries a ${EMERGENCY_CLAIMS.afterHoursSurcharge} surcharge — which we aim to never charge, because most jobs fit in business hours. Call <a href="${BUSINESS.phoneHref}">${BUSINESS.phone}</a> or <a href="/booking">book online</a>, and see full pricing on our <a href="/services/drain-cleaning">drain cleaning page</a>.</p>`,
   },
 ];
 
@@ -3692,7 +3535,7 @@ export const GALLERY_CATEGORIES = [
 //   },
 //
 // Photos: `npm run photos:ingest` strips EXIF/GPS; `npm run photos:strip -- --check` verifies.
-export const COMPLETED_PROJECTS: CompletedProject[] = [
+export const COMPLETED_PROJECT_TEXT: CompletedProjectText[] = [
   {
     slug: "hansen-homes-cape-coral",
     updatedOn: "2026-09-22",
@@ -3705,23 +3548,12 @@ export const COMPLETED_PROJECTS: CompletedProject[] = [
     description:
       "C&S Plumbing is the underground plumbing partner for Hansen Homes' newest Cape Coral build. Underground rough-in is complete — supply lines, drain/waste/vent piping, and stub-outs installed and inspected before the slab pour. We'll be back for the in-wall rough and trim phases as the build progresses. This page will be updated with photos from each phase as work continues.",
     location: "Cape Coral, FL",
-    coverImage: "/images/projects/hansen-homes-cape-coral/underground/aerial-1.jpg",
     phases: [
       {
         name: "Underground",
         slug: "underground",
         description:
           "Below-slab drain, waste, vent, and supply piping installed and pressure-tested before the concrete pour. Drone aerials show the full lot and slab layout before pour.",
-        images: [
-          { src: "/images/projects/hansen-homes-cape-coral/underground/aerial-1.jpg", alt: "Drone view of mini excavator cutting underground plumbing trenches inside the block stem wall before the slab pour" },
-          { src: "/images/projects/hansen-homes-cape-coral/underground/aerial-2.jpg", alt: "Top-down aerial of stem wall footprint with sewer trench lines and PVC stub-ups being set in Cape Coral" },
-          { src: "/images/projects/hansen-homes-cape-coral/underground/aerial-3.jpg", alt: "Street-side drone view of C&S Plumbing service truck at a Hansen Homes lot with block stem wall behind" },
-          { src: "/images/projects/hansen-homes-cape-coral/underground/aerial-4.jpg", alt: "Low aerial from the street of plumbing and builder trucks at the lot with a mini excavator behind" },
-          { src: "/images/projects/hansen-homes-cape-coral/underground/aerial-5.jpg", alt: "Wide drone view of the L-shaped block stem wall and underground trench layout with neighboring homes beyond" },
-          { src: "/images/projects/hansen-homes-cape-coral/underground/aerial-6.jpg", alt: "Close aerial of underground DWV trench with white PVC stub-ups and fittings inside the stem wall before backfill" },
-          { src: "/images/projects/hansen-homes-cape-coral/underground/aerial-7.jpg", alt: "Straight-down aerial of the full Cape Coral lot showing stem wall outline and plumbing trench lines between neighbors" },
-          { src: "/images/projects/hansen-homes-cape-coral/underground/aerial-8.jpg", alt: "Overhead drone view of the block stem wall with underground sewer trench crossing the future slab" },
-        ],
       },
     ],
     metaTitle: "Hansen Homes Cape Coral — New Construction Plumbing",
@@ -3738,43 +3570,12 @@ export const COMPLETED_PROJECTS: CompletedProject[] = [
     description:
       "Full residential new construction plumbing on Fort Myers Beach. C&S Plumbing handled every phase — underground supply and DWV, in-wall rough-in, water heater set, and final fixture trim — for a custom home built to current Florida Building Code with hurricane and salt-air considerations. Bath fixtures and water heater detail shots included below.",
     location: "Fort Myers Beach, FL",
-    coverImage: "/images/projects/306-seminal-way-fort-myers-beach/build/hero-1.webp",
     phases: [
       {
         name: "Build",
         slug: "build",
         description:
           "Underground rough-in through final trim-out. Photos cover supply and DWV piping, fixture rough, water heater installation, and finished bath fixtures.",
-        images: [
-          { src: "/images/projects/306-seminal-way-fort-myers-beach/build/hero-1.webp", alt: "Finished kitchen island with gold pull-down faucet and undermount sink at the Fort Myers Beach custom home" },
-          { src: "/images/projects/306-seminal-way-fort-myers-beach/build/hero-2.webp", alt: "Double vanity with two undermount sinks and matte black widespread faucets trimmed out beside a floor-mount toilet" },
-          { src: "/images/projects/306-seminal-way-fort-myers-beach/build/hero-3.webp", alt: "Guest bath vanity with brushed gold widespread faucet, floor-mount toilet and glass-enclosed tile shower trimmed out" },
-          { src: "/images/projects/306-seminal-way-fort-myers-beach/build/hero-4.webp", alt: "Powder bath with undermount sink, matte black single-handle faucet and floor-mount elongated toilet at finished trim" },
-          { src: "/images/projects/306-seminal-way-fort-myers-beach/build/hero-5.webp", alt: "Alcove tub with matte black shower valve trim, tub spout and showerhead set in herringbone tile" },
-          { src: "/images/projects/306-seminal-way-fort-myers-beach/build/hero-6.webp", alt: "Primary bath with double vanity faucets, walk-in tile shower with rain head and hand shower, and freestanding tub" },
-          { src: "/images/projects/306-seminal-way-fort-myers-beach/build/photo-1.jpeg", alt: "Washing machine outlet box with PEX supplies and PVC standpipe trap roughed in a framed wall" },
-          { src: "/images/projects/306-seminal-way-fort-myers-beach/build/photo-2.jpeg", alt: "PVC DWV vent stack rising through the top plate into floor joists with a tee and elbow overhead" },
-          { src: "/images/projects/306-seminal-way-fort-myers-beach/build/photo-3.jpeg", alt: "Double vanity rough-in with PEX stub-outs on brackets and PVC drain arms beside a vent stack" },
-          { src: "/images/projects/306-seminal-way-fort-myers-beach/build/photo-4.jpeg", alt: "PEX supply drops on drop-ear elbows in the wall with a foam-sealed PVC drain stub through the subfloor" },
-          { src: "/images/projects/306-seminal-way-fort-myers-beach/build/photo-5.jpeg", alt: "Custom shower rough-in with shower valve body, PEX supplies, showerhead drop-ear elbow and drain body in the subfloor" },
-          { src: "/images/projects/306-seminal-way-fort-myers-beach/build/photo-6.jpeg", alt: "Tub and shower valve body roughed in with PEX supply riser and copper tub spout stub-out" },
-          { src: "/images/projects/306-seminal-way-fort-myers-beach/build/photo-7.jpeg", alt: "White alcove bathtub set in framing with overflow and drain, tub and shower valve roughed in the wall" },
-          { src: "/images/projects/306-seminal-way-fort-myers-beach/build/photo-8.jpeg", alt: "PVC DWV riser strapped up the concrete block wall into floor trusses with PEX supply lines overhead" },
-          { src: "/images/projects/306-seminal-way-fort-myers-beach/build/photo-9.jpeg", alt: "PVC DWV stack with offset and cleanout tee at the base running up a ground-floor block wall" },
-          { src: "/images/projects/306-seminal-way-fort-myers-beach/build/photo-10.jpeg", alt: "PVC DWV drain lines with long-sweep elbows and a wye threaded through floor trusses, PEX supply alongside" },
-          { src: "/images/projects/306-seminal-way-fort-myers-beach/build/photo-11.jpeg", alt: "Overhead PVC DWV drain and vent runs with sanitary tees through floor trusses and PEX supply lines" },
-          { src: "/images/projects/306-seminal-way-fort-myers-beach/build/photo-12.jpeg", alt: "PVC vent branches with elbows and PEX supply lines secured with pipe clamps inside the floor truss space" },
-          { src: "/images/projects/306-seminal-way-fort-myers-beach/build/photo-13.jpeg", alt: "PVC vent stack rising through a framed partition wall with stud protector plates and a PEX supply riser" },
-          { src: "/images/projects/306-seminal-way-fort-myers-beach/build/photo-14.jpeg", alt: "PVC drain riser foam-sealed at the top plate, joining DWV elbows in the floor truss space above" },
-          { src: "/images/projects/306-seminal-way-fort-myers-beach/build/photo-15.jpeg", alt: "Two shower valve bodies roughed in a stud wall with PEX supply lines and capped stub-outs on brackets" },
-          { src: "/images/projects/306-seminal-way-fort-myers-beach/build/photo-16.jpeg", alt: "Looking up at PVC DWV vent elbows and PEX supply crossing open floor trusses above a framed wall" },
-          { src: "/images/projects/306-seminal-way-fort-myers-beach/build/photo-17.jpeg", alt: "PVC DWV vent line with elbows and pipe clamps routed through open-web floor trusses during rough-in" },
-          { src: "/images/projects/306-seminal-way-fort-myers-beach/build/photo-18.jpeg", alt: "Copper riser strapped up the concrete block wall from a foam-sealed slab penetration into the floor trusses" },
-          { src: "/images/projects/306-seminal-way-fort-myers-beach/build/photo-19.jpeg", alt: "Copper water service stub-up with brass ball valve at the exterior block wall before backfill of the trench" },
-          { src: "/images/projects/306-seminal-way-fort-myers-beach/build/photo-converted-1.jpeg", alt: "Open trench with PVC underground lines run toward the street on the Fort Myers Beach lot" },
-          { src: "/images/projects/306-seminal-way-fort-myers-beach/build/photo-converted-2.jpeg", alt: "PVC water service and sewer lateral laid in the trench, utility trailer and fire hydrant at the street" },
-          { src: "/images/projects/306-seminal-way-fort-myers-beach/build/photo-converted-3.jpeg", alt: "Underground trench along the block foundation with a PVC drain line elbowing out through the wall" },
-        ],
       },
     ],
     metaTitle: "306 Seminal Way — Fort Myers Beach New Construction Plumbing",
@@ -3792,90 +3593,24 @@ export const COMPLETED_PROJECTS: CompletedProject[] = [
     description:
       "Full plumbing installation for the IFHA Community Center new construction project in Lee County. C&S Plumbing handled all phases from underground rough-in through final trim out, working alongside Heatherwood Construction to deliver a complete commercial plumbing system on schedule and within budget.",
     location: "Lee County, FL",
-    coverImage: "/images/projects/ifha-community-center/underground/IMG_0723.jpeg",
     phases: [
       {
         name: "Underground",
         slug: "underground",
         description:
           "Below-slab drainage, water lines, and waste piping installed before the concrete pour.",
-        images: [
-          { src: "/images/projects/ifha-community-center/underground/IMG_0723.jpeg", alt: "PVC DWV stub-ups rising from below-slab trenches inside the formboards before the pour at IFHA Community Center" },
-          { src: "/images/projects/ifha-community-center/underground/IMG_0724.jpeg", alt: "Plumber setting PVC drain lines and vertical stub-ups in open trenches ahead of the slab pour" },
-          { src: "/images/projects/ifha-community-center/underground/IMG_0725.jpeg", alt: "Underground PVC sewer line laid at the bottom of a trench along the building formboards" },
-          { src: "/images/projects/ifha-community-center/underground/IMG_0726.jpeg", alt: "Three PVC DWV stub-ups standing in a below-slab trench with string lines set to finished grade" },
-          { src: "/images/projects/ifha-community-center/underground/IMG_0727.jpeg", alt: "PVC drain line with long-sweep bend running along a trench bottom under a grade string line" },
-          { src: "/images/projects/ifha-community-center/underground/IMG_0728.jpeg", alt: "Wide view of underground PVC drain runs and vertical stub-ups trenched across the Lee County building pad" },
-          { src: "/images/projects/ifha-community-center/underground/IMG_0729.jpeg", alt: "PVC pipe sleeve passing beneath the slab formboard at a marked wall penetration in a trench" },
-          { src: "/images/projects/ifha-community-center/underground/IMG_0730.jpeg", alt: "Foam-wrapped PVC pipe stub crossing under the formboard at a paint-marked footing penetration" },
-          { src: "/images/projects/ifha-community-center/underground/IMG_0737.jpeg", alt: "Graded building pad with formboards and PVC stub-ups set before the slab pour at IFHA Community Center" },
-        ],
       },
       {
         name: "2nd Rough",
         slug: "2nd-rough",
         description:
           "In-wall supply and drain lines roughed in after framing, before drywall.",
-        images: [
-          { src: "/images/projects/ifha-community-center/2nd-rough/IMG_0945.jpeg", alt: "Close-up of a CPVC water main coupling hung through open wood roof trusses above the slab" },
-          { src: "/images/projects/ifha-community-center/2nd-rough/photo-8.jpg", alt: "CPVC supply riser strapped down a CMU block wall beneath open wood roof trusses" },
-          { src: "/images/projects/ifha-community-center/2nd-rough/photo-9.jpg", alt: "CPVC water line dropping down a CMU wall between window openings, company truck parked outside" },
-          { src: "/images/projects/ifha-community-center/2nd-rough/photo-10.jpg", alt: "CPVC water main with tee fitting hung on clips through ceiling joists, branch dropping to a fixture" },
-          { src: "/images/projects/ifha-community-center/2nd-rough/photo-11.jpg", alt: "PVC vent and drain lines with hangers routed through open roof trusses and wall framing" },
-          { src: "/images/projects/ifha-community-center/2nd-rough/photo-12.jpg", alt: "Overhead PVC and CPVC piping run through roof trusses beside insulated HVAC ducts" },
-          { src: "/images/projects/ifha-community-center/2nd-rough/photo-13.jpg", alt: "Wide view of the open-truss main hall at IFHA Community Center with a plumber uncoiling tubing" },
-          { src: "/images/projects/ifha-community-center/2nd-rough/photo-14.jpg", alt: "PVC vent piping with elbows running through trusses and wall framing next to a scissor lift" },
-          { src: "/images/projects/ifha-community-center/2nd-rough/photo-15.jpg", alt: "CPVC supply lines offset down a block wall with a PVC vent elbow penetrating above the window" },
-          { src: "/images/projects/ifha-community-center/2nd-rough/photo-16.jpg", alt: "CPVC supply drops on a CMU wall beside metal studs with a PVC stub-up in the slab" },
-          { src: "/images/projects/ifha-community-center/2nd-rough/photo-17.jpg", alt: "Looking up at PVC vent lines and CPVC supply runs through roof trusses above metal stud walls" },
-          { src: "/images/projects/ifha-community-center/2nd-rough/photo-18.jpg", alt: "Roof-truss view of PVC vent piping and CPVC branch lines above a framed metal stud wall" },
-          { src: "/images/projects/ifha-community-center/2nd-rough/photo-19.jpg", alt: "Restroom rough-in with PVC drain stub-ups for flush-valve toilets, vent risers and capped CPVC supplies" },
-          { src: "/images/projects/ifha-community-center/2nd-rough/photo-20.jpg", alt: "Second-rough PVC drain and vent piping with red test caps in metal stud restroom walls" },
-          { src: "/images/projects/ifha-community-center/2nd-rough/photo-21.jpg", alt: "Hallway framing with a PVC vent riser, CPVC drop on the block wall and a capped floor stub" },
-          { src: "/images/projects/ifha-community-center/2nd-rough/photo-22.jpg", alt: "PVC drain stub-up in the slab with CPVC supply drops on the block wall and vent lines overhead" },
-          { src: "/images/projects/ifha-community-center/2nd-rough/photo-23.jpg", alt: "Looking up at PVC vent piping and a CPVC riser through trusses above a marked CMU wall" },
-          { src: "/images/projects/ifha-community-center/2nd-rough/photo-24.jpg", alt: "PVC vent lines with elbows and hangers under the roof deck feeding a metal stud wall" },
-          { src: "/images/projects/ifha-community-center/2nd-rough/photo-25.jpg", alt: "PVC vent riser and CPVC supply line strapped up a wood-framed wall into the roof trusses" },
-          { src: "/images/projects/ifha-community-center/2nd-rough/photo-26.jpg", alt: "Single-fixture rough-in with a PVC vent riser, CPVC supply drop and red-capped stub-out on blocking" },
-          { src: "/images/projects/ifha-community-center/2nd-rough/photo-27.jpg", alt: "Lavatory bank rough-in with three PVC vent risers, drain arms and capped CPVC stub-outs in wood framing" },
-          { src: "/images/projects/ifha-community-center/2nd-rough/photo-28.jpg", alt: "Overhead wood joists above a plywood wall with wrapped in-wall boxes strapped to the framing" },
-          { src: "/images/projects/ifha-community-center/2nd-rough/photo-29.jpg", alt: "CPVC supply line strapped down a CMU wall to a low stub-out beside a door opening" },
-          { src: "/images/projects/ifha-community-center/2nd-rough/photo-30.jpg", alt: "PVC vent riser and CPVC supply lines in a wood-framed wall with a capped floor stub-up" },
-          { src: "/images/projects/ifha-community-center/2nd-rough/photo-31.jpg", alt: "PVC vent riser strapped to wood studs with a CPVC supply drop and blocking below" },
-          { src: "/images/projects/ifha-community-center/2nd-rough/photo-32.jpg", alt: "CPVC hot and cold lines with 90-degree turns and a PVC vent elbow on treated blocking" },
-          { src: "/images/projects/ifha-community-center/2nd-rough/photo-33.jpg", alt: "CPVC supply pair on treated blocking with a pressure test gauge and shutoff valves at the bottom" },
-          { src: "/images/projects/ifha-community-center/2nd-rough/photo-34.jpg", alt: "Close-up of a pressure test gauge and blue-handle valve on a CPVC supply line during rough-in" },
-        ],
       },
       {
         name: "Trim Out",
         slug: "trim-out",
         description:
           "Final fixture installation including sinks, faucets, toilets, and water heater connections.",
-        images: [
-          { src: "/images/projects/ifha-community-center/trim-out/photo-0.jpg", alt: "Elkay stainless steel drop-in sink with single-handle faucet trimmed out on a laminate counter" },
-          { src: "/images/projects/ifha-community-center/trim-out/photo-1.jpg", alt: "Stainless single-bowl sink with basket strainer and single-lever faucet on a marble-look laminate top" },
-          { src: "/images/projects/ifha-community-center/trim-out/photo-2.jpg", alt: "Double-bowl stainless kitchen sink with gooseneck faucet and wrist-blade handles at IFHA Community Center" },
-          { src: "/images/projects/ifha-community-center/trim-out/photo-3.jpg", alt: "Floor-mount flush-valve toilet with the Sloan flushometer still boxed for protection in a tiled restroom" },
-          { src: "/images/projects/ifha-community-center/trim-out/photo-4.jpg", alt: "Corner-set floor-mount toilet with exposed flush valve and protective wrap in a gray tile restroom" },
-          { src: "/images/projects/ifha-community-center/trim-out/photo-5.jpg", alt: "Oval drop-in lavatory set in an ADA vanity top before faucet installation, gray tile wall" },
-          { src: "/images/projects/ifha-community-center/trim-out/photo-6.jpg", alt: "Two oval drop-in lavatories in an accessible vanity counter awaiting faucet trim" },
-          { src: "/images/projects/ifha-community-center/trim-out/photo-7.jpg", alt: "Exterior sewer cleanout riser and PVC stub at the building foundation before final grading in Lee County" },
-          { src: "/images/projects/ifha-community-center/trim-out/photo-35.jpg", alt: "Wall-hung lavatory and floor-mount flush-valve toilet with grab bars, floor drain awaiting its strainer" },
-          { src: "/images/projects/ifha-community-center/trim-out/photo-36.jpg", alt: "Two Kohler wall-hung urinals with exposed flush valves and a privacy screen in a tiled restroom" },
-          { src: "/images/projects/ifha-community-center/trim-out/photo-37.jpg", alt: "Oval lavatory with single-hole faucet trimmed on an accessible vanity beneath a mirror" },
-          { src: "/images/projects/ifha-community-center/trim-out/photo-38.jpg", alt: "PVC P-trap, angle stops and flexible supplies with a mixing valve under an accessible lavatory" },
-          { src: "/images/projects/ifha-community-center/trim-out/photo-39.jpg", alt: "Pair of oval lavatories with single-hole faucets trimmed on an accessible vanity counter" },
-          { src: "/images/projects/ifha-community-center/trim-out/photo-40.jpg", alt: "Under-counter view of twin PVC P-traps, angle stops and insulated trap wrap on ADA lavatories" },
-          { src: "/images/projects/ifha-community-center/trim-out/photo-41.jpg", alt: "Wall-hung lavatory with faucet and PVC P-trap trimmed out beside a hand dryer rough-in" },
-          { src: "/images/projects/ifha-community-center/trim-out/photo-42.jpg", alt: "Floor-mount flush-valve toilet with open-front seat and stainless grab bars in an accessible stall" },
-          { src: "/images/projects/ifha-community-center/trim-out/photo-43.jpg", alt: "Flush-valve toilet installed inside a partitioned stall with gray tile walls and floor" },
-          { src: "/images/projects/ifha-community-center/trim-out/photo-44.jpg", alt: "Floor-mount flush-valve toilet in a tiled stall with the floor drain still awaiting its strainer" },
-          { src: "/images/projects/ifha-community-center/trim-out/photo-45.jpg", alt: "Double-bowl stainless sink with gooseneck faucet, basket strainers set, counter covered with drawings" },
-          { src: "/images/projects/ifha-community-center/trim-out/photo-46.jpg", alt: "PVC P-trap and end-outlet continuous waste with braided supplies under a double-bowl sink cabinet" },
-          { src: "/images/projects/ifha-community-center/trim-out/photo-47.jpg", alt: "Electric water heater on a wall bracket with CPVC piping, expansion tank and T&P discharge line" },
-          { src: "/images/projects/ifha-community-center/trim-out/photo-48.jpg", alt: "Precast mop sink with wall-mount service faucet and water heater relief line terminating above the basin" },
-        ],
       },
     ],
     metaTitle: "IFHA Community Center Plumbing Project",
@@ -3893,25 +3628,12 @@ export const COMPLETED_PROJECTS: CompletedProject[] = [
     description:
       "Complete commercial bathroom remodel for Mangos Restaurant & Bar on North Captiva Island. C&S Plumbing handled the full scope from demolition of the existing restroom facilities through rough-in of all new supply and drain lines to final trim and fixture installation, delivering a modern, code-compliant restroom for this popular island destination.",
     location: "North Captiva Island, FL",
-    coverImage: "/images/projects/mangos-bathroom-remodel/final/IMG_3409.jpeg",
     phases: [
       {
         name: "Finished Result",
         slug: "final",
         description:
           "The completed commercial bathroom remodel — modern fixtures, new plumbing throughout, and a clean, code-compliant restroom.",
-        images: [
-          { src: "/images/projects/mangos-bathroom-remodel/final/IMG_3409.jpeg", alt: "Double trough sink with two chrome single-handle faucets on a white oak vanity, marble-look tile and LED mirror" },
-          { src: "/images/projects/mangos-bathroom-remodel/final/IMG_3410.jpeg", alt: "Walk-in tile shower with ceiling rain head, hand shower, two chrome valve trims and a center floor drain" },
-          { src: "/images/projects/mangos-bathroom-remodel/final/IMG_3416.jpeg", alt: "ADA restroom stall with wall-hung lavatory, chrome centerset faucet, floor-mount tank toilet and chrome grab bars at Mangos" },
-          { src: "/images/projects/mangos-bathroom-remodel/final/IMG_3425.jpeg", alt: "Finished Mangos men's restroom with trough sink vanity, wall-hung urinals with privacy screens and louvered stall doors" },
-          { src: "/images/projects/mangos-bathroom-remodel/final/IMG_3435.jpeg", alt: "Chrome single-handle lavatory faucet running into the solid-surface trough sink with pop-up drain and marble-look backsplash" },
-          { src: "/images/projects/mangos-bathroom-remodel/final/IMG_3437.jpeg", alt: "Two chrome single-handle faucets running water into the trough sink beneath the LED-backlit mirror at final testing" },
-          { src: "/images/projects/mangos-bathroom-remodel/final/IMG_3445.jpeg", alt: "Two wall-hung urinals with chrome manual flushometer valves, stainless privacy screen and a linear trench drain below" },
-          { src: "/images/projects/mangos-bathroom-remodel/final/IMG_3448.jpeg", alt: "Wall-mounted hose bibb with threaded spout installed through marble-look wall tile for restroom washdown" },
-          { src: "/images/projects/mangos-bathroom-remodel/final/IMG_3450.jpeg", alt: "Floor-mount tank toilet with open-front elongated seat and chrome ADA grab bars on the rear and side walls" },
-          { src: "/images/projects/mangos-bathroom-remodel/final/IMG_3451.jpeg", alt: "Wall-hung lavatory with chrome two-handle centerset faucet and chrome P-trap beside an ADA grab bar" },
-        ],
       },
     ],
     metaTitle: "Mangos Restaurant Bathroom Remodel",
@@ -3932,81 +3654,16 @@ export const COMPLETED_PROJECTS: CompletedProject[] = [
     description:
       "C&S Plumbing was the commercial plumbing contractor for Hangar 97, a new-construction aviation hangar at Punta Gorda Airport (PGD) built by Stellar Development. Below-slab underground rough-in — supply, drain, waste, and vent piping set and inspected before the pour — and the second rough-in through the commercial structure are documented below. Estimated and project-managed in-house by the C&S office.",
     location: "Punta Gorda, FL",
-    coverImage: "/images/projects/hangar-97-punta-gorda-airport/2nd-rough/photo-10.jpg",
     phases: [
       {
         name: "Underground",
         slug: "underground",
         description: "Below-slab supply, drain, waste, and vent piping installed and inspected ahead of the slab pour for the new hangar.",
-        images: [
-          { src: "/images/projects/hangar-97-punta-gorda-airport/underground/photo-1.jpg", alt: "Trench drain channel with plywood cover set in the sandy trench, mini excavator parked behind" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/underground/photo-2.jpg", alt: "Trench drain run leveled in the open trench ahead of the slab pour at Hangar 97, Punta Gorda" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/underground/photo-3.jpg", alt: "Plumber setting PVC sewer pipe in a deep below-slab trench at the Punta Gorda Airport hangar site" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/underground/photo-4.jpg", alt: "Trench drain line set across the graded building pad with the airport runway fence behind" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/underground/photo-5.jpg", alt: "Staked and taped building pad before underground rough-in, airliner taxiing beyond the airport fence" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/underground/photo-6.jpg", alt: "Close view of trench drain leveling rods set in concrete pads under the plywood-covered channel" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/underground/photo-7.jpg", alt: "PVC drain line and elbow tied into the trench drain outlet in the open trench at Hangar 97" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/underground/photo-8.jpg", alt: "Plumber taping the trench drain end cap and outlet fitting in the trench before backfill" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/underground/photo-9.jpg", alt: "Trench drain run supported on leveling rods in concrete, looking down the trench toward the site entrance" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/underground/photo-10.jpg", alt: "Plumber dry-fitting PVC DWV wyes and combos for the underground sanitary layout at Hangar 97" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/underground/photo-11.jpg", alt: "Slab edge forms staked along the trench line ahead of the pour at the Punta Gorda Airport hangar" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/underground/photo-12.jpg", alt: "Trench drain set to grade on the compacted pad with the airport fence and taxiway beyond" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/underground/photo-13.jpg", alt: "Crew laying PVC sewer pipe in the trench, seen from the excavator cab with the airfield behind" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/underground/photo-14.jpg", alt: "Single PVC DWV line bedded on the trench bottom with bell coupling before backfill" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/underground/photo-15.jpg", alt: "PVC sewer line in the trench joined with a rubber coupling, excavator bucket above at Hangar 97" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/underground/photo-16.jpg", alt: "Shielded rubber coupling joining PVC sewer pipe to an elbow in the site trench" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/underground/photo-17.jpg", alt: "Copper water service riser with ball valve feeding the backflow preventer, PVC sleeves around the pit" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/underground/photo-18.jpg", alt: "Backflow preventer assembly on copper riser with brass ball valve at the Hangar 97 water service" },
-        ],
       },
       {
         name: "Second Rough",
         slug: "2nd-rough",
         description: "In-wall and overhead rough-in — water supply, DWV, and fixture stub-outs run throughout the commercial structure.",
-        images: [
-          { src: "/images/projects/hangar-97-punta-gorda-airport/2nd-rough/photo-1.jpg", alt: "Steel stud office framing inside the pre-engineered metal hangar with CPVC supply runs along the top track" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/2nd-rough/photo-2.jpg", alt: "Overhead CPVC water lines run above steel stud framing beside spiral duct in the hangar office wing" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/2nd-rough/photo-3.jpg", alt: "Hot, cold and recirculation CPVC lines dropping down a steel column with the Punta Gorda runway beyond" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/2nd-rough/photo-4.jpg", alt: "CPVC supply lines strapped along the top of steel stud framing under the hangar roof purlins" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/2nd-rough/photo-5.jpg", alt: "Three CPVC risers clamped to a steel column beside the hangar door opening" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/2nd-rough/photo-6.jpg", alt: "Plumber on a scissor lift running overhead PVC and PEX through steel studs, vent risers at Hangar 97" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/2nd-rough/photo-7.jpg", alt: "PVC DWV vent lines and CPVC supply threaded through steel studs above red and blue PEX distribution" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/2nd-rough/photo-8.jpg", alt: "Overhead CPVC supply runs hung along the corridor beside the sprinkler main and PEX branches" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/2nd-rough/photo-9.jpg", alt: "Steel stud partition with wood header and overhead CPVC runs in the hangar office build-out" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/2nd-rough/photo-10.jpg", alt: "View from the hangar roof edge over the job site toward the Punta Gorda Airport apron" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/2nd-rough/photo-11.jpg", alt: "Hangar roof deck and open door seen through the mezzanine window, runway beyond" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/2nd-rough/photo-12.jpg", alt: "Airport control tower rising behind trees next to the Hangar 97 site" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/2nd-rough/photo-13.jpg", alt: "Crew member on the standing-seam metal roof facing the airport control tower" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/2nd-rough/photo-14.jpg", alt: "Corridor ceiling with CPVC supply on hangers, PVC vent, sprinkler main and firestopped wall penetrations" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/2nd-rough/photo-15.jpg", alt: "Capped hot and cold supply stub-outs and a drain stub through drywall for a lavatory rough-in" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/2nd-rough/photo-16.jpg", alt: "Hydrostatic test gauge manifold with hot and cold valves mounted on the metal wall panel" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/2nd-rough/photo-17.jpg", alt: "PVC vent piping with elbows run across the mezzanine deck beside the exhaust duct" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/2nd-rough/photo-18.jpg", alt: "PVC line with drops along the mezzanine edge against the hangar insulation" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/2nd-rough/photo-19.jpg", alt: "CPVC lines on hangers turning down through firestopped drywall penetrations at the ceiling" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/2nd-rough/photo-20.jpg", alt: "Single pipe drop through a firestopped ceiling penetration next to bundled MC cable" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/2nd-rough/photo-21.jpg", alt: "PVC vent elbow firestopped through the wall top beside CPVC line and exhaust duct" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/2nd-rough/photo-22.jpg", alt: "CPVC riser strapped to the finished wall beside the grooved sprinkler riser at Hangar 97" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/2nd-rough/photo-23.jpg", alt: "Overhead PVC water main with CPVC branch and ball valve, blue PEX and firestopped wall penetrations" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/2nd-rough/photo-24.jpg", alt: "Water line sleeved through a firestopped wall penetration above the electrical panel" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/2nd-rough/photo-25.jpg", alt: "PVC water line dropped down the electrical room wall with three stub-outs, panels alongside" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/2nd-rough/photo-26.jpg", alt: "Corridor ceiling run of CPVC supply, PVC vent and sprinkler main with braided flex drop" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/2nd-rough/photo-27.jpg", alt: "Overhead PVC DWV run and CPVC supply hung along the corridor beside spiral duct at Hangar 97" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/2nd-rough/photo-28.jpg", alt: "Plumber on a ladder finishing overhead corridor piping near the sprinkler main" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/2nd-rough/photo-29.jpg", alt: "Restroom rough-in with PVC DWV stack, wall-hung fixture carrier, PEX supply and copper stub-outs at Hangar 97" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/2nd-rough/photo-30.jpg", alt: "Lavatory carrier with 3-inch PVC DWV riser and red and blue PEX feeding copper stub-outs" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/2nd-rough/photo-31.jpg", alt: "Open hangar bay under the pre-engineered steel frame with the door raised toward the airfield" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/2nd-rough/photo-32.jpg", alt: "Steel stud restroom wall with PVC DWV vent risers, PEX branches and copper stub-outs, cleanout in slab" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/2nd-rough/photo-33.jpg", alt: "Wall-hung fixture carrier with 2-inch PVC DWV riser and PEX supply to copper stub-outs" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/2nd-rough/photo-34.jpg", alt: "PEX hot and cold lines through steel studs to copper stub-outs, closet flange in the slab" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/2nd-rough/photo-35.jpg", alt: "Three CPVC lines clipped along the steel girt behind the hangar wall panel" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/2nd-rough/photo-36.jpg", alt: "Plenum-rated CPVC supply lines clamped in the tight chase between wall panel and insulation" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/2nd-rough/photo-37.jpg", alt: "Plumber on a scissor lift working overhead CPVC and PVC in the corridor at Hangar 97" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/2nd-rough/photo-38.jpg", alt: "Drywalled restroom with closet flange, floor drain and capped lavatory stub-outs awaiting trim" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/2nd-rough/photo-39.jpg", alt: "Long drywalled wall with electrical boxes in the hangar office wing, overhead piping beyond" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/2nd-rough/photo-40.jpg", alt: "Restroom at drywall stage with lavatory stub-outs, closet flange and floor drain in the slab" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/2nd-rough/photo-41.jpg", alt: "Empty hangar bay with the hangar door open toward the Punta Gorda Airport runway" },
-          { src: "/images/projects/hangar-97-punta-gorda-airport/2nd-rough/photo-42.jpg", alt: "Plumber connecting a slab stub-out at the wall base with copper coil and tools staged" },
-        ],
       },
     ],
     scopeDetails: ["Underground DWV and supply rough-in","Second rough-in","Commercial new construction"],
@@ -4032,58 +3689,26 @@ export const COMPLETED_PROJECTS: CompletedProject[] = [
     description:
       "C&S Plumbing is the plumbing contractor on a commercial remodel of a U.S. Postal Service facility in Cape Coral, built by Engelke Construction Solutions, LLC. Scope covers full plumbing demolition, a water repipe, new rough-in, and fixture trim. Phase photos below run from demo through trim as the remodel progresses.",
     location: "Cape Coral, FL",
-    coverImage: "/images/projects/usps-cape-coral-remodel/trim-out/photo-1.jpg",
     phases: [
       {
         name: "Demolition",
         slug: "demo",
         description: "Existing plumbing demolished and removed to prep the facility for the remodel.",
-        images: [
-          { src: "/images/projects/usps-cape-coral-remodel/demo/photo-1.jpg", alt: "Restroom demo with the floor-mount toilet pulled, closet flange exposed, lavatory removed and ADA grab bars in place" },
-          { src: "/images/projects/usps-cape-coral-remodel/demo/photo-2.jpg", alt: "Demo with wall tile chased open, old supply stubs exposed and the slab cut for new below-slab drains" },
-          { src: "/images/projects/usps-cape-coral-remodel/demo/photo-3.jpg", alt: "Gutted USPS Cape Coral restroom with fixtures pulled, tile chased to the block and slab trenched for drains" },
-          { src: "/images/projects/usps-cape-coral-remodel/demo/photo-4.jpg", alt: "Wall-hung urinals and tank toilet pulled and staged during demo, with capped supply stubs and the slab opened" },
-          { src: "/images/projects/usps-cape-coral-remodel/demo/photo-5.jpg", alt: "Demo in progress with lavatories removed, wall chases opened and a slab trench cut along the block wall" },
-          { src: "/images/projects/usps-cape-coral-remodel/demo/photo-6.jpg", alt: "Tile chased open exposing old supply stubs above a slab cut and the existing PVC drain stub" },
-          { src: "/images/projects/usps-cape-coral-remodel/demo/photo-7.jpg", alt: "Block wall chase opened at the lavatory wall showing existing PVC vent and supply lines above the trench" },
-        ],
       },
       {
         name: "Water Repipe",
         slug: "water-repipe",
         description: "New water distribution piping run to replace the building's aging supply lines.",
-        images: [
-          { src: "/images/projects/usps-cape-coral-remodel/water-repipe/photo-1.jpg", alt: "Copper press fittings, elbows, tees and reducers laid out on the tile floor ahead of the water repipe" },
-          { src: "/images/projects/usps-cape-coral-remodel/water-repipe/photo-2.jpg", alt: "Copper pipe lengths and press fittings staged on the floor for the USPS Cape Coral water repipe" },
-          { src: "/images/projects/usps-cape-coral-remodel/water-repipe/photo-3.jpg", alt: "Corroded copper supply lines with green verdigris at soldered tees and a ball valve, replaced in the repipe" },
-          { src: "/images/projects/usps-cape-coral-remodel/water-repipe/photo-4.jpg", alt: "Brass ball valve on the copper water service stub-up with a copper sleeve through the exterior block wall" },
-          { src: "/images/projects/usps-cape-coral-remodel/water-repipe/photo-5.jpg", alt: "Plumber on a scissor lift running copper water main above the ceiling grid under the metal roof deck" },
-          { src: "/images/projects/usps-cape-coral-remodel/water-repipe/photo-6.jpg", alt: "Overhead copper supply line being pressed into place above the suspended ceiling grid from a scissor lift" },
-          { src: "/images/projects/usps-cape-coral-remodel/water-repipe/photo-7.jpg", alt: "Plumber on a scissor lift installing overhead copper water line above the ceiling grid at the USPS facility" },
-        ],
       },
       {
         name: "Rough-In",
         slug: "rough-in",
         description: "New drain, waste, vent, and supply rough-in for the remodeled layout.",
-        images: [
-          { src: "/images/projects/usps-cape-coral-remodel/rough-in/photo-1.jpg", alt: "Copper hot and cold stub-outs with a PVC drain stub-out through mold-resistant drywall for a wall-hung lavatory" },
-          { src: "/images/projects/usps-cape-coral-remodel/rough-in/photo-2.jpg", alt: "Two slab cuts patched with fresh concrete after below-slab drain work, marked with orange layout paint" },
-          { src: "/images/projects/usps-cape-coral-remodel/rough-in/photo-3.jpg", alt: "Lavatory bank rough-in with copper supply stub-outs and PVC drain stub-outs capped through mold-resistant drywall" },
-          { src: "/images/projects/usps-cape-coral-remodel/rough-in/photo-4.jpg", alt: "Close-up of copper hot and cold stub-outs and a PVC drain stub-out roughed for a wall-hung lavatory" },
-          { src: "/images/projects/usps-cape-coral-remodel/rough-in/photo-5.jpg", alt: "In-wall rough on furred block wall with copper stub-outs on blocking, PVC drain with sanitary tee and cleanout" },
-          { src: "/images/projects/usps-cape-coral-remodel/rough-in/photo-6.jpg", alt: "PVC DWV risers with sanitary tees and copper stub-outs on the chased block wall above the slab trench" },
-          { src: "/images/projects/usps-cape-coral-remodel/rough-in/photo-7.jpg", alt: "Copper stub-outs, PVC drain stubs and wood blocking for wall-hung fixtures, floor drain set in the open slab" },
-        ],
       },
       {
         name: "Trim-Out",
         slug: "trim-out",
         description: "Finish fixtures set and final connections made.",
-        images: [
-          { src: "/images/projects/usps-cape-coral-remodel/trim-out/photo-1.jpg", alt: "Wall-hung toilets with chrome flushometer valves and wall-hung lavatories trimmed out in the USPS Cape Coral restroom" },
-          { src: "/images/projects/usps-cape-coral-remodel/trim-out/photo-2.jpg", alt: "Wall-hung urinal, wall-hung toilet and two lavatories with chrome faucets and flushometers trimmed out above a floor drain" },
-        ],
       },
     ],
     scopeDetails: ["Plumbing demolition","Whole-building water repipe","Rough-in","Fixture trim-out"],
@@ -4101,39 +3726,16 @@ export const COMPLETED_PROJECTS: CompletedProject[] = [
     description:
       "Full residential new-construction plumbing at 1119 Harvest Ave in Lehigh Acres for builder Douglas Brookes. C&S Plumbing set the below-slab underground supply and DWV, then completed the in-wall second rough. Trim and finish phases follow as the home is built out.",
     location: "Lehigh Acres, FL",
-    coverImage: "/images/projects/1119-harvest-ave-lehigh-acres/2nd-rough/photo-1.jpg",
     phases: [
       {
         name: "Underground",
         slug: "underground",
         description: "Below-slab supply and drain/waste/vent piping installed and inspected before the slab pour.",
-        images: [
-          { src: "/images/projects/1119-harvest-ave-lehigh-acres/underground/photo-1.jpg", alt: "Mini excavator bucket opening trench lines on a marked pad inside formboards before the underground rough-in" },
-          { src: "/images/projects/1119-harvest-ave-lehigh-acres/underground/photo-2.jpg", alt: "Crew backfilling PVC DWV branch lines and stub-ups trenched across a Lehigh Acres pad before the pour" },
-        ],
       },
       {
         name: "Second Rough",
         slug: "2nd-rough",
         description: "In-wall water supply, DWV, and fixture stub-outs roughed in throughout the home.",
-        images: [
-          { src: "/images/projects/1119-harvest-ave-lehigh-acres/2nd-rough/photo-1.jpg", alt: "Red PEX hot water lines strapped down block-wall furring and run through a framed island knee wall" },
-          { src: "/images/projects/1119-harvest-ave-lehigh-acres/2nd-rough/photo-2.jpg", alt: "Red and blue PEX supply lines crossing roof trusses and dropping down furring strips on a block wall" },
-          { src: "/images/projects/1119-harvest-ave-lehigh-acres/2nd-rough/photo-3.jpg", alt: "Blue PEX cold line dropped between furring strips on a block wall to a marked stub-out location" },
-          { src: "/images/projects/1119-harvest-ave-lehigh-acres/2nd-rough/photo-4.jpg", alt: "Washing machine outlet box with PEX supplies and PVC standpipe trap roughed in beside the dryer vent duct" },
-          { src: "/images/projects/1119-harvest-ave-lehigh-acres/2nd-rough/photo-5.jpg", alt: "Red and blue PEX branch lines and a PVC DWV vent routed through roof truss webs overhead" },
-          { src: "/images/projects/1119-harvest-ave-lehigh-acres/2nd-rough/photo-6.jpg", alt: "PVC vent elbow, PEX supply loops and a galvanized dryer duct rising through trusses over stud framing" },
-          { src: "/images/projects/1119-harvest-ave-lehigh-acres/2nd-rough/photo-7.jpg", alt: "Hot and cold PEX dropped to the tub filler stub-out above a cardboard-protected bathtub set in framing" },
-          { src: "/images/projects/1119-harvest-ave-lehigh-acres/2nd-rough/photo-8.jpg", alt: "PEX supply drops and an open PVC drain stub-up in a fresh slab patch at the bathroom rough" },
-          { src: "/images/projects/1119-harvest-ave-lehigh-acres/2nd-rough/photo-9.jpg", alt: "Red and blue PEX lavatory stub-outs through the stud wall above a PVC drain stub in patched slab" },
-          { src: "/images/projects/1119-harvest-ave-lehigh-acres/2nd-rough/photo-10.jpg", alt: "Red and blue PEX lines strapped down a stud to a green-handled shutoff valve near the dryer duct" },
-          { src: "/images/projects/1119-harvest-ave-lehigh-acres/2nd-rough/photo-11.jpg", alt: "Framed bathroom wall with PEX supply runs, PVC drain and vent stack roughed in below trusses" },
-          { src: "/images/projects/1119-harvest-ave-lehigh-acres/2nd-rough/photo-12.jpg", alt: "PEX hot and cold branches and a PVC vent stack threaded through roof trusses beside flexible ductwork" },
-          { src: "/images/projects/1119-harvest-ave-lehigh-acres/2nd-rough/photo-13.jpg", alt: "Red and blue PEX trunk lines routed along roof trusses above stud framing toward an open doorway" },
-          { src: "/images/projects/1119-harvest-ave-lehigh-acres/2nd-rough/photo-14.jpg", alt: "Blue PEX cold line dropped down a block wall corner beneath supply runs strapped to the trusses" },
-          { src: "/images/projects/1119-harvest-ave-lehigh-acres/2nd-rough/photo-15.jpg", alt: "Red and blue PEX drops with stub-out fittings through the stud wall furred against a block wall" },
-          { src: "/images/projects/1119-harvest-ave-lehigh-acres/2nd-rough/photo-16.jpg", alt: "PEX supply lines through a knee wall to bracketed stub-outs beside a PVC drain elbow from the slab" },
-        ],
       },
     ],
     scopeDetails: ["Underground rough-in","Second rough-in","Residential new construction"],
@@ -4151,34 +3753,16 @@ export const COMPLETED_PROJECTS: CompletedProject[] = [
     description:
       "Residential new-construction plumbing at 1026 Halby Ave in Lehigh Acres for builder Douglas Brookes. C&S Plumbing set the below-slab underground and completed the in-wall second rough; trim and finish phases follow as the build progresses.",
     location: "Lehigh Acres, FL",
-    coverImage: "/images/projects/1026-halby-ave-lehigh-acres/2nd-rough/photo-1.jpg",
     phases: [
       {
         name: "Underground",
         slug: "underground",
         description: "Below-slab supply and drain/waste/vent piping installed ahead of the slab pour.",
-        images: [
-          { src: "/images/projects/1026-halby-ave-lehigh-acres/underground/photo-1.jpg", alt: "PVC drain stub-ups through compacted fill inside wood formboards on a Lehigh Acres pad before the pour" },
-        ],
       },
       {
         name: "Second Rough",
         slug: "2nd-rough",
         description: "In-wall water supply, DWV, and fixture stub-outs roughed in throughout the home.",
-        images: [
-          { src: "/images/projects/1026-halby-ave-lehigh-acres/2nd-rough/photo-1.jpg", alt: "Wood-stud partition framing with red and blue PEX runs and a PVC vent stack beneath roof trusses" },
-          { src: "/images/projects/1026-halby-ave-lehigh-acres/2nd-rough/photo-2.jpg", alt: "Red and blue PEX supply stub-outs on stud blocking beside a PVC drain riser through the slab" },
-          { src: "/images/projects/1026-halby-ave-lehigh-acres/2nd-rough/photo-3.jpg", alt: "Red and blue PEX branches and a PVC drain tee with vent riser roughed through a stud partition" },
-          { src: "/images/projects/1026-halby-ave-lehigh-acres/2nd-rough/photo-4.jpg", alt: "PEX trunk lines along truss bottom chords with a PVC vent elbow above a block wall doorway" },
-          { src: "/images/projects/1026-halby-ave-lehigh-acres/2nd-rough/photo-5.jpg", alt: "PEX supply loops and a PVC vent routed through top plates and trusses beside insulated flex duct" },
-          { src: "/images/projects/1026-halby-ave-lehigh-acres/2nd-rough/photo-6.jpg", alt: "Washing machine outlet box with PEX supplies, PVC standpipe trap and dryer duct roughed in a laundry wall" },
-          { src: "/images/projects/1026-halby-ave-lehigh-acres/2nd-rough/photo-7.jpg", alt: "Blue PEX cold line strapped along a truss chord above furred block walls and window openings" },
-          { src: "/images/projects/1026-halby-ave-lehigh-acres/2nd-rough/photo-8.jpg", alt: "PVC drain elbow stubbed up through a slab cutout below the bottom plate of a framed knee wall" },
-          { src: "/images/projects/1026-halby-ave-lehigh-acres/2nd-rough/photo-9.jpg", alt: "Two PVC drain stub-ups in a slab cutout beneath a copper stub-out and blue PEX line" },
-          { src: "/images/projects/1026-halby-ave-lehigh-acres/2nd-rough/photo-10.jpg", alt: "Single blue PEX drop strapped to a furred block wall ending at a copper stub-out" },
-          { src: "/images/projects/1026-halby-ave-lehigh-acres/2nd-rough/photo-11.jpg", alt: "Blue PEX cold line dropped through framed partition studs to a recessed supply box near the slab" },
-          { src: "/images/projects/1026-halby-ave-lehigh-acres/2nd-rough/photo-12.jpg", alt: "Blue PEX line strapped down an exterior block wall to a copper stub-out beside stacked lumber" },
-        ],
       },
     ],
     scopeDetails: ["Underground rough-in","Second rough-in","Residential new construction"],
@@ -4197,22 +3781,11 @@ export const COMPLETED_PROJECTS: CompletedProject[] = [
     description:
       "C&S Plumbing is the plumbing contractor on a FEMA-compliant new-construction home rebuild in Punta Gorda, built by Draft Construction LLC. Below-slab underground supply and drain/waste/vent piping is installed and inspected. In-wall rough and trim phases follow as the rebuild continues.",
     location: "Punta Gorda, FL",
-    coverImage: "/images/projects/fema-home-punta-gorda/underground/photo-1.jpg",
     phases: [
       {
         name: "Underground",
         slug: "underground",
         description: "Below-slab supply and DWV piping installed and inspected before the slab pour for the FEMA rebuild.",
-        images: [
-          { src: "/images/projects/fema-home-punta-gorda/underground/photo-1.jpg", alt: "PVC DWV stub-ups and a poly water service laid in sandy trenches along the poured stem wall" },
-          { src: "/images/projects/fema-home-punta-gorda/underground/photo-2.jpg", alt: "PVC drain run bedded in a sandy trench inside the formed stem wall of an elevated home pad" },
-          { src: "/images/projects/fema-home-punta-gorda/underground/photo-3.jpg", alt: "Plumber fitting a PVC riser and elbow at the formed stem wall of a FEMA elevated home rebuild" },
-          { src: "/images/projects/fema-home-punta-gorda/underground/photo-4.jpg", alt: "Primed PVC stub-ups and taped risers set in trenched sandy fill ahead of the slab pour" },
-          { src: "/images/projects/fema-home-punta-gorda/underground/photo-5.jpg", alt: "PVC drain stub-ups along the poured stem wall with loose pipe lengths staged on the sandy pad" },
-          { src: "/images/projects/fema-home-punta-gorda/underground/photo-6.jpg", alt: "Open trenches cut through sandy fill inside stem wall forms before the underground DWV goes in" },
-          { src: "/images/projects/fema-home-punta-gorda/underground/photo-7.jpg", alt: "PVC drain stub-ups beside the poured stem wall in sandy fill of a Punta Gorda elevated home pad" },
-          { src: "/images/projects/fema-home-punta-gorda/underground/photo-8.jpg", alt: "PVC DWV stub-ups and drain run laid in sandy fill along the stem wall before the slab pour" },
-        ],
       },
     ],
     scopeDetails: ["Underground rough-in","FEMA-compliant new construction"],
@@ -4230,27 +3803,11 @@ export const COMPLETED_PROJECTS: CompletedProject[] = [
     description:
       "C&S Plumbing is the plumbing contractor on a K-1 bathroom remodel at South Florida Christian Academy in Fort Myers, built by McDaniel Construction. Demolition of the existing fixtures and piping is complete; rough-in and trim phases follow as the remodel progresses.",
     location: "Fort Myers, FL",
-    coverImage: "/images/projects/south-florida-christian-academy-bathroom-remodel/demo/photo-1.jpg",
     phases: [
       {
         name: "Demolition",
         slug: "demo",
         description: "Existing fixtures and plumbing demolished to prep the K-1 bathrooms for the remodel.",
-        images: [
-          { src: "/images/projects/south-florida-christian-academy-bathroom-remodel/demo/photo-1.jpg", alt: "PVC riser with a brass hose connection and blue-handled ball valve at the base of an exterior wall" },
-          { src: "/images/projects/south-florida-christian-academy-bathroom-remodel/demo/photo-2.jpg", alt: "Four closet flanges taped off and angle stops left on the wall after the toilets were pulled" },
-          { src: "/images/projects/south-florida-christian-academy-bathroom-remodel/demo/photo-3.jpg", alt: "Row of taped closet flanges and capped supply stops in the demoed school restroom stalls" },
-          { src: "/images/projects/south-florida-christian-academy-bathroom-remodel/demo/photo-4.jpg", alt: "Four-bowl cultured marble lavatory top with faucets and drain fittings pulled ahead of counter removal" },
-          { src: "/images/projects/south-florida-christian-academy-bathroom-remodel/demo/photo-5.jpg", alt: "Cultured marble lav bowls with faucet holes and tailpiece openings exposed after fixture demo" },
-          { src: "/images/projects/south-florida-christian-academy-bathroom-remodel/demo/photo-6.jpg", alt: "Capped lavatory supply stubs along the wall under the counter after the faucets were disconnected" },
-          { src: "/images/projects/south-florida-christian-academy-bathroom-remodel/demo/photo-7.jpg", alt: "Capped supply stubs under the lav counter apron with old adhesive beads on the wood support" },
-          { src: "/images/projects/south-florida-christian-academy-bathroom-remodel/demo/photo-8.jpg", alt: "Taped closet flange and wall-hung lavatory carrier arms with supply stops in a demoed accessible restroom" },
-          { src: "/images/projects/south-florida-christian-academy-bathroom-remodel/demo/photo-9.jpg", alt: "Eight taped closet flanges and capped angle stops in a row after the school toilets were pulled" },
-          { src: "/images/projects/south-florida-christian-academy-bathroom-remodel/demo/photo-10.jpg", alt: "Gutted school restroom with taped closet flanges, stacked partitions and a cart of demo debris" },
-          { src: "/images/projects/south-florida-christian-academy-bathroom-remodel/demo/photo-11.jpg", alt: "Long multi-bowl cultured marble lav counter stripped of faucets and drains with demo cart alongside" },
-          { src: "/images/projects/south-florida-christian-academy-bathroom-remodel/demo/photo-12.jpg", alt: "PVC supply line dropping to a brass stub with shutoff in a dirty concrete chase" },
-          { src: "/images/projects/south-florida-christian-academy-bathroom-remodel/demo/photo-13.jpg", alt: "Old brass gate valve on a painted PVC supply stub in a concrete chase during the bathroom demo" },
-        ],
       },
     ],
     scopeDetails: ["Plumbing demolition","Commercial bathroom remodel"],
@@ -4268,18 +3825,11 @@ export const COMPLETED_PROJECTS: CompletedProject[] = [
     description:
       "C&S Plumbing handled the residential new-construction plumbing on a Decker Homes build in Punta Gorda. The build is complete; the photos below are from our underground and rough-in work on the home.",
     location: "Punta Gorda, FL",
-    coverImage: "/images/projects/decker-homes-punta-gorda/new-construction/photo-1.jpg",
     phases: [
       {
         name: "New Construction",
         slug: "new-construction",
         description: "Residential new-construction plumbing for a Decker Homes build in Punta Gorda.",
-        images: [
-          { src: "/images/projects/decker-homes-punta-gorda/new-construction/photo-1.jpg", alt: "PVC drain lines laid in open trenches with stub-ups on a wooded Punta Gorda lot before backfill" },
-          { src: "/images/projects/decker-homes-punta-gorda/new-construction/photo-2.jpg", alt: "PVC DWV branch lines and stub-ups across the formboarded pad of a new home before the slab pour" },
-          { src: "/images/projects/decker-homes-punta-gorda/new-construction/photo-3.jpg", alt: "Capped PVC stub-up in the foreground with drain runs and vent risers laid out inside the formboards" },
-          { src: "/images/projects/decker-homes-punta-gorda/new-construction/photo-4.jpg", alt: "Newly framed and sheathed Decker Homes house on a graded lot with the porch slab poured" },
-        ],
       },
     ],
     scopeDetails: ["Residential new construction plumbing"],
@@ -4298,25 +3848,11 @@ export const COMPLETED_PROJECTS: CompletedProject[] = [
     description:
       "C&S Plumbing handled the trim-out phase on a Hansen Homes new-construction build (1210) in Cape Coral — finish fixtures, water heater, and final connections set after rough-in and inspection. C&S is the plumbing partner across multiple Hansen Homes Cape Coral builds.",
     location: "Cape Coral, FL",
-    coverImage: "/images/projects/hansen-homes-1210-cape-coral/trim-out/photo-1.jpg",
     phases: [
       {
         name: "Trim-Out",
         slug: "trim-out",
         description: "Finish fixtures, water heater, and final connections set on the new-construction home.",
-        images: [
-          { src: "/images/projects/hansen-homes-1210-cape-coral/trim-out/photo-1.jpg", alt: "Ruud electric tank water heater in the garage with CPVC supply lines, ball valve and T&P relief valve" },
-          { src: "/images/projects/hansen-homes-1210-cape-coral/trim-out/photo-2.jpg", alt: "Plumber connecting the drain under a freestanding laundry tub with a two-handle chrome utility faucet" },
-          { src: "/images/projects/hansen-homes-1210-cape-coral/trim-out/photo-3.jpg", alt: "White two-piece elongated toilet set in a small water closet with tile floor on a Hansen Homes build" },
-          { src: "/images/projects/hansen-homes-1210-cape-coral/trim-out/photo-4.jpg", alt: "Brushed nickel tub and shower trim with spout, valve and shower head beside a glass mosaic tile niche" },
-          { src: "/images/projects/hansen-homes-1210-cape-coral/trim-out/photo-5.jpg", alt: "Undermount bathroom sink with brushed nickel single-handle lavatory faucet and pop-up drain in a quartz vanity top" },
-          { src: "/images/projects/hansen-homes-1210-cape-coral/trim-out/photo-6.jpg", alt: "Plumber hooking up an undermount stainless kitchen sink with pull-down faucet in a new Cape Coral home" },
-          { src: "/images/projects/hansen-homes-1210-cape-coral/trim-out/photo-7.jpg", alt: "Two-piece elongated toilet with WaterSense label installed in a water closet with marble-look tile floor" },
-          { src: "/images/projects/hansen-homes-1210-cape-coral/trim-out/photo-8.jpg", alt: "Rectangular undermount lavatory sink with brushed nickel faucet and pop-up drain under an open medicine cabinet mirror" },
-          { src: "/images/projects/hansen-homes-1210-cape-coral/trim-out/photo-9.jpg", alt: "Undermount vanity sink with brushed nickel single-handle faucet on a quartz countertop before final cleanup" },
-          { src: "/images/projects/hansen-homes-1210-cape-coral/trim-out/photo-10.jpg", alt: "Brushed nickel handheld shower head on wall bracket with hose and single-handle valve trim in a tiled shower" },
-          { src: "/images/projects/hansen-homes-1210-cape-coral/trim-out/photo-11.jpg", alt: "Tiled shower with brushed nickel handheld shower head and valve trim beside a vertical glass mosaic niche" },
-        ],
       },
     ],
     scopeDetails: ["Fixture trim-out","Water heater set","Residential new construction"],
@@ -4343,20 +3879,11 @@ export const COMPLETED_PROJECTS: CompletedProject[] = [
     description:
       "C&S Plumbing handled the trim-out phase on a Hansen Homes new-construction build (2210) in Cape Coral — finish fixtures and final connections set after rough-in and inspection. C&S is the plumbing partner across multiple Hansen Homes Cape Coral builds.",
     location: "Cape Coral, FL",
-    coverImage: "/images/projects/hansen-homes-2210-cape-coral/trim-out/photo-1.jpg",
     phases: [
       {
         name: "Trim-Out",
         slug: "trim-out",
         description: "Finish fixtures and final connections set on the new-construction home.",
-        images: [
-          { src: "/images/projects/hansen-homes-2210-cape-coral/trim-out/photo-1.jpg", alt: "Freestanding soaking tub with brushed nickel wall-mount tub filler and valve trim in a tiled master bath" },
-          { src: "/images/projects/hansen-homes-2210-cape-coral/trim-out/photo-2.jpg", alt: "White two-piece elongated toilet with chrome trip lever installed in a Cape Coral new-build water closet" },
-          { src: "/images/projects/hansen-homes-2210-cape-coral/trim-out/photo-3.jpg", alt: "Undermount lavatory sink with polished chrome single-handle faucet on a quartz top, freestanding tub reflected in the mirror" },
-          { src: "/images/projects/hansen-homes-2210-cape-coral/trim-out/photo-4.jpg", alt: "Polished chrome lavatory faucet on a deck plate over an undermount sink in a quartz double vanity" },
-          { src: "/images/projects/hansen-homes-2210-cape-coral/trim-out/photo-5.jpg", alt: "Walk-in shower with dual brushed nickel shower heads flanking a vertical glass mosaic accent strip and niche" },
-          { src: "/images/projects/hansen-homes-2210-cape-coral/trim-out/photo-6.jpg", alt: "Brushed nickel shower head and single-handle valve trim in a marble-look tile shower with blue glass mosaic band" },
-        ],
       },
     ],
     scopeDetails: ["Fixture trim-out","Residential new construction"],
@@ -4495,6 +4022,6 @@ export const COASTAL_COMEBACK_FAQS = [
   {
     question: "How is this different from a home watch service?",
     answer:
-      "Home watch services are great generalists — they look for obvious problems. We're licensed plumbers (CFC1432485), so we actually shut down, drain, inspect, and fix the plumbing system. Many of our snowbird customers use both: a home watch service for general property checks, and the Coastal Comeback Plan specifically for plumbing.",
+      `Home watch services are great generalists — they look for obvious problems. We're licensed plumbers (${BUSINESS.license}), so we actually shut down, drain, inspect, and fix the plumbing system. Many of our snowbird customers use both: a home watch service for general property checks, and the Coastal Comeback Plan specifically for plumbing.`,
   },
 ];

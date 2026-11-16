@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import PageTransition from "@/components/layout/PageTransition";
 import UEPServicePage from "./UEPServicePage";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import FaqJsonLd from "@/components/seo/FaqJsonLd";
@@ -132,7 +131,7 @@ function ServiceJsonLd() {
 
 export default function Page() {
   return (
-    <PageTransition>
+    <>
       <ServiceJsonLd />
       <FaqJsonLd faqs={landing.faqs} />
       <BreadcrumbJsonLd
@@ -149,6 +148,6 @@ export default function Page() {
         description="What a Cape Coral UEP conversion involves, step by step, and what it costs."
       />
       <CTASection />
-    </PageTransition>
+    </>
   );
 }

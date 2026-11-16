@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
-import PageTransition from "@/components/layout/PageTransition";
 import ServiceDetail from "@/components/services/ServiceDetail";
 import CTASection from "@/components/home/CTASection";
 import FaqJsonLd from "@/components/seo/FaqJsonLd";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import FaqAccordion from "@/components/ui/FaqAccordion";
 import Container from "@/components/ui/Container";
+import Section from "@/components/ui/Section";
+import { Chapter } from "@/components/services/ServiceLandingTemplate";
+import { picture } from "@/lib/media";
+import { RESIDENTIAL_PAGE as COPY } from "@/content/services";
 import NewConstructionBenefits from "@/components/builders/NewConstructionBenefits";
 import { BUSINESS, SERVICES, areaServedCities } from "@/lib/constants";
 import { TERMS_URL } from "@/lib/terms-meta";
@@ -86,7 +89,7 @@ function ResidentialServiceJsonLd() {
 
 export default function ResidentialPage() {
   return (
-    <PageTransition>
+    <>
       <FaqJsonLd faqs={RESIDENTIAL_FAQS} />
       <ResidentialServiceJsonLd />
       <BreadcrumbJsonLd
@@ -102,25 +105,23 @@ export default function ResidentialPage() {
         description="Whether it's a midnight emergency or a planned renovation, our residential plumbing team delivers fast, reliable service that protects your home and keeps your family comfortable."
         services={residentialServices}
         highlights={highlights}
-        heroImage="/images/team/team-work-1.jpg"
-        heroImagePosition="center top"
+        frame={picture("service.header.residential")}
+        breadcrumb={[
+          { name: "Home", href: "/" },
+          { name: "Services", href: "/services" },
+          { name: "Residential Plumbing", href: "/services/residential" },
+        ]}
       />
       {/* Owners of homes C&S plumbed as new construction */}
       <NewConstructionBenefits overline="Did C&S plumb your new home?" />
-      <section className="py-16 sm:py-24 bg-[#F5F5F7]">
-        <Container size="narrow">
-          <div className="text-center mb-8 sm:mb-12">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
-              Residential Plumbing FAQs
-            </h2>
-            <p className="text-sm sm:text-base text-gray-500">
-              Common questions from Southwest Florida homeowners.
-            </p>
-          </div>
-          <FaqAccordion faqs={RESIDENTIAL_FAQS} />
+      <Section tone="shell" spacing="sm" labelledBy="residential-faq-heading">
+        <Container>
+          <Chapter id="residential-faq-heading" title={COPY.faqTitle} description={COPY.faqDescription}>
+            <FaqAccordion faqs={RESIDENTIAL_FAQS} />
+          </Chapter>
         </Container>
-      </section>
+      </Section>
       <CTASection />
-    </PageTransition>
+    </>
   );
 }

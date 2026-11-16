@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import ContactPage from "./ContactPage";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
+import { BUSINESS } from "@/lib/business";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/contact" },
   title: "Contact Us",
   description:
-    "Contact C&S Plumbing of Lee for a free estimate. Serving Cape Coral, Fort Myers, North Fort Myers & Naples. Call 833-PLUMB-IT or use our online form.",
+    `Contact C&S Plumbing of Lee for a free estimate. Serving Cape Coral, Fort Myers, North Fort Myers & Naples. Call ${BUSINESS.phone} or use our online form.`,
   keywords: [
     "contact plumber Cape Coral",
     "plumbing estimate Fort Myers",

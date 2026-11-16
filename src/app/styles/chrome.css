@@ -1,0 +1,198 @@
+/* chrome styles. Imported by ../globals.css.
+   Put rules inside @layer components { ... } so utility classes can still
+   override them; use the design tokens (var(--color-*), var(--tone-*),
+   var(--ease-*), var(--dur-*)) rather than raw values. */
+
+@layer components {
+  /* Footer: the phone dock is fixed over the bottom of the page below md, so
+     the footer ends with room for it (--dock-h is 0 from 48rem), plus room
+     for the request button that floats above it, so neither ever covers the
+     last line. Where the dock is not rendered (HIDDEN_PATHS) its share goes. */
+  .site-footer {
+    --float-room: 4.5rem;
+    padding-bottom: calc(var(--dock-h) + var(--float-room));
+  }
+
+  body:not(:has([data-dock])) .site-footer {
+    padding-bottom: var(--float-room);
+  }
+
+  /* Footer link groups: closed accordions on phones, one 56 px row each with
+     a line between them. */
+  .footer-group {
+    border-bottom: 1px solid var(--color-steel-200);
+  }
+
+  .footer-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 3.5rem;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .footer-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .footer-summary-icon {
+    flex: none;
+    color: var(--color-primary-dark);
+  }
+
+  /* From md the groups are open columns. Only where ::details-content can be
+     styled; elsewhere they stay working accordions. */
+  @media (min-width: 48rem) {
+    .footer-group {
+      border-bottom: 0;
+    }
+
+    @supports selector(::details-content) {
+      .footer-group::details-content {
+        content-visibility: visible;
+      }
+
+      .footer-summary {
+        min-height: 0;
+        margin-bottom: 0.75rem;
+        cursor: default;
+        pointer-events: none;
+      }
+
+      .footer-summary-icon {
+        display: none !important;
+      }
+    }
+  }
+
+  /* Request service button: bottom right, above the dock on phones. One
+     floating control at a time: it steps aside while the coupon card shows. */
+  .request-fab {
+    position: fixed;
+    z-index: 40;
+    right: calc(1rem + env(safe-area-inset-right, 0px));
+    bottom: calc(var(--dock-h) + 0.75rem);
+  }
+
+  @media (min-width: 48rem) {
+    .request-fab {
+      bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+    }
+  }
+
+  body[data-coupon-open] .request-fab {
+    display: none;
+  }
+
+  /* Coupon card. Fine pointers: top right under the header. Touch: attached
+     above the dock, full width minus 12 px margins. */
+  .coupon-card {
+    position: fixed;
+    z-index: 40;
+    top: calc(var(--nav-h) + 0.75rem);
+    right: calc(1rem + env(safe-area-inset-right, 0px));
+    width: min(21.25rem, calc(100% - 1.5rem));
+  }
+
+  @media (pointer: coarse) {
+    .coupon-card {
+      top: auto;
+      left: 0;
+      right: 0;
+      bottom: calc(var(--dock-h) + 0.75rem);
+      width: calc(100% - 1.5rem);
+      max-width: 30rem;
+      margin-inline: auto;
+    }
+  }
+
+  /* While the card shows, keyboard focus is scrolled clear of it as well as
+     of the header and the dock (--coupon-h is the card's measured height). */
+  @media (pointer: fine) {
+    html:has(body[data-coupon-open]) {
+      scroll-padding-top: calc(var(--nav-h) + var(--coupon-h, 0px) + 1.5rem);
+    }
+  }
+
+  @media (pointer: coarse) {
+    html:has(body[data-coupon-open]) {
+      scroll-padding-bottom: calc(var(--dock-h) + var(--coupon-h, 0px) + 1.5rem);
+    }
+
+    /* The page can scroll its last lines out from under the card... */
+    body[data-coupon-open] .site-footer {
+      --float-room: calc(var(--coupon-h, 0px) + 1.5rem);
+    }
+
+  }
+
+  /* Preview marker (review builds only): a slim tab on the left edge, half
+     way down, where no page content sits. Its details open beside it. */
+  .preview-ribbon {
+    position: fixed;
+    z-index: 30;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .preview-tab {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.375rem;
+    padding: 0.75rem 0;
+    border: 1px solid var(--color-steel-300);
+    border-left: 0;
+    border-radius: 0 0.5rem 0.5rem 0;
+    background: var(--color-white);
+    color: var(--color-navy);
+    font-size: 0.625rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  .preview-tab > span {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    white-space: nowrap;
+  }
+
+  @media (min-width: 48rem) {
+    .preview-tab {
+      width: 1.875rem;
+      font-size: 0.6875rem;
+    }
+  }
+}
+
+/* No site chrome on paper: the printed documents rely on it. */
+@media print {
+  [data-dock],
+  .request-fab,
+  dialog.request-dialog,
+  .coupon-card,
+  .preview-ribbon {
+    display: none !important;
+  }
+}
+
+/* On a photo hero's first screen the floating Request button stays out of the
+   picture (it would sit on the film's Pause button and on the photograph). It
+   arrives with the first scroll, when the header turns white. */
+@layer components {
+  .request-fab {
+    transition: opacity var(--dur-2) var(--ease-enter), visibility var(--dur-2);
+  }
+
+  @media (scripting: enabled) {
+    body:has([data-hero-photo]):has(.site-header:not([data-scrolled])) .request-fab {
+      visibility: hidden;
+      opacity: 0;
+    }
+  }
+}

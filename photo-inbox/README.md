@@ -5,8 +5,9 @@ grid. Drop originals in, run one command, and they come out resized, converted,
 stripped of location data, and named to match the paths the site expects.
 
 Raw drops are gitignored — only this file and the empty folder structure are
-committed. The finished WebP files land in `public/images/projects/` and those
-**are** committed.
+committed. The finished WebP files land in `public/images/projects/` and
+`public/images/gallery/`, and those **are** committed. The owner's short guide
+is `HOW-TO-UPDATE.md` at the top of the project.
 
 ## How to use it
 
@@ -18,20 +19,23 @@ committed. The finished WebP files land in `public/images/projects/` and those
 
    Straight off a phone is fine — HEIC, JPG, PNG, TIFF all work, at any size,
    named anything. `IMG_9.HEIC` sorts before `IMG_10.HEIC`, not after.
+   (HEIC is converted by the Mac itself, so run the ingest on a Mac.)
 
 2. **Run the ingest:**
 
    ```bash
-   npm run photos:ingest                    # everything in the inbox
+   npm run photos                           # everything in the inbox: projects and gallery
    npm run photos:ingest -- <project-slug>  # one project
    npm run photos:ingest -- --dry-run       # report only, writes nothing
    ```
 
-3. **Paste the generated block.** Each project gets a ready-made phase block at
-   `photo-inbox/_generated/<project-slug>.ts.txt`. Paste it into that project's
-   `phases: [...]` array in `src/lib/constants.ts` and replace the `TODO`
-   description line. For a project that doesn't exist yet, also fill in the
-   metadata (see below).
+3. **Describe the new photos.** There is nothing to paste into code. Each new
+   photo was added to the `images.json` in its folder
+   (`public/images/projects/<project-slug>/<phase-slug>/images.json`) with an
+   empty `"alt"`. Write what each photo shows between the quotes. The same
+   file takes a `"caption"`, `"cover": true` for the project's card photo and
+   `"hidden": true` to pull a photo off the site without deleting it. For a
+   project that doesn't exist yet, also send the metadata (see below).
 
 4. **Check nothing is broken:**
 
@@ -39,12 +43,13 @@ committed. The finished WebP files land in `public/images/projects/` and those
    npm run photos:check
    ```
 
-   Fails if any page references an image that isn't on disk. Next.js only
-   surfaces a bad image path at request time, so this is what catches a typo
-   before a customer does.
+   Fails if a page names an image that isn't on disk, if a photo still carries
+   location data, or if a HEIC/TIFF file ended up in `public/images`. It also
+   lists the photos that still need a description.
 
-5. **Empty the inbox** once the WebP files are committed. The originals are
-   already in Drive; keeping a second copy here just bloats the working tree.
+5. **Originals move themselves** to `photo-inbox/_done/` once they are
+   converted. Empty that folder when the WebP files are committed; the
+   originals are already in Drive.
 
 ## What the ingest does to each photo
 
@@ -55,20 +60,23 @@ committed. The finished WebP files land in `public/images/projects/` and those
 | Resize to max 2400px wide (never upscales) | 4000px off a phone is ~4x the pixels any layout uses |
 | Encode WebP q82 | Roughly 70% smaller than the source JPEG at the same visible quality |
 | Rename `photo-1 … photo-N` | Matches the existing convention across all project folders |
+| Add an entry to the folder's `images.json` | So the photo can be described without touching code; `alt` starts empty and the check lists it until it is filled in |
+| Move the original to `photo-inbox/_done/` | The inbox only ever holds what is still waiting |
 
 Re-running against a phase that already has photos **appends** — a second batch
-continues at `photo-<next>` instead of overwriting the first.
+continues at `photo-<next>` instead of overwriting the first. Nothing is ever
+overwritten.
 
 ## Gallery photos
 
-`/gallery` is a flat filterable grid, not a project broken into phases, so it
-has its own inbox and its own command. Same treatment of the pixels — rotate,
-strip GPS, downscale, WebP.
+`/gallery` is a filterable grid, not a project broken into phases, so photos
+are grouped by category. Same treatment of the pixels — rotate, strip GPS,
+downscale, WebP.
 
 1. **Drop photos** into the folder for the category:
 
    ```
-   photo-inbox/_gallery/<category>/
+   photo-inbox/gallery/<category>/
    ```
 
    Only four categories exist, because `GalleryItem` in `src/lib/types.ts` is a
@@ -79,24 +87,22 @@ strip GPS, downscale, WebP.
 2. **Run the ingest:**
 
    ```bash
-   npm run gallery:ingest                 # every category
-   npm run gallery:ingest -- commercial   # just one
+   npm run photos                         # everything in the inbox: projects and gallery
+   npm run gallery:ingest -- commercial   # just one category
    npm run gallery:ingest -- --dry-run    # report only, writes nothing
    ```
 
-3. **Paste the generated block** from `photo-inbox/_generated/_gallery.ts.txt`
-   into `galleryItems` in `src/app/gallery/GalleryPage.tsx`. Ids continue from
-   the highest one already in that array, so they never collide.
-
-4. **Fill in the two TODOs on each entry.** The script leaves `alt` and `title`
+3. **Fill in `alt` and `title`** for each new photo in
+   `public/images/gallery/<category>/images.json`. The script leaves both
    blank on purpose — a filename like `IMG_4864.jpeg` says nothing about what
    the photo shows, and both fields are read by humans and by search engines.
-   `title` is the caption on the tile; `alt` describes the image for a screen
-   reader.
+   `title` is the caption shown when the photo is opened full screen; `alt`
+   describes the image for a screen reader. The `id` and `category` are filled in for you; ids continue after
+   the highest one used anywhere in the gallery, so they never collide.
 
-Files land as `<category>-<n>.webp`. Renaming them to something descriptive
-(`commercial-prerinse-faucet.webp`) matches the convention of the 64 photos
-already in `public/images/gallery/` — just update the `src` to match.
+Files land as `public/images/gallery/<category>/<category>-<n>.webp`. Renaming
+one to something descriptive (`commercial-prerinse-faucet.webp`) is fine —
+rename its entry in that folder's `images.json` to match.
 
 A gallery photo has to stand on its own with no project page around it, so it
 wants to be the strongest single frame of a job rather than one of a sequence.
@@ -106,13 +112,18 @@ wants to be the strongest single frame of a job rather than one of a sequence.
 Use these, because they're what the existing 13 projects already use. A new
 phase slug is fine when the job genuinely has one — just keep it kebab-case.
 
+A phase folder only shows once the project's entry in `COMPLETED_PROJECT_TEXT`
+(`src/lib/constants.ts`) lists a phase with the same `slug` (with its `name`
+and `description`). Until then `npm run photos:check` names the folder as
+"not published". The same goes for a whole new project folder.
+
 `underground` · `2nd-rough` · `rough-in` · `water-repipe` · `trim-out` ·
 `final` · `demo` · `build` · `new-construction`
 
 ## Closing out a project
 
 A project is "closed out" when its page stops saying *In Progress*. Three
-fields in `COMPLETED_PROJECTS` do that work — set them together with the final
+fields of the project's entry in `COMPLETED_PROJECT_TEXT` (`src/lib/constants.ts`) do that work — set them together with the final
 phase of photos:
 
 ```ts
@@ -157,8 +168,12 @@ folder name becomes `csplumbinglee.com/projects/<slug>`.
 | 1326 Lafayette St | 12 HEIC, Jun 2025 | `photo-inbox/1326-lafayette-st/final/` |
 | Naples Dock Line | 2 JPG (before / after), Oct 2025 | `photo-inbox/naples-dock-line/final/` |
 
-Each new project needs the metadata the generated block can't infer — send it
-with the photos and it goes straight in:
+Each new project also needs an entry in `COMPLETED_PROJECT_TEXT`
+(`src/lib/constants.ts`) with the same `slug` as its folder, and its phases
+listed by `slug`; the photos alone do not make a page. These are the facts the
+photos can't supply. Send them with the photos and they go straight in (a
+`cost` with a dollar figure stops the build at the claims check unless it is
+marked as documented, so "On Request" is the default):
 
 ```
 name:        # e.g. "39 Southport — New Construction (Cape Coral)"
@@ -179,8 +194,9 @@ materials:   # brands installed
 The raw drops are gitignored, so a local `git push` never carries them. Two
 ways to get photos onto a branch Claude can process:
 
-1. **Local:** drop the photos in `photo-inbox/…`, run `npm run photos:ingest`,
-   commit the WebP output under `public/images/projects/` and push. Claude
+1. **Local:** drop the photos in `photo-inbox/…`, run `npm run photos`,
+   commit the WebP output and the `images.json` beside it under
+   `public/images/projects/` (or `public/images/gallery/`) and push. Claude
    takes it from there (captions, description, case study, close-out fields).
 2. **No laptop:** upload the originals straight into
    `photo-inbox/<slug>/<phase>/` on the branch through GitHub's *Add file →

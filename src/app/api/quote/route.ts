@@ -21,6 +21,7 @@ import {
   reportConversion,
 } from "@/lib/openai-ads-capi";
 import { TERMS_URL, TERMS_VERSION } from "@/lib/terms-meta";
+import { BUSINESS } from "@/lib/business";
 
 // The estimate is recomputed on the server from the shopper's selections
 // (src/lib/quote-submission.ts). This public endpoint renders text into a
@@ -168,11 +169,11 @@ export async function POST(request: Request) {
             </div>
 
             <p style="color: #666; font-size: 14px;">
-              Or call us anytime: <a href="tel:8337586248" style="color: #0099FF;">833-PLUMB-IT</a>
+              Or call us anytime: <a href="${BUSINESS.phoneHref}" style="color: #0099FF;">${BUSINESS.phone}</a>
             </p>
 
             <p style="color: #999; font-size: 12px; margin-top: 20px;">
-              C&S Plumbing of Lee · License #CFC1432485 · 951 Pondella Rd, North Fort Myers, FL 33903
+              C&S Plumbing of Lee · License #${BUSINESS.license} · ${BUSINESS.address}, ${BUSINESS.city}, ${BUSINESS.state} ${BUSINESS.zip}
             </p>
             <p style="color: #999; font-size: 12px; margin-top: 8px;">
               Estimates are subject to our Terms &amp; Conditions (rev. ${TERMS_VERSION}):

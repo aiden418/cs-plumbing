@@ -1,64 +1,52 @@
-"use client";
-
-import Image from "next/image";
-import { motion } from "framer-motion";
 import Container from "@/components/ui/Container";
+import Frame from "@/components/ui/Frame";
+import Section from "@/components/ui/Section";
 import SectionHeading from "@/components/ui/SectionHeading";
-import StaggerChildren, {
-  staggerItem,
-} from "@/components/animations/StaggerChildren";
 import { TEAM_MEMBERS } from "@/lib/constants";
+import { image } from "@/lib/media";
+import { ABOUT_TEAM } from "@/content/about";
 
+/**
+ * The team: a portrait with name, role and bio for each person. On phones
+ * the portrait sits beside the name; from 768 px three portrait cards.
+ * Keeps the #team anchor.
+ */
 export default function TeamGrid() {
   return (
-    <section id="team" className="scroll-mt-20 py-16 sm:py-24 lg:py-32">
+    <Section tone="white" spacing="sm" id="team" labelledBy="about-team-title">
       <Container>
         <SectionHeading
-          overline="Our Team"
-          title="Meet the People Behind Every Job"
-          subtitle="The family and crew keeping Southwest Florida flowing."
+          id="about-team-title"
+          align="left"
+          overline={ABOUT_TEAM.overline}
+          title={ABOUT_TEAM.title}
+          subtitle={ABOUT_TEAM.subtitle}
+          className="mb-8 sm:mb-10"
         />
 
-        <StaggerChildren className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 max-w-4xl mx-auto">
-          {TEAM_MEMBERS.map((member) => (
-            <motion.div
-              key={member.name}
-              variants={staggerItem}
-              className="group text-center"
-            >
-              <div className="relative w-36 h-36 sm:w-40 sm:h-40 md:w-48 md:h-48 mx-auto mb-4 sm:mb-6 rounded-2xl overflow-hidden bg-gray-100 border border-gray-200 group-hover:border-primary/30 transition-all duration-500">
-                {member.image ? (
-                  <Image
-                    src={member.image}
-                    alt={member.name}
-                    fill
-                    className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
-                    style={member.imagePosition ? { objectPosition: member.imagePosition } : undefined}
-                    sizes="(max-width: 640px) 144px, (max-width: 768px) 160px, 192px"
-                  />
-                ) : (
-                  <div className="absolute inset-0 flex items-center justify-center text-gray-600">
-                    <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full bg-primary/10 flex items-center justify-center">
-                      <span className="text-primary font-bold text-lg sm:text-xl">
-                        {member.name.charAt(0)}
-                      </span>
-                    </div>
-                  </div>
-                )}
-              </div>
-              <h3 className="text-base sm:text-lg font-bold text-gray-900">{member.name}</h3>
-              <p className="text-primary text-sm font-medium mt-1">
-                {member.role}
-              </p>
-              {member.bio && (
-                <p className="text-gray-500 text-xs sm:text-sm mt-2 sm:mt-3 leading-relaxed px-2 sm:px-0">
-                  {member.bio}
-                </p>
-              )}
-            </motion.div>
-          ))}
-        </StaggerChildren>
+        <ul className="grid grid-cols-1 gap-y-8 md:grid-cols-3 md:gap-x-6">
+          {TEAM_MEMBERS.map((member) => {
+            const media = member.image ? image(member.image, { alt: member.name }) : null;
+            return (
+              <li key={member.name} className="grid grid-cols-[7.5rem_minmax(0,1fr)] gap-x-5 md:block">
+                <Frame
+                  media={media}
+                  aspect="4/5"
+                  position={member.imagePosition ?? "50% 25%"}
+                  sizes="(min-width: 1280px) 400px, (min-width: 768px) 31vw, 120px"
+                  quality={75}
+                  className="self-start"
+                />
+                <div className="self-center md:mt-5">
+                  <h3 className="text-xl leading-snug font-semibold text-fg">{member.name}</h3>
+                  <p className="mt-1 font-semibold text-primary-dark">{member.role}</p>
+                </div>
+                {member.bio && <p className="col-span-2 mt-4 max-w-[60ch] text-body md:mt-3">{member.bio}</p>}
+              </li>
+            );
+          })}
+        </ul>
       </Container>
-    </section>
+    </Section>
   );
 }

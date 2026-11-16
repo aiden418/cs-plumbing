@@ -1,7 +1,12 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import PageTransition from "@/components/layout/PageTransition";
 import PageHero from "@/components/ui/PageHero";
+import Button from "@/components/ui/Button";
+import { Phone } from "@/components/ui/icons";
+import { BUSINESS } from "@/lib/business";
+import Container from "@/components/ui/Container";
+import Section from "@/components/ui/Section";
+import { QUOTE } from "@/content/conversion";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import CTASection from "@/components/home/CTASection";
 import QuoteBuilderPage from "./QuoteBuilderPage";
@@ -21,7 +26,7 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <PageTransition>
+    <>
       <BreadcrumbJsonLd
         items={[
           { name: "Home", href: "/" },
@@ -32,33 +37,46 @@ export default function Page() {
           page copy are in the prerendered HTML. The quiz below reads
           ?service= and is client-only by design. */}
       <PageHero
+        layout="plain"
         size="sm"
-        align="center"
-        overline="Instant Quote Builder"
-        title="Instant Plumbing Quote for"
-        accent="Water Heaters & Repiping in Lee County"
-        description="Answer a few questions and get an instant price range for water heater installation or whole-home repiping anywhere in Cape Coral, Fort Myers, and Lee County. Final price set after a free on-site inspection — no obligation, no pressure."
-      >
-        {/* What happens next */}
-        <div className="mt-6 sm:mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs sm:text-sm text-white/60">
-          <span className="inline-flex items-center gap-1.5">
-            <span className="flex items-center justify-center w-5 h-5 rounded-full bg-gold text-navy text-[10px] font-bold">1</span>
-            Answer a few questions
-          </span>
-          <span className="inline-flex items-center gap-1.5">
-            <span className="flex items-center justify-center w-5 h-5 rounded-full bg-gold text-navy text-[10px] font-bold">2</span>
-            Get your instant range
-          </span>
-          <span className="inline-flex items-center gap-1.5">
-            <span className="flex items-center justify-center w-5 h-5 rounded-full bg-gold text-navy text-[10px] font-bold">3</span>
-            C&amp;S confirms within 1 business day
-          </span>
-        </div>
-      </PageHero>
-      <Suspense>
-        <QuoteBuilderPage />
-      </Suspense>
+        overline={QUOTE.hero.overline}
+        title={QUOTE.hero.title}
+        accent={QUOTE.hero.accent}
+        description={QUOTE.hero.description}
+        media={
+          /* What happens next: beside the headline on desktop, under it on phones. */
+          <div className="lg:mt-6">
+            <ol aria-label={QUOTE.hero.stepsLabel} className="border-b border-rule">
+              {QUOTE.hero.steps.map((step, i) => (
+                <li key={step} className="flex items-center gap-4 border-t border-rule py-3.5 font-medium text-fg">
+                  <span aria-hidden="true" className="cv-num-disc">
+                    {i + 1}
+                  </span>
+                  <span>{step}</span>
+                </li>
+              ))}
+            </ol>
+            <Button
+              href={BUSINESS.phoneHref}
+              variant="secondary"
+              size="lg"
+              icon={<Phone aria-hidden="true" className="size-5" />}
+              className="mt-6 w-full sm:w-auto"
+            >
+              {`Call ${BUSINESS.phone}`}
+            </Button>
+          </div>
+        }
+      />
+      <Section tone="shell" spacing="none" className="py-8 sm:py-10 lg:py-12">
+        <Container className="min-h-[20rem]">
+          <p className="mb-5 max-w-[60ch] text-lg text-body">{QUOTE.hero.descriptionMore}</p>
+          <Suspense>
+            <QuoteBuilderPage />
+          </Suspense>
+        </Container>
+      </Section>
       <CTASection />
-    </PageTransition>
+    </>
   );
 }

@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { range, startingAt } from "@/lib/pricing";
-import { Warehouse, DoorOpen, Sun, TreePine, Flame, Plug, Fuel, Shield, ShieldCheck, ShieldPlus } from "lucide-react";
 import type {
   WaterHeaterSelections,
   HeaterType,
@@ -16,7 +15,7 @@ import type {
   QuoteResult,
 } from "@/lib/quote-types";
 import { calculateWaterHeater } from "@/lib/quote-pricing";
-import WizardShell from "./WizardShell";
+import WizardShell, { type SummaryRow } from "./WizardShell";
 import ProductCard from "./ProductCard";
 import type { ProductOption } from "./ProductCard";
 import CheckboxGrid from "./CheckboxGrid";
@@ -113,16 +112,16 @@ const BRAND_TIERS: ProductOption[] = [
 ];
 
 const LOCATIONS = [
-  { id: "garage", label: "Garage", icon: <Warehouse className="w-8 h-8 sm:w-10 sm:h-10" /> },
-  { id: "closet", label: "Indoor Closet", icon: <DoorOpen className="w-8 h-8 sm:w-10 sm:h-10" /> },
-  { id: "outdoor", label: "Outdoor", icon: <Sun className="w-8 h-8 sm:w-10 sm:h-10" /> },
-  { id: "attic", label: "Attic", icon: <TreePine className="w-8 h-8 sm:w-10 sm:h-10" /> },
+  { id: "garage", label: "Garage" },
+  { id: "closet", label: "Indoor Closet" },
+  { id: "outdoor", label: "Outdoor" },
+  { id: "attic", label: "Attic" },
 ];
 
 const FUEL_TYPES = [
-  { id: "electric", label: "Electric", icon: <Plug className="w-8 h-8 sm:w-10 sm:h-10" /> },
-  { id: "gas", label: "Natural Gas", icon: <Flame className="w-8 h-8 sm:w-10 sm:h-10" /> },
-  { id: "propane", label: "Propane", icon: <Fuel className="w-8 h-8 sm:w-10 sm:h-10" /> },
+  { id: "electric", label: "Electric" },
+  { id: "gas", label: "Natural Gas" },
+  { id: "propane", label: "Propane" },
 ];
 
 const WARRANTIES: ProductOption[] = [
@@ -131,14 +130,12 @@ const WARRANTIES: ProductOption[] = [
     label: "Standard 6-Year",
     description: "Included with every installation",
     priceHint: "Included",
-    icon: <Shield className="w-8 h-8 sm:w-10 sm:h-10" />,
   },
   {
     id: "extended",
     label: "Extended 10-Year",
     description: "Extra peace of mind for your investment",
     priceHint: "+$150 – $200", // claim-ok: calculator modifier
-    icon: <ShieldCheck className="w-8 h-8 sm:w-10 sm:h-10" />,
     badge: "Best Value",
   },
   {
@@ -146,7 +143,6 @@ const WARRANTIES: ProductOption[] = [
     label: "Premium 12-Year",
     description: "Maximum coverage — full parts & labor",
     priceHint: "+$300 – $400", // claim-ok: calculator modifier
-    icon: <ShieldPlus className="w-8 h-8 sm:w-10 sm:h-10" />,
   },
 ];
 
@@ -313,23 +309,31 @@ export default function WaterHeaterQuiz({ onComplete }: WaterHeaterQuizProps) {
     ? STEPS.filter((_, i) => i !== 1)
     : STEPS;
 
+  const labelOf = (options: { id: string; label: string }[], id: string | null) =>
+    options.find((o) => o.id === id)?.label ?? "";
+  const summary: SummaryRow[] = [
+    { term: STEPS[0].label, value: labelOf(HEATER_TYPES, sel.heaterType) },
+    { term: STEPS[1].label, value: labelOf([...TANK_SIZES, ...TANKLESS_SIZES], sel.size) },
+    { term: STEPS[2].label, value: labelOf(BRAND_TIERS, sel.brandTier) },
+    { term: STEPS[3].label, value: labelOf(LOCATIONS, sel.location) },
+    { term: STEPS[4].label, value: labelOf(FUEL_TYPES, sel.fuelType) },
+    { term: STEPS[5].label, value: labelOf(WARRANTIES, sel.warranty) },
+    { term: STEPS[6].label, value: sel.addons.map((a) => labelOf(ADDONS, a)).join(", ") },
+  ].filter((row) => row.value !== "");
+
   return (
     <WizardShell
       steps={visibleSteps}
       currentStep={step}
       onNext={handleNext}
       onPrev={handlePrev}
+      onStepClick={setStep}
       canProceed={canProceed()}
+      heading={STEP_HEADINGS[quizStep]}
+      subtitle={STEP_SUBTITLES[quizStep]}
+      summary={summary}
       nextLabel={step === totalSteps - 1 ? "See My Estimate" : undefined}
     >
-      <div className="mb-4 sm:mb-6">
-        <h2 className="text-lg sm:text-xl font-bold text-gray-900">
-          {STEP_HEADINGS[quizStep]}
-        </h2>
-        <p className="text-xs sm:text-sm text-gray-500 mt-1">
-          {STEP_SUBTITLES[quizStep]}
-        </p>
-      </div>
       {renderStep()}
     </WizardShell>
   );

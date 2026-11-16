@@ -1,4 +1,6 @@
-import { AREA_LANDINGS, COMPLETED_PROJECTS } from "./constants";
+import { AREA_LANDINGS } from "./constants";
+import { formatCompletedOn } from "./project-format";
+import { COMPLETED_PROJECTS } from "./projects-data";
 import { PUBLISHED_LANDINGS } from "./landing-indexing";
 import { SERVICE_HUBS, type ServiceHub } from "./service-hubs";
 import type { AreaLanding, CompletedProject, ServiceCityLanding } from "./types";
@@ -17,11 +19,6 @@ const CATEGORY_HUBS: Record<string, string[]> = {
   "Commercial Remodel": ["commercial", "plumbing-remodel"],
   Remodel: ["plumbing-remodel"],
 };
-
-const MONTHS = [
-  "January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December",
-];
 
 export function projectHubSlugs(project: CompletedProject): string[] {
   return CATEGORY_HUBS[project.category] ?? [];
@@ -140,12 +137,9 @@ export function projectLastModified(project: CompletedProject, fallback: Date): 
   return dates.reduce((a, b) => (b > a ? b : a), fallback);
 }
 
-/** "2025-05-02" -> "May 2025". Deterministic on server and client. */
-export function formatCompletedOn(iso: string): string {
-  const [y, m] = iso.split("-").map(Number);
-  const month = MONTHS[(m ?? 1) - 1] ?? "";
-  return month ? `${month} ${y}` : String(y);
-}
+// Kept in ./project-format so client components can format dates without
+// loading the project data; re-exported for the existing importers.
+export { formatCompletedOn };
 
 export function projectStatusLabel(project: CompletedProject): string {
   if (project.completedOn) return `Completed ${formatCompletedOn(project.completedOn)}`;

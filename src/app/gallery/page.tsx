@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import GalleryPage from "./GalleryPage";
+import { GALLERY_ITEMS } from "@/lib/gallery-data";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 
 export const metadata: Metadata = {
@@ -31,7 +32,7 @@ export default function Page() {
           { name: "Our Work", href: "/gallery" },
         ]}
       />
-      <GalleryPage />
+      <GalleryPage items={GALLERY_ITEMS} />
     </>
   );
 }

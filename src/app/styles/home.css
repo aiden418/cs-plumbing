@@ -1,0 +1,387 @@
+/* Homepage sections (v2-bright.md, "Homepage"). Imported by ../globals.css.
+   The hero lives in opening.css. Rules sit in @layer components so utility
+   classes can still override them; colours come from the section tone. */
+
+@layer components {
+  /* ---- Headings ------------------------------------------------------------ */
+  .home-eyebrow {
+    margin-bottom: 0.625rem;
+    color: var(--tone-accent);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .home-h2 {
+    max-width: 22ch;
+    color: var(--tone-fg);
+    font-size: clamp(2rem, 1.45rem + 2.2vw, 3rem);
+    line-height: 1.08;
+  }
+
+  .home-h2-sm {
+    max-width: 28ch;
+    color: var(--tone-fg);
+    font-size: clamp(1.5rem, 1.2rem + 1.1vw, 2rem);
+    line-height: 1.15;
+  }
+
+  .home-sub {
+    max-width: 56ch;
+    margin-top: 0.875rem;
+    color: var(--tone-body);
+    font-size: 1.125rem;
+    line-height: 1.55;
+  }
+
+  @media (min-width: 64rem) {
+    .home-sub {
+      font-size: 1.25rem;
+    }
+  }
+
+  .home-arrow-link {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--tone-link);
+    font-weight: 600;
+    text-underline-offset: 0.2em;
+  }
+
+  .home-arrow-link:hover {
+    text-decoration: underline;
+  }
+
+  /* ---- A card: white surface, 1 px line, 16 px radius, no shadow ------------- */
+  .home-card {
+    border: 1px solid var(--color-steel-200);
+    border-radius: 1rem;
+    background-color: var(--color-white);
+  }
+
+  /* ---- The two doors -------------------------------------------------------
+     A photograph beside a label, a title, one line and an arrow. */
+  .home-door {
+    display: grid;
+    grid-template-columns: 5.5rem minmax(0, 1fr);
+    column-gap: 1rem;
+    align-items: center;
+    height: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--color-steel-200);
+    border-radius: 1rem;
+    background-color: var(--color-white);
+    transition: border-color var(--dur-1) var(--ease-move);
+  }
+
+  .home-door:hover {
+    border-color: var(--color-primary);
+  }
+
+  .home-door-frame {
+    align-self: start;
+    border-radius: 0.625rem;
+  }
+
+  .home-door-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding-block: 0.125rem;
+  }
+
+  .home-door-title {
+    display: block;
+    margin-top: 0.25rem;
+    color: var(--tone-fg);
+    font-size: 1.1875rem;
+    font-weight: 700;
+    line-height: 1.25;
+  }
+
+  .home-door-body {
+    display: block;
+    margin-top: 0.375rem;
+    color: var(--tone-body);
+    font-size: 1rem;
+    line-height: 1.45;
+  }
+
+  @media (min-width: 40rem) {
+    .home-door {
+      grid-template-columns: 9rem minmax(0, 1fr);
+      column-gap: 1.25rem;
+      padding: 1rem;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .home-door {
+      grid-template-columns: 12rem minmax(0, 1fr);
+      column-gap: 1.75rem;
+    }
+
+    .home-door-text {
+      padding-block: 0.5rem;
+    }
+
+    .home-door-title {
+      margin-top: 0.375rem;
+      font-size: 1.5rem;
+    }
+
+    .home-door-body {
+      font-size: 1.0625rem;
+    }
+  }
+
+  /* ---- Services: photograph + name; the line from 768 px ------------------ */
+  .home-service-title {
+    margin-top: 0.75rem;
+    color: var(--tone-fg);
+    font-size: 1.0625rem;
+    font-weight: 650;
+    line-height: 1.3;
+  }
+
+  .home-service-text {
+    margin-top: 0.375rem;
+    color: var(--tone-body);
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 47.9375rem) {
+    .home-service-text {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      margin: -1px;
+      padding: 0;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+      border: 0;
+    }
+  }
+
+  @media (min-width: 48rem) {
+    .home-service-title {
+      margin-top: 1rem;
+      font-size: 1.25rem;
+    }
+  }
+
+  /* ---- Proof: four numbers, 2 × 2 on phones -------------------------------- */
+  .home-proof {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 1.75rem;
+    column-gap: 1rem;
+  }
+
+  .home-proof-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+  }
+
+  .home-proof-cell > dd {
+    order: -1;
+  }
+
+  .home-proof-value {
+    color: var(--tone-fg);
+    font-family: var(--font-display);
+    font-stretch: 108%;
+    font-weight: 700;
+    font-size: clamp(2.25rem, 1.6rem + 2.6vw, 3.5rem);
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .home-proof-label {
+    color: var(--tone-body);
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.35;
+  }
+
+  @media (min-width: 48rem) {
+    .home-proof {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      column-gap: 2rem;
+    }
+
+    .home-proof-label {
+      font-size: 1.0625rem;
+    }
+  }
+
+  /* ---- Logo strips ---------------------------------------------------------- */
+  .home-strip {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.25rem;
+  }
+
+  /* On phones the eyebrows (they repeat their headings) stay in the HTML but
+     are not shown, except the seasonal one on the Coastal Comeback card. */
+  @media (max-width: 47.9375rem) {
+    .home-eyebrow:not(.home-card .home-eyebrow) {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      margin: -1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .home-strip {
+      grid-template-columns: 17rem minmax(0, 1fr);
+      align-items: center;
+      gap: 3rem;
+    }
+  }
+
+  /* ---- Logo carousel (components/ui/LogoCarousel.tsx) ----------------------
+     One row of white tiles that glides sideways and loops: the track holds the
+     list twice and moves by half its width. It pauses on hover, on focus and
+     while touched; under reduced motion it is a plain scrollable strip. The
+     row clips itself, so the page never scrolls sideways. On phones it runs
+     from edge to edge of the screen. */
+  .logo-carousel {
+    --logo-carousel-gap: 1rem;
+    --logo-carousel-fade: 2rem;
+    --logo-carousel-bleed: calc(var(--spacing-gutter) + env(safe-area-inset-left, 0px));
+    min-width: 0;
+    margin-inline: calc(-1 * var(--logo-carousel-bleed));
+    padding-block: 0.25rem;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, transparent, black var(--logo-carousel-fade), black calc(100% - var(--logo-carousel-fade)), transparent);
+    mask-image: linear-gradient(to right, transparent, black var(--logo-carousel-fade), black calc(100% - var(--logo-carousel-fade)), transparent);
+    border-radius: 0.75rem;
+  }
+
+  .logo-carousel:focus-visible {
+    outline: 2px solid var(--tone-focus);
+    outline-offset: -2px;
+  }
+
+  .logo-carousel-track {
+    display: flex;
+    width: max-content;
+  }
+
+  .logo-carousel-list {
+    display: flex;
+    flex: none;
+    gap: var(--logo-carousel-gap);
+    padding-inline-end: var(--logo-carousel-gap);
+  }
+
+  .logo-carousel-tile {
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: 9rem;
+    height: 5rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--color-steel-200);
+    border-radius: 0.875rem;
+    background-color: var(--color-white);
+  }
+
+  .logo-carousel-tile[data-tone="navy"] {
+    border-color: var(--tone-canvas);
+    background-color: var(--tone-canvas);
+  }
+
+  /* The logo area: 56 px tall on phones, 64 px from 1024 px. */
+  .logo-carousel-logo {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 3.5rem;
+  }
+
+  .logo-carousel-img {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 3.5rem;
+    object-fit: contain;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .logo-carousel-track {
+      animation: logo-carousel-glide var(--logo-carousel-duration, 45s) linear infinite;
+    }
+
+    .logo-carousel[data-reverse] .logo-carousel-track {
+      animation-direction: reverse;
+    }
+
+    .logo-carousel:hover .logo-carousel-track,
+    .logo-carousel:active .logo-carousel-track,
+    .logo-carousel:focus-within .logo-carousel-track {
+      animation-play-state: paused;
+    }
+  }
+
+  /* Reduced motion: no animation, the copy goes, the row scrolls by hand.
+     The padding lets the first and last tile scroll clear of the fades. */
+  @media (prefers-reduced-motion: reduce) {
+    .logo-carousel {
+      padding-inline: var(--logo-carousel-fade);
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scrollbar-width: none;
+    }
+
+    .logo-carousel::-webkit-scrollbar {
+      display: none;
+    }
+
+    .logo-carousel-list[aria-hidden="true"] {
+      display: none;
+    }
+
+    .logo-carousel-list {
+      padding-inline-end: 0;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .logo-carousel {
+      --logo-carousel-gap: 1.25rem;
+      --logo-carousel-fade: 4rem;
+      margin-inline: 0;
+    }
+
+    .logo-carousel-tile {
+      width: 10.5rem;
+      height: 5.5rem;
+    }
+
+    .logo-carousel-logo {
+      height: 4rem;
+    }
+
+    .logo-carousel-img {
+      max-height: 4rem;
+    }
+  }
+}
+
+@keyframes logo-carousel-glide {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}

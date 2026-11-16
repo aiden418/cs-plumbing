@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import PageTransition from "@/components/layout/PageTransition";
 import ServiceLandingTemplate from "@/components/services/ServiceLandingTemplate";
 import ServiceJsonLd from "@/components/seo/ServiceJsonLd";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
@@ -28,7 +27,7 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <PageTransition>
+    <>
       <ServiceJsonLd landing={landing} />
       <FaqJsonLd faqs={landing.faqs} />
       <BreadcrumbJsonLd
@@ -39,13 +38,21 @@ export default function Page() {
           { name: landing.title, href: `/services/${landing.slug}` },
         ]}
       />
-      <ServiceLandingTemplate landing={landing} />
+      <ServiceLandingTemplate
+        landing={landing}
+        breadcrumb={[
+          { name: "Home", href: "/" },
+          { name: "Services", href: "/services" },
+          { name: "Water Heaters", href: "/services/water-heaters" },
+          { name: landing.title, href: `/services/${landing.slug}` },
+        ]}
+      />
       <RelatedPosts
         posts={postsForHub("water-heaters")}
         heading="Tankless & water heater guides"
         description="Tankless vs. tank, what a replacement costs, and how to keep a heater alive through storm season."
       />
       <CTASection />
-    </PageTransition>
+    </>
   );
 }

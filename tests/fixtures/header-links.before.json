@@ -1,0 +1,19 @@
+{
+  "source": ".redesign/baseline/snapshot-before.json",
+  "route": "/",
+  "note": "Unique hrefs of the pre-redesign site header on /, identical on /about, /builders, /contact and /services/water-heaters. Frozen before the new header was written.",
+  "hrefs": [
+    "/",
+    "/about",
+    "/areas/cape-coral",
+    "/awards",
+    "/booking",
+    "/builders",
+    "/contact",
+    "/gallery",
+    "/projects",
+    "/quote-builder",
+    "/services",
+    "tel:8337586248"
+  ]
+}

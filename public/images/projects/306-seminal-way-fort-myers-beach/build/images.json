@@ -1,0 +1,116 @@
+{
+  "hero-1.webp": {
+    "alt": "Finished kitchen island with gold pull-down faucet and undermount sink at the Fort Myers Beach custom home",
+    "order": 1,
+    "cover": true,
+    "position": "50% 73%"
+  },
+  "hero-2.webp": {
+    "alt": "Double vanity with two undermount sinks and matte black widespread faucets trimmed out beside a floor-mount toilet",
+    "order": 2
+  },
+  "hero-3.webp": {
+    "alt": "Guest bath vanity with brushed gold widespread faucet, floor-mount toilet and glass-enclosed tile shower trimmed out",
+    "order": 3
+  },
+  "hero-4.webp": {
+    "alt": "Powder bath with undermount sink, matte black single-handle faucet and floor-mount elongated toilet at finished trim",
+    "order": 4
+  },
+  "hero-5.webp": {
+    "alt": "Alcove tub with matte black shower valve trim, tub spout and showerhead set in herringbone tile",
+    "order": 5
+  },
+  "hero-6.webp": {
+    "alt": "Primary bath with double vanity faucets, walk-in tile shower with rain head and hand shower, and freestanding tub",
+    "order": 6
+  },
+  "photo-1.jpeg": {
+    "alt": "Washing machine outlet box with PEX supplies and PVC standpipe trap roughed in a framed wall",
+    "order": 7
+  },
+  "photo-2.jpeg": {
+    "alt": "PVC DWV vent stack rising through the top plate into floor joists with a tee and elbow overhead",
+    "order": 8
+  },
+  "photo-3.jpeg": {
+    "alt": "Double vanity rough-in with PEX stub-outs on brackets and PVC drain arms beside a vent stack",
+    "order": 9
+  },
+  "photo-4.jpeg": {
+    "alt": "PEX supply drops on drop-ear elbows in the wall with a foam-sealed PVC drain stub through the subfloor",
+    "order": 10
+  },
+  "photo-5.jpeg": {
+    "alt": "Custom shower rough-in with shower valve body, PEX supplies, showerhead drop-ear elbow and drain body in the subfloor",
+    "order": 11
+  },
+  "photo-6.jpeg": {
+    "alt": "Tub and shower valve body roughed in with PEX supply riser and copper tub spout stub-out",
+    "order": 12
+  },
+  "photo-7.jpeg": {
+    "alt": "White alcove bathtub set in framing with overflow and drain, tub and shower valve roughed in the wall",
+    "order": 13
+  },
+  "photo-8.jpeg": {
+    "alt": "PVC DWV riser strapped up the concrete block wall into floor trusses with PEX supply lines overhead",
+    "order": 14
+  },
+  "photo-9.jpeg": {
+    "alt": "PVC DWV stack with offset and cleanout tee at the base running up a ground-floor block wall",
+    "order": 15
+  },
+  "photo-10.jpeg": {
+    "alt": "PVC DWV drain lines with long-sweep elbows and a wye threaded through floor trusses, PEX supply alongside",
+    "order": 16
+  },
+  "photo-11.jpeg": {
+    "alt": "Overhead PVC DWV drain and vent runs with sanitary tees through floor trusses and PEX supply lines",
+    "order": 17
+  },
+  "photo-12.jpeg": {
+    "alt": "PVC vent branches with elbows and PEX supply lines secured with pipe clamps inside the floor truss space",
+    "order": 18
+  },
+  "photo-13.jpeg": {
+    "alt": "PVC vent stack rising through a framed partition wall with stud protector plates and a PEX supply riser",
+    "order": 19
+  },
+  "photo-14.jpeg": {
+    "alt": "PVC drain riser foam-sealed at the top plate, joining DWV elbows in the floor truss space above",
+    "order": 20
+  },
+  "photo-15.jpeg": {
+    "alt": "Two shower valve bodies roughed in a stud wall with PEX supply lines and capped stub-outs on brackets",
+    "order": 21
+  },
+  "photo-16.jpeg": {
+    "alt": "Looking up at PVC DWV vent elbows and PEX supply crossing open floor trusses above a framed wall",
+    "order": 22
+  },
+  "photo-17.jpeg": {
+    "alt": "PVC DWV vent line with elbows and pipe clamps routed through open-web floor trusses during rough-in",
+    "order": 23
+  },
+  "photo-18.jpeg": {
+    "alt": "Copper riser strapped up the concrete block wall from a foam-sealed slab penetration into the floor trusses",
+    "order": 24
+  },
+  "photo-19.jpeg": {
+    "alt": "Copper water service stub-up with brass ball valve at the exterior block wall before backfill of the trench",
+    "order": 25
+  },
+  "photo-converted-1.jpeg": {
+    "alt": "Open trench with PVC underground lines run toward the street on the Fort Myers Beach lot",
+    "order": 26
+  },
+  "photo-converted-2.jpeg": {
+    "alt": "PVC water service and sewer lateral laid in the trench, utility trailer and fire hydrant at the street",
+    "order": 27
+  },
+  "photo-converted-3.jpeg": {
+    "alt": "Underground trench along the block foundation with a PVC drain line elbowing out through the wall",
+    "order": 28
+  }
+}

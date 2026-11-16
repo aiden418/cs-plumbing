@@ -13,6 +13,8 @@ import {
   isHoneypotTripped,
   isTrustedOrigin,
   rateLimit,
+  sendEmailBestEffort,
+  sendEmailOrThrow,
   SMS_TO,
   tooManyRequests,
 } from "@/lib/api/secure";
@@ -70,7 +72,7 @@ export async function POST(request: Request) {
     if (!process.env.RESEND_API_KEY) {
       console.error("RESEND_API_KEY is not configured");
       return NextResponse.json(
-        { error: "Email service unavailable. Please call 833-PLUMB-IT." },
+        { error: `Email service unavailable. Please call ${BUSINESS.phone}.` },
         { status: 500 }
       );
     }
@@ -159,36 +161,38 @@ export async function POST(request: Request) {
       </div>
     `;
 
-    // Send to business
-    await resend.emails.send({
+    // Send to business. Resend resolves with an error instead of throwing when
+    // it rejects a send, so the office copy goes through sendEmailOrThrow: a
+    // refused send is a 500 for the builder, never a success screen, an
+    // eventId and a confirmation email for a lead the office did not get.
+    await sendEmailOrThrow(resend, {
       from: "C&S Plumbing Website <bookings@csplumbinglee.com>",
       to: [ADMIN_EMAIL],
       replyTo: email,
       subject: `Builder Quote Request: ${company} — ${projectType} at ${address}`,
       html,
       ...(attachments.length > 0 && { attachments }),
-    });
+    }, "builder portal admin email");
 
-    // SMS notification
+    // SMS notification (best effort — the office email above is the lead)
     if (SMS_TO) {
       const smsText = `New builder quote: ${company} - ${projectType} at ${address}. ${fileCount} files. Phone: ${phone}`;
-      await resend.emails.send({
+      await sendEmailBestEffort(resend, {
         from: "C&S Plumbing Website <bookings@csplumbinglee.com>",
         to: [SMS_TO],
         subject: "Builder Quote Request",
         text: smsText.slice(0, 160),
-      });
+      }, "builder portal SMS notification");
     }
 
     // Submitter confirmation — the portal promises "You'll get a confirmation
     // email immediately", so send one. A failure here must not fail the whole
     // submission (the admin lead email already went through).
-    try {
-      await resend.emails.send({
-        from: "C&S Plumbing of Lee <bookings@csplumbinglee.com>",
-        to: [email],
-        subject: "We received your quote request — C&S Plumbing",
-        html: `
+    await sendEmailBestEffort(resend, {
+      from: "C&S Plumbing of Lee <bookings@csplumbinglee.com>",
+      to: [email],
+      subject: "We received your quote request — C&S Plumbing",
+      html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background: #0A0A0F; padding: 20px; text-align: center;">
             <h1 style="color: #0099FF; margin: 0;">Quote Request Received</h1>
@@ -203,26 +207,24 @@ export async function POST(request: Request) {
               <p style="margin: 4px 0;"><strong>Files received:</strong> ${fileCount}</p>
             </div>
             <p style="color: #666; font-size: 14px;">
-              Questions? Call us at <a href="tel:${BUSINESS.phoneRaw}" style="color: #0099FF;">${BUSINESS.phone}</a>.
+              Questions? Call us at <a href="${BUSINESS.phoneHref}" style="color: #0099FF;">${BUSINESS.phone}</a>.
             </p>
             <p style="color: #999; font-size: 12px; margin-top: 20px;">
               ${BUSINESS.fullName} &middot; ${BUSINESS.address}, ${BUSINESS.city}, ${BUSINESS.state} ${BUSINESS.zip}
             </p>
           </div>
         </div>`,
-      });
-    } catch (confirmError) {
-      console.error("Builder portal confirmation email error:", confirmError);
-    }
+    }, "builder portal submitter confirmation");
 
-    // Id for the browser's builder_lead event (Meta custom event + dataLayer).
+    // Id for the browser's builder_lead event (Meta custom event + dataLayer),
+    // issued only here, after the office email was accepted: no id, no event.
     // Builder leads are intentionally not sent to the OpenAI CAPI as
     // lead_created — they'd be counted as homeowner leads.
     return NextResponse.json({ success: true, eventId: randomUUID() });
   } catch (error) {
     console.error("Builder portal error:", error);
     return NextResponse.json(
-      { error: "Failed to submit. Please call 833-PLUMB-IT." },
+      { error: `Failed to submit. Please call ${BUSINESS.phone}.` },
       { status: 500 }
     );
   }

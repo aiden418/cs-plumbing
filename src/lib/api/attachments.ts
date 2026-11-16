@@ -22,11 +22,11 @@ export interface AttachmentLimits {
 }
 
 /**
- * Builder portal plan sets. Mirrors the defaults FileUpload advertises
- * (10 files, 10 MB each) and the route's long-standing 25 MB total. Note
- * that Vercel rejects request bodies over 4.5 MB before this code runs, so
- * a full plan set still needs the "email large plan sets" fallback; the
- * limits here are the hard ceiling, not a promise.
+ * Builder portal plan sets: 10 files, 10 MB each and the route's
+ * long-standing 25 MB total. Note that Vercel rejects request bodies over
+ * 4.5 MB before this code runs, so the builder forms stop a selection sooner
+ * in the browser and offer email for a full plan set (see ../plan-upload.ts);
+ * the limits here are the hard ceiling, not a promise.
  */
 export const BUILDER_UPLOAD: AttachmentLimits = {
   field: "files",

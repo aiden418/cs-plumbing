@@ -41,7 +41,7 @@ export default function ServiceJsonLd({ landing }: { landing: ServiceLanding }) 
       hasCredential: {
         "@type": "EducationalOccupationalCredential",
         credentialCategory: "Professional License",
-        name: "Certified Plumbing Contractor — CFC1432485",
+        name: `Certified Plumbing Contractor — ${BUSINESS.license}`,
         recognizedBy: {
           "@type": "GovernmentOrganization",
           name: "Florida Department of Business and Professional Regulation",

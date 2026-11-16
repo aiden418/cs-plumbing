@@ -1,5 +1,8 @@
 import Link from "next/link";
-import { LinkGrid, LinkSection } from "@/components/links/LinkGrid";
+import { LinkGrid } from "@/components/links/LinkGrid";
+import SplitLinkSection from "@/components/areas/SplitLinkSection";
+import MoreOnPhones from "@/components/areas/MoreOnPhones";
+import { SERVICE_CITY_COPY } from "@/content/areas";
 import {
   areaForCity,
   hubForLanding,
@@ -7,6 +10,9 @@ import {
   landingsForHub,
 } from "@/lib/internal-links";
 import type { ServiceCityLanding } from "@/lib/types";
+
+const copy = SERVICE_CITY_COPY.links;
+const LINK_CLASS = "font-semibold text-link underline underline-offset-[0.2em] decoration-1 hover:decoration-2";
 
 /**
  * Cross-links under every service-city landing: the other service pages for
@@ -28,61 +34,72 @@ export default function CityServiceLinks({
     return null;
   }
 
+  const hubGrid = (
+    <LinkGrid
+      columns={2}
+      links={hubPages.map((p) => ({
+        href: `/${p.slug}`,
+        label: p.h1,
+        meta: `${p.city}, ${p.state}`,
+      }))}
+    />
+  );
+
   return (
-    <LinkSection
+    <SplitLinkSection
       overline={`${landing.city}, ${landing.state}`}
-      heading={`More plumbing help in ${landing.city}`}
-      description={`Every ${landing.city} service page has local pricing, FAQs and the neighborhoods we cover.`}
+      heading={copy.heading(landing.city)}
+      description={copy.description(landing.city)}
+      tone="white"
       headingId="city-service-links-heading"
     >
       {cityPages.length > 0 && (
         <LinkGrid
+          columns={2}
           links={cityPages.map((p) => ({
             href: `/${p.slug}`,
             label: p.h1,
-            meta: p.priceRange ? `Typical range ${p.priceRange}` : undefined,
+            meta: p.priceRange ? `${copy.rangePrefix} ${p.priceRange}` : undefined,
           }))}
         />
       )}
 
       {hub && hubPages.length > 0 && (
         <div className={cityPages.length > 0 ? "mt-10" : undefined}>
-          <h3 className="mb-4 text-lg font-bold text-gray-900">
-            {hub.title} in other Southwest Florida cities
+          <h3 className="mb-4 text-xl leading-snug font-semibold text-fg">
+            {copy.hubHeading(hub.title)}
           </h3>
-          <LinkGrid
-            links={hubPages.map((p) => ({
-              href: `/${p.slug}`,
-              label: p.h1,
-              meta: `${p.city}, ${p.state}`,
-            }))}
-          />
+          {hubPages.length > 3 ? (
+            <MoreOnPhones summary={copy.showCities(hubPages.length)}>{hubGrid}</MoreOnPhones>
+          ) : (
+            hubGrid
+          )}
         </div>
       )}
 
       {(area || hub) && (
-        <p className="mt-8 text-sm text-gray-600">
-          See{" "}
+        <p className="mt-6 max-w-[68ch] text-body">
+          {copy.seePrefix}
           {area && (
             <Link
               href={`/areas/${area.slug}`}
-              className="font-semibold text-primary hover:underline"
+              className={LINK_CLASS}
             >
-              all plumbing services in {area.city}, {area.state}
+              {copy.areaLink(area.city, area.state)}
             </Link>
           )}
-          {area && hub && " or "}
+          {area && hub && copy.or}
           {hub && (
             <Link
               href={hub.href}
-              className="font-semibold text-primary hover:underline"
+              className={LINK_CLASS}
             >
-              {hub.title} across Southwest Florida
+              {copy.hubLink(hub.title)}
             </Link>
           )}
           .
         </p>
       )}
-    </LinkSection>
+    </SplitLinkSection>
   );
 }

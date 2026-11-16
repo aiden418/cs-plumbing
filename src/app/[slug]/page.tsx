@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import PageTransition from "@/components/layout/PageTransition";
 import ServiceCityLandingTemplate from "@/components/service-city/ServiceCityLandingTemplate";
 import CityServiceLinks from "@/components/service-city/CityServiceLinks";
 import ServiceCityJsonLd from "@/components/seo/ServiceCityJsonLd";
@@ -60,7 +59,7 @@ export default async function Page({
   const area = areaForCity(landing.city);
 
   return (
-    <PageTransition>
+    <>
       <ServiceCityJsonLd landing={landing} />
       <FaqJsonLd faqs={landing.faqs} />
       <BreadcrumbJsonLd
@@ -81,11 +80,12 @@ export default async function Page({
           Renders nothing for cities with no project page yet. */}
       <RelatedProjects
         projects={projectsForCity(landing.city, { hub: landing.serviceSlug, limit: 3 })}
+        tone="shell"
         heading={`Recent projects in ${landing.city}`}
         description={`Real jobs we've documented in ${landing.city}, photographed phase by phase with the builder or GC named.`}
       />
       <GoogleReviews />
       <CTASection />
-    </PageTransition>
+    </>
   );
 }

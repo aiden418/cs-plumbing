@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { BUSINESS } from "@/lib/constants";
+import Button from "@/components/ui/Button";
+import PageHero from "@/components/ui/PageHero";
+import { Calendar, Phone } from "@/components/ui/icons";
+import { NOT_FOUND } from "@/content/reading";
+import { BUSINESS } from "@/lib/business";
 
 export const metadata: Metadata = {
   title: "Page Not Found",
@@ -9,59 +13,51 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
+const quietLink =
+  "inline-flex min-h-11 items-center font-semibold text-link underline-offset-4 transition-colors duration-150 hover:underline";
+
+/** The 404 page: a type-led header with the way home, to services and the call button. */
 export default function NotFound() {
   return (
-    <main className="relative min-h-screen flex items-center justify-center overflow-hidden bg-navy px-6">
-      <div className="pointer-events-none absolute -top-32 left-1/3 h-[480px] w-[480px] -translate-x-1/2 rounded-full bg-primary/25 blur-[120px]" />
-      <div className="pointer-events-none absolute bottom-0 right-0 h-72 w-72 rounded-full bg-gold/15 blur-[100px]" />
-      <div className="relative max-w-md text-center">
-        <p className="text-gold text-sm font-bold tracking-[0.2em] uppercase mb-4">
-          404 — Page Not Found
-        </p>
-        <h1 className="text-4xl sm:text-5xl font-black text-white mb-4">
-          Oops, <span className="text-gold-gradient">wrong pipe.</span>
-        </h1>
-        <p className="text-white/70 text-lg mb-8">
-          The page you&apos;re looking for doesn&apos;t exist or has been moved.
-          Let us help you find what you need.
-        </p>
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
-          <Link
-            href="/booking"
-            className="inline-flex items-center justify-center px-6 py-3 bg-gold text-navy font-bold rounded-full hover:bg-gold-dark transition-colors active:scale-[0.98] w-full sm:w-auto"
-          >
-            Book a Service
-          </Link>
-          <Link
-            href="/services"
-            className="inline-flex items-center justify-center px-6 py-3 border border-white/30 text-white font-bold rounded-full hover:bg-white/10 transition-colors active:scale-[0.98] w-full sm:w-auto"
-          >
-            View Services
-          </Link>
-        </div>
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 mt-4 text-sm">
-          <Link
-            href="/"
-            className="text-white/60 hover:text-white transition-colors"
-          >
-            Go Home
-          </Link>
-          <span className="hidden sm:inline text-white/30">·</span>
-          <a
-            href={`tel:${BUSINESS.phoneRaw}`}
-            className="text-white/60 hover:text-white transition-colors"
-          >
+    <PageHero
+      layout="type-led"
+      overline={NOT_FOUND.overline}
+      title={NOT_FOUND.title}
+      accent={NOT_FOUND.accent}
+      description={NOT_FOUND.body}
+      // Fill <main> (min-h-screen) so no white band sits between the header and the footer.
+      className="flex min-h-screen flex-col justify-center"
+      actions={
+        <>
+          <Button href={BUSINESS.phoneHref} size="lg" icon={<Phone className="size-5" />}>
             Call {BUSINESS.phone}
-          </a>
-          <span className="hidden sm:inline text-white/30">·</span>
-          <Link
-            href="/contact"
-            className="text-white/60 hover:text-white transition-colors"
+          </Button>
+          <Button href={NOT_FOUND.services.href} variant="secondary" size="lg">
+            {NOT_FOUND.services.label}
+          </Button>
+          <Button
+            href={NOT_FOUND.book.href}
+            variant="secondary"
+            size="lg"
+            icon={<Calendar className="size-5" />}
           >
-            Contact Us
+            {NOT_FOUND.book.label}
+          </Button>
+        </>
+      }
+    >
+      <ul className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-1 border-t border-rule pt-4">
+        <li>
+          <Link href={NOT_FOUND.home.href} className={quietLink}>
+            {NOT_FOUND.home.label}
           </Link>
-        </div>
-      </div>
-    </main>
+        </li>
+        <li>
+          <Link href={NOT_FOUND.contact.href} className={quietLink}>
+            {NOT_FOUND.contact.label}
+          </Link>
+        </li>
+      </ul>
+    </PageHero>
   );
 }

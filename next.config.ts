@@ -2,6 +2,12 @@ import type { NextConfig } from "next";
 import { landingRedirects } from "./src/lib/landing-indexing";
 
 const nextConfig: NextConfig = {
+  // The review-mode switch is fixed at build time for server and browser
+  // alike, so a server can never report "tags off" while the browser still
+  // loads them. Unset means the tags are on.
+  env: {
+    NEXT_PUBLIC_ANALYTICS: process.env.NEXT_PUBLIC_ANALYTICS ?? "",
+  },
   images: {
     formats: ["image/avif", "image/webp"],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],

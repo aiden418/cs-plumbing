@@ -1,37 +1,25 @@
 import type { Metadata } from "next";
-import dynamic from "next/dynamic";
 import Hero from "@/components/home/Hero";
-import StatsBar from "@/components/home/StatsBar";
-import ServiceHighlights from "@/components/home/ServiceHighlights";
-import PipelineSection from "@/components/home/PipelineSection";
-import PageTransition from "@/components/layout/PageTransition";
-import HomeFaq, { HOME_FAQS } from "@/components/home/HomeFaq";
+import HomeIntro from "@/components/home/HomeIntro";
+import Services from "@/components/home/Services";
+import EmergencyBand from "@/components/home/EmergencyBand";
+import ProofStrip from "@/components/home/ProofStrip";
+import CoastalComebackTeaser from "@/components/home/CoastalComebackTeaser";
+import WalkTheJob from "@/components/home/WalkTheJob";
+import FamilyStory from "@/components/home/FamilyStory";
+import WhereWeWork from "@/components/home/WhereWeWork";
+import ReviewsAwards from "@/components/home/ReviewsAwards";
+import GuidesFaq from "@/components/home/GuidesFaq";
+import CTASection from "@/components/home/CTASection";
+import { HOME_FAQS } from "@/components/home/HomeFaq";
 import FaqJsonLd from "@/components/seo/FaqJsonLd";
-import RelatedPosts from "@/components/blog/RelatedPosts";
 import { latestPosts } from "@/lib/internal-links";
 import { season } from "@/lib/claims";
+import { BUSINESS } from "@/lib/business";
 
 // The snowbird teaser flips between arrival (Nov–Apr) and departure copy;
 // daily revalidation means the flip needs no deploy.
 export const revalidate = 86400;
-
-// Below-the-fold sections — server-rendered for SEO, JS deferred for performance
-const CoastalComebackTeaser = dynamic(
-  () => import("@/components/home/CoastalComebackTeaser"),
-);
-const WhyChooseUs = dynamic(() => import("@/components/home/WhyChooseUs"));
-const ServiceAreasSection = dynamic(
-  () => import("@/components/home/ServiceAreasSection"),
-);
-const GoogleReviews = dynamic(() => import("@/components/home/GoogleReviews"));
-const BrandsCarousel = dynamic(
-  () => import("@/components/home/BrandsCarousel"),
-);
-const BuilderShowcase = dynamic(
-  () => import("@/components/home/BuilderShowcase"),
-);
-const CTASection = dynamic(() => import("@/components/home/CTASection"));
-const EmergencyBand = dynamic(() => import("@/components/home/EmergencyBand"));
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
@@ -40,7 +28,7 @@ export const metadata: Metadata = {
   // old title plus the layout template ran 81 characters.
   title: { absolute: "Plumber in Cape Coral & Fort Myers, FL | C&S Plumbing of Lee" },
   description:
-    "Licensed Florida plumbing contractor (CFC1432485) serving Cape Coral, Fort Myers & SWFL since 1998. Repairs, repipes, water heaters and remodels for homeowners; new construction plumbing for builders. 5.0-star rated.",
+    `Licensed Florida plumbing contractor (${BUSINESS.license}) serving Cape Coral, Fort Myers & SWFL since 1998. Repairs, repipes, water heaters and remodels for homeowners; new construction plumbing for builders. 5.0-star rated.`,
   keywords: [
     "new construction plumber SWFL",
     "new construction plumbing Cape Coral",
@@ -82,29 +70,26 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <PageTransition>
-      <PipelineSection>
-        <Hero />
-        <StatsBar />
-        <ServiceHighlights />
-      </PipelineSection>
-      <ServiceAreasSection />
+    <>
+      {/* The film/photo behind the headline, then the license line and the two doors */}
+      <Hero />
+      <HomeIntro />
+      {/* Services, the emergency band, the proof numbers */}
+      <Services />
       <EmergencyBand />
-      <WhyChooseUs />
-      <BuilderShowcase />
+      <ProofStrip />
+      {/* Our work, why C&S, reviews, service areas */}
+      <WalkTheJob />
+      <FamilyStory />
+      <ReviewsAwards />
+      <WhereWeWork />
+      {/* Coastal Comeback and the brand and builder logo strips */}
       <CoastalComebackTeaser season={season()} />
-      <GoogleReviews />
-      <BrandsCarousel />
-      {/* Server-rendered: /blog had no inbound link in the HTML before this. */}
-      <RelatedPosts
-        posts={latestPosts(3)}
-        heading="Plumbing guides for Southwest Florida homeowners"
-        description="Costs, warning signs and storm prep, written for Cape Coral, Fort Myers and the rest of SWFL."
-        tone="white"
-      />
+      {/* Guides and FAQ (server-rendered: /blog had no inbound link in the HTML before) */}
+      <GuidesFaq posts={latestPosts(3)} />
       <FaqJsonLd faqs={HOME_FAQS} />
-      <HomeFaq />
+      {/* Contact */}
       <CTASection />
-    </PageTransition>
+    </>
   );
 }

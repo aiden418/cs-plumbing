@@ -5,6 +5,14 @@ import nextTs from "eslint-config-next/typescript";
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
+  // CommonJS scripts are preloaded with `node --require` (see start:capture),
+  // so require() is the only way they can import. Everywhere else it stays an error.
+  {
+    files: ["scripts/**/*.cjs"],
+    rules: {
+      "@typescript-eslint/no-require-imports": "off",
+    },
+  },
   // Override default ignores of eslint-config-next.
   globalIgnores([
     // Default ignores of eslint-config-next:
@@ -14,6 +22,10 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     // Local Claude Code worktree checkouts (git-excluded); not part of the site.
     ".claude/**",
+    // Local redesign review artifacts and helper scripts (git-ignored).
+    ".redesign/**",
+    // Written by scripts/build-image-manifest.mjs (git-ignored).
+    "src/generated/**",
   ]),
 ]);
 

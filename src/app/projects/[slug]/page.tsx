@@ -1,12 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import PageTransition from "@/components/layout/PageTransition";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import ProjectDetail from "@/components/projects/ProjectDetail";
-import ProjectCrossLinks from "@/components/projects/ProjectCrossLinks";
 import ProjectJsonLd from "@/components/seo/ProjectJsonLd";
 import CTASection from "@/components/home/CTASection";
-import { COMPLETED_PROJECTS } from "@/lib/constants";
+import { COMPLETED_PROJECTS } from "@/lib/projects-data";
 
 export function generateStaticParams() {
   return COMPLETED_PROJECTS.map((p) => ({ slug: p.slug }));
@@ -63,7 +61,7 @@ export default async function Page({
   if (!project) notFound();
 
   return (
-    <PageTransition>
+    <>
       <BreadcrumbJsonLd
         items={[
           { name: "Home", href: "/" },
@@ -73,8 +71,7 @@ export default async function Page({
       />
       <ProjectJsonLd project={project} />
       <ProjectDetail project={project} />
-      <ProjectCrossLinks project={project} />
       <CTASection />
-    </PageTransition>
+    </>
   );
 }

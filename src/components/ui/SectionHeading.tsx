@@ -1,76 +1,64 @@
 import { cn } from "@/lib/utils";
-import ScrollReveal from "@/components/animations/ScrollReveal";
+import Eyebrow from "@/components/ui/Eyebrow";
 
 interface SectionHeadingProps {
+  /** The eyebrow label above the heading. */
   overline?: string;
   title: string;
-  /** Trailing words of the title rendered in the gold gradient (dark tone only). */
+  /** Words appended to the title, in the same colour (the old gradient is gone). */
   accent?: string;
   subtitle?: string;
+  /** "center" for short symmetrical sections; chapter headers are usually "left". */
   align?: "left" | "center";
-  /** "dark" renders white/gold for use inside navy sections. */
+  level?: 2 | 3;
+  id?: string;
+  /**
+   * Legacy. The colours come from the section's tone. "dark" is still
+   * honoured for pages not yet rebuilt whose dark band has no data-tone: the
+   * heading then takes the dark-surface text colours.
+   */
   tone?: "light" | "dark";
   className?: string;
 }
 
+/** Chapter header: optional eyebrow (14 px, blue), a big bold heading, optional lead. No motion. */
 export default function SectionHeading({
   overline,
   title,
   accent,
   subtitle,
   align = "center",
-  tone = "light",
+  level = 2,
+  id,
+  tone,
   className,
 }: SectionHeadingProps) {
-  const dark = tone === "dark";
+  const center = align === "center";
+  const Heading = level === 3 ? "h3" : "h2";
   return (
-    <ScrollReveal className={cn("mb-16", className)}>
+    <div className={cn("mb-10 sm:mb-12", className)}>
       <div
-        className={cn(
-          align === "center" && "text-center",
-          "max-w-3xl",
-          align === "center" && "mx-auto"
-        )}
+        // Legacy dark bands set bg-navy without a tone: borrow the dark text
+        // colours but keep the band's own background.
+        data-tone={tone === "dark" ? "navy" : undefined}
+        style={tone === "dark" ? { backgroundColor: "transparent" } : undefined}
+        className={cn("max-w-3xl", center && "mx-auto text-center")}
       >
-        {overline && (
-          <span
-            className={cn(
-              "inline-block text-sm font-semibold uppercase mb-4",
-              dark
-                ? "text-gold font-bold tracking-[0.2em]"
-                : "text-primary tracking-widest"
-            )}
-          >
-            {overline}
-          </span>
-        )}
-        <h2
+        {overline && <Eyebrow className={cn("mb-4", center && "justify-center")}>{overline}</Eyebrow>}
+        <Heading
+          id={id}
           className={cn(
-            "text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight",
-            dark ? "text-white" : "text-gray-900"
+            "text-fg",
+            level === 3 ? "font-display text-display-sm font-bold [font-stretch:108%]" : "text-display-md",
           )}
         >
           {title}
-          {accent && (
-            <>
-              {" "}
-              <span className={dark ? "text-gold-gradient" : "text-gradient"}>
-                {accent}
-              </span>
-            </>
-          )}
-        </h2>
+          {accent && <> {accent}</>}
+        </Heading>
         {subtitle && (
-          <p
-            className={cn(
-              "mt-4 text-lg max-w-2xl leading-relaxed mx-auto",
-              dark ? "text-white/60" : "text-gray-500"
-            )}
-          >
-            {subtitle}
-          </p>
+          <p className={cn("mt-5 max-w-[56ch] text-lead text-body", center && "mx-auto")}>{subtitle}</p>
         )}
       </div>
-    </ScrollReveal>
+    </div>
   );
 }

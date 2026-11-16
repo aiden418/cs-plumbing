@@ -1,13 +1,23 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import PageTransition from "@/components/layout/PageTransition";
 import BlogContent from "@/components/blog/BlogContent";
-import BlogRelatedLandings from "@/components/blog/BlogRelatedLandings";
 import ArticleJsonLd from "@/components/seo/ArticleJsonLd";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import FaqJsonLd from "@/components/seo/FaqJsonLd";
 import CTASection from "@/components/home/CTASection";
+import { BLOG_POST } from "@/content/reading";
 import { BLOG_POSTS } from "@/lib/constants";
+import type { BlogPost } from "@/lib/types";
+
+/** Other guides for the foot of a post: same category first, then the newest. */
+function relatedPosts(post: BlogPost, count: number): BlogPost[] {
+  const others = BLOG_POSTS.filter((p) => p.slug !== post.slug).sort((a, b) =>
+    (b.updatedDate ?? b.publishDate).localeCompare(a.updatedDate ?? a.publishDate),
+  );
+  const sameCategory = others.filter((p) => p.category === post.category);
+  const rest = others.filter((p) => p.category !== post.category);
+  return [...sameCategory, ...rest].slice(0, count);
+}
 
 export function generateStaticParams() {
   return BLOG_POSTS.map((post) => ({ slug: post.slug }));
@@ -51,7 +61,7 @@ export default async function Page({
   if (!post) notFound();
 
   return (
-    <PageTransition>
+    <>
       <ArticleJsonLd post={post} />
       {post.faqs && post.faqs.length > 0 && <FaqJsonLd faqs={post.faqs} />}
       <BreadcrumbJsonLd
@@ -61,9 +71,8 @@ export default async function Page({
           { name: post.title, href: `/blog/${post.slug}` },
         ]}
       />
-      <BlogContent post={post} />
-      <BlogRelatedLandings post={post} />
+      <BlogContent post={post} related={relatedPosts(post, BLOG_POST.related.count)} />
       <CTASection />
-    </PageTransition>
+    </>
   );
 }

@@ -2,6 +2,7 @@ import { rangeInline } from "@/lib/pricing";
 import { CLAIMS } from "@/lib/claims";
 
 import type { FAQ } from "@/lib/types";
+import { BUSINESS } from "@/lib/business";
 
 // Co-located route FAQs (same pattern as builders/builder-faqs.ts and
 // emergency/emergency-faqs.ts). Written for this page — not copied from the
@@ -15,7 +16,7 @@ export const RESIDENTIAL_FAQS: FAQ[] = [
   {
     question: "Can I get same-day plumbing service?",
     answer:
-      "Usually, yes. Calls that reach us in the morning are typically handled the same day across Cape Coral, Fort Myers, and North Fort Myers. True emergencies — burst pipes, sewage backups, no water — are dispatched 24/7 through 833-PLUMB-IT.",
+      `Usually, yes. Calls that reach us in the morning are typically handled the same day across Cape Coral, Fort Myers, and North Fort Myers. True emergencies — burst pipes, sewage backups, no water — are dispatched 24/7 through ${BUSINESS.phone}.`,
   },
   {
     question: "What does a residential service call cost?",
@@ -25,7 +26,7 @@ export const RESIDENTIAL_FAQS: FAQ[] = [
   {
     question: "Are your plumbers licensed and background-checked?",
     answer:
-      "Yes. C&S Plumbing of Lee is a Florida Certified Plumbing Contractor (CFC1432485), fully insured, and every technician who enters your home is background-checked. All permit-required work is permitted and inspected.",
+      `Yes. C&S Plumbing of Lee is a Florida Certified Plumbing Contractor (${BUSINESS.license}), fully insured, and every technician who enters your home is background-checked. All permit-required work is permitted and inspected.`,
   },
   {
     question: "Which areas do you serve for residential plumbing?",

@@ -1,0 +1,56 @@
+{
+  "photo-1.jpg": {
+    "alt": "PVC riser with a brass hose connection and blue-handled ball valve at the base of an exterior wall",
+    "order": 1
+  },
+  "photo-2.jpg": {
+    "alt": "Four closet flanges taped off and angle stops left on the wall after the toilets were pulled",
+    "order": 2
+  },
+  "photo-3.jpg": {
+    "alt": "Row of taped closet flanges and capped supply stops in the demoed school restroom stalls",
+    "order": 3
+  },
+  "photo-4.jpg": {
+    "alt": "Four-bowl cultured marble lavatory top with faucets and drain fittings pulled ahead of counter removal",
+    "order": 4
+  },
+  "photo-5.jpg": {
+    "alt": "Cultured marble lav bowls with faucet holes and tailpiece openings exposed after fixture demo",
+    "order": 5
+  },
+  "photo-6.jpg": {
+    "alt": "Capped lavatory supply stubs along the wall under the counter after the faucets were disconnected",
+    "order": 6
+  },
+  "photo-7.jpg": {
+    "alt": "Capped supply stubs under the lav counter apron with old adhesive beads on the wood support",
+    "order": 7
+  },
+  "photo-8.jpg": {
+    "alt": "Taped closet flange and wall-hung lavatory carrier arms with supply stops in a demoed accessible restroom",
+    "order": 8
+  },
+  "photo-9.jpg": {
+    "alt": "Eight taped closet flanges and capped angle stops in a row after the school toilets were pulled",
+    "order": 9,
+    "cover": true,
+    "position": "75% 50%"
+  },
+  "photo-10.jpg": {
+    "alt": "Gutted school restroom with taped closet flanges, stacked partitions and a cart of demo debris",
+    "order": 10
+  },
+  "photo-11.jpg": {
+    "alt": "Long multi-bowl cultured marble lav counter stripped of faucets and drains with demo cart alongside",
+    "order": 11
+  },
+  "photo-12.jpg": {
+    "alt": "PVC supply line dropping to a brass stub with shutoff in a dirty concrete chase",
+    "order": 12
+  },
+  "photo-13.jpg": {
+    "alt": "Old brass gate valve on a painted PVC supply stub in a concrete chase during the bathroom demo",
+    "order": 13
+  }
+}

@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import PageTransition from "@/components/layout/PageTransition";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import Container from "@/components/ui/Container";
 import PageHero from "@/components/ui/PageHero";
@@ -24,7 +23,7 @@ const BREADCRUMB = [
 
 export default function TermsPage() {
   return (
-    <PageTransition>
+    <>
       <BreadcrumbJsonLd items={BREADCRUMB} />
       <PageHero
         size="sm"
@@ -38,6 +37,6 @@ export default function TermsPage() {
           <TermsDocument />
         </Container>
       </section>
-    </PageTransition>
+    </>
   );
 }

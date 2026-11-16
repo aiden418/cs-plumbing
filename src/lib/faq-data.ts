@@ -1,5 +1,6 @@
 import { rangeInline, spanInline } from "./pricing";
 import { CLAIMS, EMERGENCY_CLAIMS } from "./claims";
+import { BUSINESS } from "./business";
 
 export interface FaqCategory {
   category: string;
@@ -21,7 +22,7 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
       {
         question: "Is C&S Plumbing licensed and insured?",
         answer:
-          "Yes. C&S Plumbing holds a Florida Certified Plumbing Contractor license (CFC1432485) issued by the Florida Department of Business and Professional Regulation. We are fully insured and bonded.",
+          `Yes. C&S Plumbing holds a Florida Certified Plumbing Contractor license (${BUSINESS.license}) issued by the Florida Department of Business and Professional Regulation. We are fully insured and bonded.`,
       },
       {
         question: "Do you offer free estimates?",
@@ -31,12 +32,12 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
       {
         question: "Do you offer 24/7 emergency plumbing service?",
         answer:
-          "Yes, we provide 24/7 emergency plumbing service for burst pipes, major leaks, sewage backups, and other plumbing emergencies. Call 833-PLUMB-IT any time, day or night.",
+          `Yes, we provide 24/7 emergency plumbing service for burst pipes, major leaks, sewage backups, and other plumbing emergencies. Call ${BUSINESS.phone} any time, day or night.`,
       },
       {
         question: "How do I schedule a plumbing appointment?",
         answer:
-          "You can book online through our website, call us at 833-PLUMB-IT (833-758-6248), or use our instant quote builder to get a rough estimate before scheduling. We offer same-day and next-day appointments for most services.",
+          `You can book online through our website, call us at ${BUSINESS.phone} (${BUSINESS.phoneDigits}), or use our instant quote builder to get a rough estimate before scheduling. We offer same-day and next-day appointments for most services.`,
       },
       {
         question: "What forms of payment do you accept?",
@@ -73,7 +74,7 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
       {
         question: "Do you pull permits for repiping in Lee County?",
         answer:
-          "Yes, every C&S Plumbing repipe job includes full permitting and final inspection by Lee County. This ensures your repiping is code-compliant and protects your home's value. Our license number is CFC1432485.",
+          `Yes, every C&S Plumbing repipe job includes full permitting and final inspection by Lee County. This ensures your repiping is code-compliant and protects your home's value. Our license number is ${BUSINESS.license}.`,
       },
       {
         question: "Does repiping increase my home's value?",
@@ -170,7 +171,7 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
       {
         question: "What should I do during a plumbing emergency?",
         answer:
-          "First, locate and shut off your main water valve to stop water flow. Then call C&S Plumbing at 833-PLUMB-IT for 24/7 emergency service. While waiting, clean up standing water to prevent damage and avoid using any fixtures connected to the problem area.",
+          `First, locate and shut off your main water valve to stop water flow. Then call C&S Plumbing at ${BUSINESS.phone} for 24/7 emergency service. While waiting, clean up standing water to prevent damage and avoid using any fixtures connected to the problem area.`,
       },
       {
         question: "How fast can you respond to a plumbing emergency?",

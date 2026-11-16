@@ -1,135 +1,192 @@
-"use client";
-
 import Link from "next/link";
-import { Clock, ArrowLeft, Phone, Calendar } from "lucide-react";
-import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
+import Container from "@/components/ui/Container";
+import Eyebrow from "@/components/ui/Eyebrow";
 import FaqAccordion from "@/components/ui/FaqAccordion";
-import { BUSINESS } from "@/lib/constants";
+import PageHero from "@/components/ui/PageHero";
+import Section from "@/components/ui/Section";
+import { ArrowLeft, ArrowRight, Calendar, Phone } from "@/components/ui/icons";
+import { formatPostDate } from "@/components/blog/BlogCard";
+import { BLOG_POST } from "@/content/reading";
+import { BUSINESS } from "@/lib/business";
+import { landingsForPost } from "@/lib/internal-links";
 import type { BlogPost } from "@/lib/types";
 
-export default function BlogContent({ post }: { post: BlogPost }) {
+const rowLink =
+  "group flex min-h-14 items-center justify-between gap-4 py-3 underline-offset-4";
+
+/** A short list of links as hairline rows (label, then a small second line). */
+function LinkRows({ links }: { links: { href: string; label: string; meta: string }[] }) {
+  return (
+    <ul className="mt-4 border-b border-rule">
+      {links.map((link) => (
+        <li key={link.href} className="border-t border-rule">
+          <Link href={link.href} className={rowLink}>
+            <span className="min-w-0">
+              <span className="block leading-snug font-semibold text-fg group-hover:underline">
+                {link.label}
+              </span>
+              <span className="mt-0.5 block text-sm text-muted">{link.meta}</span>
+            </span>
+            <ArrowRight className="size-5 shrink-0 text-primary transition-transform duration-150 group-hover:translate-x-0.5" />
+          </Link>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+/**
+ * A blog post: a plain white header (category, title, date, read time and
+ * byline), then the article in an 18 px reading column with its FAQ. Beside
+ * it from lg (under it on phones): the help note with Call and Book, the
+ * local service pages the post points to and other guides. Server
+ * component: the article HTML, every link and every answer are in the first
+ * response.
+ */
+export default function BlogContent({ post, related }: { post: BlogPost; related: BlogPost[] }) {
+  const hasFaqs = Boolean(post.faqs && post.faqs.length > 0);
+  const landings = landingsForPost(post);
   return (
     <>
-      {/* Hero */}
-      <section className="relative overflow-hidden bg-navy pt-24 sm:pt-28 lg:pt-32 pb-8 sm:pb-12">
-        <div className="pointer-events-none absolute -top-32 left-1/3 h-[480px] w-[480px] -translate-x-1/2 rounded-full bg-primary/25 blur-[120px]" />
-        <div className="pointer-events-none absolute bottom-0 right-0 h-72 w-72 rounded-full bg-gold/15 blur-[100px]" />
-        <Container className="relative">
-          <div className="max-w-3xl">
+      <PageHero layout="plain" size="sm" overline={post.category} title={post.title}>
+        <div className="mt-5 text-sm text-muted sm:text-base">
+          <p className="flex flex-wrap items-center gap-x-2">
+            <time dateTime={post.publishDate}>{formatPostDate(post.publishDate)}</time>
+            <span aria-hidden="true">·</span>
+            <span>{post.readTime}</span>
+          </p>
+          {/* Visible byline: the Article schema names the author, and a
+              reader (or an AI engine) should see the same person on the page. */}
+          <p className="mt-1">
+            {BLOG_POST.bylineBy}{" "}
             <Link
-              href="/blog"
-              className="inline-flex items-center gap-1.5 text-gold text-sm mb-4 hover:gap-2.5 transition-all"
+              href={BLOG_POST.authorHref}
+              className="font-semibold text-fg underline-offset-4 hover:underline"
             >
-              <ArrowLeft className="w-4 h-4" />
-              Back to Blog
+              {BLOG_POST.author}
             </Link>
-            <div className="flex items-center gap-3 mb-4">
-              <span className="text-xs font-bold text-gold uppercase tracking-[0.2em]">
-                {post.category}
-              </span>
-              <span className="flex items-center gap-1 text-xs text-white/60">
-                <Clock className="w-3 h-3" />
-                {post.readTime}
-              </span>
-              <span className="text-xs text-white/60">
-                {new Date(post.publishDate).toLocaleDateString("en-US", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
-              </span>
-            </div>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white leading-tight">
-              {post.title}
-            </h1>
-            {/* Visible byline: the Article schema names the author, and a
-                reader (or an AI engine) should see the same person on the page. */}
-            <p className="mt-4 text-sm text-white/70">
-              By{" "}
-              <Link href="/about" className="font-semibold text-white hover:text-gold transition-colors">
-                Aiden Pellechio
-              </Link>
-              , Project Manager &amp; Estimator at C&amp;S Plumbing of Lee
-              {post.updatedDate && (
-                <>
-                  {" "}· Updated{" "}
-                  {new Date(post.updatedDate).toLocaleDateString("en-US", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
-                </>
-              )}
-            </p>
-          </div>
-        </Container>
-      </section>
+            {BLOG_POST.authorRole}
+            {post.updatedDate && (
+              <>
+                {" "}· {BLOG_POST.updated}{" "}
+                <time dateTime={post.updatedDate}>{formatPostDate(post.updatedDate)}</time>
+              </>
+            )}
+          </p>
+        </div>
+      </PageHero>
 
-      {/* Content */}
-      <section className="py-8 sm:py-12 lg:py-16">
+      <Section tone="white" spacing="none" className="pt-8 pb-12 sm:pt-10 sm:pb-16">
         <Container>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
-            {/* Article */}
-            <div className="lg:col-span-2">
+          <div className="grid grid-cols-1 gap-y-12 lg:grid-cols-[minmax(0,1fr)_20rem] lg:gap-x-14 xl:grid-cols-[minmax(0,1fr)_22rem] xl:gap-x-20">
+            <div className="min-w-0">
               <article
-                className="prose prose-sm sm:prose-base max-w-none
-                  prose-headings:text-gray-900 prose-headings:font-bold
-                  prose-h2:text-xl sm:prose-h2:text-2xl prose-h2:mt-8 prose-h2:mb-4
-                  prose-h3:text-lg prose-h3:mt-6 prose-h3:mb-3
-                  prose-p:text-gray-600 prose-p:leading-relaxed
-                  prose-a:text-primary prose-a:no-underline hover:prose-a:underline
-                  prose-li:text-gray-600
-                  prose-strong:text-gray-900
-                  prose-ul:space-y-1"
+                className="rich-text post-body"
                 dangerouslySetInnerHTML={{ __html: post.content }}
               />
-              {post.faqs && post.faqs.length > 0 && (
-                <div className="mt-10">
-                  <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4">
-                    Frequently Asked Questions
+
+              {hasFaqs && (
+                <section aria-labelledby="post-faq-heading" className="mt-12 max-w-[68ch]">
+                  <h2 id="post-faq-heading" className="mb-4 text-display-sm text-fg">
+                    {BLOG_POST.faqHeading}
                   </h2>
-                  <FaqAccordion faqs={post.faqs} />
-                </div>
+                  <FaqAccordion faqs={post.faqs ?? []} />
+                </section>
               )}
             </div>
 
-            {/* Sidebar */}
-            <aside className="lg:col-span-1">
-              <div className="sticky top-24 space-y-6">
-                <div className="bg-[#F5F5F7] rounded-2xl border border-gray-200 p-5 sm:p-6">
-                  <h3 className="text-lg font-bold text-gray-900 mb-3">
-                    Need Help?
-                  </h3>
-                  <p className="text-gray-500 text-sm mb-4">
-                    Our team is ready to help with any plumbing question or
-                    project. Call us or book online.
-                  </p>
-                  <div className="space-y-3">
-                    <Button
-                      href={`tel:${BUSINESS.phoneRaw}`}
-                      variant="secondary"
-                      size="sm"
-                      icon={<Phone className="w-4 h-4" />}
-                      className="w-full"
-                    >
-                      {BUSINESS.phone}
-                    </Button>
-                    <Button
-                      href="/booking"
-                      size="sm"
-                      icon={<Calendar className="w-4 h-4" />}
-                      className="w-full"
-                    >
-                      Book Online
-                    </Button>
-                  </div>
+            <div className="space-y-9 lg:space-y-10">
+              {/* Desktop only: on phones the dock's Call / Text / Book bar and the
+                  closing band right under the article carry the same two actions,
+                  so the card would only repeat them. It stays in the HTML. */}
+              <aside
+                aria-labelledby="post-help-heading"
+                className="hidden rounded-frame border border-rule bg-shell p-6 lg:block"
+              >
+                <h2 id="post-help-heading" className="font-sans text-xl font-bold tracking-normal text-fg">
+                  {BLOG_POST.help.heading}
+                </h2>
+                <p className="mt-2 text-body">{BLOG_POST.help.body}</p>
+                <div className="mt-4 flex flex-col gap-3">
+                  <Button href={BUSINESS.phoneHref} icon={<Phone className="size-5" />} fullWidth>
+                    {BUSINESS.phone}
+                  </Button>
+                  <Button
+                    href={BLOG_POST.help.bookHref}
+                    variant="secondary"
+                    icon={<Calendar className="size-5" />}
+                    fullWidth
+                  >
+                    {BLOG_POST.help.book}
+                  </Button>
                 </div>
-              </div>
-            </aside>
+              </aside>
+
+              {landings.length > 0 && (
+                <section aria-labelledby="blog-related-landings-heading">
+                  <Eyebrow className="mb-2">{BLOG_POST.landings.overline}</Eyebrow>
+                  <h2
+                    id="blog-related-landings-heading"
+                    className="font-sans text-xl font-bold tracking-normal text-fg"
+                  >
+                    {BLOG_POST.landings.heading}
+                  </h2>
+                  {/* On phones the line is for screen readers and search engines only, to keep the page short. */}
+                  <p className="sr-only lg:not-sr-only lg:mt-2 lg:text-body">{BLOG_POST.landings.description}</p>
+                  <LinkRows
+                    links={landings.map((l) => ({
+                      href: `/${l.slug}`,
+                      label: l.h1,
+                      meta: l.priceRange
+                        ? `${BLOG_POST.landings.rangePrefix} ${l.priceRange}`
+                        : `${l.city}, ${l.state}`,
+                    }))}
+                  />
+                </section>
+              )}
+
+              {related.length > 0 && (
+                <section aria-labelledby="related-posts-heading">
+                  <Eyebrow className="mb-2">{BLOG_POST.related.overline}</Eyebrow>
+                  <h2
+                    id="related-posts-heading"
+                    className="font-sans text-xl font-bold tracking-normal text-fg"
+                  >
+                    {BLOG_POST.related.heading}
+                  </h2>
+                  <LinkRows
+                    links={related.map((p) => ({
+                      href: `/blog/${p.slug}`,
+                      label: p.title,
+                      meta: `${p.category} · ${p.readTime}`,
+                    }))}
+                  />
+                  <p className="mt-4">
+                    <Link
+                      href="/blog"
+                      className="group inline-flex min-h-11 items-center gap-2 font-semibold text-link underline-offset-[0.2em] hover:underline"
+                    >
+                      {BLOG_POST.related.all}
+                      <ArrowRight className="size-5 transition-transform duration-150 group-hover:translate-x-0.5" />
+                    </Link>
+                  </p>
+                </section>
+              )}
+
+              <p>
+                <Link
+                  href="/blog"
+                  className="group inline-flex min-h-11 items-center gap-2 font-semibold text-link underline-offset-[0.2em] hover:underline"
+                >
+                  <ArrowLeft className="size-5 transition-transform duration-150 group-hover:-translate-x-0.5" />
+                  {BLOG_POST.backToBlog}
+                </Link>
+              </p>
+            </div>
           </div>
         </Container>
-      </section>
+      </Section>
     </>
   );
 }

@@ -1,115 +1,136 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
-import { ShieldCheck, Phone, ArrowRight } from "lucide-react";
-import Container from "@/components/ui/Container";
+import BuilderLogoImage from "@/components/ui/BuilderLogoImage";
 import Button from "@/components/ui/Button";
-import ScrollReveal from "@/components/animations/ScrollReveal";
-import { BUSINESS } from "@/lib/constants";
+import Container from "@/components/ui/Container";
+import LogoCarousel from "@/components/ui/LogoCarousel";
+import { ArrowRight, Phone, ShieldCheck } from "@/components/ui/icons";
+import { BUSINESS } from "@/lib/business";
+import { BUILDERS } from "@/lib/builders-data";
+import { imageMeta } from "@/lib/media";
 import { perYear } from "@/lib/pricing";
 import { SEASON_COPY, type Season } from "@/lib/claims";
+import { brands, builders, coastal } from "@/content/home";
+import { ArrowLink, HomeHeading } from "./HomeHeading";
 
-const tierPills = [
-  { name: "Coastal Comfort", price: perYear("plan.comfort") },
-  { name: "Coastal Shield", price: perYear("plan.shield"), featured: true },
-  { name: "Coastal Smart", price: "Call" },
-];
+/**
+ * A see-through logo drawn in white (its dominant colour is pure white)
+ * would vanish on a white tile: that one is set on a navy tile instead.
+ */
+function whiteLogo(path: string) {
+  const meta = imageMeta(path);
+  return Boolean(meta?.alpha && meta.color?.toLowerCase() === "#ffffff");
+}
 
+/**
+ * On white: the seasonal Coastal Comeback plan as one compact card (the
+ * teaser beside the three annual plans), then the brands we install and the
+ * builders who trust C&S as one gliding logo carousel each. The teaser flips between
+ * arrival and departure wording by season.
+ */
 export default function CoastalComebackTeaser({ season = "departure" }: { season?: Season }) {
   const copy = SEASON_COPY[season];
   return (
-    <section className="relative py-16 sm:py-24 lg:py-28 bg-[#F5F5F7] overflow-hidden">
-      {/* Background image */}
-      <div className="absolute inset-0 pointer-events-none">
-        <Image
-          src="/images/gallery/aerial-waterfront-newbuild.jpg"
-          alt="Aerial view of a waterfront Cape Coral new construction home"
-          fill
-          className="object-cover object-center"
-          sizes="100vw"
-          quality={75}
-        />
-        <div className="absolute inset-0 bg-white/85" />
-      </div>
-      <Container className="relative z-10">
-        <ScrollReveal>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center max-w-6xl mx-auto">
-            {/* Left: copy */}
-            <div>
-              <span className="inline-block text-primary text-xs sm:text-sm font-semibold tracking-widest uppercase mb-3 sm:mb-4">
-                {copy.teaserEyebrow}
-              </span>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 leading-tight mb-4 sm:mb-6">
-                {copy.teaserTitle}
-              </h2>
-              <p className="text-base sm:text-lg text-gray-500 leading-relaxed mb-6 sm:mb-8">
-                {copy.teaserBody}
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-                <Button
-                  href="/coastal-comeback-plan"
-                  size="lg"
-                  icon={<ShieldCheck className="w-5 h-5" />}
-                >
-                  See the Plans
-                </Button>
-                <Button
-                  href={`tel:${BUSINESS.phoneRaw}`}
-                  variant="secondary"
-                  size="lg"
-                  icon={<Phone className="w-5 h-5" />}
-                >
-                  Call {BUSINESS.phone}
-                </Button>
-              </div>
-            </div>
-
-            {/* Right: tier preview card */}
-            <div className="bg-white rounded-2xl border border-gray-200 p-6 sm:p-8 shadow-sm">
-              <p className="text-xs font-semibold tracking-widest uppercase text-gray-500 mb-4">
-                Annual Plans
-              </p>
-              <ul className="space-y-3">
-                {tierPills.map((t) => (
-                  <li key={t.name}>
-                    <Link
-                      href="/coastal-comeback-plan#plans"
-                      className={`group flex items-center justify-between rounded-xl px-4 py-3 sm:px-5 sm:py-4 border card-lift card-lift-hover-subtle ${
-                        t.featured
-                          ? "bg-primary/5 border-primary/30 hover:border-primary"
-                          : "bg-[#F5F5F7] border-gray-200 hover:border-primary/40"
-                      }`}
-                    >
-                      <span className="flex items-center gap-3">
-                        <span
-                          className={`text-sm sm:text-base font-semibold ${
-                            t.featured ? "text-primary" : "text-gray-900"
-                          }`}
-                        >
-                          {t.name}
-                        </span>
-                        {t.featured && (
-                          <span className="text-[10px] font-bold tracking-wider uppercase text-white bg-primary px-2 py-0.5 rounded-full">
-                            Best
-                          </span>
-                        )}
-                      </span>
-                      <span className="flex items-center gap-2 text-sm sm:text-base font-bold text-gray-900">
-                        {t.price}
-                        <ArrowRight className="w-4 h-4 text-primary opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
-                      </span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-              <p className="text-xs text-gray-500 mt-5 leading-relaxed">
-                Cancel anytime. Available across Cape Coral, Fort Myers, Naples,
-                Bonita Springs & all of Lee &amp; Collier County.
-              </p>
+    <section data-tone="white" aria-labelledby="home-coastal-title" className="relative bg-canvas py-10 text-body md:py-14 lg:py-20">
+      <Container>
+        <div className="home-card grid grid-cols-1 gap-y-6 p-5 sm:p-8 lg:grid-cols-12 lg:gap-x-10 lg:p-10">
+          <div className="lg:col-span-7">
+            <p className="home-eyebrow">{copy.teaserEyebrow}</p>
+            <h2 id="home-coastal-title" className="home-h2-sm">
+              {copy.teaserTitle}
+            </h2>
+            <p className="mt-3 max-w-[56ch] max-md:sr-only">{copy.teaserBody}</p>
+            <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2">
+              <Button href={coastal.plansLink.href} size="lg" icon={<ShieldCheck className="size-5" />} className="max-sm:w-full">
+                {coastal.plansLink.label}
+              </Button>
+              <a href={BUSINESS.phoneHref} className="inline-flex min-h-11 items-center gap-2 font-semibold text-fg hover:text-link">
+                <Phone className="size-5 text-link" />
+                {`Call ${BUSINESS.phone}`}
+              </a>
             </div>
           </div>
-        </ScrollReveal>
+
+          <div className="lg:col-span-5 lg:self-center">
+            <p className="text-sm font-semibold text-muted">{coastal.plansListLabel}</p>
+            <ul className="mt-2 grid grid-cols-3 gap-2 md:block md:border-b md:border-rule">
+              {coastal.tiers.map((tier) => (
+                <li key={tier.name} className="max-md:rounded-xl max-md:border max-md:border-rule md:border-t md:border-rule">
+                  <Link
+                    href={coastal.plansHref}
+                    className="group flex h-full min-h-13 flex-col justify-between gap-1 p-2.5 md:flex-row md:items-center md:gap-4 md:px-0"
+                  >
+                    <span className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1 leading-snug">
+                      <span className="font-semibold text-fg group-hover:text-link">{tier.name}</span>
+                      {"featured" in tier && tier.featured && (
+                        <span className="rounded-chip bg-primary/10 px-2 py-0.5 text-sm font-semibold text-link">{coastal.featuredBadge}</span>
+                      )}
+                    </span>
+                    <span className="flex items-center gap-2 font-semibold text-fg tabular-nums">
+                      {tier.price ? perYear(tier.price) : coastal.callPrice}
+                      <ArrowRight className="size-4 text-link transition-transform duration-150 group-hover:translate-x-0.5" />
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-3 text-sm text-muted max-md:sr-only">{coastal.note}</p>
+          </div>
+        </div>
+
+        <div className="mt-12 grid grid-cols-1 gap-y-10 lg:mt-14">
+          <div aria-labelledby="home-brands-title" role="group" className="home-strip">
+            <HomeHeading
+              id="home-brands-title"
+              eyebrow={brands.overline}
+              title={brands.title}
+              subtitle={brands.subtitle}
+              subtitleHidden="always"
+              size="sm"
+              className="home-strip-head"
+            />
+            {/* Eager: a lazy logo would not load until it slid into view,
+                so tiles would arrive blank. The files are small. */}
+            <LogoCarousel
+              labelledBy="home-brands-title"
+              seconds={40}
+              items={brands.items.map((brand) => ({
+                key: brand.name,
+                logo: (
+                  <span className="logo-carousel-logo">
+                    <Image src={brand.logo} alt={`${brand.name} logo`} fill sizes="128px" loading="eager" className="object-contain" />
+                  </span>
+                ),
+              }))}
+            />
+          </div>
+
+          <div aria-labelledby="home-builders-title" role="group" className="home-strip">
+            <div className="home-strip-head">
+              <HomeHeading
+                id="home-builders-title"
+                eyebrow={builders.overline}
+                title={builders.title}
+                subtitle={builders.subtitle}
+                subtitleHidden="always"
+                size="sm"
+              />
+              <ArrowLink href={builders.link.href} className="mt-2">
+                {builders.link.label}
+              </ArrowLink>
+            </div>
+            <LogoCarousel
+              labelledBy="home-builders-title"
+              seconds={50}
+              reverse
+              items={BUILDERS.map((builder) => ({
+                key: builder.name,
+                dark: builder.darkTile ?? whiteLogo(builder.logo),
+                logo: <BuilderLogoImage builder={builder} sizes="144px" loading="eager" className="logo-carousel-img" />,
+              }))}
+            />
+          </div>
+        </div>
       </Container>
     </section>
   );

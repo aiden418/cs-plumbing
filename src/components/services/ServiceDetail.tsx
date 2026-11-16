@@ -1,16 +1,16 @@
-"use client";
-
-import Image from "next/image";
-import { Check, Phone, Calendar } from "lucide-react";
 import Container from "@/components/ui/Container";
-import Button from "@/components/ui/Button";
 import PageHero from "@/components/ui/PageHero";
-import ScrollReveal from "@/components/animations/ScrollReveal";
-import StaggerChildren, {
-  staggerItem,
-} from "@/components/animations/StaggerChildren";
-import { motion } from "framer-motion";
-import { BUSINESS } from "@/lib/constants";
+import Section from "@/components/ui/Section";
+import {
+  Chapter,
+  HeroActions,
+  OfferList,
+  PointList,
+  splitLead,
+  type Crumb,
+} from "@/components/services/ServiceLandingTemplate";
+import { SERVICE_PAGE as COPY } from "@/content/services";
+import type { MediaRef } from "@/lib/media-types";
 import type { Service } from "@/lib/types";
 
 interface ServiceDetailProps {
@@ -19,134 +19,56 @@ interface ServiceDetailProps {
   services: Service[];
   highlights?: string[];
   heroText: string;
-  heroImage?: string;
-  /** CSS object-position for the hero photo, e.g. "center top" for portraits of people. */
-  heroImagePosition?: string;
+  /** The header photograph, resolved by the server page (picture("service.header.<slug>")). */
+  frame: MediaRef | null;
+  /** The visible trail (the JSON-LD stays in the page). */
+  breadcrumb: Crumb[];
 }
 
+/**
+ * The hand-written service pages (residential, commercial): the photo hero,
+ * the services as plain rows (two columns from md) with their feature lists,
+ * and "why choose" as short checked lines.
+ */
 export default function ServiceDetail({
   title,
   description,
   services,
   highlights,
   heroText,
-  heroImage,
-  heroImagePosition,
+  frame,
+  breadcrumb,
 }: ServiceDetailProps) {
+  const { lead, rest } = splitLead(description);
   return (
     <>
-      {/* Hero */}
       <PageHero
+        layout="photo"
+        frame={frame}
+        breadcrumb={breadcrumb}
         overline={title}
         title={heroText}
-        description={description}
-        media={
-          heroImage ? (
-            <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-white/10">
-              <Image
-                src={heroImage}
-                alt={`${title} services by C&S Plumbing of Lee`}
-                fill
-                priority
-                quality={85}
-                className="object-cover"
-                style={heroImagePosition ? { objectPosition: heroImagePosition } : undefined}
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-navy/40 to-transparent" />
-            </div>
-          ) : undefined
-        }
-        actions={
-          <>
-            <Button
-              href="/booking"
-              variant="gold"
-              size="lg"
-              icon={<Calendar className="w-5 h-5" />}
-            >
-              Book a Service
-            </Button>
-            <Button
-              href={`tel:${BUSINESS.phoneRaw}`}
-              variant="outline-light"
-              size="lg"
-              icon={<Phone className="w-5 h-5" />}
-            >
-              Call {BUSINESS.phone}
-            </Button>
-          </>
-        }
+        description={lead}
+        actions={<HeroActions second={{ label: COPY.book, href: "/booking" }} />}
       />
 
-      {/* Services Grid */}
-      <section className="py-16 sm:py-24 lg:py-32">
+      <Section tone="white" spacing="sm" labelledBy="offer-heading">
         <Container>
-          <ScrollReveal>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-8 sm:mb-12">
-              What We Offer
-            </h2>
-          </ScrollReveal>
-
-          <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-            {services.map((service) => (
-              <motion.div
-                key={service.id}
-                variants={staggerItem}
-                className="bg-[#F5F5F7] rounded-2xl border border-gray-200 p-5 sm:p-6 lg:p-8 hover:border-primary/30 transition-all duration-500"
-              >
-                <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">
-                  {service.title}
-                </h3>
-                <p className="text-gray-500 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4">
-                  {service.description}
-                </p>
-                {service.features && (
-                  <ul className="space-y-1.5 sm:space-y-2">
-                    {service.features.map((feature) => (
-                      <li
-                        key={feature}
-                        className="flex items-center gap-2 text-xs sm:text-sm text-gray-600"
-                      >
-                        <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-primary flex-shrink-0" />
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </motion.div>
-            ))}
-          </StaggerChildren>
+          {rest && <p className="mb-10 max-w-[60ch] text-lead text-body sm:mb-12">{rest}</p>}
+          <Chapter id="offer-heading" title={COPY.offer} stacked>
+            <OfferList items={services} columns={2} />
+          </Chapter>
         </Container>
-      </section>
+      </Section>
 
-      {/* Highlights */}
       {highlights && (
-        <section className="py-16 sm:py-24 lg:py-32 bg-[#F5F5F7]">
+        <Section tone="shell" spacing="sm" labelledBy="why-heading">
           <Container>
-            <ScrollReveal>
-              <div className="max-w-3xl mx-auto text-center">
-                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-8 sm:mb-12">
-                  Why Choose C&S for {title}
-                </h2>
-              </div>
-            </ScrollReveal>
-            <StaggerChildren className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-4xl mx-auto">
-              {highlights.map((highlight) => (
-                <motion.div
-                  key={highlight}
-                  variants={staggerItem}
-                  className="flex items-start gap-2.5 sm:gap-3 p-3 sm:p-4"
-                >
-                  <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <Check className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-primary" />
-                  </div>
-                  <span className="text-gray-600 text-sm">{highlight}</span>
-                </motion.div>
-              ))}
-            </StaggerChildren>
+            <Chapter id="why-heading" title={`${COPY.whyBefore}${title}`} stacked>
+              <PointList items={highlights} columns={3} />
+            </Chapter>
           </Container>
-        </section>
+        </Section>
       )}
     </>
   );
