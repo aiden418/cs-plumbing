@@ -1,5 +1,7 @@
 import Link from "next/link";
-import { LinkGrid, LinkSection } from "@/components/links/LinkGrid";
+import { LinkGrid } from "@/components/links/LinkGrid";
+import SplitLinkSection from "@/components/areas/SplitLinkSection";
+import MoreOnPhones from "@/components/areas/MoreOnPhones";
 import { AREA_COPY } from "@/content/areas";
 import {
   landingsForCity,
@@ -25,8 +27,19 @@ export default function AreaServiceLinks({ landing }: { landing: AreaLanding }) 
     return null;
   }
 
+  const guideGrid = (
+    <LinkGrid
+      links={posts.map((p) => ({
+        href: `/blog/${p.slug}`,
+        label: p.title,
+        meta: `${p.category} · ${p.readTime}`,
+      }))}
+      columns={2}
+    />
+  );
+
   return (
-    <LinkSection
+    <SplitLinkSection
       overline={copy.eyebrow}
       heading={
         cityPages.length > 0
@@ -38,10 +51,12 @@ export default function AreaServiceLinks({ landing }: { landing: AreaLanding }) 
           ? copy.description(landing.city)
           : undefined
       }
+      tone="shell"
       headingId="area-service-links-heading"
     >
       {cityPages.length > 0 && (
         <LinkGrid
+          columns={2}
           links={cityPages.map((p) => ({
             href: `/${p.slug}`,
             label: p.h1,
@@ -51,7 +66,7 @@ export default function AreaServiceLinks({ landing }: { landing: AreaLanding }) 
       )}
 
       {builderCity && (
-        <p className="mt-8 max-w-[68ch] text-body">
+        <p className="mt-6 max-w-[68ch] text-body">
           {copy.builderBefore(landing.city)}
           <Link
             href={`/new-construction-plumbing/${builderCity.slug}`}
@@ -64,20 +79,17 @@ export default function AreaServiceLinks({ landing }: { landing: AreaLanding }) 
       )}
 
       {posts.length > 0 && (
-        <div className="mt-12">
-          <h3 className="mb-5 text-lg leading-snug font-semibold text-fg">
+        <div className="mt-10">
+          <h3 className="mb-4 text-xl leading-snug font-semibold text-fg">
             {copy.guidesHeading(landing.city)}
           </h3>
-          <LinkGrid
-            links={posts.map((p) => ({
-              href: `/blog/${p.slug}`,
-              label: p.title,
-              meta: `${p.category} · ${p.readTime}`,
-            }))}
-            columns={posts.length >= 4 ? 4 : 3}
-          />
+          {posts.length > 2 ? (
+            <MoreOnPhones summary={copy.showGuides(posts.length)}>{guideGrid}</MoreOnPhones>
+          ) : (
+            guideGrid
+          )}
         </div>
       )}
-    </LinkSection>
+    </SplitLinkSection>
   );
 }

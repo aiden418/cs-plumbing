@@ -4,24 +4,27 @@ import Container from "@/components/ui/Container";
 import Eyebrow from "@/components/ui/Eyebrow";
 import FaqAccordion from "@/components/ui/FaqAccordion";
 import PageHero from "@/components/ui/PageHero";
-import Reveal from "@/components/ui/Reveal";
 import Section from "@/components/ui/Section";
-import { ArrowRight, Calendar, MapPin, Phone } from "@/components/ui/icons";
+import { ArrowRight, Calendar, Check, MapPin, Phone } from "@/components/ui/icons";
 import CityProofBlock from "@/components/areas/CityProofBlock";
+import MoreOnPhones, { splitLead } from "@/components/areas/MoreOnPhones";
 import NeighborhoodList from "@/components/areas/NeighborhoodList";
 import FaqJsonLd from "@/components/seo/FaqJsonLd";
 import AreaServiceJsonLd from "@/components/seo/AreaServiceJsonLd";
 import { AREA_COPY, countyLabel } from "@/content/areas";
 import { BUSINESS, SERVICES, SERVICE_AREAS_BY_COUNTY, TRUST_PROOF_POINTS } from "@/lib/constants";
 import { picture } from "@/lib/media";
+import { cn } from "@/lib/utils";
 import type { AreaLanding, ProjectCardData } from "@/lib/types";
 
 const copy = AREA_COPY;
 
 /**
- * An /areas/<city> page (pages.md, "Area pages"): hero, services in the city,
- * local context with its neighborhoods, local proof, why C&S, FAQ. The
- * service-city links and the closing band follow in the page file.
+ * An /areas/<city> page, version 2 (v2-bright.md): the city's job photo
+ * behind the headline (or a plain white hero), then short light sections
+ * alternating white and shell: services in the city, local context with
+ * its neighborhoods, local proof, why C&S, FAQ. The service-city links and
+ * the closing band follow in the page file.
  *
  * Server component: every word and link is in the HTML and nothing here
  * ships to the browser.
@@ -41,6 +44,7 @@ export default function AreaLandingTemplate({
   const trustPoints = [...TRUST_PROOF_POINTS, copy.trust.localPoint(landing.city)];
   const paragraphs = landing.localContext.split("\n\n");
   const hasNeighborhoods = Boolean(landing.neighborhoods && landing.neighborhoods.length > 0);
+  const [heroLead, leadRest] = splitLead(landing.description);
 
   return (
     <>
@@ -59,7 +63,7 @@ export default function AreaLandingTemplate({
         overline={`${landing.city}, ${landing.state}`}
         overlineIcon={<MapPin />}
         title={landing.heroText}
-        description={landing.description}
+        description={heroLead}
         actions={
           <>
             <Button href={BUSINESS.phoneHref} size="lg" icon={<Phone className="size-5" />}>
@@ -71,46 +75,39 @@ export default function AreaLandingTemplate({
           </>
         }
       >
-        {county && <p className="label-tech mt-8 text-accent">{county}</p>}
+        {county && <p className={cn("text-[0.9375rem] font-semibold text-fg", !frame && "mt-5")}>{county}</p>}
       </PageHero>
 
-      {/* Services in this city */}
-      <Section tone="white" labelledBy="area-services-heading">
+      {/* Services in this city: compact rows, two columns from md. */}
+      <Section tone="white" spacing="sm" labelledBy="area-services-heading">
         <Container>
-          <Reveal className="mb-10 max-w-2xl sm:mb-14">
+          <div className="mb-8 max-w-3xl sm:mb-10">
+            {leadRest && <p className="mb-8 max-w-[60ch] text-lead text-body sm:mb-10">{leadRest}</p>}
             <h2 id="area-services-heading" className="text-display-md text-fg">
               {copy.services.heading(landing.city)}
             </h2>
-            <p className="mt-5 max-w-[56ch] text-lead text-body">{copy.services.lead(landing.city)}</p>
-          </Reveal>
+            <p className="mt-4 max-w-[56ch] text-lead text-body">{copy.services.lead(landing.city)}</p>
+          </div>
 
-          {/* Editorial rows: title, line, three features; the whole row is one link. */}
-          <ul className="border-b border-rule">
+          <ul className="grid grid-cols-1 border-b border-rule md:grid-cols-2 md:gap-x-10">
             {displayServices.map((service) => (
-              <li key={service.id} className="border-t border-rule">
-                <Link
-                  href={service.href}
-                  className="group grid grid-cols-1 gap-y-2 py-6 underline-offset-4 md:grid-cols-12 md:gap-x-8 lg:py-7"
-                >
-                  <h3 className="flex items-start justify-between gap-4 text-lg leading-snug font-semibold text-fg md:col-span-4 lg:col-span-3">
+              <li key={service.id} className="-mb-px border-y border-rule">
+                <Link href={service.href} className="group block py-4 underline-offset-4 lg:py-5">
+                  <h3 className="flex items-start justify-between gap-4 text-xl leading-snug font-semibold text-fg">
                     <span className="group-hover:underline">{service.title}</span>
-                    <ArrowRight className="mt-0.5 size-5 shrink-0 text-accent transition-transform duration-250 ease-settle group-hover:translate-x-0.5 lg:hidden" />
+                    <ArrowRight className="mt-1 size-5 shrink-0 text-primary transition-transform duration-150 group-hover:translate-x-0.5" />
                   </h3>
-                  <p className="max-w-[60ch] text-[0.9375rem] leading-relaxed text-body md:col-span-8 lg:col-span-5">
-                    {service.description}
-                  </p>
+                  <p className="mt-2 max-w-[60ch] text-body">{service.description}</p>
                   {service.features && (
-                    <ul className="mt-2 space-y-1 md:col-span-8 md:col-start-5 lg:col-span-3 lg:col-start-auto lg:mt-0">
+                    <ul className="mt-2.5 flex flex-wrap gap-x-4 gap-y-1 text-[0.9375rem] font-medium text-fg">
                       {service.features.slice(0, 3).map((feature) => (
-                        <li key={feature} className="text-sm text-muted">
+                        <li key={feature} className="inline-flex items-center gap-1.5">
+                          <Check className="size-4 shrink-0 text-primary" strokeWidth={2.5} aria-hidden="true" />
                           {feature}
                         </li>
                       ))}
                     </ul>
                   )}
-                  <span className="hidden justify-end lg:col-span-1 lg:flex" aria-hidden="true">
-                    <ArrowRight className="size-5 text-accent transition-transform duration-250 ease-settle group-hover:translate-x-0.5" />
-                  </span>
                 </Link>
               </li>
             ))}
@@ -119,27 +116,34 @@ export default function AreaLandingTemplate({
       </Section>
 
       {/* Local context and neighborhoods */}
-      <Section tone="shell" labelledBy="area-local-heading">
+      <Section tone="shell" spacing="sm" labelledBy="area-local-heading">
         <Container>
-          <div className="grid grid-cols-1 gap-y-12 lg:grid-cols-12 lg:gap-x-8">
-            <Reveal className={hasNeighborhoods ? "lg:col-span-7" : "lg:col-span-8"}>
-              <h2 id="area-local-heading" className="text-display-md text-fg">
-                {copy.local.heading(landing.city)}
-              </h2>
-              <div className="mt-8 max-w-[68ch] space-y-5 text-body">
-                {paragraphs.map((paragraph) => (
-                  <p key={paragraph.slice(0, 40)}>{paragraph}</p>
-                ))}
-              </div>
-            </Reveal>
-
+          {/* Phones: heading, story, neighborhoods. From 64rem the heading and
+              the neighborhoods share the left column and the story runs
+              beside them from the top, so the section is only as tall as
+              the story. */}
+          <div className="grid grid-cols-1 gap-y-6 lg:grid-cols-12 lg:grid-rows-[auto_1fr] lg:gap-x-10 lg:gap-y-8">
+            <h2 id="area-local-heading" className="text-display-md text-fg lg:col-span-5">
+              {copy.local.heading(landing.city)}
+            </h2>
+            <div className="max-w-[68ch] space-y-5 text-body lg:col-span-7 lg:col-start-6 lg:row-span-2 lg:row-start-1">
+              <p>{paragraphs[0]}</p>
+              {paragraphs.length > 1 && (
+                <MoreOnPhones summary={copy.local.more}>
+                  <div className="space-y-5 pt-3 lg:pt-0">
+                    {paragraphs.slice(1).map((paragraph) => (
+                      <p key={paragraph.slice(0, 40)}>{paragraph}</p>
+                    ))}
+                  </div>
+                </MoreOnPhones>
+              )}
+            </div>
             {hasNeighborhoods && (
-              <Reveal className="lg:col-span-4 lg:col-start-9 lg:pt-2">
-                <NeighborhoodList
-                  heading={copy.local.neighborhoodsHeading(landing.city)}
-                  names={landing.neighborhoods ?? []}
-                />
-              </Reveal>
+              <NeighborhoodList
+                className="mt-4 lg:col-span-5 lg:row-start-2 lg:mt-0"
+                heading={copy.local.neighborhoodsHeading(landing.city)}
+                names={landing.neighborhoods ?? []}
+              />
             )}
           </div>
         </Container>
@@ -151,39 +155,34 @@ export default function AreaLandingTemplate({
       {/* Service+city pages, builder page and city guides are rendered by the
           server component AreaServiceLinks in each /areas/<slug>/page.tsx. */}
 
-      {/* Why choose C&S */}
-      <Section tone="navy" labelledBy="area-trust-heading">
+      {/* Why choose C&S: short rows, two or three columns. */}
+      <Section tone="shell" spacing="sm" labelledBy="area-trust-heading">
         <Container>
-          <div className="grid grid-cols-1 gap-y-10 lg:grid-cols-12 lg:gap-x-8">
-            <Reveal className="lg:col-span-4">
-              <h2 id="area-trust-heading" className="text-display-md text-fg">
-                {copy.trust.heading(landing.city)}
-              </h2>
-            </Reveal>
-            <Reveal className="lg:col-span-8">
-              <ul className="grid grid-cols-1 gap-x-8 sm:grid-cols-2">
-                {trustPoints.map((point) => (
-                  <li key={point} className="-mt-px border-y border-rule py-3.5 text-fg">
-                    <span>{point}</span>
-                  </li>
-                ))}
-              </ul>
-            </Reveal>
-          </div>
+          <h2 id="area-trust-heading" className="mb-8 max-w-3xl text-display-md text-fg">
+            {copy.trust.heading(landing.city)}
+          </h2>
+          <ul className="grid grid-cols-2 gap-x-4 gap-y-4 sm:gap-x-8 lg:grid-cols-3 lg:gap-x-10">
+            {trustPoints.map((point) => (
+              <li key={point} className="flex items-start gap-2 text-[0.9375rem] leading-snug font-semibold text-fg sm:gap-3 sm:text-base">
+                <Check className="mt-0.5 size-4 shrink-0 text-primary sm:size-5" strokeWidth={2.5} aria-hidden="true" />
+                <span>{point}</span>
+              </li>
+            ))}
+          </ul>
         </Container>
       </Section>
 
-      {/* City FAQ */}
+      {/* City FAQ: closed accordion, answers in the HTML. */}
       {landing.faqs && landing.faqs.length > 0 && (
-        <Section tone="shell" labelledBy="area-faq-heading">
+        <Section tone="white" spacing="sm" labelledBy="area-faq-heading">
           <Container>
-            <div className="grid grid-cols-1 gap-y-10 lg:grid-cols-12 lg:gap-x-8">
-              <Reveal className="lg:col-span-4">
-                <Eyebrow className="mb-4">{copy.faq.eyebrow}</Eyebrow>
+            <div className="grid grid-cols-1 gap-y-8 lg:grid-cols-12 lg:gap-x-10">
+              <div className="lg:col-span-4">
+                <Eyebrow className="mb-3">{copy.faq.eyebrow}</Eyebrow>
                 <h2 id="area-faq-heading" className="text-display-md text-fg">
                   {copy.faq.heading(landing.city)}
                 </h2>
-              </Reveal>
+              </div>
               <div className="lg:col-span-8">
                 <FaqAccordion faqs={landing.faqs} name={`faq-${landing.slug}`} />
               </div>

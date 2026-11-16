@@ -80,6 +80,7 @@ export default async function Page({
           Renders nothing for cities with no project page yet. */}
       <RelatedProjects
         projects={projectsForCity(landing.city, { hub: landing.serviceSlug, limit: 3 })}
+        tone="shell"
         heading={`Recent projects in ${landing.city}`}
         description={`Real jobs we've documented in ${landing.city}, photographed phase by phase with the builder or GC named.`}
       />
