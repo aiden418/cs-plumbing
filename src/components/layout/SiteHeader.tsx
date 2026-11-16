@@ -52,7 +52,8 @@ export function Panel({ group, lookup = picture }: { group: NavGroup; lookup?: (
   const photos = group.photos
     .map((p) => ({ ...p, media: lookup(p.id) }))
     .filter((p) => p.media !== null);
-  const linkSpan = photos.length === 0 ? "col-span-12" : photos.length === 1 ? "col-span-9" : "col-span-8";
+  const linkSpan =
+    photos.length === 2 ? "col-span-8" : photos.length === 1 ? "col-span-9" : group.columns.length === 1 ? "col-span-8" : "col-span-12";
   const columnCount = group.columns.length;
 
   return (
@@ -192,7 +193,16 @@ export default function SiteHeader() {
                   panel={<Panel group={item.group} />}
                 >
                   <HeaderLink href={item.group.href} sections={item.group.sections} className="nav-link">
-                    {item.group.label}
+                    {item.group.short ? (
+                      <>
+                        <span className="nav-label-long">{item.group.label}</span>
+                        <span className="nav-label-short" aria-hidden="true">
+                          {item.group.short}
+                        </span>
+                      </>
+                    ) : (
+                      item.group.label
+                    )}
                   </HeaderLink>
                 </NavItem>
               ),

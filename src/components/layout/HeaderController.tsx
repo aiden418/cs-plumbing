@@ -257,7 +257,7 @@ export function NavItem({ id, buttonLabel, children, panel }: NavItemProps) {
         <ChevronDown className="size-4" />
         <span className="sr-only">{buttonLabel}</span>
       </button>
-      <div id={panelId(id)} className="nav-panel" data-tone="ink" hidden={!isOpen}>
+      <div id={panelId(id)} className="nav-panel" hidden={!isOpen}>
         {panel}
       </div>
     </li>

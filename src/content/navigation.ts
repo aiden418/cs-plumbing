@@ -40,6 +40,8 @@ export interface NavGroup {
   /** The top-level label and the hub it links to. */
   label: string;
   href: string;
+  /** A shorter label for the narrowest desktop widths (the label stays the accessible name). */
+  short?: string;
   /** The first line of the group in the mobile menu: the hub, by its own name. */
   hub: NavItem;
   columns: NavColumn[];
@@ -160,6 +162,7 @@ export const NAV_GROUPS: Record<NavGroupId, NavGroup> = {
   areas: {
     id: "areas",
     label: areasTop.label,
+    short: "Areas",
     href: serviceMap.href,
     hub: serviceMap,
     columns: areaColumns,

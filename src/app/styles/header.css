@@ -189,12 +189,15 @@
     display: grid;
   }
 
+  /* One long column set in two, read down the first column then the second. */
   .panel-list--split {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    display: block;
+    columns: 2;
     column-gap: 2rem;
   }
 
   .panel-list > li {
+    break-inside: avoid;
     border-bottom: 1px solid var(--tone-rule);
   }
 
@@ -241,21 +244,32 @@
   }
 
   .header-quote,
-  .header-book {
+  .header-book,
+  .header-quote-short,
+  .nav-label-short {
     display: none;
   }
 
-  .header-quote-short {
-    display: none;
+  /* Words that step aside at some widths but stay the accessible name. */
+  .header-call-number,
+  .header-hours {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
   }
 
-  /* The call button. Phones: icon + "Call". Desktop: "Call 833-PLUMB-IT"
-     with the hours line under it from 80rem. */
+  /* The call button. Phones: icon + "Call". Desktop: "Call 833-PLUMB-IT",
+     with the hours line under it where there is room. */
   .header-call {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
     min-height: 2.75rem;
+    min-width: 2.75rem;
+    justify-content: center;
     padding-inline: 0.75rem;
     border: 1px solid rgb(255 255 255 / 0.28);
     border-radius: var(--radius-control);
@@ -264,7 +278,10 @@
     font-weight: 600;
     line-height: 1.2;
     white-space: nowrap;
-    transition: background-color var(--dur-1) var(--ease-enter), border-color var(--dur-1) var(--ease-enter), transform var(--dur-1) var(--ease-enter);
+    transition:
+      background-color var(--dur-1) var(--ease-enter),
+      border-color var(--dur-1) var(--ease-enter),
+      transform var(--dur-1) var(--ease-enter);
   }
 
   .header-call:hover {
@@ -284,16 +301,6 @@
     flex-direction: column;
   }
 
-  .header-call-number,
-  .header-hours {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip-path: inset(50%);
-    white-space: nowrap;
-  }
-
   .header-menu {
     display: inline-flex;
     align-items: center;
@@ -303,11 +310,34 @@
     margin-right: -0.375rem;
     border-radius: var(--radius-control);
     color: var(--color-white);
-    transition: background-color var(--dur-1) var(--ease-enter), transform var(--dur-1) var(--ease-enter);
+    transition:
+      background-color var(--dur-1) var(--ease-enter),
+      transform var(--dur-1) var(--ease-enter);
   }
 
   .header-menu:hover {
     background: rgb(255 255 255 / 0.06);
+  }
+
+  /* The narrowest phones: the call button keeps its icon, the word steps
+     aside so the menu button still fits beside the logo. */
+  @media (max-width: 22.49rem) {
+    .header-bar {
+      gap: 0.5rem;
+    }
+
+    .header-call {
+      padding-inline: 0;
+    }
+
+    .header-call-word {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
   }
 
   @media (min-width: 70rem) {
@@ -347,7 +377,9 @@
       font-weight: 600;
       line-height: 1.2;
       white-space: nowrap;
-      transition: background-color var(--dur-1) var(--ease-enter), transform var(--dur-1) var(--ease-enter);
+      transition:
+        background-color var(--dur-1) var(--ease-enter),
+        transform var(--dur-1) var(--ease-enter);
     }
 
     .header-book:hover {
@@ -363,9 +395,14 @@
     }
   }
 
-  /* Narrow desktop: "Get a quote" becomes "Quote" (the long label stays as
-     the accessible name). */
-  @media (min-width: 70rem) and (max-width: 74.99rem) {
+  /* Desktop widths, measured (Inter 15 px, the full lockup, six items and
+     three actions need about 1415 px). As the window narrows, in order:
+       < 90rem  the hours line drops, "Get a quote" becomes "Quote"
+       < 84rem  "Service Areas" becomes "Areas", the call button shows the
+                number alone (the word stays its accessible name)
+       < 78rem  the wordmark steps aside (the emblem stays the home link)
+     Each shortened label keeps the full words as the accessible name. */
+  @media (min-width: 70rem) and (max-width: 89.99rem) {
     .header-quote-long {
       position: absolute;
       width: 1px;
@@ -380,8 +417,23 @@
     }
   }
 
-  /* 80rem and up: the hours line under the call label. */
-  @media (min-width: 80rem) {
+  @media (min-width: 70rem) and (max-width: 83.99rem) {
+    .nav-label-long,
+    .header-call-word {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+
+    .nav-label-short {
+      display: inline;
+    }
+  }
+
+  @media (min-width: 90rem) {
     .header-actions {
       gap: 0.75rem;
     }
@@ -579,6 +631,14 @@
     margin-top: 1.75rem;
     color: var(--tone-muted);
     font-size: 0.9375rem;
+  }
+}
+
+/* < 78rem: the wordmark steps aside. Outside the layer on purpose: the
+   lockup's own flex utility would otherwise win. */
+@media (min-width: 70rem) and (max-width: 77.99rem) {
+  .header-bar > .header-logo > span {
+    display: none;
   }
 }
 
