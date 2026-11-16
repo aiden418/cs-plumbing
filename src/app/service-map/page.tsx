@@ -73,7 +73,7 @@ export default function ServiceMapPage() {
 
       {/* The map (a third-party Google My Maps frame, lazy-loaded exactly as
           before) and, beside it from lg, the area pages by county. */}
-      <Section tone="white" className="pt-6 pb-12 sm:pt-10 sm:pb-20">
+      <Section tone="white" spacing="none" className="pt-6 pb-12 sm:pt-10 sm:pb-20">
         <Container>
           <div className="grid grid-cols-1 gap-y-8 lg:grid-cols-12 lg:gap-x-12">
             <div className="lg:col-span-7 xl:col-span-8">

@@ -72,7 +72,7 @@ export default function FAQPage() {
         }
       />
 
-      <Section tone="white" className="pt-8 pb-14 sm:pt-10 sm:pb-20">
+      <Section tone="white" spacing="none" className="pt-8 pb-14 sm:pt-10 sm:pb-20">
         <Container>
           <div className="grid grid-cols-1 gap-y-10 lg:grid-cols-12 lg:gap-x-8">
             {/* Categories: a list at the top on phones, a sticky side list from lg. */}
@@ -100,7 +100,7 @@ export default function FAQPage() {
             <div className="space-y-12 sm:space-y-14 lg:col-span-8 lg:col-start-5">
               {FAQ_CATEGORIES.map((cat) => (
                 <section key={cat.slug} id={cat.slug} aria-labelledby={`${cat.slug}-heading`}>
-                  <div className="mb-6 flex flex-wrap items-end justify-between gap-x-6 gap-y-2">
+                  <div className="mb-4 flex flex-wrap items-center justify-between gap-x-6 gap-y-1">
                     <h2 id={`${cat.slug}-heading`} className="text-display-sm text-fg">
                       {cat.category}
                     </h2>

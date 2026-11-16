@@ -77,7 +77,7 @@ export default function BlogContent({ post, related }: { post: BlogPost; related
         </div>
       </PageHero>
 
-      <Section tone="white" className="pt-8 pb-12 sm:pt-10 sm:pb-16">
+      <Section tone="white" spacing="none" className="pt-8 pb-12 sm:pt-10 sm:pb-16">
         <Container>
           <div className="grid grid-cols-1 gap-y-12 lg:grid-cols-[minmax(0,1fr)_20rem] lg:gap-x-14 xl:grid-cols-[minmax(0,1fr)_22rem] xl:gap-x-20">
             <div className="min-w-0">

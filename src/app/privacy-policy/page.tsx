@@ -15,7 +15,7 @@ export default function PrivacyPolicyPage() {
   return (
     <>
       <PageHero layout="plain" size="sm" overline={PRIVACY.overline} title={PRIVACY.title} />
-      <Section tone="white" className="pt-6 pb-14 sm:pt-10 sm:pb-20">
+      <Section tone="white" spacing="none" className="pt-6 pb-14 sm:pt-10 sm:pb-20">
         <Container>
           <div>
             {/* One reading column on phones, two from lg (reading.css). */}

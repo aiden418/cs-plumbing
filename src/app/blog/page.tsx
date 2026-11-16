@@ -39,7 +39,7 @@ export default function Page() {
         description={BLOG_INDEX.description}
       />
 
-      <Section tone="white" className="pb-12 sm:pb-16">
+      <Section tone="white" spacing="none" className="pb-12 sm:pb-16">
         <Container>
           {/* Hairline rows: one column on phones, two from lg, three from xl.
               The first rows' line sits on the hero's bottom line (-mt-px). */}
