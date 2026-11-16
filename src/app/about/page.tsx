@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Button from "@/components/ui/Button";
 import PageHero from "@/components/ui/PageHero";
-import { ArrowUpRight, Calendar } from "@/components/ui/icons";
+import { ArrowRight, Calendar, Phone } from "@/components/ui/icons";
 import FamilyStory from "@/components/about/FamilyStory";
 import Generations from "@/components/about/Generations";
 import Timeline from "@/components/about/Timeline";
@@ -13,8 +13,9 @@ import Credentials from "@/components/about/Credentials";
 import TrainingTrade from "@/components/about/TrainingTrade";
 import CTASection from "@/components/home/CTASection";
 import AboutPersonJsonLd from "@/components/seo/AboutPersonJsonLd";
+import { BUSINESS } from "@/lib/business";
 import { LATEST_AWARD } from "@/lib/awards";
-import { image, picture } from "@/lib/media";
+import { image, slot } from "@/lib/media";
 import { ABOUT_HERO } from "@/content/about";
 
 export const metadata: Metadata = {
@@ -42,54 +43,60 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   const badge = image(LATEST_AWARD.badge);
+  // The about.lead position, uncropped: the aerial of a C&S waterfront new
+  // build reads well full width behind the headline (the family portrait
+  // would be cut through the faces); the portrait opens the story below.
+  const lead = slot("about.lead")?.desktop ?? null;
+
   return (
     <>
       <PageHero
-        layout="split"
-        frame={picture("about.lead")}
-        className="about-hero"
+        layout="photo"
+        frame={lead ? { ...lead, position: "30% 60%" } : null}
         overline={ABOUT_HERO.overline}
         title={ABOUT_HERO.title}
         accent={ABOUT_HERO.accent}
         description={ABOUT_HERO.description}
         actions={
           <>
-            <Button href={ABOUT_HERO.primaryAction.href} variant="inverse" iconRight={<ArrowUpRight className="size-5" />}>
-              {ABOUT_HERO.primaryAction.label}
+            <Button href={BUSINESS.phoneHref} variant="primary" size="lg" icon={<Phone className="size-5" />}>
+              {ABOUT_HERO.callLabel} {BUSINESS.phone}
             </Button>
-            <Button href={ABOUT_HERO.secondaryAction.href} variant="secondary" icon={<Calendar className="size-5" />}>
+            <Button href={ABOUT_HERO.secondaryAction.href} variant="onPhoto" size="lg" icon={<Calendar className="size-5" />}>
               {ABOUT_HERO.secondaryAction.label}
             </Button>
           </>
         }
       >
-        <Link
-          href="/awards"
-          className="group mt-10 flex max-w-md items-center gap-4 border-t border-rule pt-6"
-        >
-          {badge && (
-            <Image
-              src={badge.src}
-              alt={`${LATEST_AWARD.title} — ${LATEST_AWARD.category}`}
-              width={badge.width}
-              height={badge.height}
-              sizes="80px"
-              className="h-12 w-auto shrink-0"
-            />
-          )}
-          <span className="min-w-0">
-            <span className="block leading-snug font-semibold text-fg underline-offset-4 group-hover:underline">
-              {LATEST_AWARD.title}
+        <div className="flex flex-col gap-x-8 gap-y-3 sm:flex-row sm:flex-wrap sm:items-center">
+          <Link
+            href={ABOUT_HERO.primaryAction.href}
+            className="inline-flex min-h-11 items-center gap-2 font-semibold text-fg underline decoration-1 underline-offset-4 hover:decoration-2"
+          >
+            {ABOUT_HERO.primaryAction.label}
+            <ArrowRight aria-hidden="true" className="size-5 shrink-0 rotate-90" />
+          </Link>
+          <Link href="/awards" className="group inline-flex min-h-11 items-center gap-3">
+            {badge && (
+              <Image
+                src={badge.src}
+                alt={`${LATEST_AWARD.title} — ${LATEST_AWARD.category}`}
+                width={badge.width}
+                height={badge.height}
+                sizes="64px"
+                className="h-11 w-auto shrink-0"
+              />
+            )}
+            <span className="min-w-0 leading-snug">
+              <span className="block font-semibold text-fg underline-offset-4 group-hover:underline">
+                {LATEST_AWARD.title}
+              </span>
+              <span className="block text-[0.9375rem] text-body">
+                {ABOUT_HERO.awardVotedPrefix} {LATEST_AWARD.category}
+              </span>
             </span>
-            <span className="mt-0.5 block text-sm text-muted">
-              {ABOUT_HERO.awardVotedPrefix} {LATEST_AWARD.category}
-            </span>
-          </span>
-          <ArrowUpRight
-            aria-hidden="true"
-            className="ml-auto size-5 shrink-0 text-accent transition-transform duration-250 ease-settle group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-          />
-        </Link>
+          </Link>
+        </div>
       </PageHero>
 
       <AboutPersonJsonLd />

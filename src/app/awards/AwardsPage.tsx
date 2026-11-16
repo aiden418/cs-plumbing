@@ -4,10 +4,11 @@ import Container from "@/components/ui/Container";
 import Eyebrow from "@/components/ui/Eyebrow";
 import FaqAccordion from "@/components/ui/FaqAccordion";
 import PageHero from "@/components/ui/PageHero";
-import Reveal from "@/components/ui/Reveal";
 import Section from "@/components/ui/Section";
 import SectionHeading from "@/components/ui/SectionHeading";
-import { ExternalLink } from "@/components/ui/icons";
+import Button from "@/components/ui/Button";
+import { ExternalLink, Phone } from "@/components/ui/icons";
+import { BUSINESS } from "@/lib/business";
 import Credentials from "@/components/about/Credentials";
 import { AWARDS, LATEST_AWARD } from "@/lib/awards";
 import { image } from "@/lib/media";
@@ -50,7 +51,7 @@ function BadgeFrame({
 }) {
   if (!media) return null;
   return (
-    <div className={cn("rounded-frame bg-white p-[8%]", className)}>
+    <div className={cn("rounded-2xl bg-white p-[8%]", className)}>
       <Image
         src={media.src}
         alt={alt}
@@ -72,7 +73,7 @@ export default function AwardsPage() {
   return (
     <>
       <PageHero
-        layout="split"
+        layout="plain"
         overline={AWARDS_PAGE.overline}
         title={AWARDS_PAGE.title}
         accent={AWARDS_PAGE.accent}
@@ -84,19 +85,24 @@ export default function AwardsPage() {
             winners list. Here&rsquo;s every award, and how each one is decided.
           </p>
         }
+        actions={
+          <Button href={BUSINESS.phoneHref} variant="primary" size="lg" icon={<Phone className="size-5" />}>
+            {AWARDS_PAGE.callLabel} {BUSINESS.phone}
+          </Button>
+        }
         media={
           <BadgeFrame
             media={latestBadge}
             alt={`${LATEST_AWARD.title} — ${LATEST_AWARD.category}`}
-            sizes="(min-width: 1024px) 420px, 80vw"
+            sizes="(min-width: 1024px) 352px, 176px"
             preload
-            className="mx-auto w-full max-w-[26rem] lg:mr-0"
+            className="w-44 lg:mr-0 lg:ml-auto lg:w-full lg:max-w-[22rem]"
           />
         }
       />
 
-      {/* Awards */}
-      <Section tone="white" labelledBy="awards-list-title">
+      {/* Awards: a card each (badge beside the words), side by side on desktop */}
+      <Section tone="shell" spacing="sm" labelledBy="awards-list-title">
         <Container>
           <SectionHeading
             id="awards-list-title"
@@ -105,39 +111,40 @@ export default function AwardsPage() {
             title={AWARDS_PAGE.list.title}
             accent={AWARDS_PAGE.list.accent}
             subtitle={`Two years on the ${LATEST_AWARD.issuer}'s winners list, in two categories.`}
+            className="mb-8 sm:mb-10"
           />
-          <ol className="border-b border-rule">
-            {AWARDS.map((a, i) => (
-              <Reveal
-                as="li"
+          <ol className="grid grid-cols-1 gap-5 lg:grid-cols-2 lg:gap-6">
+            {AWARDS.map((a) => (
+              <li
                 key={a.slug}
-                index={i}
-                className="grid grid-cols-1 gap-y-6 border-t border-rule py-10 sm:grid-cols-12 sm:gap-x-8"
+                className="grid grid-cols-[6.5rem_minmax(0,1fr)] gap-x-5 gap-y-4 rounded-2xl border border-steel-200 bg-white p-5 sm:grid-cols-[9rem_minmax(0,1fr)] sm:gap-x-6 sm:p-6"
               >
                 <BadgeFrame
                   media={image(a.badge)}
                   alt={`${a.title} — ${a.category}`}
-                  sizes="(min-width: 1024px) 280px, (min-width: 640px) 30vw, 60vw"
-                  className="w-3/5 max-w-[17.5rem] self-start border border-rule sm:col-span-4 sm:w-full lg:col-span-3"
+                  sizes="(min-width: 640px) 144px, 104px"
+                  className="self-start p-0"
                 />
-                <div className="sm:col-span-8 lg:col-span-8 lg:col-start-5">
-                  <p className="label-tech text-accent tabular-nums">{a.year}</p>
-                  <h3 className="mt-2 font-display text-display-sm font-bold text-fg [font-stretch:108%]">{a.category}</h3>
-                  <p className="mt-1 text-muted">{a.title}</p>
-                  <p className="mt-5 max-w-[60ch] text-body">{a.summary}</p>
-                  <dl className="mt-6 grid max-w-[36rem] grid-cols-2 gap-x-6 border-t border-rule pt-5">
+                <div className="self-center">
+                  <p className="meta text-accent tabular-nums">{a.year}</p>
+                  <h3 className="mt-1 font-display text-display-sm font-bold text-fg [font-stretch:108%]">{a.category}</h3>
+                  <p className="mt-1 text-body">{a.title}</p>
+                </div>
+                <div className="col-span-2 sm:col-span-1 sm:col-start-2">
+                  <p className="text-body">{a.summary}</p>
+                  <dl className="mt-4 flex flex-wrap gap-x-10 gap-y-1 border-t border-rule pt-4">
                     <div>
-                      <dt className="label-tech text-muted">{AWARDS_PAGE.list.awardedLabel}</dt>
-                      <dd className="mt-2 font-medium text-fg">{monthYear(a.awardedOn)}</dd>
+                      <dt className="text-[0.9375rem] font-medium text-body">{AWARDS_PAGE.list.awardedLabel}</dt>
+                      <dd className="mt-1 font-semibold text-fg">{monthYear(a.awardedOn)}</dd>
                     </div>
                     <div>
-                      <dt className="label-tech text-muted">{AWARDS_PAGE.list.votedByLabel}</dt>
-                      <dd className="mt-1 font-medium text-fg">
+                      <dt className="text-[0.9375rem] font-medium text-body">{AWARDS_PAGE.list.votedByLabel}</dt>
+                      <dd className="font-semibold text-fg">
                         <a
                           href={a.citationUrl ?? a.issuerUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex min-h-11 items-center gap-1.5 text-link underline-offset-4 hover:underline"
+                          className="inline-flex min-h-11 items-center gap-1.5 text-link underline decoration-1 underline-offset-4 hover:decoration-2"
                         >
                           {a.issuer} {AWARDS_PAGE.list.readersSuffix}
                           <ExternalLink className="size-4 shrink-0" aria-hidden="true" />
@@ -146,14 +153,14 @@ export default function AwardsPage() {
                     </div>
                   </dl>
                 </div>
-              </Reveal>
+              </li>
             ))}
           </ol>
         </Container>
       </Section>
 
-      {/* How it works — the paragraph an answer engine quotes */}
-      <Section tone="shell" labelledBy="awards-how-title">
+      {/* How it works: the three real steps of the vote, and the paragraph an answer engine quotes */}
+      <Section tone="white" spacing="sm" labelledBy="awards-how-title">
         <Container>
           <SectionHeading
             id="awards-how-title"
@@ -162,47 +169,47 @@ export default function AwardsPage() {
             title={AWARDS_PAGE.how.title}
             accent={AWARDS_PAGE.how.accent}
             subtitle={AWARDS_PAGE.how.subtitle}
+            className="mb-8 sm:mb-10"
           />
-          <ol className="grid grid-cols-1 gap-x-8 md:grid-cols-3">
+          <ol className="grid grid-cols-1 gap-x-8 border-b border-rule md:grid-cols-3 md:border-b-0">
             {HOW_IT_WORKS.map((step, i) => (
-              <Reveal as="li" key={step.title} index={i} className="border-t border-rule pt-5 pb-8 md:pb-0">
-                <p className="label-tech text-accent tabular-nums">{String(i + 1).padStart(2, "0")}</p>
-                <h3 className="mt-3 text-lg leading-snug font-semibold text-fg">{step.title}</h3>
-                <p className="mt-2 max-w-[44ch] text-body">{step.body}</p>
-              </Reveal>
+              <li key={step.title} className="border-t border-rule py-5 md:pb-0">
+                <h3 className="text-lg leading-snug font-semibold text-fg">
+                  <span className="text-primary-dark tabular-nums">{i + 1}.</span> {step.title}
+                </h3>
+                <p className="mt-1.5 max-w-[44ch] text-body">{step.body}</p>
+              </li>
             ))}
           </ol>
-          <Reveal>
-            <p className="mt-12 max-w-[68ch] text-body lg:mt-16">
-              A vote is a lagging indicator — it reflects work that was already done. Read it
-              alongside the things you can check yourself: our{" "}
-              <Link href="/reviews" className={textLink}>
-                Google reviews
-              </Link>
-              , our{" "}
-              <Link href="/projects" className={textLink}>
-                completed projects
-              </Link>
-              , and both licenses on the DBPR.
-            </p>
-          </Reveal>
+          <p className="mt-8 max-w-[68ch] text-body lg:mt-10">
+            A vote is a lagging indicator — it reflects work that was already done. Read it
+            alongside the things you can check yourself: our{" "}
+            <Link href="/reviews" className={textLink}>
+              Google reviews
+            </Link>
+            , our{" "}
+            <Link href="/projects" className={textLink}>
+              completed projects
+            </Link>
+            , and both licenses on the DBPR.
+          </p>
         </Container>
       </Section>
 
       {/* Licenses, insurance, builders — the verifiable half of "trust" */}
-      <Credentials tone="white" />
+      <Credentials tone="shell" />
 
-      {/* FAQ */}
-      <Section tone="shell" labelledBy="awards-faq-title">
+      {/* FAQ: closed accordion; every answer stays in the HTML */}
+      <Section tone="white" spacing="sm" labelledBy="awards-faq-title">
         <Container>
           <div className="grid grid-cols-1 lg:grid-cols-12 lg:gap-x-8">
             <div className="lg:col-span-4">
-              <Eyebrow className="mb-4">{AWARDS_PAGE.faq.overline}</Eyebrow>
+              <Eyebrow className="mb-3">{AWARDS_PAGE.faq.overline}</Eyebrow>
               <h2 id="awards-faq-title" className="text-display-md text-fg">
                 {AWARDS_PAGE.faq.title} {AWARDS_PAGE.faq.accent}
               </h2>
             </div>
-            <FaqAccordion faqs={AWARDS_FAQS} className="mt-10 lg:col-span-8 lg:mt-0" />
+            <FaqAccordion faqs={AWARDS_FAQS} className="mt-6 lg:col-span-8 lg:mt-0" />
           </div>
         </Container>
       </Section>

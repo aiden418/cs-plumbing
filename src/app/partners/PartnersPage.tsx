@@ -1,4 +1,7 @@
 import Link from "next/link";
+import Button from "@/components/ui/Button";
+import { Phone } from "@/components/ui/icons";
+import { BUSINESS } from "@/lib/business";
 import Container from "@/components/ui/Container";
 import PageHero from "@/components/ui/PageHero";
 import Section from "@/components/ui/Section";
@@ -26,22 +29,13 @@ export default function PartnersPage() {
   return (
     <>
       <PageHero
-        layout="type-led"
+        layout="plain"
         overline={PARTNERS_PAGE.overline}
         title={PARTNERS_PAGE.title}
         accent={PARTNERS_PAGE.accent}
         description={PARTNERS_PAGE.description}
-      />
-
-      <Section tone="white" labelledBy="partners-list-title">
-        <Container>
-          {/* The hero <h1> carries this visually; the list still needs a
-              section heading so the outline doesn't jump h1 -> h3. */}
-          <h2 id="partners-list-title" className="sr-only">
-            {PARTNERS_PAGE.listHeading}
-          </h2>
-
-          <p className="mb-10 max-w-[68ch] text-lead text-body sm:mb-12">
+        media={
+          <p className="max-w-[60ch] text-body lg:mt-6">
             As a{" "}
             <Link href="/about" className={textLink}>
               family-owned plumbing company
@@ -54,6 +48,21 @@ export default function PartnersPage() {
             partner, HVAC service, roofing, or concrete work, these are the companies we personally
             recommend to our customers.
           </p>
+        }
+        actions={
+          <Button href={BUSINESS.phoneHref} variant="primary" size="lg" icon={<Phone className="size-5" />}>
+            {PARTNERS_PAGE.callLabel} {BUSINESS.phone}
+          </Button>
+        }
+      />
+
+      <Section tone="shell" spacing="sm" labelledBy="partners-list-title">
+        <Container>
+          {/* The hero <h1> carries this visually; the list still needs a
+              section heading so the outline doesn't jump h1 -> h3. */}
+          <h2 id="partners-list-title" className="sr-only">
+            {PARTNERS_PAGE.listHeading}
+          </h2>
 
           <PartnerDirectory
             partners={partners}
@@ -66,7 +75,7 @@ export default function PartnersPage() {
             }}
           />
 
-          <p className="mt-12 max-w-[68ch] text-muted sm:mt-16">
+          <p className="mt-10 max-w-[68ch] text-body">
             Looking for a plumber instead? C&amp;S Plumbing of Lee County offers{" "}
             <Link href="/services" className={textLink}>
               full-service plumbing
