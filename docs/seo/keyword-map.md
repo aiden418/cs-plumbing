@@ -60,6 +60,40 @@ What it means:
 
 Next pull (after the daily allowance resets, or from a full GSC export): branded vs non-branded split; the `www.candsplumbingfl.com` property (how much the duplicate domain captured); pages 101–200; device split; the same tables 14 and 28 days after the tankless page deploys.
 
+## 2c. Search Console at the redesign launch (Nov 2 – Nov 15, 2026)
+
+The redesign went live on 2026-11-16 with every URL, title, description, canonical and H1 unchanged. This is the last full 14 days before it: the baseline for judging the redesign. Pulled 2026-11-16 through Supermetrics (free tier: 100 rows, data from 2026-11-02).
+
+**Totals:** 5,600 impressions · 36 clicks · 0.64 % CTR · average position ≈ 16 · ≈ 400 impressions/day (was ≈ 370/day in the 14 days to Nov 11).
+
+| Page | Impr. | Clicks | Avg pos |
+|---|---|---|---|
+| `/` | 2,854 | 29 | 11.3 |
+| `/services/water-heaters` | 2,114 | 1 | 22.3 |
+| `/areas/punta-gorda` | 387 | 0 | 19.8 |
+| `/booking` (Reserve with Google links) | 365 | 2 | 3.5 |
+| `/about` · `/contact` · `/services` | 192 · 118 · 112 | 0 | 14.0 · 10.2 · 12.0 |
+| `/builders` · `/reviews` · `/emergency` | 90 · 88 · 83 | 0 · 0 · 2 | 6.2 · 7.3 · 20.7 |
+| `/areas/fort-myers` · `/areas/naples` · `/projects` | 68 · 61 · 48 | 0 | 16.2 · 19.0 · 3.5 |
+| `/water-heater-repair-lehigh-acres` · `/emergency-plumber-bonita-springs` | 27 · 24 | 0 | 5.2 · 8.6 |
+| `/areas/cape-coral` · `/faq` · `/gallery` · `/terms` | 26 each | 0 | 3.2 · 9.8 · 3.2 · 7.1 |
+| 19 other URLs | 1–19 each | 3 in total | — |
+
+- **37 URLs had an impression; 13 of the service-city landings did (7 in the previous pull).**
+- **Water heaters are still the whole non-brand story.** The hub took 2,114 impressions at position 22 for one click. Top phrasings: "water heater installation fort myers fl" 81 (pos 30) · "water heater repair fort myers" 68 (20) · "water heater installation fort myers" 59 (36) · "water heater replacement" 51 (18) · "water heater repair near me" 50 (12).
+- **Tankless still lands on the hub** (≈ 355 impressions across 10 phrasings, positions 14–42). `/services/tankless-water-heaters` (built Nov 12) has no impressions yet: it is not indexed.
+- City head terms on the home page: "plumber cape coral" 66 (16.3) · "plumber cape coral fl" 50 (12.9) · "certified plumber in cape coral fl" 52 (17.0) · "plumber near me" 65 (6.3, 2 clicks). Fort Myers contractor terms hold: "plumbing contractors fort myers" 29 (4.2) · "plumbing contractor in fort myers" 31 (5.2) · "fort myers commercial plumbing" 20 (3.9).
+- Brand: "c&s plumbing" 38 impressions, 5 clicks, position 5.5 (unchanged); "c&s plumbing of lee" 14, 2 clicks, position 1.6.
+- The North Fort Myers position-1 rows with zero clicks are still the rank-tracker artifact from §2b.
+
+**Indexing (Search Console, Pages report, read 2026-11-16):** 49 indexed · 88 not indexed (84 discovered – currently not indexed, 3 crawled – currently not indexed, 1 page with redirect, 0 not found). Unchanged since 2026-10-21. Sitemap last read 2026-11-13.
+
+**Links (Search Console, read 2026-11-16):** 35 external links from 25 sites; targets `/` 29, `/about` 2, `/services` 2, `/areas/fort-myers` 1, `/reviews` 1. All five still resolve. The sites are directories and aggregators plus the Breeze contest platform, LinkedIn, Procore, MapQuest and Yahoo; no newspaper, association, builder or supplier link yet.
+
+**Changed with the launch follow-up (2026-11-16):** `/services/commercial` title now "Commercial Plumber Cape Coral & Fort Myers | C&S Plumbing" (cluster 11); `/services/tankless-water-heaters` title cut to 60 characters; Twitter cards are per page; review count 60 → 64.
+
+**Compare next on 2026-11-30 and 2026-12-14** (same tables, 14-day windows after the launch). A drop on `/` or `/services/water-heaters` beyond normal daily swing (304–577 impressions/day in this window) is the signal to look at.
+
 ## 3. Clusters → owning page
 
 Rule: **one page owns one primary query.** Secondary pages may mention it but must not carry it in the title. Where two pages collide, GSC decides which keeps the query (the one with impressions) and the other is retitled.
@@ -76,7 +110,7 @@ Rule: **one page owns one primary query.** Secondary pages may mention it but mu
 | 8 | Drain cleaning | drain cleaning cape coral · hydro jetting fort myers · sewer camera inspection | `/services/drain-cleaning` · `/drain-cleaning-<city>` | "Drain Cleaning Services \| Cape Coral & Fort Myers Plumber" | Fine. |
 | 9 | Water quality | water softener installation cape coral · well water treatment lehigh acres · sulfur smell well water | `/services/water-softeners` · `/water-softeners-<city>` · blog | "Water Softener Installation \| Cape Coral & Fort Myers" | Add **well water** wording to the Lehigh/North Fort Myers pages (now on the area hubs). |
 | 10 | Remodel plumbing | bathroom remodel plumber cape coral · kitchen plumbing fort myers | `/services/plumbing-remodel` · `/plumbing-remodel-<city>` | "Kitchen & Bath Plumbing Remodels \| Cape Coral" | Fine. |
-| 11 | Commercial | commercial plumber fort myers · backflow testing cape coral · grease trap service | `/services/commercial` · `/commercial-plumbing-<city>` | "Commercial Plumbing Services" | Title has no geo: use "Commercial Plumber Cape Coral & Fort Myers \| C&S Plumbing". |
+| 11 | Commercial | commercial plumber fort myers · backflow testing cape coral · grease trap service | `/services/commercial` · `/commercial-plumbing-<city>` | "Commercial Plumber Cape Coral & Fort Myers \| C&S Plumbing" | Done 2026-11-16 (title had no geo). |
 | 12 | Brand | c&s plumbing of lee · cs plumbing lee · c and s plumbing cape coral | `/` · GBP | — | Brand searches are the leading indicator that offline marketing and PR are working; track them in GSC separately (Supermetrics "branded vs non-branded" dimension). |
 
 ## 4. Content gaps worth building (in priority order)
