@@ -1,5 +1,10 @@
 import type { ServiceCityLanding } from "./types";
-import { AWARD_TRUST_LINE, BUSINESS, UEP_STATUS } from "./constants";
+// Facts come from the small modules, never from ./constants: next.config.ts
+// loads this file (through ./landing-indexing) to declare redirects, and
+// tests/config-import-graph.test.ts keeps the page data off that chain.
+import { AWARD_TRUST_LINE } from "./awards";
+import { BUSINESS } from "./business";
+import { UEP_STATUS } from "./uep-status";
 import { composed, from, money, perFoot, price, range, rangeInline, span, spanInline } from "./pricing";
 import { CLAIMS, EMERGENCY_CLAIMS } from "./claims";
 
