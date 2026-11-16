@@ -36,10 +36,21 @@ export const BLOG_POST = {
     book: "Book Online",
     bookHref: "/booking",
   },
-  /** The other guides under the article (RelatedPosts). */
+  /** The other guides beside (desktop) or under (phone) the article; words as in RelatedPosts. */
   related: {
+    overline: "From the blog",
     heading: "Plumbing guides for Southwest Florida homeowners",
     count: 3,
+    all: "All plumbing guides & tips",
+  },
+  /** The service-city pages a post points to; words as in BlogRelatedLandings. */
+  landings: {
+    overline: "Local service pages",
+    heading: "Pricing and details for your city",
+    description:
+      "The service pages this guide refers to, with local price ranges, FAQs and the neighborhoods we cover.",
+    /** "Typical range <price range>" under a landing link. */
+    rangePrefix: "Typical range",
   },
 } as const;
 

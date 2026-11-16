@@ -52,7 +52,8 @@ export default function FAQPage() {
       <FaqJsonLd faqs={allFaqs} />
 
       <PageHero
-        layout="compact"
+        layout="plain"
+        size="sm"
         overline={FAQ_PAGE.overline}
         title={FAQ_PAGE.title}
         accent={FAQ_PAGE.accent}
@@ -71,22 +72,22 @@ export default function FAQPage() {
         }
       />
 
-      <Section tone="white" spacing="sm">
+      <Section tone="white" className="pt-8 pb-14 sm:pt-10 sm:pb-20">
         <Container>
-          <div className="grid grid-cols-1 gap-y-12 lg:grid-cols-12 lg:gap-x-8">
+          <div className="grid grid-cols-1 gap-y-10 lg:grid-cols-12 lg:gap-x-8">
             {/* Categories: a list at the top on phones, a sticky side list from lg. */}
             <nav aria-labelledby="faq-categories-heading" className="lg:col-span-3">
               <div className="lg:sticky lg:top-[calc(var(--nav-h)+2rem)]">
-                <p id="faq-categories-heading" className="label-tech mb-3 flex items-center gap-2.5 text-accent">
-                  <span className="joint" aria-hidden="true" />
+                <p id="faq-categories-heading" className="mb-3 font-semibold text-fg">
                   {FAQ_PAGE.categoriesLabel}
                 </p>
-                <ul className="grid grid-cols-1 gap-x-6 border-b border-rule sm:grid-cols-2 lg:grid-cols-1">
+                {/* Phones: a wrap of tappable chips. From lg: a plain list of hairline rows. */}
+                <ul className="flex flex-wrap gap-2 lg:block lg:border-b lg:border-rule">
                   {FAQ_CATEGORIES.map((cat) => (
-                    <li key={cat.slug} className="-mb-px border-b border-rule">
+                    <li key={cat.slug} className="lg:border-t lg:border-rule">
                       <a
                         href={`#${cat.slug}`}
-                        className="flex min-h-12 items-center py-2 font-medium text-fg underline-offset-4 transition-colors duration-150 hover:text-link hover:underline"
+                        className="flex min-h-11 items-center rounded-full border border-steel-300 bg-white px-4 font-medium text-fg hover:border-primary hover:text-link lg:min-h-12 lg:rounded-none lg:border-0 lg:bg-transparent lg:px-0 lg:hover:underline"
                       >
                         {cat.category}
                       </a>
@@ -96,7 +97,7 @@ export default function FAQPage() {
               </div>
             </nav>
 
-            <div className="space-y-16 sm:space-y-20 lg:col-span-8 lg:col-start-5">
+            <div className="space-y-12 sm:space-y-14 lg:col-span-8 lg:col-start-5">
               {FAQ_CATEGORIES.map((cat) => (
                 <section key={cat.slug} id={cat.slug} aria-labelledby={`${cat.slug}-heading`}>
                   <div className="mb-6 flex flex-wrap items-end justify-between gap-x-6 gap-y-2">
@@ -106,7 +107,7 @@ export default function FAQPage() {
                     {cat.link && (
                       <Link
                         href={cat.link}
-                        className="inline-flex min-h-11 items-center text-sm font-semibold text-link underline-offset-4 hover:underline"
+                        className="inline-flex min-h-11 items-center font-semibold text-link underline-offset-4 hover:underline"
                       >
                         {FAQ_PAGE.learnMore}
                       </Link>

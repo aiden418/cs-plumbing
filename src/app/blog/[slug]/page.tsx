@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import BlogContent from "@/components/blog/BlogContent";
-import BlogRelatedLandings from "@/components/blog/BlogRelatedLandings";
-import RelatedPosts from "@/components/blog/RelatedPosts";
 import ArticleJsonLd from "@/components/seo/ArticleJsonLd";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import FaqJsonLd from "@/components/seo/FaqJsonLd";
@@ -73,14 +71,7 @@ export default async function Page({
           { name: post.title, href: `/blog/${post.slug}` },
         ]}
       />
-      <BlogContent post={post} />
-      <BlogRelatedLandings post={post} tone="shell" />
-      <RelatedPosts
-        posts={relatedPosts(post, BLOG_POST.related.count)}
-        heading={BLOG_POST.related.heading}
-        // Alternate with the landings block above when there is one.
-        tone={post.relatedLandings?.length ? "white" : "shell"}
-      />
+      <BlogContent post={post} related={relatedPosts(post, BLOG_POST.related.count)} />
       <CTASection />
     </>
   );
