@@ -1,0 +1,22 @@
+{
+  "photo-1.webp": {
+    "alt": "Excavator opening the trench along the building, with the old clay sewer pipe exposed at the bottom",
+    "order": 4
+  },
+  "photo-2.webp": {
+    "alt": "Long trench cut beside the landscaped bed, running toward the excavator near the building",
+    "order": 5
+  },
+  "photo-3.webp": {
+    "alt": "Crew member at the first excavation in the parking lot with the excavator in position",
+    "order": 1
+  },
+  "photo-4.webp": {
+    "alt": "Vacuum hose and jetter line in the excavated hole where the old clay sewer pipe was exposed",
+    "order": 2
+  },
+  "photo-5.webp": {
+    "alt": "Sewer camera monitor showing the inside of the line during the inspection",
+    "order": 3
+  }
+}

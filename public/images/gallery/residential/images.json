@@ -12,5 +12,19 @@
     "title": "Service Call — Clearing a Kitchen Drain",
     "category": "residential",
     "order": 78
+  },
+  "residential-3.webp": {
+    "id": "100",
+    "alt": "New copper riser with a brass shutoff valve where the water service enters the house",
+    "title": "New Water Service — After",
+    "category": "residential",
+    "order": 101
+  },
+  "residential-4.webp": {
+    "id": "101",
+    "alt": "Old water service connection at the house wall before replacement, with a worn hose bibb and a cut copper stub",
+    "title": "New Water Service — Before",
+    "category": "residential",
+    "order": 100
   }
 }
