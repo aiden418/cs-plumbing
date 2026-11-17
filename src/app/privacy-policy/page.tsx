@@ -39,7 +39,7 @@ export default function PrivacyPolicyPage() {
             {/* One reading column on phones, two from lg (reading.css). */}
             <div className="rich-text post-body legal-columns">
               <p>
-                <strong>Last updated:</strong> March 10, 2026
+                <strong>Last updated:</strong> November 16, 2026
               </p>
 
               <p>
@@ -109,6 +109,17 @@ export default function PrivacyPolicyPage() {
                 Our website may use cookies and similar technologies to enhance
                 your browsing experience and analyze site traffic. You can
                 control cookie settings through your browser preferences.
+              </p>
+              <p>
+                We use a first-party cookie for up to 30 days to remember the most
+                recent identifiable source of a website visit, including campaign
+                tags, advertising click identifiers, the landing page and referring
+                website. When you submit an enquiry, these details accompany the
+                enquiry sent to our office and may be recorded with your service
+                job so we can measure which advertising leads to completed work.
+                Direct return visits do not extend this cookie’s lifetime. This
+                source-tracking cookie is not set or used when your browser sends
+                a Global Privacy Control signal.
               </p>
 
               <h2>

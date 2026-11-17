@@ -1,3 +1,4 @@
+import { leadAttributionHtml } from "@/lib/api/lead-attribution-email";
 import { NextResponse, after } from "next/server";
 import { Resend } from "resend";
 import { serviceRequestSchema, SERVICE_REQUEST_OPTIONS } from "@/lib/service-request";
@@ -58,6 +59,8 @@ export async function POST(request: Request) {
         { status: 500 }
       );
     }
+    const eventId = newConversionId();
+    const attributionHtml = leadAttributionHtml(request, eventId);
     const resend = new Resend(process.env.RESEND_API_KEY);
     const serviceLabel = SERVICE_REQUEST_OPTIONS.find(([value]) => value === service)?.[1] ?? service;
     const safe = {
@@ -81,6 +84,7 @@ export async function POST(request: Request) {
             <h1 style="color: #0099FF; margin: 0;">New Contact Form</h1>
           </div>
           <div style="padding: 20px; background: #f9f9f9;">
+            ${attributionHtml}
             <p><strong>Name:</strong> ${safe.name}</p>
             ${safe.email ? `<p><strong>Email:</strong> <a href="mailto:${safe.email}">${safe.email}</a></p>` : ""}
             <p><strong>Phone:</strong> <a href="tel:${safe.phone}">${safe.phone}</a></p>
@@ -136,7 +140,6 @@ export async function POST(request: Request) {
 
     // Server-side copy of the conversion, sent after the response so it can
     // never delay or fail the lead. The browser pixel reuses eventId.
-    const eventId = newConversionId();
     const context = captureRequestContext(request);
     after(() =>
       reportConversion({ type: "lead_created", id: eventId, context, sourcePath, email })

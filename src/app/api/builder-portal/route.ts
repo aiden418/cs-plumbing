@@ -1,3 +1,4 @@
+import { leadAttributionHtml } from "@/lib/api/lead-attribution-email";
 import { NextResponse } from "next/server";
 import { CLAIMS } from "@/lib/claims";
 import { Resend } from "resend";
@@ -106,8 +107,12 @@ export async function POST(request: Request) {
       description: escapeHtml(description),
     };
 
+    const eventId = randomUUID();
+    const attributionHtml = leadAttributionHtml(request, eventId);
+
     // Build HTML email
     const html = `
+      ${attributionHtml}
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <div style="background: #1B2B4B; padding: 24px; border-radius: 12px 12px 0 0;">
           <h1 style="color: #fff; margin: 0; font-size: 20px;">
@@ -220,7 +225,7 @@ export async function POST(request: Request) {
     // issued only here, after the office email was accepted: no id, no event.
     // Builder leads are intentionally not sent to the OpenAI CAPI as
     // lead_created — they'd be counted as homeowner leads.
-    return NextResponse.json({ success: true, eventId: randomUUID() });
+    return NextResponse.json({ success: true, eventId });
   } catch (error) {
     console.error("Builder portal error:", error);
     return NextResponse.json(
