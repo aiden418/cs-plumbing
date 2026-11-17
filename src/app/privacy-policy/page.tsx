@@ -16,7 +16,6 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     siteName: BUSINESS.fullName,
-    images: [{ url: "/images/logos/logo-512.png", width: 512, height: 512, alt: `${BUSINESS.fullName} Logo` }],
     title: `Privacy Policy | ${BUSINESS.fullName}`,
     description: `Privacy policy for ${BUSINESS.fullName}. Learn how we collect, use, and protect your personal information.`,
     url: "https://www.csplumbinglee.com/privacy-policy",

@@ -1,47 +1,61 @@
 import type { Metadata } from "next";
-import { Camera, CalendarCheck, ClipboardList, Gift, Phone } from "lucide-react";
-import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
+import Container from "@/components/ui/Container";
 import PageHero from "@/components/ui/PageHero";
+import Section from "@/components/ui/Section";
+import { Phone } from "@/components/ui/icons";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import GiveawayEntryForm from "@/components/giveaway/GiveawayEntryForm";
-import { BUSINESS } from "@/lib/constants";
+import { BUSINESS } from "@/lib/business";
 import { licenseLine } from "@/lib/claims";
-import { GIVEAWAY, giveawayRules, isGiveawayOpen } from "@/lib/giveaway";
+import { GIVEAWAY, isGiveawayOpen } from "@/lib/giveaway";
+import { giveawayRules } from "@/lib/giveaway-rules";
+import { heroFrame } from "@/lib/hero-frame";
 
 // Open/closed is decided when the page renders; hourly revalidation flips it
 // to the closed state after the end date without a deploy. The API enforces
 // the exact cutoff either way.
 export const revalidate = 3600;
 
-const description = `Enter to win ${GIVEAWAY.prizeShort} by C&S Plumbing of Lee. Free to enter for Southwest Florida homeowners. Ends ${GIVEAWAY.endsLabel}.`;
+const shareTitle = "Win a New Water Heater, Installed Free";
+const description = `${GIVEAWAY.occasion}, C&S Plumbing of Lee is giving away ${GIVEAWAY.prizeShort}. Free to enter for Southwest Florida homeowners. Ends ${GIVEAWAY.endsLabel}.`;
 
 export const metadata: Metadata = {
   alternates: { canonical: GIVEAWAY.path },
   title: "Water Heater Giveaway",
   description,
   openGraph: {
-    title: "Win a New Water Heater, Installed | C&S Plumbing of Lee",
+    type: "website",
+    siteName: BUSINESS.fullName,
+    title: `${shareTitle} | ${BUSINESS.fullName}`,
     description,
     url: `https://www.csplumbinglee.com${GIVEAWAY.path}`,
+    // A committed JPEG with a photograph (scripts/build-giveaway-share-image.mjs);
+    // rebuild it when the end date changes.
+    images: [
+      {
+        url: "/og/water-heater-giveaway.jpg",
+        width: 1200,
+        height: 630,
+        type: "image/jpeg",
+        alt: `Win a new water heater, installed free. ${BUSINESS.fullName} anniversary giveaway, enter by ${GIVEAWAY.endsLabelShort}.`,
+      },
+    ],
   },
 };
 
 const steps = [
   {
-    icon: ClipboardList,
     title: "Fill out the form",
-    body: "Your name, phone, email and the address of the home.",
+    description: "Your name, phone, email and the address of the home.",
   },
   {
-    icon: Camera,
     title: "Add a photo and the year",
-    body: "Snap your current water heater and tell us the year on its label.",
+    description: "Snap your current water heater and tell us the year on its label.",
   },
   {
-    icon: CalendarCheck,
-    title: `Winner drawn ${GIVEAWAY.drawOn}`,
-    body: "One entry is picked at random. We call and email the winner.",
+    title: `Winner drawn ${GIVEAWAY.drawOnShort}`,
+    description: "One entry is picked at random. We call and email the winner.",
   },
 ];
 
@@ -60,97 +74,97 @@ export default function Page() {
 
       <PageHero
         size="sm"
-        overline={open ? `Giveaway · Ends ${GIVEAWAY.endsLabel}` : "Giveaway closed"}
-        overlineIcon={<Gift className="h-4 w-4" />}
+        frame={heroFrame({ src: "/images/gallery/rheem-water-heater.jpg", position: "center 30%" })}
+        overline={open ? `Anniversary giveaway · Ends ${GIVEAWAY.endsLabelShort}` : "Giveaway closed"}
         title="Win a New Water Heater,"
-        accent="Installed Free."
+        accent="Installed Free"
         description={
           open
-            ? "One Southwest Florida homeowner gets a brand-new tank water heater, installed by our licensed plumbers. Free to enter, takes about a minute."
+            ? `${GIVEAWAY.occasion}, one Southwest Florida homeowner gets a brand-new tank water heater, installed by our licensed plumbers. Free to enter. Takes about a minute.`
             : `Entries closed on ${GIVEAWAY.endsLabel}. Thank you to everyone who entered. We contact the winner directly.`
         }
-        image={{ src: "/images/gallery/tank-water-heater-replacement.jpg", position: "center 35%" }}
         actions={
           open ? (
-            <Button href="#enter" variant="gold" size="lg">
-              Enter Now
+            <Button href="#enter" variant="brass" size="lg">
+              Enter now
             </Button>
           ) : (
-            <Button href="/services/water-heaters" variant="gold" size="lg">
-              Water Heater Services
+            <Button href="/services/water-heaters" variant="brass" size="lg">
+              Water heater services
             </Button>
           )
         }
       />
 
-      <section className="py-10 sm:py-16 lg:py-20">
+      <Section tone="shell" spacing="none" className="py-8 sm:py-12 lg:py-14">
         <Container>
-          <div className="grid grid-cols-1 gap-10 lg:grid-cols-5 lg:gap-16">
-            {/* Form first on phones: the link is shared to people ready to enter. */}
-            <div id="enter" className="scroll-mt-28 lg:order-2 lg:col-span-3">
+          <div className="grid grid-cols-1 gap-y-12 lg:grid-cols-12 lg:gap-x-10">
+            {/* Form first: the link is shared to people ready to enter. */}
+            <div id="enter" className="min-w-0 scroll-mt-28 lg:col-span-7">
               {open ? (
                 <GiveawayEntryForm />
               ) : (
-                <div className="rounded-2xl border border-gray-200 bg-[#F5F5F7] p-6 sm:p-8 text-center">
-                  <h2 className="text-xl sm:text-2xl font-bold text-gray-900">This giveaway has ended</h2>
-                  <p className="mt-2 text-sm text-gray-600">
+                <div className="rounded-frame border border-steel-200 bg-white p-5 sm:p-8">
+                  <h2 className="text-display-sm text-fg">This giveaway has ended</h2>
+                  <p className="mt-2 text-body">
                     Entries closed at {GIVEAWAY.endsLabelLong}. Need a water heater looked at now?
                   </p>
-                  <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:justify-center">
-                    <Button href="/booking">Book a Free Estimate</Button>
-                    <Button href={`tel:${BUSINESS.phoneRaw}`} variant="secondary" icon={<Phone className="h-4 w-4" />}>
-                      {BUSINESS.phone}
+                  <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+                    <Button href="/booking">Book a free estimate</Button>
+                    <Button href={BUSINESS.phoneHref} variant="secondary" icon={<Phone className="size-5" />}>
+                      {`Call ${BUSINESS.phone}`}
                     </Button>
                   </div>
                 </div>
               )}
             </div>
 
-            <div className="lg:order-1 lg:col-span-2">
-              <h2 className="text-xl sm:text-2xl font-bold text-gray-900">How it works</h2>
-              <ol className="mt-6 space-y-5">
-                {steps.map((step) => (
-                  <li key={step.title} className="flex items-start gap-4">
-                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                      <step.icon className="h-5 w-5" />
-                    </div>
-                    <div>
-                      <p className="text-sm sm:text-base font-semibold text-gray-900">{step.title}</p>
-                      <p className="mt-0.5 text-sm text-gray-500">{step.body}</p>
+            <div className="min-w-0 lg:col-span-5">
+              <h2 className="text-display-sm text-fg">The prize</h2>
+              <p className="mt-3 text-body">{GIVEAWAY.prize}</p>
+              <p className="mt-2 text-sm text-muted">Approximate retail value {GIVEAWAY.arv}.</p>
+
+              <h2 className="mt-10 text-display-sm text-fg">How it works</h2>
+              <ol className="mt-4 border-t border-rule">
+                {steps.map((step, i) => (
+                  <li key={step.title} className="grid grid-cols-[2rem_1fr] gap-x-3.5 border-b border-rule py-5">
+                    <span aria-hidden="true" className="cv-num-disc">
+                      {i + 1}
+                    </span>
+                    <div className="min-w-0">
+                      <h3 className="pt-0.5 text-lg leading-snug font-semibold text-fg">{step.title}</h3>
+                      <p className="mt-1.5 text-body">{step.description}</p>
                     </div>
                   </li>
                 ))}
               </ol>
 
-              <div className="mt-8 rounded-2xl bg-navy p-5 sm:p-6">
-                <p className="text-xs font-bold uppercase tracking-[0.2em] text-gold">The prize</p>
-                <p className="mt-2 text-sm leading-relaxed text-white/90">{GIVEAWAY.prize}</p>
-                <p className="mt-3 text-xs text-white/60">Approximate retail value {GIVEAWAY.arv}.</p>
-              </div>
+              <h2 className="mt-10 text-lg font-semibold text-fg">Watch for fake &quot;you won&quot; messages</h2>
+              <p className="mt-2 text-body">{GIVEAWAY.scamWarning}</p>
 
-              <p className="mt-6 text-xs leading-relaxed text-gray-500">
+              <p className="mt-8 text-sm text-muted">
                 {BUSINESS.fullName} · Family owned since {BUSINESS.founded} · {licenseLine("marketing")}
               </p>
             </div>
           </div>
         </Container>
-      </section>
+      </Section>
 
-      <section id="rules" className="scroll-mt-24 bg-[#F5F5F7] py-12 sm:py-16">
+      <Section tone="white" spacing="none" id="rules" className="scroll-mt-24 py-12 lg:py-16">
         <Container size="narrow">
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">Official rules</h2>
+          <h2 className="text-display-sm text-fg">Official rules</h2>
           <dl className="mt-6 space-y-5">
             {rules.map((rule, i) => (
               <div key={rule.title}>
-                <dt className="text-sm font-semibold text-gray-900">
+                <dt className="font-semibold text-fg">
                   {i + 1}. {rule.title}
                 </dt>
-                <dd className="mt-1 text-sm leading-relaxed text-gray-600">{rule.body}</dd>
+                <dd className="mt-1 text-body">{rule.body}</dd>
               </div>
             ))}
           </dl>
         </Container>
-      </section>
+      </Section>
     </>
   );
 }

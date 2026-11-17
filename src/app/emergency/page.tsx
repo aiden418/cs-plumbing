@@ -26,6 +26,7 @@ export const metadata: Metadata = {
     "weekend plumber Cape Coral",
   ],
   openGraph: {
+    siteName: "C&S Plumbing of Lee",
     title: "24/7 Emergency Plumber | Cape Coral, Fort Myers, SWFL",
     description:
       `Plumbing emergency? C&S Plumbing responds 24/7 across Southwest Florida. Call ${BUSINESS.phone} now.`,

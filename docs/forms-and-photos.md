@@ -104,18 +104,26 @@ fallback line.
 
 ## Water heater giveaway (`/water-heater-giveaway`)
 
-Added 2026-11-13. Everything that changes between runs lives in
-`src/lib/giveaway.ts`: end date, drawing date, prize wording, official rules
-and the entry schema. The approximate retail value reads from `PRICES`.
+Added 2026-11-13, rebuilt on the forms kit 2026-11-17. Runs until 11:59 PM ET
+on December 8, 2026 (the company's anniversary, start of its 29th year);
+drawing on or about December 10. The launch plan, runner-up email and social
+posts are in `docs/giveaway-playbook.md`.
+
+Everything that changes between runs lives in `src/lib/giveaway.ts` (dates,
+prize wording, consent line, scam warning, entry schema) and
+`src/lib/giveaway-rules.ts` (official rules). The approximate retail value
+reads from `PRICES`.
 
 - Entry = first/last name, phone, email, street/city/ZIP, year the heater was
   made (or "not sure"), 1–3 photos, and a required "18+, own the home, agree
-  to the rules" box. A second, optional box records consent to be contacted
-  about a replacement; the office email shows it as YES / No.
-- `/api/giveaway` sends one email per entry to `office@csplumbinglee.com`
-  with the photos attached (subject starts `Giveaway Entry:`) and a receipt
-  to the entrant. Nothing is stored: the inbox is the entry list, so the
-  drawing and the one-per-household check are done from those emails.
+  to the rules" box.
+- Consent: entering allows email about the giveaway and water heater offers
+  (rule 10 and the line under the button say so; every such email needs an
+  opt-out). Calls and texts about offers only for entrants who tick the
+  optional box; the office email shows it as YES / No (email only).
+- `/api/giveaway` sends one email per entry to `BUSINESS.email` with the
+  photos attached (subject starts `Giveaway Entry:`) and a receipt to the
+  entrant. Nothing is stored on our side: the inbox is the entry list.
 - Heaters 10+ years old are tagged "replacement candidate" in the office
   email.
 - After `endsAt` the API returns 403 and the page shows a closed state
@@ -125,10 +133,39 @@ and the entry schema. The approximate retail value reads from `PRICES`.
   deliberately not a `Lead` / Google Ads conversion, so entrants do not
   dilute service-lead bidding.
 - The coupon popup is suppressed on this path (it covered the submit button).
+- Link preview: `public/og/water-heater-giveaway.jpg`, built by
+  `node scripts/build-giveaway-share-image.mjs "December 8"`. Rebuild it when
+  the end date changes.
 
-Verified with the capture harness: valid multipart entry (200, office email
-with photo, receipt), no photo (400), 4 photos (400), missing agreement
-(400), honeypot (200, no email), browser submit at phone width, and the
+### Optional: log every entry to a Google Sheet
+
+Set `GIVEAWAY_SHEET_WEBHOOK_URL` in Vercel (Production) and each entry is
+also posted as one JSON row, without photos. A failed post never fails the
+entry. Setup, about five minutes:
+
+1. Create a Google Sheet. Extensions → Apps Script, paste:
+
+   ```js
+   const COLS = ["receivedAt","firstName","lastName","phone","email","address","city","zip","heaterYear","heaterAge","callTextOk","photos","emailId"];
+   function doPost(e) {
+     const row = JSON.parse(e.postData.contents);
+     const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
+     if (sheet.getLastRow() === 0) sheet.appendRow(COLS);
+     sheet.appendRow(COLS.map((c) => row[c] ?? ""));
+     return ContentService.createTextOutput("ok");
+   }
+   ```
+
+2. Deploy → New deployment → Web app; execute as "Me", access "Anyone".
+3. Copy the web app URL into `GIVEAWAY_SHEET_WEBHOOK_URL` and redeploy.
+
+The URL is a secret of sorts (anyone holding it can append rows), so keep it
+in Vercel only. The sheet holds names, addresses and phone numbers: share it
+with the people who run the drawing and nobody else.
+
+Verified 2026-11-17 with the capture harness and a phone-width browser: empty
+submit (field errors), no photo (message), valid entry (office email with
+photo, receipt), honeypot, a cross-site Origin (403), and on 2026-11-13 the
 closed state with a past `endsAt` (page copy, API 403).
 
 ## Builder plan uploads

@@ -27,6 +27,7 @@ export const metadata: Metadata = {
     "emergency plumber questions",
   ],
   openGraph: {
+    siteName: "C&S Plumbing of Lee",
     title: "Plumbing FAQ — C&S Plumbing of Lee",
     description:
       "Answers to common plumbing questions about costs, timelines, services, and more from a licensed Florida contractor.",

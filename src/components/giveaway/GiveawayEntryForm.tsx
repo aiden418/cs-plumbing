@@ -2,47 +2,81 @@
 
 import Link from "next/link";
 import { useId, useRef, useState } from "react";
-import { BUSINESS } from "@/lib/constants";
+import { BUSINESS } from "@/lib/business";
 import { GIVEAWAY, giveawayEntrySchema, heaterYearOptions } from "@/lib/giveaway";
 import { trackGiveawayEntry } from "@/lib/pixel";
 import FileUpload from "@/components/builder-portal/FileUpload";
+import { Checkbox, Field, FormattedInput, FormPanel, FormStatus, Select, SubmitRow } from "@/components/forms";
 import { PHOTO_UPLOAD, photoTotalError } from "@/lib/photo-upload";
 import { compressAll } from "@/lib/compress-image";
 
 const YEARS = heaterYearOptions();
+const linkClass = "font-semibold text-link underline underline-offset-[0.2em]";
 
+type Errors = Partial<Record<string, string>>;
+
+/** First problem per field: the shared schema's message, else the browser's own. */
+function fieldErrors(form: HTMLFormElement, schemaIssues: { path: PropertyKey[]; message: string }[]): Errors {
+  const errors: Errors = {};
+  for (const issue of schemaIssues) {
+    const key = String(issue.path[0] ?? "");
+    if (key && !errors[key]) errors[key] = issue.message;
+  }
+  for (const element of Array.from(form.elements)) {
+    const el = element as HTMLInputElement;
+    if (!el.name || !el.willValidate || el.validity.valid || errors[el.name]) continue;
+    errors[el.name] = el.validationMessage;
+  }
+  return errors;
+}
+
+/**
+ * Entry form of the water heater giveaway. Always multipart: a photo of the
+ * current heater is part of the entry. Fields, limits and messages come from
+ * src/lib/giveaway.ts, which /api/giveaway checks again on the server.
+ */
 export default function GiveawayEntryForm() {
   const id = useId();
   const busy = useRef(false);
+  const statusRef = useRef<HTMLDivElement>(null);
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
   const [closed, setClosed] = useState(false);
   const [error, setError] = useState("");
+  const [errors, setErrors] = useState<Errors>({});
+  const [photoError, setPhotoError] = useState("");
   const [photos, setPhotos] = useState<File[]>([]);
-  const inputClass =
-    "mt-1 w-full rounded-xl border border-gray-300 bg-white px-3 py-3 text-base sm:text-sm text-gray-900 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary";
-  const labelClass = "block text-sm font-medium text-gray-700";
+
+  const focusStatus = () => requestAnimationFrame(() => statusRef.current?.focus());
 
   async function submit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (busy.current) return;
-    const parsed = giveawayEntrySchema.safeParse(Object.fromEntries(new FormData(event.currentTarget)));
-    if (!parsed.success) {
-      setError(parsed.error.issues[0].message);
+    const form = event.currentTarget;
+    const parsed = giveawayEntrySchema.safeParse(Object.fromEntries(new FormData(form)));
+    const found = fieldErrors(form, parsed.success ? [] : parsed.error.issues);
+    if (!parsed.success || Object.keys(found).length > 0) {
+      setErrors(found);
+      setError(parsed.success ? Object.values(found)[0] ?? "" : parsed.error.issues[0].message);
+      const first = Array.from(form.elements).find(
+        (el) => (el as HTMLInputElement).name && found[(el as HTMLInputElement).name],
+      ) as HTMLElement | undefined;
+      first?.focus();
       return;
     }
-    if (photos.length === 0) {
-      setError("Please add a photo of your water heater.");
-      return;
-    }
-    const sizeError = photoTotalError(photos);
-    if (sizeError) {
-      setError(sizeError);
+    const photoProblem =
+      photos.length === 0 ? "Please add a photo of your water heater." : photoTotalError(photos);
+    if (photoProblem) {
+      setErrors({});
+      setPhotoError(photoProblem);
+      setError(photoProblem);
       return;
     }
     busy.current = true;
     setSending(true);
     setError("");
+    setErrors({});
+    setPhotoError("");
     try {
       const body = new FormData();
       for (const [key, value] of Object.entries(parsed.data)) {
@@ -55,6 +89,7 @@ export default function GiveawayEntryForm() {
         throw Object.assign(new Error(result.error ?? "Submission failed"), { code: result.code });
       }
       setSent(true);
+      focusStatus();
       trackGiveawayEntry({ eventId: result.eventId });
     } catch (err) {
       const code = (err as { code?: string }).code;
@@ -65,133 +100,156 @@ export default function GiveawayEntryForm() {
           ? err.message
           : `Your entry could not be sent. Please try again or call ${BUSINESS.phone}.`,
       );
+      focusStatus();
     } finally {
       busy.current = false;
       setSending(false);
     }
   }
 
+  /** Editing a field clears its message; the rest stay until the next submit. */
+  function clearFieldError(event: React.FormEvent<HTMLFormElement>) {
+    const name = (event.target as HTMLInputElement).name;
+    if (!name || !errors[name]) return;
+    setErrors((prev) => {
+      const next = { ...prev };
+      delete next[name];
+      return next;
+    });
+  }
+
   if (sent) {
     return (
-      <div role="status" className="rounded-2xl border border-green-200 bg-green-50 p-6 sm:p-8 text-center">
-        <h3 className="text-xl font-bold text-gray-900">You&apos;re entered!</h3>
-        <p className="mt-2 text-sm text-gray-600">
-          We emailed you a receipt. The winner is drawn on or about {GIVEAWAY.drawOn} and contacted by phone and
-          email.
+      <FormStatus ref={statusRef} tabIndex={-1} status="success" data-tone="white" title="You're entered!">
+        <p>
+          We emailed you a receipt. The winner is drawn on or about {GIVEAWAY.drawOn}. {GIVEAWAY.scamWarning}
         </p>
-        <p className="mt-3 text-sm text-gray-600">
+        <p className="mt-3">
           Water heater acting up before then? Call{" "}
-          <a className="font-semibold text-primary underline" href={`tel:${BUSINESS.phoneRaw}`}>
+          <a className={linkClass} href={BUSINESS.phoneHref}>
             {BUSINESS.phone}
           </a>
           .
         </p>
-      </div>
+      </FormStatus>
     );
   }
 
+  const fid = (name: string) => `${id}-${name}`;
+
   return (
-    <form
-      onSubmit={submit}
-      noValidate={false}
-      className="rounded-2xl border border-gray-200 bg-[#F5F5F7] p-5 sm:p-8 space-y-4"
-      aria-label="Water heater giveaway entry"
-    >
-      <div>
-        <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Enter the giveaway</h2>
-        <p className="mt-1 text-xs text-gray-500">Takes about a minute. All fields are required.</p>
-      </div>
-      <fieldset disabled={sending || closed} className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+    <FormPanel className="border border-steel-200">
+      <form
+        onSubmit={submit}
+        onChange={clearFieldError}
+        noValidate
+        className="space-y-6"
+        aria-label="Water heater giveaway entry"
+      >
         <div>
-          <label className={labelClass} htmlFor={`${id}-first`}>First name</label>
-          <input id={`${id}-first`} name="firstName" autoComplete="given-name" required maxLength={60} className={inputClass} />
+          <h2 className="text-display-sm text-fg">Enter the giveaway</h2>
+          <p className="mt-1 text-sm text-muted">Takes about a minute. Every field is required.</p>
         </div>
-        <div>
-          <label className={labelClass} htmlFor={`${id}-last`}>Last name</label>
-          <input id={`${id}-last`} name="lastName" autoComplete="family-name" required maxLength={60} className={inputClass} />
-        </div>
-        <div>
-          <label className={labelClass} htmlFor={`${id}-phone`}>Phone number</label>
-          <input id={`${id}-phone`} name="phone" type="tel" inputMode="tel" autoComplete="tel" required minLength={10} maxLength={30} className={inputClass} />
-        </div>
-        <div>
-          <label className={labelClass} htmlFor={`${id}-email`}>Email</label>
-          <input id={`${id}-email`} name="email" type="email" autoComplete="email" required maxLength={200} className={inputClass} />
-        </div>
-        <div className="sm:col-span-2">
-          <label className={labelClass} htmlFor={`${id}-address`}>Home address (where the water heater is)</label>
-          <input id={`${id}-address`} name="address" autoComplete="street-address" required minLength={5} maxLength={200} placeholder="Street address" className={inputClass} />
-        </div>
-        <div>
-          <label className={labelClass} htmlFor={`${id}-city`}>City</label>
-          <input id={`${id}-city`} name="city" autoComplete="address-level2" required minLength={2} maxLength={80} className={inputClass} />
-        </div>
-        <div>
-          <label className={labelClass} htmlFor={`${id}-zip`}>ZIP code</label>
-          <input id={`${id}-zip`} name="zip" inputMode="numeric" autoComplete="postal-code" required pattern="[0-9]{5}" maxLength={5} className={inputClass} />
-        </div>
-        <div className="sm:col-span-2">
-          <label className={labelClass} htmlFor={`${id}-year`}>Year your water heater was made</label>
-          <select id={`${id}-year`} name="heaterYear" defaultValue="" required className={inputClass}>
-            <option value="" disabled>Select a year</option>
-            {YEARS.map(([value, label]) => (
-              <option key={value} value={value}>{label}</option>
-            ))}
-          </select>
-          <p className="mt-1 text-xs text-gray-500">
-            It&apos;s on the label on the side of the tank, shown as a manufacture date or in the first digits of the
-            serial number.
-          </p>
-        </div>
-        <div className="sm:col-span-2">
-          <span className={labelClass}>
-            Photo of your water heater (up to {GIVEAWAY.maxPhotos})
-          </span>
-          <p className="mt-1 text-xs text-gray-500">
-            One of the whole heater, and one of the label if you can get it.
-          </p>
-          <div className="mt-2">
+        <fieldset disabled={sending || closed} className="grid min-w-0 grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-x-6">
+          <Field id={fid("firstName")} label="First name" required error={errors.firstName}>
+            <FormattedInput name="firstName" preset="name" autoComplete="given-name" maxLength={60} />
+          </Field>
+          <Field id={fid("lastName")} label="Last name" required error={errors.lastName}>
+            <FormattedInput name="lastName" preset="name" autoComplete="family-name" maxLength={60} />
+          </Field>
+          <Field id={fid("phone")} label="Phone number" required error={errors.phone}>
+            <FormattedInput name="phone" preset="tel" minLength={10} maxLength={30} />
+          </Field>
+          <Field id={fid("email")} label="Email" required error={errors.email}>
+            <FormattedInput name="email" preset="email" maxLength={200} />
+          </Field>
+          <Field
+            id={fid("address")}
+            label="Home address"
+            hint="Where the water heater is."
+            required
+            error={errors.address}
+            className="sm:col-span-2"
+          >
+            <FormattedInput name="address" preset="street-address" minLength={5} maxLength={200} />
+          </Field>
+          <Field id={fid("city")} label="City" required error={errors.city}>
+            <FormattedInput name="city" preset="name" autoComplete="address-level2" minLength={2} maxLength={80} />
+          </Field>
+          <Field id={fid("zip")} label="ZIP code" required error={errors.zip}>
+            <FormattedInput name="zip" preset="postal-code" pattern="[0-9]{5}" maxLength={5} />
+          </Field>
+          <Field
+            id={fid("heaterYear")}
+            label="Year your water heater was made"
+            hint="On the label on the side of the tank: a manufacture date, or the first digits of the serial number."
+            required
+            error={errors.heaterYear}
+            className="sm:col-span-2"
+          >
+            <Select name="heaterYear" defaultValue="">
+              <option value="" disabled>
+                Select a year
+              </option>
+              {YEARS.map(([value, label]) => (
+                <option key={value} value={value}>
+                  {label}
+                </option>
+              ))}
+            </Select>
+          </Field>
+          <div className="min-w-0 sm:col-span-2">
             <FileUpload
+              id={fid("photos")}
+              label={`Photo of your water heater (1 to ${GIVEAWAY.maxPhotos}: the whole heater, plus its label if you can)`}
               files={photos}
               onChange={(next) => {
-                // Downscale phone photos as they are picked so the upload stays small.
+                setPhotoError("");
                 setError("");
+                // Downscale phone photos as they are picked so the upload stays small.
                 void compressAll(next).then(setPhotos);
               }}
               maxFiles={GIVEAWAY.maxPhotos}
               maxSizeMb={PHOTO_UPLOAD.maxBytesEach / 1024 / 1024}
+              error={photoError || undefined}
               compact
             />
           </div>
-        </div>
-        <label className="sm:col-span-2 flex items-start gap-3 text-sm text-gray-700">
-          <input type="checkbox" name="agree" required className="mt-0.5 h-5 w-5 shrink-0 rounded border-gray-300 accent-[#0077CC]" />
-          <span>
-            I&apos;m 18 or older, I own this home, and I agree to the{" "}
-            <a className="font-medium text-primary underline" href="#rules">official rules</a>.
-          </span>
-        </label>
-        <label className="sm:col-span-2 flex items-start gap-3 text-sm text-gray-700">
-          <input type="checkbox" name="contactOk" className="mt-0.5 h-5 w-5 shrink-0 rounded border-gray-300 accent-[#0077CC]" />
-          <span>
-            Optional: C&amp;S Plumbing may call, text or email me about replacing my water heater. Not required to
-            enter or win.
-          </span>
-        </label>
-        <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="absolute -left-[9999px] w-px h-px opacity-0" />
-      </fieldset>
-      {error && <p role="alert" className="text-sm text-red-700">{error}</p>}
-      <button
-        type="submit"
-        disabled={sending || closed}
-        className="w-full rounded-xl bg-primary px-4 py-3.5 text-base font-semibold text-white hover:bg-primary-dark disabled:opacity-60"
-      >
-        {sending ? "Sending…" : "Enter to Win"}
-      </button>
-      <p className="text-xs text-gray-500">
-        No purchase necessary. Ends {GIVEAWAY.endsLabel}.{" "}
-        <Link className="underline" href="/privacy-policy">Privacy policy</Link>
-      </p>
-    </form>
+          <Checkbox
+            id={fid("agree")}
+            name="agree"
+            required
+            error={errors.agree}
+            wrapperClassName="sm:col-span-2"
+            label={
+              <>
+                I&apos;m 18 or older, I own this home, and I agree to the{" "}
+                <a className={linkClass} href="#rules">
+                  official rules
+                </a>
+                .
+              </>
+            }
+          />
+          <Checkbox
+            id={fid("contactOk")}
+            name="contactOk"
+            wrapperClassName="sm:col-span-2"
+            label="It's OK to call or text me about replacing my water heater."
+            hint="Optional. Not required to enter or win."
+          />
+          {/* Same honeypot markup as ServiceRequestForm. */}
+          <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="absolute -left-[9999px] w-px h-px opacity-0" />
+        </fieldset>
+        {error ? <FormStatus ref={statusRef} tabIndex={-1} status="error" data-tone="white" title={error} /> : null}
+        <SubmitRow label="Enter to win" loading={sending} disabled={closed} className="w-full sm:w-auto" />
+        <p className="text-sm text-muted">
+          No purchase necessary. Ends {GIVEAWAY.endsLabel}. {GIVEAWAY.consent}{" "}
+          <Link className="text-link underline underline-offset-[0.2em]" href="/privacy-policy">
+            Privacy policy
+          </Link>
+        </p>
+      </form>
+    </FormPanel>
   );
 }

@@ -16,6 +16,7 @@ export const metadata: Metadata = {
   keywords: landing.keywords,
     alternates: { canonical: "/services/plumbing-remodel" },
   openGraph: {
+    siteName: "C&S Plumbing of Lee",
     title: landing.metaTitle,
     description: landing.metaDescription,
     url: "https://www.csplumbinglee.com/services/plumbing-remodel",

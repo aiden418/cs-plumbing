@@ -41,6 +41,7 @@ export async function generateMetadata({
     keywords: post.keywords,
     alternates: { canonical: `/blog/${post.slug}` },
     openGraph: {
+      siteName: "C&S Plumbing of Lee",
       title: post.metaTitle,
       description: post.metaDescription,
       url: `https://www.csplumbinglee.com/blog/${post.slug}`,

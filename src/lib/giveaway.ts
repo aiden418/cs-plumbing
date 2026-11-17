@@ -2,25 +2,40 @@
  * Water heater giveaway: one place for the dates, the prize wording, the
  * official rules and the entry schema. The page, the entry form and
  * /api/giveaway all read from here, so the rules a customer agrees to and
- * the checks the server runs cannot drift apart.
+ * the checks the server runs cannot drift apart. The official rules live in
+ * ./giveaway-rules.ts (server only), so this file stays light enough for the
+ * entry form to import.
  *
  * To run it again later: change `endsAt`, `drawOn` and (if needed) the prize.
  * Once `endsAt` passes, the page shows a "closed" state and the API rejects
  * entries on its own; no deploy is needed to close it.
  */
 import { z } from "zod";
-import { BUSINESS, countiesSentence } from "./constants";
 import { spanInline } from "./pricing";
 
 export const GIVEAWAY = {
   path: "/water-heater-giveaway",
   name: "Water Heater Giveaway",
-  /** Last moment an entry is accepted (Eastern time). */
-  endsAt: "2026-12-31T23:59:59-05:00",
-  endsLabel: "December 31, 2026",
-  endsLabelLong: "11:59 PM ET on December 31, 2026",
+  /**
+   * Last moment an entry is accepted (Eastern time). December 8 is the
+   * company's anniversary: the giveaway opens its 29th year in business
+   * (owner, 2026-11-17).
+   */
+  endsAt: "2026-12-08T23:59:59-05:00",
+  endsLabel: "December 8, 2026",
+  endsLabelShort: "December 8",
+  endsLabelLong: "11:59 PM ET on December 8, 2026",
   /** Random drawing date ("on or about"). */
-  drawOn: "January 5, 2027",
+  drawOn: "December 10, 2026",
+  drawOnShort: "December 10",
+  /** Why now, in the owner's words. */
+  occasion: "To kick off our 29th year in business",
+  /** Shown on the page and in the receipt: fake "you won" messages follow every public giveaway. */
+  scamWarning:
+    "We contact the winner by phone and email from our office only. We never ask for a payment, a card number or a fee to claim the prize.",
+  /** Shown beside the submit button; rule 10 says the same. */
+  consent:
+    "By entering, you agree we may email you about this giveaway and about water heater offers. You can opt out of those emails at any time. We call or text about offers only if you tick the box above.",
   prizeShort: "a new tank water heater, installed",
   prize:
     "One new standard tank-type water heater (40 or 50 gallon, sized to the winner's home) with standard replacement installation by C&S Plumbing of Lee, including haul-away of the old unit and the permit.",
@@ -87,60 +102,9 @@ export const giveawayEntrySchema = z.object({
     ),
   /** Required: 18+, owns the home, accepts the official rules. */
   agree: checkbox.refine((v) => v, "Please confirm you agree to the official rules."),
-  /** Optional: OK to be contacted about replacing the heater. */
+  /** Optional: OK to be called or texted about replacing the heater. */
   contactOk: checkbox,
   website: z.string().optional(),
 });
 
 export type GiveawayEntry = z.infer<typeof giveawayEntrySchema>;
-
-/** Official rules, rendered on the page under #rules. */
-export function giveawayRules(): { title: string; body: string }[] {
-  const counties = countiesSentence();
-  return [
-    {
-      title: "No purchase necessary",
-      body: "No purchase or payment of any kind is necessary to enter or win. A purchase does not improve your chances of winning. Void where prohibited.",
-    },
-    {
-      title: "Sponsor",
-      body: `${BUSINESS.legalName}, d/b/a ${BUSINESS.fullName}, ${BUSINESS.address}, ${BUSINESS.city}, ${BUSINESS.state} ${BUSINESS.zip}.`,
-    },
-    {
-      title: "Who can enter",
-      body: `Legal residents of Florida, 18 or older, who own a single-family home, condo or townhome in ${counties} and enter for that home. Employees of the Sponsor and members of their households are not eligible. Limit one entry per household; duplicate entries are removed.`,
-    },
-    {
-      title: "Entry period",
-      body: `Entries are accepted until ${GIVEAWAY.endsLabelLong}. Entries received after that time are not eligible.`,
-    },
-    {
-      title: "How to enter",
-      body: `Complete the entry form on this page with your name, phone number, email, the address of the home, the year your current water heater was made and at least one photo of it. Incomplete entries, and entries with a photo that is not of the water heater at the address entered, may be disqualified.`,
-    },
-    {
-      title: "Prize",
-      body: `${GIVEAWAY.prize} Approximate retail value: ${GIVEAWAY.arv}, depending on size. Work beyond a standard replacement (relocating the heater, converting fuel type, or upgrades to gas, electrical, venting or structure required by code) is not included and would be quoted in writing before any work begins. The prize is installed at the address on the winning entry, is not transferable and has no cash alternative.`,
-    },
-    {
-      title: "Winner selection",
-      body: `One winner is selected in a random drawing from all eligible entries on or about ${GIVEAWAY.drawOn}. The odds of winning depend on the number of eligible entries received. The age or condition of your water heater does not affect your chances.`,
-    },
-    {
-      title: "Notification",
-      body: `The winner is contacted by phone and email using the details on the entry. If the winner cannot be reached within 7 days, or is found ineligible, an alternate winner is drawn. Installation is scheduled at a mutually agreed time within 60 days of the drawing.`,
-    },
-    {
-      title: "Taxes and publicity",
-      body: "Any taxes on the prize are the winner's responsibility. With the winner's permission, the Sponsor may share the winner's first name, city and photos of the installation.",
-    },
-    {
-      title: "Your information",
-      body: "We use the information and photos you submit to run this giveaway and to contact you about your entry. We contact you about replacing your water heater only if you tick that box on the form. We do not sell your information. See our privacy policy for details.",
-    },
-    {
-      title: "Social media",
-      body: "This giveaway is not sponsored, endorsed or administered by, or associated with, Facebook, Instagram, Google or any other platform where it is shared.",
-    },
-  ];
-}

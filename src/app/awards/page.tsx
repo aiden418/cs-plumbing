@@ -22,6 +22,7 @@ export const metadata: Metadata = {
     "C&S Plumbing awards",
   ],
   openGraph: {
+    siteName: "C&S Plumbing of Lee",
     title: `Awards & Recognition | C&S Plumbing of Lee`,
     description: `${LATEST_AWARD.summary} See every award and how it's decided.`,
     url: `${BASE}/awards`,

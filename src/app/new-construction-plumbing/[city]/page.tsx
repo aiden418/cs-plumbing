@@ -48,7 +48,7 @@ export async function generateMetadata({
     title: { absolute: page.metaTitle },
     description: page.metaDescription,
     alternates: { canonical: path },
-    openGraph: { title: page.metaTitle, description: page.metaDescription, url: `${BASE}${path}` },
+    openGraph: { siteName: "C&S Plumbing of Lee", title: page.metaTitle, description: page.metaDescription, url: `${BASE}${path}` },
   };
 }
 

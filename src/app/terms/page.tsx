@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   title: TITLE,
   description: DESCRIPTION,
   alternates: { canonical: TERMS_PATH },
-  openGraph: { title: TITLE, description: DESCRIPTION, url: TERMS_URL, type: "website" },
+  openGraph: { siteName: "C&S Plumbing of Lee", title: TITLE, description: DESCRIPTION, url: TERMS_URL, type: "website" },
 };
 
 const BREADCRUMB = [

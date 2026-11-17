@@ -21,6 +21,7 @@ export const metadata: Metadata = {
     "home plumbing tips SWFL",
   ],
   openGraph: {
+    siteName: "C&S Plumbing of Lee",
     title: "Plumbing Tips & Blog | C&S Plumbing",
     description:
       "Expert plumbing tips and guides for Southwest Florida homeowners.",

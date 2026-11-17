@@ -35,6 +35,7 @@ export const metadata: Metadata = {
     "licensed plumber Fort Myers",
   ],
   openGraph: {
+    siteName: "C&S Plumbing of Lee",
     title: "About C&S Plumbing of Lee",
     description:
       "Three generations. One name on every job. Family owned and operated since 1998, 9,500+ homes plumbed. Meet the Pellechio family behind Southwest Florida's most trusted plumbing company.",

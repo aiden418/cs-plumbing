@@ -5,6 +5,7 @@ import ProjectDetail from "@/components/projects/ProjectDetail";
 import ProjectJsonLd from "@/components/seo/ProjectJsonLd";
 import CTASection from "@/components/home/CTASection";
 import { COMPLETED_PROJECTS } from "@/lib/projects-data";
+import { sharePhoto } from "@/lib/share-image";
 
 export function generateStaticParams() {
   return COMPLETED_PROJECTS.map((p) => ({ slug: p.slug }));
@@ -18,6 +19,7 @@ export async function generateMetadata({
   const { slug } = await params;
   const project = COMPLETED_PROJECTS.find((p) => p.slug === slug);
   if (!project) return {};
+  const cover = project.coverImage ? sharePhoto(project.coverImage, project.name) : null;
 
   return {
     title: { absolute: project.metaTitle },
@@ -31,6 +33,7 @@ export async function generateMetadata({
     alternates: { canonical: `/projects/${project.slug}` },
     openGraph: {
       type: "article",
+      siteName: "C&S Plumbing of Lee",
       title: project.metaTitle,
       description: project.metaDescription,
       url: `https://www.csplumbinglee.com/projects/${project.slug}`,
@@ -38,15 +41,13 @@ export async function generateMetadata({
       ...(project.updatedOn ?? project.completedOn
         ? { modifiedTime: project.updatedOn ?? project.completedOn }
         : {}),
-      images: project.coverImage
-        ? [{ url: project.coverImage, alt: project.name }]
-        : [],
+      images: cover ? [cover] : [],
     },
     twitter: {
       card: "summary_large_image",
       title: project.metaTitle,
       description: project.metaDescription,
-      images: project.coverImage ? [project.coverImage] : [],
+      images: cover ? [cover] : [],
     },
   };
 }
