@@ -414,7 +414,7 @@ export const NEW_CONSTRUCTION_CITIES: NewConstructionCity[] = [
     permitAuthority: "Lee County (Lehigh Acres is unincorporated)",
     metaTitle: "New Construction Plumbing Lehigh Acres | Builders & GCs",
     metaDescription:
-      "Lehigh Acres new construction plumbing for production and scattered-lot builders. Underground through final, permitted through Lee County. Submit plans for a bid.",
+      "Lehigh Acres new construction plumbing for production and scattered-lot builders. Underground through final, Lee County permits. Submit plans for a bid.",
     intro:
       "Lehigh Acres is one of the busiest scattered-lot markets in Lee County. We have documented slab-to-rough builds here, and production schedules are where phase-by-phase coordination pays off.",
     localConditions: [
@@ -438,7 +438,7 @@ export const NEW_CONSTRUCTION_CITIES: NewConstructionCity[] = [
     permitAuthority: "the Village of Estero",
     metaTitle: "New Construction Plumbing Estero | Builders & GCs",
     metaDescription:
-      "New construction plumbing in Estero for custom and community builders. Slab layout through final, permitted through the Village of Estero. Submit plans for a bid.",
+      "New construction plumbing in Estero for custom and community builders. Slab layout through final, Village of Estero permits. Submit plans for a bid.",
     intro:
       "Estero building is mostly planned communities and custom homes, where builders want the plumbing scope nailed down before the slab and the fixture package to match the spec at trim.",
     localConditions: [

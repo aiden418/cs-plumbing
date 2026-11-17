@@ -4,7 +4,7 @@ import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/builder-portal" },
-  title: "Builder Portal — Submit Plans for a Quote",
+  title: "Builder Portal: Submit Plans for a Bid",
   description:
     "Builders and GCs: upload your blueprints to request a plumbing quote. New construction, commercial and remodel projects across Southwest Florida.",
   keywords: [
