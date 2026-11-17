@@ -1,0 +1,74 @@
+/* services styles. Imported by ../globals.css.
+   Put rules inside @layer components { ... } so utility classes can still
+   override them; use the design tokens (var(--color-*), var(--tone-*),
+   var(--ease-*), var(--dur-*)) rather than raw values. */
+
+@layer components {
+  /* "Why choose": one line each, led by a check, a 1 px line between rows. */
+  .service-points > li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    border-top: 1px solid var(--tone-rule);
+    padding-block: 0.8125rem;
+    color: var(--tone-fg);
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  .service-points > li > svg {
+    flex: none;
+    margin-top: 0.0625rem;
+  }
+
+  /* A service's feature list: short lines led by a small check, no rules. */
+  .service-checks > li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    color: var(--tone-body);
+    font-size: 1rem;
+    line-height: 1.45;
+  }
+
+  .service-checks > li > svg {
+    flex: none;
+    margin-top: 0.1875rem;
+  }
+
+  /* Services index, two cards a row on phones: an odd last card takes the
+     whole row, its photo landscape, so no gap is left beside it. */
+  @media (width < 48rem) {
+    .service-grid > li:last-child:nth-child(odd) {
+      grid-column: span 2;
+    }
+  }
+
+  /* The job photos: a shorter rail than a project page's. */
+  .filmstrip.job-filmstrip {
+    --rail-h: clamp(13rem, 30vh, 21rem);
+  }
+
+  /* The request form beside the page from lg: it stays in view while the
+     reader scrolls the column next to it. The form is taller than most
+     screens, so the panel keeps to the screen height and scrolls inside
+     itself: the submit button is always reachable. */
+  @media (min-width: 64rem) {
+    .service-request-panel {
+      position: sticky;
+      top: calc(var(--nav-h) + 1rem);
+      max-height: calc(100svh - var(--nav-h) - 2rem);
+      overflow-y: auto;
+      scrollbar-width: thin;
+    }
+  }
+}
+
+/* In the utilities layer so it outranks the frame's own aspect class. */
+@layer utilities {
+  @media (width < 48rem) {
+    .service-grid > li:last-child:nth-child(odd) .aspect-\[4\/3\] {
+      aspect-ratio: 16 / 9;
+    }
+  }
+}

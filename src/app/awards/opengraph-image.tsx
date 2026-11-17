@@ -1,7 +1,6 @@
 import { createOgImage, ogImageContentType, ogImageSize } from "@/lib/og";
 import { LATEST_AWARD } from "@/lib/constants";
 
-export const runtime = "edge";
 export const size = ogImageSize;
 export const contentType = ogImageContentType;
 export const alt = `${LATEST_AWARD.title} — ${LATEST_AWARD.category} — C&S Plumbing of Lee`;

@@ -1,0 +1,28 @@
+{
+  "photo-1.jpg": {
+    "alt": "Freestanding soaking tub with brushed nickel wall-mount tub filler and valve trim in a tiled master bath",
+    "order": 1,
+    "cover": true,
+    "position": "0% 44.4%"
+  },
+  "photo-2.jpg": {
+    "alt": "White two-piece elongated toilet with chrome trip lever installed in a Cape Coral new-build water closet",
+    "order": 2
+  },
+  "photo-3.jpg": {
+    "alt": "Undermount lavatory sink with polished chrome single-handle faucet on a quartz top, freestanding tub reflected in the mirror",
+    "order": 3
+  },
+  "photo-4.jpg": {
+    "alt": "Polished chrome lavatory faucet on a deck plate over an undermount sink in a quartz double vanity",
+    "order": 4
+  },
+  "photo-5.jpg": {
+    "alt": "Walk-in shower with dual brushed nickel shower heads flanking a vertical glass mosaic accent strip and niche",
+    "order": 5
+  },
+  "photo-6.jpg": {
+    "alt": "Brushed nickel shower head and single-handle valve trim in a marble-look tile shower with blue glass mosaic band",
+    "order": 6
+  }
+}

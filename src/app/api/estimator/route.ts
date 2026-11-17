@@ -1,8 +1,11 @@
 import { NextResponse } from "next/server";
 import { ESTIMATOR_SERVICES } from "@/lib/constants";
+import { forbiddenOrigin, isTrustedOrigin } from "@/lib/api/secure";
 
 export async function POST(request: Request) {
   try {
+    if (!isTrustedOrigin(request)) return forbiddenOrigin();
+
     const { serviceId, factor } = await request.json();
 
     const service = ESTIMATOR_SERVICES.find((s) => s.id === serviceId);

@@ -1,7 +1,7 @@
-import type { Metadata } from "next";
-import { Inter, Montserrat } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Archivo, Inter, Montserrat } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/layout/Navbar";
+import SiteHeader from "@/components/layout/SiteHeader";
 import Footer from "@/components/layout/Footer";
 import StickyMobileCTA from "@/components/layout/StickyMobileCTA";
 import DeferredWidgets from "@/components/layout/DeferredWidgets";
@@ -9,21 +9,52 @@ import JsonLd from "@/components/seo/JsonLd";
 import MetaPixel from "@/components/analytics/MetaPixel";
 import OpenAIPixel from "@/components/analytics/OpenAIPixel";
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
-import SmoothScrollProvider from "@/components/providers/SmoothScrollProvider";
+import CallTracking from "@/components/analytics/CallTracking";
+import PreviewRibbon from "@/components/layout/PreviewRibbon";
+import IntroHead from "@/components/home/IntroHead";
+import RevealObserver from "@/components/ui/RevealObserver";
 
+// Font budget: at most 100 KB of fonts preloaded. Archivo (the display face,
+// with its width axis) is the one preloaded file. Its fallback metrics are
+// hand-tuned in globals.css ("Archivo Fallback", measured by
+// scripts/fonts/measure-fallback.mjs), so Next's automatic fallback is off.
+// Turbopack in Next 16.4 ignores `adjustFontFallback: false` for Google fonts
+// and still writes its own "Archivo Fallback"; naming our family in `fallback`
+// is what actually stops it, and puts the family right after Archivo.
+const archivo = Archivo({
+  variable: "--font-archivo",
+  subsets: ["latin"],
+  axes: ["wdth"],
+  display: "swap",
+  fallback: ["Archivo Fallback"],
+  adjustFontFallback: false,
+});
+
+// Reading face. Not preloaded: Next's metric-matched "Inter Fallback" holds
+// the layout until it arrives.
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
   display: "swap",
+  preload: false,
 });
 
+// Only the printed builder documents and the Terms still use Montserrat
+// (.print-doc / .terms-doc in globals.css). Not preloaded, so no other page
+// downloads it.
 const montserrat = Montserrat({
   variable: "--font-montserrat",
   subsets: ["latin"],
   // 800 dropped — nothing uses extrabold; one fewer font file on first load
   weight: ["700", "900"],
   display: "swap",
+  preload: false,
 });
+
+export const viewport: Viewport = {
+  viewportFit: "cover",
+  themeColor: "#0A1730",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.csplumbinglee.com"),
@@ -82,12 +113,12 @@ export const metadata: Metadata = {
       },
     ],
   },
+  // Card type only. With no title, description or image here, Next fills each
+  // page's Twitter card from that page's own Open Graph data (its title, its
+  // description, its share image) instead of repeating the homepage's on
+  // every URL.
   twitter: {
     card: "summary_large_image",
-    title: "C&S Plumbing of Lee | Southwest Florida's Most Trusted Plumber",
-    description:
-      "Family owned and operated since 1998, 9,500+ homes plumbed. New construction for builders; service for homeowners across SWFL.",
-    images: ["/images/logos/logo-512.png"],
   },
   alternates: {},
   verification: {
@@ -101,27 +132,29 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${archivo.variable} ${montserrat.variable}`}>
       <head>
+        <IntroHead />
         <JsonLd />
       </head>
-      <body className={`${inter.variable} ${montserrat.variable} antialiased`}>
+      <body className="antialiased">
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:bg-primary focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:font-semibold"
         >
           Skip to content
         </a>
-        <Navbar />
-        <SmoothScrollProvider>
-          <main id="main" className="min-h-screen">{children}</main>
-          <Footer />
-        </SmoothScrollProvider>
+        <SiteHeader />
+        <main id="main" className="min-h-screen">{children}</main>
+        <Footer />
         <StickyMobileCTA />
+        <RevealObserver />
         <DeferredWidgets />
+        <PreviewRibbon />
         <MetaPixel />
         <OpenAIPixel />
         <GoogleAnalytics />
+        <CallTracking />
       </body>
     </html>
   );

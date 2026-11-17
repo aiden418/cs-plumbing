@@ -1,3 +1,4 @@
+import { leadAttributionHtml } from "@/lib/api/lead-attribution-email";
 import { NextResponse, after } from "next/server";
 import { Resend } from "resend";
 import { serviceRequestSchema, SERVICE_REQUEST_OPTIONS } from "@/lib/service-request";
@@ -6,8 +7,10 @@ import { CLAIMS } from "@/lib/claims";
 import { readSubmission } from "@/lib/api/attachments";
 import {
   escapeHtml,
+  forbiddenOrigin,
   getClientIp,
   isHoneypotTripped,
+  isTrustedOrigin,
   rateLimit,
   sendEmailBestEffort,
   sendEmailOrThrow,
@@ -26,6 +29,7 @@ export async function POST(request: Request) {
     const ip = getClientIp(request);
     const rl = rateLimit(ip);
     if (!rl.ok) return tooManyRequests(rl.retryAfter);
+    if (!isTrustedOrigin(request)) return forbiddenOrigin();
 
     // JSON from the chat widget and the plain form; multipart when the
     // customer attached photos (see src/lib/api/attachments.ts).
@@ -55,6 +59,8 @@ export async function POST(request: Request) {
         { status: 500 }
       );
     }
+    const eventId = newConversionId();
+    const attributionHtml = leadAttributionHtml(request, eventId);
     const resend = new Resend(process.env.RESEND_API_KEY);
     const serviceLabel = SERVICE_REQUEST_OPTIONS.find(([value]) => value === service)?.[1] ?? service;
     const safe = {
@@ -78,6 +84,7 @@ export async function POST(request: Request) {
             <h1 style="color: #0099FF; margin: 0;">New Contact Form</h1>
           </div>
           <div style="padding: 20px; background: #f9f9f9;">
+            ${attributionHtml}
             <p><strong>Name:</strong> ${safe.name}</p>
             ${safe.email ? `<p><strong>Email:</strong> <a href="mailto:${safe.email}">${safe.email}</a></p>` : ""}
             <p><strong>Phone:</strong> <a href="tel:${safe.phone}">${safe.phone}</a></p>
@@ -120,7 +127,7 @@ export async function POST(request: Request) {
           <div style="padding: 20px; background: #f9f9f9;">
             <p>Hi ${safe.name},</p>
             <p>Thanks for contacting C&S Plumbing of Lee about <strong>${safe.service}</strong>. ${CLAIMS.bookingConfirmation}</p>${attachments.length > 0 ? `<p>We received ${attachments.length} photo${attachments.length === 1 ? "" : "s"} with your request.</p>` : ""}
-            <p>Your appointment is confirmed only once we have spoken with you. For urgent service, call <a href="tel:${BUSINESS.phoneRaw}" style="color: #0099FF;">${BUSINESS.phone}</a> any time.</p>
+            <p>Your appointment is confirmed only once we have spoken with you. For urgent service, call <a href="${BUSINESS.phoneHref}" style="color: #0099FF;">${BUSINESS.phone}</a> any time.</p>
             <p style="color: #999; font-size: 12px; margin-top: 20px;">${BUSINESS.fullName} · ${BUSINESS.address}, ${BUSINESS.city}, ${BUSINESS.state} ${BUSINESS.zip}</p>
           </div>
         </div>
@@ -133,7 +140,6 @@ export async function POST(request: Request) {
 
     // Server-side copy of the conversion, sent after the response so it can
     // never delay or fail the lead. The browser pixel reuses eventId.
-    const eventId = newConversionId();
     const context = captureRequestContext(request);
     after(() =>
       reportConversion({ type: "lead_created", id: eventId, context, sourcePath, email })

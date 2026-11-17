@@ -1,5 +1,6 @@
 import { createOgImage, ogImageContentType, ogImageSize, type OgVariant } from "@/lib/og";
 import { PUBLISHED_LANDINGS } from "@/lib/landing-indexing";
+import { BUSINESS } from "@/lib/business";
 
 export const size = ogImageSize;
 export const contentType = ogImageContentType;
@@ -26,7 +27,7 @@ export default async function OgImage({
     return createOgImage({
       eyebrow: "Southwest Florida",
       title: "C&S Plumbing of Lee",
-      subtitle: "Family owned and operated since 1998. Licensed CFC1432485. 24/7 emergency service.",
+      subtitle: `Family owned and operated since 1998. Licensed ${BUSINESS.license}. 24/7 emergency service.`,
     });
   }
 

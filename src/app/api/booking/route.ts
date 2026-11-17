@@ -1,3 +1,4 @@
+import { leadAttributionHtml } from "@/lib/api/lead-attribution-email";
 import { NextResponse, after } from "next/server";
 import { CLAIMS } from "@/lib/claims";
 import { readSubmission } from "@/lib/api/attachments";
@@ -7,8 +8,10 @@ import { BUSINESS } from "@/lib/constants";
 import {
   ADMIN_EMAIL,
   escapeHtml,
+  forbiddenOrigin,
   getClientIp,
   isHoneypotTripped,
+  isTrustedOrigin,
   rateLimit,
   sendEmailBestEffort,
   sendEmailOrThrow,
@@ -46,6 +49,7 @@ export async function POST(request: Request) {
     const ip = getClientIp(request);
     const rl = rateLimit(ip);
     if (!rl.ok) return tooManyRequests(rl.retryAfter);
+    if (!isTrustedOrigin(request)) return forbiddenOrigin();
 
     // JSON when no photos were attached; multipart otherwise.
     const submission = await readSubmission(request);
@@ -102,6 +106,8 @@ export async function POST(request: Request) {
         { status: 500 }
       );
     }
+    const eventId = newConversionId();
+    const attributionHtml = leadAttributionHtml(request, eventId);
     const resend = new Resend(process.env.RESEND_API_KEY);
     await sendEmailOrThrow(resend, {
       from: "C&S Plumbing Website <bookings@csplumbinglee.com>",
@@ -114,6 +120,7 @@ export async function POST(request: Request) {
             <p style="color: #999; margin: 8px 0 0; font-size: 13px;">Confirmation #${confirmationId}</p>
           </div>
           <div style="padding: 20px; background: #f9f9f9;">
+            ${attributionHtml}
             <h3 style="color: #333; border-bottom: 2px solid #0099FF; padding-bottom: 8px;">Service Details</h3>
             <p><strong>Type:</strong> ${typeLabel}</p>
             <p><strong>Service:</strong> ${safe.service}</p>
@@ -177,7 +184,7 @@ export async function POST(request: Request) {
               <p style="margin: 4px 0;"><strong>Address:</strong> ${safe.address}</p>
             </div>
             <p style="color: #666; font-size: 14px;">
-              Need anything in the meantime? Call us at <a href="tel:${BUSINESS.phoneRaw}" style="color: #0099FF;">${BUSINESS.phone}</a>.
+              Need anything in the meantime? Call us at <a href="${BUSINESS.phoneHref}" style="color: #0099FF;">${BUSINESS.phone}</a>.
             </p>
             <p style="color: #999; font-size: 12px; margin-top: 20px;">
               ${BUSINESS.fullName} &middot; ${BUSINESS.address}, ${BUSINESS.city}, ${BUSINESS.state} ${BUSINESS.zip}
@@ -191,7 +198,6 @@ export async function POST(request: Request) {
 
     // Mirrors the browser pixel so the two copies dedupe on eventId:
     // a booking is appointment_scheduled, an estimate request is a lead.
-    const eventId = newConversionId();
     const context = captureRequestContext(request);
     after(() =>
       reportConversion({

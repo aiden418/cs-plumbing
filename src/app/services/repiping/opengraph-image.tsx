@@ -1,7 +1,6 @@
 import { createOgImage, ogImageContentType, ogImageSize } from "@/lib/og";
 import { rangeInline } from "@/lib/pricing";
 
-export const runtime = "edge";
 export const size = ogImageSize;
 export const contentType = ogImageContentType;
 export const alt = "Whole-Home Repiping in Cape Coral & Fort Myers";

@@ -1,146 +1,108 @@
-"use client";
-
-import { Phone, Mail, MapPin, Clock } from "lucide-react";
-import { CLAIMS } from "@/lib/claims";
+import type { ReactNode } from "react";
+import Button from "@/components/ui/Button";
 import Container from "@/components/ui/Container";
-import PageTransition from "@/components/layout/PageTransition";
 import PageHero from "@/components/ui/PageHero";
-import ScrollReveal from "@/components/animations/ScrollReveal";
-import WhatHappensNext from "@/components/ui/WhatHappensNext";
+import Section from "@/components/ui/Section";
+import { ArrowUpRight, Phone } from "@/components/ui/icons";
 import ServiceRequestForm from "@/components/services/ServiceRequestForm";
-import { BUSINESS } from "@/lib/constants";
+import { BUSINESS } from "@/lib/business";
+import { CONTACT } from "@/content/conversion";
+import NextSteps from "./_parts/NextSteps";
 
+const linkClass =
+  "inline-flex min-h-11 items-center gap-1.5 font-semibold text-link underline-offset-[0.2em] decoration-1 hover:underline";
+
+/** One way to reach the office: a short label over (phones) or beside (wider) its value. */
+function DetailRow({ label, children }: { label: string; children: ReactNode }) {
+  return (
+    <div className="grid grid-cols-1 gap-0.5 border-t border-rule py-4 sm:grid-cols-[6rem_1fr] sm:gap-5">
+      <dt className="text-[0.9375rem] font-semibold text-muted sm:pt-2.5">{label}</dt>
+      <dd className="min-w-0 text-body">{children}</dd>
+    </div>
+  );
+}
+
+/**
+ * /contact: the request form on a white card beside the ways to reach the
+ * office. Server component.
+ */
 export default function ContactPage() {
   return (
-    <PageTransition>
-      {/* Hero */}
+    <>
       <PageHero
-        align="center"
-        overline="Contact Us"
-        title="Let's Talk"
-        accent="Plumbing"
-        description="Have a question, need a quote, or facing an emergency? We're here to help."
+        layout="plain"
+        size="sm"
+        overline={CONTACT.hero.overline}
+        title={CONTACT.hero.title}
+        accent={CONTACT.hero.accent}
+        description={CONTACT.hero.description}
+        actions={
+          <Button href={BUSINESS.phoneHref} size="lg" icon={<Phone className="size-5" />}>
+            {`Call ${BUSINESS.phone}`}
+          </Button>
+        }
       />
 
-      <section className="py-16 sm:py-24 lg:py-32">
+      <Section tone="shell" spacing="none" className="py-8 sm:py-12 lg:py-14">
         <Container>
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 sm:gap-12 lg:gap-16">
-            {/* Contact Info */}
-            <div className="lg:col-span-2">
-              <ScrollReveal direction="left">
-                <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6 sm:mb-8">
-                  Get in Touch
-                </h2>
-
-                <div className="space-y-5 sm:space-y-6">
-                  <a
-                    href={`tel:${BUSINESS.phoneRaw}`}
-                    className="flex items-start gap-3 sm:gap-4 group"
-                  >
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary flex-shrink-0 group-hover:bg-primary/20 transition-colors">
-                      <Phone className="w-4 h-4 sm:w-5 sm:h-5" />
-                    </div>
-                    <div>
-                      <p className="text-gray-900 font-semibold text-sm sm:text-base">Phone</p>
-                      <p className="text-gray-500 text-xs sm:text-sm">
-                        {BUSINESS.phone}
-                      </p>
-                      <p className="text-primary text-[10px] sm:text-xs mt-1">
-                        Available 24/7 for emergencies
-                      </p>
-                    </div>
-                  </a>
-
-                  <a
-                    href={`mailto:${BUSINESS.email}`}
-                    className="flex items-start gap-3 sm:gap-4 group"
-                  >
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary flex-shrink-0 group-hover:bg-primary/20 transition-colors">
-                      <Mail className="w-4 h-4 sm:w-5 sm:h-5" />
-                    </div>
-                    <div>
-                      <p className="text-gray-900 font-semibold text-sm sm:text-base">Email</p>
-                      <p className="text-gray-500 text-xs sm:text-sm">{BUSINESS.email}</p>
-                    </div>
-                  </a>
-
-                  <div className="flex items-start gap-3 sm:gap-4">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary flex-shrink-0">
-                      <MapPin className="w-4 h-4 sm:w-5 sm:h-5" />
-                    </div>
-                    <div>
-                      <p className="text-gray-900 font-semibold text-sm sm:text-base">Office</p>
-                      <p className="text-gray-500 text-xs sm:text-sm">
-                        {BUSINESS.address}
-                        <br />
-                        {BUSINESS.city}, {BUSINESS.state} {BUSINESS.zip}
-                      </p>
-                      {/* Visible copy of the identity statement in JSON-LD and
-                          llms.txt: stale directories still list a Cape Coral
-                          address, one of them as "permanently closed". */}
-                      <p className="mt-2 text-gray-500 text-xs leading-relaxed max-w-xs">
-                        Our only office. Listings showing an older Cape Coral
-                        address refer to our former location — we&apos;re open
-                        and operating from North Fort Myers.
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-3 sm:gap-4">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary flex-shrink-0">
-                      <Clock className="w-4 h-4 sm:w-5 sm:h-5" />
-                    </div>
-                    <div>
-                      <p className="text-gray-900 font-semibold text-sm sm:text-base">Hours</p>
-                      <p className="text-gray-500 text-xs sm:text-sm">
-                        {BUSINESS.hours.weekday}
-                        <br />
-                        {BUSINESS.hours.saturday}
-                        <br />
-                        <span className="text-primary">
-                          {BUSINESS.hours.emergency}
-                        </span>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </ScrollReveal>
+          <div className="grid grid-cols-1 gap-y-12 lg:grid-cols-12 lg:gap-x-10">
+            <div className="min-w-0 lg:col-span-7">
+              <ServiceRequestForm />
             </div>
 
-            {/* Contact Form */}
-            <div className="lg:col-span-3">
-              <ScrollReveal direction="right">
-                <ServiceRequestForm />
-              </ScrollReveal>
+            <div className="min-w-0 lg:col-span-5">
+              <h2 className="text-display-sm text-fg">{CONTACT.detailsHeading}</h2>
+              <dl className="mt-5 border-b border-rule">
+                <DetailRow label={CONTACT.phoneLabel}>
+                  <a href={BUSINESS.phoneHref} className={`${linkClass} text-xl tabular-nums`}>
+                    {BUSINESS.phone}
+                  </a>
+                  <p className="text-body">{CONTACT.phoneNote}</p>
+                </DetailRow>
+                <DetailRow label={CONTACT.textLabel}>
+                  <a href={BUSINESS.smsHref} className={linkClass}>
+                    {CONTACT.textAction}
+                  </a>
+                </DetailRow>
+                <DetailRow label={CONTACT.emailLabel}>
+                  <a href={`mailto:${BUSINESS.email}`} className={`${linkClass} break-all`}>
+                    {BUSINESS.email}
+                  </a>
+                </DetailRow>
+                <DetailRow label={CONTACT.officeLabel}>
+                  <p className="font-semibold text-fg sm:pt-2">
+                    {BUSINESS.address}
+                    <br />
+                    {BUSINESS.city}, {BUSINESS.state} {BUSINESS.zip}
+                  </p>
+                  {/* Visible copy of the identity statement in JSON-LD and
+                      llms.txt: stale directories still list a Cape Coral
+                      address, one of them as "permanently closed". */}
+                  <p className="mt-2 max-w-[44ch] text-body">{CONTACT.officeNote}</p>
+                  <a
+                    href={BUSINESS.googleProfileUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`${linkClass} mt-1`}
+                  >
+                    {CONTACT.mapAction}
+                    <ArrowUpRight aria-hidden="true" className="size-4" />
+                  </a>
+                </DetailRow>
+                <DetailRow label={CONTACT.hoursLabel}>
+                  <p className="sm:pt-2">
+                    <span className="font-semibold text-fg">{BUSINESS.hours.open}</span>
+                    <br />
+                    <span>{BUSINESS.hours.emergency}</span>
+                  </p>
+                </DetailRow>
+              </dl>
             </div>
           </div>
         </Container>
-      </section>
+      </Section>
 
-      <WhatHappensNext
-        steps={[
-          {
-            title: "Send your message",
-            description:
-              "Use the form, email, or call. Tell us what you need — we route it to the right person on our team.",
-          },
-          {
-            title: "Reply within 1 business day",
-            description:
-              `${CLAIMS.bookingConfirmation} Urgent? Call 833-PLUMB-IT.`,
-          },
-          {
-            title: "Free site visit if needed",
-            description:
-              "For quotes that need eyes on the work, we'll set up a no-charge visit at a time that fits your schedule.",
-          },
-          {
-            title: "Written estimate",
-            description:
-              "Clear scope, fair price, no pressure. You decide if and when to schedule the work.",
-          },
-        ]}
-      />
-    </PageTransition>
+      <NextSteps id="contact-next" heading={CONTACT.nextHeading} steps={CONTACT.nextSteps} tone="white" />
+    </>
   );
 }

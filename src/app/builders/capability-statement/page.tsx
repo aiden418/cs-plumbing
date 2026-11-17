@@ -11,7 +11,7 @@ import {
   SERVICE_COVERAGE,
   SWFL_EXPERTISE,
 } from "@/lib/builder-program";
-import { AWARDS, BUSINESS, CONTRACTOR_RANKING, NEW_CONSTRUCTION_BENEFITS } from "@/lib/constants";
+import { AWARDS, BUSINESS, NEW_CONSTRUCTION_BENEFITS } from "@/lib/constants";
 
 // Source for public/downloads/cs-plumbing-capability-statement.pdf.
 // Regenerate after editing builder-program.ts: npm run builders:pdf
@@ -62,10 +62,6 @@ export default function CapabilityStatementPage() {
             <li key={q.id}>• {q.label}</li>
           ))}
         </ul>
-        <p className="mt-2 text-xs text-gray-500">
-          Ranking source: {CONTRACTOR_RANKING.source} contractor profile, {CONTRACTOR_RANKING.sourceUrl} (third-party
-          ranking, not a state-issued rating; checked {CONTRACTOR_RANKING.checkedOn}).
-        </p>
       </DocSection>
 
       <DocSection title="Customer benefits — after the build">
@@ -120,7 +116,7 @@ export default function CapabilityStatementPage() {
         <p>
           Bids, scheduling and documents: {BUILDER_DESK.contactName}, {BUILDER_DESK.contactRole} ·{" "}
           {BUILDER_DESK.phone} · {BUILDER_DESK.email}. Owner: Samuel &ldquo;Sam&rdquo; Pellechio ·{" "}
-          {BUSINESS.ownerPhone} or 833-PLUMB-IT ext. 1. Submit plans at csplumbinglee.com/builders.
+          {BUSINESS.ownerPhone}. Submit plans at csplumbinglee.com/builders.
         </p>
       </DocSection>
     </PrintDocument>

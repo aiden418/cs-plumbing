@@ -1,4 +1,6 @@
-import { LinkGrid, LinkSection } from "@/components/links/LinkGrid";
+import { LinkGrid } from "@/components/links/LinkGrid";
+import LinkBlock from "@/components/links/LinkBlock";
+import type { Tone } from "@/components/ui/Section";
 import { NEW_CONSTRUCTION_CITIES } from "@/lib/builder-program";
 
 /**
@@ -8,10 +10,11 @@ import { NEW_CONSTRUCTION_CITIES } from "@/lib/builder-program";
 export default function NewConstructionCityLinks({
   tone = "white",
 }: {
-  tone?: "white" | "surface";
+  /** "surface" is the legacy name of shell. */
+  tone?: Tone | "surface";
 }) {
   return (
-    <LinkSection
+    <LinkBlock
       overline="By city"
       heading="New construction plumbing by city"
       description="Builder-facing pages for each city we serve, with local notes, FAQs and the plan-submission form."
@@ -26,6 +29,6 @@ export default function NewConstructionCityLinks({
         }))}
         columns={4}
       />
-    </LinkSection>
+    </LinkBlock>
   );
 }

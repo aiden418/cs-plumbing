@@ -1,0 +1,77 @@
+/* builders styles. Imported by ../globals.css.
+   Put rules inside @layer components { ... } so utility classes can still
+   override them; use the design tokens (var(--color-*), var(--tone-*),
+   var(--ease-*), var(--dur-*)) rather than raw values. */
+
+/* The portal wizard: a new step settles into place (a short rise, no fade,
+   so nothing is ever invisible). Reduced motion keeps it still. */
+@keyframes portal-step-in {
+  from {
+    transform: translate3d(0, 0.5rem, 0);
+  }
+
+  to {
+    transform: none;
+  }
+}
+
+@layer components {
+  @media (prefers-reduced-motion: no-preference) {
+    .portal-step {
+      animation: portal-step-in var(--dur-2) var(--ease-enter) both;
+    }
+  }
+
+  /* A closed <details> on phones that is simply open from 64rem
+     (v2-bright.md "shorter pages": the lists stay in the HTML). The toggle row
+     is a plain 48 px line with a plus that turns into a minus. Browsers
+     without ::details-content keep the toggle on desktop too, which still
+     works. */
+  .phone-details > summary {
+    display: flex;
+    min-height: 3rem;
+    cursor: pointer;
+    list-style: none;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    border-top: 1px solid var(--tone-rule);
+    border-bottom: 1px solid var(--tone-rule);
+    font-weight: 600;
+    color: var(--tone-link);
+  }
+
+  .phone-details > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .phone-details > summary::after {
+    content: "+";
+    font-size: 1.5rem;
+    font-weight: 400;
+    line-height: 1;
+  }
+
+  .phone-details[open] > summary::after {
+    content: "\2212";
+  }
+
+  .phone-details > summary:focus-visible {
+    outline: 2px solid var(--tone-focus);
+    outline-offset: 2px;
+  }
+
+  @supports selector(::details-content) {
+    @media (min-width: 64rem) {
+      .phone-details > summary {
+        display: none;
+      }
+
+      .phone-details::details-content {
+        content-visibility: visible;
+        display: block;
+        block-size: auto;
+      }
+    }
+  }
+}

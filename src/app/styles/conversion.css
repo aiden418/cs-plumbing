@@ -1,0 +1,29 @@
+/* conversion styles. Imported by ../globals.css.
+   Put rules inside @layer components { ... } so utility classes can still
+   override them; use the design tokens (var(--color-*), var(--tone-*),
+   var(--ease-*), var(--dur-*)) rather than raw values.
+
+   Version 2 ("Bright and clear"): the contact, booking, quote, emergency and
+   Coastal Comeback pages are styled with utilities only. The connection-line
+   steps, the numbered editorial rows and the wizard panel slide of version 1
+   are gone (v2-bright.md: no ornament, almost no motion). */
+
+@layer components {
+  /* The pages' step lists ("What happens next", "How it works"): a small
+     numbered disc in brand blue. A real sequence, not decoration. */
+  .cv-num-disc {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 999px;
+    background: var(--color-primary-dark);
+    color: var(--color-white);
+    font-size: 0.9375rem;
+    font-weight: 650;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+}

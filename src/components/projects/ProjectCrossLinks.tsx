@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { ArrowRight, Building2, MapPin, Wrench } from "lucide-react";
-import Container from "@/components/ui/Container";
+import LinkBlock from "@/components/links/LinkBlock";
+import { ArrowRight } from "@/components/ui/icons";
 import RelatedProjects from "@/components/projects/RelatedProjects";
 import {
   projectArea,
@@ -10,13 +10,20 @@ import {
   relatedProjects,
 } from "@/lib/projects";
 import type { CompletedProject } from "@/lib/types";
+import type { Tone } from "@/components/ui/Section";
+import { PROJECT_PAGE } from "@/content/projects";
+
+const T = PROJECT_PAGE.crossLinks;
 
 /**
  * Foot of a project page: sends the authority a finished job earns back to
  * the pages that rank — the service hub, the city page and the service+city
  * landing — then links sibling projects so a GC can keep browsing proof.
+ * The links are simple rows on phones (a 1 px line between them) and three
+ * columns on desktop: a small blue label, the title, one line, an arrow.
+ * `tone` is the surface of the links; the related projects take the other.
  */
-export default function ProjectCrossLinks({ project }: { project: CompletedProject }) {
+export default function ProjectCrossLinks({ project, tone = "white" }: { project: CompletedProject; tone?: Tone }) {
   const hub = projectPrimaryHub(project);
   const area = projectArea(project);
   const cityPage = projectCityPage(project);
@@ -26,76 +33,56 @@ export default function ProjectCrossLinks({ project }: { project: CompletedProje
   const links = [
     hub && {
       href: hub.href,
-      icon: <Wrench className="h-5 w-5" />,
-      label: "Service",
+      label: T.service.label,
       title: hub.title,
-      blurb: `Everything we do for ${hub.title.toLowerCase()} across Southwest Florida.`,
+      blurb: T.service.blurb(hub.title),
     },
     area && {
       href: `/areas/${area.slug}`,
-      icon: <MapPin className="h-5 w-5" />,
-      label: "Service area",
-      title: `Plumber in ${area.city}`,
-      blurb: `Residential, commercial and emergency plumbing in ${area.city}.`,
+      label: T.area.label,
+      title: T.area.title(area.city),
+      blurb: T.area.blurb(area.city),
     },
     cityPage && {
       href: `/${cityPage.slug}`,
-      icon: <Building2 className="h-5 w-5" />,
-      label: "Local pricing",
+      label: T.cityPage.label,
       title: cityPage.h1,
-      blurb: cityPage.priceRange
-        ? `Typical range ${cityPage.priceRange}. Free written estimates.`
-        : "Local scope, pricing and FAQs for this service.",
+      blurb: cityPage.priceRange ? T.cityPage.blurb(cityPage.priceRange) : T.cityPage.fallback,
     },
   ].filter((l): l is NonNullable<typeof l> => Boolean(l));
 
   return (
     <>
       {links.length > 0 && (
-        <section className="border-t border-gray-200 bg-white py-14 sm:py-20" aria-labelledby="project-links-heading">
-          <Container>
-            <div className="mb-8 max-w-2xl">
-              <span className="mb-3 inline-block text-xs font-semibold uppercase tracking-widest text-primary sm:text-sm">
-                Where this work fits
-              </span>
-              <h2 id="project-links-heading" className="text-2xl font-bold leading-tight text-gray-900 sm:text-3xl">
-                Need the same scope on your job?
-              </h2>
-            </div>
-            <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {links.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="group flex h-full flex-col rounded-2xl border border-gray-200 bg-white p-5 transition-all hover:border-primary/30 hover:shadow-md sm:p-6"
-                  >
-                    <span className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                      {link.icon}
-                    </span>
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-gray-500">
-                      {link.label}
-                    </span>
-                    <span className="mt-1 text-base font-bold text-gray-900 transition-colors group-hover:text-primary sm:text-lg">
+        <LinkBlock overline={T.overline} heading={T.heading} headingId="project-links-heading" tone={tone}>
+          <ul className="grid grid-cols-1 border-t border-rule lg:grid-cols-3 lg:gap-x-10">
+            {links.map((link) => (
+              <li key={link.href} className="border-b border-rule lg:border-b-0">
+                <Link href={link.href} className="group flex items-start gap-4 py-5 lg:py-6">
+                  <span className="min-w-0 flex-1">
+                    <span className="meta block text-accent">{link.label}</span>
+                    <span className="mt-1 block text-lg leading-snug font-semibold text-fg underline-offset-4 group-hover:underline group-hover:decoration-1 sm:text-xl">
                       {link.title}
                     </span>
-                    <span className="mt-2 text-sm leading-relaxed text-gray-500">{link.blurb}</span>
-                    <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-primary">
-                      Open <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-                    </span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </Container>
-        </section>
+                    <span className="mt-1.5 block max-w-[60ch] text-body">{link.blurb}</span>
+                  </span>
+                  <span className="mt-6 inline-flex shrink-0 items-center text-link">
+                    <span className="sr-only">{T.open}</span>
+                    <ArrowRight className="size-5 transition-transform duration-150 group-hover:translate-x-0.5" />
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </LinkBlock>
       )}
 
       <RelatedProjects
         projects={siblings}
-        overline="Keep looking"
-        heading={city ? `More of our work in and around ${city}` : `More ${project.category.toLowerCase()} projects`}
-        description="Every project is documented phase by phase — underground, rough-in and trim — so you can judge the work, not the pitch."
-        tone="surface"
+        overline={PROJECT_PAGE.related.overline}
+        heading={PROJECT_PAGE.related.heading(city, project.category)}
+        description={PROJECT_PAGE.related.description}
+        tone={links.length > 0 ? (tone === "white" ? "shell" : "white") : tone}
       />
     </>
   );

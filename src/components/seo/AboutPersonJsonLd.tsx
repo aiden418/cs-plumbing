@@ -1,3 +1,6 @@
+import { BUSINESS } from "@/lib/business";
+import { licenseRecordFacts } from "@/lib/license-schema";
+
 export default function AboutPersonJsonLd() {
   const BASE = "https://www.csplumbinglee.com";
 
@@ -11,7 +14,7 @@ export default function AboutPersonJsonLd() {
       url: `${BASE}/about`,
       image: `${BASE}/images/team/samuel.jpeg`,
       description:
-        "First-generation licensed plumber and second-generation contractor leading C&S Plumbing of Lee since 1998. Licensed Florida Certified Plumbing Contractor (CFC1432485 / CFC057076) with decades of experience in residential, commercial, and new construction plumbing across Southwest Florida.",
+        `First-generation licensed plumber and second-generation contractor leading C&S Plumbing of Lee since 1998. Licensed Florida Certified Plumbing Contractor (${BUSINESS.license} / ${BUSINESS.license2}) with decades of experience in residential, commercial, and new construction plumbing across Southwest Florida.`,
       worksFor: {
         "@type": "Plumber",
         "@id": `${BASE}/#organization`,
@@ -20,7 +23,8 @@ export default function AboutPersonJsonLd() {
       hasCredential: {
         "@type": "EducationalOccupationalCredential",
         credentialCategory: "Professional License",
-        name: "Certified Plumbing Contractor — CFC1432485",
+        name: `Certified Plumbing Contractor — ${BUSINESS.license}`,
+        ...licenseRecordFacts("company"),
         recognizedBy: {
           "@type": "GovernmentOrganization",
           name: "Florida Department of Business and Professional Regulation",

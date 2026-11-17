@@ -1,0 +1,189 @@
+{
+  "slots": {
+    "home.hero": {
+      "image": "/images/hero/drone-construction.jpg",
+      "alt": "Aerial view of a C&S Plumbing underground rough-in: white drain lines laid out inside a block stem wall beside a mini excavator",
+      "position": "0% 50%",
+      "mobile": {
+        "aspect": "4/5",
+        "focal": [
+          0.6,
+          0.5
+        ]
+      }
+    },
+    "home.door.home": {
+      "image": "/images/gallery/pot-filler-faucet.jpg",
+      "alt": "Pot filler faucet installation",
+      "position": "63.5% 98.6%"
+    },
+    "home.door.build": {
+      "image": "/images/projects/hangar-97-punta-gorda-airport/2nd-rough/photo-30.jpg",
+      "alt": "Lavatory carrier with 3-inch PVC DWV riser and red and blue PEX feeding copper stub-outs",
+      "position": "50% 100%"
+    },
+    "home.service.new-construction": {
+      "image": "/images/gallery/new-construction-underground.jpg",
+      "alt": "New construction underground plumbing",
+      "position": "42.5% 50%"
+    },
+    "home.service.repiping": {
+      "image": "/images/services/cards/repiping.jpg",
+      "alt": "New red and blue PEX lines run to a washer outlet box in an opened wall"
+    },
+    "home.service.plumbing-remodel": {
+      "image": "/images/gallery/freestanding-tub-accent-tile.jpg",
+      "alt": "Freestanding tub with accent tile",
+      "position": "55.1% 50%"
+    },
+    "home.service.commercial": {
+      "image": "/images/projects/mangos-bathroom-remodel/final/IMG_3437.jpeg",
+      "alt": "Two chrome single-handle faucets running water into the trough sink beneath the LED-backlit mirror at final testing",
+      "position": "50% 0%"
+    },
+    "home.service.uep-utilities": {
+      "image": "/images/services/uep-utilities/JPEG image-4165-B510-28-0.jpeg",
+      "alt": "Green sewer line with couplings and a cleanout laid in an open trench",
+      "position": "50% 0%"
+    },
+    "home.service.water-heaters": {
+      "image": "/images/projects/ifha-community-center/trim-out/photo-47.jpg",
+      "alt": "Electric water heater on a wall bracket with CPVC piping, expansion tank and T&P discharge line",
+      "position": "50% 18%"
+    },
+    "service.header.commercial": {
+      "image": "/images/projects/mangos-bathroom-remodel/final/IMG_3437.jpeg",
+      "alt": "Two chrome single-handle faucets running water into the trough sink beneath the LED-backlit mirror at final testing",
+      "position": "50% 0%"
+    },
+    "service.header.new-construction": {
+      "image": "/images/gallery/aerial-underground-layout.jpg",
+      "alt": "Aerial view of underground plumbing layout"
+    },
+    "service.header.plumbing-remodel": {
+      "image": "/images/gallery/freestanding-tub-accent-tile.jpg",
+      "alt": "Freestanding tub with accent tile",
+      "position": "50% 100%"
+    },
+    "service.header.residential": {
+      "image": "/images/gallery/pot-filler-faucet.jpg",
+      "alt": "Pot filler faucet installation"
+    },
+    "service.header.tankless-water-heaters": {
+      "image": "/images/services/project-5.jpg",
+      "alt": "Tankless water heater mounted on a white stucco wall with copper and gas lines",
+      "position": "50% 50%"
+    },
+    "service.header.uep-utilities": {
+      "image": "/images/services/uep-utilities/JPEG image-4165-B510-28-0.jpeg",
+      "alt": "Green sewer line with couplings and a cleanout laid in an open trench",
+      "position": "50% 0%"
+    },
+    "service.header.water-heaters": {
+      "image": "/images/projects/ifha-community-center/trim-out/photo-47.jpg",
+      "alt": "Electric water heater on a wall bracket with CPVC piping, expansion tank and T&P discharge line",
+      "position": "50% 18%"
+    },
+    "builders.hero": {
+      "image": "/images/projects/hansen-homes-cape-coral/underground/aerial-1.jpg",
+      "alt": "Drone view of mini excavator cutting underground plumbing trenches inside the block stem wall before the slab pour",
+      "position": "50% 50%"
+    },
+    "builders.phase.underground": {
+      "image": "/images/projects/ifha-community-center/underground/IMG_0724.jpeg",
+      "alt": "Plumber setting PVC drain lines and vertical stub-ups in open trenches ahead of the slab pour",
+      "position": "50% 50.4%"
+    },
+    "builders.phase.second-rough": {
+      "image": "/images/projects/306-seminal-way-fort-myers-beach/build/photo-13.jpeg",
+      "alt": "PVC vent stack rising through a framed partition wall with stud protector plates and a PEX supply riser",
+      "position": "50% 0%"
+    },
+    "builders.phase.trim-out": {
+      "image": "/images/projects/hansen-homes-2210-cape-coral/trim-out/photo-6.jpg",
+      "alt": "Brushed nickel shower head and single-handle valve trim in a marble-look tile shower with blue glass mosaic band",
+      "position": "50% 82.4%"
+    },
+    "home.family": {
+      "image": "/images/team/sam-and-aiden.jpg",
+      "alt": "Sam Pellechio Jr. with a young Aiden — the family trade passed down by hand",
+      "position": "50% 15%"
+    },
+    "about.lead": {
+      "image": "/images/gallery/aerial-waterfront-newbuild.jpg",
+      "alt": "Aerial view of waterfront new build"
+    },
+    "contact.band": {
+      "image": "/images/history/truck-new-home.jpg",
+      "alt": "A C&S Plumbing of Lee truck at a new-construction home in Southwest Florida",
+      "position": "50% 62%"
+    },
+    "area.header.cape-coral": {
+      "image": "/images/projects/hansen-homes-cape-coral/underground/aerial-2.jpg",
+      "alt": "Top-down aerial of stem wall footprint with sewer trench lines and PVC stub-ups being set in Cape Coral",
+      "position": "50% 0%"
+    },
+    "area.header.lehigh-acres": {
+      "image": "/images/projects/1119-harvest-ave-lehigh-acres/2nd-rough/photo-1.jpg",
+      "alt": "Red PEX hot water lines strapped down block-wall furring and run through a framed island knee wall",
+      "position": "50% 100%"
+    },
+    "area.header.fort-myers-beach": {
+      "image": "/images/projects/306-seminal-way-fort-myers-beach/build/photo-13.jpeg",
+      "alt": "PVC vent stack rising through a framed partition wall with stud protector plates and a PEX supply riser",
+      "position": "50% 0%"
+    },
+    "area.header.punta-gorda": {
+      "image": "/images/projects/hangar-97-punta-gorda-airport/2nd-rough/photo-3.jpg",
+      "alt": "Hot, cold and recirculation CPVC lines dropping down a steel column with the Punta Gorda runway beyond",
+      "position": "50% 0%"
+    }
+  },
+  "crops": {
+    "logo.emblem": {
+      "image": "/images/logos/logo-new.png",
+      "box": {
+        "left": 0,
+        "top": 53,
+        "width": 2033,
+        "height": 1643
+      }
+    },
+    "home.service.repiping": {
+      "image": "/images/services/cards/repiping.jpg",
+      "box": {
+        "left": 426,
+        "top": 692,
+        "width": 947,
+        "height": 1184
+      }
+    },
+    "service.header.new-construction": {
+      "image": "/images/gallery/aerial-underground-layout.jpg",
+      "box": {
+        "left": 112,
+        "top": 0,
+        "width": 960,
+        "height": 1200
+      }
+    },
+    "service.header.residential": {
+      "image": "/images/gallery/pot-filler-faucet.jpg",
+      "box": {
+        "left": 0,
+        "top": 541,
+        "width": 1977,
+        "height": 1318
+      }
+    },
+    "about.lead": {
+      "image": "/images/gallery/aerial-waterfront-newbuild.jpg",
+      "box": {
+        "left": 320,
+        "top": 0,
+        "width": 960,
+        "height": 1200
+      }
+    }
+  }
+}

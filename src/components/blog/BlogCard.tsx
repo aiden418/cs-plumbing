@@ -1,35 +1,45 @@
-"use client";
-
-import { motion } from "framer-motion";
-import { staggerItem } from "@/components/animations/StaggerChildren";
-import { Clock, ArrowRight } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight } from "@/components/ui/icons";
+import { BLOG_INDEX } from "@/content/reading";
 import type { BlogPost } from "@/lib/types";
 
+/** "2026-03-10" → "March 10, 2026" (the calendar date as written in the data). */
+export function formatPostDate(iso: string): string {
+  return new Date(iso).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    timeZone: "UTC",
+  });
+}
+
+/**
+ * One post on the blog index as a plain row with a hairline above it: the
+ * category (blue), date and read time, the title, the excerpt and "Read
+ * More". The whole row is one link. On phones the excerpt shows three lines
+ * (the full text stays in the HTML). Server component.
+ */
 export default function BlogCard({ post }: { post: BlogPost }) {
   return (
-    <motion.a
+    <Link
       href={`/blog/${post.slug}`}
-      variants={staggerItem}
-      className="bg-white rounded-2xl border border-gray-200 p-5 sm:p-6 lg:p-8 hover:border-primary/30 transition-all duration-500 active:scale-[0.98] block group"
+      className="group flex h-full flex-col border-t border-rule py-6 sm:py-8"
     >
-      <div className="flex items-center gap-3 mb-3">
-        <span className="text-xs font-semibold text-primary uppercase tracking-wider">
-          {post.category}
-        </span>
-        <span className="flex items-center gap-1 text-xs text-gray-500">
-          <Clock className="w-3 h-3" />
-          {post.readTime}
-        </span>
-      </div>
-      <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3 group-hover:text-primary transition-colors">
+      <p className="flex flex-wrap items-center gap-x-2 text-sm text-muted">
+        <span className="font-semibold text-accent">{post.category}</span>
+        <span aria-hidden="true">·</span>
+        <time dateTime={post.publishDate}>{formatPostDate(post.publishDate)}</time>
+        <span aria-hidden="true">·</span>
+        <span>{post.readTime}</span>
+      </p>
+      <h2 className="mt-2 text-[1.375rem] leading-tight font-bold text-fg group-hover:text-link sm:text-2xl">
         {post.title}
       </h2>
-      <p className="text-gray-500 text-xs sm:text-sm leading-relaxed mb-4">
-        {post.excerpt}
-      </p>
-      <span className="inline-flex items-center gap-1.5 text-primary text-sm font-medium group-hover:gap-2.5 transition-all">
-        Read More <ArrowRight className="w-4 h-4" />
+      <p className="mt-2 line-clamp-3 text-body sm:line-clamp-none">{post.excerpt}</p>
+      <span className="mt-auto inline-flex items-center gap-2 pt-3 font-semibold text-link underline-offset-[0.2em] group-hover:underline">
+        {BLOG_INDEX.readMore}
+        <ArrowRight className="size-5 transition-transform duration-150 group-hover:translate-x-0.5" />
       </span>
-    </motion.a>
+    </Link>
   );
 }

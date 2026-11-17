@@ -1,0 +1,128 @@
+{
+  "remodel-1.webp": {
+    "id": "82",
+    "alt": "Plumber setting a new PVC drain in a trench cut through the slab during a bathroom remodel",
+    "title": "Bathroom Remodel — Slab Trench for New Drain",
+    "category": "remodel",
+    "order": 85
+  },
+  "remodel-2.webp": {
+    "id": "83",
+    "alt": "Brushed-gold shower column with a rain head and hand shower on blue stone-look tile",
+    "title": "Rain Shower Column — Brushed Gold",
+    "category": "remodel",
+    "order": 65
+  },
+  "remodel-3.webp": {
+    "id": "84",
+    "alt": "Brushed-nickel shower head and hand shower on gray glass mosaic tile with a recessed niche",
+    "title": "Shower Trim — Glass Mosaic Tile",
+    "category": "remodel",
+    "order": 68
+  },
+  "remodel-4.webp": {
+    "id": "85",
+    "alt": "CPVC supply loops with six capped stub-outs roughed in between studs for shower body sprays",
+    "title": "Body Spray Rough-In — CPVC Loops",
+    "category": "remodel",
+    "order": 84
+  },
+  "remodel-5.webp": {
+    "id": "86",
+    "alt": "Brass shower valve bodies connected to CPVC supply lines inside an open stud wall",
+    "title": "Shower Valve Rough-In — Close View",
+    "category": "remodel",
+    "order": 83
+  },
+  "remodel-6.webp": {
+    "id": "87",
+    "alt": "Row of brass shower valves fed by CPVC risers in an open wall",
+    "title": "Multi-Valve Shower Rough-In",
+    "category": "remodel",
+    "order": 82
+  },
+  "remodel-7.webp": {
+    "id": "88",
+    "alt": "New red and blue PEX stub-outs and a PVC drain arm in an opened wall above a tile floor",
+    "title": "Vanity Rough-In — PEX and Drain",
+    "category": "remodel",
+    "order": 86
+  },
+  "remodel-8.webp": {
+    "id": "89",
+    "alt": "Hot and cold PEX lines run along the base of an opened wall during a remodel",
+    "title": "Remodel Repipe — PEX Along the Wall",
+    "category": "remodel",
+    "order": 87
+  },
+  "remodel-9.webp": {
+    "id": "90",
+    "alt": "Red and blue PEX lines routed through studs to capped stub-outs in an open wall",
+    "title": "PEX Rough-In — Open Stud Wall",
+    "category": "remodel",
+    "order": 88
+  },
+  "remodel-10.webp": {
+    "id": "91",
+    "alt": "PEX hot and cold stub-outs and insulated lines in an opened wall section",
+    "title": "PEX Stub-Outs — Remodel",
+    "category": "remodel",
+    "order": 89
+  },
+  "remodel-11.webp": {
+    "id": "92",
+    "alt": "Spring-neck pull-down kitchen faucet over a stainless undermount sink in a granite countertop",
+    "title": "Kitchen Faucet — Undermount Sink",
+    "category": "remodel",
+    "order": 69
+  },
+  "remodel-12.webp": {
+    "id": "93",
+    "alt": "Brushed-nickel centerset faucet on a granite vanity top with a rectangular undermount sink",
+    "title": "Vanity Faucet — Granite Top",
+    "category": "remodel",
+    "order": 74
+  },
+  "remodel-13.webp": {
+    "id": "94",
+    "alt": "New P-trap and braided supply lines under a bathroom vanity sink",
+    "title": "Under-Sink Trap and Supplies",
+    "category": "remodel",
+    "order": 90
+  },
+  "remodel-14.webp": {
+    "id": "95",
+    "alt": "New two-piece toilet set on a patterned tile floor",
+    "title": "Toilet Install — Patterned Tile",
+    "category": "remodel",
+    "order": 73
+  },
+  "remodel-15.webp": {
+    "id": "96",
+    "alt": "Brushed-nickel shower head, hand shower and valve trim on marble-look tile",
+    "title": "Shower Trim — Marble-Look Tile",
+    "category": "remodel",
+    "order": 70
+  },
+  "remodel-16.webp": {
+    "id": "97",
+    "alt": "Centerset bathroom faucet over a rectangular undermount sink in a granite top",
+    "title": "Bathroom Faucet — Undermount Sink",
+    "category": "remodel",
+    "order": 75
+  },
+  "remodel-17.webp": {
+    "id": "98",
+    "alt": "P-trap and new quarter-turn supply stops under a vanity, marked red and blue for hot and cold",
+    "title": "Vanity Trap and Supply Stops",
+    "category": "remodel",
+    "order": 91
+  },
+  "remodel-18.webp": {
+    "id": "99",
+    "alt": "Matte black wall-mounted pot filler on white herringbone tile above the range",
+    "title": "Pot Filler — Matte Black",
+    "category": "remodel",
+    "order": 66
+  }
+}

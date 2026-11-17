@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
-import PageTransition from "@/components/layout/PageTransition";
-import Container from "@/components/ui/Container";
+import Button from "@/components/ui/Button";
+import PageHero from "@/components/ui/PageHero";
+import { ArrowRight, Calendar, Phone } from "@/components/ui/icons";
 import FamilyStory from "@/components/about/FamilyStory";
 import Generations from "@/components/about/Generations";
 import Timeline from "@/components/about/Timeline";
@@ -13,7 +13,11 @@ import Credentials from "@/components/about/Credentials";
 import TrainingTrade from "@/components/about/TrainingTrade";
 import CTASection from "@/components/home/CTASection";
 import AboutPersonJsonLd from "@/components/seo/AboutPersonJsonLd";
-import { LATEST_AWARD } from "@/lib/constants";
+import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
+import { BUSINESS } from "@/lib/business";
+import { LATEST_AWARD } from "@/lib/awards";
+import { image, slot } from "@/lib/media";
+import { ABOUT_HERO } from "@/content/about";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/about" },
@@ -39,85 +43,68 @@ export const metadata: Metadata = {
 };
 
 export default function AboutPage() {
+  const badge = image(LATEST_AWARD.badge);
+  // The about.lead position, uncropped: the aerial of a C&S waterfront new
+  // build reads well full width behind the headline (the family portrait
+  // would be cut through the faces); the portrait opens the story below.
+  const lead = slot("about.lead")?.desktop ?? null;
+
   return (
-    <PageTransition>
-      {/* ===== Hero ===== */}
-      <section className="relative overflow-hidden bg-navy pt-28 pb-16 sm:pt-32 sm:pb-20">
-        <div className="pointer-events-none absolute -top-32 left-1/3 h-[480px] w-[480px] -translate-x-1/2 rounded-full bg-primary/25 blur-[120px]" />
-        <div className="pointer-events-none absolute bottom-0 right-0 h-72 w-72 rounded-full bg-gold/15 blur-[100px]" />
-        <Container className="relative">
-          <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16">
-            {/* Copy */}
-            <div>
-              <span className="mb-4 inline-block text-xs sm:text-sm font-bold uppercase tracking-[0.2em] text-gold">
-                About Us
-              </span>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black leading-[1.05] text-white">
-                Three Generations.{" "}
-                <span className="bg-gradient-to-r from-gold to-[#F6C453] bg-clip-text text-transparent">
-                  One Name on Every Job.
-                </span>
-              </h1>
-              <p className="mt-5 max-w-xl text-base sm:text-lg leading-relaxed text-white/70">
-                Family owned and operated since 1998. From a Philadelphia builder&apos;s job sites to 9,500+
-                homes plumbed across Southwest Florida, the Pellechio family has been doing it
-                the right way for over 28 years.
-              </p>
-
-              <div className="mt-7 flex flex-wrap items-center gap-3">
-                <a
-                  href="#team"
-                  className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-bold text-navy transition-all hover:gap-3"
-                >
-                  Meet the Family <ArrowUpRight className="h-4 w-4" />
-                </a>
-                <Link
-                  href="/booking"
-                  className="inline-flex items-center gap-2 rounded-full border border-white/25 px-5 py-2.5 text-sm font-bold text-white transition-colors hover:bg-white/10"
-                >
-                  Book a Service
-                </Link>
-              </div>
-
-              {/* Award chip */}
-              <Link
-                href="/awards"
-                className="mt-7 inline-flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-2.5 backdrop-blur hover:bg-white/10 transition-colors"
-              >
-                <Image
-                  src={LATEST_AWARD.badge}
-                  alt={`${LATEST_AWARD.title} — ${LATEST_AWARD.category}`}
-                  width={LATEST_AWARD.badgeWidth}
-                  height={LATEST_AWARD.badgeHeight}
-                  sizes="48px"
-                  className="h-9 w-auto"
-                />
-                <div className="text-left">
-                  <p className="text-xs sm:text-sm font-bold text-white leading-tight">
-                    {LATEST_AWARD.title}
-                  </p>
-                  <p className="text-[10px] sm:text-xs text-white/50">
-                    Voted {LATEST_AWARD.category}
-                  </p>
-                </div>
-              </Link>
-            </div>
-
-            {/* Photo */}
-            <div className="relative aspect-[4/5] overflow-hidden rounded-3xl border border-white/10">
+    <>
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", href: "/" },
+          { name: "About", href: "/about" },
+        ]}
+      />
+      <PageHero
+        layout="photo"
+        frame={lead ? { ...lead, position: "30% 60%" } : null}
+        overline={ABOUT_HERO.overline}
+        title={ABOUT_HERO.title}
+        accent={ABOUT_HERO.accent}
+        description={ABOUT_HERO.description}
+        actions={
+          <>
+            <Button href={BUSINESS.phoneHref} variant="primary" size="lg" icon={<Phone className="size-5" />}>
+              {ABOUT_HERO.callLabel} {BUSINESS.phone}
+            </Button>
+            <Button href={ABOUT_HERO.secondaryAction.href} variant="onPhoto" size="lg" icon={<Calendar className="size-5" />}>
+              {ABOUT_HERO.secondaryAction.label}
+            </Button>
+          </>
+        }
+      >
+        <div className="flex flex-col gap-x-8 gap-y-3 sm:flex-row sm:flex-wrap sm:items-center">
+          <Link
+            href={ABOUT_HERO.primaryAction.href}
+            className="inline-flex min-h-11 items-center gap-2 font-semibold text-fg underline decoration-1 underline-offset-4 hover:decoration-2"
+          >
+            {ABOUT_HERO.primaryAction.label}
+            <ArrowRight aria-hidden="true" className="size-5 shrink-0 rotate-90" />
+          </Link>
+          <Link href="/awards" className="group inline-flex min-h-11 items-center gap-3">
+            {badge && (
               <Image
-                src="/images/team/sam-and-aiden.jpg"
-                alt="Sam Pellechio Jr. with a young Aiden — the family trade passed down by hand"
-                fill
-                priority
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 50vw"
+                src={badge.src}
+                alt={`${LATEST_AWARD.title} — ${LATEST_AWARD.category}`}
+                width={badge.width}
+                height={badge.height}
+                sizes="64px"
+                className="h-11 w-auto shrink-0"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-navy/40 to-transparent" />
-            </div>
-          </div>
-        </Container>
-      </section>
+            )}
+            <span className="min-w-0 leading-snug">
+              <span className="block font-semibold text-fg underline-offset-4 group-hover:underline">
+                {LATEST_AWARD.title}
+              </span>
+              <span className="block text-[0.9375rem] text-body">
+                {ABOUT_HERO.awardVotedPrefix} {LATEST_AWARD.category}
+              </span>
+            </span>
+          </Link>
+        </div>
+      </PageHero>
 
       <AboutPersonJsonLd />
       <FamilyStory />
@@ -128,6 +115,6 @@ export default function AboutPage() {
       <Credentials />
       <TrainingTrade />
       <CTASection />
-    </PageTransition>
+    </>
   );
 }

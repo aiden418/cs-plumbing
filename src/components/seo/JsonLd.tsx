@@ -1,13 +1,13 @@
 import {
   BUSINESS,
   AWARDS,
-  CONTRACTOR_RANKING,
   LATEST_AWARD,
   PROFILES,
   SERVICE_AREAS_BY_COUNTY,
   areaServedCities,
 } from "@/lib/constants";
 import { fetchPlaceData } from "@/lib/google-reviews";
+import { licenseRecordFacts } from "@/lib/license-schema";
 import { BUILDER_DESK, CONSTRUCTION_PHASES } from "@/lib/builder-program";
 
 export default async function JsonLd() {
@@ -39,7 +39,7 @@ export default async function JsonLd() {
     image: `${BASE}/images/team/samuel.jpeg`,
     worksFor: { "@id": `${BASE}/#organization` },
     description:
-      "Second-generation Pellechio and the first licensed plumber in the family. Earned his Florida plumbing license in December 1997 and, with his brother Chris and their father, founded C&S Plumbing of Lee in Cape Coral in 1998; has led the company since. Licensed Florida plumbing contractor (CFC1432485 / CFC057076).",
+      `Second-generation Pellechio and the first licensed plumber in the family. Earned his Florida plumbing license in December 1997 and, with his brother Chris and their father, founded C&S Plumbing of Lee in Cape Coral in 1998; has led the company since. Licensed Florida plumbing contractor (${BUSINESS.license} / ${BUSINESS.license2}).`,
     hasCredential: {
       "@type": "EducationalOccupationalCredential",
       credentialCategory: "Professional License",
@@ -107,18 +107,18 @@ export default async function JsonLd() {
     logo: `${BASE}/images/logos/logo-512.png`,
     image: `${BASE}/images/hero/drone-construction.jpg`,
     telephone: `+1${BUSINESS.phoneRaw}`,
-    email: "office@csplumbinglee.com",
+    email: BUSINESS.email,
     foundingDate: "1998",
     numberOfEmployees: { "@type": "QuantitativeValue", minValue: 5, maxValue: 10 },
     description:
-      "Family owned and operated plumbing company serving Southwest Florida since 1998. 9,500+ new construction homes plumbed and 3,500+ homes repiped. 24/7 emergency service. Residential, commercial & new construction plumbing across Cape Coral, Fort Myers, Naples & all of SWFL. One office, open and operating, at 951 Pondella Rd in North Fort Myers; directory listings showing an older Cape Coral street address refer to the company's former office.",
+      `Family owned and operated plumbing company serving Southwest Florida since 1998. 9,500+ new construction homes plumbed and 3,500+ homes repiped. 24/7 emergency service. Residential, commercial & new construction plumbing across Cape Coral, Fort Myers, Naples & all of SWFL. One office, open and operating, at ${BUSINESS.address} in North Fort Myers; directory listings showing an older Cape Coral street address refer to the company's former office.`,
     slogan: "Southwest Florida's Most Trusted Plumbing Team",
     address: {
       "@type": "PostalAddress",
-      streetAddress: "951 Pondella Rd",
-      addressLocality: "North Fort Myers",
-      addressRegion: "FL",
-      postalCode: "33903",
+      streetAddress: BUSINESS.address,
+      addressLocality: BUSINESS.city,
+      addressRegion: BUSINESS.state,
+      postalCode: BUSINESS.zip,
       addressCountry: "US",
     },
     geo: {
@@ -126,22 +126,16 @@ export default async function JsonLd() {
       latitude: BUSINESS.geo.latitude,
       longitude: BUSINESS.geo.longitude,
     },
+    // The business operates 24/7 (Aiden, 2026-11-13); the emergency
+    // ContactPoint below keeps the dedicated after-hours line discoverable.
     openingHoursSpecification: [
       {
         "@type": "OpeningHoursSpecification",
-        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-        opens: "07:30",
-        closes: "16:30",
-      },
-      {
-        "@type": "OpeningHoursSpecification",
-        dayOfWeek: "Saturday",
-        opens: "09:00",
-        closes: "15:00",
+        dayOfWeek: [...BUSINESS.hours.schema.days],
+        opens: BUSINESS.hours.schema.opens,
+        closes: BUSINESS.hours.schema.closes,
       },
     ],
-    // Office is closed Sundays — 24/7 availability is the emergency line,
-    // modeled honestly as a ContactPoint instead of fake Sunday office hours.
     contactPoint: {
       "@type": "ContactPoint",
       contactType: "emergency",
@@ -149,9 +143,9 @@ export default async function JsonLd() {
       availableLanguage: "English",
       hoursAvailable: {
         "@type": "OpeningHoursSpecification",
-        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-        opens: "00:00",
-        closes: "23:59",
+        dayOfWeek: [...BUSINESS.hours.schema.days],
+        opens: BUSINESS.hours.schema.opens,
+        closes: BUSINESS.hours.schema.closes,
       },
     },
     priceRange: "$$",
@@ -171,7 +165,8 @@ export default async function JsonLd() {
       {
         "@type": "EducationalOccupationalCredential",
         credentialCategory: "Professional License",
-        name: "Florida Certified Plumbing Contractor — CFC1432485",
+        name: `Florida Certified Plumbing Contractor — ${BUSINESS.license}`,
+        ...licenseRecordFacts("company"),
         recognizedBy: {
           "@type": "GovernmentOrganization",
           name: "Florida Department of Business and Professional Regulation",
@@ -181,7 +176,8 @@ export default async function JsonLd() {
       {
         "@type": "EducationalOccupationalCredential",
         credentialCategory: "Professional License",
-        name: "Florida Certified Plumbing Contractor — CFC057076",
+        name: `Florida Certified Plumbing Contractor — ${BUSINESS.license2}`,
+        ...licenseRecordFacts("founder"),
         recognizedBy: {
           "@type": "GovernmentOrganization",
           name: "Florida Department of Business and Professional Regulation",
@@ -324,12 +320,6 @@ export default async function JsonLd() {
     citation: [
       {
         "@type": "CreativeWork",
-        name: `${CONTRACTOR_RANKING.source} contractor profile — C&S Plumbing of Lee`,
-        url: CONTRACTOR_RANKING.sourceUrl,
-        description: `${CONTRACTOR_RANKING.quote} A third-party ranking by ${CONTRACTOR_RANKING.source}, not a state-issued rating. Checked ${CONTRACTOR_RANKING.checkedOn}.`,
-      },
-      {
-        "@type": "CreativeWork",
         name: `${LATEST_AWARD.program} — ${LATEST_AWARD.issuer}`,
         // Falls back to the issuer's site until the winners listing is live.
         url: LATEST_AWARD.citationUrl ?? LATEST_AWARD.issuerUrl,
@@ -359,9 +349,9 @@ export default async function JsonLd() {
       {
         "@type": "CreativeWork",
         name: "Florida DBPR — Verify a Contractor License",
-        url: BUSINESS.licenseLookupUrl,
+        url: BUSINESS.licenseRecordUrl,
         description:
-          "C&S Plumbing's Certified Plumbing Contractor license (CFC1432485) can be verified through the Florida DBPR.",
+          `C&S Plumbing's Certified Plumbing Contractor license (${BUSINESS.license}) can be verified through the Florida DBPR.`,
       },
     ],
 

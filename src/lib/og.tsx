@@ -169,7 +169,7 @@ export function createOgImage({ title, eyebrow, subtitle, variant = "default" }:
               </span>
               <span style={{ fontSize: 18, color: TEXT_MUTED }}>•</span>
               <span style={{ fontSize: 18, color: TEXT_DARK, fontWeight: 600 }}>
-                Licensed CFC1432485
+                {`Licensed ${BUSINESS.license}`}
               </span>
               <span style={{ fontSize: 18, color: TEXT_MUTED }}>•</span>
               <span style={{ fontSize: 18, color: TEXT_DARK, fontWeight: 600 }}>

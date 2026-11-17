@@ -1,0 +1,450 @@
+{
+  "aerial-underground-layout.jpg": {
+    "id": "1",
+    "alt": "Aerial view of underground plumbing layout",
+    "title": "Aerial View — Underground Plumbing Layout",
+    "category": "new-construction",
+    "order": 1
+  },
+  "aerial-waterfront-newbuild.jpg": {
+    "id": "2",
+    "alt": "Aerial view of waterfront new build",
+    "title": "Aerial View — Waterfront New Build",
+    "category": "new-construction",
+    "order": 2
+  },
+  "freestanding-soaking-tub.jpg": {
+    "id": "3",
+    "alt": "Freestanding soaking tub",
+    "title": "Freestanding Soaking Tub Install",
+    "category": "remodel",
+    "order": 3
+  },
+  "freestanding-tub-floor-filler.jpg": {
+    "id": "4",
+    "alt": "Freestanding tub with floor-mount filler",
+    "title": "Freestanding Tub with Floor-Mount Filler",
+    "category": "remodel",
+    "order": 4
+  },
+  "freestanding-tub-accent-tile.jpg": {
+    "id": "5",
+    "alt": "Freestanding tub with accent tile",
+    "title": "Freestanding Tub with Accent Tile",
+    "category": "remodel",
+    "order": 5
+  },
+  "soaking-tub-niche.jpg": {
+    "id": "6",
+    "alt": "Soaking tub in tiled niche",
+    "title": "Soaking Tub Niche Installation",
+    "category": "remodel",
+    "order": 6
+  },
+  "double-vanity-bathroom.jpg": {
+    "id": "7",
+    "alt": "Double vanity bathroom remodel",
+    "title": "Double Vanity Bathroom Remodel",
+    "category": "remodel",
+    "order": 7
+  },
+  "wall-mount-faucet-vanity.jpg": {
+    "id": "8",
+    "alt": "Wall-mount faucet vanity",
+    "title": "Wall-Mount Faucet Vanity Install",
+    "category": "remodel",
+    "order": 8
+  },
+  "vessel-sink-vanity.jpg": {
+    "id": "9",
+    "alt": "Vessel sink vanity",
+    "title": "Bathroom Vanity & Vessel Sink",
+    "category": "remodel",
+    "order": 9
+  },
+  "waterfront-kitchen-sink.jpg": {
+    "id": "10",
+    "alt": "Waterfront kitchen sink install",
+    "title": "Waterfront Kitchen Sink Install",
+    "category": "remodel",
+    "order": 10
+  },
+  "dual-shower-head.jpg": {
+    "id": "11",
+    "alt": "Dual shower head installation",
+    "title": "Dual Shower Head Installation",
+    "category": "remodel",
+    "order": 11
+  },
+  "multi-jet-body-spray-shower.jpg": {
+    "id": "12",
+    "alt": "Multi-jet body spray shower",
+    "title": "Multi-Jet Body Spray Shower System",
+    "category": "remodel",
+    "order": 12
+  },
+  "rain-shower-handheld.jpg": {
+    "id": "13",
+    "alt": "Rain shower with handheld sprayer",
+    "title": "Rain Shower with Handheld Sprayer",
+    "category": "remodel",
+    "order": 13
+  },
+  "rain-shower-handheld-marble.jpg": {
+    "id": "14",
+    "alt": "Rain shower and handheld on marble tile",
+    "title": "Rain Shower & Handheld Install",
+    "category": "remodel",
+    "order": 14
+  },
+  "shower-slide-bar.jpg": {
+    "id": "15",
+    "alt": "Shower slide bar system",
+    "title": "Shower Slide Bar System",
+    "category": "remodel",
+    "order": 15
+  },
+  "dual-shower-system.jpg": {
+    "id": "16",
+    "alt": "Dual shower system",
+    "title": "Dual Shower System Install",
+    "category": "remodel",
+    "order": 16
+  },
+  "modern-toilet-install.jpg": {
+    "id": "17",
+    "alt": "Modern toilet installation",
+    "title": "Modern Toilet Installation",
+    "category": "remodel",
+    "order": 17
+  },
+  "toilet-install-tilework.jpg": {
+    "id": "18",
+    "alt": "Toilet install with tile work",
+    "title": "Toilet Installation with Tile Work",
+    "category": "remodel",
+    "order": 18
+  },
+  "half-bath-pedestal-sink.jpg": {
+    "id": "19",
+    "alt": "Half bath pedestal sink",
+    "title": "Half Bath Pedestal Sink & Toilet",
+    "category": "remodel",
+    "order": 19
+  },
+  "bathroom-toilet-install.jpg": {
+    "id": "20",
+    "alt": "Bathroom toilet installation",
+    "title": "Bathroom Toilet Installation",
+    "category": "remodel",
+    "order": 20
+  },
+  "widespread-bathroom-faucet.jpg": {
+    "id": "21",
+    "alt": "Widespread bathroom faucet",
+    "title": "Widespread Bathroom Faucet Install",
+    "category": "remodel",
+    "order": 21
+  },
+  "laundry-room-repipe.jpg": {
+    "id": "22",
+    "alt": "Laundry room repipe",
+    "title": "Laundry Room Repipe",
+    "category": "remodel",
+    "order": 22
+  },
+  "new-construction-roughin.jpg": {
+    "id": "23",
+    "alt": "Remodel rough-in plumbing",
+    "title": "Remodel Rough-In Plumbing",
+    "category": "remodel",
+    "order": 23
+  },
+  "attic-pex-repipe.jpg": {
+    "id": "24",
+    "alt": "Attic PEX water line repipe",
+    "title": "Attic PEX Water Line Repipe",
+    "category": "remodel",
+    "order": 24
+  },
+  "commercial-sink-install.jpg": {
+    "id": "25",
+    "alt": "Commercial sink installation",
+    "title": "Commercial Sink Installation",
+    "category": "commercial",
+    "order": 25
+  },
+  "commercial-slab-excavation.jpg": {
+    "id": "26",
+    "alt": "Commercial slab plumbing excavation",
+    "title": "Commercial Slab Plumbing Excavation",
+    "category": "commercial",
+    "order": 26
+  },
+  "commercial-plumbing-roughin.jpg": {
+    "id": "27",
+    "alt": "Commercial plumbing rough-in",
+    "title": "Commercial Plumbing Rough-In",
+    "category": "commercial",
+    "order": 27
+  },
+  "commercial-prerinse-faucet.jpg": {
+    "id": "28",
+    "alt": "Commercial pre-rinse faucet",
+    "title": "Commercial Pre-Rinse Faucet Install",
+    "category": "commercial",
+    "order": 28
+  },
+  "commercial-kitchen-sink-sprayer.jpg": {
+    "id": "29",
+    "alt": "Commercial kitchen sink and sprayer",
+    "title": "Commercial Kitchen Sink & Sprayer",
+    "category": "commercial",
+    "order": 29
+  },
+  "commercial-restroom-sink.jpg": {
+    "id": "30",
+    "alt": "Commercial restroom sink",
+    "title": "Commercial Restroom Sink Install",
+    "category": "commercial",
+    "order": 30
+  },
+  "commercial-toilet-install.jpg": {
+    "id": "31",
+    "alt": "Commercial toilet installation",
+    "title": "Commercial Toilet Installation",
+    "category": "commercial",
+    "order": 31
+  },
+  "marina-water-pedestal.jpg": {
+    "id": "32",
+    "alt": "Marina water and power pedestal",
+    "title": "Marina Water & Power Pedestal",
+    "category": "commercial",
+    "order": 32
+  },
+  "under-dock-plumbing.jpg": {
+    "id": "33",
+    "alt": "Under-dock plumbing work",
+    "title": "Under-Dock Plumbing Work",
+    "category": "commercial",
+    "order": 33
+  },
+  "underground-water-tank.jpg": {
+    "id": "34",
+    "alt": "Underground water tank installation",
+    "title": "Underground Water Tank Installation",
+    "category": "commercial",
+    "order": 34
+  },
+  "backflow-preventer-meter.jpg": {
+    "id": "35",
+    "alt": "Backflow preventer and meter assembly",
+    "title": "Backflow Preventer & Meter Assembly",
+    "category": "commercial",
+    "order": 35
+  },
+  "exterior-hose-bib.jpg": {
+    "id": "36",
+    "alt": "Exterior hose bib installation",
+    "title": "Exterior Hose Bib Installation",
+    "category": "commercial",
+    "order": 36
+  },
+  "prerinse-faucet-three-compartment-sink.jpg": {
+    "id": "64",
+    "alt": "Pre-rinse spray faucet installed at a commercial three-compartment sink",
+    "title": "Pre-Rinse Faucet — Three-Compartment Sink",
+    "category": "commercial",
+    "order": 37
+  },
+  "new-construction-underground.jpg": {
+    "id": "37",
+    "alt": "New construction underground plumbing",
+    "title": "New Construction Underground Plumbing",
+    "category": "new-construction",
+    "order": 38
+  },
+  "underground-sewer-roughin.jpg": {
+    "id": "38",
+    "alt": "Underground sewer line rough-in",
+    "title": "Underground Sewer Line Rough-In",
+    "category": "new-construction",
+    "order": 39
+  },
+  "foundation-plumbing-layout.jpg": {
+    "id": "39",
+    "alt": "Foundation plumbing layout",
+    "title": "Foundation Plumbing Layout",
+    "category": "new-construction",
+    "order": 40
+  },
+  "drain-line-trenching.jpg": {
+    "id": "40",
+    "alt": "Drain line trenching",
+    "title": "Underground Drain Line Trenching",
+    "category": "new-construction",
+    "order": 41
+  },
+  "copper-water-service.jpg": {
+    "id": "41",
+    "alt": "Copper water service assembly",
+    "title": "Copper Water Service Assembly",
+    "category": "new-construction",
+    "order": 42
+  },
+  "new-construction-overhead-roughin.jpg": {
+    "id": "42",
+    "alt": "New construction overhead rough-in",
+    "title": "New Construction Overhead Rough-In",
+    "category": "new-construction",
+    "order": 43
+  },
+  "new-construction-dwv-roughin.jpg": {
+    "id": "43",
+    "alt": "New construction DWV rough-in",
+    "title": "New Construction DWV Rough-In",
+    "category": "new-construction",
+    "order": 44
+  },
+  "underground-pipe-work.jpg": {
+    "id": "44",
+    "alt": "Underground pipe installation",
+    "title": "Underground Pipe Work — Cape Coral",
+    "category": "residential",
+    "order": 45
+  },
+  "tankless-water-heater.jpg": {
+    "id": "45",
+    "alt": "Tankless water heater installation",
+    "title": "Tankless Water Heater Installation",
+    "category": "residential",
+    "order": 46
+  },
+  "rheem-water-heater.jpg": {
+    "id": "46",
+    "alt": "Rheem water heater installation",
+    "title": "Rheem Water Heater Installation",
+    "category": "residential",
+    "order": 47
+  },
+  "electric-water-heater-closet.jpg": {
+    "id": "47",
+    "alt": "Electric water heater closet install",
+    "title": "Electric Water Heater Closet Install",
+    "category": "residential",
+    "order": 48
+  },
+  "tank-water-heater-replacement.jpg": {
+    "id": "48",
+    "alt": "Tank water heater replacement",
+    "title": "Tank Water Heater Replacement",
+    "category": "residential",
+    "order": 49
+  },
+  "water-filtration-system.jpg": {
+    "id": "49",
+    "alt": "Water filtration system install",
+    "title": "Water Filtration System Install",
+    "category": "residential",
+    "order": 50
+  },
+  "pot-filler-faucet.jpg": {
+    "id": "50",
+    "alt": "Pot filler faucet installation",
+    "title": "Pot Filler Faucet Installation",
+    "category": "residential",
+    "order": 51
+  },
+  "kitchen-faucet-sink.jpg": {
+    "id": "51",
+    "alt": "Kitchen faucet and sink install",
+    "title": "Kitchen Faucet & Sink Install",
+    "category": "residential",
+    "order": 52
+  },
+  "under-sink-plumbing-disposal.jpg": {
+    "id": "52",
+    "alt": "Under-sink plumbing and disposal",
+    "title": "Under-Sink Plumbing & Disposal",
+    "category": "residential",
+    "order": 53
+  },
+  "outdoor-shower-fixture.jpg": {
+    "id": "53",
+    "alt": "Outdoor shower fixture set",
+    "title": "Outdoor Shower Fixture Set",
+    "category": "residential",
+    "order": 54
+  },
+  "grinder-pump-install.jpg": {
+    "id": "54",
+    "alt": "Grinder pump installation",
+    "title": "Grinder Pump Installation",
+    "category": "residential",
+    "order": 55
+  },
+  "sewer-tap-connection.jpg": {
+    "id": "55",
+    "alt": "Sewer tap connection",
+    "title": "Sewer Tap Connection",
+    "category": "residential",
+    "order": 56
+  },
+  "water-meter-connection.jpg": {
+    "id": "56",
+    "alt": "Water meter connection repair",
+    "title": "Water Meter Connection Repair",
+    "category": "residential",
+    "order": 57
+  },
+  "residential-excavation.jpg": {
+    "id": "57",
+    "alt": "Residential excavation work",
+    "title": "Residential Excavation Work",
+    "category": "residential",
+    "order": 58
+  },
+  "residential-sewer-excavation.jpg": {
+    "id": "58",
+    "alt": "Residential sewer line excavation",
+    "title": "Residential Sewer Line Excavation",
+    "category": "residential",
+    "order": 59
+  },
+  "dock-drain-pipe.jpg": {
+    "id": "59",
+    "alt": "Dock drain pipe installation",
+    "title": "Dock Drain Pipe Installation",
+    "category": "residential",
+    "order": 60
+  },
+  "dock-hose-reel.jpg": {
+    "id": "60",
+    "alt": "Dock hose reel and fish station",
+    "title": "Dock Hose Reel & Fish Station",
+    "category": "residential",
+    "order": 61
+  },
+  "under-dock-water-line.jpg": {
+    "id": "61",
+    "alt": "Under-dock water line run",
+    "title": "Under-Dock Water Line Run",
+    "category": "residential",
+    "order": 62
+  },
+  "cs-plumbing-crew.jpg": {
+    "id": "62",
+    "alt": "The C&S Plumbing crew",
+    "title": "The C&S Plumbing Crew",
+    "category": "residential",
+    "order": 63
+  },
+  "team-excavator.jpg": {
+    "id": "63",
+    "alt": "Team at work with mini excavator",
+    "title": "Team at Work — Mini Excavator",
+    "category": "residential",
+    "order": 64
+  }
+}

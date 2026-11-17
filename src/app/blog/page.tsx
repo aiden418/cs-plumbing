@@ -1,6 +1,12 @@
 import type { Metadata } from "next";
-import PageTransition from "@/components/layout/PageTransition";
-import BlogIndexPage from "./BlogIndexPage";
+import BlogCard from "@/components/blog/BlogCard";
+import CTASection from "@/components/home/CTASection";
+import Container from "@/components/ui/Container";
+import PageHero from "@/components/ui/PageHero";
+import Section from "@/components/ui/Section";
+import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
+import { BLOG_INDEX } from "@/content/reading";
+import { BLOG_POSTS } from "@/lib/constants";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/blog" },
@@ -23,9 +29,41 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
+  const posts = [...BLOG_POSTS].sort((a, b) => b.publishDate.localeCompare(a.publishDate));
   return (
-    <PageTransition>
-      <BlogIndexPage />
-    </PageTransition>
+    <>
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", href: "/" },
+          { name: "Blog", href: "/blog" },
+        ]}
+      />
+      <PageHero
+        layout="plain"
+        overline={BLOG_INDEX.overline}
+        title={BLOG_INDEX.title}
+        accent={BLOG_INDEX.accent}
+        description={BLOG_INDEX.description}
+      />
+
+      <Section tone="white" spacing="none" className="pb-12 sm:pb-16">
+        <Container>
+          {/* Hairline rows: one column on phones, two from lg, three from xl.
+              The first rows' line sits on the hero's bottom line (-mt-px). */}
+          <ul
+            aria-label={BLOG_INDEX.listLabel}
+            className="-mt-px grid grid-cols-1 gap-x-10 lg:grid-cols-2 xl:grid-cols-3"
+          >
+            {posts.map((post) => (
+              <li key={post.slug}>
+                <BlogCard post={post} />
+              </li>
+            ))}
+          </ul>
+        </Container>
+      </Section>
+
+      <CTASection />
+    </>
   );
 }

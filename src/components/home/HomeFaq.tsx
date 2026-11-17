@@ -1,6 +1,8 @@
-import Container from "@/components/ui/Container";
-import SectionHeading from "@/components/ui/SectionHeading";
+import FaqAccordion from "@/components/ui/FaqAccordion";
+import { ArrowLink, HomeHeading } from "./HomeHeading";
+import { faq } from "@/content/home";
 import type { FAQ } from "@/lib/types";
+import { BUSINESS } from "@/lib/business";
 
 export const HOME_FAQS: FAQ[] = [
   {
@@ -16,7 +18,7 @@ export const HOME_FAQS: FAQ[] = [
   {
     question: "Is C&S Plumbing licensed and insured?",
     answer:
-      "Yes. We work under Florida Certified Plumbing Contractor license CFC1432485 and carry full general liability and workers' comp insurance. We pull every required permit and pass every inspection — no exceptions.",
+      `Yes. We work under Florida Certified Plumbing Contractor license ${BUSINESS.license} and carry full general liability and workers' comp insurance. We pull every required permit and pass every inspection — no exceptions.`,
   },
   {
     question: "What plumbing services do you offer?",
@@ -35,28 +37,15 @@ export const HOME_FAQS: FAQ[] = [
   },
 ];
 
+/** The home FAQ as a native accordion, closed: every answer is in the HTML. The FAQPage JSON-LD stays in page.tsx. */
 export default function HomeFaq() {
   return (
-    <section className="py-16 sm:py-24 lg:py-28 bg-white">
-      <Container>
-        <SectionHeading
-          overline="FAQ"
-          title="Common Questions"
-          subtitle="Quick answers about service, coverage, and what to expect from C&S Plumbing of Lee."
-        />
-        <div className="mx-auto mt-10 grid max-w-4xl gap-x-10 gap-y-7 sm:grid-cols-2 sm:mt-12">
-          {HOME_FAQS.map((f) => (
-            <div key={f.question}>
-              <h3 className="text-base sm:text-lg font-bold text-gray-900">
-                {f.question}
-              </h3>
-              <p className="mt-2 text-sm sm:text-base leading-relaxed text-gray-500">
-                {f.answer}
-              </p>
-            </div>
-          ))}
-        </div>
-      </Container>
-    </section>
+    <div>
+      <HomeHeading id="home-faq-title" eyebrow={faq.overline} title={faq.title} subtitle={faq.subtitle} subtitleHidden="phone" size="sm" />
+      <FaqAccordion faqs={HOME_FAQS} name="home-faq" className="mt-6" />
+      <ArrowLink href={faq.allLink.href} className="mt-4">
+        {faq.allLink.label}
+      </ArrowLink>
+    </div>
   );
 }

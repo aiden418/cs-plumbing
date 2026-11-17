@@ -1,20 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState, type FormEvent } from "react";
 import { CLAIMS } from "@/lib/claims";
-import { motion } from "framer-motion";
-import {
-  CheckCircle,
-  ShieldCheck,
-  RotateCcw,
-  Send,
-  Phone,
-  CalendarCheck,
-} from "lucide-react";
+import { Check, ShieldCheck, RotateCcw, Send, Phone, CalendarCheck } from "lucide-react";
 import Button from "@/components/ui/Button";
-import { BUSINESS } from "@/lib/constants";
-import { cn } from "@/lib/utils";
+import { Field, FormStatus, FormattedInput } from "@/components/forms";
+import { BUSINESS } from "@/lib/business";
 import { trackQuoteBuilder } from "@/lib/pixel";
+import { QUOTE } from "@/content/conversion";
 import type {
   QuoteResult as QuoteResultType,
   WaterHeaterSelections,
@@ -28,28 +21,11 @@ interface QuoteResultProps {
   onReset: () => void;
 }
 
-const INCLUDED_ITEMS = {
-  "water-heater": [
-    "Professional installation by a licensed plumber",
-    "Old unit removal & disposal",
-    "All required permits & inspections",
-    "Post-install cleanup",
-    "Warranty coverage as selected",
-  ],
-  repipe: [
-    "All materials & labor",
-    "Permit & inspections",
-    CLAIMS.repipeRestoration,
-    "Post-install cleanup",
-    "Pressure testing & inspection",
-  ],
-};
+type LeadErrors = Partial<Record<keyof LeadCaptureData, string>>;
 
-export default function QuoteResult({
-  result,
-  selections,
-  onReset,
-}: QuoteResultProps) {
+const T = QUOTE.result;
+
+export default function QuoteResult({ result, selections, onReset }: QuoteResultProps) {
   const [showForm, setShowForm] = useState(false);
   const [lead, setLead] = useState<LeadCaptureData>({
     name: "",
@@ -58,10 +34,15 @@ export default function QuoteResult({
   });
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [errors, setErrors] = useState<LeadErrors>({});
   const [website, setWebsite] = useState(""); // honeypot
+  const statusRef = useRef<HTMLDivElement>(null);
+  const firstFieldRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = async () => {
     setSubmitting(true);
+    setSubmitError(null);
     try {
       const res = await fetch("/api/quote", {
         method: "POST",
@@ -82,122 +63,131 @@ export default function QuoteResult({
       void trackQuoteBuilder({ email: lead.email, eventId: data.eventId });
       setSubmitted(true);
     } catch {
-      alert("Something went wrong. Please call us directly.");
+      setSubmitError(T.error);
     } finally {
       setSubmitting(false);
+      requestAnimationFrame(() => statusRef.current?.focus());
     }
   };
 
-  const canSubmit = lead.name.length >= 2 && lead.email.includes("@") && lead.phone.length >= 7;
+  // The same rules as before; now each one is explained beside its field.
+  const submit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (submitting) return;
+    const found: LeadErrors = {};
+    if (lead.name.length < 2) found.name = T.errors.name;
+    if (!lead.email.includes("@")) found.email = T.errors.email;
+    if (lead.phone.length < 7) found.phone = T.errors.phone;
+    setErrors(found);
+    const first = (Object.keys(found) as (keyof LeadCaptureData)[])[0];
+    if (first) {
+      document.getElementById(`quote-lead-${first}`)?.focus();
+      return;
+    }
+    void handleSubmit();
+  };
+
+  const setField = (key: keyof LeadCaptureData, value: string) => {
+    setLead((p) => ({ ...p, [key]: value }));
+    if (errors[key]) setErrors((p) => ({ ...p, [key]: undefined }));
+  };
+
+  const money = (n: number) => `$${n.toLocaleString()}`;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.4 }}
-      className="bg-white rounded-2xl border border-gray-200 p-4 sm:p-6 lg:p-8"
+    <div
+      data-tone="white"
+      className="grid grid-cols-1 gap-y-10 rounded-frame border border-rule bg-white p-5 text-body sm:p-8 lg:grid-cols-12 lg:gap-x-10 lg:p-10"
     >
-      {/* Header */}
-      <div className="text-center mb-6 sm:mb-8">
-        <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">
-          Your preliminary estimate
-        </h2>
-        <p className="text-sm text-gray-500">
-          Most homeowners in Lee County pay
+      {/* The estimate */}
+      <div className="min-w-0 lg:col-span-7">
+        <h2 className="text-display-sm text-fg">{T.heading}</h2>
+        <p className="mt-4 text-body">{T.lead}</p>
+        <p className="mt-1 font-display text-display-md font-bold text-fg tabular-nums">
+          {money(result.total.min)} – {money(result.total.max)}
+        </p>
+        <p className="mt-4 inline-flex items-center gap-2 font-semibold text-success-ink">
+          <ShieldCheck aria-hidden="true" className="size-5" />
+          {T.verification}
         </p>
 
-        {/* Price range */}
-        <div className="text-4xl sm:text-5xl font-black text-gray-900 my-4 sm:my-6">
-          ${result.total.min.toLocaleString()} – ${result.total.max.toLocaleString()}
-        </div>
-
-        {/* Field verification badge */}
-        <div className="inline-flex items-center gap-2 bg-green-50 text-green-700 px-4 py-2 rounded-full text-xs sm:text-sm font-medium">
-          <ShieldCheck className="w-4 h-4" />
-          Free on-site verification included
-        </div>
-      </div>
-
-      {/* Line items */}
-      <div className="border-t border-gray-100 pt-4 sm:pt-6 mb-4 sm:mb-6">
-        <h3 className="text-sm font-semibold text-gray-900 mb-3">Price Breakdown</h3>
-        <div className="space-y-2">
+        <h3 className="mt-8 text-lg font-semibold text-fg">{T.breakdown}</h3>
+        <dl className="mt-3 border-b border-rule">
           {result.lineItems.map((item, i) => (
-            <div
-              key={i}
-              className="flex items-center justify-between text-xs sm:text-sm"
-            >
-              <span className="text-gray-600">{item.label}</span>
-              <span className="font-medium text-gray-900">
+            <div key={i} className="flex items-baseline justify-between gap-6 border-t border-rule py-3">
+              <dt className="text-body">{item.label}</dt>
+              <dd className="shrink-0 font-semibold text-fg tabular-nums">
                 {item.range.min === item.range.max
-                  ? `$${Math.abs(item.range.min).toLocaleString()}${item.range.min < 0 ? " credit" : ""}`
-                  : `$${item.range.min.toLocaleString()} – $${item.range.max.toLocaleString()}`}
-              </span>
+                  ? `${money(Math.abs(item.range.min))}${item.range.min < 0 ? T.credit : ""}`
+                  : `${money(item.range.min)} – ${money(item.range.max)}`}
+              </dd>
             </div>
           ))}
-        </div>
-      </div>
+        </dl>
 
-      {/* What's included */}
-      <div className="bg-[#F5F5F7] rounded-xl p-4 sm:p-5 mb-4 sm:mb-6">
-        <h3 className="text-sm font-semibold text-gray-900 mb-3">What&apos;s Included</h3>
-        <ul className="space-y-2">
-          {INCLUDED_ITEMS[result.service].map((item, i) => (
-            <li key={i} className="flex items-start gap-2 text-xs sm:text-sm text-gray-600">
-              <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
-              {item}
-            </li>
-          ))}
-        </ul>
-      </div>
+        {/* Notes */}
+        {result.notes.length > 0 && (
+          <div className="mt-5 space-y-1">
+            {result.notes.map((note, i) => (
+              <p key={i} className="text-[0.9375rem] text-body">
+                {note}
+              </p>
+            ))}
+          </div>
+        )}
 
-      {/* Notes */}
-      {result.notes.length > 0 && (
-        <div className="mb-6 sm:mb-8">
-          {result.notes.map((note, i) => (
-            <p key={i} className="text-[10px] sm:text-xs text-gray-400 mb-1">
-              {note}
-            </p>
-          ))}
-        </div>
-      )}
-
-      {/* Disclaimer */}
-      <div className="bg-blue-50 border border-blue-100 rounded-xl p-4 mb-6 sm:mb-8">
-        <p className="text-xs sm:text-sm text-blue-700 leading-relaxed">
+        {/* Disclaimer */}
+        <p className="mt-6 rounded-control bg-shell p-4 text-[0.9375rem] leading-relaxed text-body">
           {CLAIMS.estimateDisclaimer}
         </p>
       </div>
 
-      {/* Lead capture */}
-      {!submitted ? (
-        <>
-          {!showForm ? (
+      {/* What's included + next step */}
+      <div className="min-w-0 lg:col-span-5">
+        <h3 className="text-lg font-semibold text-fg">{T.included}</h3>
+        <ul className="mt-3 border-b border-rule">
+          {QUOTE.included[result.service].map((item, i) => (
+            <li key={i} className="flex items-start gap-3 border-t border-rule py-3 leading-snug text-body">
+              <Check aria-hidden="true" className="mt-1 size-4 shrink-0 text-success-ink" />
+              {item}
+            </li>
+          ))}
+        </ul>
+
+        <div className="mt-8">
+          {submitted ? (
+            <FormStatus
+              ref={statusRef}
+              tabIndex={-1}
+              status="success"
+              title={T.sentTitle}
+              actions={
+                <Button href={BUSINESS.phoneHref} variant="secondary" icon={<Phone className="size-5" />} size="sm">
+                  Call {BUSINESS.phone}
+                </Button>
+              }
+            >
+              {T.sentBody}
+            </FormStatus>
+          ) : !showForm ? (
             <div className="flex flex-col gap-3">
-              <button
-                onClick={() => setShowForm(true)}
-                className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-primary text-white font-semibold text-sm hover:bg-primary-dark transition-all duration-300"
-              >
-                <Send className="w-4 h-4" /> Email Me This Quote
-              </button>
               <Button
-                href="/booking"
-                variant="secondary"
-                icon={<CalendarCheck className="w-4 h-4" />}
-                className="w-full justify-center"
+                onClick={() => {
+                  setShowForm(true);
+                  requestAnimationFrame(() => firstFieldRef.current?.focus());
+                }}
+                icon={<Send aria-hidden="true" className="size-5" />}
+                fullWidth
               >
-                Schedule Your Free Visit
+                {T.emailQuote}
+              </Button>
+              <Button href="/booking" variant="secondary" icon={<CalendarCheck className="size-5" />} fullWidth>
+                {T.schedule}
               </Button>
             </div>
           ) : (
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="space-y-3"
-            >
-              <p className="text-sm font-semibold text-gray-900">
-                We&apos;ll email you this quote — no spam, ever.
-              </p>
+            <form noValidate onSubmit={submit} className="space-y-4">
+              <p className="font-semibold text-fg">{T.formIntro}</p>
               {/* Honeypot — hidden from real users */}
               <input
                 type="text"
@@ -208,74 +198,44 @@ export default function QuoteResult({
                 onChange={(e) => setWebsite(e.target.value)}
                 className="absolute -left-[9999px] w-px h-px opacity-0"
               />
-              <input
-                value={lead.name}
-                onChange={(e) => setLead((p) => ({ ...p, name: e.target.value }))}
-                placeholder="Your name"
-                className="w-full bg-white border border-gray-200 rounded-xl px-3 sm:px-4 py-2.5 sm:py-3 text-gray-900 text-sm outline-none focus:border-primary transition-colors"
-              />
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <input
+              <Field id="quote-lead-name" label={T.nameLabel} required error={errors.name}>
+                <FormattedInput
+                  ref={firstFieldRef}
+                  preset="name"
+                  value={lead.name}
+                  onChange={(e) => setField("name", e.target.value)}
+                />
+              </Field>
+              <Field id="quote-lead-email" label={T.emailLabel} required error={errors.email}>
+                <FormattedInput
+                  preset="email"
                   value={lead.email}
-                  onChange={(e) => setLead((p) => ({ ...p, email: e.target.value }))}
-                  placeholder="Email"
-                  type="email"
-                  className="w-full bg-white border border-gray-200 rounded-xl px-3 sm:px-4 py-2.5 sm:py-3 text-gray-900 text-sm outline-none focus:border-primary transition-colors"
+                  onChange={(e) => setField("email", e.target.value)}
                 />
-                <input
+              </Field>
+              <Field id="quote-lead-phone" label={T.phoneLabel} required error={errors.phone}>
+                <FormattedInput
+                  preset="tel"
+                  enterKeyHint="send"
                   value={lead.phone}
-                  onChange={(e) => setLead((p) => ({ ...p, phone: e.target.value }))}
-                  placeholder="Phone"
-                  type="tel"
-                  className="w-full bg-white border border-gray-200 rounded-xl px-3 sm:px-4 py-2.5 sm:py-3 text-gray-900 text-sm outline-none focus:border-primary transition-colors"
+                  onChange={(e) => setField("phone", e.target.value)}
                 />
-              </div>
-              <button
-                onClick={handleSubmit}
-                disabled={!canSubmit || submitting}
-                className={cn(
-                  "w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300",
-                  canSubmit && !submitting
-                    ? "bg-primary text-white hover:bg-primary-dark"
-                    : "bg-[#F5F5F7] text-gray-400 cursor-not-allowed"
-                )}
-              >
-                {submitting ? "Sending..." : "Send My Quote"}
-              </button>
-            </motion.div>
+              </Field>
+              {submitError && <FormStatus ref={statusRef} tabIndex={-1} status="error" title={submitError} />}
+              <Button type="submit" loading={submitting} icon={<Send aria-hidden="true" className="size-5" />} fullWidth>
+                {submitting ? T.sending : T.send}
+              </Button>
+            </form>
           )}
-        </>
-      ) : (
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="text-center py-4"
-        >
-          <CheckCircle className="w-12 h-12 text-green-500 mx-auto mb-3" />
-          <p className="text-sm font-semibold text-gray-900 mb-1">Quote sent!</p>
-          <p className="text-xs text-gray-500 mb-4">
-            Check your email. We&apos;ll be in touch shortly.
-          </p>
-          <Button
-            href={`tel:${BUSINESS.phoneRaw}`}
-            variant="secondary"
-            icon={<Phone className="w-4 h-4" />}
-            size="sm"
-          >
-            Call {BUSINESS.phone}
-          </Button>
-        </motion.div>
-      )}
+        </div>
 
-      {/* Start over */}
-      <div className="mt-6 pt-4 border-t border-gray-100 text-center">
-        <button
-          onClick={onReset}
-          className="text-xs sm:text-sm text-gray-500 hover:text-gray-900 inline-flex items-center gap-1 transition-colors"
-        >
-          <RotateCcw className="w-3 h-3" /> Start Over
-        </button>
+        {/* Start over */}
+        <div className="mt-8 border-t border-rule pt-4">
+          <Button variant="ghost" onClick={onReset} icon={<RotateCcw aria-hidden="true" className="size-4" />} iconRight={<></>}>
+            {T.startOver}
+          </Button>
+        </div>
       </div>
-    </motion.div>
+    </div>
   );
 }

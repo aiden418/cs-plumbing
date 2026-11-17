@@ -1,0 +1,36 @@
+{
+  "photo-1.jpg": {
+    "alt": "PVC DWV stub-ups and a poly water service laid in sandy trenches along the poured stem wall",
+    "order": 1
+  },
+  "photo-2.jpg": {
+    "alt": "PVC drain run bedded in a sandy trench inside the formed stem wall of an elevated home pad",
+    "order": 2
+  },
+  "photo-3.jpg": {
+    "alt": "Plumber fitting a PVC riser and elbow at the formed stem wall of a FEMA elevated home rebuild",
+    "order": 3,
+    "cover": true,
+    "position": "50% 54.6%"
+  },
+  "photo-4.jpg": {
+    "alt": "Primed PVC stub-ups and taped risers set in trenched sandy fill ahead of the slab pour",
+    "order": 4
+  },
+  "photo-5.jpg": {
+    "alt": "PVC drain stub-ups along the poured stem wall with loose pipe lengths staged on the sandy pad",
+    "order": 5
+  },
+  "photo-6.jpg": {
+    "alt": "Open trenches cut through sandy fill inside stem wall forms before the underground DWV goes in",
+    "order": 6
+  },
+  "photo-7.jpg": {
+    "alt": "PVC drain stub-ups beside the poured stem wall in sandy fill of a Punta Gorda elevated home pad",
+    "order": 7
+  },
+  "photo-8.jpg": {
+    "alt": "PVC DWV stub-ups and drain run laid in sandy fill along the stem wall before the slab pour",
+    "order": 8
+  }
+}

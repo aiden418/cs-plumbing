@@ -1,12 +1,15 @@
+import { leadAttributionHtml } from "@/lib/api/lead-attribution-email";
 import { NextResponse, after } from "next/server";
 import { CLAIMS } from "@/lib/claims";
 import { Resend } from "resend";
-import { z } from "zod";
+import { parseQuoteSubmission } from "@/lib/quote-submission";
 import {
   ADMIN_EMAIL,
   escapeHtml,
+  forbiddenOrigin,
   getClientIp,
   isHoneypotTripped,
+  isTrustedOrigin,
   rateLimit,
   sendEmailBestEffort,
   sendEmailOrThrow,
@@ -19,55 +22,29 @@ import {
   reportConversion,
 } from "@/lib/openai-ads-capi";
 import { TERMS_URL, TERMS_VERSION } from "@/lib/terms-meta";
+import { BUSINESS } from "@/lib/business";
 
-// Bounds are sized to what the quote engine can legitimately produce (see
-// src/lib/quote-pricing.ts). This public endpoint renders caller-supplied text
-// into a C&S-branded email sent to the caller-supplied address — anything
-// larger than these caps is abuse, not a real quote.
-const MoneySchema = z.number().finite().min(-100_000).max(1_000_000);
-const RangeSchema = z.object({ min: MoneySchema, max: MoneySchema });
-
-const QuoteSchema = z.object({
-  service: z.enum(["water-heater", "repipe"]),
-  selections: z
-    .record(z.string().max(64), z.unknown())
-    .refine((obj) => Object.keys(obj).length <= 24, "Too many selections"),
-  result: z.object({
-    total: RangeSchema,
-    lineItems: z
-      .array(
-        z.object({
-          label: z.string().max(120),
-          range: RangeSchema,
-        })
-      )
-      .max(24),
-    notes: z.array(z.string().max(500)).max(12),
-  }),
-  lead: z.object({
-    name: z.string().min(2).max(100),
-    email: z.string().email().max(200),
-    phone: z.string().min(7).max(30),
-  }),
-  sourcePath: z.string().max(200).optional(),
-  website: z.string().optional(),
-});
+// The estimate is recomputed on the server from the shopper's selections
+// (src/lib/quote-submission.ts). This public endpoint renders text into a
+// C&S-branded email sent to the caller-supplied address, so no number or line
+// of text in that email may come from the request body itself.
 
 export async function POST(request: Request) {
   try {
     const ip = getClientIp(request);
     const rl = rateLimit(ip);
     if (!rl.ok) return tooManyRequests(rl.retryAfter);
+    if (!isTrustedOrigin(request)) return forbiddenOrigin();
 
     const json = await request.json();
-    const parsed = QuoteSchema.safeParse(json);
-    if (!parsed.success) {
+    const parsed = parseQuoteSubmission(json);
+    if (!parsed.ok) {
       return NextResponse.json(
         { error: "Invalid submission" },
         { status: 400 }
       );
     }
-    const { service, selections, result, lead, sourcePath, website } = parsed.data;
+    const { service, selections, result, lead, sourcePath, website } = parsed.quote;
 
     if (isHoneypotTripped(website)) {
       return NextResponse.json({ success: true });
@@ -80,6 +57,8 @@ export async function POST(request: Request) {
         { status: 500 }
       );
     }
+    const eventId = newConversionId();
+    const attributionHtml = leadAttributionHtml(request, eventId);
     const resend = new Resend(process.env.RESEND_API_KEY);
     const serviceLabel = service === "water-heater" ? "Water Heater" : "Whole-Home Repipe";
 
@@ -128,6 +107,7 @@ export async function POST(request: Request) {
             <h1 style="color: #0099FF; margin: 0;">New Quote Request</h1>
           </div>
           <div style="padding: 20px; background: #f9f9f9;">
+            ${attributionHtml}
             <h3 style="color: #333; border-bottom: 2px solid #0099FF; padding-bottom: 8px;">Customer Info</h3>
             <p><strong>Name:</strong> ${safeLead.name}</p>
             <p><strong>Email:</strong> <a href="mailto:${safeLead.email}">${safeLead.email}</a></p>
@@ -193,11 +173,11 @@ export async function POST(request: Request) {
             </div>
 
             <p style="color: #666; font-size: 14px;">
-              Or call us anytime: <a href="tel:8337586248" style="color: #0099FF;">833-PLUMB-IT</a>
+              Or call us anytime: <a href="${BUSINESS.phoneHref}" style="color: #0099FF;">${BUSINESS.phone}</a>
             </p>
 
             <p style="color: #999; font-size: 12px; margin-top: 20px;">
-              C&S Plumbing of Lee · License #CFC1432485 · 951 Pondella Rd, North Fort Myers, FL 33903
+              C&S Plumbing of Lee · License #${BUSINESS.license} · ${BUSINESS.address}, ${BUSINESS.city}, ${BUSINESS.state} ${BUSINESS.zip}
             </p>
             <p style="color: #999; font-size: 12px; margin-top: 8px;">
               Estimates are subject to our Terms &amp; Conditions (rev. ${TERMS_VERSION}):
@@ -217,7 +197,6 @@ export async function POST(request: Request) {
       }, "quote SMS notification");
     }
 
-    const eventId = newConversionId();
     const context = captureRequestContext(request);
     after(() =>
       reportConversion({ type: "lead_created", id: eventId, context, sourcePath, email: lead.email })

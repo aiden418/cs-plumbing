@@ -1,7 +1,6 @@
 import { createOgImage, ogImageContentType, ogImageSize } from "@/lib/og";
 import { perYear } from "@/lib/pricing";
 
-export const runtime = "edge";
 export const size = ogImageSize;
 export const contentType = ogImageContentType;
 export const alt = "Coastal Comeback Plan — C&S Plumbing of Lee";

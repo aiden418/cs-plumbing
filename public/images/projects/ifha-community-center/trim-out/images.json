@@ -1,0 +1,96 @@
+{
+  "photo-0.jpg": {
+    "alt": "Elkay stainless steel drop-in sink with single-handle faucet trimmed out on a laminate counter",
+    "order": 1,
+    "featured": true
+  },
+  "photo-1.jpg": {
+    "alt": "Stainless single-bowl sink with basket strainer and single-lever faucet on a marble-look laminate top",
+    "order": 2
+  },
+  "photo-2.jpg": {
+    "alt": "Double-bowl stainless kitchen sink with gooseneck faucet and wrist-blade handles at IFHA Community Center",
+    "order": 3,
+    "featured": true
+  },
+  "photo-3.jpg": {
+    "alt": "Floor-mount flush-valve toilet with the Sloan flushometer still boxed for protection in a tiled restroom",
+    "order": 4
+  },
+  "photo-4.jpg": {
+    "alt": "Corner-set floor-mount toilet with exposed flush valve and protective wrap in a gray tile restroom",
+    "order": 5
+  },
+  "photo-5.jpg": {
+    "alt": "Oval drop-in lavatory set in an ADA vanity top before faucet installation, gray tile wall",
+    "order": 6
+  },
+  "photo-6.jpg": {
+    "alt": "Two oval drop-in lavatories in an accessible vanity counter awaiting faucet trim",
+    "order": 7
+  },
+  "photo-7.jpg": {
+    "alt": "Exterior sewer cleanout riser and PVC stub at the building foundation before final grading in Lee County",
+    "order": 8
+  },
+  "photo-35.jpg": {
+    "alt": "Wall-hung lavatory and floor-mount flush-valve toilet with grab bars, floor drain awaiting its strainer",
+    "order": 9
+  },
+  "photo-36.jpg": {
+    "alt": "Two Kohler wall-hung urinals with exposed flush valves and a privacy screen in a tiled restroom",
+    "order": 10,
+    "featured": true
+  },
+  "photo-37.jpg": {
+    "alt": "Oval lavatory with single-hole faucet trimmed on an accessible vanity beneath a mirror",
+    "order": 11
+  },
+  "photo-38.jpg": {
+    "alt": "PVC P-trap, angle stops and flexible supplies with a mixing valve under an accessible lavatory",
+    "order": 12
+  },
+  "photo-39.jpg": {
+    "alt": "Pair of oval lavatories with single-hole faucets trimmed on an accessible vanity counter",
+    "order": 13
+  },
+  "photo-40.jpg": {
+    "alt": "Under-counter view of twin PVC P-traps, angle stops and insulated trap wrap on ADA lavatories",
+    "order": 14
+  },
+  "photo-41.jpg": {
+    "alt": "Wall-hung lavatory with faucet and PVC P-trap trimmed out beside a hand dryer rough-in",
+    "order": 15
+  },
+  "photo-42.jpg": {
+    "alt": "Floor-mount flush-valve toilet with open-front seat and stainless grab bars in an accessible stall",
+    "order": 16,
+    "featured": true
+  },
+  "photo-43.jpg": {
+    "alt": "Flush-valve toilet installed inside a partitioned stall with gray tile walls and floor",
+    "order": 17
+  },
+  "photo-44.jpg": {
+    "alt": "Floor-mount flush-valve toilet in a tiled stall with the floor drain still awaiting its strainer",
+    "order": 18
+  },
+  "photo-45.jpg": {
+    "alt": "Double-bowl stainless sink with gooseneck faucet, basket strainers set, counter covered with drawings",
+    "order": 19
+  },
+  "photo-46.jpg": {
+    "alt": "PVC P-trap and end-outlet continuous waste with braided supplies under a double-bowl sink cabinet",
+    "order": 20,
+    "featured": true
+  },
+  "photo-47.jpg": {
+    "alt": "Electric water heater on a wall bracket with CPVC piping, expansion tank and T&P discharge line",
+    "order": 21
+  },
+  "photo-48.jpg": {
+    "alt": "Precast mop sink with wall-mount service faucet and water heater relief line terminating above the basin",
+    "order": 22,
+    "featured": true
+  }
+}

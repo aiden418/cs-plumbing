@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import PageTransition from "@/components/layout/PageTransition";
 import AreaLandingTemplate from "@/components/areas/AreaLandingTemplate";
+import { cityProofProjects } from "@/lib/projects-data";
 import AreaServiceLinks from "@/components/areas/AreaServiceLinks";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import CTASection from "@/components/home/CTASection";
@@ -22,16 +22,16 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <PageTransition>
+    <>
       <BreadcrumbJsonLd
         items={[
           { name: "Home", href: "/" },
           { name: landing.city, href: `/areas/${landing.slug}` },
         ]}
       />
-      <AreaLandingTemplate landing={landing} />
+      <AreaLandingTemplate landing={landing} proofProjects={cityProofProjects(landing.city)} />
       <AreaServiceLinks landing={landing} />
       <CTASection />
-    </PageTransition>
+    </>
   );
 }

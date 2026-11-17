@@ -10,7 +10,7 @@ a placeholder in its place.
 |---|---|---|
 | Founding | Founded 1998 in Cape Coral by brothers Chris and Sam with their father; "Family owned and operated since 1998" | sitewide |
 | Project counts | 9,500+ new construction homes plumbed; 3,500+ homes repiped — owner-reported, kept separate, never combined | `BUSINESS.homesCompleted`, `BUSINESS.repipesCompleted` |
-| Contractor ranking | "Top 5% of Florida licensed contractors on BuildZoom" — third-party, linked, checked 2026-09-29 | `CONTRACTOR_RANKING` in constants.ts |
+| Contractor ranking | Removed from the site on 2026-11-16. After the profile was claimed (2026-11-13) BuildZoom shows "score of 0 does not rank in the top 50%", so "Top 5% of Florida licensed contractors" no longer has a source. Put it back only when the profile shows the ranking again, with the verbatim quote and the date checked. | removed (`CONTRACTOR_RANKING` deleted from constants.ts) |
 | Per-phase turnaround | No durations. "Phase schedules are coordinated with your superintendent…" | `PHASE_SCHEDULE_NOTE` |
 | Capacity | No homes/month or crew count. "Contact our estimating team to discuss upcoming starts…" | `SCHEDULING_NOTE` |
 | Coverage | "Southwest Florida, from Port Charlotte through Naples" (coverage, not permit jurisdictions) | `SERVICE_COVERAGE` |
@@ -25,7 +25,7 @@ a placeholder in its place.
 | Item | Where it goes | Notes |
 |---|---|---|
 | W-9 exact legal-name match | prequal packet "Legal name" row, Terms clause 1.1 | Owner states Draft Plumbing Corp; an older Sunbiz record reads C & S PLUMBING OF LEE, INC. Confirm the signed W-9 and the DBPR record for CFC1432485 match Draft Plumbing Corp |
-| BuildZoom profile housekeeping | external | Profile still shows the former Cape Coral address (1011 SE 12th Ct) and only CFC057076; claim/update it so the linked source matches the site |
+| BuildZoom profile housekeeping | external | Profile still shows the former Cape Coral address (1011 SE 12th Ct) and only CFC057076; claim/update it so the linked source matches the site Update 2026-11-16: claimed; address now 951 Pondella Rd and the profile links to the site; phone still (239) 458-9223, only CFC057076 listed, score reads 0; BuildZoom asked for a signed referral agreement by email on 2026-11-14. |
 | Production `ADMIN_EMAIL` | Vercel env | Intended destination is office@csplumbinglee.com (code default). Not verified: `vercel login` then `vercel env ls production` |
 | Production bid-form test | /builders#bid after deploy; /builder-portal today | Owner submits a labeled test; confirm admin email, SMS gateway copy, and submitter confirmation arrive |
 | Hangar 97 completion date | `COMPLETED_PROJECTS[hangar-97].completedOn` | Marked Completed per owner; date unset. Trim/final phases not photographed — confirm performed before listing |

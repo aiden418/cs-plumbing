@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
-import { AREA_LANDINGS, BLOG_POSTS, COMPLETED_PROJECTS } from "@/lib/constants";
+import { AREA_LANDINGS, BLOG_POSTS } from "@/lib/constants";
+import { COMPLETED_PROJECTS } from "@/lib/projects-data";
 import { GALLERY_ITEMS } from "@/lib/gallery-data";
 import { isProjectComplete, projectImages, projectLastModified } from "@/lib/projects";
 import { INDEXED_LANDINGS } from "@/lib/landing-indexing";

@@ -1,0 +1,30 @@
+{
+  "photo-1.webp": {
+    "alt": "Green septic tank and black pump chamber set in the excavation beside the new home, with the excavator bucket alongside",
+    "order": 4
+  },
+  "photo-2.webp": {
+    "alt": "Septic tank lowered into its excavation behind the house while the crew checks the inlet pipe",
+    "order": 2
+  },
+  "photo-3.webp": {
+    "alt": "Mini excavator digging the hole for the septic tank beside the house",
+    "order": 1
+  },
+  "photo-4.webp": {
+    "alt": "Two crew members setting the black pump chamber next to the septic tank",
+    "order": 3
+  },
+  "photo-5.webp": {
+    "alt": "Rows of black plastic drainfield chambers laid out in front of the new home's porch",
+    "order": 6
+  },
+  "photo-6.webp": {
+    "alt": "Chamber drainfield laid out in the front yard of the new gray home",
+    "order": 7
+  },
+  "photo-7.webp": {
+    "alt": "Drainfield chambers connected to a header of green and white PVC pipe, with the neighborhood street beyond",
+    "order": 5
+  }
+}

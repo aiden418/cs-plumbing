@@ -1,0 +1,64 @@
+[
+  {
+    "file": "/videos/hero/hero-portrait.hevc.2c9b71af.mp4",
+    "audience": "portrait-phone",
+    "width": 608,
+    "height": 1080,
+    "codec": "hvc1.1.6.L93.B0",
+    "type": "video/mp4; codecs=\"hvc1.1.6.L93.B0\"",
+    "bytes": 734511,
+    "sha256": "2c9b71af364fb929de7e3be63b082e1485813359839659d161029d65077fae2e",
+    "durationSeconds": 10,
+    "cropCenterX": 0.58,
+    "recipe": "caafadd048c2"
+  },
+  {
+    "file": "/videos/hero/hero-portrait.h264.e6bca365.mp4",
+    "audience": "portrait-phone",
+    "width": 608,
+    "height": 1080,
+    "codec": "avc1.64001F",
+    "type": "video/mp4; codecs=\"avc1.64001F\"",
+    "bytes": 1172526,
+    "sha256": "e6bca3650c5ab6655d91358b8c936f6a586fd600c6b32d0b9a3d3200c750d1de",
+    "durationSeconds": 10,
+    "cropCenterX": 0.58,
+    "recipe": "6e220a88fb90"
+  },
+  {
+    "file": "/videos/hero/hero-mid.hevc.dff8b6d2.mp4",
+    "audience": "up-to-1023",
+    "width": 1280,
+    "height": 720,
+    "codec": "hvc1.1.6.L93.B0",
+    "type": "video/mp4; codecs=\"hvc1.1.6.L93.B0\"",
+    "bytes": 895579,
+    "sha256": "dff8b6d2b9859d08c165fbb412f217bef930d7f6de9ee23a6e201ab8c1d81f62",
+    "durationSeconds": 10,
+    "recipe": "6e985b135a45"
+  },
+  {
+    "file": "/videos/hero/hero-mid.h264.49cb3c41.mp4",
+    "audience": "up-to-1023",
+    "width": 1280,
+    "height": 720,
+    "codec": "avc1.64001F",
+    "type": "video/mp4; codecs=\"avc1.64001F\"",
+    "bytes": 1358881,
+    "sha256": "49cb3c41946161e1d578272b205d53461775f5697cf8aacbb5f8e6b62b6e4805",
+    "durationSeconds": 10,
+    "recipe": "ed360760aca3"
+  },
+  {
+    "file": "/videos/hero-loop.mp4",
+    "audience": "desktop",
+    "width": 1920,
+    "height": 1080,
+    "codec": "avc1.640032",
+    "type": "video/mp4; codecs=\"avc1.640032\"",
+    "bytes": 2266876,
+    "sha256": "4d0630826a9adb8a7ffca80fb0902d1eddf7a3a61df40b32ea11ecf6c1b61615",
+    "durationSeconds": 10,
+    "original": true
+  }
+]

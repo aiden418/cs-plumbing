@@ -1,155 +1,100 @@
-"use client";
-
 import Link from "next/link";
-import Image from "next/image";
-import { motion } from "framer-motion";
-import { ArrowRight, Award, Hammer } from "lucide-react";
 import Container from "@/components/ui/Container";
-import ScrollReveal from "@/components/animations/ScrollReveal";
-import { COMPLETED_PROJECTS } from "@/lib/constants";
+import Eyebrow from "@/components/ui/Eyebrow";
+import Section from "@/components/ui/Section";
+import { ArrowRight } from "@/components/ui/icons";
+import ProjectCard from "@/components/explorer/ProjectCard";
+import { AREA_COPY } from "@/content/areas";
+import { BUSINESS } from "@/lib/business";
+import { COMPLETED_PROJECTS } from "@/lib/projects-data";
+import type { ProjectCardData } from "@/lib/types";
+
+const copy = AREA_COPY.proof;
 
 interface CityProofBlockProps {
   cityName: string;
+  /** From cityProofProjects() in @/lib/projects-data, resolved by the server page. */
+  projects: ProjectCardData[];
+}
+
+function TextLink({ href, children }: { href: string; children: React.ReactNode }) {
+  return (
+    <Link
+      href={href}
+      className="group inline-flex min-h-11 items-center gap-2 font-semibold text-link underline-offset-[0.2em] hover:underline"
+    >
+      {children}
+      <ArrowRight className="size-5 transition-transform duration-150 group-hover:translate-x-0.5" />
+    </Link>
+  );
 }
 
 /**
- * Major-project proof for area pages. Pulls completed projects matching the
- * city (location field includes city name) and renders 2–4 project tiles.
- * Falls back to a generic stat tile when no project matches yet.
+ * Major-project proof for area pages: the city's documented projects as
+ * photo cards (a sideways row on phones, a grid from 640 px) with the client
+ * and photo count, then the homes-plumbed figure in one short row. When no
+ * project is recorded for the city yet, the same figure with the
+ * across-Lee-County note and the license. Server component.
  */
-export default function CityProofBlock({ cityName }: CityProofBlockProps) {
-  const projects = COMPLETED_PROJECTS.filter((p) =>
-    p.location?.toLowerCase().includes(cityName.toLowerCase())
-  ).slice(0, 3);
-
-  const hasProjects = projects.length > 0;
+export default function CityProofBlock({ cityName, projects }: CityProofBlockProps) {
+  // The page picks the projects; the tiles need the full records for their covers.
+  const records = projects
+    .map((card) => COMPLETED_PROJECTS.find((p) => p.slug === card.slug))
+    .filter((p): p is (typeof COMPLETED_PROJECTS)[number] => Boolean(p));
+  const hasProjects = records.length > 0;
 
   return (
-    <section className="py-16 sm:py-24 lg:py-28 bg-white">
+    <Section tone="white" spacing="sm" labelledBy="city-proof-heading">
       <Container>
-        <ScrollReveal>
-          <div className="max-w-3xl mb-8 sm:mb-12">
-            <span className="inline-block text-primary text-xs sm:text-sm font-semibold tracking-widest uppercase mb-3">
-              Local proof
-            </span>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 leading-tight">
-              Major projects we&apos;ve done in and around {cityName}
-            </h2>
-            <p className="text-gray-500 text-sm sm:text-base leading-relaxed">
-              New construction, repipes, remodels, and commercial work — the
-              kind of plumbing scope that defines a project, not a service call.
-            </p>
-          </div>
-        </ScrollReveal>
+        <div className="mb-8 max-w-3xl sm:mb-10">
+          <Eyebrow className="mb-3">{copy.eyebrow}</Eyebrow>
+          <h2 id="city-proof-heading" className="text-display-md text-fg">
+            {copy.heading(cityName)}
+          </h2>
+          <p className="mt-4 max-w-[56ch] text-lead text-body">{copy.lead}</p>
+        </div>
 
         {hasProjects ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            {projects.map((project, i) => (
-              <motion.div
-                key={project.slug}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.5, delay: i * 0.08 }}
-              >
-                <Link
-                  href={`/projects/${project.slug}`}
-                  className="group block h-full rounded-2xl overflow-hidden bg-[#F5F5F7] border border-gray-200 hover:border-primary/30 transition-all duration-500"
-                >
-                  <div className="relative aspect-[16/10] overflow-hidden">
-                    <Image
-                      src={project.coverImage}
-                      alt={`${project.name} — completed C&S Plumbing project`}
-                      fill
-                      className="object-cover group-hover:scale-[1.04] transition-transform duration-700"
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    />
-                    <div className="absolute inset-x-0 top-0 p-3">
-                      <span className="inline-block px-2.5 py-1 rounded-full bg-white/90 backdrop-blur-sm text-[10px] sm:text-xs font-semibold text-gray-900 uppercase tracking-wider">
-                        {project.category}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="p-5 sm:p-6">
-                    <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-1 leading-snug group-hover:text-primary transition-colors">
-                      {project.name}
-                    </h3>
-                    {project.location && (
-                      <p className="text-xs text-gray-500 mb-3">
-                        {project.location}
-                      </p>
-                    )}
-                    <span className="inline-flex items-center gap-1 text-xs sm:text-sm font-semibold text-primary">
-                      See the project
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </span>
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
+          <>
+            <ul className="area-tiles" aria-label={copy.heading(cityName)}>
+              {records.map((project) => (
+                <li key={project.slug}>
+                  <ProjectCard
+                    project={project}
+                    aspect="4/3"
+                    details
+                    sizes="(min-width: 1280px) 400px, (min-width: 1024px) 30vw, (min-width: 640px) 46vw, 82vw"
+                  />
+                </li>
+              ))}
+            </ul>
 
-            {/* Stats tile pinned alongside projects */}
-            <ScrollReveal delay={projects.length * 0.08}>
-              <div className="h-full rounded-2xl overflow-hidden bg-primary text-white p-6 sm:p-7 flex flex-col justify-between">
-                <div>
-                  <Award className="w-7 h-7 mb-4 opacity-90" />
-                  <p className="text-3xl sm:text-4xl font-black leading-none mb-2">
-                    9,500+
-                  </p>
-                  <p className="text-sm sm:text-base font-medium text-white/90">
-                    homes plumbed across Lee County since 1998
-                  </p>
-                </div>
-                <Link
-                  href="/projects"
-                  className="inline-flex items-center gap-1 text-xs sm:text-sm font-semibold text-white/90 hover:text-white mt-6"
-                >
-                  See all projects <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
-              </div>
-            </ScrollReveal>
-          </div>
+            <div className="mt-6 flex flex-col gap-1 border-t border-rule pt-5 sm:flex-row sm:items-center sm:justify-between sm:gap-8">
+              <p>
+                <span className="text-display-sm font-display font-bold text-fg tabular-nums">{copy.statFigure}</span>{" "}
+                <span className="ml-1 font-medium text-body">{copy.statCaption}</span>
+              </p>
+              <TextLink href="/projects">{copy.allProjects}</TextLink>
+            </div>
+          </>
         ) : (
           // Fallback: no completed-project record yet for this city
-          <ScrollReveal>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
-              <div className="md:col-span-2 rounded-2xl bg-[#F5F5F7] border border-gray-200 p-6 sm:p-8">
-                <Hammer className="w-7 h-7 text-primary mb-4" />
-                <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2">
-                  We&apos;ve built across Lee County since 1998
-                </h3>
-                <p className="text-sm sm:text-base text-gray-500 leading-relaxed mb-4">
-                  Cape Coral, Fort Myers, North Fort Myers, Bonita Springs,
-                  Estero, Naples, Lehigh Acres, and Sanibel — over 9,500 homes
-                  served by the same family-owned crew. New construction,
-                  repipes, remodels, and commercial.
-                </p>
-                <Link
-                  href="/projects"
-                  className="inline-flex items-center gap-1 text-sm font-semibold text-primary hover:underline"
-                >
-                  See completed projects
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
-              </div>
-              <div className="rounded-2xl bg-primary text-white p-6 sm:p-8 flex flex-col justify-between">
-                <div>
-                  <Award className="w-7 h-7 mb-4 opacity-90" />
-                  <p className="text-3xl sm:text-4xl font-black leading-none mb-2">
-                    9,500+
-                  </p>
-                  <p className="text-sm sm:text-base font-medium text-white/90">
-                    homes plumbed across Lee County
-                  </p>
-                </div>
-                <p className="text-xs text-white/80 mt-6">
-                  CFC1432485
-                </p>
+          <div className="grid grid-cols-1 gap-y-6 border-t border-rule pt-8 lg:grid-cols-12 lg:gap-x-10">
+            <div className="lg:col-span-7">
+              <h3 className="text-display-sm text-fg">{copy.fallbackHeading}</h3>
+              <p className="mt-4 max-w-[60ch] text-body">{copy.fallbackBody}</p>
+              <div className="mt-4">
+                <TextLink href="/projects">{copy.fallbackLink}</TextLink>
               </div>
             </div>
-          </ScrollReveal>
+            <div className="lg:col-span-4 lg:col-start-9">
+              <p className="text-display-md font-display font-bold text-fg tabular-nums">{copy.statFigure}</p>
+              <p className="mt-2 font-medium text-body">{copy.fallbackStatCaption}</p>
+              <p className="mt-4 border-t border-rule pt-4 text-[0.9375rem] text-body">{BUSINESS.license}</p>
+            </div>
+          </div>
         )}
       </Container>
-    </section>
+    </Section>
   );
 }

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { EMERGENCY_CLAIMS } from "@/lib/claims";
-import PageTransition from "@/components/layout/PageTransition";
 import ServiceDetail from "@/components/services/ServiceDetail";
 import CTASection from "@/components/home/CTASection";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
@@ -8,6 +7,13 @@ import FaqJsonLd from "@/components/seo/FaqJsonLd";
 import RelatedProjects from "@/components/projects/RelatedProjects";
 import HubCityLinks from "@/components/service-city/HubCityLinks";
 import { projectsForHub } from "@/lib/projects";
+import { BUSINESS } from "@/lib/business";
+import Container from "@/components/ui/Container";
+import Section from "@/components/ui/Section";
+import FaqAccordion from "@/components/ui/FaqAccordion";
+import { Chapter } from "@/components/services/ServiceLandingTemplate";
+import { picture } from "@/lib/media";
+import { COMMERCIAL_PAGE as COPY } from "@/content/services";
 
 const commercialFaqs = [
   {
@@ -24,7 +30,7 @@ const commercialFaqs = [
   },
   {
     question: "Can you handle commercial plumbing permits in Lee County and Cape Coral?",
-    answer: "Yes. We manage all commercial plumbing permits through Lee County and the City of Cape Coral. Our licensed plumbing contractor (CFC1432485) handles the full permitting process including plan review, inspections, and final certificate of occupancy sign-off.",
+    answer: `Yes. We manage all commercial plumbing permits through Lee County and the City of Cape Coral. Our licensed plumbing contractor (${BUSINESS.license}) handles the full permitting process including plan review, inspections, and final certificate of occupancy sign-off.`,
   },
   {
     question: "Do you offer preventive maintenance contracts for commercial properties?",
@@ -42,7 +48,8 @@ const commercialFaqs = [
 
 export const metadata: Metadata = {
   alternates: { canonical: "/services/commercial" },
-  title: "Commercial Plumbing Services",
+  // Keyword map, cluster 11: the hub's title carries the two core cities.
+  title: { absolute: "Commercial Plumber Cape Coral & Fort Myers | C&S Plumbing" },
   description:
     "Commercial plumbing in Cape Coral, Fort Myers & Lee County — preventive maintenance, emergency repairs, grease traps and backflow prevention.",
   keywords: [
@@ -171,14 +178,19 @@ const highlights = [
 
 export default function CommercialPage() {
   return (
-    <PageTransition>
+    <>
       <ServiceDetail
         title="Commercial Services"
         heroText="Plumbing Solutions for Your Business"
         description="Businesses across Lee County rely on C&S Plumbing for efficient, code-compliant commercial plumbing services. From preventive maintenance to emergency repairs, we keep your operations flowing."
         services={commercialServices}
         highlights={highlights}
-        heroImage="/images/services/cards/commercial.jpg"
+        frame={picture("service.header.commercial")}
+        breadcrumb={[
+          { name: "Home", href: "/" },
+          { name: "Services", href: "/services" },
+          { name: "Commercial", href: "/services/commercial" },
+        ]}
       />
       {/* Documented commercial jobs — proof for the GC or property manager */}
       <RelatedProjects
@@ -194,46 +206,17 @@ export default function CommercialPage() {
         description="City pages for property managers and business owners in Cape Coral, Fort Myers and Naples."
       />
       {/* FAQ */}
-      <section className="py-16 sm:py-24 lg:py-32 bg-surface">
-        <div className="max-w-4xl mx-auto px-6 lg:px-8">
-          <div className="text-center mb-10 sm:mb-16">
-            <span className="inline-block text-primary text-xs sm:text-sm font-semibold tracking-widest uppercase mb-3 sm:mb-4">
-              FAQ
-            </span>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900">
-              Commercial Plumbing Questions
-            </h2>
-          </div>
-          <div className="space-y-4">
-            {commercialFaqs.map((faq, i) => (
-              <details
-                key={i}
-                className="group bg-white border border-gray-200 rounded-xl overflow-hidden"
-              >
-                <summary className="flex items-center justify-between cursor-pointer px-5 sm:px-6 py-4 sm:py-5 text-left text-base sm:text-lg font-semibold text-gray-900 hover:text-primary transition-colors">
-                  <span className="pr-4">{faq.question}</span>
-                  <svg
-                    className="w-5 h-5 shrink-0 text-gray-400 group-open:rotate-180 transition-transform duration-200"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                  </svg>
-                </summary>
-                <div className="px-5 sm:px-6 pb-5 sm:pb-6 text-gray-600 leading-relaxed">
-                  {faq.answer}
-                </div>
-              </details>
-            ))}
-          </div>
-        </div>
-      </section>
+      <Section tone="shell" spacing="sm" labelledBy="commercial-faq-heading">
+        <Container>
+          <Chapter id="commercial-faq-heading" overline={COPY.faqOverline} title={COPY.faqTitle}>
+            <FaqAccordion faqs={commercialFaqs} />
+          </Chapter>
+        </Container>
+      </Section>
 
       <BreadcrumbJsonLd items={[{ name: "Home", href: "/" }, { name: "Services", href: "/services" }, { name: "Commercial", href: "/services/commercial" }]} />
       <FaqJsonLd faqs={commercialFaqs} />
       <CTASection />
-    </PageTransition>
+    </>
   );
 }

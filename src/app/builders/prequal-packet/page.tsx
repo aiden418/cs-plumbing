@@ -6,7 +6,8 @@ import {
   PREQUAL_STATUS_LABEL,
   QUALIFICATIONS,
 } from "@/lib/builder-program";
-import { BUSINESS, COMPLETED_PROJECTS, CONTRACTOR_RANKING, WARRANTY } from "@/lib/constants";
+import { BUSINESS, WARRANTY } from "@/lib/constants";
+import { COMPLETED_PROJECTS } from "@/lib/projects-data";
 import { projectStatusLabel } from "@/lib/projects";
 
 // Source for public/downloads/cs-plumbing-prequal-packet.pdf.
@@ -28,9 +29,9 @@ export default function PrequalPacketPage() {
             <tr><td>Legal name</td><td>{BUSINESS.legalName}</td></tr>
             <tr><td>Doing business as</td><td>{BUSINESS.fullName}</td></tr>
             <tr><td>Founded</td><td>{BUSINESS.founded}, Cape Coral, FL — family owned and operated</td></tr>
-            <tr><td>Owner &amp; co-founder</td><td>Samuel &ldquo;Sam&rdquo; Pellechio · {BUSINESS.ownerPhone} or 833-PLUMB-IT ext. 1</td></tr>
+            <tr><td>Owner &amp; co-founder</td><td>Samuel &ldquo;Sam&rdquo; Pellechio · {BUSINESS.ownerPhone}</td></tr>
             <tr><td>Office</td><td>{BUSINESS.address}, {BUSINESS.city}, {BUSINESS.state} {BUSINESS.zip}</td></tr>
-            <tr><td>Phone / email</td><td>{BUSINESS.phone} (833-758-6248) · {BUSINESS.email}</td></tr>
+            <tr><td>Phone / email</td><td>{BUSINESS.phone}{` (${BUSINESS.phoneDigits}) · `}{BUSINESS.email}</td></tr>
             <tr><td>Builder contact</td><td>{BUILDER_DESK.contactName}, {BUILDER_DESK.contactRole} · {BUILDER_DESK.phone} · {BUILDER_DESK.email}</td></tr>
             <tr><td>Licenses</td><td>Florida Certified Plumbing Contractor {BUSINESS.license} and {BUSINESS.license2}</td></tr>
           </tbody>
@@ -43,10 +44,6 @@ export default function PrequalPacketPage() {
             <li key={q.id}>• {q.label}</li>
           ))}
         </ul>
-        <p className="mt-2 text-xs text-gray-500">
-          Ranking source: {CONTRACTOR_RANKING.source} contractor profile, {CONTRACTOR_RANKING.sourceUrl} (third-party
-          ranking, not a state-issued rating; checked {CONTRACTOR_RANKING.checkedOn}).
-        </p>
       </DocSection>
 
       <DocSection title="Warranty">

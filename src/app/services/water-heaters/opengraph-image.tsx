@@ -1,7 +1,6 @@
 import { createOgImage, ogImageContentType, ogImageSize } from "@/lib/og";
 import { from, spanInline } from "@/lib/pricing";
 
-export const runtime = "edge";
 export const size = ogImageSize;
 export const contentType = ogImageContentType;
 export const alt = "Water Heater Repair & Installation — C&S Plumbing";

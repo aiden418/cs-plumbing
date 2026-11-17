@@ -1,7 +1,7 @@
 "use client";
 
-import { Check } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { useId } from "react";
+import { OptionCard } from "@/components/forms";
 
 export interface CheckboxItem {
   id: string;
@@ -15,52 +15,24 @@ interface CheckboxGridProps {
   onToggle: (id: string) => void;
 }
 
-export default function CheckboxGrid({
-  options,
-  selected,
-  onToggle,
-}: CheckboxGridProps) {
+/** Optional add-ons: checkbox cards (Space toggles), any number may be chosen. */
+export default function CheckboxGrid({ options, selected, onToggle }: CheckboxGridProps) {
+  const name = useId();
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
-      {options.map((opt) => {
-        const isSelected = selected.includes(opt.id);
-        return (
-          <button
-            key={opt.id}
-            onClick={() => onToggle(opt.id)}
-            className={cn(
-              "flex items-center gap-3 p-3 sm:p-4 rounded-xl border text-left transition-all duration-300",
-              isSelected
-                ? "border-primary bg-primary/10"
-                : "border-gray-200 hover:border-gray-300"
-            )}
-          >
-            <div
-              className={cn(
-                "w-5 h-5 rounded-md border-2 flex items-center justify-center flex-shrink-0 transition-all duration-300",
-                isSelected
-                  ? "border-primary bg-primary text-white"
-                  : "border-gray-300"
-              )}
-            >
-              {isSelected && <Check className="w-3 h-3" />}
-            </div>
-            <div className="flex-1 min-w-0">
-              <span
-                className={cn(
-                  "text-xs sm:text-sm font-medium block",
-                  isSelected ? "text-primary" : "text-gray-600"
-                )}
-              >
-                {opt.label}
-              </span>
-            </div>
-            <span className="text-xs sm:text-sm font-semibold text-gray-500 flex-shrink-0">
-              +${opt.price}
-            </span>
-          </button>
-        );
-      })}
+    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+      {options.map((opt) => (
+        <OptionCard
+          key={opt.id}
+          type="checkbox"
+          id={`${name}-${opt.id}`}
+          name={name}
+          value={opt.id}
+          checked={selected.includes(opt.id)}
+          onChange={() => onToggle(opt.id)}
+          title={opt.label}
+          price={<>+${opt.price}</>}
+        />
+      ))}
     </div>
   );
 }

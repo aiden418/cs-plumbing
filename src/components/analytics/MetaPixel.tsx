@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import Script from "next/script";
-import { META_PIXEL_ID, trackPhoneClick } from "@/lib/pixel";
+import { TAG_IDS, trackPhoneClick } from "@/lib/pixel";
 
 export default function MetaPixel() {
   // Single sitewide source for tel: click conversions (Meta "Contact" and
@@ -16,6 +16,14 @@ export default function MetaPixel() {
     document.addEventListener("click", handleClick);
     return () => document.removeEventListener("click", handleClick);
   }, []);
+
+  // Tags off (NEXT_PUBLIC_ANALYTICS=off): no pixel script and no beacon. The
+  // listener above stays mounted; with no fbq / oaiq / gtag on the page its
+  // handler has nothing to call.
+  if (!TAG_IDS) return null;
+  // Named as before so the tag markup below is unchanged. This is the real
+  // id unless the build is in placeholder mode.
+  const META_PIXEL_ID = TAG_IDS.meta;
 
   return (
     <>

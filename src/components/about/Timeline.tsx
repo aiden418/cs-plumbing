@@ -1,80 +1,59 @@
-"use client";
-
-import Image from "next/image";
 import Container from "@/components/ui/Container";
-import SectionHeading from "@/components/ui/SectionHeading";
-import ScrollReveal from "@/components/animations/ScrollReveal";
+import Eyebrow from "@/components/ui/Eyebrow";
+import Frame from "@/components/ui/Frame";
+import Section from "@/components/ui/Section";
 import { TIMELINE_EVENTS } from "@/lib/constants";
+import { image } from "@/lib/media";
+import { ABOUT_TIMELINE } from "@/content/about";
 
+/**
+ * The company timeline: one row per year, words beside a small photo on
+ * phones, five columns on desktop. Some of these historical photos show an
+ * old phone number, so none is shown larger than before (13rem at most).
+ */
 export default function Timeline() {
   return (
-    <section className="py-16 sm:py-24 lg:py-32 bg-white">
-      <Container size="narrow">
-        <SectionHeading
-          overline="Our Journey"
-          title="28+ Years of Excellence"
-          subtitle="From a single truck to Southwest Florida's most trusted plumbing team."
-        />
+    <Section tone="white" spacing="sm" labelledBy="about-timeline-title">
+      <Container>
+        <header className="max-w-3xl">
+          <Eyebrow className="mb-3">{ABOUT_TIMELINE.overline}</Eyebrow>
+          <h2 id="about-timeline-title" className="text-display-md text-fg">
+            {ABOUT_TIMELINE.title}
+          </h2>
+          <p className="mt-4 max-w-[48ch] text-lead text-body">{ABOUT_TIMELINE.subtitle}</p>
+        </header>
 
-        <div className="relative">
-          {/* Vertical line */}
-          <div className="absolute left-5 sm:left-8 lg:left-1/2 top-0 bottom-0 w-px bg-gray-300 lg:-translate-x-px" />
-
-          <div className="space-y-8 sm:space-y-12">
-            {TIMELINE_EVENTS.map((event, i) => (
-              <ScrollReveal
+        <ol
+          aria-label={ABOUT_TIMELINE.label}
+          className="mt-8 border-b border-rule sm:mt-10 lg:grid lg:grid-cols-5 lg:gap-x-6 lg:border-b-0"
+        >
+          {TIMELINE_EVENTS.map((event) => {
+            const media = event.image
+              ? image(event.image, { alt: event.imageAlt ?? `C&S Plumbing — ${event.title}` })
+              : null;
+            return (
+              <li
                 key={event.year}
-                direction={i % 2 === 0 ? "left" : "right"}
-                delay={i * 0.1}
+                className="grid grid-cols-[minmax(0,1fr)_6.5rem] gap-x-4 border-t border-rule py-6 sm:grid-cols-[minmax(0,1fr)_9rem] sm:gap-x-6 lg:flex lg:flex-col-reverse lg:justify-end lg:gap-y-4 lg:pt-5 lg:pb-0"
               >
-                <div
-                  className={`relative flex items-start gap-4 sm:gap-8 ${
-                    i % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"
-                  }`}
-                >
-                  {/* Content */}
-                  <div
-                    className={`flex-1 ml-12 sm:ml-20 lg:ml-0 ${
-                      i % 2 === 0 ? "lg:text-right lg:pr-16" : "lg:pl-16"
-                    }`}
-                  >
-                    <span className="text-primary font-bold text-base sm:text-lg">
-                      {event.year}
-                    </span>
-                    <h3 className="text-lg sm:text-xl font-bold text-gray-900 mt-1 mb-1.5 sm:mb-2">
-                      {event.title}
-                    </h3>
-                    <p className="text-gray-500 text-xs sm:text-sm leading-relaxed">
-                      {event.description}
-                    </p>
-                    {event.image && (
-                      <div
-                        className={`relative mt-4 aspect-[3/2] w-full max-w-sm overflow-hidden rounded-xl border border-gray-200 ${
-                          i % 2 === 0 ? "lg:ml-auto" : ""
-                        }`}
-                      >
-                        <Image
-                          src={event.image}
-                          alt={event.imageAlt ?? `C&S Plumbing — ${event.title}`}
-                          fill
-                          className="object-cover"
-                          sizes="(max-width: 1024px) 90vw, 384px"
-                        />
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Dot */}
-                  <div className="absolute left-5 sm:left-8 lg:left-1/2 -translate-x-1/2 w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-primary border-[3px] sm:border-4 border-white z-10" />
-
-                  {/* Spacer for alternating layout */}
-                  <div className="hidden lg:block flex-1" />
+                <div>
+                  <p className="font-display text-xl font-bold text-primary-dark tabular-nums">{event.year}</p>
+                  <h3 className="mt-1 text-xl leading-snug font-semibold text-fg">{event.title}</h3>
+                  <p className="mt-2 text-body">{event.description}</p>
                 </div>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
+                <Frame
+                  media={media}
+                  aspect="4/3"
+                  sizes="(min-width: 1024px) 208px, (min-width: 640px) 144px, 104px"
+                  quality={70}
+                  className="w-full lg:max-w-[13rem]"
+                  frameClassName="rounded-xl"
+                />
+              </li>
+            );
+          })}
+        </ol>
       </Container>
-    </section>
+    </Section>
   );
 }

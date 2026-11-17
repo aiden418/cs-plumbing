@@ -1,30 +1,50 @@
-"use client";
-
-import { Phone, Calendar, MapPin, Check } from "lucide-react";
-import Container from "@/components/ui/Container";
+import Link from "next/link";
 import Button from "@/components/ui/Button";
-import PageHero from "@/components/ui/PageHero";
-import { areaHeroImage } from "@/lib/hero-images";
+import Container from "@/components/ui/Container";
+import Eyebrow from "@/components/ui/Eyebrow";
 import FaqAccordion from "@/components/ui/FaqAccordion";
-import ScrollReveal from "@/components/animations/ScrollReveal";
-import StaggerChildren, {
-  staggerItem,
-} from "@/components/animations/StaggerChildren";
+import PageHero from "@/components/ui/PageHero";
+import Section from "@/components/ui/Section";
+import { ArrowRight, Calendar, Check, MapPin, Phone } from "@/components/ui/icons";
 import CityProofBlock from "@/components/areas/CityProofBlock";
+import MoreOnPhones, { splitLead } from "@/components/areas/MoreOnPhones";
+import NeighborhoodList from "@/components/areas/NeighborhoodList";
 import FaqJsonLd from "@/components/seo/FaqJsonLd";
 import AreaServiceJsonLd from "@/components/seo/AreaServiceJsonLd";
-import { motion } from "framer-motion";
-import { BUSINESS, SERVICES, TRUST_PROOF_POINTS } from "@/lib/constants";
-import type { AreaLanding } from "@/lib/types";
+import { AREA_COPY, countyLabel } from "@/content/areas";
+import { BUSINESS, SERVICES, SERVICE_AREAS_BY_COUNTY, TRUST_PROOF_POINTS } from "@/lib/constants";
+import { picture } from "@/lib/media";
+import { cn } from "@/lib/utils";
+import type { AreaLanding, ProjectCardData } from "@/lib/types";
 
+const copy = AREA_COPY;
+
+/**
+ * An /areas/<city> page, version 2 (v2-bright.md): the city's job photo
+ * behind the headline (or a plain white hero), then short light sections
+ * alternating white and shell: services in the city, local context with
+ * its neighborhoods, local proof, why C&S, FAQ. The service-city links and
+ * the closing band follow in the page file.
+ *
+ * Server component: every word and link is in the HTML and nothing here
+ * ships to the browser.
+ */
 export default function AreaLandingTemplate({
   landing,
+  proofProjects,
 }: {
   landing: AreaLanding;
+  proofProjects: ProjectCardData[];
 }) {
   const displayServices = SERVICES.filter(
     (s) => s.id !== "commercial" && s.id !== "new-construction"
   );
+  const frame = picture(`area.header.${landing.slug}`);
+  const county = countyLabel(landing.city, SERVICE_AREAS_BY_COUNTY);
+  const trustPoints = [...TRUST_PROOF_POINTS, copy.trust.localPoint(landing.city)];
+  const paragraphs = landing.localContext.split("\n\n");
+  const hasNeighborhoods = Boolean(landing.neighborhoods && landing.neighborhoods.length > 0);
+  const [heroLead, leadRest] = splitLead(landing.description);
 
   return (
     <>
@@ -32,171 +52,143 @@ export default function AreaLandingTemplate({
       {landing.faqs && landing.faqs.length > 0 && (
         <FaqJsonLd faqs={landing.faqs} />
       )}
-      {/* Hero */}
+
       <PageHero
-        size="sm"
-        image={areaHeroImage(landing.slug)}
+        layout={frame ? "split" : "type-led"}
+        frame={frame}
+        breadcrumb={[
+          { name: "Home", href: "/" },
+          { name: landing.city, href: `/areas/${landing.slug}` },
+        ]}
         overline={`${landing.city}, ${landing.state}`}
-        overlineIcon={<MapPin className="w-3.5 h-3.5" />}
+        overlineIcon={<MapPin />}
         title={landing.heroText}
-        description={landing.description}
+        description={heroLead}
         actions={
           <>
-            <Button
-              href="/booking"
-              variant="gold"
-              size="lg"
-              icon={<Calendar className="w-5 h-5" />}
-            >
-              Book a Plumber
+            <Button href={BUSINESS.phoneHref} size="lg" icon={<Phone className="size-5" />}>
+              {copy.hero.call} {BUSINESS.phone}
             </Button>
-            <Button
-              href={`tel:${BUSINESS.phoneRaw}`}
-              variant="outline-light"
-              size="lg"
-              icon={<Phone className="w-5 h-5" />}
-            >
-              Call {BUSINESS.phone}
+            <Button href="/booking" variant="secondary" size="lg" icon={<Calendar className="size-5" />}>
+              {copy.hero.book}
             </Button>
           </>
         }
-      />
+      >
+        {county && <p className={cn("text-[0.9375rem] font-semibold text-fg", !frame && "mt-5")}>{county}</p>}
+      </PageHero>
 
-      {/* Services Available */}
-      <section className="py-16 sm:py-24 lg:py-32">
+      {/* Services in this city: compact rows, two columns from md. */}
+      <Section tone="white" spacing="sm" labelledBy="area-services-heading">
         <Container>
-          <ScrollReveal>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
-              Plumbing Services in {landing.city}
+          <div className="mb-8 max-w-3xl sm:mb-10">
+            {leadRest && <p className="mb-8 max-w-[60ch] text-lead text-body sm:mb-10">{leadRest}</p>}
+            <h2 id="area-services-heading" className="text-display-md text-fg">
+              {copy.services.heading(landing.city)}
             </h2>
-            <p className="text-gray-500 text-base sm:text-lg mb-8 sm:mb-12 max-w-2xl">
-              Full-service residential and commercial plumbing for{" "}
-              {landing.city} homes and businesses.
-            </p>
-          </ScrollReveal>
+            <p className="mt-4 max-w-[56ch] text-lead text-body">{copy.services.lead(landing.city)}</p>
+          </div>
 
-          <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+          <ul className="grid grid-cols-1 border-b border-rule md:grid-cols-2 md:gap-x-10">
             {displayServices.map((service) => (
-              <motion.a
-                key={service.id}
-                href={service.href}
-                variants={staggerItem}
-                className="bg-[#F5F5F7] rounded-2xl border border-gray-200 p-5 sm:p-6 card-lift card-lift-hover-subtle hover:border-primary/30 block"
-              >
-                <h3 className="text-lg font-bold text-gray-900 mb-2">
-                  {service.title}
-                </h3>
-                <p className="text-gray-500 text-xs sm:text-sm leading-relaxed mb-3">
-                  {service.description}
-                </p>
-                {service.features && (
-                  <ul className="space-y-1.5">
-                    {service.features.slice(0, 3).map((feature) => (
-                      <li
-                        key={feature}
-                        className="flex items-center gap-2 text-xs text-gray-600"
-                      >
-                        <Check className="w-3 h-3 text-primary flex-shrink-0" />
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </motion.a>
-            ))}
-          </StaggerChildren>
-        </Container>
-      </section>
-
-      {/* Local Context */}
-      <section className="py-16 sm:py-24 lg:py-32 bg-[#F5F5F7]">
-        <Container>
-          <ScrollReveal>
-            <div className="max-w-3xl mx-auto">
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-6 sm:mb-8">
-                Serving {landing.city} Since 1998
-              </h2>
-              <div className="text-gray-500 text-sm sm:text-base leading-relaxed mb-8 space-y-4">
-                {landing.localContext.split("\n\n").map((paragraph) => (
-                  <p key={paragraph.slice(0, 40)}>{paragraph}</p>
-                ))}
-              </div>
-
-              {landing.neighborhoods && landing.neighborhoods.length > 0 && (
-                <>
-                  <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-4">
-                    Neighborhoods We Serve in {landing.city}
+              <li key={service.id} className="-mb-px border-y border-rule">
+                <Link href={service.href} className="group block py-4 underline-offset-4 lg:py-5">
+                  <h3 className="flex items-start justify-between gap-4 text-xl leading-snug font-semibold text-fg">
+                    <span className="group-hover:underline">{service.title}</span>
+                    <ArrowRight className="mt-1 size-5 shrink-0 text-primary transition-transform duration-150 group-hover:translate-x-0.5" />
                   </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {landing.neighborhoods.map((neighborhood) => (
-                      <span
-                        key={neighborhood}
-                        className="px-3 py-1.5 bg-gray-100 rounded-full text-xs sm:text-sm text-gray-600 border border-gray-200"
-                      >
-                        {neighborhood}
-                      </span>
+                  <p className="mt-2 max-w-[60ch] text-body">{service.description}</p>
+                  {service.features && (
+                    <ul className="mt-2.5 flex flex-wrap gap-x-4 gap-y-1 text-[0.9375rem] font-medium text-fg">
+                      {service.features.slice(0, 3).map((feature) => (
+                        <li key={feature} className="inline-flex items-center gap-1.5">
+                          <Check className="size-4 shrink-0 text-primary" strokeWidth={2.5} aria-hidden="true" />
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </Container>
+      </Section>
+
+      {/* Local context and neighborhoods */}
+      <Section tone="shell" spacing="sm" labelledBy="area-local-heading">
+        <Container>
+          {/* Phones: heading, story, neighborhoods. From 64rem the heading and
+              the neighborhoods share the left column and the story runs
+              beside them from the top, so the section is only as tall as
+              the story. */}
+          <div className="grid grid-cols-1 gap-y-6 lg:grid-cols-12 lg:grid-rows-[auto_1fr] lg:gap-x-10 lg:gap-y-8">
+            <h2 id="area-local-heading" className="text-display-md text-fg lg:col-span-5">
+              {copy.local.heading(landing.city)}
+            </h2>
+            <div className="max-w-[68ch] space-y-5 text-body lg:col-span-7 lg:col-start-6 lg:row-span-2 lg:row-start-1">
+              <p>{paragraphs[0]}</p>
+              {paragraphs.length > 1 && (
+                <MoreOnPhones summary={copy.local.more}>
+                  <div className="space-y-5 pt-3 lg:pt-0">
+                    {paragraphs.slice(1).map((paragraph) => (
+                      <p key={paragraph.slice(0, 40)}>{paragraph}</p>
                     ))}
                   </div>
-                </>
+                </MoreOnPhones>
               )}
             </div>
-          </ScrollReveal>
+            {hasNeighborhoods && (
+              <NeighborhoodList
+                className="mt-4 lg:col-span-5 lg:row-start-2 lg:mt-0"
+                heading={copy.local.neighborhoodsHeading(landing.city)}
+                names={landing.neighborhoods ?? []}
+              />
+            )}
+          </div>
         </Container>
-      </section>
+      </Section>
 
       {/* Major-project proof for this city */}
-      <CityProofBlock cityName={landing.city} />
+      <CityProofBlock cityName={landing.city} projects={proofProjects} />
 
       {/* Service+city pages, builder page and city guides are rendered by the
-          server component AreaServiceLinks in each /areas/<slug>/page.tsx so
-          the landing data set is no longer shipped to the client. */}
+          server component AreaServiceLinks in each /areas/<slug>/page.tsx. */}
 
-      {/* Why Choose C&S */}
-      <section className="py-16 sm:py-24 lg:py-32">
+      {/* Why choose C&S: short rows, two or three columns. */}
+      <Section tone="shell" spacing="sm" labelledBy="area-trust-heading">
         <Container>
-          <ScrollReveal>
-            <div className="max-w-3xl mx-auto text-center">
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-8 sm:mb-12">
-                Why {landing.city} Trusts C&S Plumbing
-              </h2>
-            </div>
-          </ScrollReveal>
-          <StaggerChildren className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-4xl mx-auto">
-            {[...TRUST_PROOF_POINTS, `Fast response to ${landing.city}`].map((highlight) => (
-              <motion.div
-                key={highlight}
-                variants={staggerItem}
-                className="flex items-start gap-2.5 sm:gap-3 p-3 sm:p-4"
-              >
-                <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <Check className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-primary" />
-                </div>
-                <span className="text-gray-600 text-sm">{highlight}</span>
-              </motion.div>
+          <h2 id="area-trust-heading" className="mb-8 max-w-3xl text-display-md text-fg">
+            {copy.trust.heading(landing.city)}
+          </h2>
+          <ul className="grid grid-cols-2 gap-x-4 gap-y-4 sm:gap-x-8 lg:grid-cols-3 lg:gap-x-10">
+            {trustPoints.map((point) => (
+              <li key={point} className="flex items-start gap-2 text-[0.9375rem] leading-snug font-semibold text-fg sm:gap-3 sm:text-base">
+                <Check className="mt-0.5 size-4 shrink-0 text-primary sm:size-5" strokeWidth={2.5} aria-hidden="true" />
+                <span>{point}</span>
+              </li>
             ))}
-          </StaggerChildren>
+          </ul>
         </Container>
-      </section>
+      </Section>
 
-      {/* City FAQ */}
+      {/* City FAQ: closed accordion, answers in the HTML. */}
       {landing.faqs && landing.faqs.length > 0 && (
-        <section className="py-16 sm:py-24 lg:py-32 bg-[#F5F5F7]">
+        <Section tone="white" spacing="sm" labelledBy="area-faq-heading">
           <Container>
-            <ScrollReveal>
-              <div className="max-w-4xl mx-auto">
-                <div className="text-center mb-10 sm:mb-16">
-                  <span className="inline-block text-primary text-xs sm:text-sm font-semibold tracking-widest uppercase mb-3 sm:mb-4">
-                    FAQ
-                  </span>
-                  <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900">
-                    {landing.city} Plumbing Questions
-                  </h2>
-                </div>
-                <FaqAccordion faqs={landing.faqs} />
+            <div className="grid grid-cols-1 gap-y-8 lg:grid-cols-12 lg:gap-x-10">
+              <div className="lg:col-span-4">
+                <Eyebrow className="mb-3">{copy.faq.eyebrow}</Eyebrow>
+                <h2 id="area-faq-heading" className="text-display-md text-fg">
+                  {copy.faq.heading(landing.city)}
+                </h2>
               </div>
-            </ScrollReveal>
+              <div className="lg:col-span-8">
+                <FaqAccordion faqs={landing.faqs} name={`faq-${landing.slug}`} />
+              </div>
+            </div>
           </Container>
-        </section>
+        </Section>
       )}
     </>
   );

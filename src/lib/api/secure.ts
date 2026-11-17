@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
 import type { Resend } from "resend";
+import { BUSINESS } from "../business";
+
+export { isTrustedOrigin } from "./origin";
 
 const ESCAPE_MAP: Record<string, string> = {
   "&": "&amp;",
@@ -42,6 +45,11 @@ export function tooManyRequests(retryAfter?: number) {
     { error: "Too many requests" },
     { status: 429, headers: retryAfter ? { "Retry-After": String(retryAfter) } : undefined }
   );
+}
+
+/** 403 for a browser POST whose Origin is another site (see ./origin.ts). */
+export function forbiddenOrigin() {
+  return NextResponse.json({ error: "Forbidden" }, { status: 403 });
 }
 
 export function isHoneypotTripped(value: unknown): boolean {
@@ -91,4 +99,4 @@ export async function sendEmailBestEffort(
 export const SMS_TO = process.env.SMS_GATEWAY_TO ?? "";
 
 // Inquiries land in the office inbox unless ADMIN_EMAIL overrides it.
-export const ADMIN_EMAIL = process.env.ADMIN_EMAIL ?? "office@csplumbinglee.com";
+export const ADMIN_EMAIL = process.env.ADMIN_EMAIL ?? BUSINESS.email;
