@@ -34,6 +34,7 @@
     "start:capture": "RESEND_API_KEY=re_local_capture RESEND_CAPTURE=.resend-capture.jsonl NODE_OPTIONS=\"--require ./scripts/resend-capture.cjs\" next start"
   },
   "dependencies": {
+    "@vercel/blob": "^2.9.0",
     "clsx": "^2.1.1",
     "lucide-react": "^0.563.0",
     "next": "^16.4.6",

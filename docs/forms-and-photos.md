@@ -127,7 +127,8 @@ reads from `PRICES`.
   optional box; the office email shows it as YES / No (email only).
 - `/api/giveaway` sends one email per entry to `BUSINESS.email` with the
   photos attached (subject starts `Giveaway Entry:`) and a receipt to the
-  entrant. Nothing is stored on our side: the inbox is the entry list.
+  entrant. The fields (not the photos) are also kept for the entries sheet,
+  see below.
 - Heaters 10+ years old are tagged "replacement candidate" in the office
   email.
 - After `endsAt` the API returns 403 and the page shows a closed state
@@ -141,7 +142,29 @@ reads from `PRICES`.
   `node scripts/build-giveaway-share-image.mjs "December 8"`. Rebuild it when
   the end date changes.
 
-### Optional: log every entry to a Google Sheet
+### Entries sheet (set up 2026-11-17)
+
+Each entry's fields (no photos) are also saved as one small JSON object in
+the project's private Vercel Blob store `cs-plumbing-giveaway-entries`
+(`src/lib/api/giveaway-store.ts`). `/api/giveaway/export?key=…` returns them
+as CSV, oldest water heater first, and the Google Sheet "C&S Oldest Water
+Heater Giveaway — Entries" pulls that URL with `=IMPORTDATA(...)`.
+
+- The sheet refreshes on its own roughly every hour, and when it is opened.
+  It is a mirror: sort and filter with a filter view, add notes in a second
+  tab, but do not type into the imported range (that breaks the import).
+- The key is `GIVEAWAY_EXPORT_KEY` in Vercel and sits inside the sheet's
+  formula. Anyone who can open the sheet can read the entries, so share the
+  sheet only with the people who judge. To cut access, change the key in
+  Vercel, redeploy, and update the formula.
+- Saving is best effort and never fails an entry; the office email is still
+  the record, and the only place the photos are.
+- **When the giveaway is wrapped up, delete the `giveaway/` folder in the
+  Blob store** (Vercel → Storage). It holds names, addresses and phone
+  numbers.
+- Entries submitted before this went live exist only as emails.
+
+### Alternative: push rows to a Google Sheet with Apps Script
 
 Set `GIVEAWAY_SHEET_WEBHOOK_URL` in Vercel (Production) and each entry is
 also posted as one JSON row, without photos. A failed post never fails the

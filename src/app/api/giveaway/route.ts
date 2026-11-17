@@ -10,6 +10,8 @@ import {
   isGiveawayOpen,
 } from "@/lib/giveaway";
 import { readSubmission } from "@/lib/api/attachments";
+import { saveEntry } from "@/lib/api/giveaway-store";
+import type { EntryRow } from "@/lib/giveaway-log";
 import {
   escapeHtml,
   forbiddenOrigin,
@@ -24,9 +26,12 @@ import {
 
 /**
  * Water heater giveaway entry. Same delivery model as the contact form: the
- * entry and its photos go to the office inbox as one email (nothing is
- * stored on our side) and the entrant gets a receipt. The office inbox is
- * the entry list: every subject starts with "Giveaway Entry".
+ * entry and its photos go to the office inbox as one email and the entrant
+ * gets a receipt. Every subject starts with "Giveaway Entry".
+ *
+ * A copy of the entry's fields (no photos) is also saved to the private
+ * blob store, which the entries sheet imports through /api/giveaway/export
+ * (src/lib/api/giveaway-store.ts).
  *
  * Optional: when GIVEAWAY_SHEET_WEBHOOK_URL is set, each entry is also posted
  * as one JSON row (no photos) to that URL, e.g. a Google Apps Script that
@@ -162,7 +167,7 @@ export async function POST(request: Request) {
       `,
     }, "giveaway entrant confirmation");
 
-    await logToSheet({
+    const row: EntryRow = {
       receivedAt: new Date().toISOString(),
       firstName: entry.firstName,
       lastName: entry.lastName,
@@ -178,7 +183,9 @@ export async function POST(request: Request) {
       callTextOk: entry.contactOk ? "yes" : "no",
       photos: String(attachments.length),
       emailId,
-    });
+    };
+    // Both best effort: the office email above is the record of the entry.
+    await Promise.all([saveEntry(row), logToSheet(row)]);
 
     // No PII in logs; the Resend id traces the entry in the Resend dashboard.
     console.log(`Giveaway entry accepted (resend id ${emailId})`);
