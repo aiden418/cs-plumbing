@@ -122,15 +122,11 @@ export default function PrivacyPolicyPage() {
               </p>
 
               <p>
-                We also use HighLevel/LeadConnector to display a tracking phone
-                number and connect website calls with their visit source. This
-                service receives visit information, including page URLs, campaign
-                parameters, referring pages and device information, and uses
-                browser storage and identifier cookies that may last up to one
-                year. When you call a tracking number, call details such as your
-                phone number, call time and duration may be linked with this visit
-                and your service enquiry. Website call tracking is not loaded
-                when your browser sends a Global Privacy Control signal.
+                We use HighLevel/LeadConnector to handle calls and messages to
+                our main business number. Call details such as your phone number,
+                call time and duration, along with information and photos you
+                provide, may be linked with your contact record and service
+                enquiry for office follow-up.
               </p>
 
               <h2>
