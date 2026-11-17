@@ -149,10 +149,13 @@ describe("gallery-data", () => {
     ]);
   });
 
-  test("the real gallery keeps its 64 photos, unique ids and the old order", () => {
-    assert.equal(GALLERY_ITEMS.length, 64);
-    assert.equal(new Set(GALLERY_ITEMS.map((g) => g.id)).size, 64);
+  test("the real gallery keeps its first 64 photos, unique ids and the old order as photos are added", () => {
+    // Photos added later with `npm run photos` take ids from 65 up, so the
+    // count grows; the first 64 and their order must not change.
     const ids = GALLERY_ITEMS.map((g) => g.id);
+    assert.ok(ids.length >= 64, `the gallery has ${ids.length} photos; the first 64 must stay`);
+    assert.equal(new Set(ids).size, ids.length, "every gallery photo has its own id");
+    for (let n = 1; n <= 64; n += 1) assert.ok(ids.includes(String(n)), `id ${n} is still in the gallery`);
     assert.equal(ids.indexOf("64"), ids.indexOf("36") + 1, "id 64 still sits after 36, as it did in the old list");
   });
 });

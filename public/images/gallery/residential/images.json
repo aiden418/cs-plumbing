@@ -1,0 +1,16 @@
+{
+  "residential-1.webp": {
+    "id": "65",
+    "alt": "Whole-home water treatment system with a stainless tank and digital control valve installed outside on a stucco wall",
+    "title": "Whole-Home Water Treatment System",
+    "category": "residential",
+    "order": 72
+  },
+  "residential-2.webp": {
+    "id": "66",
+    "alt": "C&S plumber feeding a drain cable into the drain line under a kitchen sink",
+    "title": "Service Call — Clearing a Kitchen Drain",
+    "category": "residential",
+    "order": 78
+  }
+}
