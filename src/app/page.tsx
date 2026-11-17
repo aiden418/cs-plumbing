@@ -60,6 +60,7 @@ export const metadata: Metadata = {
     "Charlotte County plumber",
   ],
   openGraph: {
+    siteName: "C&S Plumbing of Lee",
     title:
       "C&S Plumbing of Lee — New Construction, Remodel & Service Plumber in SWFL",
     description:

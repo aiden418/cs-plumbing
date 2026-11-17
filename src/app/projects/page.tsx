@@ -17,6 +17,7 @@ export const metadata: Metadata = {
     "C&S Plumbing projects",
   ],
   openGraph: {
+    siteName: "C&S Plumbing of Lee",
     title: "Completed Projects | C&S Plumbing",
     description:
       "Browse completed plumbing projects across Southwest Florida.",

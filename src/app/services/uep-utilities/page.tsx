@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { sharePhoto } from "@/lib/share-image";
 import UEPServicePage from "./UEPServicePage";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import FaqJsonLd from "@/components/seo/FaqJsonLd";
@@ -8,6 +9,11 @@ import { postsForHub } from "@/lib/internal-links";
 import { BUSINESS, SERVICE_LANDINGS } from "@/lib/constants";
 
 const landing = SERVICE_LANDINGS.find((s) => s.slug === "uep-utilities")!;
+
+const uepShare = sharePhoto(
+  "/images/services/uep-utilities/photo-1.jpg",
+  "UEP utilities hookup — irrigation and water service line installation in Cape Coral",
+);
 
 export const metadata: Metadata = {
   title: { absolute: landing.metaTitle },
@@ -20,20 +26,13 @@ export const metadata: Metadata = {
     url: "https://www.csplumbinglee.com/services/uep-utilities",
     type: "website",
     siteName: "C&S Plumbing of Lee",
-    images: [
-      {
-        url: "/images/services/uep-utilities/photo-1.jpg",
-        width: 1200,
-        height: 900,
-        alt: "UEP utilities hookup — irrigation and water service line installation in Cape Coral",
-      },
-    ],
+    images: [uepShare],
   },
   twitter: {
     card: "summary_large_image",
     title: landing.metaTitle,
     description: landing.metaDescription,
-    images: ["/images/services/uep-utilities/photo-1.jpg"],
+    images: [uepShare],
   },
 };
 

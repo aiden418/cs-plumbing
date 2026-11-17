@@ -64,6 +64,7 @@ export const metadata: Metadata = {
     "property management plumbing Lee County",
   ],
   openGraph: {
+    siteName: "C&S Plumbing of Lee",
     title: "Commercial Plumbing | C&S Plumbing of Lee",
     description:
       "Reliable commercial plumbing across Lee County — maintenance, emergency repairs, grease traps, backflow prevention & tenant improvements for businesses.",

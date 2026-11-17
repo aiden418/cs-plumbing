@@ -16,6 +16,7 @@ export const metadata: Metadata = {
     "plumbing gallery Lee County",
   ],
   openGraph: {
+    siteName: "C&S Plumbing of Lee",
     title: "Our Work | C&S Plumbing Project Gallery",
     description:
       "See our residential, commercial & new construction plumbing work across Southwest Florida.",

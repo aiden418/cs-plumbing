@@ -21,6 +21,7 @@ export const metadata: Metadata = {
     "builder plumber prequalification Lee County",
   ],
   openGraph: {
+    siteName: "C&S Plumbing of Lee",
     title: "Builder Portal | C&S Plumbing of Lee",
     description:
       "Upload blueprints and project details to get a plumbing quote. New construction, commercial, and remodel projects.",

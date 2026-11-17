@@ -25,6 +25,7 @@ export const metadata: Metadata = {
     "vacant home water leak prevention",
   ],
   openGraph: {
+    siteName: "C&S Plumbing of Lee",
     title: "Coastal Comeback Plan | C&S Plumbing of Lee",
     description:
       `Annual snowbird plumbing protection. Pre-departure shutdown, mid-summer checks, and a return-ready inspection — from ${perYear("plan.comfort")}.`,

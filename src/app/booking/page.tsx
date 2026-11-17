@@ -17,6 +17,7 @@ export const metadata: Metadata = {
     "plumber appointment near me",
   ],
   openGraph: {
+    siteName: "C&S Plumbing of Lee",
     title: "Book a Plumber | C&S Plumbing of Lee",
     description:
       "Book online in under 2 minutes. Emergency, residential & commercial plumbing across Southwest Florida.",

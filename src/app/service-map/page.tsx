@@ -38,6 +38,7 @@ export const metadata: Metadata = {
     "Southwest Florida plumber map",
   ],
   openGraph: {
+    siteName: "C&S Plumbing of Lee",
     title: "Service Map | C&S Plumbing of Lee",
     description:
       "9,500+ jobs completed across Southwest Florida. See our service area and job locations.",

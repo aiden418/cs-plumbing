@@ -27,6 +27,7 @@ export const metadata: Metadata = {
     "UEP hookup new construction Cape Coral",
   ],
   openGraph: {
+    siteName: "C&S Plumbing of Lee",
     title: "For Builders & GCs — New Construction Plumbing | C&S Plumbing of Lee",
     description: `${BUILDER_PROOF.headline}. Three generations, Florida Certified Plumbing Contractor ${BUSINESS.license}, slab to final.`,
     url: "https://www.csplumbinglee.com/builders",

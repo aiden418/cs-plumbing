@@ -22,6 +22,7 @@ export const metadata: Metadata = {
     "C&S Plumbing recommended companies",
   ],
   openGraph: {
+    siteName: "C&S Plumbing of Lee",
     title: "Recommended Companies | C&S Plumbing of Lee",
     description:
       "Local, family-owned businesses we trust and recommend across Southwest Florida — from HVAC and roofing to general contractors and concrete work.",

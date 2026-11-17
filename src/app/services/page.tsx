@@ -29,6 +29,7 @@ export const metadata: Metadata = {
     "plumber near me",
   ],
   openGraph: {
+    siteName: "C&S Plumbing of Lee",
     title: "Plumbing Services | C&S Plumbing of Lee",
     description:
       "Every plumbing solution under one roof — emergency repairs, drain cleaning, water heaters, repiping, new construction & commercial plumbing across SWFL.",

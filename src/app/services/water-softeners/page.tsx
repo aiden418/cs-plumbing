@@ -16,6 +16,7 @@ export const metadata: Metadata = {
   keywords: landing.keywords,
     alternates: { canonical: "/services/water-softeners" },
   openGraph: {
+    siteName: "C&S Plumbing of Lee",
     title: landing.metaTitle,
     description: landing.metaDescription,
     url: "https://www.csplumbinglee.com/services/water-softeners",

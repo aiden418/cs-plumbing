@@ -23,6 +23,7 @@ export const metadata: Metadata = {
     "5 star plumber Lee County",
   ],
   openGraph: {
+    siteName: "C&S Plumbing of Lee",
     title: "Reviews | C&S Plumbing of Lee",
     description:
       "Real Google reviews from Southwest Florida homeowners. 5.0-star rated, family owned and operated since 1998.",

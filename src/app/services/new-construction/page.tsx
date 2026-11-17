@@ -68,6 +68,7 @@ export const metadata: Metadata = {
     "new construction plumbing bid",
   ],
   openGraph: {
+    siteName: "C&S Plumbing of Lee",
     title: "New Construction Plumbing | C&S Plumbing of Lee",
     description:
       "9,500+ homes plumbed. The builder's choice for new construction plumbing in Cape Coral, Fort Myers & all of Southwest Florida.",

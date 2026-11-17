@@ -39,6 +39,7 @@ export async function generateMetadata({
     alternates: { canonical: `/${landing.slug}` },
     ...(isIndexed(landing) ? {} : { robots: { index: false, follow: true } }),
     openGraph: {
+      siteName: "C&S Plumbing of Lee",
       title: landing.metaTitle,
       description: landing.metaDescription,
       url: `https://www.csplumbinglee.com/${landing.slug}`,

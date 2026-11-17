@@ -94,6 +94,84 @@ the confirmation to the builder), the bid form's fields with no files (200),
 address (429). A send Resend refuses cannot be produced with this harness;
 `tests/builder-portal-route.test.ts` covers it with a stub.
 
+The builder portal's upload (`src/components/builder-portal/FileUpload.tsx`
+defaults, `src/app/api/builder-portal/route.ts`) still advertises 10 MB per
+file and 25 MB total, which Vercel's 4.5 MB request limit makes unreachable:
+a builder attaching a full plan set gets a platform 413, not our error
+message. Fix is either a direct-to-storage upload (Vercel Blob client
+upload) or a much lower advertised cap with a "email large plan sets"
+fallback line.
+
+## Water heater giveaway (`/water-heater-giveaway`)
+
+Added 2026-11-13, rebuilt on the forms kit 2026-11-17. The contest: the
+oldest working water heater entered from Cape Coral, Fort Myers or North
+Fort Myers wins a new one, installed. Runs until 11:59 PM ET on December 8,
+2026 (the company's anniversary, start of its 29th year); winner announced
+on or about December 15, after site visits. The launch plan, runner-up email and social
+posts are in `docs/giveaway-playbook.md`.
+
+Everything that changes between runs lives in `src/lib/giveaway.ts` (dates,
+prize wording, consent line, scam warning, entry schema) and
+`src/lib/giveaway-rules.ts` (official rules). The approximate retail value
+reads from `PRICES`.
+
+- Entry = first/last name, phone, email, street, city (one of the three),
+  ZIP, year the heater was made (back to 1960, or "not sure"), 1–3 photos,
+  and a required "18+, own the home or have the owner's OK, agree to the
+  rules" box. Ticking "someone else's water heater" asks for the homeowner's
+  name; the office email then shows "Entered by" and "Homeowner".
+- Consent: entering allows email about the giveaway and water heater offers
+  (rule 10 and the line under the button say so; every such email needs an
+  opt-out). Calls and texts about offers only for entrants who tick the
+  optional box; the office email shows it as YES / No (email only).
+- `/api/giveaway` sends one email per entry to `BUSINESS.email` with the
+  photos attached (subject starts `Giveaway Entry:`) and a receipt to the
+  entrant. Nothing is stored on our side: the inbox is the entry list.
+- Heaters 10+ years old are tagged "replacement candidate" in the office
+  email.
+- After `endsAt` the API returns 403 and the page shows a closed state
+  within the hour (`revalidate = 3600`). The sitemap entry drops on the next
+  deploy.
+- Tracking is a custom `giveaway_entry` event on Meta and GA4 only. It is
+  deliberately not a `Lead` / Google Ads conversion, so entrants do not
+  dilute service-lead bidding.
+- The coupon popup is suppressed on this path (it covered the submit button).
+- Link preview: `public/og/water-heater-giveaway.jpg`, built by
+  `node scripts/build-giveaway-share-image.mjs "December 8"`. Rebuild it when
+  the end date changes.
+
+### Optional: log every entry to a Google Sheet
+
+Set `GIVEAWAY_SHEET_WEBHOOK_URL` in Vercel (Production) and each entry is
+also posted as one JSON row, without photos. A failed post never fails the
+entry. Setup, about five minutes:
+
+1. Create a Google Sheet. Extensions → Apps Script, paste:
+
+   ```js
+   const COLS = ["receivedAt","heaterYear","heaterAge","firstName","lastName","phone","email","homeowner","enteredForSomeoneElse","address","city","zip","callTextOk","photos","emailId"];
+   function doPost(e) {
+     const row = JSON.parse(e.postData.contents);
+     const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
+     if (sheet.getLastRow() === 0) sheet.appendRow(COLS);
+     sheet.appendRow(COLS.map((c) => row[c] ?? ""));
+     return ContentService.createTextOutput("ok");
+   }
+   ```
+
+2. Deploy → New deployment → Web app; execute as "Me", access "Anyone".
+3. Copy the web app URL into `GIVEAWAY_SHEET_WEBHOOK_URL` and redeploy.
+
+The URL is a secret of sorts (anyone holding it can append rows), so keep it
+in Vercel only. The sheet holds names, addresses and phone numbers: share it
+with the people who run the drawing and nobody else.
+
+Verified 2026-11-17 with the capture harness and a phone-width browser: empty
+submit (field errors), no photo (message), valid entry (office email with
+photo, receipt), honeypot, a cross-site Origin (403), and on 2026-11-13 the
+closed state with a past `endsAt` (page copy, API 403).
+
 ## Builder plan uploads
 
 The Builder Portal wizard (`/builder-portal`) and the short bid form
