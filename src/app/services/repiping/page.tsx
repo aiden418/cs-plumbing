@@ -5,8 +5,10 @@ import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 import FaqJsonLd from "@/components/seo/FaqJsonLd";
 import CTASection from "@/components/home/CTASection";
 import RelatedPosts from "@/components/blog/RelatedPosts";
+import RelatedProjects from "@/components/projects/RelatedProjects";
 import { postsForHub } from "@/lib/internal-links";
 import { SERVICE_LANDINGS } from "@/lib/constants";
+import { projectsForHub } from "@/lib/projects";
 
 const landing = SERVICE_LANDINGS.find((s) => s.slug === "repiping")!;
 
@@ -35,6 +37,12 @@ export default function Page() {
         ]}
       />
       <ServiceLandingTemplate landing={landing} />
+      <RelatedProjects
+        projects={projectsForHub("repiping", 3)}
+        overline="Documented repipes"
+        heading="Repipe jobs we've photographed with the walls open"
+        description="PEX water lines through attics and block walls, and new drain lines under an elevated home, photographed while the framing was still open."
+      />
       <RelatedPosts
         posts={postsForHub("repiping")}
         heading="Repiping guides & costs"

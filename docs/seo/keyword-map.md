@@ -118,6 +118,21 @@ Google Analytics, 2026-10-19 to 2026-11-15: `chatgpt.com` sent 8 of 485 sessions
 
 **Open, off the site:** Google reviews; Bing Places and Bing Webmaster Tools (Microsoft sign-in); Yelp and BuildZoom phone numbers, BuildZoom license line, Birdeye claim, BBB profile, and the old phone on the Breeze entry (rows in `citation-tracker.csv`).
 
+## 2e. Project proof pages added (2026-11-16)
+
+Two project pages went live with the November photo batch. Neither is a new "owning page" for a cluster in §3; each is proof for a hub and links back to it.
+
+| Page | Title | Proof for | Notes |
+|---|---|---|---|
+| `/projects/808-miramar-sewer-line-cape-coral` | "Sewer Line Replacement in Cape Coral — 808 Miramar" | Cluster 8, `/services/drain-cleaning` (main sewer lines, camera inspection) and the Cape Coral pages | Carries "sewer line replacement cape coral" in its title because no page owns that query yet. **Watch-list:** when the cast iron / sewer replacement page (§4, gap 3) is built, that page takes the query and this one is retitled to lead with the job ("808 Miramar — …"). |
+| `/projects/residential-repipes` | "PEX Repipe Photos — Attic, Wall and Under-Floor Jobs" | Cluster 3, `/services/repiping` | No city in the title or on the page (five private homes, addresses withheld), so it cannot collide with the hub or `/repiping-<city>`. It targets photo searches ("pex repipe photos", "what does a repipe look like"). |
+
+Wiring: both categories ("Sewer & Drain", "Repiping") are mapped to their hub in `CATEGORY_HUBS` (`src/lib/projects.ts`), so each project page links to its hub at the foot, and `/services/repiping` and `/services/drain-cleaning` each show their project under the service copy. 808 Miramar also leads the project tiles on `/drain-cleaning-cape-coral`.
+
+Already automatic for every project page: sitemap entry with `lastmod`, canonical, Open Graph image (the cover), `CreativeWork` and breadcrumb JSON-LD with every photo, a line in `/llms.txt`, and the IndexNow notice to Bing after the deploy.
+
+**Indexing:** not yet requested in Search Console for either URL. Queue them behind `/services/plumbing-remodel` and the area hubs (see §2c; the quota is about 11 a day).
+
 ## 3. Clusters → owning page
 
 Rule: **one page owns one primary query.** Secondary pages may mention it but must not carry it in the title. Where two pages collide, GSC decides which keeps the query (the one with impressions) and the other is retitled.

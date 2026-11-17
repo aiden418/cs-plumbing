@@ -3908,7 +3908,7 @@ export const COMPLETED_PROJECT_TEXT: CompletedProjectText[] = [
   {
     slug: "808-miramar-sewer-line-cape-coral",
     updatedOn: "2026-11-16",
-    name: "808 Miramar — New Sewer Line (Cape Coral)",
+    name: "808 Miramar — Sewer Line Replacement (Cape Coral)",
     // Owner asked for the client not to be named (Nov 2026).
     client: "Property Owner",
     category: "Sewer & Drain",
@@ -3917,7 +3917,7 @@ export const COMPLETED_PROJECT_TEXT: CompletedProjectText[] = [
     timeline: "October 2026",
     cost: "On Request",
     description:
-      "C&S Plumbing installed a new sewer line at 808 Miramar, a two-story multi-unit building in Cape Coral. The crew exposed the original clay line, inspected it by camera, trenched along the building and across the parking area, and laid new PVC sewer pipe in its place.",
+      "C&S Plumbing replaced the sewer line at 808 Miramar, a two-story multi-unit building in Cape Coral. The crew exposed the original clay line, inspected it by camera, trenched along the building and across the parking area, and laid new PVC sewer pipe in its place.",
     location: "Cape Coral, FL",
     phases: [
       {
@@ -3932,8 +3932,10 @@ export const COMPLETED_PROJECT_TEXT: CompletedProjectText[] = [
       },
     ],
     scopeDetails: ["Sewer line location and camera inspection","Excavation and trenching","New PVC sewer line"],
-    metaTitle: "808 Miramar Cape Coral — New Sewer Line",
-    metaDescription: "C&S Plumbing of Lee installed a new sewer line at 808 Miramar in Cape Coral — the old clay line exposed and camera-inspected, then new PVC sewer pipe laid.",
+    // Title leads with the search term ("sewer line replacement cape coral",
+    // docs/seo/keyword-map.md §2e); no other page owns it yet.
+    metaTitle: "Sewer Line Replacement in Cape Coral — 808 Miramar",
+    metaDescription: "Sewer line replacement at 808 Miramar in Cape Coral by C&S Plumbing of Lee: the old clay line exposed and camera-inspected, then new PVC sewer pipe laid.",
   },
   {
     slug: "residential-repipes",
@@ -3971,8 +3973,10 @@ export const COMPLETED_PROJECT_TEXT: CompletedProjectText[] = [
       },
     ],
     scopeDetails: ["Water line repipes in PEX","New PVC drain lines under an elevated home","Fixture stub-outs and shutoff valves"],
-    metaTitle: "Residential Repipes — PEX Water Line Replacement",
-    metaDescription: "Photos from residential repipe jobs by C&S Plumbing of Lee — PEX water lines through attics and walls, and new drain lines under an elevated home.",
+    // The repiping hub owns "repipe <city>"; this page takes the photo
+    // searches and carries no city in its title (keyword-map.md §2e).
+    metaTitle: "PEX Repipe Photos — Attic, Wall and Under-Floor Jobs",
+    metaDescription: "See what a repipe looks like behind the walls: PEX water lines through attics and block walls and new drains under an elevated home, by C&S Plumbing of Lee.",
   },
 ];
 
