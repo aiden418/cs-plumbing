@@ -121,18 +121,6 @@ export default function PrivacyPolicyPage() {
                 a Global Privacy Control signal.
               </p>
 
-              <p>
-                We also use HighLevel/LeadConnector to display a tracking phone
-                number and connect website calls with their visit source. This
-                service receives visit information, including page URLs, campaign
-                parameters, referring pages and device information, and uses
-                browser storage and identifier cookies that may last up to one
-                year. When you call a tracking number, call details such as your
-                phone number, call time and duration may be linked with this visit
-                and your service enquiry. Website call tracking is not loaded
-                when your browser sends a Global Privacy Control signal.
-              </p>
-
               <h2>
                 Your Rights
               </h2>
