@@ -18,6 +18,10 @@ const CATEGORY_HUBS: Record<string, string[]> = {
   "Commercial New Construction": ["commercial", "new-construction"],
   "Commercial Remodel": ["commercial", "plumbing-remodel"],
   Remodel: ["plumbing-remodel"],
+  Repiping: ["repiping"],
+  // Sewer line work: the drain-cleaning hub is the one that covers main
+  // sewer lines and camera inspections.
+  "Sewer & Drain": ["drain-cleaning"],
 };
 
 export function projectHubSlugs(project: CompletedProject): string[] {
