@@ -242,7 +242,7 @@ async function main() {
     reducedMotion: Boolean(values["reduced-motion"]),
     settle: intArg(values.settle, "settle", 600),
     timeout: intArg(values.timeout, "timeout", 45000),
-    storage: { ...(values["show-coupon"] ? {} : { "cs-coupon-seen": "now" }), ...pairsArg(values.storage, "storage") },
+    storage: { ...(values["show-coupon"] ? {} : { "cs-coupon-seen": "now", "cs-giveaway-seen": "now" }), ...pairsArg(values.storage, "storage") },
   };
   const ext = options.format === "jpeg" ? "jpg" : "png";
   const jobs = [];

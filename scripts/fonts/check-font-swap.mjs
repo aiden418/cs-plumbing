@@ -47,7 +47,7 @@ const VIEWPORTS = [
 /** Injected before any page script: records every layout shift with what moved. */
 const RECORDER = `
   window.__shifts = [];
-  try { localStorage.setItem("cs-coupon-seen", String(Date.now())); } catch (e) {}
+  try { localStorage.setItem("cs-coupon-seen", String(Date.now())); localStorage.setItem("cs-giveaway-seen", String(Date.now())); } catch (e) {}
   new PerformanceObserver((list) => {
     for (const entry of list.getEntries()) {
       window.__shifts.push({

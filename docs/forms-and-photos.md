@@ -507,3 +507,12 @@ npx next build && node scripts/qa/dump-page-images.mjs --out before.json
 node scripts/qa/dump-page-images.mjs --out after.json
 node scripts/qa/dump-page-images.mjs --compare before.json after.json   # exit 1 if a route lost a picture
 ```
+
+### Sitewide giveaway card
+
+While `isGiveawayOpen()` is true, the coupon card (`CouponPopup.tsx`) shows
+the giveaway instead of the coupon: it appears five seconds after a page
+loads, links to the entry form, and stays away for seven days once closed
+or clicked (`localStorage["cs-giveaway-seen"]`). It is not shown on the
+giveaway, emergency, booking, contact or quote pages. After the end date the
+card is the coupon again with no deploy.
