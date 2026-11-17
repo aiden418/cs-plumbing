@@ -4,10 +4,10 @@ import Container from "@/components/ui/Container";
 import PageHero from "@/components/ui/PageHero";
 import TermsDocument from "@/components/terms/TermsDocument";
 import { BUSINESS } from "@/lib/constants";
-import { TERMS_PATH, TERMS_URL, TERMS_VERSION } from "@/lib/terms-meta";
+import { TERMS_PATH, TERMS_URL } from "@/lib/terms-meta";
 
 const TITLE = "Terms & Conditions";
-const DESCRIPTION = `Terms and conditions governing estimates, proposals, invoices and plumbing work by ${BUSINESS.fullName} (rev. ${TERMS_VERSION}): pricing, change orders, payment, warranty and dispute resolution.`;
+const DESCRIPTION = `Terms and conditions for estimates, proposals, invoices and plumbing work by ${BUSINESS.fullName}: pricing, change orders, payment and warranty.`;
 
 export const metadata: Metadata = {
   title: TITLE,

@@ -152,7 +152,8 @@ export default function TermsDocument() {
       {/* Print-only letterhead. Lives inside the article so the print CSS keeps it. */}
       <header className="hidden print:block border-b-2 border-navy pb-3 mb-6">
         <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary">Terms &amp; Conditions</p>
-        <h1 className="text-2xl font-black text-navy">{BUSINESS.fullName}</h1>
+        {/* Not a heading: the page already has its H1, and this letterhead prints only. */}
+        <p className="text-2xl font-black text-navy">{BUSINESS.fullName}</p>
         <p className="text-xs text-gray-600">
           {BUSINESS.legalName} · Florida Certified Plumbing Contractor {BUSINESS.license} · {BUSINESS.license2}
         </p>

@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   // old title plus the layout template ran 81 characters.
   title: { absolute: "Plumber in Cape Coral & Fort Myers, FL | C&S Plumbing of Lee" },
   description:
-    `Licensed Florida plumbing contractor (${BUSINESS.license}) serving Cape Coral, Fort Myers & SWFL since 1998. Repairs, repipes, water heaters and remodels for homeowners; new construction plumbing for builders. 5.0-star rated.`,
+    `Licensed plumber (${BUSINESS.license}) serving Cape Coral, Fort Myers & SWFL since 1998. Repairs, repipes, water heaters, remodels and new construction plumbing.`,
   keywords: [
     "new construction plumber SWFL",
     "new construction plumbing Cape Coral",

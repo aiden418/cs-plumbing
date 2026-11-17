@@ -775,7 +775,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       "No hot water? Whether you need a quick repair or a full replacement, C&S Plumbing installs and services all types of water heaters — traditional tank, tankless, and hybrid systems.",
     metaTitle: "Water Heater Repair & Installation | Fort Myers & Cape Coral",
     metaDescription:
-      `Water heater repair ${rangeInline("waterHeater.repair")}, tank replacement ${spanInline("waterHeater.tank40", "waterHeater.tank50")} installed, tankless & hybrid options. Same-day service in Fort Myers, Cape Coral & North Fort Myers. Licensed ${BUSINESS.license}. Call ${BUSINESS.phone}.`,
+      `Water heater repair ${rangeInline("waterHeater.repair")}, tank replacement ${spanInline("waterHeater.tank40", "waterHeater.tank50")} installed. Same-day service in Fort Myers & Cape Coral. Call ${BUSINESS.phone}.`,
     keywords: [
       "water heater Cape Coral",
       "water heater installation Fort Myers",
@@ -934,7 +934,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       "Endless hot water without a tank in the garage. C&S installs gas tankless systems from Rinnai, Navien and Noritz — gas line, venting and permit included — and repairs every major brand, usually the same day.",
     metaTitle: "Tankless Water Heater Installation | Fort Myers & Cape Coral",
     metaDescription:
-      `Tankless water heater installation & repair in Fort Myers, Cape Coral & SWFL. Rinnai, Navien & Noritz, ${rangeInline("waterHeater.tankless")} installed incl. gas line & venting. Same-day repair. Call ${BUSINESS.phone}.`,
+      `Tankless water heater installation & repair in Fort Myers & Cape Coral. Rinnai, Navien & Noritz, ${rangeInline("waterHeater.tankless")} installed. Call ${BUSINESS.phone}.`,
     keywords: [
       "tankless water heater installation Fort Myers",
       "tankless water heater installation Cape Coral",
@@ -1838,7 +1838,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     slug: "north-fort-myers",
     city: "North Fort Myers",
     state: "FL",
-    metaTitle: "North Fort Myers Plumber — Our Hometown",
+    metaTitle: "North Fort Myers Hometown Plumber",
     metaDescription:
       `North Fort Myers' hometown plumber since 1998, headquartered on Pondella Rd. Emergency service, repiping, drains & more. Call ${BUSINESS.phone}.`,
     keywords: [

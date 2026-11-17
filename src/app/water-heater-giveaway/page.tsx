@@ -18,7 +18,8 @@ import { heroFrame } from "@/lib/hero-frame";
 export const revalidate = 3600;
 
 const shareTitle = "Wanted: SWFL's Oldest Working Water Heater";
-const description = `${GIVEAWAY.hunt}. The oldest one in ${GIVEAWAY.citiesSentence} wins ${GIVEAWAY.prizeShort}. Enter yours, or one you know of, by ${GIVEAWAY.endsLabelShort}.`;
+// Under 160 characters so search results show it whole.
+const description = `Wanted: the oldest working water heater in ${GIVEAWAY.citiesSentence}. The oldest one wins a new one, installed free. Enter by ${GIVEAWAY.endsLabelShort}.`;
 
 export const metadata: Metadata = {
   alternates: { canonical: GIVEAWAY.path },
