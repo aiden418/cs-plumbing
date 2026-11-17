@@ -1,3 +1,4 @@
+import { leadAttributionHtml } from "@/lib/api/lead-attribution-email";
 import { NextResponse, after } from "next/server";
 import { CLAIMS } from "@/lib/claims";
 import { readSubmission } from "@/lib/api/attachments";
@@ -105,6 +106,8 @@ export async function POST(request: Request) {
         { status: 500 }
       );
     }
+    const eventId = newConversionId();
+    const attributionHtml = leadAttributionHtml(request, eventId);
     const resend = new Resend(process.env.RESEND_API_KEY);
     await sendEmailOrThrow(resend, {
       from: "C&S Plumbing Website <bookings@csplumbinglee.com>",
@@ -117,6 +120,7 @@ export async function POST(request: Request) {
             <p style="color: #999; margin: 8px 0 0; font-size: 13px;">Confirmation #${confirmationId}</p>
           </div>
           <div style="padding: 20px; background: #f9f9f9;">
+            ${attributionHtml}
             <h3 style="color: #333; border-bottom: 2px solid #0099FF; padding-bottom: 8px;">Service Details</h3>
             <p><strong>Type:</strong> ${typeLabel}</p>
             <p><strong>Service:</strong> ${safe.service}</p>
@@ -194,7 +198,6 @@ export async function POST(request: Request) {
 
     // Mirrors the browser pixel so the two copies dedupe on eventId:
     // a booking is appointment_scheduled, an estimate request is a lead.
-    const eventId = newConversionId();
     const context = captureRequestContext(request);
     after(() =>
       reportConversion({

@@ -1,3 +1,4 @@
+import { leadAttributionHtml } from "@/lib/api/lead-attribution-email";
 import { NextResponse, after } from "next/server";
 import { CLAIMS } from "@/lib/claims";
 import { Resend } from "resend";
@@ -56,6 +57,8 @@ export async function POST(request: Request) {
         { status: 500 }
       );
     }
+    const eventId = newConversionId();
+    const attributionHtml = leadAttributionHtml(request, eventId);
     const resend = new Resend(process.env.RESEND_API_KEY);
     const serviceLabel = service === "water-heater" ? "Water Heater" : "Whole-Home Repipe";
 
@@ -104,6 +107,7 @@ export async function POST(request: Request) {
             <h1 style="color: #0099FF; margin: 0;">New Quote Request</h1>
           </div>
           <div style="padding: 20px; background: #f9f9f9;">
+            ${attributionHtml}
             <h3 style="color: #333; border-bottom: 2px solid #0099FF; padding-bottom: 8px;">Customer Info</h3>
             <p><strong>Name:</strong> ${safeLead.name}</p>
             <p><strong>Email:</strong> <a href="mailto:${safeLead.email}">${safeLead.email}</a></p>
@@ -193,7 +197,6 @@ export async function POST(request: Request) {
       }, "quote SMS notification");
     }
 
-    const eventId = newConversionId();
     const context = captureRequestContext(request);
     after(() =>
       reportConversion({ type: "lead_created", id: eventId, context, sourcePath, email: lead.email })
