@@ -9,6 +9,7 @@ import JsonLd from "@/components/seo/JsonLd";
 import MetaPixel from "@/components/analytics/MetaPixel";
 import OpenAIPixel from "@/components/analytics/OpenAIPixel";
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
+import CallTracking from "@/components/analytics/CallTracking";
 import PreviewRibbon from "@/components/layout/PreviewRibbon";
 import IntroHead from "@/components/home/IntroHead";
 import RevealObserver from "@/components/ui/RevealObserver";
@@ -153,6 +154,7 @@ export default function RootLayout({
         <MetaPixel />
         <OpenAIPixel />
         <GoogleAnalytics />
+        <CallTracking />
       </body>
     </html>
   );
