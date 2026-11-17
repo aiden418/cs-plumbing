@@ -39,6 +39,7 @@ function collector(opts) {
   }
   try {
     localStorage.setItem("cs-coupon-seen", String(Date.now()));
+    localStorage.setItem("cs-giveaway-seen", String(Date.now()));
     for (const [k, v] of Object.entries(opts.storage || {})) localStorage.setItem(k, v);
   } catch {}
   new PerformanceObserver((l) => {

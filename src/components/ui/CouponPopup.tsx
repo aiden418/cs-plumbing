@@ -6,17 +6,25 @@ import { X } from "@/components/ui/icons";
 import Link from "next/link";
 import { buttonClasses } from "@/components/ui/Button";
 import { trackEvent } from "@/lib/pixel";
+import { GIVEAWAY, isGiveawayOpen } from "@/lib/giveaway";
 
 const STORAGE_KEY = "cs-coupon-seen";
 const REARM_DAYS = 30;
+// While the giveaway is open the card announces it instead of the coupon. It
+// has its own key, so a visitor who closed the coupon last week still hears
+// about the giveaway, and it comes back after a week, not a month.
+const GIVEAWAY_STORAGE_KEY = "cs-giveaway-seen";
+const GIVEAWAY_REARM_DAYS = 7;
+/** The giveaway card does not wait for exit intent or half a page of scroll. */
+const GIVEAWAY_DELAY_MS = 5000;
 
 // Never interrupt someone with a burst pipe or someone already converting.
 const SUPPRESSED_PATHS = ["/emergency", "/booking", "/contact", "/quote-builder", "/water-heater-giveaway"];
 
-function wasRecentlyDismissed(): boolean {
+function wasRecentlyDismissed(key: string, days: number): boolean {
   let raw: string | null;
   try {
-    raw = localStorage.getItem(STORAGE_KEY);
+    raw = localStorage.getItem(key);
   } catch {
     // Storage blocked: treat as seen rather than show it on every page.
     return true;
@@ -25,12 +33,12 @@ function wasRecentlyDismissed(): boolean {
   const ts = Number(raw);
   // Legacy "1" value or unparseable → treat as dismissed forever-ago, re-arm
   if (!Number.isFinite(ts)) return false;
-  return Date.now() - ts < REARM_DAYS * 24 * 60 * 60 * 1000;
+  return Date.now() - ts < days * 24 * 60 * 60 * 1000;
 }
 
-function remember() {
+function remember(key: string) {
   try {
-    localStorage.setItem(STORAGE_KEY, String(Date.now()));
+    localStorage.setItem(key, String(Date.now()));
   } catch {
     // Storage blocked: nothing to record.
   }
@@ -43,9 +51,18 @@ function remember() {
  * 30-day key is recorded when the card is first shown. While it shows,
  * body[data-coupon-open] tells the request button to step aside and moves
  * the page's scroll padding clear of it (chrome.css).
+ *
+ * Until the giveaway's end date (src/lib/giveaway.ts) the same card carries
+ * the giveaway instead, shown a few seconds after the page loads. After that
+ * date it is the coupon again with no deploy.
  */
 export default function CouponPopup() {
   const [show, setShow] = useState(false);
+  // Read once on mount (client only): which offer this visit gets.
+  const [giveaway] = useState(() => isGiveawayOpen());
+  const storageKey = giveaway ? GIVEAWAY_STORAGE_KEY : STORAGE_KEY;
+  const rearmDays = giveaway ? GIVEAWAY_REARM_DAYS : REARM_DAYS;
+  const popupName = giveaway ? "Giveaway Popup" : "Coupon Popup";
   const cardRef = useRef<HTMLElement>(null);
   const pathname = usePathname();
   const suppressed = SUPPRESSED_PATHS.some(
@@ -53,12 +70,12 @@ export default function CouponPopup() {
   );
 
   const open = useCallback(() => {
-    remember();
+    remember(storageKey);
     setShow((prev) => {
-      if (!prev) trackEvent("ViewContent", { content_name: "Coupon Popup" });
+      if (!prev) trackEvent("ViewContent", { content_name: popupName });
       return true;
     });
-  }, []);
+  }, [storageKey, popupName]);
 
   // Publish the card's state and height to the page (attributes only, no
   // React state outside this component).
@@ -84,7 +101,7 @@ export default function CouponPopup() {
 
   useEffect(() => {
     if (typeof window === "undefined" || suppressed) return;
-    if (wasRecentlyDismissed()) return;
+    if (wasRecentlyDismissed(storageKey, rearmDays)) return;
 
     let fired = false;
     const fire = () => {
@@ -108,9 +125,11 @@ export default function CouponPopup() {
     };
 
     const isCoarse = window.matchMedia("(pointer: coarse)").matches;
+    const timer = giveaway ? window.setTimeout(fire, GIVEAWAY_DELAY_MS) : undefined;
     const cleanup = () => {
       document.removeEventListener("mouseout", onMouseOut);
       window.removeEventListener("scroll", onScroll);
+      if (timer !== undefined) window.clearTimeout(timer);
     };
     if (isCoarse) {
       window.addEventListener("scroll", onScroll, { passive: true });
@@ -118,11 +137,11 @@ export default function CouponPopup() {
       document.addEventListener("mouseout", onMouseOut);
     }
     return cleanup;
-  }, [suppressed, open]);
+  }, [suppressed, open, giveaway, storageKey, rearmDays]);
 
   function dismiss() {
     setShow(false);
-    remember();
+    remember(storageKey);
   }
 
   if (!visible) return null;
@@ -131,7 +150,7 @@ export default function CouponPopup() {
     <aside
       ref={cardRef}
       data-tone="white"
-      aria-label="Coupon for your first service"
+      aria-label={giveaway ? "Oldest water heater giveaway" : "Coupon for your first service"}
       className="coupon-card enter overflow-hidden rounded-2xl border border-steel-200 bg-canvas text-body shadow-lift"
     >
             {/* Close button */}
@@ -144,6 +163,31 @@ export default function CouponPopup() {
               <X className="size-5" />
             </button>
 
+            {giveaway ? (
+            <div className="p-5">
+              <p className="eyebrow pr-10 text-accent">Anniversary giveaway</p>
+              <h2 className="mt-2 text-display-sm text-fg">
+                Got an old water heater?
+              </h2>
+              <p className="mt-2 text-body">
+                We&apos;re looking for the oldest working water heater in {GIVEAWAY.cities.slice(0, -1).join(", ")} and{" "}
+                {GIVEAWAY.cities[GIVEAWAY.cities.length - 1]}. The oldest one wins a new one, installed free.
+              </p>
+              <p className="mt-3 mb-4 text-sm leading-snug text-muted">
+                Enter yours, or one you know of, by {GIVEAWAY.endsLabelShort}. No purchase necessary.
+              </p>
+              <Link
+                href={GIVEAWAY.path}
+                onClick={() => {
+                  trackEvent("ViewContent", { content_name: "Giveaway Popup CTA" });
+                  dismiss();
+                }}
+                className={buttonClasses({ variant: "primary", size: "md", fullWidth: true })}
+              >
+                Enter the giveaway
+              </Link>
+            </div>
+            ) : (
             <div className="p-5">
               {/* Headline */}
               <h2 className="pr-10 text-display-sm display-wide text-fg">
@@ -179,6 +223,7 @@ export default function CouponPopup() {
                 Book Now &amp; Save $50
               </Link>
             </div>
+            )}
     </aside>
   );
 }
