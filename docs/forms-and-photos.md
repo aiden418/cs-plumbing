@@ -104,9 +104,11 @@ fallback line.
 
 ## Water heater giveaway (`/water-heater-giveaway`)
 
-Added 2026-11-13, rebuilt on the forms kit 2026-11-17. Runs until 11:59 PM ET
-on December 8, 2026 (the company's anniversary, start of its 29th year);
-drawing on or about December 10. The launch plan, runner-up email and social
+Added 2026-11-13, rebuilt on the forms kit 2026-11-17. The contest: the
+oldest working water heater entered from Cape Coral, Fort Myers or North
+Fort Myers wins a new one, installed. Runs until 11:59 PM ET on December 8,
+2026 (the company's anniversary, start of its 29th year); winner announced
+on or about December 15, after site visits. The launch plan, runner-up email and social
 posts are in `docs/giveaway-playbook.md`.
 
 Everything that changes between runs lives in `src/lib/giveaway.ts` (dates,
@@ -114,9 +116,11 @@ prize wording, consent line, scam warning, entry schema) and
 `src/lib/giveaway-rules.ts` (official rules). The approximate retail value
 reads from `PRICES`.
 
-- Entry = first/last name, phone, email, street/city/ZIP, year the heater was
-  made (or "not sure"), 1–3 photos, and a required "18+, own the home, agree
-  to the rules" box.
+- Entry = first/last name, phone, email, street, city (one of the three),
+  ZIP, year the heater was made (back to 1960, or "not sure"), 1–3 photos,
+  and a required "18+, own the home or have the owner's OK, agree to the
+  rules" box. Ticking "someone else's water heater" asks for the homeowner's
+  name; the office email then shows "Entered by" and "Homeowner".
 - Consent: entering allows email about the giveaway and water heater offers
   (rule 10 and the line under the button say so; every such email needs an
   opt-out). Calls and texts about offers only for entrants who tick the
@@ -146,7 +150,7 @@ entry. Setup, about five minutes:
 1. Create a Google Sheet. Extensions → Apps Script, paste:
 
    ```js
-   const COLS = ["receivedAt","firstName","lastName","phone","email","address","city","zip","heaterYear","heaterAge","callTextOk","photos","emailId"];
+   const COLS = ["receivedAt","heaterYear","heaterAge","firstName","lastName","phone","email","homeowner","enteredForSomeoneElse","address","city","zip","callTextOk","photos","emailId"];
    function doPost(e) {
      const row = JSON.parse(e.postData.contents);
      const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];

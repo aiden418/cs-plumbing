@@ -6,7 +6,12 @@
  * ./giveaway-rules.ts (server only), so this file stays light enough for the
  * entry form to import.
  *
- * To run it again later: change `endsAt`, `drawOn` and (if needed) the prize.
+ * The contest (owner, 2026-11-17): the oldest working water heater entered
+ * from Cape Coral, Fort Myers or North Fort Myers wins a new one, installed.
+ * Anyone can enter their own heater or, with the owner's permission, someone
+ * else's.
+ *
+ * To run it again later: change `endsAt`, `announceOn` and (if needed) the prize.
  * Once `endsAt` passes, the page shows a "closed" state and the API rejects
  * entries on its own; no deploy is needed to close it.
  */
@@ -15,7 +20,7 @@ import { spanInline } from "./pricing";
 
 export const GIVEAWAY = {
   path: "/water-heater-giveaway",
-  name: "Water Heater Giveaway",
+  name: "Oldest Water Heater Giveaway",
   /**
    * Last moment an entry is accepted (Eastern time). December 8 is the
    * company's anniversary: the giveaway opens its 29th year in business
@@ -25,26 +30,31 @@ export const GIVEAWAY = {
   endsLabel: "December 8, 2026",
   endsLabelShort: "December 8",
   endsLabelLong: "11:59 PM ET on December 8, 2026",
-  /** Random drawing date ("on or about"). */
-  drawOn: "December 10, 2026",
-  drawOnShort: "December 10",
+  /** Winner announced ("on or about"): a week after closing, to verify the oldest entries on site. */
+  announceOn: "December 15, 2026",
+  announceOnShort: "December 15",
   /** Why now, in the owner's words. */
   occasion: "To kick off our 29th year in business",
+  /** The contest in one line (owner, 2026-11-17). */
+  hunt: "We're looking for the oldest working water heater in Southwest Florida",
+  /** Homes that can be entered. Also the options of the form's city field. */
+  cities: ["Cape Coral", "Fort Myers", "North Fort Myers"],
+  citiesSentence: "Cape Coral, Fort Myers or North Fort Myers",
+  prizeShort: "a new tank water heater, installed free",
+  prize:
+    "One new standard tank-type water heater (40 or 50 gallon, sized to the home) with standard replacement installation by C&S Plumbing of Lee, including haul-away of the old unit and the permit.",
+  /** Approximate retail value, from the published installed prices. */
+  arv: spanInline("waterHeater.tank40", "waterHeater.tank50"),
+  /** Photos of the current heater: at least one, at most this many. */
+  maxPhotos: 3,
+  /** Oldest year offered in the dropdown; anything older is one option. */
+  oldestYear: 1960,
   /** Shown on the page and in the receipt: fake "you won" messages follow every public giveaway. */
   scamWarning:
     "We contact the winner by phone and email from our office only. We never ask for a payment, a card number or a fee to claim the prize.",
   /** Shown beside the submit button; rule 10 says the same. */
   consent:
     "By entering, you agree we may email you about this giveaway and about water heater offers. You can opt out of those emails at any time. We call or text about offers only if you tick the box above.",
-  prizeShort: "a new tank water heater, installed",
-  prize:
-    "One new standard tank-type water heater (40 or 50 gallon, sized to the winner's home) with standard replacement installation by C&S Plumbing of Lee, including haul-away of the old unit and the permit.",
-  /** Approximate retail value, from the published installed prices. */
-  arv: spanInline("waterHeater.tank40", "waterHeater.tank50"),
-  /** Photos of the current heater: at least one, at most this many. */
-  maxPhotos: 3,
-  /** Oldest year offered in the dropdown; anything older is one option. */
-  oldestYear: 1990,
 } as const;
 
 export function isGiveawayOpen(now: Date = new Date()): boolean {
@@ -59,7 +69,7 @@ export function heaterYearOptions(now: Date = new Date()): [value: string, label
   const options: [string, string][] = [];
   for (let y = now.getFullYear(); y >= GIVEAWAY.oldestYear; y--) options.push([String(y), String(y)]);
   options.push([HEATER_YEAR_OLDER, `Before ${GIVEAWAY.oldestYear}`]);
-  options.push([HEATER_YEAR_UNSURE, "Not sure (we'll read it from your photo)"]);
+  options.push([HEATER_YEAR_UNSURE, "Not sure (we'll read it from the label photo)"]);
   return options;
 }
 
@@ -88,7 +98,10 @@ export const giveawayEntrySchema = z.object({
   }, "Please enter a 10-digit phone number."),
   email: z.string().trim().email("Please enter a valid email address.").max(200),
   address: z.string().trim().min(5, "Please enter the street address of the home.").max(200),
-  city: z.string().trim().min(2, "Please enter the city.").max(80),
+  city: z
+    .string()
+    .trim()
+    .refine((v) => (GIVEAWAY.cities as readonly string[]).includes(v), "Please select the city the home is in."),
   zip: z.string().trim().regex(/^\d{5}$/, "Please enter a 5-digit ZIP code."),
   heaterYear: z
     .string()
@@ -100,11 +113,17 @@ export const giveawayEntrySchema = z.object({
         (/^\d{4}$/.test(v) && Number(v) >= GIVEAWAY.oldestYear && Number(v) <= new Date().getFullYear() + 1),
       "Please select the year your water heater was made.",
     ),
-  /** Required: 18+, owns the home, accepts the official rules. */
+  /** Entering a relative's, friend's or neighbor's heater: the owner's name is then required. */
+  forSomeoneElse: checkbox,
+  ownerName: z.string().trim().max(120).optional().default(""),
+  /** Required: 18+, owns the home or has the owner's permission, accepts the official rules. */
   agree: checkbox.refine((v) => v, "Please confirm you agree to the official rules."),
   /** Optional: OK to be called or texted about replacing the heater. */
   contactOk: checkbox,
   website: z.string().optional(),
+}).refine((entry) => !entry.forSomeoneElse || entry.ownerName.length >= 2, {
+  path: ["ownerName"],
+  message: "Please enter the homeowner's name.",
 });
 
 export type GiveawayEntry = z.infer<typeof giveawayEntrySchema>;

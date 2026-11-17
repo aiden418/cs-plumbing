@@ -46,6 +46,7 @@ export default function GiveawayEntryForm() {
   const [errors, setErrors] = useState<Errors>({});
   const [photoError, setPhotoError] = useState("");
   const [photos, setPhotos] = useState<File[]>([]);
+  const [forSomeoneElse, setForSomeoneElse] = useState(false);
 
   const focusStatus = () => requestAnimationFrame(() => statusRef.current?.focus());
 
@@ -65,7 +66,7 @@ export default function GiveawayEntryForm() {
       return;
     }
     const photoProblem =
-      photos.length === 0 ? "Please add a photo of your water heater." : photoTotalError(photos);
+      photos.length === 0 ? "Please add a photo of the water heater." : photoTotalError(photos);
     if (photoProblem) {
       setErrors({});
       setPhotoError(photoProblem);
@@ -122,7 +123,8 @@ export default function GiveawayEntryForm() {
     return (
       <FormStatus ref={statusRef} tabIndex={-1} status="success" data-tone="white" title="You're entered!">
         <p>
-          We emailed you a receipt. The winner is drawn on or about {GIVEAWAY.drawOn}. {GIVEAWAY.scamWarning}
+          We emailed you a receipt. We verify the oldest water heaters in person and announce the winner on or about{" "}
+          {GIVEAWAY.announceOn}. {GIVEAWAY.scamWarning}
         </p>
         <p className="mt-3">
           Water heater acting up before then? Call{" "}
@@ -147,14 +149,16 @@ export default function GiveawayEntryForm() {
         aria-label="Water heater giveaway entry"
       >
         <div>
-          <h2 className="text-display-sm text-fg">Enter the giveaway</h2>
-          <p className="mt-1 text-sm text-muted">Takes about a minute. Every field is required.</p>
+          <h2 className="text-display-sm text-fg">Enter a water heater</h2>
+          <p className="mt-1 text-sm text-muted">
+            Yours, or one you know of. Takes about a minute.
+          </p>
         </div>
         <fieldset disabled={sending || closed} className="grid min-w-0 grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-x-6">
-          <Field id={fid("firstName")} label="First name" required error={errors.firstName}>
+          <Field id={fid("firstName")} label="Your first name" required error={errors.firstName}>
             <FormattedInput name="firstName" preset="name" autoComplete="given-name" maxLength={60} />
           </Field>
-          <Field id={fid("lastName")} label="Last name" required error={errors.lastName}>
+          <Field id={fid("lastName")} label="Your last name" required error={errors.lastName}>
             <FormattedInput name="lastName" preset="name" autoComplete="family-name" maxLength={60} />
           </Field>
           <Field id={fid("phone")} label="Phone number" required error={errors.phone}>
@@ -165,7 +169,7 @@ export default function GiveawayEntryForm() {
           </Field>
           <Field
             id={fid("address")}
-            label="Home address"
+            label="Address of the home"
             hint="Where the water heater is."
             required
             error={errors.address}
@@ -174,14 +178,23 @@ export default function GiveawayEntryForm() {
             <FormattedInput name="address" preset="street-address" minLength={5} maxLength={200} />
           </Field>
           <Field id={fid("city")} label="City" required error={errors.city}>
-            <FormattedInput name="city" preset="name" autoComplete="address-level2" minLength={2} maxLength={80} />
+            <Select name="city" defaultValue="" autoComplete="address-level2">
+              <option value="" disabled>
+                Select a city
+              </option>
+              {GIVEAWAY.cities.map((city) => (
+                <option key={city} value={city}>
+                  {city}
+                </option>
+              ))}
+            </Select>
           </Field>
           <Field id={fid("zip")} label="ZIP code" required error={errors.zip}>
             <FormattedInput name="zip" preset="postal-code" pattern="[0-9]{5}" maxLength={5} />
           </Field>
           <Field
             id={fid("heaterYear")}
-            label="Year your water heater was made"
+            label="Year the water heater was made"
             hint="On the label on the side of the tank: a manufacture date, or the first digits of the serial number."
             required
             error={errors.heaterYear}
@@ -201,7 +214,7 @@ export default function GiveawayEntryForm() {
           <div className="min-w-0 sm:col-span-2">
             <FileUpload
               id={fid("photos")}
-              label={`Photo of your water heater (1 to ${GIVEAWAY.maxPhotos}: the whole heater, plus its label if you can)`}
+              label={`Photo of the water heater (1 to ${GIVEAWAY.maxPhotos}: the whole heater, plus the label that shows its date)`}
               files={photos}
               onChange={(next) => {
                 setPhotoError("");
@@ -216,6 +229,27 @@ export default function GiveawayEntryForm() {
             />
           </div>
           <Checkbox
+            id={fid("forSomeoneElse")}
+            name="forSomeoneElse"
+            checked={forSomeoneElse}
+            onChange={(event) => setForSomeoneElse(event.target.checked)}
+            wrapperClassName="sm:col-span-2"
+            label="This is someone else's water heater."
+            hint="A relative, friend or neighbor. The new water heater goes to them."
+          />
+          {forSomeoneElse ? (
+            <Field
+              id={fid("ownerName")}
+              label="Homeowner's name"
+              hint="We'll reach them through you first."
+              required
+              error={errors.ownerName}
+              className="sm:col-span-2"
+            >
+              <FormattedInput name="ownerName" preset="name" autoComplete="off" minLength={2} maxLength={120} />
+            </Field>
+          ) : null}
+          <Checkbox
             id={fid("agree")}
             name="agree"
             required
@@ -223,7 +257,7 @@ export default function GiveawayEntryForm() {
             wrapperClassName="sm:col-span-2"
             label={
               <>
-                I&apos;m 18 or older, I own this home, and I agree to the{" "}
+                I&apos;m 18 or older, I own this home or have the owner&apos;s OK to enter it, and I agree to the{" "}
                 <a className={linkClass} href="#rules">
                   official rules
                 </a>
@@ -235,14 +269,14 @@ export default function GiveawayEntryForm() {
             id={fid("contactOk")}
             name="contactOk"
             wrapperClassName="sm:col-span-2"
-            label="It's OK to call or text me about replacing my water heater."
+            label="It's OK to call or text me about replacing a water heater."
             hint="Optional. Not required to enter or win."
           />
           {/* Same honeypot markup as ServiceRequestForm. */}
           <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="absolute -left-[9999px] w-px h-px opacity-0" />
         </fieldset>
         {error ? <FormStatus ref={statusRef} tabIndex={-1} status="error" data-tone="white" title={error} /> : null}
-        <SubmitRow label="Enter to win" loading={sending} disabled={closed} className="w-full sm:w-auto" />
+        <SubmitRow label="Submit entry" loading={sending} disabled={closed} className="w-full sm:w-auto" />
         <p className="text-sm text-muted">
           No purchase necessary. Ends {GIVEAWAY.endsLabel}. {GIVEAWAY.consent}{" "}
           <Link className="text-link underline underline-offset-[0.2em]" href="/privacy-policy">

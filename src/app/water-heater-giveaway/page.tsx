@@ -17,12 +17,12 @@ import { heroFrame } from "@/lib/hero-frame";
 // the exact cutoff either way.
 export const revalidate = 3600;
 
-const shareTitle = "Win a New Water Heater, Installed Free";
-const description = `${GIVEAWAY.occasion}, C&S Plumbing of Lee is giving away ${GIVEAWAY.prizeShort}. Free to enter for Southwest Florida homeowners. Ends ${GIVEAWAY.endsLabel}.`;
+const shareTitle = "Wanted: SWFL's Oldest Working Water Heater";
+const description = `${GIVEAWAY.hunt}. The oldest one in ${GIVEAWAY.citiesSentence} wins ${GIVEAWAY.prizeShort}. Enter yours, or one you know of, by ${GIVEAWAY.endsLabelShort}.`;
 
 export const metadata: Metadata = {
   alternates: { canonical: GIVEAWAY.path },
-  title: "Water Heater Giveaway",
+  title: "Oldest Water Heater Giveaway",
   description,
   openGraph: {
     type: "website",
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
         width: 1200,
         height: 630,
         type: "image/jpeg",
-        alt: `Win a new water heater, installed free. ${BUSINESS.fullName} anniversary giveaway, enter by ${GIVEAWAY.endsLabelShort}.`,
+        alt: `Wanted: Southwest Florida's oldest working water heater. The oldest one wins a new one, installed free. Enter by ${GIVEAWAY.endsLabelShort}.`,
       },
     ],
   },
@@ -46,16 +46,16 @@ export const metadata: Metadata = {
 
 const steps = [
   {
-    title: "Fill out the form",
-    description: "Your name, phone, email and the address of the home.",
+    title: "Tell us where it is",
+    description: `Your name and contact details, and the address of the home in ${GIVEAWAY.citiesSentence}. It can be your water heater or one you know of, with the owner's OK.`,
   },
   {
     title: "Add a photo and the year",
-    description: "Snap your current water heater and tell us the year on its label.",
+    description: "Snap the water heater and its label. The manufacture date is printed there, or in the first digits of the serial number.",
   },
   {
-    title: `Winner drawn ${GIVEAWAY.drawOnShort}`,
-    description: "One entry is picked at random. We call and email the winner.",
+    title: "Oldest one wins",
+    description: `After ${GIVEAWAY.endsLabelShort} we visit the oldest entries to confirm the date and that the heater still works. Winner announced ${GIVEAWAY.announceOnShort}.`,
   },
 ];
 
@@ -76,17 +76,17 @@ export default function Page() {
         size="sm"
         frame={heroFrame({ src: "/images/gallery/rheem-water-heater.jpg", position: "center 30%" })}
         overline={open ? `Anniversary giveaway · Ends ${GIVEAWAY.endsLabelShort}` : "Giveaway closed"}
-        title="Win a New Water Heater,"
-        accent="Installed Free"
+        title="Wanted: SWFL's Oldest"
+        accent="Working Water Heater"
         description={
           open
-            ? `${GIVEAWAY.occasion}, one Southwest Florida homeowner gets a brand-new tank water heater, installed by our licensed plumbers. Free to enter. Takes about a minute.`
+            ? `${GIVEAWAY.occasion}, we're replacing the oldest working water heater in ${GIVEAWAY.citiesSentence} with a brand-new one, installed free. Have an old one, or know someone who does? Enter it.`
             : `Entries closed on ${GIVEAWAY.endsLabel}. Thank you to everyone who entered. We contact the winner directly.`
         }
         actions={
           open ? (
             <Button href="#enter" variant="brass" size="lg">
-              Enter now
+              Enter a water heater
             </Button>
           ) : (
             <Button href="/services/water-heaters" variant="brass" size="lg">

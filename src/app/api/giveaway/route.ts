@@ -109,6 +109,7 @@ export async function POST(request: Request) {
       phone: escapeHtml(entry.phone),
       address: escapeHtml(`${entry.address}, ${entry.city}, FL ${entry.zip}`),
       year: escapeHtml(yearLabel + ageNote),
+      owner: escapeHtml(entry.forSomeoneElse ? entry.ownerName : `${fullName} (the entrant)`),
     };
 
     const emailId = await sendEmailOrThrow(resend, {
@@ -122,7 +123,8 @@ export async function POST(request: Request) {
             <h1 style="color: #0099FF; margin: 0;">Water Heater Giveaway Entry</h1>
           </div>
           <div style="padding: 20px; background: #f9f9f9;">
-            <p><strong>Name:</strong> ${safe.name}</p>
+            <p><strong>Entered by:</strong> ${safe.name}</p>
+            <p><strong>Homeowner:</strong> ${safe.owner}</p>
             <p><strong>Phone:</strong> <a href="tel:${safe.phone}">${safe.phone}</a></p>
             <p><strong>Email:</strong> <a href="mailto:${safe.email}">${safe.email}</a></p>
             <p><strong>Address:</strong> ${safe.address}</p>
@@ -143,7 +145,7 @@ export async function POST(request: Request) {
     await sendEmailBestEffort(resend, {
       from: "C&S Plumbing of Lee <contact@csplumbinglee.com>",
       to: [entry.email],
-      subject: "You're entered — C&S Plumbing Water Heater Giveaway",
+      subject: "You're entered — C&S Plumbing Oldest Water Heater Giveaway",
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background: #0A0A0F; padding: 20px; text-align: center;">
@@ -151,8 +153,8 @@ export async function POST(request: Request) {
           </div>
           <div style="padding: 20px; background: #f9f9f9;">
             <p>Hi ${safe.firstName},</p>
-            <p>Thanks for entering the C&S Plumbing of Lee Water Heater Giveaway. We received your entry for <strong>${safe.address}</strong> with ${attachments.length} photo${attachments.length === 1 ? "" : "s"}.</p>
-            <p>Entries close at ${GIVEAWAY.endsLabelLong}. One winner is drawn at random on or about ${GIVEAWAY.drawOn}. ${escapeHtml(GIVEAWAY.scamWarning)} The official rules are at <a href="https://www.csplumbinglee.com${GIVEAWAY.path}#rules" style="color: #0099FF;">csplumbinglee.com${GIVEAWAY.path}</a>.</p>
+            <p>Thanks for helping us find the oldest working water heater in Southwest Florida. We received your entry for <strong>${safe.address}</strong> with ${attachments.length} photo${attachments.length === 1 ? "" : "s"}.</p>
+            <p>Entries close at ${GIVEAWAY.endsLabelLong}. After that we visit the homes with the oldest water heaters to confirm their age, and announce the winner on or about ${GIVEAWAY.announceOn}. ${escapeHtml(GIVEAWAY.scamWarning)} The official rules are at <a href="https://www.csplumbinglee.com${GIVEAWAY.path}#rules" style="color: #0099FF;">csplumbinglee.com${GIVEAWAY.path}</a>.</p>
             <p>Water heater acting up before then? Call <a href="${BUSINESS.phoneHref}" style="color: #0099FF;">${BUSINESS.phone}</a>.</p>
             <p style="color: #999; font-size: 12px; margin-top: 20px;">${BUSINESS.fullName} · ${BUSINESS.address}, ${BUSINESS.city}, ${BUSINESS.state} ${BUSINESS.zip}</p>
           </div>
@@ -171,6 +173,8 @@ export async function POST(request: Request) {
       zip: entry.zip,
       heaterYear: yearLabel,
       heaterAge: age === null ? "" : String(age),
+      homeowner: entry.forSomeoneElse ? entry.ownerName : fullName,
+      enteredForSomeoneElse: entry.forSomeoneElse ? "yes" : "no",
       callTextOk: entry.contactOk ? "yes" : "no",
       photos: String(attachments.length),
       emailId,
