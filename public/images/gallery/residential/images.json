@@ -1,0 +1,30 @@
+{
+  "residential-1.webp": {
+    "id": "65",
+    "alt": "Whole-home water treatment system with a stainless tank and digital control valve installed outside on a stucco wall",
+    "title": "Whole-Home Water Treatment System",
+    "category": "residential",
+    "order": 72
+  },
+  "residential-2.webp": {
+    "id": "66",
+    "alt": "C&S plumber feeding a drain cable into the drain line under a kitchen sink",
+    "title": "Service Call — Clearing a Kitchen Drain",
+    "category": "residential",
+    "order": 78
+  },
+  "residential-3.webp": {
+    "id": "100",
+    "alt": "New copper riser with a brass shutoff valve where the water service enters the house",
+    "title": "New Water Service — After",
+    "category": "residential",
+    "order": 101
+  },
+  "residential-4.webp": {
+    "id": "101",
+    "alt": "Old water service connection at the house wall before replacement, with a worn hose bibb and a cut copper stub",
+    "title": "New Water Service — Before",
+    "category": "residential",
+    "order": 100
+  }
+}

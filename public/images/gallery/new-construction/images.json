@@ -1,0 +1,30 @@
+{
+  "new-construction-1.webp": {
+    "id": "78",
+    "alt": "Aerial view of a block home under construction with a C&S Plumbing service truck parked out front",
+    "title": "Aerial View — New Home Under Construction",
+    "category": "new-construction",
+    "order": 76
+  },
+  "new-construction-2.webp": {
+    "id": "79",
+    "alt": "Hot and cold PEX lines strapped down an exterior block wall to an outdoor shower valve",
+    "title": "Outdoor Shower Rough-In — Block Wall",
+    "category": "new-construction",
+    "order": 81
+  },
+  "new-construction-3.webp": {
+    "id": "80",
+    "alt": "C&S plumber installing shower trim in a newly tiled walk-in shower",
+    "title": "Shower Trim-Out — New Construction",
+    "category": "new-construction",
+    "order": 77
+  },
+  "new-construction-4.webp": {
+    "id": "81",
+    "alt": "Freestanding soaking tub with a wall-mounted tub filler in a tiled alcove",
+    "title": "Freestanding Tub — Trim-Out",
+    "category": "new-construction",
+    "order": 67
+  }
+}

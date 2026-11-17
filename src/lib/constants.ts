@@ -3630,17 +3630,17 @@ export const COMPLETED_PROJECT_TEXT: CompletedProjectText[] = [
   },
   {
     slug: "hangar-97-punta-gorda-airport",
-    updatedOn: "2026-09-22",
+    updatedOn: "2026-11-16",
     name: "Hangar 97 — Punta Gorda Airport (Commercial New Construction)",
     client: "Stellar Development",
     category: "Commercial New Construction",
     // Owner confirmed complete (Sep 2026); completion date not yet supplied,
-    // so `completedOn` stays unset. Only underground and second rough are
-    // photographed.
+    // so `completedOn` stays unset. Underground, second rough and trim-out
+    // are photographed (trim-out photos added Nov 2026).
     timeline: "Completed",
     cost: "On Request",
     description:
-      "C&S Plumbing was the commercial plumbing contractor for Hangar 97, a new-construction aviation hangar at Punta Gorda Airport (PGD) built by Stellar Development. Below-slab underground rough-in — supply, drain, waste, and vent piping set and inspected before the pour — and the second rough-in through the commercial structure are documented below. Estimated and project-managed in-house by the C&S office.",
+      "C&S Plumbing was the commercial plumbing contractor for Hangar 97, a new-construction aviation hangar at Punta Gorda Airport (PGD) built by Stellar Development. Below-slab underground rough-in — supply, drain, waste, and vent piping set and inspected before the pour — the second rough-in through the commercial structure, and the fixture trim-out are documented below. Estimated and project-managed in-house by the C&S office.",
     location: "Punta Gorda, FL",
     phases: [
       {
@@ -3653,18 +3653,23 @@ export const COMPLETED_PROJECT_TEXT: CompletedProjectText[] = [
         slug: "2nd-rough",
         description: "In-wall and overhead rough-in — water supply, DWV, and fixture stub-outs run throughout the commercial structure.",
       },
+      {
+        name: "Trim-Out",
+        slug: "trim-out",
+        description: "Restroom fixtures, the hangar-bay drinking fountain, utility sink, emergency shower and eyewash station, and the water heater set and connected.",
+      },
     ],
-    scopeDetails: ["Underground DWV and supply rough-in","Second rough-in","Commercial new construction"],
-    // Draft case study — documented phases only; trim/final, dates and
-    // inspection results to be confirmed. Builder permission not yet given.
+    scopeDetails: ["Underground DWV and supply rough-in","Second rough-in","Fixture trim-out","Commercial new construction"],
+    // Draft case study — documented phases only; dates and inspection
+    // results to be confirmed. Builder permission not yet given.
     caseStudy: {
       builder: { name: "Stellar Development", permission: false },
       projectType: "Commercial aviation hangar, new construction",
-      phasesPerformed: ["Underground", "Second rough"],
+      phasesPerformed: ["Underground", "Second rough", "Trim-out"],
       projectManagement: "Estimated and project-managed in-house by the C&S office",
     },
     metaTitle: "Hangar 97 Punta Gorda Airport — Commercial Plumbing",
-    metaDescription: "Commercial plumbing for Hangar 97 at Punta Gorda Airport — underground and second rough-in documented by C&S Plumbing of Lee, estimated and managed in-house.",
+    metaDescription: "Commercial plumbing for Hangar 97 at Punta Gorda Airport — underground, second rough-in and trim-out by C&S Plumbing of Lee, estimated and managed in-house.",
   },
   {
     slug: "usps-cape-coral-remodel",
@@ -3759,7 +3764,7 @@ export const COMPLETED_PROJECT_TEXT: CompletedProjectText[] = [
   },
   {
     slug: "fema-home-punta-gorda",
-    updatedOn: "2026-09-22",
+    updatedOn: "2026-11-16",
     name: "FEMA Home Rebuild — New Construction (Punta Gorda)",
     client: "Draft Construction LLC",
     clientUrl: "https://www.draftconstructionswfl.com",
@@ -3767,7 +3772,7 @@ export const COMPLETED_PROJECT_TEXT: CompletedProjectText[] = [
     timeline: "In Progress",
     cost: "On Request",
     description:
-      "C&S Plumbing is the plumbing contractor on a FEMA-compliant new-construction home rebuild in Punta Gorda, built by Draft Construction LLC. Below-slab underground supply and drain/waste/vent piping is installed and inspected. In-wall rough and trim phases follow as the rebuild continues.",
+      "C&S Plumbing is the plumbing contractor on a FEMA-compliant new-construction home rebuild in Punta Gorda, built by Draft Construction LLC. Below-slab underground supply and drain/waste/vent piping is installed and inspected, and the home's septic system — tank, pump chamber and chamber drainfield — is set. In-wall rough and trim phases follow as the rebuild continues.",
     location: "Punta Gorda, FL",
     phases: [
       {
@@ -3775,30 +3780,52 @@ export const COMPLETED_PROJECT_TEXT: CompletedProjectText[] = [
         slug: "underground",
         description: "Below-slab supply and DWV piping installed and inspected before the slab pour for the FEMA rebuild.",
       },
+      {
+        name: "Septic System",
+        slug: "septic",
+        description: "Septic tank and pump chamber set beside the home, and the chamber drainfield laid out and piped in the front yard.",
+      },
     ],
-    scopeDetails: ["Underground rough-in","FEMA-compliant new construction"],
+    scopeDetails: ["Underground rough-in","Septic tank, pump chamber and drainfield","FEMA-compliant new construction"],
     metaTitle: "FEMA Home Rebuild Punta Gorda — New Construction Plumbing",
     metaDescription: "C&S Plumbing of Lee handles new-construction plumbing on a FEMA-compliant home rebuild in Punta Gorda for builder Draft Construction LLC.",
   },
   {
     slug: "south-florida-christian-academy-bathroom-remodel",
-    updatedOn: "2026-09-22",
+    updatedOn: "2026-11-16",
     name: "South Florida Christian Academy — K-1 Bathroom Remodel",
     client: "McDaniel Construction",
     category: "Commercial Remodel",
-    timeline: "In Progress",
+    // Final photos (Nov 2026) show the restrooms finished and in use;
+    // completion date not yet supplied, so `completedOn` stays unset.
+    timeline: "Completed",
     cost: "On Request",
     description:
-      "C&S Plumbing is the plumbing contractor on a K-1 bathroom remodel at South Florida Christian Academy in Fort Myers, built by McDaniel Construction. Demolition of the existing fixtures and piping is complete; rough-in and trim phases follow as the remodel progresses.",
+      "C&S Plumbing was the plumbing contractor on a K-1 bathroom remodel at South Florida Christian Academy in Fort Myers, built by McDaniel Construction. C&S demolished the existing fixtures and piping, then made the drain and supply connections for the new sink counters and faucets. Photos below run from the restrooms before the remodel through demolition, rough-in and the finished rooms.",
     location: "Fort Myers, FL",
     phases: [
+      {
+        name: "Before",
+        slug: "before",
+        description: "The original K-1 restroom sink counters before demolition.",
+      },
       {
         name: "Demolition",
         slug: "demo",
         description: "Existing fixtures and plumbing demolished to prep the K-1 bathrooms for the remodel.",
       },
+      {
+        name: "Rough-In",
+        slug: "rough-in",
+        description: "Drain and supply connections made under the new sink counters.",
+      },
+      {
+        name: "Final",
+        slug: "final",
+        description: "Finished restrooms with the new sink counters and touch-free faucets in service.",
+      },
     ],
-    scopeDetails: ["Plumbing demolition","Commercial bathroom remodel"],
+    scopeDetails: ["Plumbing demolition","Sink drain and supply connections","Fixture trim-out","Commercial bathroom remodel"],
     metaTitle: "South Florida Christian Academy Bathroom Remodel",
     metaDescription: "C&S Plumbing of Lee handles a K-1 bathroom remodel at South Florida Christian Academy in Fort Myers for builder McDaniel Construction.",
   },
@@ -3877,6 +3904,75 @@ export const COMPLETED_PROJECT_TEXT: CompletedProjectText[] = [
     scopeDetails: ["Fixture trim-out","Residential new construction"],
     metaTitle: "Hansen Homes 2210 Cape Coral New Construction Plumbing",
     metaDescription: "Trim-out on Hansen Homes build 2210 in Cape Coral by C&S Plumbing of Lee — finish fixtures and final connections on a new-construction home.",
+  },
+  {
+    slug: "808-miramar-sewer-line-cape-coral",
+    updatedOn: "2026-11-16",
+    name: "808 Miramar — New Sewer Line (Cape Coral)",
+    // Owner asked for the client not to be named (Nov 2026).
+    client: "Property Owner",
+    category: "Sewer & Drain",
+    // Every photo is dated 2026-10-29. No completion date was supplied, so
+    // `completedOn` stays unset and the page shows the month of the work.
+    timeline: "October 2026",
+    cost: "On Request",
+    description:
+      "C&S Plumbing installed a new sewer line at 808 Miramar, a two-story multi-unit building in Cape Coral. The crew exposed the original clay line, inspected it by camera, trenched along the building and across the parking area, and laid new PVC sewer pipe in its place.",
+    location: "Cape Coral, FL",
+    phases: [
+      {
+        name: "Excavation",
+        slug: "excavation",
+        description: "The original clay sewer line located, exposed and inspected by camera, and the trench cut along the building.",
+      },
+      {
+        name: "New Sewer Line",
+        slug: "sewer-line",
+        description: "New PVC sewer pipe laid and joined along the trench.",
+      },
+    ],
+    scopeDetails: ["Sewer line location and camera inspection","Excavation and trenching","New PVC sewer line"],
+    metaTitle: "808 Miramar Cape Coral — New Sewer Line",
+    metaDescription: "C&S Plumbing of Lee installed a new sewer line at 808 Miramar in Cape Coral — the old clay line exposed and camera-inspected, then new PVC sewer pipe laid.",
+  },
+  {
+    slug: "residential-repipes",
+    updatedOn: "2026-11-16",
+    name: "Residential Repipes — PEX and Drain Line Replacements",
+    // A set of jobs at private homes, photographed Feb–May 2024. No
+    // addresses, and no `location`: the Projects page counts each distinct
+    // location as a city served.
+    client: "Private Homeowners",
+    category: "Repiping",
+    timeline: "Completed",
+    cost: "On Request",
+    description:
+      "A set of residential repipe jobs by C&S Plumbing, photographed with the walls, attic and floor framing still open. The photos are grouped by job: new drain and water lines under an elevated home, PEX water lines run through an attic, a block home repiped behind its walls, and in-wall drops to fixtures. Addresses are not shown.",
+    phases: [
+      {
+        name: "Elevated Home",
+        slug: "elevated-home",
+        description: "New PVC drain lines and PEX water lines hung under the floor framing of an elevated home.",
+      },
+      {
+        name: "Attic Repipe",
+        slug: "attic",
+        description: "Hot and cold PEX lines run through the attic and brought down to the fixtures.",
+      },
+      {
+        name: "Block Home",
+        slug: "block-home",
+        description: "PEX water lines run along block walls and through opened drywall to the bathroom and laundry.",
+      },
+      {
+        name: "In-Wall Drops",
+        slug: "in-wall-drops",
+        description: "PEX drops and stub-outs inside opened walls on two more repipe jobs.",
+      },
+    ],
+    scopeDetails: ["Water line repipes in PEX","New PVC drain lines under an elevated home","Fixture stub-outs and shutoff valves"],
+    metaTitle: "Residential Repipes — PEX Water Line Replacement",
+    metaDescription: "Photos from residential repipe jobs by C&S Plumbing of Lee — PEX water lines through attics and walls, and new drain lines under an elevated home.",
   },
 ];
 
