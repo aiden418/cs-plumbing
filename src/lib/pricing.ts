@@ -31,6 +31,10 @@ const CHECKED = "2026-11-12";
 export const PRICES = {
   // Water heaters
   "waterHeater.repair": { min: 195, max: 475, checked: CHECKED, note: "Thermostat, element, T&P, valve; same-day in most cases" },
+  // FLAGGED 2026-11-20 (Aiden): the office is to confirm this 40-gallon range.
+  // It stays as approved on 2026-11-12 until they do; when they answer, change
+  // min/max here if needed, set `checked` to that day and remove this note.
+  // Never replace it with one job's quote as a "from" price.
   "waterHeater.tank40": { min: 1650, max: 2200, checked: CHECKED, note: "Installed; haul-away, pan, T&P, permit and Lee County final included" },
   "waterHeater.tank50": { min: 1850, max: 2500, checked: CHECKED, note: "Installed; same inclusions as 40-gal" },
   "waterHeater.tank75": { min: 1800, max: 2600, checked: CHECKED, note: "Calculator only; carried over from the quote builder — confirm" },

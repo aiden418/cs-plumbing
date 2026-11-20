@@ -101,12 +101,20 @@ export default function ResidentialPage() {
         ]}
       />
       <ServiceDetail
-        title="Residential Services"
-        heroText="Your Home Deserves the Best Plumbing"
-        description="Whether it's a midnight emergency or a planned renovation, our residential plumbing team delivers fast, reliable service that protects your home and keeps your family comfortable."
+        title={COPY.hero.overline}
+        heroText={COPY.hero.title}
+        description={COPY.hero.description}
         services={residentialServices}
         highlights={highlights}
         frame={picture("service.header.residential")}
+        request={{
+          label: COPY.requestLabel,
+          // "Residential Plumbing" in the form's service list.
+          service: "residential",
+          listTitle: COPY.repairs.title,
+          listDescription: COPY.repairs.description,
+          jobs: COPY.repairs.jobs,
+        }}
         breadcrumb={[
           { name: "Home", href: "/" },
           { name: "Services", href: "/services" },

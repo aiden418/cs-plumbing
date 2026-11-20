@@ -16,7 +16,7 @@ import { INDEXED_LANDINGS } from "@/lib/landing-indexing";
 import { image, picture } from "@/lib/media";
 import type { MediaRef } from "@/lib/media-types";
 import { SERVICE_PAGE as COPY, SERVICE_PHOTO_FALLBACK } from "@/content/services";
-import type { ServiceLanding } from "@/lib/types";
+import type { CostRow, PriceSummary as PriceSummaryData, ServiceLanding } from "@/lib/types";
 
 /* --------------------------------------------------------------------------
    Shared parts of the service pages (also used by ServiceDetail and the
@@ -55,17 +55,74 @@ export function splitLead(text: string, max = 180): { lead: string; rest: string
   return { lead: lead.trim(), rest: sentences.slice(i).join("").trim() };
 }
 
-/** The two hero actions: the call first (the primary action), then booking or the form. */
-export function HeroActions({ second }: { second: { label: string; href: string } }) {
-  return (
+/**
+ * The two hero actions: the call first (the primary action), then booking or
+ * the form. `lead="second"` swaps them for a page whose main ask is the
+ * request form: that button is the blue one, with the call right beside it.
+ */
+export function HeroActions({
+  second,
+  lead = "call",
+}: {
+  second: { label: string; href: string };
+  lead?: "call" | "second";
+}) {
+  const callFirst = lead === "call";
+  const call = (
+    <Button
+      href={BUSINESS.phoneHref}
+      variant={callFirst ? "primary" : "secondary"}
+      size="lg"
+      icon={<Phone className="size-5" />}
+    >
+      {COPY.call} {BUSINESS.phone}
+    </Button>
+  );
+  const other = (
+    <Button href={second.href} variant={callFirst ? "secondary" : "primary"} size="lg">
+      {second.label}
+    </Button>
+  );
+  return callFirst ? (
     <>
-      <Button href={BUSINESS.phoneHref} variant="primary" size="lg" icon={<Phone className="size-5" />}>
-        {COPY.call} {BUSINESS.phone}
-      </Button>
-      <Button href={second.href} variant="secondary" size="lg">
-        {second.label}
-      </Button>
+      {call}
+      {other}
     </>
+  ) : (
+    <>
+      {other}
+      {call}
+    </>
+  );
+}
+
+/**
+ * The inline request form in its panel: where a page's "#request-service"
+ * button lands. From lg it stays in view beside the reading column
+ * (services.css); `className` places it in the caller's grid.
+ */
+export function RequestPanel({
+  title,
+  intro,
+  service,
+  className,
+}: {
+  title: string;
+  intro: string;
+  /** The form's preselected "Service needed" option (SERVICE_REQUEST_OPTIONS). */
+  service: string;
+  className?: string;
+}) {
+  return (
+    <aside id="request-service" aria-labelledby="request-service-title" className={cn("scroll-mt-28", className)}>
+      <div className="service-request-panel rounded-2xl border border-steel-200 bg-white p-5 shadow-[0_8px_30px_-12px_rgb(10_23_48/0.18)] sm:p-7">
+        <h2 id="request-service-title" className="text-display-sm text-fg">
+          {title}
+        </h2>
+        <p className="mt-2 mb-5 text-[0.9375rem] text-body">{intro}</p>
+        <ServiceRequestForm defaultService={service} source="service-page" compact />
+      </div>
+    </aside>
   );
 }
 
@@ -93,6 +150,107 @@ export function PriceLine({
         </Link>
       )}
     </p>
+  );
+}
+
+/**
+ * The header's price summary: one labelled range per kind of job, so a repair
+ * is never read against a replacement. A job with no published price gets a
+ * link to the request form instead of a figure. The last line jumps to the
+ * pricing section, where each range is shown with what it includes.
+ */
+export function PriceSummary({
+  summary,
+  requestHref,
+  detailsHref,
+}: {
+  summary: PriceSummaryData;
+  /** Where "request pricing" goes: the page's request form. */
+  requestHref: string;
+  /** The pricing section further down the page. */
+  detailsHref?: string;
+}) {
+  const row = "grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-x-4 border-t border-rule py-2.5";
+  const link = "font-semibold text-link underline underline-offset-4 hover:decoration-2";
+  return (
+    <div className="mt-6 max-w-[30rem]">
+      <h2 id="price-summary-heading" className="text-base font-semibold text-fg">
+        {COPY.priceSummary.title}
+      </h2>
+      <dl aria-labelledby="price-summary-heading" className="mt-2 border-b border-rule">
+        {summary.rows.map((item) => (
+          <div key={item.label} className={row}>
+            <dt className="text-base text-body">{item.label}</dt>
+            <dd className="text-right text-lg font-semibold whitespace-nowrap text-fg tabular-nums">{item.range}</dd>
+          </div>
+        ))}
+        {summary.request && (
+          <div className={row}>
+            <dt className="text-base text-body">{summary.request.label}</dt>
+            <dd className="text-right text-base">
+              <Link href={requestHref} className={link}>
+                {summary.request.action}
+              </Link>
+            </dd>
+          </div>
+        )}
+      </dl>
+      {detailsHref && (
+        <Link href={detailsHref} className={cn("mt-1 inline-flex min-h-11 items-center gap-1.5 text-base", link)}>
+          {COPY.priceSummary.details}
+          <ArrowRight className="size-4" />
+        </Link>
+      )}
+    </div>
+  );
+}
+
+/** The pricing section's rows. Grouped rows ("Repairs", "Replacements") get a sub-heading per group. */
+function CostRows({ rows, requestHref }: { rows: CostRow[]; requestHref: string }) {
+  const groups: { title?: string; rows: CostRow[] }[] = [];
+  for (const item of rows) {
+    const last = groups[groups.length - 1];
+    if (last && last.title === item.group) last.rows.push(item);
+    else groups.push({ title: item.group, rows: [item] });
+  }
+  return (
+    <div className="space-y-8">
+      {groups.map((group) => (
+        <div key={group.title ?? "all"}>
+          {group.title && <h3 className="mb-3 text-lg leading-snug font-semibold text-fg sm:text-xl">{group.title}</h3>}
+          <dl className="border-b border-rule">
+            {group.rows.map((item) => (
+              <div
+                key={item.label}
+                className="grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-x-4 gap-y-0.5 border-t border-rule py-4"
+              >
+                {item.request ? (
+                  // No figure to line up on the right: the label keeps the full width, the link sits under it.
+                  <>
+                    <dt className="col-span-2 font-semibold text-fg">{item.label}</dt>
+                    <dd className="col-span-2">
+                      <Link
+                        href={requestHref}
+                        className="inline-flex min-h-11 items-center gap-1.5 font-semibold text-link underline underline-offset-4 hover:decoration-2"
+                      >
+                        {item.request}
+                        <ArrowRight className="size-4" />
+                      </Link>
+                    </dd>
+                  </>
+                ) : (
+                  <>
+                    <dt className="font-semibold text-fg">{item.label}</dt>
+                    <dd className="text-right font-semibold whitespace-nowrap text-fg tabular-nums sm:text-lg">{item.range}</dd>
+                  </>
+                )}
+                {item.note && <dd className="col-span-2 text-[0.9375rem] text-body">{item.note}</dd>}
+              </div>
+            ))}
+          </dl>
+        </div>
+      ))}
+    </div>
   );
 }
 
@@ -271,18 +429,7 @@ export default function ServiceLandingTemplate({
 
   const costRows = hasCost && (
     <>
-      <dl className="border-b border-rule">
-        {landing.costBreakdown!.map((item) => (
-          <div
-            key={item.label}
-            className="grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-x-4 gap-y-0.5 border-t border-rule py-4"
-          >
-            <dt className="font-semibold text-fg">{item.label}</dt>
-            <dd className="text-right font-semibold whitespace-nowrap text-fg tabular-nums sm:text-lg">{item.range}</dd>
-            {item.note && <dd className="col-span-2 text-[0.9375rem] text-body">{item.note}</dd>}
-          </div>
-        ))}
-      </dl>
+      <CostRows rows={landing.costBreakdown!} requestHref={bookHref} />
       <div className="mt-7">
         <Button href={bookHref} variant="primary" size="lg">
           {COPY.cost.cta}
@@ -375,19 +522,12 @@ export default function ServiceLandingTemplate({
         <>
           {restOfLead}
           <div className="grid grid-cols-1 gap-y-14 lg:grid-cols-12 lg:gap-x-10">
-            <aside
-              id="request-service"
-              aria-labelledby="request-service-title"
-              className="scroll-mt-28 lg:col-span-5 lg:col-start-8 lg:row-start-1 xl:col-span-4 xl:col-start-9"
-            >
-              <div className="service-request-panel rounded-2xl border border-steel-200 bg-white p-5 shadow-[0_8px_30px_-12px_rgb(10_23_48/0.18)] sm:p-7">
-                <h2 id="request-service-title" className="text-display-sm text-fg">
-                  {formTitle}
-                </h2>
-                <p className="mt-2 mb-5 text-[0.9375rem] text-body">{COPY.requestForm.intro}</p>
-                <ServiceRequestForm defaultService={requestService} source="service-page" compact />
-              </div>
-            </aside>
+            <RequestPanel
+              title={formTitle}
+              intro={COPY.requestForm.intro}
+              service={requestService}
+              className="lg:col-span-5 lg:col-start-8 lg:row-start-1 xl:col-span-4 xl:col-start-9"
+            />
             <div className="min-w-0 space-y-14 sm:space-y-16 lg:col-span-7 lg:row-start-1 xl:col-span-8 xl:pr-6">
               {hasAnswers && (
                 <Chapter id="quick-answers-heading" overline={COPY.answers.overline} title={COPY.answers.title} wide={false}>
@@ -441,8 +581,16 @@ export default function ServiceLandingTemplate({
         description={lead}
         actions={<HeroActions second={{ label: requestService ? COPY.request : COPY.book, href: bookHref }} />}
       >
-        {landing.priceRange && (
-          <PriceLine label={COPY.typicalRange} range={landing.priceRange} link={{ label: COPY.getQuote, href: bookHref }} />
+        {landing.priceSummary ? (
+          <PriceSummary
+            summary={landing.priceSummary}
+            requestHref={bookHref}
+            detailsHref={hasCost ? "#cost-heading" : undefined}
+          />
+        ) : (
+          landing.priceRange && (
+            <PriceLine label={COPY.typicalRange} range={landing.priceRange} link={{ label: COPY.getQuote, href: bookHref }} />
+          )
         )}
       </PageHero>
 
