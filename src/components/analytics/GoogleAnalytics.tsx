@@ -1,7 +1,10 @@
 "use client";
 
 import Script from "next/script";
-import { TAG_IDS } from "@/lib/pixel";
+import { BUSINESS } from "@/lib/business";
+import { GOOGLE_ADS_ID, TAG_IDS } from "@/lib/pixel";
+
+const WEBSITE_CALL_CONVERSION_LABEL = "V3DdCPHyq7wdEOm5tKw9";
 
 /**
  * Google Analytics 4 via gtag.js. Renders nothing until GA_MEASUREMENT_ID is
@@ -12,15 +15,68 @@ import { TAG_IDS } from "@/lib/pixel";
  * Client-side route changes are reported by GA4's Enhanced Measurement
  * ("page changes based on browser history events", on by default for a web
  * stream), so there is deliberately no manual page_view here — adding one
- * would double-count every navigation. Conversion events (calls, texts,
- * forms, bookings, builder bids) are sent from src/lib/pixel.ts alongside
- * the Meta and OpenAI pixels so all three platforms see the same actions.
+ * would double-count every navigation. The Google Ads forwarding tag
+ * measures placed calls separately from the click events in src/lib/pixel.ts.
  */
 export default function GoogleAnalytics() {
   if (!TAG_IDS?.ga) return null;
-  // Named as before so the tag markup below is unchanged. These are the real
-  // ids unless the build is in placeholder mode.
-  const { ga: GA_MEASUREMENT_ID, googleAds: GOOGLE_ADS_ID } = TAG_IDS;
+  const { ga: GA_MEASUREMENT_ID, googleAds: googleAdsId } = TAG_IDS;
+  const websiteCallConfig = googleAdsId === GOOGLE_ADS_ID ? `
+          gtag('config', '${googleAdsId}/${WEBSITE_CALL_CONVERSION_LABEL}', {
+            phone_conversion_number: ${JSON.stringify(BUSINESS.phone)},
+            phone_conversion_callback: (formattedNumber, mobileNumber) => {
+              // Keep the published number if Google cannot supply a usable forwarding number.
+              if (!/^\\+?\\d{10,15}$/.test(mobileNumber) ||
+                  mobileNumber.replace(/^\\+?1?/, '') === ${JSON.stringify(BUSINESS.phoneRaw)}) return;
+
+              const originalHref = ${JSON.stringify(BUSINESS.phoneHref)};
+              const forwardingHref = 'tel:' + mobileNumber;
+              const displays = ${JSON.stringify([BUSINESS.phone, BUSINESS.phoneDigits])};
+              const displayNumber = formattedNumber || mobileNumber;
+              const replaceNumber = text => displays.reduce(
+                (value, number) => value.replaceAll(number, displayNumber),
+                text
+              );
+
+              function updatePhoneLinks() {
+                for (const link of document.querySelectorAll(
+                  'a[href="' + originalHref + '"], a[href="' + forwardingHref + '"]'
+                )) {
+                  if (link.getAttribute('href') !== forwardingHref) {
+                    link.setAttribute('href', forwardingHref);
+                  }
+                  const label = link.getAttribute('aria-label');
+                  if (label) {
+                    const updatedLabel = replaceNumber(label);
+                    if (updatedLabel !== label) link.setAttribute('aria-label', updatedLabel);
+                  }
+                  const textNodes = document.createTreeWalker(link, NodeFilter.SHOW_TEXT);
+                  while (textNodes.nextNode()) {
+                    const node = textNodes.currentNode;
+                    const updatedText = replaceNumber(node.data);
+                    if (updatedText !== node.data) node.data = updatedText;
+                  }
+                }
+              }
+
+              // Next.js navigation and menus can render new phone links after the tag loads.
+              // Disconnect while applying updates so our writes do not trigger another scan.
+              function refreshPhoneLinks() {
+                observer.disconnect();
+                updatePhoneLinks();
+                observer.observe(document.body, {
+                  childList: true,
+                  subtree: true,
+                  characterData: true,
+                  attributes: true,
+                  attributeFilter: ['href', 'aria-label'],
+                });
+              }
+              const observer = new MutationObserver(refreshPhoneLinks);
+              refreshPhoneLinks();
+            },
+          });
+        ` : "";
   return (
     <>
       <Script
@@ -34,7 +90,8 @@ export default function GoogleAnalytics() {
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
           gtag('config', '${GA_MEASUREMENT_ID}');
-          gtag('config', '${GOOGLE_ADS_ID}');
+          gtag('config', '${googleAdsId}');
+          ${websiteCallConfig}
         `}
       </Script>
     </>

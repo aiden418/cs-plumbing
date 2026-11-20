@@ -4,6 +4,7 @@ import { readFileSync, readdirSync } from "node:fs";
 import { createRequire } from "node:module";
 import { join, relative, sep } from "node:path";
 import { fileURLToPath } from "node:url";
+import { runInNewContext } from "node:vm";
 import { PLACEHOLDER_TAG_IDS, type TagIds } from "../src/lib/pixel";
 
 /**
@@ -14,9 +15,8 @@ import { PLACEHOLDER_TAG_IDS, type TagIds } from "../src/lib/pixel";
  * <Script> props (id, strategy, src, inline body) and the <noscript> beacon a
  * page would get, and can run the effects by hand. No browser, no network.
  *
- * The expected markup below is production's, written out in full on purpose:
- * these tags are what the ad platforms and GA4 see, so changing one should
- * take a deliberate edit here as well.
+ * The expected base markup is written out on purpose. The call forwarding
+ * configuration is checked by running the Google tag's queued commands.
  *
  * The last two tests read the source tree instead: the switch covers the
  * whole site only while these loaders are the only tags, each mounted once.
@@ -211,6 +211,30 @@ function render(loader: Loader): { tree: unknown; tags: Tag[]; effects: Effect[]
   return { tree, tags: tagsIn(tree), effects };
 }
 
+function assertGoogleTags(loader: Loader, ids: TagIds) {
+  const { tags } = render(loader);
+  const body = String(tags[1].body);
+  const dataLayer: IArguments[] = [];
+  runInNewContext(body, { window: { dataLayer }, dataLayer });
+  const commands = dataLayer.map((args) => Array.from(args));
+  assert.equal(commands.shift()?.[0], "js");
+  assert.deepEqual(commands.slice(0, 2), [["config", ids.ga], ["config", ids.googleAds]]);
+  if (ids.googleAds === REAL.googleAds) {
+    assert.equal(commands.length, 3);
+    const [command, destination, settings] = commands[2];
+    assert.equal(command, "config");
+    assert.equal(destination, "AW-16467696873/V3DdCPHyq7wdEOm5tKw9");
+    assert.equal(settings.phone_conversion_number, "833-PLUMB-IT");
+    assert.equal(typeof settings.phone_conversion_callback, "function");
+  } else {
+    assert.equal(commands.length, 2, "placeholder builds cannot request a forwarding number");
+  }
+  const afterBaseConfig = body.indexOf(`gtag('config', '${ids.googleAds}');`)
+    + `gtag('config', '${ids.googleAds}');`.length;
+  tags[1].body = body.slice(0, afterBaseConfig) + "\n        ";
+  assert.deepEqual(tags, googleTags(ids));
+}
+
 type Call = [name: string, ...args: unknown[]];
 
 /** Run `body` with a stand-in `window` (with or without the tag globals) and `document`. */
@@ -250,7 +274,7 @@ const clickOn = (selectorThatMatches: string | null) => ({
 
 test("switch unset: the three loaders render exactly production's tags", () => {
   const { GoogleAnalytics, MetaPixel, OpenAIPixel } = load();
-  assert.deepEqual(render(GoogleAnalytics).tags, googleTags(REAL));
+  assertGoogleTags(GoogleAnalytics, REAL);
   assert.deepEqual(render(MetaPixel).tags, metaTags(REAL));
   assert.deepEqual(render(OpenAIPixel).tags, openaiTags(REAL));
 });
@@ -258,7 +282,7 @@ test("switch unset: the three loaders render exactly production's tags", () => {
 test("a blank or unrecognised switch value renders the same as unset", () => {
   for (const analytics of ["", "on", "true", "false", "0", "disabled", "offf"]) {
     const { GoogleAnalytics, MetaPixel, OpenAIPixel } = load({ analytics });
-    assert.deepEqual(render(GoogleAnalytics).tags, googleTags(REAL), JSON.stringify(analytics));
+    assertGoogleTags(GoogleAnalytics, REAL);
     assert.deepEqual(render(MetaPixel).tags, metaTags(REAL), JSON.stringify(analytics));
     assert.deepEqual(render(OpenAIPixel).tags, openaiTags(REAL), JSON.stringify(analytics));
   }
@@ -290,10 +314,10 @@ test("NEXT_PUBLIC_ANALYTICS=off: the tel: listener stays mounted and a call tap 
 
 // ── (c) placeholder: same tags, fake ids ────────────────────────────────────
 
-test("NEXT_PUBLIC_ANALYTICS=placeholder: the same tags as production with only the ids swapped", () => {
+test("NEXT_PUBLIC_ANALYTICS=placeholder: fake IDs and no call forwarding", () => {
   const { GoogleAnalytics, MetaPixel, OpenAIPixel } = load({ analytics: "placeholder" });
   const rendered = [render(GoogleAnalytics).tags, render(MetaPixel).tags, render(OpenAIPixel).tags];
-  assert.deepEqual(rendered[0], googleTags(PLACEHOLDER_TAG_IDS));
+  assertGoogleTags(GoogleAnalytics, PLACEHOLDER_TAG_IDS);
   assert.deepEqual(rendered[1], metaTags(PLACEHOLDER_TAG_IDS));
   assert.deepEqual(rendered[2], openaiTags(PLACEHOLDER_TAG_IDS));
   const markup = JSON.stringify(rendered);
@@ -319,10 +343,10 @@ test("NEXT_PUBLIC_GA_MEASUREMENT_ID=off removes the Google tag, and only that, i
 
 test("a GA id supplied by NEXT_PUBLIC_GA_MEASUREMENT_ID is used when the tags are on, never in placeholder mode", () => {
   const custom = { ...REAL, ga: "G-OVERRIDE01" };
-  assert.deepEqual(render(load({ ga: "G-OVERRIDE01" }).GoogleAnalytics).tags, googleTags(custom));
-  assert.deepEqual(
-    render(load({ analytics: "placeholder", ga: "G-OVERRIDE01" }).GoogleAnalytics).tags,
-    googleTags(PLACEHOLDER_TAG_IDS),
+  assertGoogleTags(load({ ga: "G-OVERRIDE01" }).GoogleAnalytics, custom);
+  assertGoogleTags(
+    load({ analytics: "placeholder", ga: "G-OVERRIDE01" }).GoogleAnalytics,
+    PLACEHOLDER_TAG_IDS,
   );
 });
 
