@@ -5,9 +5,9 @@ import Script from "next/script";
 import { TAG_IDS, trackPhoneClick } from "@/lib/pixel";
 
 export default function MetaPixel() {
-  // Single sitewide source for tel: click conversions (Meta "Contact" and
-  // OpenAI "lead_created"). Components must not add their own onClick
-  // tracking to tel: links or every call tap is reported twice.
+  // Single sitewide source for tel: click events (Meta "Contact" and GA4
+  // "contact"; OpenAI is not sent call taps). Components must not add their
+  // own onClick tracking to tel: links or every call tap is reported twice.
   useEffect(() => {
     function handleClick(e: MouseEvent) {
       const link = (e.target as HTMLElement).closest('a[href^="tel:"]');

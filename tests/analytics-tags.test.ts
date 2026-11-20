@@ -350,9 +350,244 @@ test("a GA id supplied by NEXT_PUBLIC_GA_MEASUREMENT_ID is used when the tags ar
   );
 });
 
+// ── the Google Ads forwarding number: what the callback does to the page ────
+//
+// Google's call-tracking script (gstatic.com/call-tracking) calls
+// phone_conversion_callback(formatted, mobile) only when its server returned a
+// forwarding number, and calls it again on its refresh timer and every time
+// the tab becomes visible. These tests run the callback exactly as the tag
+// ships it, against a stand-in page.
+
+const COMPANY_TEL = "tel:+18337586248";
+const COMPANY_SMS = "sms:+18337586248?&body=Hi%20C%26S%20Plumbing%2C%20I%20need%20help%20with%20";
+
+type ForwardingCallback = (formatted?: unknown, mobile?: unknown) => void;
+
+interface PageLink {
+  attrs: Record<string, string>;
+  texts: { data: string }[];
+  getAttribute(name: string): string | null;
+  setAttribute(name: string, value: string): void;
+}
+
+/** A page of links, with the DOM calls the callback uses and a way to play a DOM change. */
+function forwardingPage() {
+  type Observer = { notify: () => void; observing: boolean };
+  const observers: Observer[] = [];
+  const links: PageLink[] = [];
+  /** The callback disconnects its observer before it writes, so its own writes never re-trigger it. */
+  const assertNotObserved = () =>
+    assert.ok(observers.every((o) => !o.observing), "the page was written to while the observer was connected");
+
+  function link(href: string, texts: string[], label?: string): PageLink {
+    const attrs: Record<string, string> = { href, ...(label ? { "aria-label": label } : {}) };
+    const made: PageLink = {
+      attrs,
+      texts: texts.map((text) => {
+        let data = text;
+        return {
+          get data() {
+            return data;
+          },
+          set data(next: string) {
+            assertNotObserved();
+            data = next;
+          },
+        };
+      }),
+      getAttribute: (name) => attrs[name] ?? null,
+      setAttribute: (name, value) => {
+        assertNotObserved();
+        attrs[name] = value;
+      },
+    };
+    links.push(made);
+    return made;
+  }
+
+  class MutationObserver {
+    private readonly self: Observer;
+    constructor(callback: () => void) {
+      this.self = { notify: callback, observing: false };
+      observers.push(this.self);
+    }
+    observe(target: unknown, options: Record<string, unknown>) {
+      assert.equal(target, document.body);
+      // Copied first: the tag runs in its own context, so its objects have another realm's prototypes.
+      assert.deepEqual(JSON.parse(JSON.stringify(options)), {
+        childList: true,
+        subtree: true,
+        characterData: true,
+        attributes: true,
+        attributeFilter: ["href", "aria-label"],
+      });
+      this.self.observing = true;
+    }
+    disconnect() {
+      this.self.observing = false;
+    }
+  }
+
+  const document = {
+    body: {},
+    querySelectorAll(selector: string) {
+      const parts = selector.split(", ");
+      const hrefs = parts.map((part) => /^a\[href="([^"\]]+)"\]$/.exec(part)?.[1]);
+      assert.ok(hrefs.every(Boolean), `unexpected selector: ${selector}`);
+      return links.filter((l) => hrefs.includes(l.attrs.href));
+    },
+    createTreeWalker(root: PageLink, whatToShow: number) {
+      assert.equal(whatToShow, 4);
+      let index = -1;
+      return {
+        currentNode: root as unknown,
+        nextNode() {
+          index += 1;
+          if (index >= root.texts.length) return null;
+          this.currentNode = root.texts[index];
+          return this.currentNode;
+        },
+      };
+    },
+  };
+
+  return {
+    link,
+    observers,
+    globals: { document, NodeFilter: { SHOW_TEXT: 4 }, MutationObserver },
+    /** A DOM change (a route change, an opened menu, React re-rendering a link). */
+    domChanged: () => observers.filter((o) => o.observing).forEach((o) => o.notify()),
+    text: (l: PageLink) => l.texts.map((t) => t.data).join(""),
+  };
+}
+
+/** The callback from the production tag, bound to a stand-in page. */
+function forwardingCallback(page: ReturnType<typeof forwardingPage>): ForwardingCallback {
+  const body = String(render(load().GoogleAnalytics).tags[1].body);
+  const dataLayer: IArguments[] = [];
+  runInNewContext(body, { window: { dataLayer }, dataLayer, ...page.globals });
+  const settings = Array.from(dataLayer[dataLayer.length - 1])[2] as { phone_conversion_callback: ForwardingCallback };
+  return settings.phone_conversion_callback;
+}
+
+test("a forwarding number from Google replaces the number on every company call link, and only there", () => {
+  const page = forwardingPage();
+  const heroCall = page.link(COMPANY_TEL, ["Call", " ", "833-PLUMB-IT"]);
+  const footer = page.link(COMPANY_TEL, ["833-PLUMB-IT"]);
+  const digits = page.link(COMPANY_TEL, ["833-758-6248"]);
+  const dock = page.link(COMPANY_TEL, ["Call"], "Call 833-758-6248 (833-PLUMB-IT)");
+  const text = page.link(COMPANY_SMS, ["Text"], "Text us");
+  const partner = page.link("tel:2395551234", ["(239) 555-1234"]);
+  const booking = page.link("/booking", ["Request a Repair"]);
+
+  forwardingCallback(page)("(239) 555-0142", "+12395550142");
+
+  for (const l of [heroCall, footer, digits, dock]) assert.equal(l.attrs.href, "tel:+12395550142");
+  assert.equal(page.text(heroCall), "Call (239) 555-0142");
+  assert.equal(page.text(footer), "(239) 555-0142");
+  assert.equal(page.text(digits), "(239) 555-0142");
+  assert.equal(page.text(dock), "Call");
+  assert.equal(dock.attrs["aria-label"], "Call (239) 555-0142", "the label reads the number once");
+  // Text links keep the business number; other people's numbers and page links are not touched.
+  assert.deepEqual(text.attrs, { href: COMPANY_SMS, "aria-label": "Text us" });
+  assert.deepEqual(partner.attrs, { href: "tel:2395551234" });
+  assert.equal(page.text(partner), "(239) 555-1234");
+  assert.deepEqual(booking.attrs, { href: "/booking" });
+  assert.equal(page.observers.length, 1);
+  assert.equal(page.observers[0].observing, true, "the page is watched for links rendered later");
+});
+
+test("without a usable forwarding number the published number stays and nothing is watched", () => {
+  const unusable: [formatted: unknown, mobile: unknown][] = [
+    [undefined, undefined],
+    ["", ""],
+    ["833-PLUMB-IT", "+18337586248"], // the company number itself
+    ["833-758-6248", "8337586248"],
+    ["833-758-6248", "18337586248"],
+    ["999-PLUMB-IT", "+999"], // what the "Force" button of Google's debug panel sends for a lettered number
+    ["(239) 555-0142", "(239) 555-0142"], // not a dialable string
+    ["x", "+1239555014x"],
+  ];
+  for (const [formatted, mobile] of unusable) {
+    const page = forwardingPage();
+    const call = page.link(COMPANY_TEL, ["Call ", "833-PLUMB-IT"], "Call 833-758-6248 (833-PLUMB-IT)");
+    const sms = page.link(COMPANY_SMS, ["Text"]);
+    forwardingCallback(page)(formatted, mobile);
+    assert.equal(call.attrs.href, COMPANY_TEL, JSON.stringify(mobile));
+    assert.equal(call.attrs["aria-label"], "Call 833-758-6248 (833-PLUMB-IT)");
+    assert.equal(page.text(call), "Call 833-PLUMB-IT");
+    assert.equal(sms.attrs.href, COMPANY_SMS);
+    assert.deepEqual(page.observers, []);
+  }
+  // Google never calls the callback for a visitor it has no number for: the page is simply left alone.
+  const page = forwardingPage();
+  const call = page.link(COMPANY_TEL, ["833-PLUMB-IT"]);
+  forwardingCallback(page);
+  assert.equal(call.attrs.href, COMPANY_TEL);
+  assert.equal(page.text(call), "833-PLUMB-IT");
+  assert.deepEqual(page.observers, []);
+});
+
+test("a forwarding number with no formatted form is shown as sent", () => {
+  const page = forwardingPage();
+  const call = page.link(COMPANY_TEL, ["Call ", "833-PLUMB-IT"]);
+  forwardingCallback(page)("", "12395550142");
+  assert.equal(call.attrs.href, "tel:12395550142");
+  assert.equal(page.text(call), "Call 12395550142");
+});
+
+test("call links rendered after the swap (client-side navigation, the mobile menu) get the forwarding number", () => {
+  const page = forwardingPage();
+  const header = page.link(COMPANY_TEL, ["833-PLUMB-IT"]);
+  forwardingCallback(page)("(239) 555-0142", "+12395550142");
+
+  // A route change renders the next page's links with the published number.
+  const nextPageHero = page.link(COMPANY_TEL, ["Call ", "833-PLUMB-IT"]);
+  const nextPageText = page.link(COMPANY_SMS, ["Text"]);
+  page.domChanged();
+  assert.equal(nextPageHero.attrs.href, "tel:+12395550142");
+  assert.equal(page.text(nextPageHero), "Call (239) 555-0142");
+  assert.equal(nextPageText.attrs.href, COMPANY_SMS);
+
+  // React re-renders a link it owns back to the published number.
+  header.attrs.href = COMPANY_TEL;
+  header.texts[0] = { data: "833-PLUMB-IT" };
+  page.domChanged();
+  assert.equal(header.attrs.href, "tel:+12395550142");
+  assert.equal(page.text(header), "(239) 555-0142");
+  assert.equal(page.observers.length, 1);
+  assert.equal(page.observers[0].observing, true);
+});
+
+test("Google calling again adds no second observer, and a changed number replaces the first", () => {
+  const page = forwardingPage();
+  const call = page.link(COMPANY_TEL, ["Call ", "833-PLUMB-IT"], "Call 833-758-6248 (833-PLUMB-IT)");
+  const callback = forwardingCallback(page);
+
+  // The refresh timer and every return to the tab repeat the same number.
+  for (let i = 0; i < 4; i++) callback("(239) 555-0142", "+12395550142");
+  assert.equal(page.observers.length, 1);
+  assert.equal(call.attrs.href, "tel:+12395550142");
+  assert.equal(page.text(call), "Call (239) 555-0142");
+
+  // A new number from a later refresh takes over, on old links and new ones.
+  callback("(239) 555-0177", "+12395550177");
+  const later = page.link(COMPANY_TEL, ["833-758-6248"]);
+  page.domChanged();
+  for (const l of [call, later]) assert.equal(l.attrs.href, "tel:+12395550177");
+  assert.equal(page.text(call), "Call (239) 555-0177");
+  assert.equal(call.attrs["aria-label"], "Call (239) 555-0177");
+  assert.equal(page.text(later), "(239) 555-0177");
+
+  // A later unusable answer leaves the last good number in place.
+  callback("", "");
+  assert.equal(call.attrs.href, "tel:+12395550177");
+  assert.equal(page.observers.length, 1);
+});
+
 // ── the single call-tracking listener and the route-change page view ────────
 
-test("one document-level tel: listener in every mode; a call tap reports once per platform", () => {
+test("one document-level tel: listener in every mode; a call tap reports once to Meta and GA4, never to OpenAI", () => {
   for (const analytics of [undefined, "off", "placeholder"]) {
     const { MetaPixel, GoogleAnalytics, OpenAIPixel } = load({ analytics });
     assert.equal(render(GoogleAnalytics).effects.length, 0, `GoogleAnalytics effects (${analytics})`);
@@ -368,12 +603,12 @@ test("one document-level tel: listener in every mode; a call tap reports once pe
       handler(clickOn(null)); // any other click
       assert.deepEqual(calls, [], String(analytics));
 
+      // A tap is not a lead: Meta and GA4 hear about it, the OpenAI pixel does not.
       handler(clickOn('a[href^="tel:"]'));
       assert.deepEqual(
         calls,
         [
           ["fbq", "track", "Contact", { content_name: "Phone Call", content_category: "Lead" }],
-          ["oaiq", "measure", "lead_created", { type: "customer_action" }],
           ["gtag", "event", "contact", { content_name: "Phone Call", content_category: "Lead" }],
         ],
         String(analytics),

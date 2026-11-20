@@ -204,6 +204,7 @@ async function exercise(pixel: Pixel, globals: "present" | "absent"): Promise<{ 
     pixel.trackBuilderLead({ units: "12", community: "Test Community", source: "builders-hub" }, { eventId: "evt-builder" });
     pixel.trackBuilderLead({ units: "12" }); // no id
     pixel.trackEvent("ViewContent", { content_name: "Coupon" });
+    pixel.trackEvent("Lead", { content_name: "Coupon Popup CTA" }); // a button click: no server id
     return { calls, dataLayer: win.dataLayer };
   } finally {
     if (before === undefined) delete scope.window;
@@ -220,12 +221,32 @@ test("conversion helpers report exactly the same events in every mode", async ()
 
   // Spot checks on the shared log, so "the same" cannot quietly mean "nothing".
   const named = (name: string) => on.calls.filter((c) => c[0] === name);
-  assert.equal(named("fbq").length, 8);
-  assert.equal(named("oaiq").length, 7);
-  assert.equal(named("gtag").length, 11);
-  assert.deepEqual(on.calls[0], ["fbq", "track", "Contact", { content_name: "Phone Call", content_category: "Lead" }]);
-  assert.deepEqual(on.calls[1], ["oaiq", "measure", "lead_created", { type: "customer_action" }]);
-  assert.deepEqual(on.calls[2], ["gtag", "event", "contact", { content_name: "Phone Call", content_category: "Lead" }]);
+  assert.equal(named("fbq").length, 9);
+  assert.equal(named("oaiq").length, 5);
+  assert.equal(named("gtag").length, 12);
+  // Call and Text taps: Meta "Contact" and GA4 "contact", nothing to OpenAI.
+  assert.deepEqual(on.calls.slice(0, 4), [
+    ["fbq", "track", "Contact", { content_name: "Phone Call", content_category: "Lead" }],
+    ["gtag", "event", "contact", { content_name: "Phone Call", content_category: "Lead" }],
+    ["fbq", "track", "Contact", { content_name: "Text Message", content_category: "Lead" }],
+    ["gtag", "event", "contact", { content_name: "Text Message", content_category: "Lead" }],
+  ]);
+  // OpenAI hears only about inquiries the server delivered, each with the
+  // server's id so the browser event and the Conversions API copy count once.
+  const customerAction = { type: "customer_action" };
+  assert.equal(named("oaiq")[0][1], "init", "the submitter's hashed email goes on init, before the event");
+  assert.deepEqual(Object.keys((named("oaiq")[0][2] as { user: object }).user), ["email_sha256"]);
+  assert.deepEqual(named("oaiq").slice(1), [
+    ["oaiq", "measure", "lead_created", customerAction, { event_id: "evt-contact" }],
+    ["oaiq", "measure", "lead_created", customerAction, { event_id: "evt-quote" }],
+    ["oaiq", "measure", "lead_created", customerAction, { event_id: "evt-estimate" }],
+    ["oaiq", "measure", "appointment_scheduled", customerAction, { event_id: "evt-booking" }],
+  ]);
+  // Meta and GA4 still get the coupon button click; without an id OpenAI does not.
+  assert.deepEqual(on.calls.slice(-2), [
+    ["fbq", "track", "Lead", { content_name: "Coupon Popup CTA" }],
+    ["gtag", "event", "generate_lead", { content_name: "Coupon Popup CTA" }],
+  ]);
   // Confirmed inquiries still go to the real Google Ads conversion, deduplicated by the server's id.
   const adsConversions = named("gtag").filter((c) => c[2] === "conversion");
   assert.deepEqual(
