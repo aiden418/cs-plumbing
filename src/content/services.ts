@@ -68,6 +68,11 @@ export const SERVICE_PAGE = {
   book: "Book a Service",
   request: "Request Service",
   typicalRange: "Typical range:",
+  /** The header's price summary (a page with a labelled list instead of one range). */
+  priceSummary: {
+    title: "Typical prices",
+    details: "See what each price includes",
+  },
   /** UEP Utilities words its range line differently. */
   typicalPriceRange: "Typical price range:",
   getQuote: "Get a Quote",
@@ -138,6 +143,42 @@ export const DEFAULT_JOB_PHOTOS: readonly { src: string; caption?: string }[] = 
 
 /** /services/residential */
 export const RESIDENTIAL_PAGE = {
+  /** The header: repairs first. `title` is the page's H1. */
+  hero: {
+    overline: "Residential Services",
+    title: "Plumbing Repairs in Cape Coral & Fort Myers",
+    description:
+      "Leaks, running toilets, dripping faucets, broken hose bibs and water heater repairs. Licensed C&S plumbers serve Cape Coral, Fort Myers and North Fort Myers.",
+  },
+  /** The blue button in the header and the heading of the request form it jumps to. */
+  requestLabel: "Request a Repair",
+  /** The first section: the everyday repair jobs, in plain words, beside the request form. */
+  repairs: {
+    title: "Common repairs we handle",
+    description: "Not sure what is wrong? Tell us what you are seeing in the request form and our office will take it from there.",
+    jobs: [
+      {
+        title: "Plumbing leaks",
+        description: "Leaking pipes, supply lines and shut-off valves under a sink, behind a wall or outside the house.",
+      },
+      {
+        title: "Running toilets",
+        description: "Toilets that keep running, fill slowly, leak at the base or will not flush properly.",
+      },
+      {
+        title: "Dripping faucets",
+        description: "Kitchen, bathroom and tub faucets that drip, leak at the handle or have lost pressure.",
+      },
+      {
+        title: "Broken hose bibs",
+        description: "Outdoor spigots that drip, will not shut off or have broken at the wall.",
+      },
+      {
+        title: "Water heater repairs",
+        description: "No hot water, hot water that runs out too fast, or a tank that is leaking.",
+      },
+    ],
+  },
   faqTitle: "Residential Plumbing FAQs",
   faqDescription: "Common questions from Southwest Florida homeowners.",
 } as const;

@@ -1,4 +1,5 @@
-import { rangeInline, spanInline } from "./pricing";
+import { rangeInline } from "./pricing";
+import { WATER_HEATER_COST_ANSWER } from "./water-heater-prices";
 import { CLAIMS, EMERGENCY_CLAIMS, LICENSE_STATUS_SENTENCE } from "./claims";
 import { BUSINESS } from "./business";
 
@@ -90,8 +91,8 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
     faqs: [
       {
         question: "How much does a water heater cost in Cape Coral?",
-        answer:
-          `Repairs run ${rangeInline("waterHeater.repair")}. Traditional tank replacements run ${spanInline("waterHeater.tank40", "waterHeater.tank50")} installed with haul-away included, tankless installations run ${rangeInline("waterHeater.tankless")}, and heat-pump hybrids run ${rangeInline("waterHeater.hybrid")}. C&S Plumbing provides free estimates with upfront pricing.`,
+        // The same sentence as the first FAQ on /services/water-heaters.
+        answer: WATER_HEATER_COST_ANSWER,
       },
       {
         question: "Should I get a tankless or traditional water heater?",

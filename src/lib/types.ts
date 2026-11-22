@@ -3,6 +3,28 @@ import type { PriceString } from "./pricing";
 /** A price field: a formatter result from ./pricing, or an inclusion label. */
 export type PriceText = PriceString | "Included" | "Included on installs";
 
+/**
+ * One line of a service page's pricing section: a price (always a ./pricing
+ * formatter result or an inclusion label), or, for a job with no published
+ * price, the words of a link to the page's request form.
+ */
+export type CostRow = {
+  label: string;
+  note?: string;
+  /** Rows that share a group sit under one sub-heading ("Repairs", "Replacements"). */
+  group?: string;
+} & ({ range: PriceText; request?: undefined } | { request: string; range?: undefined });
+
+/**
+ * A header price summary for a page where one overall range would hide what
+ * each kind of job costs: labelled ranges, each a ./pricing formatter result.
+ */
+export interface PriceSummary {
+  rows: { label: string; range: PriceString }[];
+  /** A job with no published price: its label and the words of the link that asks for one. */
+  request?: { label: string; action: string };
+}
+
 export interface Service {
   id: string;
   title: string;
@@ -152,12 +174,14 @@ export interface ServiceLanding {
   faqs: FAQ[];
   /** Always a ./pricing formatter result — never a typed literal. */
   priceRange?: PriceString;
+  /** Shown in the header instead of `priceRange` (which still feeds the schema's overall Offer). */
+  priceSummary?: PriceSummary;
   highlights: string[];
   image?: string;
   gallery?: { src: string; caption?: string }[];
   relatedServices?: string[];
   relatedAreas?: string[];
-  costBreakdown?: { label: string; range: PriceText; note?: string }[];
+  costBreakdown?: CostRow[];
   caseStudies?: { title: string; location: string; cost: string; summary: string }[];
   answerBlocks?: AnswerBlock[];
 }

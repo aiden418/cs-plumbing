@@ -388,7 +388,14 @@ export function buildLlmsFullTxt(): string {
     const parts = [
       `### ${s.title}`,
       `URL: ${BASE}/services/${s.slug}`,
-      s.priceRange ? `Typical range: ${s.priceRange}` : "",
+      s.priceSummary
+        ? `Typical prices: ${[
+            ...s.priceSummary.rows.map((r) => `${r.label} ${r.range}`),
+            ...(s.priceSummary.request ? [`${s.priceSummary.request.label}: priced on request`] : []),
+          ].join("; ")}`
+        : s.priceRange
+          ? `Typical range: ${s.priceRange}`
+          : "",
       "",
       s.heroText,
       "",
@@ -411,7 +418,7 @@ export function buildLlmsFullTxt(): string {
     if (s.costBreakdown?.length) {
       parts.push(
         "\n#### Cost breakdown (Lee County)\n",
-        s.costBreakdown.map((c) => `- ${c.label}: ${c.range}${c.note ? ` (${c.note})` : ""}`).join("\n"),
+        s.costBreakdown.map((c) => `- ${c.label}: ${c.range ?? "priced on request"}${c.note ? ` (${c.note})` : ""}`).join("\n"),
       );
     }
     if (s.caseStudies?.length) {

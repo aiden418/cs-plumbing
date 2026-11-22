@@ -4,6 +4,14 @@ import { CLAIMS, EMERGENCY_CLAIMS, LICENSE, licenseLine } from "./claims";
 import { BUSINESS } from "./business";
 import { AWARDS, AWARD_TRUST_LINE, LATEST_AWARD } from "./awards";
 import { UEP_STATUS } from "./uep-status";
+import {
+  WATER_HEATER_COST_ANSWER,
+  WATER_HEATER_HYBRID_REBATE,
+  WATER_HEATER_MAINTENANCE,
+  WATER_HEATER_PRICE_ORDER,
+  WATER_HEATER_PRICES,
+  WATER_HEATER_TANK_SIZES,
+} from "./water-heater-prices";
 
 // Prices live in ./pricing, promises in ./claims; both are re-exported so
 // existing consumers keep importing them from here.
@@ -775,7 +783,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       "No hot water? Whether you need a quick repair or a full replacement, C&S Plumbing installs and services all types of water heaters — traditional tank, tankless, and hybrid systems.",
     metaTitle: "Water Heater Repair & Installation | Fort Myers & Cape Coral",
     metaDescription:
-      `Water heater repair ${rangeInline("waterHeater.repair")}, tank replacement ${spanInline("waterHeater.tank40", "waterHeater.tank50")} installed. Same-day service in Fort Myers & Cape Coral. Call ${BUSINESS.phone}.`,
+      `Water heater repair ${WATER_HEATER_PRICES.repair.inline}, tank replacement ${WATER_HEATER_PRICES.tank.inline} installed. Same-day service in Fort Myers & Cape Coral. Call ${BUSINESS.phone}.`,
     keywords: [
       "water heater Cape Coral",
       "water heater installation Fort Myers",
@@ -814,8 +822,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
     faqs: [
       {
         question: "How much does a water heater cost in Cape Coral?",
-        answer:
-          `Repairs run ${rangeInline("waterHeater.repair")}. Traditional tank replacements run ${spanInline("waterHeater.tank40", "waterHeater.tank50")} installed with haul-away included, tankless installations run ${rangeInline("waterHeater.tankless")}, and heat-pump hybrids run ${rangeInline("waterHeater.hybrid")}. C&S Plumbing provides free estimates with upfront pricing.`,
+        answer: WATER_HEATER_COST_ANSWER,
       },
       {
         question: "Should I get a tankless or traditional water heater?",
@@ -848,7 +855,17 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
           "Common signs include inconsistent water temperature, rusty water from the hot side only, rumbling or popping noises, visible corrosion or leaking around the base, and an age of 10+ years. If your water heater shows any of these signs, schedule a free inspection.",
       },
     ],
+    // The overall span still feeds the schema's one Offer. The header shows
+    // the labelled summary below instead: one range from a repair to a
+    // tankless install told a homeowner nothing about their own job.
     priceRange: span("waterHeater.repair", "waterHeater.tankless"),
+    priceSummary: {
+      rows: WATER_HEATER_PRICE_ORDER.map((id) => ({
+        label: WATER_HEATER_PRICES[id].label,
+        range: WATER_HEATER_PRICES[id].range,
+      })),
+      request: { label: WATER_HEATER_MAINTENANCE.label, action: WATER_HEATER_MAINTENANCE.request },
+    },
     highlights: [
       "Same-day service available",
       "All brands installed & serviced",
@@ -860,13 +877,19 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       CLAIMS.warrantyBullet,
       "Serving Cape Coral, Fort Myers & SWFL",
     ],
+    // Rows, labels and notes come from ./water-heater-prices: the same list
+    // the header summary and the cost FAQ read.
     costBreakdown: [
-      { label: "40-gallon electric tank — installed", range: range("waterHeater.tank40"), note: "Includes haul-away of old unit, code-compliant pan & T&P" },
-      { label: "50-gallon electric tank — installed", range: range("waterHeater.tank50"), note: "Most common SWFL family-of-four size" },
-      { label: "Tankless gas (Rinnai/Navien)", range: range("waterHeater.tankless"), note: "Gas line + venting included; whole-home flow" },
-      { label: "Heat-pump hybrid (50–80 gal)", range: range("waterHeater.hybrid"), note: `Often qualifies for FL utility rebates of up to ~${money(price("waterHeater.hybridRebate").max)} (confirm with your utility)` },
-      { label: "Same-day repair (thermostat / element / T&P)", range: range("waterHeater.repair"), note: "If it can be repaired vs replaced" },
-      { label: "Permit + Lee County final", range: "Included on installs", note: "Required when replacing a unit" },
+      ...WATER_HEATER_PRICES.repair.rows.map((row) => ({ ...row, group: "Repairs" })),
+      ...[...WATER_HEATER_PRICES.tank.rows, ...WATER_HEATER_PRICES.tankless.rows, ...WATER_HEATER_PRICES.hybrid.rows].map(
+        (row) => ({ ...row, group: "Replacements" }),
+      ),
+      { label: "Permit + Lee County final", range: "Included on installs", note: "Required when replacing a unit", group: "Replacements" },
+      {
+        label: WATER_HEATER_MAINTENANCE.note,
+        request: WATER_HEATER_MAINTENANCE.request,
+        group: WATER_HEATER_MAINTENANCE.label,
+      },
     ],
     caseStudies: [
       {
@@ -901,8 +924,8 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
     answerBlocks: [
       {
         question: "How much does a water heater cost installed in Cape Coral?",
-        answer: `Tank replacements run ${spanInline("waterHeater.tank40", "waterHeater.tank50")} installed; tankless runs ${rangeInline("waterHeater.tankless")}.`,
-        detail: `A standard 40-gallon electric tank is ${rangeInline("waterHeater.tank40")} installed and a 50-gallon is ${rangeInline("waterHeater.tank50")} — including haul-away of the old unit, code-compliant pan, and fittings. Gas tankless (Rinnai/Navien) runs ${rangeInline("waterHeater.tankless")} including gas line and venting. Heat-pump hybrids are ${rangeInline("waterHeater.hybrid")} and often qualify for Florida utility rebates of up to ~${money(price("waterHeater.hybridRebate").max)}.`,
+        answer: `Tank replacements run ${WATER_HEATER_PRICES.tank.inline} installed; tankless runs ${WATER_HEATER_PRICES.tankless.inline}.`,
+        detail: `A standard 40-gallon electric tank is ${WATER_HEATER_TANK_SIZES.tank40} installed and a 50-gallon is ${WATER_HEATER_TANK_SIZES.tank50} — including haul-away of the old unit, code-compliant pan, and fittings. Gas tankless (Rinnai/Navien) runs ${WATER_HEATER_PRICES.tankless.inline} including gas line and venting. Heat-pump hybrids are ${WATER_HEATER_PRICES.hybrid.inline} and often qualify for Florida utility rebates of up to ${WATER_HEATER_HYBRID_REBATE}. ${WATER_HEATER_MAINTENANCE.label} is priced on request.`,
       },
       {
         question: "Tankless vs traditional — which is right for my home?",
@@ -912,7 +935,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       {
         question: "How fast can you replace a failed water heater?",
         answer: "Same-day installation in most cases.",
-        detail: `If your tank fails in the morning, we can usually have a new unit installed and running the same day. After-hours and weekend emergency installs are available 24/7. Repairs (thermostat, element, valve) run ${rangeInline("waterHeater.repair")}.`,
+        detail: `If your tank fails in the morning, we can usually have a new unit installed and running the same day. After-hours and weekend emergency installs are available 24/7. Repairs (thermostat, element, valve) run ${WATER_HEATER_PRICES.repair.inline}.`,
       },
       {
         question: "Do tankless water heaters work in Florida hard water?",

@@ -27,3 +27,14 @@ Edit `CLAIMS` or `EMERGENCY_CLAIMS` in `src/lib/claims.ts`. Call sites: booking,
 | Response time | Typically 30–60 minutes in Cape Coral, Fort Myers and North Fort Myers; same-day elsewhere. No per-city minute claims. |
 | Coastal Comeback Plan | $349 / $549 confirmed; copy flips by season (`season()`), pages revalidate daily. |
 | Hybrid rebate | "Up to ~$2,000" kept; confirm with FPL / LCEC each year. |
+
+## Open confirmations (flagged 2026-11-20, Aiden)
+
+Nothing below has been changed on the site. Each item stays as published until the office answers.
+
+| Item | Published now | Waiting on |
+|---|---|---|
+| 40-gallon electric tank, installed | `waterHeater.tank40`: $1,650 – $2,200 (approved 2026-11-12) | The office to confirm the range. One job's quote is not a public "from" price. When confirmed, edit `PRICES` and set `checked`; the header summary, pricing section, FAQs, quote builder and llms.txt follow. |
+| Water heater maintenance | No price: every surface says "Request maintenance pricing" (`WATER_HEATER_MAINTENANCE` in `src/lib/water-heater-prices.ts`) | An approved public maintenance price, if the office wants one published. |
+| Installation warranty on repipes | `CLAIMS.warrantyInstall`, `warrantyInstallShort`, `warrantyBullet`: one year on labor and on materials C&S supplies | Aiden (2026-11-20): the standard warranty is one year on labor, and a repipe may carry job-specific terms. Whether C&S covers repipe materials is not confirmed. Proposed wording: one-year labor warranty everywhere; on repipes, "materials coverage and any job-specific terms are written into your proposal". The Terms (clause 9.1) state one year on installation labor and materials and 30 days on repair labor, so a change here is also a Terms revision (`docs/terms-on-documents.md`). |
+

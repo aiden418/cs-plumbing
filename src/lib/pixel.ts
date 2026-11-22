@@ -93,10 +93,13 @@ export const TAG_IDS = tagIds(ANALYTICS_MODE, {
   openai: OPENAI_PIXEL_ID,
 });
 
-// Meta event name -> OpenAI (ChatGPT ads) standard event. Only genuine
-// conversion actions are mapped; unmapped events stay Meta-only.
+// Meta event name -> OpenAI (ChatGPT ads) standard event. OpenAI only ever
+// hears about an inquiry the server delivered: trackEvent sends these two
+// with the server-issued event id and not at all without one. A tap on a
+// Call or Text link ("Contact") is deliberately absent. It is not a lead
+// until someone connects or sends the message, and it has no server id to
+// deduplicate on, so it stays a Meta and GA4 engagement event.
 const OAIQ_EVENT_MAP: Record<string, string> = {
-  Contact: 'lead_created',
   Lead: 'lead_created',
   Schedule: 'appointment_scheduled',
 };
@@ -177,11 +180,11 @@ export function trackEvent(
 ) {
   if (typeof window === 'undefined') return;
   safeFbq('track', event, params);
+  // Server-confirmed conversions only: the id is the one the Conversions API
+  // copy carries (src/lib/openai-ads-capi.ts), so OpenAI counts the pair once.
   const oaiqEvent = OAIQ_EVENT_MAP[event];
-  if (oaiqEvent) {
-    const args: unknown[] = ['measure', oaiqEvent, { type: 'customer_action' }];
-    if (options?.eventId) args.push({ event_id: options.eventId });
-    safeOaiq(...args);
+  if (oaiqEvent && options?.eventId) {
+    safeOaiq('measure', oaiqEvent, { type: 'customer_action' }, { event_id: options.eventId });
   }
   const gaEvent = GA_EVENT_MAP[event];
   if (gaEvent) {
@@ -192,9 +195,13 @@ export function trackEvent(
   }
 }
 
+// Call and Text taps are engagement, reported to Meta ("Contact") and GA4
+// ("contact") only. OpenAI is not told: see OAIQ_EVENT_MAP. Placed calls are
+// measured separately by the Google Ads forwarding number (GoogleAnalytics.tsx).
+//
 // tel: clicks are tracked once, sitewide, by the document-level listener in
 // MetaPixel.tsx. Do not also attach this to a tel: link's onClick or the
-// click reports twice (two Meta "Contact" + two OpenAI "lead_created").
+// click reports twice (two Meta "Contact" + two GA4 "contact").
 export function trackPhoneClick() {
   trackEvent('Contact', { content_name: 'Phone Call', content_category: 'Lead' });
 }

@@ -24,24 +24,33 @@ export default function GoogleAnalytics() {
   const websiteCallConfig = googleAdsId === GOOGLE_ADS_ID ? `
           gtag('config', '${googleAdsId}/${WEBSITE_CALL_CONVERSION_LABEL}', {
             phone_conversion_number: ${JSON.stringify(BUSINESS.phone)},
-            phone_conversion_callback: (formattedNumber, mobileNumber) => {
-              // Keep the published number if Google cannot supply a usable forwarding number.
-              if (!/^\\+?\\d{10,15}$/.test(mobileNumber) ||
-                  mobileNumber.replace(/^\\+?1?/, '') === ${JSON.stringify(BUSINESS.phoneRaw)}) return;
-
-              const originalHref = ${JSON.stringify(BUSINESS.phoneHref)};
-              const forwardingHref = 'tel:' + mobileNumber;
+            phone_conversion_callback: (() => {
+              // Google calls this once with a forwarding number, then again on its
+              // refresh timer and each time the tab is shown again (and never for a
+              // visitor it has no number for). One observer and one set of lists
+              // serve every call, so a repeat does nothing new and a changed number
+              // replaces the earlier one.
+              const publishedNumber = ${JSON.stringify(BUSINESS.phoneRaw)};
+              // Every href and every visible form a company call link has carried:
+              // the published ones, then each forwarding number Google has sent.
+              const hrefs = [${JSON.stringify(BUSINESS.phoneHref)}];
               const displays = ${JSON.stringify([BUSINESS.phone, BUSINESS.phoneDigits])};
-              const displayNumber = formattedNumber || mobileNumber;
-              const replaceNumber = text => displays.reduce(
-                (value, number) => value.replaceAll(number, displayNumber),
-                text
-              );
+              let forwardingHref = '';
+              let displayNumber = '';
+              let observer = null;
+
+              function replaceNumber(text) {
+                let value = text;
+                for (const number of displays) {
+                  if (number !== displayNumber) value = value.replaceAll(number, displayNumber);
+                }
+                // A label that gives both forms, digits then (vanity), would otherwise read the new number twice.
+                return value.replaceAll(displayNumber + ' (' + displayNumber + ')', displayNumber);
+              }
 
               function updatePhoneLinks() {
-                for (const link of document.querySelectorAll(
-                  'a[href="' + originalHref + '"], a[href="' + forwardingHref + '"]'
-                )) {
+                const selector = hrefs.map(href => 'a[href="' + href + '"]').join(', ');
+                for (const link of document.querySelectorAll(selector)) {
                   if (link.getAttribute('href') !== forwardingHref) {
                     link.setAttribute('href', forwardingHref);
                   }
@@ -72,9 +81,20 @@ export default function GoogleAnalytics() {
                   attributeFilter: ['href', 'aria-label'],
                 });
               }
-              const observer = new MutationObserver(refreshPhoneLinks);
-              refreshPhoneLinks();
-            },
+
+              return (formattedNumber, mobileNumber) => {
+                // Keep the published number if Google cannot supply a usable forwarding number.
+                if (typeof mobileNumber !== 'string' || !/^\\+?\\d{10,15}$/.test(mobileNumber) ||
+                    mobileNumber.replace(/^\\+?1?/, '') === publishedNumber) return;
+
+                forwardingHref = 'tel:' + mobileNumber;
+                displayNumber = formattedNumber || mobileNumber;
+                if (!hrefs.includes(forwardingHref)) hrefs.push(forwardingHref);
+                if (!displays.includes(displayNumber)) displays.push(displayNumber);
+                if (!observer) observer = new MutationObserver(refreshPhoneLinks);
+                refreshPhoneLinks();
+              };
+            })(),
           });
         ` : "";
   return (
