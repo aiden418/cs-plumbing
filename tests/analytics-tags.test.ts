@@ -15,8 +15,9 @@ import { PLACEHOLDER_TAG_IDS, type TagIds } from "../src/lib/pixel";
  * <Script> props (id, strategy, src, inline body) and the <noscript> beacon a
  * page would get, and can run the effects by hand. No browser, no network.
  *
- * The expected base markup is written out on purpose. The call forwarding
- * configuration is checked by running the Google tag's queued commands.
+ * The expected base markup is written out on purpose. The start of Google's
+ * call script is checked by running the Google tag's inline script against a
+ * stand-in window and document.
  *
  * The last two tests read the source tree instead: the switch covers the
  * whole site only while these loaders are the only tags, each mounted once.
@@ -28,6 +29,10 @@ const REAL: TagIds = {
   meta: "1372903383968668",
   openai: "DMBS1D5TFZstmLgAtY2XcW",
 };
+
+/** Google's call-tracking loader and the "C&S Website Phone Calls" conversion it is started for. */
+const CALL_SCRIPT = "https://www.gstatic.com/wcm/loader.js";
+const CALL_CONVERSION = { ak: "16467696873", cl: "V3DdCPHyq7wdEOm5tKw9" };
 
 const lines = (...text: string[]) => text.join("\n");
 
@@ -211,23 +216,76 @@ function render(loader: Loader): { tree: unknown; tags: Tag[]; effects: Effect[]
   return { tree, tags: tagsIn(tree), effects };
 }
 
+type ForwardingCallback = (formatted?: unknown, mobile?: unknown) => void;
+
+/**
+ * A window and document for the Google tag's inline script: the gtag commands
+ * it queues and the scripts it adds. `documentParts` are the DOM calls a test
+ * page supplies on top.
+ */
+function googlePage(documentParts: Record<string, unknown> = {}) {
+  const dataLayer: IArguments[] = [];
+  const scripts: Record<string, unknown>[] = [];
+  const window: Record<string, unknown> = { dataLayer };
+  const document = {
+    ...documentParts,
+    createElement: (tag: string): Record<string, unknown> => ({ tag }),
+    head: {
+      appendChild(script: Record<string, unknown>) {
+        scripts.push(script);
+      },
+    },
+  };
+  return {
+    window,
+    document,
+    scripts,
+    /** Run the tag's inline script on this page. */
+    run(body: string, globals: Record<string, unknown> = {}) {
+      runInNewContext(body, { ...globals, window, document, dataLayer });
+    },
+    commands: () => dataLayer.map((args) => Array.from(args)),
+  };
+}
+
+/**
+ * The site started Google's call script itself: one loader added to the page
+ * and one queued call, the same one Google's tag makes for a website call
+ * conversion. Returns the callback that call hands to Google.
+ */
+function assertCallTrackingStarted(page: ReturnType<typeof googlePage>): ForwardingCallback {
+  const queue = page.window._googWcmImpl as { q?: IArguments[] } | undefined;
+  assert.equal(typeof queue, "function");
+  assert.equal(page.window._googWcmAk, CALL_CONVERSION.ak);
+  assert.deepEqual(page.scripts, [{ tag: "script", async: true, src: CALL_SCRIPT }]);
+  assert.equal(queue?.q?.length, 1, "one call waits for the script");
+  const [version, callback, conversion, number, unused, askedAt, ...rest] = Array.from(queue?.q?.[0] ?? []);
+  assert.equal(version, 2);
+  assert.equal(typeof callback, "function");
+  // Copied first: the tag runs in its own context, so its objects have another realm's prototypes.
+  assert.deepEqual(JSON.parse(JSON.stringify(conversion)), CALL_CONVERSION);
+  assert.equal(number, "833-PLUMB-IT");
+  assert.equal(unused, null);
+  assert.equal(Object.prototype.toString.call(askedAt), "[object Date]");
+  assert.deepEqual(rest, []);
+  return callback as ForwardingCallback;
+}
+
 function assertGoogleTags(loader: Loader, ids: TagIds) {
   const { tags } = render(loader);
   const body = String(tags[1].body);
-  const dataLayer: IArguments[] = [];
-  runInNewContext(body, { window: { dataLayer }, dataLayer });
-  const commands = dataLayer.map((args) => Array.from(args));
+  const page = googlePage();
+  page.run(body);
+  const commands = page.commands();
   assert.equal(commands.shift()?.[0], "js");
-  assert.deepEqual(commands.slice(0, 2), [["config", ids.ga], ["config", ids.googleAds]]);
+  // The Google tag gets the two base commands and nothing else: the account's
+  // tag ignores a second Ads config, so call tracking is not sent through it.
+  assert.deepEqual(commands, [["config", ids.ga], ["config", ids.googleAds]]);
   if (ids.googleAds === REAL.googleAds) {
-    assert.equal(commands.length, 3);
-    const [command, destination, settings] = commands[2];
-    assert.equal(command, "config");
-    assert.equal(destination, "AW-16467696873/V3DdCPHyq7wdEOm5tKw9");
-    assert.equal(settings.phone_conversion_number, "833-PLUMB-IT");
-    assert.equal(typeof settings.phone_conversion_callback, "function");
+    assertCallTrackingStarted(page);
   } else {
-    assert.equal(commands.length, 2, "placeholder builds cannot request a forwarding number");
+    assert.equal(page.window._googWcmImpl, undefined, "placeholder builds cannot request a forwarding number");
+    assert.deepEqual(page.scripts, []);
   }
   const afterBaseConfig = body.indexOf(`gtag('config', '${ids.googleAds}');`)
     + `gtag('config', '${ids.googleAds}');`.length;
@@ -352,16 +410,14 @@ test("a GA id supplied by NEXT_PUBLIC_GA_MEASUREMENT_ID is used when the tags ar
 
 // ── the Google Ads forwarding number: what the callback does to the page ────
 //
-// Google's call-tracking script (gstatic.com/call-tracking) calls
-// phone_conversion_callback(formatted, mobile) only when its server returned a
+// Google's call-tracking script (gstatic.com/call-tracking) calls the callback
+// it was handed, callback(formatted, mobile), only when its server returned a
 // forwarding number, and calls it again on its refresh timer and every time
 // the tab becomes visible. These tests run the callback exactly as the tag
 // ships it, against a stand-in page.
 
 const COMPANY_TEL = "tel:+18337586248";
 const COMPANY_SMS = "sms:+18337586248?&body=Hi%20C%26S%20Plumbing%2C%20I%20need%20help%20with%20";
-
-type ForwardingCallback = (formatted?: unknown, mobile?: unknown) => void;
 
 interface PageLink {
   attrs: Record<string, string>;
@@ -464,11 +520,34 @@ function forwardingPage() {
 /** The callback from the production tag, bound to a stand-in page. */
 function forwardingCallback(page: ReturnType<typeof forwardingPage>): ForwardingCallback {
   const body = String(render(load().GoogleAnalytics).tags[1].body);
-  const dataLayer: IArguments[] = [];
-  runInNewContext(body, { window: { dataLayer }, dataLayer, ...page.globals });
-  const settings = Array.from(dataLayer[dataLayer.length - 1])[2] as { phone_conversion_callback: ForwardingCallback };
-  return settings.phone_conversion_callback;
+  const { document, ...globals } = page.globals;
+  const google = googlePage(document);
+  google.run(body, globals);
+  return assertCallTrackingStarted(google);
 }
+
+test("the site starts Google's call script itself, and does not load it twice", () => {
+  const body = String(render(load().GoogleAnalytics).tags[1].body);
+  // No second Ads config rides along: if Google's tag ever acted on one again, the script would be asked twice.
+  assert.ok(!body.includes("phone_conversion"), "call tracking is not sent through gtag");
+
+  const fresh = googlePage();
+  fresh.run(body);
+  assertCallTrackingStarted(fresh);
+
+  // Something has already started the script: the call goes to it and no loader is added.
+  const started = googlePage();
+  const calls: unknown[][] = [];
+  started.window._googWcmImpl = (...args: unknown[]) => {
+    calls.push(args);
+  };
+  started.run(body);
+  assert.deepEqual(started.scripts, []);
+  assert.equal(started.window._googWcmAk, undefined);
+  assert.equal(calls.length, 1);
+  assert.deepEqual([calls[0][0], typeof calls[0][1], calls[0][3]], [2, "function", "833-PLUMB-IT"]);
+  assert.deepEqual(JSON.parse(JSON.stringify(calls[0][2])), CALL_CONVERSION);
+});
 
 test("a forwarding number from Google replaces the number on every company call link, and only there", () => {
   const page = forwardingPage();
