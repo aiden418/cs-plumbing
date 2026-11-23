@@ -10,8 +10,6 @@ interface BuilderLogoImageProps {
    *  srcset entry instead of a full-width one. */
   sizes: string;
   loading?: "eager" | "lazy";
-  /** "low" for logos far down a page: fetched after everything on the first screen, and not preloaded. */
-  fetchPriority?: "low" | "auto";
 }
 
 /**
@@ -25,7 +23,6 @@ export default function BuilderLogoImage({
   className,
   sizes,
   loading = "lazy",
-  fetchPriority,
 }: BuilderLogoImageProps) {
   return (
     <Image
@@ -35,7 +32,6 @@ export default function BuilderLogoImage({
       height={builder.logoHeight}
       sizes={sizes}
       loading={loading}
-      fetchPriority={fetchPriority}
       // The optimizer refuses SVG unless `dangerouslyAllowSVG` is set. This is
       // the one SVG logo and it's 5KB, so pass it through rather than loosen
       // the global image config.

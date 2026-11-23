@@ -3,6 +3,7 @@ import Link from "next/link";
 import BuilderLogoImage from "@/components/ui/BuilderLogoImage";
 import Button from "@/components/ui/Button";
 import Container from "@/components/ui/Container";
+import EagerWhenNear from "@/components/ui/EagerWhenNear";
 import LogoCarousel from "@/components/ui/LogoCarousel";
 import { ArrowRight, Phone, ShieldCheck } from "@/components/ui/icons";
 import { BUSINESS } from "@/lib/business";
@@ -78,8 +79,13 @@ export default function CoastalComebackTeaser({ season = "departure" }: { season
           </div>
         </div>
 
+        {/* The two logo rows are near the bottom of the page. Their pictures
+            are lazy, so the first screen does not wait behind 24 logos; a
+            lazy logo in a gliding row would arrive blank, so EagerWhenNear
+            loads the whole row once the visitor is within reach of it. */}
+        <EagerWhenNear />
         <div className="mt-12 grid grid-cols-1 gap-y-10 lg:mt-14">
-          <div aria-labelledby="home-brands-title" role="group" className="home-strip">
+          <div aria-labelledby="home-brands-title" role="group" className="home-strip" data-eager-near="">
             <HomeHeading
               id="home-brands-title"
               eyebrow={brands.overline}
@@ -89,10 +95,6 @@ export default function CoastalComebackTeaser({ season = "departure" }: { season
               size="sm"
               className="home-strip-head"
             />
-            {/* Eager: a lazy logo would not load until it slid into view,
-                so tiles would arrive blank. Low priority: these rows are near
-                the bottom of the page, so the browser fetches them after the
-                first screen, and React does not preload them in <head>. */}
             <LogoCarousel
               labelledBy="home-brands-title"
               seconds={40}
@@ -100,14 +102,14 @@ export default function CoastalComebackTeaser({ season = "departure" }: { season
                 key: brand.name,
                 logo: (
                   <span className="logo-carousel-logo">
-                    <Image src={brand.logo} alt={`${brand.name} logo`} fill sizes="128px" loading="eager" fetchPriority="low" className="object-contain" />
+                    <Image src={brand.logo} alt={`${brand.name} logo`} fill sizes="128px" loading="lazy" className="object-contain" />
                   </span>
                 ),
               }))}
             />
           </div>
 
-          <div aria-labelledby="home-builders-title" role="group" className="home-strip">
+          <div aria-labelledby="home-builders-title" role="group" className="home-strip" data-eager-near="">
             <div className="home-strip-head">
               <HomeHeading
                 id="home-builders-title"
@@ -128,7 +130,7 @@ export default function CoastalComebackTeaser({ season = "departure" }: { season
               items={BUILDERS.map((builder) => ({
                 key: builder.name,
                 dark: builder.darkTile ?? whiteLogo(builder.logo),
-                logo: <BuilderLogoImage builder={builder} sizes="144px" loading="eager" fetchPriority="low" className="logo-carousel-img" />,
+                logo: <BuilderLogoImage builder={builder} sizes="144px" loading="lazy" className="logo-carousel-img" />,
               }))}
             />
           </div>
