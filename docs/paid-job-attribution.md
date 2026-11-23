@@ -1,6 +1,6 @@
 # Paid job attribution
 
-Website enquiries carry an office-only source receipt and the same unique lead ID returned on successful submission. It covers contact/chat, booking, estimate, quote builder and builder portal submissions. No ServiceM8 API integration is configured by this change. Office staff must copy the receipt to the matching job diary and apply the matching job badge.
+Website enquiries carry an office-only source receipt and the same unique lead ID returned on successful submission (`CS-` and eight letters or digits, for example `CS-7K3M9Q2X`; it is also in the email subject, on the customer's confirmation and in every tracking event, see `docs/forms-and-photos.md`). It covers contact/chat, booking, estimate, quote builder and builder portal submissions. No ServiceM8 API integration is configured by this change. Office staff must copy the receipt to the matching job diary and apply the matching job badge.
 
 ## Source rules
 

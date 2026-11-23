@@ -13,6 +13,7 @@ import { BUSINESS } from "@/lib/business";
 import { SERVICE_AREAS_BY_COUNTY } from "@/lib/constants";
 import { areaForCity } from "@/lib/internal-links";
 import { picture } from "@/lib/media";
+import type { ReactNode } from "react";
 import type { ServiceCityLanding } from "@/lib/types";
 
 const copy = SERVICE_CITY_COPY;
@@ -29,10 +30,16 @@ const copy = SERVICE_CITY_COPY;
 export default function ServiceCityLandingTemplate({
   landing,
   areaHubHref,
+  secondAction,
+  afterTrust,
 }: {
   landing: ServiceCityLanding;
   /** /areas/<slug> for this landing's city, when a hub exists. */
   areaHubHref?: string;
+  /** The button beside the call button. Default: the request-service page. */
+  secondAction?: { label: string; href: string };
+  /** Sections of this page's own, placed right under the trust strip. */
+  afterTrust?: ReactNode;
 }) {
   // The city's header photograph (a real C&S job there), else the plain hero.
   const area = areaForCity(landing.city);
@@ -55,8 +62,8 @@ export default function ServiceCityLandingTemplate({
             <Button href={BUSINESS.phoneHref} size="lg" icon={<Phone className="size-5" />}>
               {copy.hero.call} <span className="whitespace-nowrap">{BUSINESS.phone}</span>
             </Button>
-            <Button href="/booking" variant="secondary" size="lg" icon={<Calendar className="size-5" />}>
-              {copy.hero.book}
+            <Button href={secondAction?.href ?? "/booking"} variant="secondary" size="lg" icon={<Calendar className="size-5" />}>
+              {secondAction?.label ?? copy.hero.book}
             </Button>
           </>
         }
@@ -94,6 +101,8 @@ export default function ServiceCityLandingTemplate({
           </ul>
         </Container>
       </Section>
+
+      {afterTrust}
 
       {/* Service description: the main content block */}
       <Section tone="white" spacing="sm" labelledBy="service-city-description-heading">

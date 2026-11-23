@@ -9,7 +9,7 @@ export const hero = {
   lead:
     "Family owned and operated since 1998, with 9,500+ homes plumbed. New construction for builders, and repairs, repipes and remodels for homeowners across Cape Coral, Fort Myers and Southwest Florida.",
   /** Labels of the hero actions. The call label reads the phone number from @/lib/business. */
-  bookLabel: "Book a Service",
+  bookLabel: "Request Service",
   quoteLabel: "Get an instant quote",
   /** Trust line just under the hero: this, the license number, then the latest award. */
   licensePrefix: "Florida Certified Plumbing Contractor",
@@ -32,7 +32,7 @@ export const doors = [
     slot: "home.door.build",
     label: "Builders & GCs",
     title: "New construction, slab to final",
-    body: "Scope by phase, prequal packet, submit plans for a bid.",
+    body: "Scope by phase, prequal packet, send plans for a bid.",
     cta: "Builder services",
   },
   {
@@ -41,7 +41,7 @@ export const doors = [
     label: "Homeowners / Service",
     title: "Repairs, repipes & remodels",
     body: "Water heaters, leaks, drains, fixtures, whole-home repipes.",
-    cta: "Book a service",
+    cta: "Request service",
   },
 ];
 
@@ -69,10 +69,11 @@ export const services = {
 /** Chapter 2: the emergency band. The response time comes from EMERGENCY_CLAIMS. */
 export const emergency = {
   overline: "24/7 Emergency Response",
-  title: "Burst pipe at 2 AM? We're already rolling.",
-  /** The line under the heading; `responseTime` is EMERGENCY_CLAIMS.responseTime. */
-  body: (responseTime: string) =>
-    `Response ${responseTime}. Upfront pricing before any work begins — nights, weekends, and holidays included.`,
+  // Not "we're already rolling": no arrival time is promised until dispatch confirms one.
+  title: "Burst pipe at 2 AM? We're open.",
+  /** The line under the heading; `arrival` is EMERGENCY_CLAIMS.arrival. */
+  body: (arrival: string) =>
+    `${arrival} Upfront pricing before any work begins — nights, weekends, and holidays included.`,
   callLine: "One call. A licensed plumber on the way.",
   licensePrefix: "Florida Certified Plumbing Contractor",
   ariaLabel: "24/7 emergency plumbing",
@@ -172,11 +173,11 @@ export const areas = {
   id: "service-areas",
   overline: "Service Areas",
   title: "Serving All of Southwest Florida",
-  /** `responseTime` is EMERGENCY_CLAIMS.responseTime. */
-  subtitle: (responseTime: string) => `From Cape Coral to Naples — response ${responseTime}.`,
+  /** `arrival` is EMERGENCY_CLAIMS.arrival. */
+  subtitle: (arrival: string) => `From Cape Coral to Naples. ${arrival}`,
   countySuffix: "County",
   more: "Plus Fort Myers Beach, Captiva Island, Punta Gorda, Port Charlotte, Marco Island & more.",
-  bookLink: { href: "/booking", label: "Book a Plumber in Your Area" },
+  bookLink: { href: "/booking", label: "Request Service in Your Area" },
   mapLink: { href: "/service-map", label: "Service map" },
 };
 

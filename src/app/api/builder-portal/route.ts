@@ -4,7 +4,8 @@ import { CLAIMS } from "@/lib/claims";
 import { Resend } from "resend";
 import { z } from "zod";
 import { BUSINESS } from "@/lib/constants";
-import { randomUUID } from "node:crypto";
+import { acceptedLead, acceptOnce, isTestFlag, leadHeaderHtml, leadIdFor, logAccepted, subjectFor } from "@/lib/api/lead";
+import type { LeadForm } from "@/lib/lead";
 import { BUILDER_UPLOAD, collectAttachments } from "@/lib/api/attachments";
 import {
   ADMIN_EMAIL,
@@ -41,6 +42,10 @@ const BuilderPortalSchema = z
     // Which form/page sent it (e.g. "builders-hub", "nc-city:cape-coral").
     source: z.string().max(80).optional().default("builder-portal"),
     website: z.string().optional(),
+    // One per filled-in form, repeated on every retry (src/lib/lead.ts).
+    submissionKey: z.string().max(64).optional(),
+    // A marked test visit (?cs_test=1); multipart sends it as a string.
+    test: z.string().max(8).optional(),
   })
   .refine((d) => d.address.trim().length >= 5 || d.community.trim().length >= 2, {
     message: "address or community required",
@@ -107,16 +112,21 @@ export async function POST(request: Request) {
       description: escapeHtml(description),
     };
 
-    const eventId = randomUUID();
-    const attributionHtml = leadAttributionHtml(request, eventId);
+    const test = isTestFlag(parsed.data.test);
+    const form: LeadForm = source === "builder-portal" ? "builder_portal" : "builder_bid";
+    // One ID for this bid request: office email, the builder's confirmation and tracking.
+    const leadId = leadIdFor(parsed.data.submissionKey);
+    const lead = { leadId, leadType: "builder_bid", form, test } as const;
+    const attributionHtml = leadAttributionHtml(request, leadId);
 
     // Build HTML email
     const html = `
+      ${leadHeaderHtml(lead)}
       ${attributionHtml}
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <div style="background: #1B2B4B; padding: 24px; border-radius: 12px 12px 0 0;">
           <h1 style="color: #fff; margin: 0; font-size: 20px;">
-            New Builder Quote Request
+            New Builder Bid Request
           </h1>
           <p style="color: #94a3b8; margin: 4px 0 0; font-size: 14px;">
             ${safe.company} &mdash; ${safe.projectType}
@@ -170,22 +180,25 @@ export async function POST(request: Request) {
     // it rejects a send, so the office copy goes through sendEmailOrThrow: a
     // refused send is a 500 for the builder, never a success screen, an
     // eventId and a confirmation email for a lead the office did not get.
-    await sendEmailOrThrow(resend, {
+    // It goes out once per submission: a double tap or a retry of a request
+    // the office already has gets the first answer back.
+    const answer = await acceptOnce(parsed.data.submissionKey, async () => {
+    const officeEmailId = await sendEmailOrThrow(resend, {
       from: "C&S Plumbing Website <bookings@csplumbinglee.com>",
       to: [ADMIN_EMAIL],
       replyTo: email,
-      subject: `Builder Quote Request: ${company} — ${projectType} at ${address}`,
+      subject: subjectFor(`Builder Bid Request: ${company} — ${projectType} at ${address}`, leadId, test),
       html,
       ...(attachments.length > 0 && { attachments }),
     }, "builder portal admin email");
 
     // SMS notification (best effort — the office email above is the lead)
-    if (SMS_TO) {
-      const smsText = `New builder quote: ${company} - ${projectType} at ${address}. ${fileCount} files. Phone: ${phone}`;
+    if (SMS_TO && !test) {
+      const smsText = `New builder bid request: ${company} - ${projectType} at ${address}. ${fileCount} files. Phone: ${phone}`;
       await sendEmailBestEffort(resend, {
         from: "C&S Plumbing Website <bookings@csplumbinglee.com>",
         to: [SMS_TO],
-        subject: "Builder Quote Request",
+        subject: "Builder Bid Request",
         text: smsText.slice(0, 160),
       }, "builder portal SMS notification");
     }
@@ -196,11 +209,12 @@ export async function POST(request: Request) {
     await sendEmailBestEffort(resend, {
       from: "C&S Plumbing of Lee <bookings@csplumbinglee.com>",
       to: [email],
-      subject: "We received your quote request — C&S Plumbing",
+      subject: `We received your bid request — C&S Plumbing [${leadId}]`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background: #0A0A0F; padding: 20px; text-align: center;">
-            <h1 style="color: #0099FF; margin: 0;">Quote Request Received</h1>
+            <h1 style="color: #0099FF; margin: 0;">Bid Request Received</h1>
+            <p style="color: #999; margin: 8px 0 0; font-size: 13px;">Request ID ${leadId}</p>
           </div>
           <div style="padding: 20px; background: #f9f9f9;">
             <p>Hi ${escapeHtml(name)},</p>
@@ -221,11 +235,15 @@ export async function POST(request: Request) {
         </div>`,
     }, "builder portal submitter confirmation");
 
-    // Id for the browser's builder_lead event (Meta custom event + dataLayer),
-    // issued only here, after the office email was accepted: no id, no event.
-    // Builder leads are intentionally not sent to the OpenAI CAPI as
-    // lead_created — they'd be counted as homeowner leads.
-    return NextResponse.json({ success: true, eventId });
+    logAccepted(lead, officeEmailId);
+    // The Lead ID for the browser's builder_lead event (Meta custom event +
+    // dataLayer), issued only here, after the office email was accepted: no
+    // id, no event. Builder leads are intentionally not sent to the OpenAI
+    // CAPI as lead_created — they'd be counted as homeowner leads.
+    return acceptedLead(leadId, "builder_bid", test);
+    });
+
+    return NextResponse.json(answer);
   } catch (error) {
     console.error("Builder portal error:", error);
     return NextResponse.json(

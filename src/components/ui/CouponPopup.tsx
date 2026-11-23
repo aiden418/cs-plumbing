@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { X } from "@/components/ui/icons";
 import Link from "next/link";
 import { buttonClasses } from "@/components/ui/Button";
-import { trackEvent } from "@/lib/pixel";
+import { trackCouponClick, trackEvent } from "@/lib/pixel";
 import { GIVEAWAY, isGiveawayOpen } from "@/lib/giveaway";
 
 const STORAGE_KEY = "cs-coupon-seen";
@@ -215,12 +215,14 @@ export default function CouponPopup() {
               <Link
                 href="/booking"
                 onClick={() => {
-                  trackEvent("Lead", { content_name: "Coupon Popup CTA" });
+                  // A click on the coupon is interest, not an inquiry: the lead
+                  // is counted when the office receives the request form.
+                  trackCouponClick();
                   dismiss();
                 }}
                 className={buttonClasses({ variant: "primary", size: "md", fullWidth: true })}
               >
-                Book Now &amp; Save $50
+                Request Service &amp; Save $50
               </Link>
             </div>
             )}

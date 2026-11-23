@@ -121,13 +121,15 @@ function submission(
 
 const logged = () => errorLog.map((args) => args.map(String).join(" ")).join("\n");
 
-test("a valid submission emails the office with the plans, texts the SMS gateway, confirms to the builder and returns an eventId", async () => {
+test("a valid submission emails the office with the plans, texts the SMS gateway, confirms to the builder and returns one Lead ID", async () => {
   const res = await POST(submission({}, [pdf(), png()]));
   assert.equal(res.status, 200);
   const body = await res.json();
-  assert.deepEqual(Object.keys(body).sort(), ["eventId", "success"]);
+  assert.deepEqual(Object.keys(body).sort(), ["eventId", "leadId", "leadType", "success"]);
   assert.equal(body.success, true);
-  assert.match(body.eventId, /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/);
+  assert.match(body.leadId, /^CS-[0-9A-HJKMNP-TV-Z]{8}$/);
+  assert.equal(body.eventId, body.leadId, "tracking and the office email carry the same ID");
+  assert.equal(body.leadType, "builder_bid");
 
   assert.equal(sent.length, 3);
   const [office, sms, confirmation] = sent;
@@ -136,20 +138,23 @@ test("a valid submission emails the office with the plans, texts the SMS gateway
   assert.equal(office.reply_to, SUBMITTER);
   assert.equal(
     office.subject,
-    "Builder Quote Request: QA Homes LLC — Residential New Construction at 123 Test St, Cape Coral, FL 33904",
+    `Builder Bid Request: QA Homes LLC — Residential New Construction at 123 Test St, Cape Coral, FL 33904 [${body.leadId}]`,
   );
+  assert.match(office.html ?? "", /Request type:<\/strong> Builder bid request/);
+  assert.ok((office.html ?? "").includes(`Lead ID:</strong> ${body.leadId}`));
   assert.deepEqual(office.attachments?.map((a) => a.filename), ["site plan.pdf", "lot.png"]);
   assert.match(office.html ?? "", /2 files attached to this email/);
   assert.match(office.html ?? "", /Source: builder-portal/);
 
   assert.deepEqual(sms.to, [SMS_GATEWAY]);
-  assert.equal(sms.subject, "Builder Quote Request");
+  assert.equal(sms.subject, "Builder Bid Request");
   assert.ok((sms.text ?? "").length <= 160);
   assert.match(sms.text ?? "", /QA Homes LLC/);
   assert.equal(sms.attachments, undefined);
 
   assert.deepEqual(confirmation.to, [SUBMITTER]);
-  assert.equal(confirmation.subject, "We received your quote request — C&S Plumbing");
+  assert.equal(confirmation.subject, `We received your bid request — C&S Plumbing [${body.leadId}]`);
+  assert.ok((confirmation.html ?? "").includes(`Request ID ${body.leadId}`));
   assert.match(confirmation.html ?? "", /Files received:<\/strong> 2/);
   assert.equal(confirmation.attachments, undefined);
 
@@ -162,7 +167,7 @@ test("the short bid form (community instead of a street address, no description)
   );
   assert.equal(res.status, 200);
   assert.equal((await res.json()).success, true);
-  assert.match(sent[0].subject, /at Cape Coral Unit 42 \(community\)$/);
+  assert.match(sent[0].subject, /at Cape Coral Unit 42 \(community\) \[CS-[0-9A-Z]{8}\]$/);
   assert.match(sent[0].html ?? "", /Source: builders-hub/);
   assert.match(sent[0].html ?? "", /No files uploaded/);
 });
@@ -279,4 +284,56 @@ test("the checks keep their order: rate limit, origin, fields, honeypot, email k
   assert.ok(Number(limited.headers.get("retry-after")) > 0);
 
   assert.equal(sent.length, 0);
+});
+
+// ── one bid request, one Lead ID ─────────────────────────────────────────────
+
+const KEY = "3f2b8c1e-7a4d-4c9b-9e21-5d6f7a8b9c0d";
+
+test("a retry with the same submission key gets the same Lead ID back and the office is emailed once", async () => {
+  const first = await (await POST(submission({ submissionKey: KEY }))).json();
+  const emailsAfterFirst = sent.length;
+  const again = await POST(submission({ submissionKey: KEY }));
+  assert.equal(again.status, 200);
+  const second = await again.json();
+  assert.equal(second.success, true);
+  assert.equal(second.leadId, first.leadId);
+  assert.equal(second.duplicate, true);
+  assert.equal(first.duplicate, undefined);
+  assert.equal(sent.length, emailsAfterFirst, "no second office email, SMS or confirmation");
+});
+
+test("a double tap (two requests at once, same key) sends the office one email", async () => {
+  const key = "9a8b7c6d-5e4f-4a3b-8c2d-1e0f9a8b7c6d";
+  const [a, b] = await Promise.all([
+    POST(submission({ submissionKey: key })),
+    POST(submission({ submissionKey: key })),
+  ]);
+  const [first, second] = [await a.json(), await b.json()];
+  assert.equal(first.leadId, second.leadId);
+  assert.equal(sent.filter((email) => email.to.includes(ADMIN_EMAIL)).length, 1);
+  assert.equal([first, second].filter((body) => body.duplicate).length, 1);
+});
+
+test("a failed submission is not remembered: the retry with the same key is delivered once", async () => {
+  const key = "11111111-2222-4333-8444-555555555555";
+  refuse = (email) => email.to.includes(ADMIN_EMAIL);
+  const failed = await POST(submission({ submissionKey: key }));
+  assert.equal(failed.status, 500);
+  assert.equal((await failed.json()).leadId, undefined, "a failure carries no Lead ID to report");
+  refuse = () => false;
+  sent.length = 0;
+  const retried = await (await POST(submission({ submissionKey: key }))).json();
+  assert.equal(retried.success, true);
+  assert.equal(retried.duplicate, undefined);
+  assert.equal(sent.filter((email) => email.to.includes(ADMIN_EMAIL)).length, 1);
+  assert.ok(sent[0].subject.endsWith(`[${retried.leadId}]`));
+});
+
+test("a marked test request reaches the office labelled TEST and is flagged in the answer", async () => {
+  const body = await (await POST(submission({ test: "true" }))).json();
+  assert.equal(body.test, true);
+  assert.match(sent[0].subject, /^\[TEST\] Builder Bid Request: /);
+  assert.match(sent[0].html ?? "", /TEST REQUEST/);
+  assert.ok(!sent.some((email) => email.to.includes(SMS_GATEWAY)), "no text message for a test");
 });

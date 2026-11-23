@@ -16,11 +16,8 @@ import {
   SMS_TO,
   tooManyRequests,
 } from "@/lib/api/secure";
-import {
-  captureRequestContext,
-  newConversionId,
-  reportConversion,
-} from "@/lib/openai-ads-capi";
+import { captureRequestContext, reportConversion } from "@/lib/openai-ads-capi";
+import { acceptedLead, acceptOnce, isTestFlag, leadHeaderHtml, leadIdFor, logAccepted, subjectFor } from "@/lib/api/lead";
 import { TERMS_URL, TERMS_VERSION } from "@/lib/terms-meta";
 import { BUSINESS } from "@/lib/business";
 
@@ -45,6 +42,8 @@ export async function POST(request: Request) {
       );
     }
     const { service, selections, result, lead, sourcePath, website } = parsed.quote;
+    const submissionKey = (json as { submissionKey?: unknown } | null)?.submissionKey;
+    const test = isTestFlag((json as { test?: unknown } | null)?.test);
 
     if (isHoneypotTripped(website)) {
       return NextResponse.json({ success: true });
@@ -57,9 +56,17 @@ export async function POST(request: Request) {
         { status: 500 }
       );
     }
-    const eventId = newConversionId();
-    const attributionHtml = leadAttributionHtml(request, eventId);
-    const resend = new Resend(process.env.RESEND_API_KEY);
+    const resendKey = process.env.RESEND_API_KEY;
+    // One ID for this inquiry: office email, customer email and tracking.
+    const leadId = leadIdFor(submissionKey);
+    const leadInfo = { leadId, leadType: "homeowner_request", form: "quote_builder", test } as const;
+    const attributionHtml = leadAttributionHtml(request, leadId);
+    const context = captureRequestContext(request);
+
+    // The office email for one submission goes out once: a double tap or a
+    // retry of a request the office already has gets the first answer back.
+    const answer = await acceptOnce(submissionKey, async () => {
+    const resend = new Resend(resendKey);
     const serviceLabel = service === "water-heater" ? "Water Heater" : "Whole-Home Repipe";
 
     const lineItemsHtml = result.lineItems
@@ -97,16 +104,17 @@ export async function POST(request: Request) {
       phone: escapeHtml(lead.phone),
     };
 
-    await sendEmailOrThrow(resend, {
+    const officeEmailId = await sendEmailOrThrow(resend, {
       from: "C&S Plumbing Website <bookings@csplumbinglee.com>",
       to: [ADMIN_EMAIL],
-      subject: `New Quote: ${serviceLabel} $${result.total.min.toLocaleString()}–$${result.total.max.toLocaleString()} — ${lead.name}`,
+      subject: subjectFor(`New Quote Request: ${serviceLabel} $${result.total.min.toLocaleString()}–$${result.total.max.toLocaleString()} — ${lead.name}`, leadId, test),
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background: #0A0A0F; padding: 20px; text-align: center;">
             <h1 style="color: #0099FF; margin: 0;">New Quote Request</h1>
           </div>
           <div style="padding: 20px; background: #f9f9f9;">
+            ${leadHeaderHtml(leadInfo)}
             ${attributionHtml}
             <h3 style="color: #333; border-bottom: 2px solid #0099FF; padding-bottom: 8px;">Customer Info</h3>
             <p><strong>Name:</strong> ${safeLead.name}</p>
@@ -139,7 +147,7 @@ export async function POST(request: Request) {
     await sendEmailBestEffort(resend, {
       from: "C&S Plumbing of Lee <bookings@csplumbinglee.com>",
       to: [lead.email],
-      subject: `Your ${serviceLabel} Estimate — C&S Plumbing`,
+      subject: `Your ${serviceLabel} Estimate — C&S Plumbing [${leadId}]`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background: #0A0A0F; padding: 20px; text-align: center;">
@@ -168,7 +176,7 @@ export async function POST(request: Request) {
 
             <div style="text-align: center; margin: 24px 0;">
               <a href="https://www.csplumbinglee.com/booking" style="display: inline-block; background: #0099FF; color: #fff; padding: 12px 32px; border-radius: 8px; text-decoration: none; font-weight: 600;">
-                Schedule Your Free Visit
+                Request Your Free Visit
               </a>
             </div>
 
@@ -188,7 +196,7 @@ export async function POST(request: Request) {
       `,
     }, "quote customer copy");
 
-    if (SMS_TO) {
+    if (SMS_TO && !test) {
       await sendEmailBestEffort(resend, {
         from: "C&S Plumbing Website <bookings@csplumbinglee.com>",
         to: [SMS_TO],
@@ -197,12 +205,18 @@ export async function POST(request: Request) {
       }, "quote SMS notification");
     }
 
-    const context = captureRequestContext(request);
-    after(() =>
-      reportConversion({ type: "lead_created", id: eventId, context, sourcePath, email: lead.email })
-    );
+    logAccepted(leadInfo, officeEmailId);
+    return acceptedLead(leadId, "homeowner_request", test);
+    });
 
-    return NextResponse.json({ success: true, eventId });
+    // A repeat of a submission the office already has, and a test, report nothing.
+    if (!answer.duplicate && !test) {
+      after(() =>
+        reportConversion({ type: "lead_created", id: leadId, context, sourcePath, email: lead.email })
+      );
+    }
+
+    return NextResponse.json(answer);
   } catch (error) {
     console.error("Quote email error:", error);
     return NextResponse.json(

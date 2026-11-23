@@ -30,8 +30,11 @@ export default function OpenAIPixel() {
   // id unless the build is in placeholder mode.
   const OPENAI_PIXEL_ID = TAG_IDS.openai;
 
+  // lazyOnload, like the Meta pixel: the SDK is fetched once the page has
+  // loaded, so it never competes with the first screen. Its click cookie is
+  // read on init either way, and a form lead comes long after that.
   return (
-    <Script id="openai-pixel" strategy="afterInteractive">
+    <Script id="openai-pixel" strategy="lazyOnload">
       {`
         !function(w,d,s,u){if(w.oaiq)return;var q=function(){q.q.push(arguments)};
         q.q=[];w.oaiq=q;var j=d.createElement(s);j.async=!0;j.src=u;

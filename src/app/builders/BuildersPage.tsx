@@ -11,6 +11,7 @@ import NewConstructionBenefits from "@/components/builders/NewConstructionBenefi
 import {
   BidSplit,
   BuilderDesk,
+  DocumentRow,
   BuilderProofStory,
   ConstructionPhases,
   PrequalDocs,
@@ -20,7 +21,17 @@ import {
 } from "@/components/builders/BuilderSections";
 import { BUILDERS_HUB as COPY } from "@/content/builders";
 import { BUILDER_STATS, BUILDER_GALLERY, BUILDER_CASE_STUDIES } from "@/lib/builders-data";
-import { BUILDER_DESK, BUILDER_PROOF, CAPABILITY_STATEMENT_PDF, NEW_CONSTRUCTION_CITIES } from "@/lib/builder-program";
+import {
+  BUILDER_DESK,
+  BUILDER_PROOF,
+  CAPABILITY_STATEMENT_PDF,
+  NEW_CONSTRUCTION_CITIES,
+  PREQUAL_PACKET_PDF,
+} from "@/lib/builder-program";
+import { CLAIMS } from "@/lib/claims";
+import { COMPLETED_PROJECTS } from "@/lib/projects-data";
+import ProjectCard from "@/components/explorer/ProjectCard";
+import Eyebrow from "@/components/ui/Eyebrow";
 import { image, picture } from "@/lib/media";
 import BuilderGallery, { type BuilderGalleryItem } from "./BuilderGallery";
 import BuilderLogoWall from "./BuilderLogoWall";
@@ -45,6 +56,7 @@ export default function BuildersPage() {
     });
   }
   const caseStudies = BUILDER_CASE_STUDIES.filter((study) => !study.placeholder);
+  const startProject = COMPLETED_PROJECTS.find((project) => project.slug === COPY.start.projectSlug);
 
   return (
     <>
@@ -78,6 +90,58 @@ export default function BuildersPage() {
           </>
         }
       />
+
+      {/* The three things a builder comes for, beside one documented job. */}
+      <Section tone="white" spacing="sm" labelledBy="builder-start-heading" className="border-b border-rule">
+        <Container>
+          <div className="grid grid-cols-1 gap-y-10 lg:grid-cols-12 lg:gap-x-12">
+            <div className="min-w-0 lg:col-span-7">
+              <h2 id="builder-start-heading" className="text-display-md text-fg">
+                {COPY.start.heading}
+              </h2>
+              <p className="mt-4 max-w-[58ch] text-lead text-body">{CLAIMS.bidAcknowledgement}</p>
+              <div className="mt-6">
+                <Button href="#bid" size="lg" iconRight={<ArrowRight className="size-5" />} className="w-full sm:w-auto">
+                  {COPY.start.bidAction}
+                </Button>
+              </div>
+              <ul className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                <DocumentRow href={PREQUAL_PACKET_PDF} label={COPY.start.prequalPdf} />
+                <DocumentRow href={CAPABILITY_STATEMENT_PDF} label={COPY.start.capabilityPdf} />
+              </ul>
+              <p className="mt-5 max-w-[60ch] text-body">
+                <span className="font-semibold text-fg">{COPY.start.contactLabel}:</span> {BUILDER_DESK.contactName},{" "}
+                {BUILDER_DESK.contactRole}.
+              </p>
+              <p className="mt-1 flex flex-wrap gap-x-5 gap-y-1">
+                <a
+                  href={BUILDER_DESK.phoneHref}
+                  className="inline-flex min-h-11 items-center font-semibold whitespace-nowrap text-link underline underline-offset-[0.2em]"
+                >
+                  {BUILDER_DESK.phone}
+                </a>
+                <a
+                  href={`mailto:${BUILDER_DESK.email}`}
+                  className="inline-flex min-h-11 items-center font-semibold whitespace-nowrap text-link underline underline-offset-[0.2em]"
+                >
+                  {BUILDER_DESK.email}
+                </a>
+              </p>
+            </div>
+            {startProject && (
+              <div className="min-w-0 lg:col-span-5">
+                <Eyebrow className="mb-3">{COPY.start.projectOverline}</Eyebrow>
+                <ProjectCard
+                  project={startProject}
+                  aspect="4/3"
+                  details
+                  sizes="(min-width: 1024px) 460px, (min-width: 640px) 80vw, 92vw"
+                />
+              </div>
+            )}
+          </div>
+        </Container>
+      </Section>
 
       <BuilderProofStory tone="white" spacing="sm">
         <ul className="mt-8 grid grid-cols-3 gap-x-4 border-y border-rule py-5 sm:gap-x-8">

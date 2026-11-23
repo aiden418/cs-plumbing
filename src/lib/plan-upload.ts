@@ -1,6 +1,6 @@
 /**
  * Plan-set uploads on the builder forms (the Builder Portal wizard and the
- * short "Submit plans for a bid" form).
+ * short "Send plans for a bid" form).
  *
  * Plan files go up exactly as picked: a plan PDF cannot be downscaled in the
  * browser the way a phone photo is (see compress-image.ts). Production

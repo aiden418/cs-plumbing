@@ -11,6 +11,7 @@ import {
   PriceLine,
   splitLead,
 } from "@/components/services/ServiceLandingTemplate";
+import { UepPrivateSide } from "@/components/services/UepSections";
 import { picture } from "@/lib/media";
 import { SERVICE_PAGE, UEP_PAGE } from "@/content/services";
 import type { ServiceLanding } from "@/lib/types";
@@ -89,7 +90,7 @@ export default function UEPServicePage({
         overline={landing.title}
         title={landing.heroText}
         description={lead}
-        actions={<HeroActions second={{ label: SERVICE_PAGE.book, href: "/booking" }} />}
+        actions={<HeroActions second={{ label: UEP_PAGE.estimateLabel, href: UEP_PAGE.estimateHref }} />}
       >
         {landing.priceRange && <PriceLine label={SERVICE_PAGE.typicalPriceRange} range={landing.priceRange} />}
       </PageHero>
@@ -104,11 +105,14 @@ export default function UEPServicePage({
         </Container>
       </Section>
 
+      {/* The owner's side: scope, permits, restoration; the dates are on the Cape Coral page */}
+      <UepPrivateSide tone="shell" />
+
       {/* Gallery */}
-      <JobGallery id="uep-work" photos={UEP_IMAGES} title={UEP_PAGE.galleryTitle} fallback={false} tone="shell" />
+      <JobGallery id="uep-work" photos={UEP_IMAGES} title={UEP_PAGE.galleryTitle} fallback={false} tone="white" />
 
       {/* Highlights */}
-      <Section tone="white" spacing="sm" labelledBy="why-heading">
+      <Section tone="shell" spacing="sm" labelledBy="why-heading">
         <Container>
           <Chapter id="why-heading" title={`${SERVICE_PAGE.whyBefore}${landing.title}`} stacked>
             <PointList items={landing.highlights} columns={3} />
@@ -117,7 +121,7 @@ export default function UEPServicePage({
       </Section>
 
       {/* FAQ */}
-      <Section tone="shell" spacing="sm" labelledBy="faq-heading">
+      <Section tone="white" spacing="sm" labelledBy="faq-heading">
         <Container>
           <Chapter id="faq-heading" title={SERVICE_PAGE.faq}>
             <FaqAccordion faqs={landing.faqs} />

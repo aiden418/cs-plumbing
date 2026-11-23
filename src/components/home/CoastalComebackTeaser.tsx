@@ -90,7 +90,9 @@ export default function CoastalComebackTeaser({ season = "departure" }: { season
               className="home-strip-head"
             />
             {/* Eager: a lazy logo would not load until it slid into view,
-                so tiles would arrive blank. The files are small. */}
+                so tiles would arrive blank. Low priority: these rows are near
+                the bottom of the page, so the browser fetches them after the
+                first screen, and React does not preload them in <head>. */}
             <LogoCarousel
               labelledBy="home-brands-title"
               seconds={40}
@@ -98,7 +100,7 @@ export default function CoastalComebackTeaser({ season = "departure" }: { season
                 key: brand.name,
                 logo: (
                   <span className="logo-carousel-logo">
-                    <Image src={brand.logo} alt={`${brand.name} logo`} fill sizes="128px" loading="eager" className="object-contain" />
+                    <Image src={brand.logo} alt={`${brand.name} logo`} fill sizes="128px" loading="eager" fetchPriority="low" className="object-contain" />
                   </span>
                 ),
               }))}
@@ -126,7 +128,7 @@ export default function CoastalComebackTeaser({ season = "departure" }: { season
               items={BUILDERS.map((builder) => ({
                 key: builder.name,
                 dark: builder.darkTile ?? whiteLogo(builder.logo),
-                logo: <BuilderLogoImage builder={builder} sizes="144px" loading="eager" className="logo-carousel-img" />,
+                logo: <BuilderLogoImage builder={builder} sizes="144px" loading="eager" fetchPriority="low" className="logo-carousel-img" />,
               }))}
             />
           </div>

@@ -55,7 +55,7 @@ export const ESTIMATOR_COPY = {
   startOver: "Start over",
   disclaimer: "*Estimate only. Actual cost depends on specific conditions.",
   disclaimerMore: "Contact us for a free, accurate quote.",
-  book: "Book a Service",
+  book: "Request Service",
   bookHref: "/booking",
   again: "Try another service",
   detailed: "Want a detailed estimate? Build your custom quote →",
@@ -65,7 +65,7 @@ export const ESTIMATOR_COPY = {
 /** The shared parts of every service page. */
 export const SERVICE_PAGE = {
   call: "Call",
-  book: "Book a Service",
+  book: "Request Service",
   request: "Request Service",
   typicalRange: "Typical range:",
   /** The header's price summary (a page with a labelled list instead of one range). */
@@ -78,7 +78,7 @@ export const SERVICE_PAGE = {
   getQuote: "Get a Quote",
   requestForm: {
     titleBefore: "Request ",
-    titleRepipe: "a Repipe Estimate",
+    titleRepipe: "a Repipe Walkthrough",
     titleWaterHeater: "Water Heater Service",
     intro: "Tell us how to reach you and where you need service. Our office will follow up to discuss the work.",
   },
@@ -204,4 +204,52 @@ export const NEW_CONSTRUCTION_PAGE = {
 /** /services/uep-utilities */
 export const UEP_PAGE = {
   galleryTitle: "Our UEP Work",
+  /** Where the dated phase information and the estimate request live. */
+  cityPageHref: "/uep-connection-cape-coral",
+  estimateHref: "/uep-connection-cape-coral#estimate",
+  estimateLabel: "Request a connection estimate",
+  /** The service page: the owner's side of the work. The facts are the ones the page already stated. */
+  privateSide: {
+    heading: "What is on your side of the property line",
+    lead: "The city's contractors install the mains, the meters and the stubs in the right-of-way. Everything from the property line to your house is the owner's to connect.",
+    items: [
+      {
+        title: "Private-side scope",
+        body: "A water service line from the city meter to the house, a sewer lateral from the house to the city stub, an optional separate irrigation line, and pump-out and abandonment of the old septic tank.",
+      },
+      {
+        title: "Permits",
+        body: "We apply for the City of Cape Coral permits each part needs, you list C&S as your plumber with Cape Coral Utilities for the water connection, and we schedule the inspections and close the permits out.",
+      },
+      {
+        title: "Restoration",
+        body: "We backfill and rough-grade the trenches when the work is done. Sod, pavers, driveway or concrete crossings and other surface restoration are quoted on site before you sign. The City's assessment and meter fees are separate.",
+      },
+    ],
+    datesTitle: "Dates by area.",
+    datesAfter: (checked: string) => `Checked ${checked}.`,
+    datesLink: "Phase dates and how to use your notice date",
+  },
+  /** The Cape Coral connection page: dated status. */
+  status: {
+    overline: "Cape Coral UEP status",
+    heading: "Where each area stands",
+    checkedBefore: "Read from the City of Cape Coral's own pages and council summaries on ",
+    checkedAfter: ". The city's schedule can change; its documents are linked here so you can check the latest yourself.",
+    decisionHeading: "North 3: the council decision",
+    north3Advice:
+      "If you own in North 3, there is nothing to connect to yet and no deadline is running. Earlier forecasts of a start date no longer apply; we will update this page when the city publishes a new one.",
+    north1Link: "City of Cape Coral: North 1 status",
+    faqLink: "City of Cape Coral: UEP connection FAQ",
+  },
+  notice: {
+    overline: "North 1 West homeowners",
+    ruleSource: "City of Cape Coral,",
+    ruleSourceLink: "UEP Frequently Asked Questions",
+    ruleChecked: (checked: string) => `, read ${checked}.`,
+  },
+  estimate: {
+    heading: "Request a connection estimate",
+    intro: "Send the property address and the date on your notice. Our office checks the parcel first, then contacts you about an on-site estimate.",
+  },
 } as const;

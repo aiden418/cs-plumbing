@@ -349,7 +349,7 @@ export const NEW_CONSTRUCTION_CITIES: NewConstructionCity[] = [
     permitAuthority: "the City of Cape Coral",
     metaTitle: "New Construction Plumbing Cape Coral | Builders & GCs",
     metaDescription:
-      "Cape Coral new construction plumbing for builders: slab layout, top-out, trim, UEP hookup and final. 9,500+ homes plumbed since 1998. Submit plans for a bid.",
+      "Cape Coral new construction plumbing for builders: slab layout, top-out, trim, UEP hookup and final. 9,500+ homes plumbed since 1998. Send plans for a bid.",
     intro:
       "Cape Coral is still building out lot by lot. Canal lots, a shallow water table and the city's utility expansion all change how the plumbing goes in. C&S was founded here in 1998, and we've been plumbing Cape Coral homes ever since.",
     localConditions: [
@@ -387,7 +387,7 @@ export const NEW_CONSTRUCTION_CITIES: NewConstructionCity[] = [
     permitAuthority: "the City of Fort Myers (inside city limits) or Lee County (unincorporated addresses)",
     metaTitle: "New Construction Plumbing Fort Myers | Builders & GCs",
     metaDescription:
-      "Fort Myers new construction plumbing for builders: underground, top-out, trim, hookup and final. 9,500+ homes plumbed since 1998. Submit plans for a bid.",
+      "Fort Myers new construction plumbing for builders: underground, top-out, trim, hookup and final. 9,500+ homes plumbed since 1998. Send plans for a bid.",
     intro:
       "A Fort Myers mailing address can be inside city limits or in unincorporated Lee County, and that decides who issues the permit and who inspects it. We sort that out before we bid.",
     localConditions: [
@@ -414,7 +414,7 @@ export const NEW_CONSTRUCTION_CITIES: NewConstructionCity[] = [
     permitAuthority: "Lee County (Lehigh Acres is unincorporated)",
     metaTitle: "New Construction Plumbing Lehigh Acres | Builders & GCs",
     metaDescription:
-      "Lehigh Acres new construction plumbing for production and scattered-lot builders. Underground through final, Lee County permits. Submit plans for a bid.",
+      "Lehigh Acres new construction plumbing for production and scattered-lot builders. Underground through final, Lee County permits. Send plans for a bid.",
     intro:
       "Lehigh Acres is one of the busiest scattered-lot markets in Lee County. We have documented slab-to-rough builds here, and production schedules are where phase-by-phase coordination pays off.",
     localConditions: [
@@ -438,7 +438,7 @@ export const NEW_CONSTRUCTION_CITIES: NewConstructionCity[] = [
     permitAuthority: "the Village of Estero",
     metaTitle: "New Construction Plumbing Estero | Builders & GCs",
     metaDescription:
-      "New construction plumbing in Estero for custom and community builders. Slab layout through final, Village of Estero permits. Submit plans for a bid.",
+      "New construction plumbing in Estero for custom and community builders. Slab layout through final, Village of Estero permits. Send plans for a bid.",
     intro:
       "Estero building is mostly planned communities and custom homes, where builders want the plumbing scope nailed down before the slab and the fixture package to match the spec at trim.",
     localConditions: [
@@ -462,7 +462,7 @@ export const NEW_CONSTRUCTION_CITIES: NewConstructionCity[] = [
     permitAuthority: "the City of Bonita Springs",
     metaTitle: "New Construction Plumbing Bonita Springs | Builders & GCs",
     metaDescription:
-      "Bonita Springs new construction plumbing for builders and GCs, from underground to final. Permitted through the City of Bonita Springs. Submit plans for a bid.",
+      "Bonita Springs new construction plumbing for builders and GCs, from underground to final. Permitted through the City of Bonita Springs. Send plans for a bid.",
     intro:
       "Bonita Springs runs from Gulf-front rebuilds to inland communities. Coastal lots bring flood-zone elevations into the plumbing plan; inland builds bring production schedules.",
     localConditions: [
@@ -486,7 +486,7 @@ export const NEW_CONSTRUCTION_CITIES: NewConstructionCity[] = [
     permitAuthority: "the City of Punta Gorda Building Division",
     metaTitle: "New Construction Plumbing Punta Gorda | Builders & GCs",
     metaDescription:
-      "Punta Gorda new construction plumbing for builders: slab layout, top-out, trim, hookup and final. Documented Punta Gorda builds. Submit plans for a bid.",
+      "Punta Gorda new construction plumbing for builders: slab layout, top-out, trim, hookup and final. Documented Punta Gorda builds. Send plans for a bid.",
     intro:
       "We've documented new construction and commercial plumbing in Punta Gorda, from ground-up homes to airport hangar work, and we take on builder work across Charlotte County.",
     localConditions: [
@@ -510,7 +510,7 @@ export const NEW_CONSTRUCTION_CITIES: NewConstructionCity[] = [
     permitAuthority: "Charlotte County (Port Charlotte is unincorporated)",
     metaTitle: "New Construction Plumbing Port Charlotte | Builders & GCs",
     metaDescription:
-      "Port Charlotte new construction plumbing for builders and GCs, underground through final, permitted through Charlotte County. Submit plans for a bid.",
+      "Port Charlotte new construction plumbing for builders and GCs, underground through final, permitted through Charlotte County. Send plans for a bid.",
     intro:
       "Port Charlotte's platted lots are filling in with new single-family homes. Builders need a plumbing sub who can keep pace lot to lot and knows Charlotte County's inspection process.",
     localConditions: [

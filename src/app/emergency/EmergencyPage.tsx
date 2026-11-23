@@ -57,7 +57,7 @@ export default function EmergencyPage({
         <p className="mt-5 flex items-start gap-2.5 text-body">
           <Clock aria-hidden="true" className="mt-1 size-5 shrink-0 text-emergency" />
           <span>
-            {EMERGENCY.hero.responsePrefix} {EMERGENCY_CLAIMS.responseTime}
+            {EMERGENCY_CLAIMS.arrival}
           </span>
         </p>
       </PageHero>

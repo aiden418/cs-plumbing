@@ -26,7 +26,7 @@ a placeholder in its place.
 |---|---|---|
 | W-9 exact legal-name match | prequal packet "Legal name" row, Terms clause 1.1 | Owner states Draft Plumbing Corp; an older Sunbiz record reads C & S PLUMBING OF LEE, INC. Confirm the signed W-9 and the DBPR record for CFC1432485 match Draft Plumbing Corp |
 | BuildZoom profile housekeeping | external | Profile still shows the former Cape Coral address (1011 SE 12th Ct) and only CFC057076; claim/update it so the linked source matches the site Update 2026-11-16: claimed; address now 951 Pondella Rd and the profile links to the site; phone still (239) 458-9223, only CFC057076 listed, score reads 0; BuildZoom asked for a signed referral agreement by email on 2026-11-14. |
-| Production `ADMIN_EMAIL` | Vercel env | Intended destination is office@csplumbinglee.com (code default). Not verified: `vercel login` then `vercel env ls production` |
+| Production `ADMIN_EMAIL` | Vercel env | No longer read on the live site (2026-11-22): production office copies always go to office@csplumbinglee.com (`officeRecipient()` in `src/lib/api/secure.ts`). The saved value is "sensitive" and cannot be read back, so it was never verified; it can be deleted from the Production environment. Preview and local builds still honour it. |
 | Production bid-form test | /builders#bid after deploy; /builder-portal today | Owner submits a labeled test; confirm admin email, SMS gateway copy, and submitter confirmation arrive |
 | Hangar 97 completion date | `COMPLETED_PROJECTS[hangar-97].completedOn` | Marked Completed per owner; date unset. Trim/final phases not photographed — confirm performed before listing |
 | Case-study facts | `COMPLETED_PROJECTS[].caseStudy` | Fixture counts, schedule vs. plan, inspection results for Hansen 1210 trim-out and Hangar 97 — omitted until supplied |
@@ -40,7 +40,7 @@ a placeholder in its place.
 - Secondary domains on the same project, all 308 redirects to `www.csplumbinglee.com`: `csplumbinglee.com`, `www.candsplumbingfl.com` (added 2026-11-10) and `candsplumbingfl.com` (added 2026-11-12). A redirect only works once DNS points the host at Vercel: on 2026-11-12 the apex `candsplumbingfl.com` still had GoDaddy forwarding A records (15.197.225.128 / 3.33.251.168), so at GoDaddy either remove the forwarding and add the apex A records Vercel currently recommends (`216.150.1.1` and `216.150.16.1`; the older `76.76.21.21` still works), or keep GoDaddy forwarding and make sure it is a permanent (301) unmasked forward to `https://www.csplumbinglee.com`. Never let either host serve a copy of the site — Google indexed `www.candsplumbingfl.com/contact` as a duplicate. Step-by-step in `docs/seo/browser-session-playbook.md` §2.
 - GitHub: `aiden418/cs-plumbing`, production deploys from `main`. Feature branches (`claude/*`) get Vercel preview URLs when the Git integration is connected.
 - The Vercel CLI token on this Mac is expired. To let the assistant deploy previews or read env vars: run `npx vercel login` in a terminal, complete the browser prompt, then `npx vercel env ls production` and `npx vercel deploy` work.
-- `ADMIN_EMAIL` (production) must be `office@csplumbinglee.com`; the code default is the same, so an unset variable is also correct.
+- `ADMIN_EMAIL` is ignored in production; office copies go to `office@csplumbinglee.com`. It only redirects test mail on Preview and local builds.
 
 ## Regenerating the PDFs
 

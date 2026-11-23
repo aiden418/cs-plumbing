@@ -6,6 +6,7 @@ import FileUpload from "@/components/builder-portal/FileUpload";
 import { Field, FormattedInput, FormPanel, FormStatus, Honeypot, Input, SubmitRow } from "@/components/forms";
 import { PLAN_SET_MAX_BYTES } from "@/lib/plan-upload";
 import { trackBuilderLead } from "@/lib/pixel";
+import { isTestVisit, newSubmissionKey, type AcceptedLead } from "@/lib/lead";
 import { BUSINESS } from "@/lib/business";
 
 type Errors = Partial<Record<string, string>>;
@@ -38,14 +39,14 @@ function nativeErrors(form: HTMLFormElement): Errors {
 }
 
 /**
- * Short "Submit plans for a bid" form for /builders and the new-construction
+ * Short "Send plans for a bid" form for /builders and the new-construction
  * city pages. Posts to the same /api/builder-portal endpoint as the full
  * Builder Portal wizard and fires builder_lead — never the homeowner Lead.
  */
 export default function BuilderBidForm({
   source,
   defaultCommunity = "",
-  heading = "Submit plans for a bid",
+  heading = "Send plans for a bid",
 }: {
   /** Where the form lives, e.g. "builders-hub" or "nc-city:cape-coral". */
   source: string;
@@ -58,11 +59,17 @@ export default function BuilderBidForm({
   const [error, setError] = useState<string | null>(null);
   const [errors, setErrors] = useState<Errors>({});
   const statusRef = useRef<HTMLDivElement>(null);
+  // A second tap while the first is uploading does nothing, and a retry
+  // repeats the same key: one bid request, one Lead ID.
+  const busy = useRef(false);
+  const submissionKey = useRef<string | null>(null);
+  const [requestId, setRequestId] = useState("");
 
   const focusStatus = () => requestAnimationFrame(() => statusRef.current?.focus());
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (busy.current) return;
     const form = e.currentTarget;
     const found = nativeErrors(form);
     if (Object.keys(found).length > 0) {
@@ -75,16 +82,19 @@ export default function BuilderBidForm({
       return;
     }
     setErrors({});
+    busy.current = true;
     setSubmitting(true);
     setError(null);
     const body = new FormData(form);
     body.set("source", source);
+    body.set("submissionKey", (submissionKey.current ??= newSubmissionKey()));
+    if (isTestVisit()) body.set("test", "true");
     files.forEach((f) => body.append("files", f));
     try {
       const res = await fetch("/api/builder-portal", { method: "POST", body });
       // Not every failure is JSON: the platform answers a request body that is
       // too large with a plain-text 413 before the route runs.
-      const data: { success?: boolean; eventId?: string; error?: string; code?: string } = await res
+      const data: Partial<AcceptedLead> & { error?: string; code?: string } = await res
         .json()
         .catch(() => ({}));
       if (!res.ok || !data.success) {
@@ -96,8 +106,9 @@ export default function BuilderBidForm({
           community: String(body.get("community") ?? ""),
           source,
         },
-        { eventId: data.eventId, email: String(body.get("email") ?? "") }
+        { eventId: data.eventId, email: String(body.get("email") ?? ""), test: data.test }
       );
+      setRequestId(data.leadId ?? "");
       setSubmitted(true);
       focusStatus();
     } catch (err) {
@@ -110,6 +121,7 @@ export default function BuilderBidForm({
       );
       focusStatus();
     } finally {
+      busy.current = false;
       setSubmitting(false);
     }
   }
@@ -130,6 +142,11 @@ export default function BuilderBidForm({
       <FormStatus ref={statusRef} tabIndex={-1} status="success" data-tone="white" title="Plans received">
         A confirmation email is on its way. Our estimating team will review the plans and
         follow up with a written scope and price.
+        {requestId && (
+          <span className="mt-2 block">
+            Request ID: <span className="font-semibold text-fg tabular-nums">{requestId}</span>
+          </span>
+        )}
       </FormStatus>
     );
   }

@@ -24,7 +24,7 @@ Edit `CLAIMS` or `EMERGENCY_CLAIMS` in `src/lib/claims.ts`. Call sites: booking,
 | Licenses | CFC1432485 only on marketing surfaces; both licenses on Terms, prequal packet, capability statement, builder print documents and the JSON-LD credential list. What the state's record showed for each (status, renewal date, the record's address) is `LICENSE_RECORD`, read on the DBPR site 2026-11-16; pages state it as a dated check, and `tests/license-record.test.ts` asks for a fresh look once the renewal date passes. |
 | Service-call fee | No amount published: free estimates on installations, repipes and water heaters; repair visits carry a diagnostic fee quoted at booking. |
 | Booking confirmation | Within 1 business day, usually the same day — same sentence in every form and customer email. Builder bids: acknowledged within 1 business day; no takeoff turnaround promised. |
-| Response time | Typically 30–60 minutes in Cape Coral, Fort Myers and North Fort Myers; same-day elsewhere. No per-city minute claims. |
+| Response time | **Superseded 2026-11-22 (Aiden).** The site gave 30–60 minutes in `EMERGENCY_CLAIMS`, "1-2 hours" twice on the leak-repair page and other figures on some city pages, and dispatch had confirmed none. Until dispatch confirms a response time, every page says "Call the office for current availability and an estimated arrival time." (`EMERGENCY_CLAIMS.arrival`). No page states minutes or hours to arrive; `tests/plan-facts.test.ts` enforces it. When Sam and dispatch approve a statement, write it in `src/lib/claims.ts` once. |
 | Coastal Comeback Plan | $349 / $549 confirmed; copy flips by season (`season()`), pages revalidate daily. |
 | Hybrid rebate | "Up to ~$2,000" kept; confirm with FPL / LCEC each year. |
 

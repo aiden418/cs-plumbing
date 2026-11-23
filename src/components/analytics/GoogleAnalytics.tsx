@@ -7,6 +7,10 @@ import { GOOGLE_ADS_ID, TAG_IDS } from "@/lib/pixel";
 const WEBSITE_CALL_CONVERSION_LABEL = "V3DdCPHyq7wdEOm5tKw9";
 /** Google's call-tracking loader: the script its own tag loads for a website call conversion. */
 const GOOGLE_CALL_SCRIPT = "https://www.gstatic.com/wcm/loader.js";
+/** The Google tag library. Added to the page by the inline script below, never preloaded. */
+const GOOGLE_TAG_SCRIPT = "https://www.googletagmanager.com/gtag/js";
+/** The longest a visit waits for the Google tag, whatever else is going on (ms). */
+const GOOGLE_TAG_MAX_WAIT_MS = 6000;
 
 /**
  * Google Analytics 4 via gtag.js. Renders nothing until GA_MEASUREMENT_ID is
@@ -31,6 +35,17 @@ const GOOGLE_CALL_SCRIPT = "https://www.gstatic.com/wcm/loader.js";
  * tag sends internally: the same conversion id and label, the same number
  * and the same callback arguments. The Google tag is still needed: it stores
  * the ad click that the call script reads.
+ *
+ * When the tag loads (2026-11-22). The commands are queued at once, so no
+ * event is ever lost, but the 150 KB library is no longer preloaded ahead of
+ * the first screen. It is added to the page:
+ *   - immediately, for a visit that arrived from a Google ad (a click id in
+ *     the address, or Google's click cookie from an earlier visit): that
+ *     visitor may tap Call within a second and must get the forwarding number;
+ *   - otherwise once the page has loaded and the browser is idle, at the
+ *     visitor's first touch, key press or scroll, or after
+ *     GOOGLE_TAG_MAX_WAIT_MS, whichever comes first.
+ * Google's call script starts in the same step, as before.
  */
 export default function GoogleAnalytics() {
   if (!TAG_IDS?.ga) return null;
@@ -125,23 +140,49 @@ export default function GoogleAnalytics() {
             window._googWcmImpl(2, onForwardingNumber, conversion, ${JSON.stringify(BUSINESS.phone)}, null, new Date());
           })();
         ` : "";
+  const loadWhenReady = `
+          (() => {
+            let started = false;
+            const waits = [];
+            const start = () => {
+              if (started) return;
+              started = true;
+              for (const [target, type] of waits) target.removeEventListener(type, start);
+              const tag = document.createElement('script');
+              tag.async = true;
+              tag.src = ${JSON.stringify(`${GOOGLE_TAG_SCRIPT}?id=${GA_MEASUREMENT_ID}`)};
+              document.head.appendChild(tag);
+              ${websiteCallTracking}
+            };
+            const wait = (target, type) => {
+              waits.push([target, type]);
+              target.addEventListener(type, start, { once: true, passive: true });
+            };
+            // From a Google ad: nothing waits.
+            const fromAd = /[?&](gclid|gbraid|wbraid)=/.test(window.location.search) ||
+              /(^|;\\s*)_gcl_(aw|gb)=/.test(document.cookie);
+            if (fromAd) { start(); return; }
+            // Everyone else: after the first screen, or at the first sign of use.
+            const whenIdle = () => {
+              if (typeof window.requestIdleCallback === 'function') window.requestIdleCallback(start, { timeout: 2000 });
+              else window.setTimeout(start, 200);
+            };
+            if (document.readyState === 'complete') whenIdle();
+            else window.addEventListener('load', whenIdle, { once: true });
+            for (const type of ['pointerdown', 'touchstart', 'keydown', 'scroll']) wait(window, type);
+            window.setTimeout(start, ${GOOGLE_TAG_MAX_WAIT_MS});
+          })();
+        `;
   return (
-    <>
-      <Script
-        id="ga4-src"
-        src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-        strategy="afterInteractive"
-      />
-      <Script id="ga4-init" strategy="afterInteractive">
-        {`
+    <Script id="ga4-init" strategy="afterInteractive">
+      {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
           gtag('config', '${GA_MEASUREMENT_ID}');
           gtag('config', '${googleAdsId}');
-          ${websiteCallTracking}
+          ${loadWhenReady}
         `}
-      </Script>
-    </>
+    </Script>
   );
 }

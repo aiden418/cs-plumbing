@@ -398,7 +398,7 @@ export function Qualifications({ tone = "white", spacing = "default" }: { tone?:
 }
 
 /** One downloadable document as a card row: the whole row is the download link. */
-function DocumentRow({ href, label }: { href: string; label: string }) {
+export function DocumentRow({ href, label }: { href: string; label: string }) {
   // Plain <a>: a PDF isn't a route, so next/link would try a client navigation first.
   return (
     <li>

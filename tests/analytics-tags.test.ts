@@ -36,13 +36,16 @@ const CALL_CONVERSION = { ak: "16467696873", cl: "V3DdCPHyq7wdEOm5tKw9" };
 
 const lines = (...text: string[]) => text.join("\n");
 
+/** The Google tag library, as the inline script adds it to the page. */
+const tagLibrary = (ids: TagIds) => ({
+  tag: "script",
+  async: true,
+  src: `https://www.googletagmanager.com/gtag/js?id=${ids.ga}`,
+});
+
+// One inline script. There is deliberately no <Script src> for the library:
+// next/script would preload it ahead of the first screen.
 const googleTags = (ids: TagIds) => [
-  {
-    tag: "Script",
-    id: "ga4-src",
-    src: `https://www.googletagmanager.com/gtag/js?id=${ids.ga}`,
-    strategy: "afterInteractive",
-  },
   {
     tag: "Script",
     id: "ga4-init",
@@ -95,7 +98,7 @@ const openaiTags = (ids: TagIds) => [
   {
     tag: "Script",
     id: "openai-pixel",
-    strategy: "afterInteractive",
+    strategy: "lazyOnload",
     body: lines(
       "",
       "        !function(w,d,s,u){if(w.oaiq)return;var q=function(){q.q.push(arguments)};",
@@ -223,12 +226,31 @@ type ForwardingCallback = (formatted?: unknown, mobile?: unknown) => void;
  * it queues and the scripts it adds. `documentParts` are the DOM calls a test
  * page supplies on top.
  */
-function googlePage(documentParts: Record<string, unknown> = {}) {
+function googlePage(
+  documentParts: Record<string, unknown> = {},
+  visit: { search?: string; cookie?: string; readyState?: string; idleCallback?: boolean } = {},
+) {
   const dataLayer: IArguments[] = [];
   const scripts: Record<string, unknown>[] = [];
-  const window: Record<string, unknown> = { dataLayer };
+  /** What the loader is waiting on. */
+  const idle: (() => void)[] = [];
+  const timers: { run: () => void; ms: number }[] = [];
+  const listening: { type: string; run: () => void }[] = [];
+  const window: Record<string, unknown> = {
+    dataLayer,
+    location: { search: visit.search ?? "" },
+    setTimeout: (run: () => void, ms: number) => timers.push({ run, ms }),
+    addEventListener: (type: string, run: () => void) => listening.push({ type, run }),
+    removeEventListener: (type: string, run: () => void) => {
+      const at = listening.findIndex((l) => l.type === type && l.run === run);
+      if (at >= 0) listening.splice(at, 1);
+    },
+    ...(visit.idleCallback === false ? {} : { requestIdleCallback: (run: () => void) => idle.push(run) }),
+  };
   const document = {
     ...documentParts,
+    cookie: visit.cookie ?? "",
+    readyState: visit.readyState ?? "complete",
     createElement: (tag: string): Record<string, unknown> => ({ tag }),
     head: {
       appendChild(script: Record<string, unknown>) {
@@ -236,13 +258,28 @@ function googlePage(documentParts: Record<string, unknown> = {}) {
       },
     },
   };
+  /** The page finished loading and the browser went idle. */
+  const becomeIdle = () => {
+    for (const l of listening.filter((x) => x.type === "load")) l.run();
+    for (const run of idle.splice(0)) run();
+  };
   return {
     window,
     document,
     scripts,
-    /** Run the tag's inline script on this page. */
-    run(body: string, globals: Record<string, unknown> = {}) {
+    idle,
+    timers,
+    listening,
+    becomeIdle,
+    /** The visitor does something (a tap, a key, a scroll). */
+    interact: (type: string) => listening.filter((l) => l.type === type).forEach((l) => l.run()),
+    /**
+     * Run the tag's inline script on this page and, unless `wait` is asked
+     * for, let the page load and go idle so the library has been added.
+     */
+    run(body: string, globals: Record<string, unknown> = {}, wait = false) {
       runInNewContext(body, { ...globals, window, document, dataLayer });
+      if (!wait) becomeIdle();
     },
     commands: () => dataLayer.map((args) => Array.from(args)),
   };
@@ -253,11 +290,12 @@ function googlePage(documentParts: Record<string, unknown> = {}) {
  * and one queued call, the same one Google's tag makes for a website call
  * conversion. Returns the callback that call hands to Google.
  */
-function assertCallTrackingStarted(page: ReturnType<typeof googlePage>): ForwardingCallback {
+function assertCallTrackingStarted(page: ReturnType<typeof googlePage>, ids: TagIds = REAL): ForwardingCallback {
   const queue = page.window._googWcmImpl as { q?: IArguments[] } | undefined;
   assert.equal(typeof queue, "function");
   assert.equal(page.window._googWcmAk, CALL_CONVERSION.ak);
-  assert.deepEqual(page.scripts, [{ tag: "script", async: true, src: CALL_SCRIPT }]);
+  // Added in one step: the Google tag library first, then Google's call loader.
+  assert.deepEqual(page.scripts, [tagLibrary(ids), { tag: "script", async: true, src: CALL_SCRIPT }]);
   assert.equal(queue?.q?.length, 1, "one call waits for the script");
   const [version, callback, conversion, number, unused, askedAt, ...rest] = Array.from(queue?.q?.[0] ?? []);
   assert.equal(version, 2);
@@ -273,7 +311,8 @@ function assertCallTrackingStarted(page: ReturnType<typeof googlePage>): Forward
 
 function assertGoogleTags(loader: Loader, ids: TagIds) {
   const { tags } = render(loader);
-  const body = String(tags[1].body);
+  assert.equal(tags.length, 1, "one inline script, and no <Script src> for next/script to preload");
+  const body = String(tags[0].body);
   const page = googlePage();
   page.run(body);
   const commands = page.commands();
@@ -282,14 +321,14 @@ function assertGoogleTags(loader: Loader, ids: TagIds) {
   // tag ignores a second Ads config, so call tracking is not sent through it.
   assert.deepEqual(commands, [["config", ids.ga], ["config", ids.googleAds]]);
   if (ids.googleAds === REAL.googleAds) {
-    assertCallTrackingStarted(page);
+    assertCallTrackingStarted(page, ids);
   } else {
     assert.equal(page.window._googWcmImpl, undefined, "placeholder builds cannot request a forwarding number");
-    assert.deepEqual(page.scripts, []);
+    assert.deepEqual(page.scripts, [tagLibrary(ids)]);
   }
   const afterBaseConfig = body.indexOf(`gtag('config', '${ids.googleAds}');`)
     + `gtag('config', '${ids.googleAds}');`.length;
-  tags[1].body = body.slice(0, afterBaseConfig) + "\n        ";
+  tags[0].body = body.slice(0, afterBaseConfig) + "\n        ";
   assert.deepEqual(tags, googleTags(ids));
 }
 
@@ -519,7 +558,7 @@ function forwardingPage() {
 
 /** The callback from the production tag, bound to a stand-in page. */
 function forwardingCallback(page: ReturnType<typeof forwardingPage>): ForwardingCallback {
-  const body = String(render(load().GoogleAnalytics).tags[1].body);
+  const body = String(render(load().GoogleAnalytics).tags[0].body);
   const { document, ...globals } = page.globals;
   const google = googlePage(document);
   google.run(body, globals);
@@ -527,7 +566,7 @@ function forwardingCallback(page: ReturnType<typeof forwardingPage>): Forwarding
 }
 
 test("the site starts Google's call script itself, and does not load it twice", () => {
-  const body = String(render(load().GoogleAnalytics).tags[1].body);
+  const body = String(render(load().GoogleAnalytics).tags[0].body);
   // No second Ads config rides along: if Google's tag ever acted on one again, the script would be asked twice.
   assert.ok(!body.includes("phone_conversion"), "call tracking is not sent through gtag");
 
@@ -542,11 +581,93 @@ test("the site starts Google's call script itself, and does not load it twice", 
     calls.push(args);
   };
   started.run(body);
-  assert.deepEqual(started.scripts, []);
+  assert.deepEqual(started.scripts, [tagLibrary(REAL)], "the library is added; the call loader is not added twice");
   assert.equal(started.window._googWcmAk, undefined);
   assert.equal(calls.length, 1);
   assert.deepEqual([calls[0][0], typeof calls[0][1], calls[0][3]], [2, "function", "833-PLUMB-IT"]);
   assert.deepEqual(JSON.parse(JSON.stringify(calls[0][2])), CALL_CONVERSION);
+});
+
+// ── when the Google tag loads ───────────────────────────────────────────────
+//
+// The commands are queued at once (nothing is ever lost), but the library is
+// not fetched ahead of the first screen: it waits for the page to load and
+// go idle, or for the visitor's first touch, key or scroll. A visit from a
+// Google ad waits for nothing, because that visitor may tap Call at once.
+
+const googleBody = () => String(render(load().GoogleAnalytics).tags[0].body);
+
+test("an ordinary visit: commands queued at once, the library only after the page is idle", () => {
+  for (const readyState of ["loading", "interactive", "complete"]) {
+    const page = googlePage({}, { readyState });
+    page.run(googleBody(), {}, true);
+    assert.deepEqual(page.commands().map((c) => c[0]), ["js", "config", "config"], readyState);
+    assert.deepEqual(page.scripts, [], `nothing fetched yet (${readyState})`);
+    assert.equal(page.window._googWcmImpl, undefined, `call script not started yet (${readyState})`);
+    page.becomeIdle();
+    assertCallTrackingStarted(page);
+    // Whatever else was being waited for does nothing more.
+    page.becomeIdle();
+    for (const type of ["pointerdown", "touchstart", "keydown", "scroll"]) page.interact(type);
+    page.timers.forEach((timer) => timer.run());
+    assert.equal(page.scripts.length, 2, `started once (${readyState})`);
+  }
+});
+
+test("the visitor's first touch, key or scroll loads it without waiting for the page", () => {
+  for (const type of ["pointerdown", "touchstart", "keydown", "scroll"]) {
+    const page = googlePage({}, { readyState: "loading" });
+    page.run(googleBody(), {}, true);
+    assert.deepEqual(page.scripts, [], type);
+    page.interact(type);
+    assertCallTrackingStarted(page);
+    assert.deepEqual(
+      page.listening.map((l) => l.type),
+      ["load"],
+      `its own listeners are removed after the first one fires (${type})`,
+    );
+  }
+});
+
+test("a visit from a Google ad loads the tag and the call script immediately", () => {
+  const visits = [
+    { search: "?gclid=TEST-CLICK" },
+    { search: "?utm_source=google&gclid=TEST-CLICK" },
+    { search: "?gbraid=TEST-CLICK" },
+    { search: "?wbraid=TEST-CLICK" },
+    { cookie: "_gcl_aw=GCL.1795390000.TEST-CLICK" },
+    { cookie: "other=1; _gcl_aw=GCL.1795390000.TEST-CLICK" },
+    { cookie: "_ga=GA1.1.1; _gcl_gb=GCL.1795390000.TEST" },
+  ];
+  for (const visit of visits) {
+    const page = googlePage({}, { ...visit, readyState: "loading" });
+    page.run(googleBody(), {}, true);
+    assertCallTrackingStarted(page);
+    assert.deepEqual(page.listening, [], JSON.stringify(visit));
+  }
+  // Look-alikes are ordinary visits.
+  for (const visit of [{ search: "?fbclid=X" }, { search: "?notgclid=1x" }, { cookie: "_gcl_au=1.1.1" }, { cookie: "x_gcl_aw=1" }]) {
+    const page = googlePage({}, { ...visit, readyState: "loading" });
+    page.run(googleBody(), {}, true);
+    assert.deepEqual(page.scripts, [], JSON.stringify(visit));
+  }
+});
+
+test("a page that never goes idle still gets the tag: after six seconds at the latest", () => {
+  const page = googlePage({}, { readyState: "loading" });
+  page.run(googleBody(), {}, true);
+  assert.deepEqual(page.timers.map((timer) => timer.ms), [6000]);
+  page.timers[0].run();
+  assertCallTrackingStarted(page);
+});
+
+test("a browser without requestIdleCallback (Safari) loads it shortly after the page has loaded", () => {
+  const page = googlePage({}, { readyState: "complete", idleCallback: false });
+  page.run(googleBody(), {}, true);
+  assert.deepEqual(page.scripts, []);
+  assert.deepEqual(page.timers.map((timer) => timer.ms).sort((a, b) => a - b), [200, 6000]);
+  page.timers.find((timer) => timer.ms === 200)?.run();
+  assertCallTrackingStarted(page);
 });
 
 test("a forwarding number from Google replaces the number on every company call link, and only there", () => {
@@ -682,13 +803,14 @@ test("one document-level tel: listener in every mode; a call tap reports once to
       handler(clickOn(null)); // any other click
       assert.deepEqual(calls, [], String(analytics));
 
-      // A tap is not a lead: Meta and GA4 hear about it, the OpenAI pixel does not.
+      // A tap is an interaction, not a lead: Meta ("Contact") and GA4
+      // ("phone_tap", not a key event) hear about it, the OpenAI pixel does not.
       handler(clickOn('a[href^="tel:"]'));
       assert.deepEqual(
         calls,
         [
-          ["fbq", "track", "Contact", { content_name: "Phone Call", content_category: "Lead" }],
-          ["gtag", "event", "contact", { content_name: "Phone Call", content_category: "Lead" }],
+          ["fbq", "track", "Contact", { content_name: "Phone Call", content_category: "Interaction" }],
+          ["gtag", "event", "phone_tap", { content_name: "Phone Call", content_category: "Interaction" }],
         ],
         String(analytics),
       );

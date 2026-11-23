@@ -25,6 +25,7 @@ import BuilderPortalIntro from "@/components/builder-portal/BuilderPortalIntro";
 import { AFTER_SUBMIT, BUILDER_PORTAL } from "@/content/builders";
 import { BUSINESS } from "@/lib/business";
 import { trackBuilderLead } from "@/lib/pixel";
+import { isTestVisit, newSubmissionKey, type AcceptedLead } from "@/lib/lead";
 import { PLAN_SET_MAX_BYTES } from "@/lib/plan-upload";
 
 const COPY = BUILDER_PORTAL.wizard;
@@ -93,6 +94,10 @@ export default function BuilderPortalPage() {
   // screen-reader users land at the top of what just appeared.
   const stepHeadingRef = useRef<HTMLHeadingElement>(null);
   const successRef = useRef<HTMLDivElement>(null);
+  // A second tap while the first is uploading does nothing.
+  const busy = useRef(false);
+  const submissionKey = useRef<string | null>(null);
+  const [requestId, setRequestId] = useState("");
   const goTo = (next: number) => {
     setStep(next);
     requestAnimationFrame(() => stepHeadingRef.current?.focus({ preventScroll: false }));
@@ -126,12 +131,17 @@ export default function BuilderPortalPage() {
   };
 
   const handleSubmit = async () => {
+    if (busy.current) return;
+    busy.current = true;
     setSubmitting(true);
     setSubmitError(null);
     try {
       const body = new FormData();
       // Text fields, including the `website` honeypot
       Object.entries(form).forEach(([key, val]) => body.append(key, val));
+      // One key per filled-in request, repeated on a retry: one Lead ID.
+      body.append("submissionKey", (submissionKey.current ??= newSubmissionKey()));
+      if (isTestVisit()) body.append("test", "true");
       // Files
       files.forEach((file) => body.append("files", file));
 
@@ -142,9 +152,7 @@ export default function BuilderPortalPage() {
 
       // Not every failure is JSON: the platform answers a request body that is
       // too large with a plain-text 413 before the route runs.
-      const result: {
-        success?: boolean;
-        eventId?: string;
+      const result: Partial<AcceptedLead> & {
         error?: string;
         code?: string;
       } = await res.json().catch(() => ({}));
@@ -153,8 +161,9 @@ export default function BuilderPortalPage() {
       }
       trackBuilderLead(
         { units: form.units, community: form.community, source: "builder-portal" },
-        { eventId: result.eventId, email: form.email }
+        { eventId: result.eventId, email: form.email, test: result.test }
       );
+      setRequestId(result.leadId ?? "");
       setSubmitted(true);
       // The success screen replaces the page: start it at the top, focused.
       requestAnimationFrame(() => {
@@ -170,6 +179,7 @@ export default function BuilderPortalPage() {
           : `Something went wrong. Please call us directly at ${BUSINESS.phone}.`
       );
     } finally {
+      busy.current = false;
       setSubmitting(false);
     }
   };
@@ -194,6 +204,11 @@ export default function BuilderPortalPage() {
             <>
               <p>{done.thanks(form.name, files.length)}</p>
               <p className="mt-3">{done.next}</p>
+              {requestId && (
+                <p className="mt-3">
+                  Request ID: <span className="font-semibold tabular-nums">{requestId}</span>
+                </p>
+              )}
             </>
           }
           actions={

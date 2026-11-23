@@ -7,6 +7,7 @@ import Button from "@/components/ui/Button";
 import { Field, FormStatus, FormattedInput } from "@/components/forms";
 import { BUSINESS } from "@/lib/business";
 import { trackQuoteBuilder } from "@/lib/pixel";
+import { isTestVisit, newSubmissionKey, type AcceptedLead } from "@/lib/lead";
 import { QUOTE } from "@/content/conversion";
 import type {
   QuoteResult as QuoteResultType,
@@ -39,11 +40,18 @@ export default function QuoteResult({ result, selections, onReset }: QuoteResult
   const [website, setWebsite] = useState(""); // honeypot
   const statusRef = useRef<HTMLDivElement>(null);
   const firstFieldRef = useRef<HTMLInputElement>(null);
+  // One key per estimate sent, repeated on a retry: one request, one Lead ID.
+  const busy = useRef(false);
+  const submissionKey = useRef<string | null>(null);
+  const [requestId, setRequestId] = useState("");
 
   const handleSubmit = async () => {
+    if (busy.current) return;
+    busy.current = true;
     setSubmitting(true);
     setSubmitError(null);
     try {
+      const test = isTestVisit();
       const res = await fetch("/api/quote", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -54,17 +62,22 @@ export default function QuoteResult({ result, selections, onReset }: QuoteResult
           lead,
           sourcePath: window.location.pathname,
           website,
+          submissionKey: (submissionKey.current ??= newSubmissionKey()),
+          ...(test ? { test: true } : {}),
         }),
       });
-      const data: { success?: boolean; eventId?: string } = await res
+      const data: Partial<AcceptedLead> = await res
         .json()
         .catch(() => ({}));
       if (!res.ok || !data.success) throw new Error("Submission failed");
-      void trackQuoteBuilder({ email: lead.email, eventId: data.eventId });
+      // Counted only now, with the Lead ID of the request the office received.
+      void trackQuoteBuilder({ email: lead.email, eventId: data.eventId, leadType: data.leadType, test: data.test });
+      setRequestId(data.leadId ?? "");
       setSubmitted(true);
     } catch {
       setSubmitError(T.error);
     } finally {
+      busy.current = false;
       setSubmitting(false);
       requestAnimationFrame(() => statusRef.current?.focus());
     }
@@ -168,6 +181,11 @@ export default function QuoteResult({ result, selections, onReset }: QuoteResult
               }
             >
               {T.sentBody}
+              {requestId && (
+                <span className="mt-2 block">
+                  Request ID: <span className="font-semibold text-fg tabular-nums">{requestId}</span>
+                </span>
+              )}
             </FormStatus>
           ) : !showForm ? (
             <div className="flex flex-col gap-3">

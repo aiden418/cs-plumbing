@@ -12,6 +12,8 @@ import { PUBLISHED_LANDINGS, isIndexed } from "@/lib/landing-indexing";
 import { getServiceHub } from "@/lib/service-hubs";
 import { areaForCity } from "@/lib/internal-links";
 import { projectsForCity } from "@/lib/projects";
+import { UepNoticeAndEstimate, UepPhaseStatus } from "@/components/services/UepSections";
+import { UEP_PAGE } from "@/content/services";
 
 // Only published landings get a page; a retired slug is a redirect in
 // next.config.ts, and anything else is a 404 rather than a runtime render.
@@ -58,6 +60,9 @@ export default async function Page({
 
   const hub = getServiceHub(landing.serviceSlug);
   const area = areaForCity(landing.city);
+  // The Cape Coral connection page carries the dated UEP status, the
+  // notice-date steps and the estimate request that asks for both facts.
+  const isUepConnection = `/${landing.slug}` === UEP_PAGE.cityPageHref;
 
   return (
     <>
@@ -73,6 +78,17 @@ export default async function Page({
       <ServiceCityLandingTemplate
         landing={landing}
         areaHubHref={area ? `/areas/${area.slug}` : undefined}
+        {...(isUepConnection
+          ? {
+              secondAction: { label: UEP_PAGE.estimateLabel, href: "#estimate" },
+              afterTrust: (
+                <>
+                  <UepPhaseStatus tone="white" />
+                  <UepNoticeAndEstimate tone="shell" />
+                </>
+              ),
+            }
+          : {})}
       />
       {/* Siblings in this city, this service elsewhere, and both parent hubs —
           server-rendered so the links are in the HTML. */}

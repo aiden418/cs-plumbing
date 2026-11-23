@@ -7,7 +7,7 @@
  * Client components import this file, so it must never import
  * "@/lib/constants", "@/lib/media" or anything generated.
  */
-import { BUSINESS } from "@/lib/business";
+import { BUSINESS, OFFICE_CONTACTS } from "@/lib/business";
 import { CLAIMS, EMERGENCY_CLAIMS } from "@/lib/claims";
 import { money, price } from "@/lib/pricing";
 
@@ -33,6 +33,9 @@ export const CONTACT = {
   textLabel: "Text",
   textAction: "Can't talk? Text us instead",
   emailLabel: "Email",
+  /** Who runs the office; the names and what each handles are OFFICE_CONTACTS in src/lib/business.ts. */
+  peopleLabel: "Ask for",
+  peopleNote: "Both answer the office line and the office email above.",
   officeLabel: "Office",
   officeNote:
     "Our only office. Listings showing an older Cape Coral address refer to our former location — we're open and operating from North Fort Myers.",
@@ -43,7 +46,7 @@ export const CONTACT = {
     {
       title: "Send your message",
       description:
-        "Use the form, email, or call. Tell us what you need — we route it to the right person on our team.",
+        `Use the form, email, or call. ${OFFICE_CONTACTS.map((person) => `${person.name.split(" ")[0]} handles ${person.handles.toLowerCase()}`).join("; ")}.`,
     },
     {
       title: "Reply within 1 business day",
@@ -68,10 +71,10 @@ export const CONTACT = {
 export const BOOKING = {
   hero: {
     booking: {
-      overline: "Book a Service",
-      title: "Schedule Your",
-      accent: "Appointment",
-      description: `Book online in under 2 minutes. ${CLAIMS.bookingConfirmation}`,
+      overline: "Request Service",
+      title: "Request a",
+      accent: "Preferred Time",
+      description: `Tell us what you need and when works for you. Our office calls to confirm the appointment. ${CLAIMS.bookingConfirmation}`,
     },
     estimate: {
       overline: "Request an Estimate",
@@ -82,9 +85,9 @@ export const BOOKING = {
     preferToTalk: "Prefer to talk?",
   },
   requestTypeLegend: "Request type",
-  requestTypes: { booking: "Book a Service", estimate: "Request an Estimate" },
+  requestTypes: { booking: "Request Service", estimate: "Request an Estimate" },
   steps: {
-    booking: ["Service", "Details", "Schedule", "Info"],
+    booking: ["Service", "Details", "Preferred time", "Info"],
     estimate: ["Service", "Details", "Info"],
   },
   serviceHeading: "What do you need help with?",
@@ -101,7 +104,9 @@ export const BOOKING = {
   budgetLegend: "What's your budget range?",
   urgencyLegend: "How urgent is this?",
   urgencyLabels: { normal: "normal", soon: "Within a week", emergency: "emergency" } as Record<string, string>,
-  scheduleHeading: "Pick a date & time",
+  scheduleHeading: "Choose a preferred date and time",
+  /** Under the heading: this step asks, it does not book. */
+  scheduleNote: "This is the time you would like. Our office calls to confirm it or to offer the closest opening.",
   dateLegend: "Preferred Date",
   timeLegend: "Preferred Time",
   infoHeading: "Your Information",
@@ -112,15 +117,15 @@ export const BOOKING = {
   allRequired: "All fields required so we can dispatch the right tech to you.",
   back: "Back",
   continue: "Continue",
-  submit: { booking: "Submit Booking", estimate: "Submit Estimate Request" },
+  submit: { booking: "Request a preferred time", estimate: "Request an estimate" },
   submitting: "Submitting...",
   summaryHeading: "Your request",
   summaryEmpty: "Nothing chosen yet.",
-  confirmTitle: { booking: "Booking Submitted!", estimate: "Estimate Request Submitted!" },
-  confirmationPrefix: "Confirmation #",
+  confirmTitle: { booking: "Request received", estimate: "Estimate request received" },
+  confirmationPrefix: "Request ID ",
   confirmBody: {
     estimate: `We’ll review your project details and get back to you with a quote. ${CLAIMS.bookingConfirmation} For urgent needs, call us directly.`,
-    booking: `We’ll call to confirm your appointment. ${CLAIMS.bookingConfirmation} A copy was sent to `,
+    booking: `Your preferred time is a request, not a confirmed appointment yet. Our office will call to confirm it. ${CLAIMS.bookingConfirmation} A copy was sent to `,
   },
   submitError: `Something went wrong and your request was not submitted. Please try again, or call us at ${BUSINESS.phone}.`,
   errors: {
@@ -136,18 +141,18 @@ export const BOOKING = {
   nextHeading: "What happens after you submit",
   nextSteps: [
     {
-      title: "Submit the form",
+      title: "Send your request",
       description:
-        "Pick a service, time window, and add a note if there's anything we should know in advance.",
+        "Pick a service and the time you would prefer, and add a note if there's anything we should know in advance.",
     },
     {
       title: "We call to confirm",
       description: `${CLAIMS.bookingConfirmation} We confirm the appointment window and answer any quick questions.`,
     },
     {
-      title: "Tech arrives on time",
+      title: "Tech arrives in the confirmed window",
       description:
-        "Lee County truck shows up inside your window. We diagnose, quote, and only proceed with your sign-off.",
+        "Once we have confirmed a time with you, the tech comes in that window. We diagnose, quote, and only proceed with your sign-off.",
     },
     {
       title: "Clean, code-compliant work",
@@ -199,7 +204,7 @@ export const QUOTE = {
     credit: " credit",
     included: "What's Included",
     emailQuote: "Email Me This Quote",
-    schedule: "Schedule Your Free Visit",
+    schedule: "Request Your Free Visit",
     formIntro: "We'll email you this quote — no spam, ever.",
     nameLabel: "Your name",
     emailLabel: "Email",
@@ -246,7 +251,7 @@ export const EMERGENCY = {
     description:
       "Don't wait. Every minute counts in a plumbing emergency. Call us now and we'll be on our way.",
     text: "Can't talk? Text us instead",
-    responsePrefix: "Response time:",
+    // Arrival wording comes from EMERGENCY_CLAIMS.arrival (src/lib/claims.ts).
   },
   typesHeading: "Common Plumbing Emergencies",
   types: [
@@ -282,7 +287,7 @@ export const EMERGENCY = {
     },
     {
       title: "Tech dispatched fast",
-      description: `Lee County trucks are staged across the service area. Arrival is ${EMERGENCY_CLAIMS.responseTime}.`,
+      description: `Lee County trucks are staged across the service area. ${EMERGENCY_CLAIMS.arrival}`,
     },
     {
       title: "Quote before we work",

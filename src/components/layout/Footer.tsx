@@ -29,7 +29,7 @@ export const quickLinks = [
   { label: "Reviews", href: "/reviews" },
   { label: "Blog", href: "/blog" },
   { label: "Contact", href: "/contact" },
-  { label: "Book a Service", href: "/booking" },
+  { label: "Request Service", href: "/booking" },
   { label: "Emergency", href: "/emergency" },
   { label: "Coastal Comeback Plan", href: "/coastal-comeback-plan" },
   { label: "Instant Quote", href: "/quote-builder" },

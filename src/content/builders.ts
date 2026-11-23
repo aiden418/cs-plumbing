@@ -17,10 +17,21 @@ export const BUILDERS_HUB = {
     accent: "Since 1998",
     /** Followed by BUILDER_PROOF.subline. */
     leadPrefix: "New construction plumbing for builders and GCs across Lee and Charlotte counties, from slab layout to final.",
-    bidAction: "Submit Plans for a Bid",
+    bidAction: "Send Plans for a Bid",
     capabilityAction: "Capability Statement",
     /** Followed by the builder desk's phone number. */
     call: "Call",
+  },
+  /** Right under the header: the three things a builder comes for, beside a documented job. */
+  start: {
+    heading: "Send plans, or take the packet with you",
+    bidAction: "Send plans for a bid",
+    prequalPdf: "Prequalification packet (PDF)",
+    capabilityPdf: "Capability statement (PDF)",
+    contactLabel: "Estimating contact",
+    projectOverline: "A documented commercial job",
+    /** The project shown beside the actions (its slug in COMPLETED_PROJECT_TEXT). */
+    projectSlug: "usps-cape-coral-remodel",
   },
   logoWall: {
     overline: "Trusted By",
@@ -156,7 +167,7 @@ export const NC_CITY = {
   title: "New Construction Plumbing in",
   accent: (city: string) => `${city}, FL`,
   breadcrumb: (city: string) => `New Construction Plumbing — ${city}`,
-  bidAction: "Submit Plans for a Bid",
+  bidAction: "Send Plans for a Bid",
   capabilityAction: "Capability Statement",
   /** Followed by the builder desk's phone number. */
   call: "Call",
@@ -202,7 +213,7 @@ export const BUILDER_PORTAL = {
     leadEnd: `, Florida Certified Plumbing Contractor license ${BUSINESS.license}, and a 5.0 rating from the GCs and custom home builders we work with every week.`,
     lead2:
       "Upload your plans below. We'll come back with a detailed takeoff and proposal — no upfront cost, no commitment.",
-    submitPlans: "Submit Plans",
+    submitPlans: "Send Plans",
     licenseLine: `License #${BUSINESS.license} · #${BUSINESS.license2} · Family owned and operated since 1998`,
   },
   why: {
@@ -268,10 +279,10 @@ export const BUILDER_PORTAL = {
       "Permit set if you have one — otherwise we'll work from the architecturals",
       "Target rough-in date and any GC scheduling constraints",
     ],
-    submitPlans: "Submit Plans",
+    submitPlans: "Send Plans",
   },
   wizard: {
-    overline: "Submit your plans",
+    overline: "Send your plans",
     title: "Send us your project",
     intro:
       "Four short steps — contact info, project details, plans, then review. We'll get back to you with a detailed scope and quote.",

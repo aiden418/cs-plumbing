@@ -33,7 +33,7 @@ export default function WhereWeWork() {
             id="home-areas-title"
             eyebrow={areas.overline}
             title={areas.title}
-            subtitle={areas.subtitle(EMERGENCY_CLAIMS.responseTime)}
+            subtitle={areas.subtitle(EMERGENCY_CLAIMS.arrival)}
             subtitleHidden="phone"
             className="lg:col-span-5"
           />

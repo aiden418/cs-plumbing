@@ -98,5 +98,20 @@ export async function sendEmailBestEffort(
 
 export const SMS_TO = process.env.SMS_GATEWAY_TO ?? "";
 
-// Inquiries land in the office inbox unless ADMIN_EMAIL overrides it.
-export const ADMIN_EMAIL = process.env.ADMIN_EMAIL ?? BUSINESS.email;
+/**
+ * Where the office copy of a booking, quote and builder request goes.
+ *
+ * On the live site that is always the shared office inbox (BUSINESS.email).
+ * The ADMIN_EMAIL variable is not read in production: its saved value in
+ * Vercel cannot be read back or checked, and one stale personal address there
+ * would carry every request away from the office without anyone noticing
+ * (2026-11-22, when a former employee's contact details were being removed).
+ * Preview and local builds may still point test mail somewhere else with
+ * ADMIN_EMAIL. Vercel sets VERCEL_ENV on every deployment.
+ */
+export function officeRecipient(env: Record<string, string | undefined> = process.env): string {
+  if (env.VERCEL_ENV === "production") return BUSINESS.email;
+  return env.ADMIN_EMAIL || BUSINESS.email;
+}
+
+export const ADMIN_EMAIL = officeRecipient();

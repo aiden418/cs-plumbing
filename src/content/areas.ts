@@ -11,7 +11,7 @@
 /** /areas/<city> pages (AreaLandingTemplate and its blocks). */
 export const AREA_COPY = {
   hero: {
-    book: "Book a Plumber",
+    book: "Request Service",
     /** Prefix of the call button; the phone number follows. */
     call: "Call",
   },
@@ -69,7 +69,7 @@ export const SERVICE_CITY_COPY = {
   hero: {
     /** Prefix of the call button; the phone number follows. */
     call: "Call Now —",
-    book: "Book Online",
+    book: "Request Service",
     priceLabel: "Typical price range:",
     /** "Serving <city>" then this, then the license number. */
     since: " since 1998 · License #",

@@ -10,6 +10,8 @@ import FaqAccordion from "@/components/ui/FaqAccordion";
 import { ArrowRight, Check, Phone } from "@/components/ui/icons";
 import ServiceRequestForm from "@/components/services/ServiceRequestForm";
 import JobGallery from "@/components/services/JobGallery";
+import LocalJobs from "@/components/services/LocalJobs";
+import { LOCAL_JOB_SECTIONS, localJobsForService } from "@/content/local-jobs";
 import { SERVICE_LANDINGS, AREA_LANDINGS } from "@/lib/constants";
 import { BUSINESS } from "@/lib/business";
 import { INDEXED_LANDINGS } from "@/lib/landing-indexing";
@@ -409,9 +411,16 @@ export default function ServiceLandingTemplate({
     .map((slug) => AREA_LANDINGS.find((a) => a.slug === slug))
     .filter((a): a is (typeof AREA_LANDINGS)[number] => Boolean(a));
 
+  // Jobs shown in full under the header (photo, what the estimate covered,
+  // the request button). The older card for the same job is then left out.
+  const localJobs = localJobsForService(landing.slug);
+  const localJobSection = LOCAL_JOB_SECTIONS[landing.slug];
+  const featured = new Set(localJobs.map((job) => job.replacesCaseStudy).filter(Boolean));
+  const caseStudies = (landing.caseStudies ?? []).filter((cs) => !featured.has(cs.title));
+
   const hasAnswers = Boolean(landing.answerBlocks && landing.answerBlocks.length > 0);
   const hasCost = Boolean(landing.costBreakdown && landing.costBreakdown.length > 0);
-  const hasCases = Boolean(landing.caseStudies && landing.caseStudies.length > 0);
+  const hasCases = caseStudies.length > 0;
   const hasLinks = relatedServices.length > 0 || relatedAreas.length > 0 || cityPages.length > 0;
 
   /** The rest of the hero's lead, word for word, at the top of the first section. */
@@ -466,7 +475,7 @@ export default function ServiceLandingTemplate({
         {COPY.casesAfter}
       </h2>
       <ul className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-6">
-        {landing.caseStudies!.map((cs) => (
+        {caseStudies.map((cs) => (
           <li key={cs.title}>
             <article className="h-full rounded-2xl border border-steel-200 bg-white p-5 sm:p-6">
               <p className="text-xl font-semibold text-fg tabular-nums">{cs.cost}</p>
@@ -478,6 +487,38 @@ export default function ServiceLandingTemplate({
         ))}
       </ul>
     </div>
+  );
+
+  const process = landing.process && (
+    <Chapter id="process-heading" title={landing.process.heading} description={landing.process.lead}>
+      <ol className="border-b border-rule">
+        {landing.process.steps.map((step, i) => (
+          <li key={step.title} className="grid grid-cols-[2rem_1fr] gap-x-3.5 border-t border-rule py-5">
+            <span aria-hidden="true" className="cv-num-disc">
+              {i + 1}
+            </span>
+            <div className="min-w-0">
+              <h3 className="pt-0.5 text-lg leading-snug font-semibold text-fg">{step.title}</h3>
+              <p className="mt-1.5 max-w-[60ch] text-body">{step.body}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+      <div className="mt-6 flex flex-col gap-x-8 gap-y-3 sm:flex-row sm:items-center">
+        <Button href={bookHref} variant="primary" size="lg">
+          {landing.process.cta}
+        </Button>
+        {landing.process.project && (
+          <Link
+            href={landing.process.project.href}
+            className="group inline-flex min-h-11 items-center gap-2 font-semibold text-link underline-offset-[0.2em] hover:underline"
+          >
+            {landing.process.project.label}
+            <ArrowRight className="size-5 shrink-0 transition-transform duration-150 group-hover:translate-x-0.5" />
+          </Link>
+        )}
+      </div>
+    </Chapter>
   );
 
   const links = hasLinks && (
@@ -563,6 +604,7 @@ export default function ServiceLandingTemplate({
     if (landing.highlights.length > 0) blocks.push({ key: "why", labelledBy: "why-heading", node: why(true) });
     if (hasCost) blocks.push({ key: "cost", labelledBy: "cost-heading", node: cost(true) });
   }
+  if (process) blocks.push({ key: "process", labelledBy: "process-heading", node: process });
   if (hasCases) blocks.push({ key: "cases", labelledBy: "cases-heading", node: cases });
 
   const tones = toneSequence([...blocks.map(() => "auto" as const), "auto", "auto", ...(hasLinks ? ["auto" as const] : [])]);
@@ -593,6 +635,17 @@ export default function ServiceLandingTemplate({
           )
         )}
       </PageHero>
+
+      {localJobSection && (
+        <LocalJobs
+          jobs={localJobs}
+          heading={localJobSection.heading}
+          lead={localJobSection.lead}
+          page="service"
+          ctaHref={bookHref}
+          tone="shell"
+        />
+      )}
 
       {blocks.map((block, i) => (
         <Section key={block.key} tone={tones[i].tone} spacing="sm" labelledBy={block.labelledBy}>

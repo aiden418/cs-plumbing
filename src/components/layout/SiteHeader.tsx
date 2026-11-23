@@ -30,7 +30,7 @@ import MobileNavSheet, { MenuButton, TextUsLink } from "./MobileNavSheet";
  * client shells that receive this content as children.
  *
  * Opening contract: data-intro-in marks what the homepage intro holds back
- * (the navigation list, "Get a quote", "Book a Service", the menu button).
+ * (the navigation list, "Get a quote", "Request Service", the menu button).
  * The logo and the Call button never carry it.
  */
 

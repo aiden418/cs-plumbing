@@ -21,6 +21,35 @@ attached). `src/lib/api/attachments.ts` parses either shape; string fields
 go through the same zod schema as before, files are validated and attached
 as base64 (Resend's wire format). Nothing is stored on our side.
 
+## One inquiry, one Lead ID (2026-11-22)
+
+Every form (`/contact` and the inline request forms, `/booking`, the quote
+builder, the UEP estimate form on `/uep-connection-cape-coral`, both builder
+forms) works the same way:
+
+| Step | What happens |
+|---|---|
+| The visitor presses Send | The form makes a submission key once and repeats it on every retry (`newSubmissionKey()` in `src/lib/lead.ts`). A second tap while the first request is on its way does nothing. |
+| The server accepts it | The office email is sent and accepted by Resend. Only then does the answer carry `leadId` (for example `CS-7K3M9Q2X`), `leadType` and `success`. A refused or failed send answers with an error and no ID. |
+| The same key arrives again | The first answer is returned with `duplicate: true` and nothing is sent (`acceptOnce()` in `src/lib/api/lead.ts`; per server instance, 30 minutes). The ID is derived from the key, so even a retry that reaches another instance prints the ID the office already has. |
+| The office email | Subject ends with `[CS-XXXXXXXX]`; the first line gives the request type and the same Lead ID; then the source block for ServiceM8. |
+| The customer | Sees "Request ID CS-XXXXXXXX" on the confirmation screen and in the confirmation email. |
+| Tracking | Counted once per Lead ID, only now (`src/lib/pixel.ts`). Homeowner requests and utility estimates are a `generate_lead` with `lead_type` `homeowner_request` or `utility_estimate`; builder bids are `builder_lead`. Call and Text taps and the coupon button are interactions (`phone_tap`, `text_tap`, `coupon_click`), never leads. |
+
+A request for a preferred time is a lead, not an appointment: the office
+confirms the time. Nothing reports "appointment scheduled" any more.
+
+**Marked test visits.** Open any page with `?cs_test=1` and the rest of that
+browser tab's visit is a test: the request reaches the office with `[TEST]`
+in the subject and a banner at the top, no text message is sent, and it is
+recorded in Google Analytics as `test_lead` only (no lead, no ad conversion).
+Close the tab, or open a page with `?cs_test=0`, to end it.
+
+**Failed delivery, locally.** With `npm run start:capture`, write a number to
+`.resend-capture.fail` (`echo 1 > .resend-capture.fail`) and the next send is
+refused the way Resend refuses one. The form shows its error, no lead is
+counted, and trying again with the same form goes through once.
+
 ## Photo limits and why
 
 `src/lib/photo-upload.ts` is the single source for the limits and is used by

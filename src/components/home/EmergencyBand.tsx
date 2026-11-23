@@ -22,7 +22,7 @@ export default function EmergencyBand() {
               {emergency.title}
             </h2>
             <p className="mt-4 max-w-[52ch] text-[1.0625rem] text-white/90 lg:text-lg">
-              {emergency.body(EMERGENCY_CLAIMS.responseTime)}
+              {emergency.body(EMERGENCY_CLAIMS.arrival)}
             </p>
           </div>
           <div className="lg:col-span-4 lg:col-start-9">

@@ -40,7 +40,7 @@ interface CtaBandProps {
   className?: string;
 }
 
-const DEFAULT_SECONDARY: CtaAction = { label: "Book a Service", href: "/booking" };
+const DEFAULT_SECONDARY: CtaAction = { label: "Request Service", href: "/booking" };
 
 /**
  * The closing band (v2-bright.md "Homepage" 11): brand blue with white words,

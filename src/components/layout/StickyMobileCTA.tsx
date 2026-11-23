@@ -14,8 +14,8 @@ const outline = `${target} border border-steel-300 bg-white text-navy hover:bg-s
 
 /**
  * The phone dock (chrome-and-opening.md section 3; v2-bright.md: a white bar
- * with a top line, Call in blue, Text and Book white with a border): Call,
- * Text and Book, fixed to the bottom below md. The footer reserves its height (--dock-h), and the
+ * with a top line, Call in blue, Text and Request white with a border): Call,
+ * Text and Request (the request-service page), fixed to the bottom below md. The footer reserves its height (--dock-h), and the
  * page's scroll-padding keeps focused elements clear of it.
  *
  * Call tracking: the tel: link has no handler of its own (one document-level
@@ -52,7 +52,7 @@ export default function StickyMobileCTA() {
         </a>
         <Link href="/booking" className={outline}>
           <Calendar className="size-5" />
-          Book
+          Request
         </Link>
       </div>
     </div>
