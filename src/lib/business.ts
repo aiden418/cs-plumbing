@@ -24,6 +24,18 @@ const CITY = "North Fort Myers";
 const STATE = "FL";
 const ZIP = "33903";
 
+/**
+ * Who runs the office, and what each of them handles (Aiden, 2026-11-22).
+ * Both are reached on the company line and the shared office inbox: no
+ * personal numbers or addresses are published. The contact page, the About
+ * team section and llms.txt read this list, so a staffing change is made
+ * here once. Only a first name was supplied for Lonnie.
+ */
+export const OFFICE_CONTACTS = [
+  { name: "Aiden Pellechio", handles: "Estimates, pricing and project questions" },
+  { name: "Lonnie", handles: "Scheduling and routine service follow-up" },
+] as const;
+
 export const BUSINESS = {
   name: "C&S Plumbing",
   fullName: "C&S Plumbing of Lee",

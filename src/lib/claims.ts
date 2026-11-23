@@ -86,17 +86,21 @@ export function licenseLine(variant: "marketing" | "formal"): string {
     : `Licensed & insured — ${LICENSE.company}; co-founder Samuel Pellechio also holds ${LICENSE.founder}`;
 }
 
-const CORE_MINUTES = "30–60 minutes";
-const CORE_CITIES = "Cape Coral, Fort Myers and North Fort Myers";
+/**
+ * Arrival times. Interim wording (Aiden, 2026-11-22). The site used to give
+ * different windows for the same area (30 to 60 minutes here, one to two
+ * hours on the leak page, other figures on some city pages), and dispatch
+ * has confirmed none of them. Until it confirms one, every page uses this
+ * sentence and no page states minutes or hours to arrive. When dispatch
+ * approves a response time, write it here once and the pages follow.
+ */
+const ARRIVAL = "Call the office for current availability and an estimated arrival time.";
 
 export const EMERGENCY_CLAIMS = {
-  /** The minute window for the Lee County core, on its own ("… in 30–60 minutes"). */
-  coreMinutes: CORE_MINUTES,
-  coreCities: CORE_CITIES,
-  /** Lower-case, mid-sentence: "Response time is typically …". */
-  responseTime: `typically ${CORE_MINUTES} in ${CORE_CITIES}; same-day elsewhere`,
-  /** Sentence form. */
-  responseTimeSentence: `Typically ${CORE_MINUTES} in ${CORE_CITIES}; same-day elsewhere.`,
+  /** The sentence, on its own. */
+  arrival: ARRIVAL,
+  /** The same words inside a sentence, after "24/7;" and the like. */
+  arrivalInline: "call the office for current availability and an estimated arrival time",
   afterHoursSurcharge: rangeInline("emergency.afterHoursSurcharge"),
   afterHoursPricing: `After-hours calls (nights, weekends, and holidays) carry a ${rangeInline("emergency.afterHoursSurcharge")} surcharge — always included in the written price you approve before any work begins.`,
 } as const;
@@ -147,7 +151,7 @@ export const SEASON_COPY: Record<
     description:
       "The Coastal Comeback Plan puts a licensed plumber in your home before you unpack — a start-up inspection, a water heater check and a walk of every valve and fixture — and shuts the house down properly when you head north again.",
     teaserEyebrow: "Welcome Back · For SWFL Snowbirds",
-    teaserTitle: "Back in Town? Book the Start-Up Inspection Before the First Shower.",
+    teaserTitle: "Back in Town? Request the Start-Up Inspection Before the First Shower.",
     teaserBody:
       "The Coastal Comeback Plan is our annual snowbird program — a licensed plumber restarts and inspects your Florida home when you return, and shuts it down properly when you leave.",
   },

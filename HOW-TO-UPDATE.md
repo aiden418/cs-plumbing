@@ -210,6 +210,29 @@ November 16, 2026"). After a renewal, open the two record links in
 `activeThrough` there. The About page, the FAQ, the footer link, the Google
 data and `/llms.txt` all follow.
 
+**Who runs the office:** in `src/lib/business.ts`, the short list
+`OFFICE_CONTACTS` (name, and what that person handles). The Contact page, the
+"In the office" block on the About page and `/llms.txt` follow. The team
+portraits on the About page are `TEAM_MEMBERS` in `src/lib/constants.ts`.
+
+**Arrival times:** one sentence, in `src/lib/claims.ts` (`EMERGENCY_CLAIMS`).
+It currently reads "Call the office for current availability and an estimated
+arrival time." because dispatch has not confirmed a response time. When it
+does, write the approved wording there once; the emergency page, the leak
+page, the city pages and `/llms.txt` follow. Never type minutes or hours to
+arrive on a page: `npm test` fails if one appears.
+
+**Cape Coral UEP status:** in `src/lib/uep-status.ts`. Re-read the four city
+pages listed at the top of that file, update the three status sentences and
+set `checkedOn` and `checkedOnLabel` to the day you checked. Both UEP pages
+and `/llms.txt` show that date. Do not write a North 3 start date until the
+city publishes one.
+
+**Job examples (water heaters, tankless, Fort Myers, Cape Coral):** in
+`src/content/local-jobs.ts`. The steps to confirm a job against its record
+and swap in its approved photo are at the top of that file. `npm test` lists
+the jobs that still have open items.
+
 **Hours:** in `src/lib/business.ts`, under `hours`. `open` is the line
 customers read ("Open 24 hours, 7 days a week"). `schema` just below it is the
 same hours as Google reads them (days, `opens`, `closes`). Change both together.

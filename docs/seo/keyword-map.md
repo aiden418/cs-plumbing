@@ -133,6 +133,24 @@ Already automatic for every project page: sitemap entry with `lastmod`, canonica
 
 **Indexing:** not yet requested in Search Console for either URL. Queue them behind `/services/plumbing-remodel` and the area hubs (see §2c; the quota is about 11 a day).
 
+## 2f. Ten-page pass from the 90-day plan (2026-11-22)
+
+Audit window for the plan: Oct 18 – Nov 14, 2026. `/services/water-heaters` had 3 clicks from 3,513 impressions; "water heater installation fort myers fl" 157 impressions and "tankless water heater installation cape coral fl" 127, both with zero clicks. The ten pages were not re-inspected in Search Console before this pass (it is readable only in the owner's signed-in Chrome); inspect them and request indexing after the pass is published, then compare equal 28-day windows.
+
+| Page | What changed |
+|---|---|
+| `/services/water-heaters` | Title "Water Heater Installation in Fort Myers & Cape Coral, FL" (was "Water Heater Repair & Installation \| Fort Myers & Cape Coral"); H1 and opening lead with installation and Fort Myers. Two local jobs under the header (Fort Myers tank replacement, Cape Coral tankless conversion), each with what the estimate covered, a link to its city page and "Request a water-heater estimate". |
+| `/services/tankless-water-heaters` | Title "Tankless Water Heater Installation in Cape Coral & Fort Myers"; H1 and description lead with Cape Coral. The Cape Coral conversion under the header with "Request a tankless water-heater estimate". |
+| `/services/repiping` | New section "What a whole-home repipe opens up" (access, water shutoff, wall openings, restoration), linked to `/projects/residential-repipes`, ending in "Request a repipe walkthrough". |
+| `/areas/cape-coral`, `/areas/fort-myers` | One local job each (tankless conversion; tank replacement) linking to its service page. |
+| `/services/uep-utilities` | Private-side scope, permits, restoration; dates moved to the city page. |
+| `/uep-connection-cape-coral` | Dated status (checked 2026-11-22), the November 2 council decision on North 3 with the city's document linked, how to use the date on a Notice of Availability, and an estimate request that asks for the address and that date. |
+| `/builders` | "Send plans for a bid", both downloads, the estimating contact and a documented project directly under the header. |
+| `/projects/usps-cape-coral-remodel` | Scope in short, the overhead copper repipe and the finished fixtures, from the phase photos; "Send plans for a bid". No closeout yet (not recorded). |
+| `/projects/residential-repipes` | How the pipes were reached, what was opened, restoration; "Request a repipe walkthrough". No city (not recorded). |
+
+Open items that need the office's records are listed in `src/content/local-jobs.ts` (`needs`) and printed by `npm test`.
+
 ## 3. Clusters → owning page
 
 Rule: **one page owns one primary query.** Secondary pages may mention it but must not carry it in the title. Where two pages collide, GSC decides which keeps the query (the one with impressions) and the other is retitled.

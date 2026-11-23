@@ -7,6 +7,8 @@ import PageHero from "@/components/ui/PageHero";
 import Section from "@/components/ui/Section";
 import { ArrowRight, Calendar, Check, MapPin, Phone } from "@/components/ui/icons";
 import CityProofBlock from "@/components/areas/CityProofBlock";
+import LocalJobs from "@/components/services/LocalJobs";
+import { LOCAL_JOB_SECTIONS, localJobsForArea } from "@/content/local-jobs";
 import MoreOnPhones, { splitLead } from "@/components/areas/MoreOnPhones";
 import NeighborhoodList from "@/components/areas/NeighborhoodList";
 import FaqJsonLd from "@/components/seo/FaqJsonLd";
@@ -45,6 +47,9 @@ export default function AreaLandingTemplate({
   const paragraphs = landing.localContext.split("\n\n");
   const hasNeighborhoods = Boolean(landing.neighborhoods && landing.neighborhoods.length > 0);
   const [heroLead, leadRest] = splitLead(landing.description);
+  // A job done in this city, with the service page that offers the same work.
+  const localJobs = localJobsForArea(landing.slug);
+  const localJobSection = LOCAL_JOB_SECTIONS[landing.slug];
 
   return (
     <>
@@ -114,6 +119,18 @@ export default function AreaLandingTemplate({
           </ul>
         </Container>
       </Section>
+
+      {localJobSection && (
+        <LocalJobs
+          jobs={localJobs}
+          heading={localJobSection.heading}
+          lead={localJobSection.lead}
+          page="city"
+          ctaHref={(job) => `/services/${job.primaryService.slug}#request-service`}
+          tone="white"
+          divider
+        />
+      )}
 
       {/* Local context and neighborhoods */}
       <Section tone="shell" spacing="sm" labelledBy="area-local-heading">

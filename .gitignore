@@ -61,6 +61,7 @@ photo-inbox/_generated/
 
 # local form-delivery harness output (npm run start:capture)
 .resend-capture.jsonl
+.resend-capture.fail
 
 # redesign review artifacts (screenshots, snapshots, measurements) — local only
 .redesign/

@@ -32,8 +32,8 @@ export const BLOG_POST = {
   faqHeading: "Frequently Asked Questions",
   help: {
     heading: "Need Help?",
-    body: "Our team is ready to help with any plumbing question or project. Call us or book online.",
-    book: "Book Online",
+    body: "Our team is ready to help with any plumbing question or project. Call us or request service online.",
+    book: "Request Service",
     bookHref: "/booking",
   },
   /** The other guides beside (desktop) or under (phone) the article; words as in RelatedPosts. */
@@ -71,7 +71,7 @@ export const FAQ_PAGE = {
     title: "Still Have",
     accent: "Questions?",
     body: "Our team is happy to answer any plumbing question. Get a free estimate or schedule a service call — we're here to help.",
-    book: { label: "Book a Service", href: "/booking" },
+    book: { label: "Request Service", href: "/booking" },
     quote: { label: "Get an Instant Quote", href: "/quote-builder" },
   },
 } as const;
@@ -80,7 +80,7 @@ export const SERVICE_MAP = {
   overline: "Service Area",
   title: "Where We",
   accent: "Work",
-  book: "Book a Service",
+  book: "Request Service",
   bookHref: "/booking",
   map: {
     src: "https://www.google.com/maps/d/embed?mid=1525gJBVH8SRdUNAF-0nemUswy8DmRjo&ehbc=2E312F",
@@ -105,7 +105,7 @@ export const NOT_FOUND = {
   title: "Oops,",
   accent: "wrong pipe.",
   body: "The page you're looking for doesn't exist or has been moved. Let us help you find what you need.",
-  book: { label: "Book a Service", href: "/booking" },
+  book: { label: "Request Service", href: "/booking" },
   services: { label: "View Services", href: "/services" },
   home: { label: "Go Home", href: "/" },
   contact: { label: "Contact Us", href: "/contact" },

@@ -6,9 +6,9 @@ import NextSteps from "../contact/_parts/NextSteps";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/booking" },
-  title: "Book a Service",
+  title: "Request Service",
   description:
-    "Book your plumbing appointment online. Emergency, residential, commercial and new construction plumbing across Cape Coral, Fort Myers & SWFL.",
+    "Request plumbing service online and ask for a preferred time. Our office calls to confirm. Residential, commercial and new construction plumbing across Cape Coral, Fort Myers & SWFL.",
   keywords: [
     "book plumber Cape Coral",
     "schedule plumbing Fort Myers",
@@ -18,9 +18,9 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     siteName: "C&S Plumbing of Lee",
-    title: "Book a Plumber | C&S Plumbing of Lee",
+    title: "Request Plumbing Service | C&S Plumbing of Lee",
     description:
-      "Book online in under 2 minutes. Emergency, residential & commercial plumbing across Southwest Florida.",
+      "Request service online in under 2 minutes; our office calls to confirm. Residential & commercial plumbing across Southwest Florida.",
     url: "https://www.csplumbinglee.com/booking",
   },
 };
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <>
-      <BreadcrumbJsonLd items={[{ name: "Home", href: "/" }, { name: "Book a Service", href: "/booking" }]} />
+      <BreadcrumbJsonLd items={[{ name: "Home", href: "/" }, { name: "Request Service", href: "/booking" }]} />
       <BookingPage />
       <NextSteps id="booking-next" heading={BOOKING.nextHeading} steps={BOOKING.nextSteps} tone="white" />
     </>

@@ -38,7 +38,7 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
       {
         question: "How do I schedule a plumbing appointment?",
         answer:
-          `You can book online through our website, call us at ${BUSINESS.phone} (${BUSINESS.phoneDigits}), or use our instant quote builder to get a rough estimate before scheduling. We offer same-day and next-day appointments for most services.`,
+          `You can request service through our website, call us at ${BUSINESS.phone} (${BUSINESS.phoneDigits}), or use our instant quote builder to get a rough estimate before scheduling. We offer same-day and next-day appointments for most services.`,
       },
       {
         question: "What forms of payment do you accept?",
@@ -177,7 +177,7 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
       {
         question: "How fast can you respond to a plumbing emergency?",
         answer:
-          `Our emergency team responds ${EMERGENCY_CLAIMS.responseTime}, for burst pipes, sewage backups, gas leaks and active leaks. We are available 24/7, 365 days a year.`,
+          `Our emergency line is answered 24/7, 365 days a year, for burst pipes, sewage backups, gas leaks and active leaks. ${EMERGENCY_CLAIMS.arrival}`,
       },
       {
         question: "Do you charge extra for emergency or after-hours calls?",

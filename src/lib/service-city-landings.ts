@@ -153,7 +153,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       "Water damage doubles every hour. C&S Plumbing responds to Cape Coral emergencies 24/7 with licensed master plumbers who know your canal-lot home inside and out.",
     trustBadges: TRUST_BADGES,
     serviceDescription:
-      `Cape Coral's 400+ miles of navigable canals make it one of the most unique cities in Florida — and one of the most challenging for residential plumbing. Canal-lot homes sit on sandy, water-saturated soil that shifts with the tides and seasonal rains, placing constant stress on underground supply lines and drain pipes. When a pipe fails at 2 AM, the damage compounds fast.\n\nC&S Plumbing of Lee has been the emergency plumber Cape Coral homeowners trust since 1998. Our dispatch team is available around the clock, and because we're based right here in Lee County, our trucks reach most Cape Coral neighborhoods in ${EMERGENCY_CLAIMS.coreMinutes} — whether you're in SW Cape Coral near Surfside or up by Burnt Store Road.\n\nSaltwater intrusion and high chloride levels in Cape Coral's soil accelerate corrosion on copper supply lines, especially in homes built between 1978 and 1995 that may also have polybutylene pipes. These failures don't wait for business hours. A pinhole leak behind a wall can dump hundreds of gallons before you notice the stain on your drywall. Our emergency crews arrive equipped with electronic leak detection, pipe cameras, and the materials to perform same-night repairs.\n\nHurricane season brings its own set of emergencies — from shifting soil that cracks underground lines to storm surge forcing debris into drain systems. C&S has responded to every major storm event in Lee County since Hurricane Charley in 2004, and our crews are trained in post-storm plumbing triage that prioritizes safety and prevents secondary water damage.\n\nWhen you call ${BUSINESS.phone}, you're not getting a call center. You're reaching a family-owned company with Florida Certified Plumbing Contractor license ${BUSINESS.license} and a 5.0 Google rating from 46+ Cape Coral and Fort Myers homeowners. We quote before we start — even at midnight.`,
+      `Cape Coral's 400+ miles of navigable canals make it one of the most unique cities in Florida — and one of the most challenging for residential plumbing. Canal-lot homes sit on sandy, water-saturated soil that shifts with the tides and seasonal rains, placing constant stress on underground supply lines and drain pipes. When a pipe fails at 2 AM, the damage compounds fast.\n\nC&S Plumbing of Lee has been the emergency plumber Cape Coral homeowners trust since 1998. Our dispatch team is available around the clock, and we're based right here in Lee County, so we cover all of Cape Coral — whether you're in SW Cape Coral near Surfside or up by Burnt Store Road. ${EMERGENCY_CLAIMS.arrival}\n\nSaltwater intrusion and high chloride levels in Cape Coral's soil accelerate corrosion on copper supply lines, especially in homes built between 1978 and 1995 that may also have polybutylene pipes. These failures don't wait for business hours. A pinhole leak behind a wall can dump hundreds of gallons before you notice the stain on your drywall. Our emergency crews arrive equipped with electronic leak detection, pipe cameras, and the materials to perform same-night repairs.\n\nHurricane season brings its own set of emergencies — from shifting soil that cracks underground lines to storm surge forcing debris into drain systems. C&S has responded to every major storm event in Lee County since Hurricane Charley in 2004, and our crews are trained in post-storm plumbing triage that prioritizes safety and prevents secondary water damage.\n\nWhen you call ${BUSINESS.phone}, you're not getting a call center. You're reaching a family-owned company with Florida Certified Plumbing Contractor license ${BUSINESS.license} and a 5.0 Google rating from 46+ Cape Coral and Fort Myers homeowners. We quote before we start — even at midnight.`,
     features: [
       {
         title: "45-Minute Average Response",
@@ -188,7 +188,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       {
         question: "How fast can an emergency plumber get to my Cape Coral home?",
         answer:
-          `Response in Cape Coral is ${EMERGENCY_CLAIMS.coreMinutes}. We stage trucks in both the SW and NW quadrants of the city to minimize response times, and our dispatch line at ${BUSINESS.phone} is staffed 24/7/365.`,
+          `${EMERGENCY_CLAIMS.arrival} We stage trucks in both the SW and NW quadrants of the city to minimize response times, and our dispatch line at ${BUSINESS.phone} is staffed 24/7/365.`,
       },
       {
         question: "What counts as a plumbing emergency in Cape Coral?",
@@ -285,7 +285,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       {
         question: "How quickly can you reach a plumbing emergency in Fort Myers?",
         answer:
-          `Response in Fort Myers is ${EMERGENCY_CLAIMS.coreMinutes}. We're headquartered in North Fort Myers and maintain trucks positioned throughout the Fort Myers metro area. Call ${BUSINESS.phone} and our dispatcher will give you an accurate ETA based on current crew locations.`,
+          `${EMERGENCY_CLAIMS.arrival} We're headquartered in North Fort Myers and maintain trucks positioned throughout the Fort Myers metro area. Call ${BUSINESS.phone} and our dispatcher will give you an accurate ETA based on current crew locations.`,
       },
       {
         question: "Do older Fort Myers homes need different emergency plumbing care?",
@@ -2442,7 +2442,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       {
         question: "How fast can you get to a plumbing emergency in Bonita Springs?",
         answer:
-          `Emergency response is ${EMERGENCY_CLAIMS.responseTime}. We maintain truck coverage in the southern Lee County area so Bonita Springs calls are dispatched promptly, and our dispatch line at ${BUSINESS.phone} is staffed 24/7/365. Your dispatcher will give you an accurate ETA when you call.`,
+          `${EMERGENCY_CLAIMS.arrival} We maintain truck coverage in the southern Lee County area so Bonita Springs calls are dispatched promptly, and our dispatch line at ${BUSINESS.phone} is staffed 24/7/365. Your dispatcher will give you an accurate ETA when you call.`,
       },
       {
         question: "Do you handle condo plumbing emergencies in Bonita Springs?",
@@ -2700,7 +2700,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       "Got your UEP notice? C&S Plumbing handles the entire customer-side connection — water service, irrigation, sewer lateral, and septic abandonment — with permits pulled and pricing quoted per foot before we dig.",
     trustBadges: TRUST_BADGES,
     serviceDescription:
-      `Cape Coral's Utilities Extension Project (UEP) is the largest municipal utilities expansion in Southwest Florida, and if you own a home in one of the active expansion areas, the letter from the city eventually lands in your mailbox: city water and sewer have reached your street, and you have ${UEP_STATUS.connectionWindowDays} days from that Notice of Availability to connect, using a City of Cape Coral licensed plumber. The city's contractors install the mains, meters, and stubs in the right-of-way — but everything from the property line to your house is on you. That customer-side connection is exactly what C&S Plumbing has specialized in through phase after phase of the UEP.\n\nThe scope is bigger than most homeowners expect. A complete UEP conversion typically means a new water service line from the city meter to your home (${perFoot("uep.waterPerFt")}), an optional separate irrigation line from the irrigation meter (${perFoot("uep.irrigationPerFt")}) so your sprinklers don't run on metered potable water, a sewer lateral from your house to the city stub (${perFoot("uep.sewerPerFt")} depending on distance and depth), and pump-out and code-compliant abandonment of your old septic tank (${money(price("uep.septicAbandon").min)}). Each piece needs its own permit and inspection through the City of Cape Coral, and the water connection requires you to list a licensed plumber with Cape Coral Utilities before the meter goes live. We handle all of it — permits, utility coordination, trenching, connection, testing, and final inspection.\n\nBecause we've connected homes across the completed southwest phases and the northern expansion areas, we know the practical details that make the difference: how to route a trench around mature landscaping and concrete driveways, why capping the well correctly matters if you keep it for irrigation, and how to plan the sewer lateral's grade on Cape Coral's flat lots so it drains properly for the next fifty years. The northern UEP areas — North 1, North 2, and the phases still to come around Gator Circle and the Jacaranda and Diplomat corridors — have some of the longest lot-to-main runs in the city, which makes per-foot pricing and an accurate site measurement essential before you sign anything.\n\nWhere the UEP stands as of ${UEP_STATUS.checkedOnLabel}, per the City of Cape Coral: ${UEP_STATUS.summary} If your Notice of Availability has arrived, the clock is already running — calling early in the window, before every plumber in town is booked with your neighbors, is the difference between a scheduled job and a deadline scramble.\n\nOne thing we tell every UEP customer upfront: the city's assessments and impact fees are billed by the city, not the plumber. Our quote covers the plumbing scope, in writing, before the first shovel hits the ground. The installation itself typically takes 1–3 days once permits are issued and your meter is set.\n\nC&S Plumbing of Lee is family-owned, based just across the river in North Fort Myers, and licensed under ${BUSINESS.license}. We've built and connected thousands of homes in Cape Coral's soil since 1998. If your neighborhood is in an active UEP phase — or you want to connect voluntarily before the deadline crunch — call ${BUSINESS.phone} for a free on-site estimate.`,
+      `Cape Coral's Utilities Extension Project (UEP) is the largest municipal utilities expansion in Southwest Florida, and if you own a home in one of the active expansion areas, the letter from the city eventually lands in your mailbox: city water and sewer have reached your street, and you have ${UEP_STATUS.connectionWindowDays} days from the date printed on that Notice of Availability to connect, using a City of Cape Coral licensed plumber. The city's contractors install the mains, meters, and stubs in the right-of-way — but everything from the property line to your house is on you. That customer-side connection is exactly what C&S Plumbing has specialized in through phase after phase of the UEP.\n\nThe scope is bigger than most homeowners expect. A complete UEP conversion typically means a new water service line from the city meter to your home (${perFoot("uep.waterPerFt")}), an optional separate irrigation line from the irrigation meter (${perFoot("uep.irrigationPerFt")}) so your sprinklers don't run on metered potable water, a sewer lateral from your house to the city stub (${perFoot("uep.sewerPerFt")} depending on distance and depth), and pump-out and code-compliant abandonment of your old septic tank (${money(price("uep.septicAbandon").min)}). Each piece needs its own permit and inspection through the City of Cape Coral, and the water connection requires you to list a licensed plumber with Cape Coral Utilities before the meter goes live. We handle all of it — permits, utility coordination, trenching, connection, testing, and final inspection.\n\nBecause we've connected homes across the completed southwest phases and the northern expansion areas, we know the practical details that make the difference: how to route a trench around mature landscaping and concrete driveways, why capping the well correctly matters if you keep it for irrigation, and how to plan the sewer lateral's grade on Cape Coral's flat lots so it drains properly for the next fifty years. The northern UEP areas — North 1, North 2, and the phases still to come around Gator Circle and the Jacaranda and Diplomat corridors — have some of the longest lot-to-main runs in the city, which makes per-foot pricing and an accurate site measurement essential before you sign anything.\n\nWhere the UEP stands as of ${UEP_STATUS.checkedOnLabel}, per the City of Cape Coral: ${UEP_STATUS.summary} If your Notice of Availability has arrived, the clock is already running — calling early in the window, before every plumber in town is booked with your neighbors, is the difference between a scheduled job and a deadline scramble.\n\nOne thing we tell every UEP customer upfront: the city's assessments and impact fees are billed by the city, not the plumber. Our quote covers the plumbing scope, in writing, before the first shovel hits the ground. The installation itself typically takes 1–3 days once permits are issued and your meter is set.\n\nC&S Plumbing of Lee is family-owned, based just across the river in North Fort Myers, and licensed under ${BUSINESS.license}. We've built and connected thousands of homes in Cape Coral's soil since 1998. If your neighborhood is in an active UEP phase — or you want to connect voluntarily before the deadline crunch — call ${BUSINESS.phone} for a free on-site estimate.`,
     features: [
       {
         title: "Complete Customer-Side Connection",
@@ -2744,7 +2744,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       {
         question: "Do I have to connect when the UEP reaches my Cape Coral street?",
         answer:
-          `Yes. Once city water and sewer are available to your property, the city mails a Notice of Availability and you have ${UEP_STATUS.connectionWindowDays} days to connect, using a City of Cape Coral licensed plumber who pulls the permits. Septic systems must be properly abandoned once you're on city sewer. Connecting early in your window — before every plumber in town is booked with your neighbors — almost always means better scheduling and less stress than a deadline scramble.`,
+          `Yes. Once city water and sewer are available to your property, the city mails a Notice of Availability and you have ${UEP_STATUS.connectionWindowDays} days from the date on that letter to connect, using a City of Cape Coral licensed plumber who pulls the permits. Septic systems must be properly abandoned once you're on city sewer. Connecting early in your window — before every plumber in town is booked with your neighbors — almost always means better scheduling and less stress than a deadline scramble.`,
       },
       {
         question: "How much does a UEP connection cost in Cape Coral?",
@@ -2769,7 +2769,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       {
         question: "Which Cape Coral UEP areas are active right now?",
         answer:
-          `${UEP_STATUS.summary} That is the City of Cape Coral's published status as of ${UEP_STATUS.checkedOnLabel}; check the city's UEP pages or call us for the latest on your street.`,
+          `${UEP_STATUS.summary} That is what the City of Cape Coral's own pages and council summaries said when we last checked them, on ${UEP_STATUS.checkedOnLabel}; the city's UEP pages have the latest for your street.`,
       },
       {
         question: "Which UEP areas do you serve?",
@@ -2819,7 +2819,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       {
         title: "Home-Territory Response Times",
         description:
-          "Headquartered on Pondella Rd, we reach most North Fort Myers emergencies in 20–30 minutes — often faster than anyone can reach anywhere else.",
+          `We are headquartered on Pondella Rd, so North Fort Myers is our home base. ${EMERGENCY_CLAIMS.arrival}`,
       },
       {
         title: "Cast Iron & Older-Home Expertise",
@@ -2858,7 +2858,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       {
         question: "How fast can you reach an emergency in North Fort Myers?",
         answer:
-          `Faster here than anywhere — North Fort Myers is our home base. Our shop is at 951 Pondella Road, so response is ${EMERGENCY_CLAIMS.coreMinutes} and often quicker in neighborhoods off Hancock Bridge Parkway, Pondella, and Bayshore Road. Call ${BUSINESS.phone} and dispatch will give you a live ETA.`,
+          `Faster here than anywhere — North Fort Myers is our home base. Our shop is at 951 Pondella Road, close to the neighborhoods off Hancock Bridge Parkway, Pondella, and Bayshore Road. ${EMERGENCY_CLAIMS.arrival} Call ${BUSINESS.phone} and dispatch will give you a live ETA.`,
       },
       {
         question: "Do you handle plumbing emergencies in mobile and manufactured homes?",
@@ -3746,7 +3746,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       {
         question: "How fast can you respond to a leak in Estero?",
         answer:
-          `Active leaks are treated as priority calls, and we typically reach Estero homes within the hour from our Lee County dispatch. For suspected slab leaks that aren't actively flooding, we usually schedule detection within 24 hours. Either way, call ${BUSINESS.phone} and we'll walk you through shutting off the main water valve over the phone to stop the damage immediately.`,
+          `Active leaks are treated as priority calls. ${EMERGENCY_CLAIMS.arrival} For suspected slab leaks that aren't actively flooding, we usually schedule detection within 24 hours. Either way, call ${BUSINESS.phone} and we'll walk you through shutting off the main water valve over the phone to stop the damage immediately.`,
       },
       {
         question: "How much does leak detection and repair cost in Estero?",
@@ -4039,7 +4039,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       {
         question: "How quickly can you respond to a leak in Bonita Springs?",
         answer:
-          `Active leaks are treated with urgency — emergency response is ${EMERGENCY_CLAIMS.responseTime}; suspected hidden leaks that aren't actively flooding are same-day or next-day. If water is actively flowing, shut off your main valve and call ${BUSINESS.phone}; our dispatcher will walk you through it and give you a real ETA.`,
+          `Active leaks are treated with urgency. ${EMERGENCY_CLAIMS.arrival} Suspected hidden leaks that aren't actively flooding are same-day or next-day. If water is actively flowing, shut off your main valve and call ${BUSINESS.phone}; our dispatcher will walk you through it and give you a real ETA.`,
       },
       {
         question: "How much does leak detection and repair cost in Bonita Springs?",
@@ -4111,7 +4111,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       {
         title: "Honest Response Times",
         description:
-          "We reach most of Port Charlotte in 30–45 minutes from North Fort Myers — and we tell you the real ETA, not a sales pitch.",
+          `We come to Port Charlotte from North Fort Myers, and we tell you the real ETA, not a sales pitch. ${EMERGENCY_CLAIMS.arrival}`,
       },
       {
         title: "Aging-Pipe Expertise",
@@ -4233,7 +4233,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       {
         question: "How fast can you fix a water heater in Port Charlotte?",
         answer:
-          `No hot water is a priority call — most Port Charlotte repairs are handled same-day or next-day, with our trucks reaching most of the city in 30–45 minutes from North Fort Myers. Full replacements are typically installed within the same week, and often within a day or two if your old tank is actively leaking. Call ${BUSINESS.phone} for a realistic timeline.`,
+          `No hot water is a priority call — most Port Charlotte repairs are handled same-day or next-day. ${EMERGENCY_CLAIMS.arrival} Full replacements are typically installed within the same week, and often within a day or two if your old tank is actively leaking. Call ${BUSINESS.phone} for a realistic timeline.`,
       },
       {
         question: "How much does water heater replacement cost in Port Charlotte?",
@@ -4915,7 +4915,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       {
         question: "How fast can you clear a clogged drain in Punta Gorda?",
         answer:
-          `Most Punta Gorda drain calls are reached the same day, and our crews arrive from Lee County typically within an hour via US-41 or I-75. A standard single-drain clog is usually cleared in one visit — we carry cable machines, jetting equipment, and cameras on the truck, so there's no second trip to finish the job. Call ${BUSINESS.phone} to get on the schedule.`,
+          `Most Punta Gorda drain calls are reached the same day, and our crews come up from Lee County via US-41 or I-75. ${EMERGENCY_CLAIMS.arrival} A standard single-drain clog is usually cleared in one visit — we carry cable machines, jetting equipment, and cameras on the truck, so there's no second trip to finish the job. Call ${BUSINESS.phone} to get on the schedule.`,
       },
       {
         question: "How much does drain cleaning cost in Punta Gorda?",
@@ -5012,7 +5012,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       {
         question: "How quickly can you get to a leak in Punta Gorda?",
         answer:
-          `Active leaks are prioritized, and we typically reach Punta Gorda within an hour from our Lee County base — PGI, Burnt Store Isles, and the Historic District are all a straight run up US-41 or I-75. If water is actively flowing, call ${BUSINESS.phone} and our dispatcher will walk you through shutting off your main valve while a truck heads your way.`,
+          `Active leaks are prioritized — PGI, Burnt Store Isles, and the Historic District are all a straight run up US-41 or I-75 from our Lee County base. ${EMERGENCY_CLAIMS.arrival} If water is actively flowing, call ${BUSINESS.phone} and our dispatcher will walk you through shutting off your main valve while a truck heads your way.`,
       },
       {
         question: "How much does leak repair cost in Punta Gorda?",
@@ -5303,7 +5303,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
       {
         question: "How fast do you respond to commercial plumbing emergencies in Cape Coral?",
         answer:
-          `Commercial calls get priority dispatch because downtime costs revenue. Our trucks reach most Cape Coral commercial corridors — Pine Island Road, Del Prado, downtown 47th Terrace — in ${EMERGENCY_CLAIMS.coreMinutes}, and maintenance contract customers move to the front of the queue. Call ${BUSINESS.phone} and tell the dispatcher you're a business; we'll give you a real ETA on the spot.`,
+          `Commercial calls get priority dispatch because downtime costs revenue. We cover Cape Coral's commercial corridors — Pine Island Road, Del Prado, downtown 47th Terrace — and maintenance contract customers move to the front of the queue. ${EMERGENCY_CLAIMS.arrival} Call ${BUSINESS.phone} and tell the dispatcher you're a business; we'll give you a real ETA on the spot.`,
       },
       {
         question: "How is commercial plumbing work priced?",

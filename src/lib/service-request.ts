@@ -14,6 +14,16 @@ export const serviceRequestSchema = z.object({
   source: z.string().max(40).optional(),
   sourcePath: z.string().max(200).optional(),
   website: z.string().optional(),
+  // City utility (UEP) connection estimates: where the property is, the date
+  // printed on the city's Notice of Availability, and what is being connected.
+  address: z.string().trim().max(300).optional(),
+  noticeDate: z.string().trim().max(40).optional(),
+  utilities: z.string().trim().max(160).optional(),
+  connectionStatus: z.string().trim().max(160).optional(),
+  // One per filled-in form, repeated on every retry (src/lib/lead.ts).
+  submissionKey: z.string().max(64).optional(),
+  // A marked test visit (?cs_test=1). JSON sends a boolean, multipart a string.
+  test: z.union([z.boolean(), z.string().max(8)]).optional(),
 });
 
 export const SERVICE_REQUEST_OPTIONS = [
@@ -26,5 +36,6 @@ export const SERVICE_REQUEST_OPTIONS = [
   ["commercial", "Commercial Plumbing"],
   ["new-construction", "New Construction"],
   ["remodel", "Remodeling"],
+  ["uep", "City Utility (UEP) Connection"],
   ["other", "Other"],
 ] as const;

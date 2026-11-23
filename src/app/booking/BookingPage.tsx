@@ -23,7 +23,8 @@ import {
 } from "@/components/forms";
 import { BUSINESS } from "@/lib/business";
 import { cn } from "@/lib/utils";
-import { trackBooking, trackEstimateRequest } from "@/lib/pixel";
+import { trackEstimateRequest, trackPreferredTimeRequest } from "@/lib/pixel";
+import { isTestVisit, newSubmissionKey, type AcceptedLead } from "@/lib/lead";
 import { localIsoDate } from "@/lib/local-date";
 import useLocationSearch from "@/hooks/useLocationSearch";
 import { BOOKING } from "@/content/conversion";
@@ -125,6 +126,10 @@ export default function BookingPage() {
   const [errors, setErrors] = useState<Errors>({});
   const headingRef = useRef<HTMLHeadingElement>(null);
   const doneRef = useRef<HTMLDivElement>(null);
+  // A second tap while the first request is on its way does nothing, and a
+  // retry repeats the same key, so the office gets one request and one ID.
+  const busy = useRef(false);
+  const submissionKey = useRef<string | null>(null);
   const [form, setForm] = useState<FormData>({
     requestType: "booking",
     service: "",
@@ -208,14 +213,22 @@ export default function BookingPage() {
   };
 
   const handleSubmit = async () => {
+    if (busy.current) return;
     const sizeError = photoTotalError(photos);
     if (sizeError) {
       setSubmitError(sizeError);
       return;
     }
+    busy.current = true;
     setSubmitting(true);
     try {
-      const payload = { ...form, sourcePath: window.location.pathname };
+      const test = isTestVisit();
+      const payload = {
+        ...form,
+        sourcePath: window.location.pathname,
+        submissionKey: (submissionKey.current ??= newSubmissionKey()),
+        ...(test ? { test: true } : {}),
+      };
       // Photos ride along as multipart; without them the payload stays JSON.
       const res = photos.length > 0
         ? await fetch("/api/booking", {
@@ -232,10 +245,8 @@ export default function BookingPage() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload),
           });
-      const data: {
-        success?: boolean;
+      const data: Partial<AcceptedLead> & {
         confirmationId?: string;
-        eventId?: string;
         error?: string;
         code?: string;
       } = await res
@@ -245,8 +256,9 @@ export default function BookingPage() {
         throw Object.assign(new Error(data.error ?? "Submission failed"), { code: data.code });
       }
       if (data.confirmationId) setConfirmationId(data.confirmationId);
-      const track = form.requestType === "estimate" ? trackEstimateRequest : trackBooking;
-      void track({ email: form.email, eventId: data.eventId });
+      // Counted only now, with the Lead ID of the request the office received.
+      const track = form.requestType === "estimate" ? trackEstimateRequest : trackPreferredTimeRequest;
+      void track({ email: form.email, eventId: data.eventId, leadType: data.leadType, test: data.test });
       // Only show the confirmation screen once the server has accepted the request.
       setStep(totalSteps);
       requestAnimationFrame(() => doneRef.current?.focus());
@@ -255,6 +267,7 @@ export default function BookingPage() {
       const attachmentIssue = (err as { code?: string }).code === "attachments" && err instanceof Error;
       setSubmitError(attachmentIssue ? err.message : BOOKING.submitError);
     } finally {
+      busy.current = false;
       setSubmitting(false);
     }
   };
@@ -486,6 +499,7 @@ export default function BookingPage() {
                   {isScheduleStep && (
                     <div className="space-y-7">
                       <StepHeading headingRef={headingRef}>{BOOKING.scheduleHeading}</StepHeading>
+                      <p className="-mt-3 max-w-[56ch] text-body">{BOOKING.scheduleNote}</p>
                       <OptionGroup id="booking-date" legend={BOOKING.dateLegend} error={errors.date} columns={3}>
                         {dates.map((d) => (
                           <OptionCard

@@ -192,7 +192,7 @@ export const MOBILE_LINKS: NavItem[] = [projects, contact];
 /** The header's fixed actions (the call link comes from BUSINESS). */
 export const NAV_ACTIONS = {
   quote: { label: "Get a quote", short: "Quote", href: "/quote-builder" },
-  book: { label: "Book a Service", href: "/booking" },
+  book: { label: "Request Service", href: "/booking" },
   text: { label: "Text us" },
   call: { label: "Call" },
 } as const;

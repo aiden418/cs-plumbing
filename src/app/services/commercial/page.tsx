@@ -38,7 +38,7 @@ const commercialFaqs = [
   },
   {
     question: "How fast do you respond to commercial plumbing emergencies?",
-    answer: `Our commercial emergency team is available 24/7; response is ${EMERGENCY_CLAIMS.responseTime}. We understand that plumbing emergencies can shut down your business, so we prioritize speed and provide temporary solutions to keep you operating while permanent repairs are made.`,
+    answer: `Our commercial emergency team is available 24/7. ${EMERGENCY_CLAIMS.arrival} We understand that plumbing emergencies can shut down your business, so we prioritize speed and provide temporary solutions to keep you operating while permanent repairs are made.`,
   },
   {
     question: "Do you service restaurants and food service businesses?",

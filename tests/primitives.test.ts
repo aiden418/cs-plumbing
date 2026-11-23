@@ -149,7 +149,7 @@ test("CTASection keeps its words and links", async () => {
   const html = renderToStaticMarkup(createElement(CTASection));
   assert.ok(html.includes("Ready to Get Started?"));
   assert.ok(html.includes("Southwest Florida&#x27;s most trusted plumbing company."));
-  assert.ok(html.includes('href="/booking"') && html.includes("Book a Service"));
+  assert.ok(html.includes('href="/booking"') && html.includes("Request Service"));
   assert.ok(html.includes(`href="${BUSINESS.phoneHref}"`) && html.includes(`Call ${BUSINESS.phone}`));
   assert.ok(html.includes("Free estimates · No hidden fees · Satisfaction guaranteed"));
   // Version 2: the closing band is brand blue (class cta-band), not ink.

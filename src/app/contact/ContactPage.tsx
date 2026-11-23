@@ -5,7 +5,7 @@ import PageHero from "@/components/ui/PageHero";
 import Section from "@/components/ui/Section";
 import { ArrowUpRight, Phone } from "@/components/ui/icons";
 import ServiceRequestForm from "@/components/services/ServiceRequestForm";
-import { BUSINESS } from "@/lib/business";
+import { BUSINESS, OFFICE_CONTACTS } from "@/lib/business";
 import { CONTACT } from "@/content/conversion";
 import NextSteps from "./_parts/NextSteps";
 
@@ -68,6 +68,17 @@ export default function ContactPage() {
                   <a href={`mailto:${BUSINESS.email}`} className={`${linkClass} break-all`}>
                     {BUSINESS.email}
                   </a>
+                </DetailRow>
+                <DetailRow label={CONTACT.peopleLabel}>
+                  <ul className="space-y-1.5 sm:pt-2">
+                    {OFFICE_CONTACTS.map((person) => (
+                      <li key={person.name}>
+                        <span className="font-semibold text-fg">{person.name}</span>
+                        <span className="block text-body">{person.handles}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="mt-2 text-[0.9375rem] text-muted">{CONTACT.peopleNote}</p>
                 </DetailRow>
                 <DetailRow label={CONTACT.officeLabel}>
                   <p className="font-semibold text-fg sm:pt-2">

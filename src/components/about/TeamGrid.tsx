@@ -3,6 +3,7 @@ import Frame from "@/components/ui/Frame";
 import Section from "@/components/ui/Section";
 import SectionHeading from "@/components/ui/SectionHeading";
 import { TEAM_MEMBERS } from "@/lib/constants";
+import { BUSINESS, OFFICE_CONTACTS } from "@/lib/business";
 import { image } from "@/lib/media";
 import { ABOUT_TEAM } from "@/content/about";
 
@@ -46,6 +47,33 @@ export default function TeamGrid() {
             );
           })}
         </ul>
+
+        {/* Who answers the office line, and what each of them handles. */}
+        <div className="mt-10 grid grid-cols-1 gap-y-5 border-t border-rule pt-8 lg:grid-cols-12 lg:gap-x-10">
+          <div className="lg:col-span-4">
+            <h3 className="text-display-sm text-fg">{ABOUT_TEAM.office.heading}</h3>
+            <p className="mt-3 max-w-[40ch] text-body">{ABOUT_TEAM.office.lead}</p>
+          </div>
+          <div className="min-w-0 lg:col-span-8">
+            <dl className="grid grid-cols-1 border-b border-rule sm:grid-cols-2 sm:gap-x-10">
+              {OFFICE_CONTACTS.map((person) => (
+                <div key={person.name} className="-mb-px border-y border-rule py-4">
+                  <dt className="text-xl font-semibold text-fg">{person.name}</dt>
+                  <dd className="mt-1 text-body">{person.handles}</dd>
+                </div>
+              ))}
+            </dl>
+            <p className="mt-4 text-body">
+              <a href={BUSINESS.phoneHref} className="font-semibold text-link underline underline-offset-[0.2em]">
+                {BUSINESS.phone}
+              </a>
+              <span aria-hidden="true"> · </span>
+              <a href={`mailto:${BUSINESS.email}`} className="font-semibold text-link underline underline-offset-[0.2em] break-all">
+                {BUSINESS.email}
+              </a>
+            </p>
+          </div>
+        </div>
       </Container>
     </Section>
   );

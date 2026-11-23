@@ -111,7 +111,7 @@ export default function Page() {
                     Entries closed at {GIVEAWAY.endsLabelLong}. Need a water heater looked at now?
                   </p>
                   <div className="mt-5 flex flex-col gap-3 sm:flex-row">
-                    <Button href="/booking">Book a free estimate</Button>
+                    <Button href="/booking">Request a free estimate</Button>
                     <Button href={BUSINESS.phoneHref} variant="secondary" icon={<Phone className="size-5" />}>
                       {`Call ${BUSINESS.phone}`}
                     </Button>

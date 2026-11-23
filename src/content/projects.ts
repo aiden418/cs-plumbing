@@ -11,7 +11,7 @@
 export const PROJECTS_ACTIONS = {
   /** Followed by BUSINESS.phone. */
   call: "Call",
-  book: { label: "Book a Service", href: "/booking" },
+  book: { label: "Request Service", href: "/booking" },
 } as const;
 
 /** /projects */

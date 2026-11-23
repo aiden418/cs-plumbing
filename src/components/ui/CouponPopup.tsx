@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { X } from "@/components/ui/icons";
 import Link from "next/link";
 import { buttonClasses } from "@/components/ui/Button";
-import { trackEvent } from "@/lib/pixel";
+import { trackCouponClick, trackEvent } from "@/lib/pixel";
 import { GIVEAWAY, isGiveawayOpen } from "@/lib/giveaway";
 
 const STORAGE_KEY = "cs-coupon-seen";
@@ -17,6 +17,12 @@ const GIVEAWAY_STORAGE_KEY = "cs-giveaway-seen";
 const GIVEAWAY_REARM_DAYS = 7;
 /** The giveaway card does not wait for exit intent or half a page of scroll. */
 const GIVEAWAY_DELAY_MS = 5000;
+/**
+ * On phones the card sits over the bottom half of the screen, which is where
+ * a page's first Call and Request buttons are. It therefore also waits until
+ * the visitor has scrolled this share of a screen, so it never covers them.
+ */
+const PHONE_CLEAR_OF_FIRST_SCREEN = 0.6;
 
 // Never interrupt someone with a burst pipe or someone already converting.
 const SUPPRESSED_PATHS = ["/emergency", "/booking", "/contact", "/quote-builder", "/water-heater-giveaway"];
@@ -125,14 +131,28 @@ export default function CouponPopup() {
     };
 
     const isCoarse = window.matchMedia("(pointer: coarse)").matches;
-    const timer = giveaway ? window.setTimeout(fire, GIVEAWAY_DELAY_MS) : undefined;
+    // The giveaway: after a few seconds. On a phone, also only once the
+    // first screen's own buttons have been scrolled out from under the card.
+    let delayOver = false;
+    const giveawayWhenClear = () => {
+      if (!delayOver) return;
+      if (isCoarse && window.scrollY < window.innerHeight * PHONE_CLEAR_OF_FIRST_SCREEN) return;
+      fire();
+    };
+    const timer = giveaway
+      ? window.setTimeout(() => {
+          delayOver = true;
+          giveawayWhenClear();
+        }, GIVEAWAY_DELAY_MS)
+      : undefined;
     const cleanup = () => {
       document.removeEventListener("mouseout", onMouseOut);
       window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("scroll", giveawayWhenClear);
       if (timer !== undefined) window.clearTimeout(timer);
     };
     if (isCoarse) {
-      window.addEventListener("scroll", onScroll, { passive: true });
+      window.addEventListener("scroll", giveaway ? giveawayWhenClear : onScroll, { passive: true });
     } else {
       document.addEventListener("mouseout", onMouseOut);
     }
@@ -215,12 +235,14 @@ export default function CouponPopup() {
               <Link
                 href="/booking"
                 onClick={() => {
-                  trackEvent("Lead", { content_name: "Coupon Popup CTA" });
+                  // A click on the coupon is interest, not an inquiry: the lead
+                  // is counted when the office receives the request form.
+                  trackCouponClick();
                   dismiss();
                 }}
                 className={buttonClasses({ variant: "primary", size: "md", fullWidth: true })}
               >
-                Book Now &amp; Save $50
+                Request Service &amp; Save $50
               </Link>
             </div>
             )}

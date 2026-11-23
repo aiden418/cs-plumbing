@@ -183,6 +183,17 @@ export interface ServiceLanding {
   relatedAreas?: string[];
   costBreakdown?: CostRow[];
   caseStudies?: { title: string; location: string; cost: string; summary: string }[];
+  /**
+   * What the work involves in the customer's home, step by step, with the
+   * documented job that shows it and the request it ends in.
+   */
+  process?: {
+    heading: string;
+    lead: string;
+    steps: { title: string; body: string }[];
+    project?: { href: string; label: string };
+    cta: string;
+  };
   answerBlocks?: AnswerBlock[];
 }
 
@@ -390,6 +401,14 @@ export interface CompletedProject {
   permits?: string[];
   /** Bullet list — materials / brands installed. */
   materials?: string[];
+  /**
+   * Short titled paragraphs in the case study: a scope summary, how the crew
+   * got to the pipes, what restoration included, the closeout. Each one must
+   * be a fact from the job record or something the photos show.
+   */
+  notes?: { title: string; text: string }[];
+  /** The request this project leads to (a button under the case study). */
+  request?: { label: string; href: string };
   /**
    * ISO date (YYYY-MM-DD) the job was closed out. Marks the project complete
    * regardless of `timeline`, prints as "Completed May 2025" on the page,

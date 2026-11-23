@@ -10,6 +10,7 @@
  */
 
 import { LATEST_AWARD } from "@/lib/awards";
+import { OFFICE_CONTACTS } from "@/lib/business";
 
 /* ---------------------------------------------------------------- About -- */
 
@@ -24,7 +25,7 @@ export const ABOUT_HERO = {
   /** "Call {phone}": the first button of the hero (the number comes from @/lib/business). */
   callLabel: "Call",
   primaryAction: { label: "Meet the Family", href: "#team" },
-  secondaryAction: { label: "Book a Service", href: "/booking" },
+  secondaryAction: { label: "Request Service", href: "/booking" },
   /** Prefix of the award line under the actions ("Voted Best Plumbing Contractor"). */
   awardVotedPrefix: "Voted",
 } as const;
@@ -122,6 +123,11 @@ export const ABOUT_TEAM = {
   overline: "Our Team",
   title: "Meet the People Behind Every Job",
   subtitle: "The family and crew keeping Southwest Florida flowing.",
+  /** Under the portraits: who runs the office (OFFICE_CONTACTS in src/lib/business.ts). */
+  office: {
+    heading: "In the office",
+    lead: `${OFFICE_CONTACTS.map((person) => person.name.split(" ")[0]).join(" and ")} run the office. Call or email and ask for either of them.`,
+  },
 } as const;
 
 export const ABOUT_CREDENTIALS = {

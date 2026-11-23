@@ -12,7 +12,7 @@ export const EMERGENCY_FAQS: FAQ[] = [
   },
   {
     question: "How fast can you actually get here?",
-    answer: `Response time is ${EMERGENCY_CLAIMS.responseTime} across our Lee County core — Cape Coral, Fort Myers, and North Fort Myers — where trucks are staged. Farther areas like Naples, Punta Gorda, and Sanibel can run toward the top of that window depending on time of night and bridge traffic.`,
+    answer: `It depends on where our crews are when you call and how far you are from our North Fort Myers office. ${EMERGENCY_CLAIMS.arrival}`,
   },
   {
     question: "Do you charge extra for nights, weekends, or holidays?",

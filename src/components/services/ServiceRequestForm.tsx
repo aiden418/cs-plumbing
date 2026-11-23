@@ -6,6 +6,7 @@ import { useId, useRef, useState } from "react";
 import { BUSINESS } from "@/lib/business";
 import { serviceRequestSchema, SERVICE_REQUEST_OPTIONS } from "@/lib/service-request";
 import { trackContactForm } from "@/lib/pixel";
+import { isTestVisit, newSubmissionKey, type AcceptedLead } from "@/lib/lead";
 import FileUpload from "@/components/builder-portal/FileUpload";
 import { Field, FormattedInput, FormPanel, FormStatus, Select, SubmitRow, Textarea } from "@/components/forms";
 import { cn } from "@/lib/utils";
@@ -45,9 +46,13 @@ export default function ServiceRequestForm({
 }) {
   const id = useId();
   const busy = useRef(false);
+  // One key for this filled-in form, repeated on every retry, so the office
+  // gets one request and one Lead ID however many times Send is pressed.
+  const submissionKey = useRef<string | null>(null);
   const statusRef = useRef<HTMLDivElement>(null);
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
+  const [requestId, setRequestId] = useState("");
   const [error, setError] = useState("");
   const [errors, setErrors] = useState<Errors>({});
   const [photoError, setPhotoError] = useState("");
@@ -60,10 +65,13 @@ export default function ServiceRequestForm({
     if (busy.current) return;
     const form = event.currentTarget;
     const fields = Object.fromEntries(new FormData(form));
+    const test = isTestVisit();
     const parsed = serviceRequestSchema.safeParse({
       ...fields,
       source,
       sourcePath: window.location.pathname,
+      submissionKey: (submissionKey.current ??= newSubmissionKey()),
+      ...(test ? { test: true } : {}),
     });
     const found = fieldErrors(form, parsed.success ? [] : parsed.error.issues);
     if (!parsed.success || Object.keys(found).length > 0) {
@@ -104,13 +112,22 @@ export default function ServiceRequestForm({
           body: JSON.stringify(parsed.data),
         });
       }
-      const result = await response.json();
+      const result: Partial<AcceptedLead> & { error?: string; code?: string } = await response
+        .json()
+        .catch(() => ({}));
       if (!response.ok || !result.success) {
         throw Object.assign(new Error(result.error ?? "Submission failed"), { code: result.code });
       }
+      setRequestId(result.leadId ?? "");
       setSent(true);
       focusStatus();
-      void trackContactForm({ email: parsed.data.email, eventId: result.eventId });
+      // Counted only now, with the Lead ID of the request the office received.
+      void trackContactForm({
+        email: parsed.data.email,
+        eventId: result.eventId,
+        leadType: result.leadType,
+        test: result.test,
+      });
     } catch (err) {
       // Attachment problems are explained by the server in customer-facing words.
       const attachmentIssue = (err as { code?: string }).code === "attachments" && err instanceof Error;
@@ -147,6 +164,11 @@ export default function ServiceRequestForm({
         title="Request sent!"
       >
         <p>Our office will contact you using the details you provided. {CLAIMS.bookingConfirmation} Your appointment is confirmed only after we contact you.</p>
+        {requestId && (
+          <p className="mt-3">
+            Request ID: <span className="font-semibold text-fg tabular-nums">{requestId}</span>
+          </p>
+        )}
         <p className="mt-3">For urgent service, call <a className="font-semibold text-link underline underline-offset-[0.2em]" href={BUSINESS.phoneHref}>{BUSINESS.phone}</a>.</p>
       </FormStatus>
     );

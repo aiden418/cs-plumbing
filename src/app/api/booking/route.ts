@@ -18,11 +18,9 @@ import {
   SMS_TO,
   tooManyRequests,
 } from "@/lib/api/secure";
-import {
-  captureRequestContext,
-  newConversionId,
-  reportConversion,
-} from "@/lib/openai-ads-capi";
+import { captureRequestContext, reportConversion } from "@/lib/openai-ads-capi";
+import { acceptedLead, acceptOnce, isTestFlag, leadHeaderHtml, leadIdFor, logAccepted, subjectFor } from "@/lib/api/lead";
+import { homeownerLeadType, type LeadForm } from "@/lib/lead";
 
 const BookingSchema = z.object({
   requestType: z.enum(["booking", "estimate"]).default("booking"),
@@ -38,11 +36,11 @@ const BookingSchema = z.object({
   address: z.string().min(5).max(300),
   sourcePath: z.string().max(200).optional(),
   website: z.string().optional(),
+  // One per filled-in form, repeated on every retry (src/lib/lead.ts).
+  submissionKey: z.string().max(64).optional(),
+  // A marked test visit (?cs_test=1). JSON sends a boolean, multipart a string.
+  test: z.union([z.boolean(), z.string().max(8)]).optional(),
 });
-
-function makeConfirmationId() {
-  return `bk_${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`.toUpperCase();
-}
 
 export async function POST(request: Request) {
   try {
@@ -68,12 +66,22 @@ export async function POST(request: Request) {
     const data = parsed.data;
 
     if (isHoneypotTripped(data.website)) {
-      return NextResponse.json({ success: true, confirmationId: makeConfirmationId() });
+      // Looks accepted to a bot: a throwaway reference, no Lead ID to report.
+      return NextResponse.json({ success: true, confirmationId: leadIdFor() });
     }
 
     const isEstimate = data.requestType === "estimate";
-    const typeLabel = isEstimate ? "Estimate Request" : "Booking";
-    const confirmationId = makeConfirmationId();
+    // Nothing here is a confirmed appointment: the office calls to confirm.
+    const typeLabel = isEstimate ? "Estimate Request" : "Preferred-Time Request";
+    const test = isTestFlag(data.test);
+    const leadType = homeownerLeadType(data.service);
+    const form: LeadForm = isEstimate ? "estimate" : "preferred_time";
+    // One ID for this inquiry: office email, customer email, the confirmation
+    // screen and tracking. `confirmationId` is the same value under the name
+    // the booking page reads.
+    const leadId = leadIdFor(data.submissionKey);
+    const confirmationId = leadId;
+    const lead = { leadId, leadType, form, test };
 
     const safe = {
       service: escapeHtml(data.service),
@@ -106,20 +114,26 @@ export async function POST(request: Request) {
         { status: 500 }
       );
     }
-    const eventId = newConversionId();
-    const attributionHtml = leadAttributionHtml(request, eventId);
-    const resend = new Resend(process.env.RESEND_API_KEY);
-    await sendEmailOrThrow(resend, {
+    const resendKey = process.env.RESEND_API_KEY;
+    const attributionHtml = leadAttributionHtml(request, leadId);
+    const context = captureRequestContext(request);
+
+    // The office email for one submission goes out once: a double tap or a
+    // retry of a request the office already has gets the first answer back.
+    const answer = await acceptOnce(data.submissionKey, async () => {
+    const resend = new Resend(resendKey);
+    const officeEmailId = await sendEmailOrThrow(resend, {
       from: "C&S Plumbing Website <bookings@csplumbinglee.com>",
       to: [ADMIN_EMAIL],
-      subject: `New ${typeLabel}: ${data.service} — ${data.name} [${confirmationId}]`,
+      subject: subjectFor(`New ${typeLabel}: ${data.service} — ${data.name}`, leadId, test),
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background: #0A0A0F; padding: 20px; text-align: center;">
             <h1 style="color: #0099FF; margin: 0;">New ${typeLabel}</h1>
-            <p style="color: #999; margin: 8px 0 0; font-size: 13px;">Confirmation #${confirmationId}</p>
+            <p style="color: #999; margin: 8px 0 0; font-size: 13px;">Request ID ${confirmationId}</p>
           </div>
           <div style="padding: 20px; background: #f9f9f9;">
+            ${leadHeaderHtml(lead)}
             ${attributionHtml}
             <h3 style="color: #333; border-bottom: 2px solid #0099FF; padding-bottom: 8px;">Service Details</h3>
             <p><strong>Type:</strong> ${typeLabel}</p>
@@ -143,10 +157,10 @@ export async function POST(request: Request) {
       ...(attachments.length > 0 && { attachments }),
     }, "booking admin email");
 
-    if (SMS_TO) {
+    if (SMS_TO && !test) {
       const smsText = isEstimate
-        ? `New estimate from ${data.name} for ${data.service}. Budget: ${data.budgetRange || "N/A"}. Phone: ${data.phone}. #${confirmationId}`
-        : `New booking from ${data.name} for ${data.service} (${data.urgency}). Phone: ${data.phone}. Date: ${data.date}. #${confirmationId}`;
+        ? `New estimate request from ${data.name} for ${data.service}. Budget: ${data.budgetRange || "N/A"}. Phone: ${data.phone}. ${confirmationId}`
+        : `New preferred-time request from ${data.name} for ${data.service} (${data.urgency}). Phone: ${data.phone}. Asked for: ${data.date}. ${confirmationId}`;
       await sendEmailBestEffort(resend, {
         from: "C&S Plumbing Website <bookings@csplumbinglee.com>",
         to: [SMS_TO],
@@ -169,16 +183,16 @@ export async function POST(request: Request) {
         to: [data.email],
         subject: isEstimate
           ? `Your Estimate Request — C&S Plumbing [${confirmationId}]`
-          : `Your Booking Request — C&S Plumbing [${confirmationId}]`,
+          : `Your Service Request — C&S Plumbing [${confirmationId}]`,
         html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background: #0A0A0F; padding: 20px; text-align: center;">
             <h1 style="color: #0099FF; margin: 0;">Request Received</h1>
-            <p style="color: #999; margin: 8px 0 0; font-size: 13px;">Confirmation #${confirmationId}</p>
+            <p style="color: #999; margin: 8px 0 0; font-size: 13px;">Request ID ${confirmationId}</p>
           </div>
           <div style="padding: 20px; background: #f9f9f9;">
             <p>Hi ${safe.name},</p>
-            <p>Thanks for choosing C&S Plumbing. We&rsquo;ve received your ${isEstimate ? "estimate request" : "booking request"} and our team will call you to confirm the details. ${CLAIMS.bookingConfirmation}</p>${attachments.length > 0 ? `<p>We received ${attachments.length} photo${attachments.length === 1 ? "" : "s"} with your request.</p>` : ""}
+            <p>Thanks for choosing C&S Plumbing. We&rsquo;ve received your ${isEstimate ? "estimate request" : "service request"} and our office will call you to confirm the details. ${isEstimate ? "" : "The date and time below are the ones you asked for; your appointment is set only once we confirm it with you. "}${CLAIMS.bookingConfirmation}</p>${attachments.length > 0 ? `<p>We received ${attachments.length} photo${attachments.length === 1 ? "" : "s"} with your request.</p>` : ""}
             <div style="background: #fff; padding: 16px; border-radius: 8px; margin: 16px 0;">
               <p style="margin: 4px 0;"><strong>Service:</strong> ${safe.service}</p>${scheduleConfirmHtml}
               <p style="margin: 4px 0;"><strong>Address:</strong> ${safe.address}</p>
@@ -196,20 +210,27 @@ export async function POST(request: Request) {
       console.error("Booking customer confirmation email error:", confirmError);
     }
 
-    // Mirrors the browser pixel so the two copies dedupe on eventId:
-    // a booking is appointment_scheduled, an estimate request is a lead.
-    const context = captureRequestContext(request);
-    after(() =>
-      reportConversion({
-        type: isEstimate ? "lead_created" : "appointment_scheduled",
-        id: eventId,
-        context,
-        sourcePath: data.sourcePath,
-        email: data.email,
-      })
-    );
+    logAccepted(lead, officeEmailId);
+    return acceptedLead(leadId, leadType, test);
+    });
 
-    return NextResponse.json({ success: true, confirmationId, eventId });
+    // Mirrors the browser pixel so the two copies dedupe on the Lead ID. Both
+    // kinds of request are a lead: a preferred time is not an appointment
+    // until the office confirms it, so nothing is reported as scheduled. A
+    // repeat of a submission the office already has, and a test, report nothing.
+    if (!answer.duplicate && !test) {
+      after(() =>
+        reportConversion({
+          type: "lead_created",
+          id: leadId,
+          context,
+          sourcePath: data.sourcePath,
+          email: data.email,
+        })
+      );
+    }
+
+    return NextResponse.json({ ...answer, confirmationId });
   } catch (error) {
     console.error("Booking email error:", error);
     return NextResponse.json(

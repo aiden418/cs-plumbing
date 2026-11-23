@@ -179,37 +179,49 @@ test("the real id constants are the same in every mode (helpers and the server-s
 type Call = [name: string, ...args: unknown[]];
 type TagWindow = { fbq?: unknown; oaiq?: unknown; gtag?: unknown; dataLayer?: unknown[] };
 
-/** Run every helper once against recording stand-ins for the tag globals. */
-async function exercise(pixel: Pixel, globals: "present" | "absent"): Promise<{ calls: Call[]; dataLayer: unknown }> {
+/** Run `body` against recording stand-ins for the tag globals. */
+async function record(
+  globals: "present" | "absent",
+  body: () => Promise<void> | void,
+): Promise<{ calls: Call[]; dataLayer: unknown }> {
   const calls: Call[] = [];
-  const record =
+  const stub =
     (name: string) =>
     (...args: unknown[]) => {
       calls.push([name, ...args]);
     };
   const win: TagWindow =
-    globals === "present" ? { fbq: record("fbq"), oaiq: record("oaiq"), gtag: record("gtag") } : {};
+    globals === "present" ? { fbq: stub("fbq"), oaiq: stub("oaiq"), gtag: stub("gtag") } : {};
   const scope = globalThis as { window?: unknown };
   const before = scope.window;
   scope.window = win;
   try {
-    pixel.trackPhoneClick();
-    pixel.trackTextClick();
-    await pixel.trackContactForm({ eventId: "evt-contact", email: " Owner@Example.com " });
-    await pixel.trackQuoteBuilder({ eventId: "evt-quote" });
-    await pixel.trackEstimateRequest({ eventId: "evt-estimate" });
-    await pixel.trackBooking({ eventId: "evt-booking" });
-    await pixel.trackContactForm(); // honeypot path: the server issued no id
-    await pixel.trackBooking({ email: "owner@example.com" }); // likewise
-    pixel.trackBuilderLead({ units: "12", community: "Test Community", source: "builders-hub" }, { eventId: "evt-builder" });
-    pixel.trackBuilderLead({ units: "12" }); // no id
-    pixel.trackEvent("ViewContent", { content_name: "Coupon" });
-    pixel.trackEvent("Lead", { content_name: "Coupon Popup CTA" }); // a button click: no server id
+    await body();
     return { calls, dataLayer: win.dataLayer };
   } finally {
     if (before === undefined) delete scope.window;
     else scope.window = before;
   }
+}
+
+/** Run every helper once. */
+function exercise(pixel: Pixel, globals: "present" | "absent") {
+  return record(globals, async () => {
+    pixel.trackPhoneClick();
+    pixel.trackTextClick();
+    await pixel.trackContactForm({ eventId: "CS-CONTACT1", email: " Owner@Example.com " });
+    await pixel.trackQuoteBuilder({ eventId: "CS-QUOTE001" });
+    await pixel.trackEstimateRequest({ eventId: "CS-ESTIMAT1" });
+    await pixel.trackPreferredTimeRequest({ eventId: "CS-PREFTIME" });
+    await pixel.trackUtilityEstimate({ eventId: "CS-UTILITY1" });
+    await pixel.trackContactForm(); // honeypot path: the server issued no id
+    await pixel.trackPreferredTimeRequest({ email: "owner@example.com" }); // likewise
+    pixel.trackBuilderLead({ units: "12", community: "Test Community", source: "builders-hub" }, { eventId: "CS-BUILDER1" });
+    pixel.trackBuilderLead({ units: "12" }); // no id
+    pixel.trackEvent("ViewContent", { content_name: "Coupon" });
+    pixel.trackCouponClick(); // a button click
+    pixel.trackEvent("Lead", { content_name: "Coupon Popup CTA" }); // the old coupon call: refused without an id
+  });
 }
 
 test("conversion helpers report exactly the same events in every mode", async () => {
@@ -221,37 +233,76 @@ test("conversion helpers report exactly the same events in every mode", async ()
 
   // Spot checks on the shared log, so "the same" cannot quietly mean "nothing".
   const named = (name: string) => on.calls.filter((c) => c[0] === name);
-  assert.equal(named("fbq").length, 9);
-  assert.equal(named("oaiq").length, 5);
-  assert.equal(named("gtag").length, 12);
-  // Call and Text taps: Meta "Contact" and GA4 "contact", nothing to OpenAI.
+  // Call and Text taps are interactions: Meta "Contact", GA4 "phone_tap" /
+  // "text_tap" (never GA4's key events "contact" or "generate_lead"), nothing to OpenAI.
+  const phone = { content_name: "Phone Call", content_category: "Interaction" };
+  const text = { content_name: "Text Message", content_category: "Interaction" };
   assert.deepEqual(on.calls.slice(0, 4), [
-    ["fbq", "track", "Contact", { content_name: "Phone Call", content_category: "Lead" }],
-    ["gtag", "event", "contact", { content_name: "Phone Call", content_category: "Lead" }],
-    ["fbq", "track", "Contact", { content_name: "Text Message", content_category: "Lead" }],
-    ["gtag", "event", "contact", { content_name: "Text Message", content_category: "Lead" }],
+    ["fbq", "track", "Contact", phone],
+    ["gtag", "event", "phone_tap", phone],
+    ["fbq", "track", "Contact", text],
+    ["gtag", "event", "text_tap", text],
   ]);
-  // OpenAI hears only about inquiries the server delivered, each with the
-  // server's id so the browser event and the Conversions API copy count once.
+  // OpenAI hears only about inquiries the server accepted, each with the
+  // server's Lead ID so the browser event and the Conversions API copy count
+  // once. A preferred-time request is a lead: nothing is reported as scheduled.
   const customerAction = { type: "customer_action" };
   assert.equal(named("oaiq")[0][1], "init", "the submitter's hashed email goes on init, before the event");
   assert.deepEqual(Object.keys((named("oaiq")[0][2] as { user: object }).user), ["email_sha256"]);
   assert.deepEqual(named("oaiq").slice(1), [
-    ["oaiq", "measure", "lead_created", customerAction, { event_id: "evt-contact" }],
-    ["oaiq", "measure", "lead_created", customerAction, { event_id: "evt-quote" }],
-    ["oaiq", "measure", "lead_created", customerAction, { event_id: "evt-estimate" }],
-    ["oaiq", "measure", "appointment_scheduled", customerAction, { event_id: "evt-booking" }],
+    ["oaiq", "measure", "lead_created", customerAction, { event_id: "CS-CONTACT1" }],
+    ["oaiq", "measure", "lead_created", customerAction, { event_id: "CS-QUOTE001" }],
+    ["oaiq", "measure", "lead_created", customerAction, { event_id: "CS-ESTIMAT1" }],
+    ["oaiq", "measure", "lead_created", customerAction, { event_id: "CS-PREFTIME" }],
+    ["oaiq", "measure", "lead_created", customerAction, { event_id: "CS-UTILITY1" }],
   ]);
-  // Meta and GA4 still get the coupon button click; without an id OpenAI does not.
-  assert.deepEqual(on.calls.slice(-2), [
-    ["fbq", "track", "Lead", { content_name: "Coupon Popup CTA" }],
-    ["gtag", "event", "generate_lead", { content_name: "Coupon Popup CTA" }],
+  assert.ok(!JSON.stringify(on.calls).match(/appointment_scheduled|book_appointment|"Schedule"/));
+  // GA4 leads: one generate_lead per accepted homeowner or utility form, each
+  // with its Lead ID, its funnel and its form.
+  const gaLeads = named("gtag").filter((c) => c[2] === "generate_lead").map((c) => c[3]);
+  assert.deepEqual(gaLeads, [
+    { content_name: "Contact Form", content_category: "Service Request", lead_type: "homeowner_request", form: "contact", event_id: "CS-CONTACT1" },
+    { content_name: "Quote Builder", content_category: "Quote Request", lead_type: "homeowner_request", form: "quote_builder", event_id: "CS-QUOTE001" },
+    { content_name: "Estimate Request", content_category: "Quote Request", lead_type: "homeowner_request", form: "estimate", event_id: "CS-ESTIMAT1" },
+    { content_name: "Preferred Time Request", content_category: "Service Request", lead_type: "homeowner_request", form: "preferred_time", event_id: "CS-PREFTIME" },
+    { content_name: "Utility Connection Estimate", content_category: "Utility Estimate", lead_type: "utility_estimate", form: "utility_estimate", event_id: "CS-UTILITY1" },
   ]);
-  // Confirmed inquiries still go to the real Google Ads conversion, deduplicated by the server's id.
+  // Meta gets the same five leads, each deduplicated on the Lead ID.
+  const metaLeads = named("fbq").filter((c) => c[2] === "Lead");
+  assert.deepEqual(
+    metaLeads.map((c) => c[4]),
+    ["CS-CONTACT1", "CS-QUOTE001", "CS-ESTIMAT1", "CS-PREFTIME", "CS-UTILITY1"].map((eventID) => ({ eventID })),
+  );
+  // The builder bid request is its own event everywhere, never a homeowner lead.
+  const builder = {
+    content_name: "Builder Bid Request",
+    content_category: "Builder Lead",
+    lead_type: "builder_bid",
+    units: "12",
+    community: "Test Community",
+    source: "builders-hub",
+  };
+  assert.deepEqual(named("fbq").filter((c) => c[1] === "trackCustom" && c[2] === "builder_lead"), [
+    ["fbq", "trackCustom", "builder_lead", builder, { eventID: "CS-BUILDER1" }],
+  ]);
+  assert.deepEqual(named("gtag").filter((c) => c[2] === "builder_lead"), [
+    ["gtag", "event", "builder_lead", { ...builder, event_id: "CS-BUILDER1" }],
+  ]);
+  assert.deepEqual(on.dataLayer, [{ event: "builder_lead", event_id: "CS-BUILDER1", ...builder }]);
+  // The coupon button is an interaction on Meta and GA4. The old call, a
+  // "Lead" with no server id, reports nothing at all.
+  const coupon = { content_name: "Coupon Popup CTA", content_category: "Interaction" };
+  assert.deepEqual(on.calls.slice(-3), [
+    ["fbq", "track", "ViewContent", { content_name: "Coupon" }],
+    ["fbq", "trackCustom", "CouponClick", coupon],
+    ["gtag", "event", "coupon_click", coupon],
+  ]);
+  // Accepted homeowner and utility inquiries go to the real Google Ads
+  // conversion, deduplicated by the Lead ID. Builder bids and clicks do not.
   const adsConversions = named("gtag").filter((c) => c[2] === "conversion");
   assert.deepEqual(
     adsConversions.map((c) => c[3]),
-    ["evt-contact", "evt-quote", "evt-estimate", "evt-booking"].map((transaction_id) => ({
+    ["CS-CONTACT1", "CS-QUOTE001", "CS-ESTIMAT1", "CS-PREFTIME", "CS-UTILITY1"].map((transaction_id) => ({
       send_to: ADS_SERVICE_LEAD,
       transaction_id,
     })),
@@ -259,6 +310,84 @@ test("conversion helpers report exactly the same events in every mode", async ()
   // No placeholder id ever reaches a helper call.
   const logged = JSON.stringify(placeholder);
   for (const fake of Object.values(PLACEHOLDER_TAG_IDS)) assert.ok(!logged.includes(fake), fake);
+});
+
+// ── one inquiry, one lead ───────────────────────────────────────────────────
+
+test("a click can never be counted as a lead", async () => {
+  const pixel = loadPixel();
+  const { calls } = await record("present", () => {
+    pixel.trackEvent("Lead", { content_name: "Coupon Popup CTA" });
+    pixel.trackEvent("Schedule", { content_name: "Anything" });
+    pixel.trackEvent("Lead", { content_name: "Anything" }, {});
+    pixel.trackCouponClick();
+    pixel.trackPhoneClick();
+    pixel.trackTextClick();
+  });
+  const names = calls.map((c) => String(c[2]));
+  assert.deepEqual(names, ["CouponClick", "coupon_click", "Contact", "phone_tap", "Contact", "text_tap"]);
+  for (const forbidden of ["Lead", "generate_lead", "conversion", "contact", "lead_created"]) {
+    assert.ok(!names.includes(forbidden), forbidden);
+  }
+});
+
+test("the same Lead ID is reported once, however many answers carry it", async () => {
+  const pixel = loadPixel();
+  const { calls } = await record("present", async () => {
+    // A double tap answered twice, then a retry of a request the office already had.
+    await pixel.trackContactForm({ eventId: "CS-SAMELEAD" });
+    await pixel.trackContactForm({ eventId: "CS-SAMELEAD" });
+    await pixel.trackPreferredTimeRequest({ eventId: "CS-SAMELEAD" });
+    pixel.trackBuilderLead({ source: "builders-hub" }, { eventId: "CS-SAMEBID1" });
+    pixel.trackBuilderLead({ source: "builders-hub" }, { eventId: "CS-SAMEBID1" });
+  });
+  const count = (match: (c: Call) => boolean) => calls.filter(match).length;
+  assert.equal(count((c) => c[0] === "gtag" && c[2] === "generate_lead"), 1);
+  assert.equal(count((c) => c[0] === "gtag" && c[2] === "conversion"), 1);
+  assert.equal(count((c) => c[0] === "fbq" && c[2] === "Lead"), 1);
+  assert.equal(count((c) => c[0] === "oaiq" && c[1] === "measure"), 1);
+  assert.equal(count((c) => c[0] === "gtag" && c[2] === "builder_lead"), 1);
+  assert.equal(count((c) => c[0] === "fbq" && c[2] === "builder_lead"), 1);
+});
+
+test("a failed or refused submission (no Lead ID in the answer) reports nothing", async () => {
+  const pixel = loadPixel();
+  const { calls } = await record("present", async () => {
+    await pixel.trackContactForm({ email: "owner@example.com" });
+    await pixel.trackQuoteBuilder({});
+    await pixel.trackEstimateRequest();
+    await pixel.trackPreferredTimeRequest({ leadType: "homeowner_request" });
+    await pixel.trackUtilityEstimate({});
+    pixel.trackBuilderLead({ source: "builders-hub" }, {});
+  });
+  assert.deepEqual(calls, []);
+});
+
+test("the server's funnel decides the label: a UEP request on any homeowner form is a utility estimate", async () => {
+  const pixel = loadPixel();
+  const { calls } = await record("present", async () => {
+    await pixel.trackPreferredTimeRequest({ eventId: "CS-UEPBOOK1", leadType: "utility_estimate" });
+    await pixel.trackContactForm({ eventId: "CS-HOMEOWN1", leadType: "homeowner_request" });
+  });
+  const leads = calls.filter((c) => c[0] === "gtag" && c[2] === "generate_lead").map((c) => c[3] as Record<string, string>);
+  assert.deepEqual(leads.map((l) => [l.lead_type, l.content_category, l.form, l.event_id]), [
+    ["utility_estimate", "Utility Estimate", "preferred_time", "CS-UEPBOOK1"],
+    ["homeowner_request", "Service Request", "contact", "CS-HOMEOWN1"],
+  ]);
+});
+
+test("a marked test visit is visible in GA4 as test_lead and counted nowhere", async () => {
+  const pixel = loadPixel();
+  const { calls, dataLayer } = await record("present", async () => {
+    await pixel.trackContactForm({ eventId: "CS-TESTLEAD", email: "tester@example.com", test: true });
+    pixel.trackBuilderLead({ source: "builders-hub" }, { eventId: "CS-TESTBID1", test: true });
+  });
+  assert.deepEqual(calls.map((c) => [c[0], c[2]]), [
+    ["gtag", "test_lead"],
+    ["gtag", "test_lead"],
+  ]);
+  assert.equal((calls[0][3] as Record<string, string>).event_id, "CS-TESTLEAD");
+  assert.equal(dataLayer, undefined);
 });
 
 test("with no tag globals on the page (a tags-off build) no helper throws or reports", async () => {

@@ -57,7 +57,8 @@ export default function ProjectDetail({ project }: { project: CompletedProject }
   ];
 
   const hasCaseStudy = Boolean(
-    project.challenge ||
+    project.notes?.length ||
+      project.challenge ||
       project.solution ||
       project.scopeDetails?.length ||
       project.permits?.length ||
@@ -142,6 +143,16 @@ export default function ProjectDetail({ project }: { project: CompletedProject }
                           ))}
                       </div>
                     )}
+                    {project.notes && project.notes.length > 0 && (
+                      <div className="mt-6 grid grid-cols-1 gap-y-6 md:grid-cols-2 md:gap-x-8">
+                        {project.notes.map((note) => (
+                          <div key={note.title}>
+                            <h3 className="text-xl font-semibold text-fg">{note.title}</h3>
+                            <p className="mt-2 max-w-[60ch] text-body">{note.text}</p>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                     {lists.length > 0 && (
                       <div className={lists.length > 1 ? "mt-6 grid grid-cols-1 gap-y-6 md:grid-cols-2 md:gap-x-8" : "mt-6"}>
                         {lists.map((list) => (
@@ -154,6 +165,13 @@ export default function ProjectDetail({ project }: { project: CompletedProject }
                             </ul>
                           </div>
                         ))}
+                      </div>
+                    )}
+                    {project.request && (
+                      <div className="mt-8">
+                        <Button href={project.request.href} size="lg" iconRight={<ArrowRight className="size-5" />}>
+                          {project.request.label}
+                        </Button>
                       </div>
                     )}
                   </section>
