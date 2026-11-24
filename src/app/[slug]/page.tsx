@@ -8,10 +8,11 @@ import FaqJsonLd from "@/components/seo/FaqJsonLd";
 import CTASection from "@/components/home/CTASection";
 import GoogleReviews from "@/components/home/GoogleReviews";
 import RelatedProjects from "@/components/projects/RelatedProjects";
+import RelatedPosts from "@/components/blog/RelatedPosts";
 import { PUBLISHED_LANDINGS, isIndexed } from "@/lib/landing-indexing";
 import { getServiceHub } from "@/lib/service-hubs";
-import { areaForCity } from "@/lib/internal-links";
-import { projectsForCity } from "@/lib/projects";
+import { areaForCity, postsForLanding } from "@/lib/internal-links";
+import { projectsForCity, projectsForHub } from "@/lib/projects";
 import { UepNoticeAndEstimate, UepPhaseStatus } from "@/components/services/UepSections";
 import { UEP_PAGE } from "@/content/services";
 
@@ -63,6 +64,12 @@ export default async function Page({
   // The Cape Coral connection page carries the dated UEP status, the
   // notice-date steps and the estimate request that asks for both facts.
   const isUepConnection = `/${landing.slug}` === UEP_PAGE.cityPageHref;
+  // Local proof first. A city with no documented job yet shows the same
+  // service documented elsewhere, under a heading that says so.
+  const cityProjects = projectsForCity(landing.city, { hub: landing.serviceSlug, limit: 3 });
+  const serviceProjects =
+    cityProjects.length === 0 && landing.serviceSlug ? projectsForHub(landing.serviceSlug, 3) : [];
+  const hasProjects = cityProjects.length > 0 || serviceProjects.length > 0;
 
   return (
     <>
@@ -96,10 +103,24 @@ export default async function Page({
       {/* Local proof: documented jobs in this city, service-matched first.
           Renders nothing for cities with no project page yet. */}
       <RelatedProjects
-        projects={projectsForCity(landing.city, { hub: landing.serviceSlug, limit: 3 })}
+        projects={cityProjects}
         tone="shell"
         heading={`Recent projects in ${landing.city}`}
         description={`Real jobs we've documented in ${landing.city}, photographed phase by phase with the builder or GC named.`}
+      />
+      <RelatedProjects
+        projects={serviceProjects}
+        tone="shell"
+        overline="Documented work"
+        heading="The same work on jobs we've documented"
+        description="Photographed on site, elsewhere in Southwest Florida."
+      />
+      {/* The guides that send readers to this page, linked back. Renders
+          nothing for a landing no post refers to. */}
+      <RelatedPosts
+        posts={postsForLanding(landing.slug)}
+        tone={hasProjects ? "white" : "shell"}
+        heading="Related plumbing guides"
       />
       <GoogleReviews />
       <CTASection />

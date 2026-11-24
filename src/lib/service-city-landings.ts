@@ -134,7 +134,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     serviceSlug: "emergency",
     metaTitle: "Emergency Plumber Cape Coral | 24/7 Service",
     metaDescription:
-      `24/7 emergency plumber in Cape Coral, FL. Burst pipes, slab leaks & flooding repair. Licensed ${BUSINESS.license}, 5-star rated. Call ${BUSINESS.phone} now for fast response.`,
+      `24/7 emergency plumber in Cape Coral, FL. Burst pipes, slab leaks & flooding repair. Licensed ${BUSINESS.license}, 5-star rated. Call ${BUSINESS.phone} now.`,
     keywords: [
       "emergency plumber Cape Coral",
       "24 hour plumber Cape Coral FL",
@@ -328,7 +328,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     serviceSlug: "repiping",
     metaTitle: "Repiping Cape Coral | Whole-Home Pipe Replacement",
     metaDescription:
-      `Cape Coral whole-home repiping ${from("repipe.overall")}. Replace polybutylene & corroded copper pipes. 3,500+ repipes completed. Licensed ${BUSINESS.license}. Free estimates.`,
+      `Cape Coral whole-home repiping ${from("repipe.overall")}. Replace polybutylene & corroded copper pipes. 3,500+ repipes. Licensed ${BUSINESS.license}. Free estimates.`,
     keywords: [
       "repiping Cape Coral",
       "whole house repiping Cape Coral FL",
@@ -545,7 +545,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     serviceSlug: "leak-repair",
     metaTitle: "Water Damage Repair Cape Coral | Plumbing Experts",
     metaDescription:
-      `Plumbing-caused water damage repair in Cape Coral, FL. Slab leaks, burst pipes & pipe corrosion fixed at the source. Licensed ${BUSINESS.license}. Call ${BUSINESS.phone} now.`,
+      `Plumbing-caused water damage repair in Cape Coral, FL. Slab leaks, burst pipes & corrosion fixed at the source. Licensed ${BUSINESS.license}. Call ${BUSINESS.phone}.`,
     keywords: [
       "water damage repair Cape Coral",
       "plumbing water damage Cape Coral FL",
@@ -1355,7 +1355,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     serviceSlug: "drain-cleaning",
     metaTitle: "Drain Cleaning Fort Myers | Camera Inspection & Jetting",
     metaDescription:
-      `Professional drain cleaning in Fort Myers, FL. Hydro-jetting, camera inspection & root removal for slow or backed-up drains. 5-star rated. Call ${BUSINESS.phone}.`,
+      `Drain cleaning in Fort Myers, FL. Hydro-jetting, camera inspection & root removal for slow or backed-up drains. 5-star rated. Call ${BUSINESS.phone}.`,
     keywords: [
       "drain cleaning Fort Myers",
       "drain cleaning Fort Myers FL",
@@ -1446,7 +1446,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     serviceSlug: "emergency",
     metaTitle: "Emergency Plumber Punta Gorda | 24/7 Service",
     metaDescription:
-      `24/7 emergency plumber in Punta Gorda, FL. Burst pipes, water heater failures & backups. Licensed ${BUSINESS.license}, family owned since 1998. Call ${BUSINESS.phone}.`,
+      `24/7 emergency plumber in Punta Gorda, FL. Burst pipes, water heaters & backups. Licensed ${BUSINESS.license}, family owned since 1998. Call ${BUSINESS.phone}.`,
     keywords: [
       "emergency plumber Punta Gorda",
       "24 hour plumber Punta Gorda FL",
@@ -1536,7 +1536,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     serviceSlug: "water-heaters",
     metaTitle: "Water Heater Replacement Punta Gorda | Tank & Tankless",
     metaDescription:
-      `Water heater replacement in Punta Gorda, FL. Tank, tankless & hybrid installs, Charlotte County permits handled. Family owned since 1998. Call ${BUSINESS.phone}.`,
+      `Water heater replacement in Punta Gorda, FL. Tank, tankless & hybrid installs with Charlotte County permits. Family owned since 1998. Call ${BUSINESS.phone}.`,
     keywords: [
       "water heater replacement Punta Gorda",
       "water heater Punta Gorda FL",
@@ -1817,7 +1817,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     serviceSlug: "plumbing-remodel",
     metaTitle: "Remodel Plumbing Naples | Kitchen & Bath Specialists",
     metaDescription:
-      `Remodel plumbing in Naples, FL. Kitchen & bathroom relocations, high-end fixtures & slab work for luxury renovations. Licensed ${BUSINESS.license}. Call ${BUSINESS.phone}.`,
+      `Remodel plumbing in Naples, FL. Kitchen & bath relocations, high-end fixtures & slab work for luxury homes. Licensed ${BUSINESS.license}. Call ${BUSINESS.phone}.`,
     keywords: [
       "remodel plumbing Naples",
       "bathroom remodel plumber Naples",
@@ -1914,7 +1914,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     serviceSlug: "water-softeners",
     metaTitle: "Water Softeners Cape Coral | Hard Water Fix",
     metaDescription:
-      `Water softener installation in Cape Coral, FL. Fix 300+ ppm hard water damaging pipes & fixtures. Licensed ${BUSINESS.license}, 5-star rated. Call ${BUSINESS.phone} today.`,
+      `Water softener installation in Cape Coral, FL. Fix 300+ ppm hard water damaging pipes & fixtures. Licensed ${BUSINESS.license}, 5-star rated. Call ${BUSINESS.phone}.`,
     keywords: [
       "water softener Cape Coral",
       "water softener installation Cape Coral FL",
@@ -2008,7 +2008,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     serviceSlug: "leak-repair",
     metaTitle: "Leak Repair Cape Coral | Slab Leak Detection",
     metaDescription:
-      `Expert leak repair in Cape Coral, FL. Slab leak detection, hidden leak location & pipe repair. Licensed ${BUSINESS.license}, 5-star rated. Call ${BUSINESS.phone} for service.`,
+      `Expert leak repair in Cape Coral, FL. Slab leak detection, hidden leak location & pipe repair. Licensed ${BUSINESS.license}, 5-star rated. Call ${BUSINESS.phone}.`,
     keywords: [
       "leak repair Cape Coral",
       "slab leak detection Cape Coral",
@@ -2102,7 +2102,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     serviceSlug: "plumbing-remodel",
     metaTitle: "Plumbing Remodel Cape Coral | Kitchen & Bath",
     metaDescription:
-      `Kitchen & bathroom remodel plumbing in Cape Coral, FL. Fixture upgrades, rough-in relocation, code compliance. Licensed ${BUSINESS.license}. Call ${BUSINESS.phone}.`,
+      `Kitchen & bath remodel plumbing in Cape Coral, FL. Fixture upgrades, rough-in relocation, code compliance. Licensed ${BUSINESS.license}. Call ${BUSINESS.phone}.`,
     keywords: [
       "plumbing remodel Cape Coral",
       "bathroom remodel plumber Cape Coral",
@@ -2196,7 +2196,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     serviceSlug: "leak-repair",
     metaTitle: "Leak Repair Fort Myers | Slab Leak Experts",
     metaDescription:
-      `Leak detection & repair in Fort Myers, FL. Slab leaks, hidden leaks & pipe repair for older homes. Licensed ${BUSINESS.license}, 5-star rated. Call ${BUSINESS.phone} now.`,
+      `Leak detection & repair in Fort Myers, FL. Slab leaks, hidden leaks & pipe repair for older homes. Licensed ${BUSINESS.license}, 5-star rated. Call ${BUSINESS.phone}.`,
     keywords: [
       "leak repair Fort Myers",
       "slab leak detection Fort Myers",
@@ -2290,7 +2290,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     serviceSlug: "repiping",
     metaTitle: "Repiping Naples FL | Luxury Home Specialists",
     metaDescription:
-      `Whole-home repiping in Naples, FL. Luxury home pipe replacement, ${rangeInline("repipe.overall")}. Waterfront corrosion experts. Licensed ${BUSINESS.license}. Call ${BUSINESS.phone}.`,
+      `Whole-home repiping in Naples, FL. Luxury home repipes, ${rangeInline("repipe.overall")}. Waterfront corrosion experts. Licensed ${BUSINESS.license}. Call ${BUSINESS.phone}.`,
     keywords: [
       "repiping Naples FL",
       "whole house repipe Naples",
@@ -2389,7 +2389,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     serviceSlug: "emergency",
     metaTitle: "Emergency Plumber Bonita Springs | 24/7",
     metaDescription:
-      `24/7 emergency plumber in Bonita Springs, FL. Burst pipes, condo leaks & slab repair. Licensed ${BUSINESS.license}, 5-star rated. Call ${BUSINESS.phone} for immediate help.`,
+      `24/7 emergency plumber in Bonita Springs, FL. Burst pipes, condo leaks & slab repair. Licensed ${BUSINESS.license}, 5-star rated. Call ${BUSINESS.phone} now.`,
     keywords: [
       "emergency plumber Bonita Springs",
       "24 hour plumber Bonita Springs FL",
@@ -2679,7 +2679,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     serviceSlug: "uep-utilities",
     metaTitle: "UEP Connection Cape Coral | Water & Sewer Hookup",
     metaDescription:
-      `Cape Coral UEP connection specialists. Water service, sewer lateral & septic abandonment — permits handled, upfront per-foot pricing. Call ${BUSINESS.phone} today.`,
+      `Cape Coral UEP connection specialists. Water service, sewer lateral & septic abandonment — permits handled, upfront per-foot pricing. Call ${BUSINESS.phone}.`,
     keywords: [
       "UEP connection Cape Coral",
       "Cape Coral UEP plumber",
@@ -2795,7 +2795,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     serviceSlug: "emergency",
     metaTitle: "Emergency Plumber North Fort Myers | 24/7 Local",
     metaDescription:
-      `24/7 emergency plumber based in North Fort Myers, FL. Our shop is on Pondella Rd — fastest response in our home territory. Licensed. Call ${BUSINESS.phone} now.`,
+      `24/7 emergency plumber based in North Fort Myers, FL. Our shop is on Pondella Rd: fastest response in our home territory. Licensed. Call ${BUSINESS.phone}.`,
     keywords: [
       "emergency plumber North Fort Myers",
       "24 hour plumber North Fort Myers FL",
@@ -2901,7 +2901,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     serviceSlug: "water-heaters",
     metaTitle: "Water Heater Repair Lehigh Acres | Same-Day Fix",
     metaDescription:
-      `Water heater repair in Lehigh Acres, FL. No hot water, leaks & element failures fixed fast — well water experts. Licensed ${BUSINESS.license}. Call ${BUSINESS.phone} today.`,
+      `Water heater repair in Lehigh Acres, FL. No hot water, leaks & element failures fixed fast — well water experts. Licensed ${BUSINESS.license}. Call ${BUSINESS.phone}.`,
     keywords: [
       "water heater repair Lehigh Acres",
       "no hot water Lehigh Acres",
@@ -3008,7 +3008,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     serviceSlug: "drain-cleaning",
     metaTitle: "Drain Cleaning North Fort Myers | Clogs Cleared",
     metaDescription:
-      `Drain cleaning in North Fort Myers, FL. Clogged drains, root intrusion & cast iron blockages cleared with camera diagnosis. Licensed. Call ${BUSINESS.phone} today.`,
+      `Drain cleaning in North Fort Myers, FL. Clogged drains, root intrusion & cast iron blockages cleared with camera diagnosis. Licensed. Call ${BUSINESS.phone}.`,
     keywords: [
       "drain cleaning North Fort Myers",
       "clogged drain North Fort Myers FL",
@@ -3108,7 +3108,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     serviceSlug: "emergency",
     metaTitle: "Emergency Plumber Naples FL | 24/7 Response",
     metaDescription:
-      `24/7 emergency plumber in Naples, FL. Burst pipes, slab leaks & seasonal-home water damage. Licensed ${BUSINESS.license}, 5-star rated. Call ${BUSINESS.phone} for fast help.`,
+      `24/7 emergency plumber in Naples, FL. Burst pipes, slab leaks & seasonal-home water damage. Licensed ${BUSINESS.license}, 5-star rated. Call ${BUSINESS.phone}.`,
     keywords: [
       "emergency plumber Naples",
       "24 hour plumber Naples FL",
@@ -3204,7 +3204,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     serviceSlug: "repiping",
     metaTitle: "Repiping Punta Gorda | Whole-Home Pipe Replacement",
     metaDescription:
-      `Whole-home repiping in Punta Gorda, FL ${from("repipe.overall")}. Replace polybutylene & pinhole-leaking copper. Licensed ${BUSINESS.license}. Free estimates — call ${BUSINESS.phone}.`,
+      `Whole-home repiping in Punta Gorda, FL ${from("repipe.overall")}. Replace polybutylene & leaking copper. Licensed ${BUSINESS.license}. Free estimates: call ${BUSINESS.phone}.`,
     keywords: [
       "repiping Punta Gorda",
       "whole house repipe Punta Gorda FL",
@@ -3399,7 +3399,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     serviceSlug: "emergency",
     metaTitle: "Emergency Plumber Sanibel | 24/7 Island Response",
     metaDescription:
-      `24/7 emergency plumber on Sanibel Island, FL. Burst pipes, slab leaks & flooding in island homes. Licensed ${BUSINESS.license}. Call ${BUSINESS.phone} for fast response.`,
+      `24/7 emergency plumber on Sanibel Island, FL. Burst pipes, slab leaks & flooding in island homes. Licensed ${BUSINESS.license}. Call ${BUSINESS.phone} now.`,
     keywords: [
       "emergency plumber Sanibel Island",
       "24 hour plumber Sanibel FL",
@@ -3496,7 +3496,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     serviceSlug: "repiping",
     metaTitle: "Repiping Sanibel Island | Whole-Home Repipe",
     metaDescription:
-      `Whole-home repiping on Sanibel Island, FL. Replace salt-corroded copper & galvanized pipe with PEX. Licensed ${BUSINESS.license}. Call ${BUSINESS.phone} for a free estimate.`,
+      `Whole-home repiping on Sanibel Island, FL. Replace salt-corroded copper & galvanized with PEX. Licensed ${BUSINESS.license}. Free estimates: ${BUSINESS.phone}.`,
     keywords: [
       "repiping Sanibel Island",
       "whole house repipe Sanibel FL",
@@ -3594,7 +3594,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     serviceSlug: "water-heaters",
     metaTitle: "Water Heater Repair Estero FL | Same-Day Fix",
     metaDescription:
-      `Water heater repair & replacement in Estero, FL. Tank, tankless & heat pump units. Licensed ${BUSINESS.license}, 5-star rated. Call ${BUSINESS.phone} for same-day service.`,
+      `Water heater repair & replacement in Estero, FL. Tank, tankless & heat pump. Licensed ${BUSINESS.license}, 5-star rated. Call ${BUSINESS.phone} for same-day service.`,
     keywords: [
       "water heater repair Estero",
       "water heater replacement Estero FL",
@@ -3887,7 +3887,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     serviceSlug: "repiping",
     metaTitle: "Repiping Bonita Springs | Whole-Home PEX",
     metaDescription:
-      `Whole-home repiping in Bonita Springs, FL. Replace pinhole-leaking copper & brittle CPVC with PEX — minimal wall damage. Licensed ${BUSINESS.license}. Call ${BUSINESS.phone}.`,
+      `Whole-home repiping in Bonita Springs, FL. Replace leaking copper & CPVC with PEX, minimal wall damage. Licensed ${BUSINESS.license}. Call ${BUSINESS.phone}.`,
     keywords: [
       "repiping Bonita Springs",
       "whole house repipe Bonita Springs FL",
@@ -3985,7 +3985,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     serviceSlug: "leak-repair",
     metaTitle: "Leak Repair Bonita Springs | Slab Leak Experts",
     metaDescription:
-      `Leak detection & repair in Bonita Springs, FL. Slab leaks found with acoustic & thermal tech — no torn-up tile. Licensed ${BUSINESS.license}. Call ${BUSINESS.phone} today.`,
+      `Leak detection & repair in Bonita Springs, FL. Slab leaks found with acoustic & thermal tech — no torn-up tile. Licensed ${BUSINESS.license}. Call ${BUSINESS.phone}.`,
     keywords: [
       "leak repair Bonita Springs",
       "leak detection Bonita Springs FL",
@@ -4082,7 +4082,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     serviceSlug: "emergency",
     metaTitle: "Emergency Plumber Port Charlotte | 24/7",
     metaDescription:
-      `24/7 emergency plumber serving Port Charlotte, FL. Burst pipes, sewage backups & storm damage. Licensed ${BUSINESS.license}, 5-star rated. Call ${BUSINESS.phone} for help.`,
+      `24/7 emergency plumber for Port Charlotte, FL. Burst pipes, sewage backups & storm damage. Licensed ${BUSINESS.license}, 5-star rated. Call ${BUSINESS.phone}.`,
     keywords: [
       "emergency plumber Port Charlotte",
       "24 hour plumber Port Charlotte FL",
@@ -4179,7 +4179,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     serviceSlug: "water-heaters",
     metaTitle: "Water Heater Repair Port Charlotte | Same-Week",
     metaDescription:
-      `Water heater repair & replacement in Port Charlotte, FL. Honest repair-vs-replace advice, same-week installs. Licensed ${BUSINESS.license}. Call ${BUSINESS.phone} today.`,
+      `Water heater repair & replacement in Port Charlotte, FL. Honest repair-vs-replace advice, same-week installs. Licensed ${BUSINESS.license}. Call ${BUSINESS.phone}.`,
     keywords: [
       "water heater repair Port Charlotte",
       "water heater replacement Port Charlotte FL",
@@ -4277,7 +4277,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     serviceSlug: "repiping",
     metaTitle: "Repiping Port Charlotte | Poly-B & Copper Pros",
     metaDescription:
-      `Whole-home repiping in Port Charlotte, FL. Replace failing 1980s copper & polybutylene with PEX — permits handled. Licensed ${BUSINESS.license}. Call ${BUSINESS.phone}.`,
+      `Whole-home repiping in Port Charlotte, FL. Replace 1980s copper & polybutylene with PEX, permits handled. Licensed ${BUSINESS.license}. Call ${BUSINESS.phone}.`,
     keywords: [
       "repiping Port Charlotte",
       "whole house repipe Port Charlotte FL",
@@ -4375,7 +4375,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     serviceSlug: "drain-cleaning",
     metaTitle: "Drain Cleaning Lehigh Acres | Camera-First Service",
     metaDescription:
-      `Drain cleaning in Lehigh Acres, FL. Camera inspections, hydro jetting & root removal for septic and sewer homes. Licensed ${BUSINESS.license}. Call ${BUSINESS.phone} today.`,
+      `Drain cleaning in Lehigh Acres, FL. Camera inspection, hydro jetting & root removal for septic and sewer homes. Licensed ${BUSINESS.license}. Call ${BUSINESS.phone}.`,
     keywords: [
       "drain cleaning Lehigh Acres",
       "clogged drain Lehigh Acres FL",
@@ -4472,7 +4472,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     serviceSlug: "emergency",
     metaTitle: "Emergency Plumber Lehigh Acres | 24/7 Fast Help",
     metaDescription:
-      `24/7 emergency plumber in Lehigh Acres, FL. Burst pipes, sewage backups & well pump failures. Licensed ${BUSINESS.license}, 5-star rated. Call ${BUSINESS.phone} now.`,
+      `24/7 emergency plumber in Lehigh Acres, FL. Burst pipes, sewage backups & well pump failures. Licensed ${BUSINESS.license}, 5-star rated. Call ${BUSINESS.phone}.`,
     keywords: [
       "emergency plumber Lehigh Acres",
       "24 hour plumber Lehigh Acres FL",
@@ -4764,7 +4764,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     serviceSlug: "commercial",
     metaTitle: "Commercial Plumber Naples | Licensed Contractor",
     metaDescription:
-      `Commercial plumbing in Naples, FL. Restaurants, condo associations, tenant build-outs, grease traps & backflow testing. Licensed ${BUSINESS.license}. Call ${BUSINESS.phone}.`,
+      `Commercial plumbing in Naples, FL. Restaurants, condo associations, build-outs, grease traps & backflow. Licensed ${BUSINESS.license}. Call ${BUSINESS.phone}.`,
     keywords: [
       "commercial plumber Naples",
       "commercial plumbing Naples FL",
@@ -4861,7 +4861,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     serviceSlug: "drain-cleaning",
     metaTitle: "Drain Cleaning Punta Gorda | Hydro Jetting Pros",
     metaDescription:
-      `Drain cleaning in Punta Gorda, FL. Camera inspection, hydro jetting & root removal for clogged drains. Licensed ${BUSINESS.license}. Call ${BUSINESS.phone} for fast service.`,
+      `Drain cleaning in Punta Gorda, FL. Camera inspection, hydro jetting & root removal for clogged drains. Licensed ${BUSINESS.license}. Call ${BUSINESS.phone}.`,
     keywords: [
       "drain cleaning Punta Gorda",
       "clogged drain Punta Gorda FL",
@@ -4958,7 +4958,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     serviceSlug: "leak-repair",
     metaTitle: "Leak Repair Punta Gorda | Slab Leak Detection",
     metaDescription:
-      `Leak detection & repair in Punta Gorda, FL. Slab leaks, hidden pipe leaks & high water bills diagnosed fast. Licensed ${BUSINESS.license}. Call ${BUSINESS.phone} today.`,
+      `Leak detection & repair in Punta Gorda, FL. Slab leaks, hidden pipe leaks & high water bills diagnosed fast. Licensed ${BUSINESS.license}. Call ${BUSINESS.phone}.`,
     keywords: [
       "leak repair Punta Gorda",
       "slab leak detection Punta Gorda FL",
@@ -5055,7 +5055,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     serviceSlug: "water-softeners",
     metaTitle: "Water Softeners Fort Myers | Hard Water Fix",
     metaDescription:
-      `Water softener installation in Fort Myers, FL. Stop scale on fixtures & protect your water heater from hard water. Licensed ${BUSINESS.license}. Call ${BUSINESS.phone} today.`,
+      `Water softener installation in Fort Myers, FL. Stop hard-water scale on fixtures & protect your water heater. Licensed ${BUSINESS.license}. Call ${BUSINESS.phone}.`,
     keywords: [
       "water softener Fort Myers",
       "water softener installation Fort Myers FL",
@@ -5152,7 +5152,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     serviceSlug: "plumbing-remodel",
     metaTitle: "Plumbing Remodel Fort Myers | Kitchen & Bath",
     metaDescription:
-      `Kitchen & bathroom remodel plumbing in Fort Myers, FL. Fixture relocation, slab work, cast iron conversion & permits. Licensed ${BUSINESS.license}. Call ${BUSINESS.phone}.`,
+      `Kitchen & bath remodel plumbing in Fort Myers, FL. Fixture relocation, slab work, cast iron conversion & permits. Licensed ${BUSINESS.license}. Call ${BUSINESS.phone}.`,
     keywords: [
       "plumbing remodel Fort Myers",
       "bathroom remodel plumber Fort Myers",
@@ -5249,7 +5249,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     serviceSlug: "commercial",
     metaTitle: "Commercial Plumber Cape Coral | Licensed Contractor",
     metaDescription:
-      `Commercial plumbing in Cape Coral, FL. Restaurants, medical offices, retail build-outs & backflow testing. Licensed ${BUSINESS.license}. Call ${BUSINESS.phone} for service.`,
+      `Commercial plumbing in Cape Coral, FL. Restaurants, medical offices, retail build-outs & backflow testing. Licensed ${BUSINESS.license}. Call ${BUSINESS.phone}.`,
     keywords: [
       "commercial plumber Cape Coral",
       "commercial plumbing Cape Coral FL",
@@ -5346,7 +5346,7 @@ export const SERVICE_CITY_LANDINGS: ServiceCityLanding[] = [
     serviceSlug: "repiping",
     metaTitle: "Repiping North Fort Myers | Pipe Replacement",
     metaDescription:
-      `Whole-home repiping in North Fort Myers, FL from your neighbors on Pondella Rd. Galvanized & polybutylene replacement. Licensed ${BUSINESS.license}. Call ${BUSINESS.phone}.`,
+      `Whole-home repiping in North Fort Myers, FL by your neighbors on Pondella Rd. Galvanized & polybutylene replaced. Licensed. Call ${BUSINESS.phone}.`,
     keywords: [
       "repiping North Fort Myers",
       "whole house repiping North Fort Myers FL",

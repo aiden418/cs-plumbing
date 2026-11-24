@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/coastal-comeback-plan" },
   title: "Snowbird Plumbing Protection Plan",
   description:
-    `Snowbird plumbing protection for SWFL: shutdown before you leave, checks while you're away, start-up inspection when you're back. Annual plans from ${perYear("plan.comfort")}.`,
+    `Snowbird plumbing protection for SWFL: shutdown before you leave, checks while you're away, start-up inspection when you're back. Plans from ${perYear("plan.comfort")}.`,
   keywords: [
     "snowbird plumbing Cape Coral",
     "vacant home plumbing inspection Fort Myers",

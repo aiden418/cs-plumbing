@@ -15,7 +15,7 @@ import { REVIEWS_PAGE } from "@/content/about";
 export const metadata: Metadata = {
   title: "Reviews — 5.0-Star Rated SWFL Plumber",
   description:
-    "Real Google reviews from Cape Coral, Fort Myers and Southwest Florida homeowners. C&S Plumbing of Lee: 5.0-star rated, family owned and operated since 1998.",
+    "Real Google reviews from Cape Coral, Fort Myers and Southwest Florida homeowners. C&S Plumbing: 5.0-star rated, family owned and operated since 1998.",
   keywords: [
     "C&S Plumbing reviews",
     "plumber reviews Cape Coral",

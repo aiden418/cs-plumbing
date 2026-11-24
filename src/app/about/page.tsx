@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/about" },
   title: "About Us",
   description:
-    "Three generations of the Pellechio family, family owned and operated since 1998, 9,500+ homes plumbed. Voted Best Plumbing Contractor, Best of Cape Coral 2026.",
+    "Three Pellechio generations, family owned and operated since 1998, 9,500+ homes plumbed. Voted Best Plumbing Contractor, Best of Cape Coral 2026.",
   keywords: [
     "C&S Plumbing about",
     "Pellechio family plumbing",

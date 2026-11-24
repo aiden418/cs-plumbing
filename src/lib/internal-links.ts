@@ -111,6 +111,17 @@ export function landingsForPost(post: BlogPost): ServiceCityLanding[] {
   });
 }
 
+/**
+ * Posts that point readers to this landing (BlogPost.relatedLandings), newest
+ * first: the return link for BlogRelatedLandings, so a guide is reachable
+ * from every city page it sends readers to and not only from /blog.
+ */
+export function postsForLanding(slug: string, limit = 4): BlogPost[] {
+  return newestFirst(
+    BLOG_POSTS.filter((p) => (p.relatedLandings ?? []).includes(slug)),
+  ).slice(0, limit);
+}
+
 /** Posts whose related landings include this city, newest first. */
 export function postsForCity(city: string, limit = 4): BlogPost[] {
   const citySlugs = new Set(landingsForCity(city).map((l) => l.slug));
