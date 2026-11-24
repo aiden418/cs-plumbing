@@ -625,7 +625,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       `Aging pipes cause low water pressure, discolored water, and costly leaks. C&S Plumbing replaces your entire plumbing system with modern copper or PEX piping — backed by 3,500+ homes repiped and ${CLAIMS.warrantyInstallShort}.`,
     metaTitle: "Whole-Home Repiping | Cape Coral & Fort Myers",
     metaDescription:
-      `Whole-home repiping in Cape Coral, Fort Myers & SWFL. Copper & PEX, ${rangeInline("repipe.overall")}, 1-year labor & materials warranty. 3,500+ homes repiped. Call ${BUSINESS.phone}.`,
+      `Whole-home repiping in Cape Coral & Fort Myers. Copper & PEX, ${rangeInline("repipe.overall")}, 1-year labor & materials warranty. 3,500+ repipes. Call ${BUSINESS.phone}.`,
     keywords: [
       "repiping Cape Coral",
       "repipe Fort Myers",
@@ -1129,7 +1129,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       "Slow drains, recurring clogs, and sewage backups need professional attention. C&S Plumbing uses hydro-jetting and camera inspection technology to clear any blockage and keep your drains flowing.",
     metaTitle: "Drain Cleaning Services | Cape Coral & Fort Myers Plumber",
     metaDescription:
-      `Professional drain cleaning in Cape Coral, Fort Myers & SWFL. Hydro-jetting, camera inspection, root removal. Fast service, fair pricing. Call ${BUSINESS.phone}.`,
+      `Drain cleaning in Cape Coral, Fort Myers & SWFL. Hydro-jetting, camera inspection, root removal. Fast service, fair pricing. Call ${BUSINESS.phone}.`,
     keywords: [
       "drain cleaning Cape Coral",
       "drain cleaning Fort Myers",
@@ -1764,7 +1764,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     state: "FL",
     metaTitle: "Plumber in Cape Coral, FL",
     metaDescription:
-      `Trusted plumber in Cape Coral, FL. Emergency plumbing, repiping, drain cleaning & water heaters. Family owned and operated since 1998. Call ${BUSINESS.phone}.`,
+      `Plumber in Cape Coral, FL. Emergency plumbing, repiping, drain cleaning & water heaters. Family owned and operated since 1998. Call ${BUSINESS.phone}.`,
     keywords: [
       "plumber Cape Coral",
       "plumber Cape Coral FL",
@@ -1827,7 +1827,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     state: "FL",
     metaTitle: "Plumber in Fort Myers, FL",
     metaDescription:
-      `Expert plumber in Fort Myers, FL. Residential & commercial plumbing, emergency service, repiping, water heaters. 28+ years serving SWFL. Call ${BUSINESS.phone}.`,
+      `Plumber in Fort Myers, FL. Residential & commercial plumbing, emergency service, repiping, water heaters. 28+ years serving SWFL. Call ${BUSINESS.phone}.`,
     keywords: [
       "plumber Fort Myers",
       "plumber Fort Myers FL",
@@ -1961,7 +1961,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     state: "FL",
     metaTitle: "Plumber in Naples, FL",
     metaDescription:
-      `Professional plumber in Naples, FL. Luxury home plumbing, repiping, water heaters, emergency service. Family-owned, 9,500+ homes plumbed. Call ${BUSINESS.phone}.`,
+      `Plumber in Naples, FL. Luxury home plumbing, repiping, water heaters, emergency service. Family-owned, 9,500+ homes plumbed. Call ${BUSINESS.phone}.`,
     keywords: [
       "plumber Naples",
       "plumber Naples FL",
@@ -2082,7 +2082,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     state: "FL",
     metaTitle: "Plumber in Lehigh Acres, FL",
     metaDescription:
-      `Trusted plumber in Lehigh Acres, FL. Emergency plumbing, repiping, drain cleaning and water heaters. Family owned and operated since 1998. Call ${BUSINESS.phone}.`,
+      `Plumber in Lehigh Acres, FL. Emergency plumbing, repiping, drain cleaning and water heaters. Family owned and operated since 1998. Call ${BUSINESS.phone}.`,
     keywords: [
       "plumber Lehigh Acres",
       "plumber Lehigh Acres FL",
@@ -2231,7 +2231,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     state: "FL",
     metaTitle: "Plumber on Sanibel Island, FL",
     metaDescription:
-      `Experienced plumber on Sanibel Island, FL. Emergency plumbing, repiping, water heaters, hurricane recovery. Family-owned, 28+ years in SWFL. Call ${BUSINESS.phone}.`,
+      `Plumber on Sanibel Island, FL. Emergency plumbing, repiping, water heaters, hurricane recovery. Family-owned, 28+ years in SWFL. Call ${BUSINESS.phone}.`,
     keywords: [
       "plumber Sanibel Island",
       "plumber Sanibel FL",
@@ -2307,7 +2307,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     state: "FL",
     metaTitle: "Plumber in Fort Myers Beach, FL",
     metaDescription:
-      `Plumber on Fort Myers Beach, FL. Post-Ian rebuilds, elevated homes, repipes, water heaters & 24/7 emergencies. Family owned since 1998. Call ${BUSINESS.phone}.`,
+      `Plumber on Fort Myers Beach, FL. Post-Ian rebuilds, elevated homes, repipes, water heaters & emergencies. Family owned since 1998. Call ${BUSINESS.phone}.`,
     keywords: [
       "plumber Fort Myers Beach",
       "Fort Myers Beach plumbing",
@@ -2435,7 +2435,7 @@ export const AREA_LANDINGS: AreaLanding[] = [
     state: "FL",
     metaTitle: "Plumber in Port Charlotte, FL",
     metaDescription:
-      `Plumber in Port Charlotte, FL. Drain cleaning, water treatment, water heaters & emergency plumbing. Family owned and operated since 1998. Call ${BUSINESS.phone}.`,
+      `Plumber in Port Charlotte, FL. Drain cleaning, water treatment, water heaters & emergency plumbing. Family owned since 1998. Call ${BUSINESS.phone}.`,
     keywords: [
       "plumber Port Charlotte",
       "plumber Port Charlotte FL",
@@ -2503,7 +2503,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "C&S Plumbing Voted Best Plumbing Contractor in Cape Coral for 2026",
     metaTitle: "Voted Best Plumbing Contractor — Best of Cape Coral 2026",
     metaDescription:
-      "Cape Coral Breeze readers voted C&S Plumbing of Lee Best Plumbing Contractor in the 2026 Best of Cape Coral awards — our second year on the winners list.",
+      "Cape Coral Breeze readers voted C&S Plumbing Best Plumbing Contractor in the 2026 Best of Cape Coral awards — our second year on the winners list.",
     keywords: [
       "best plumbing contractor Cape Coral",
       "Best of Cape Coral 2026",
@@ -2553,7 +2553,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "5 Signs You Need a Whole-Home Repipe",
     metaTitle: "5 Signs You Need a Whole-Home Repipe",
     metaDescription:
-      "How do you know if your home needs repiping? Learn the 5 warning signs from Southwest Florida's repiping experts. C&S Plumbing has repiped 9,500+ homes.",
+      "How do you know if your home needs repiping? The 5 warning signs from Southwest Florida's repiping experts. C&S Plumbing has repiped 3,500+ homes.",
     keywords: ["signs you need repiping", "when to repipe house", "repiping Cape Coral", "old pipes replacement", "polybutylene pipe replacement"],
     excerpt:
       "Aging pipes don't always announce themselves with a dramatic burst. Often, the signs are subtle — until they're not. Here are 5 warning signs that your home may need a whole-home repipe.",
@@ -2860,7 +2860,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "Why Cape Coral Homes Need Repiping: The Polybutylene Pipe Problem",
     metaTitle: "Polybutylene Pipes in Cape Coral: Why You Need to Repipe",
     metaDescription:
-      `Cape Coral homes built 1978-1995 likely have polybutylene pipes that are failing. Learn why repiping is urgent and how C&S Plumbing can help. Call ${BUSINESS.phone}.`,
+      `Cape Coral homes built 1978-1995 likely have failing polybutylene pipes. Why repiping is urgent and how C&S Plumbing can help. Call ${BUSINESS.phone}.`,
     keywords: ["polybutylene pipes Cape Coral", "poly-b pipe replacement", "repiping Cape Coral", "polybutylene pipe failure", "Cape Coral plumbing problems", "PEX repiping Cape Coral"],
     excerpt:
       "Thousands of Cape Coral homes were built with polybutylene pipes between 1978 and 1995. These pipes are now failing at alarming rates, causing leaks, water damage, and insurance problems for homeowners.",
@@ -2989,10 +2989,10 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: "low-water-pressure-causes-fixes-swfl",
-    title: "Low Water Pressure in Your Southwest Florida Home? Here's Why and What to Do",
+    title: "Low Water Pressure in Southwest Florida? Here's Why and What to Do",
     metaTitle: "Low Water Pressure in Your SWFL Home — Causes and Fixes",
     metaDescription:
-      "Struggling with low water pressure in Cape Coral or Fort Myers? Learn the 6 most common causes and how to fix them. Expert plumbing advice from C&S Plumbing.",
+      "Struggling with low water pressure in Cape Coral or Fort Myers? Learn the 6 most common causes and how to fix them. Expert advice from C&S Plumbing.",
     keywords: ["low water pressure", "low water pressure Cape Coral", "water pressure problems Fort Myers", "low water pressure causes", "water pressure fix SWFL", "plumbing pressure issues Lee County"],
     excerpt:
       "A trickling shower or slow-filling faucet isn't just annoying — it's often a symptom of an underlying plumbing problem. Here are the six most common causes of low water pressure in Southwest Florida homes and exactly what to do about them.",
@@ -3109,7 +3109,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "Septic to Sewer: What Southwest Florida Homeowners Need to Know",
     metaTitle: "Septic to Sewer Conversion: What SWFL Homeowners Should Know",
     metaDescription:
-      `Switching from septic to sewer in Cape Coral or SWFL? Learn about the process, costs, and requirements. C&S Plumbing handles UEP connections. Call ${BUSINESS.phone}.`,
+      `Switching from septic to sewer in Cape Coral or SWFL? The process, costs and requirements. C&S Plumbing handles UEP connections. Call ${BUSINESS.phone}.`,
     keywords: ["septic to sewer conversion", "septic to sewer Cape Coral", "UEP connection Cape Coral", "septic abandonment Florida", "sewer hookup cost SWFL", "septic to sewer cost"],
     excerpt:
       "As Cape Coral and other Southwest Florida communities expand their sewer systems, thousands of homeowners are transitioning from septic tanks to city sewer. Here's what you need to know about the process, costs, and requirements.",
@@ -3240,7 +3240,7 @@ export const BLOG_POSTS: BlogPost[] = [
   },
   {
     slug: "plumbing-checklist-after-hurricane-swfl",
-    title: "After the Storm: A Plumbing Damage Checklist for Southwest Florida Homeowners",
+    title: "After the Storm: A Plumbing Damage Checklist for Southwest Florida",
     metaTitle: "Post-Hurricane Plumbing Checklist for SWFL Homes",
     metaDescription:
       "Just rode out a storm in Lee County? Walk this post-hurricane plumbing checklist before turning your water back on. From SWFL's storm-response veterans.",
@@ -3283,7 +3283,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "What Storm Surge Does to Canal-Home Plumbing in Cape Coral",
     metaTitle: "Storm Surge & Canal-Home Plumbing — Cape Coral Guide",
     metaDescription:
-      "Cape Coral's 400 miles of canals put waterfront homes at risk in a storm surge. What saltwater does to your pipes and what to check after the water recedes.",
+      "Cape Coral's 400 miles of canals put waterfront homes at risk in a storm surge. What saltwater does to pipes and what to check after the water recedes.",
     keywords: ["storm surge plumbing damage", "canal home plumbing Cape Coral", "saltwater flooding pipes", "plumbing after storm surge Florida", "waterfront home plumber Cape Coral"],
     excerpt:
       "Four hundred miles of canals make Cape Coral a boater's paradise — and put thousands of homes within feet of storm surge. Here's what saltwater flooding actually does to a home's plumbing, from the water heater to the pipes under the slab.",
@@ -3317,7 +3317,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "Does Homeowners Insurance Cover Slab Leaks in Florida?",
     metaTitle: "Slab Leaks & Florida Homeowners Insurance — What's Covered",
     metaDescription:
-      "Does Florida homeowners insurance pay for slab leak repairs? What's covered, what's excluded and how to document a claim, from SWFL slab leak specialists.",
+      "Does Florida homeowners insurance pay for slab leak repairs? What's covered, what's excluded and how to document a claim, from SWFL leak specialists.",
     keywords: ["slab leak insurance Florida", "does insurance cover slab leak", "water damage claim Florida", "slab leak coverage homeowners policy", "plumbing leak insurance claim"],
     excerpt:
       "The repair bill for a slab leak has two parts — fixing the pipe and fixing the damage — and Florida insurance policies usually treat them very differently. Here's how coverage typically works and how to protect your claim.",
@@ -3387,7 +3387,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "How Much Does Whole-Home Repiping Cost in Cape Coral?",
     metaTitle: "Whole-Home Repipe Cost in Cape Coral — Real 2026 Prices",
     metaDescription:
-      `Cape Coral whole-home repipe costs ${rangeInline("repipe.overall")}; most 3-bed homes run ${rangeInline("repipe.pex3x2")} in PEX. Price by home size, PEX vs copper, and what's included.`,
+      `Cape Coral whole-home repipe costs ${rangeInline("repipe.overall")}; most 3-bed homes run ${rangeInline("repipe.pex3x2")} in PEX. By home size, PEX vs copper, and what's included.`,
     keywords: ["repipe cost Cape Coral", "whole home repipe cost Florida", "how much does repiping cost", "PEX repipe price Cape Coral", "polybutylene replacement cost"],
     excerpt:
       `Straight answer: most Cape Coral repipes cost ${rangeInline("repipe.overall")}, and a typical 3-bed, 2-bath home lands between ${rangeInline("repipe.pex3x2")} in PEX. Here's the full price breakdown by home size and pipe material, and exactly what that money buys.`,
@@ -3496,7 +3496,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "How Long Does Drain Cleaning Take? A Plumber's Honest Answer",
     metaTitle: "How Long Does Drain Cleaning Take? Honest Times & Prices",
     metaDescription:
-      `Single-drain clogs clear in about an hour; main lines take 1–2 hours, hydro-jetting 2–3. Honest drain cleaning times, costs (${spanInline("drain.fixture", "drain.hydroJet")}), and why clogs return.`,
+      `Single-drain clogs clear in about an hour; main lines take 1–2 hours, hydro-jetting 2–3. Drain cleaning times, costs (${spanInline("drain.fixture", "drain.hydroJet")}) and why clogs return.`,
     keywords: ["how long does drain cleaning take", "drain cleaning cost Cape Coral", "main sewer line clog cost", "hydro jetting cost Florida", "why does my drain keep clogging"],
     excerpt:
       "Honest answer: about an hour for a single clogged fixture, 1–2 hours for a main sewer line, 2–3 hours for hydro-jetting with a camera. Here's what changes those numbers, what each job costs, and when cabling alone won't fix it.",
@@ -3653,7 +3653,7 @@ export const COMPLETED_PROJECT_TEXT: CompletedProjectText[] = [
     ],
     metaTitle: "IFHA Community Center Plumbing Project",
     metaDescription:
-      "See our complete plumbing installation for the IFHA Community Center new construction — underground, rough-in, and trim out phases by C&S Plumbing of Lee.",
+      "See our complete plumbing installation for the IFHA Community Center new construction — underground, rough-in, and trim out phases by C&S Plumbing.",
   },
   {
     slug: "mangos-bathroom-remodel",
@@ -3719,7 +3719,7 @@ export const COMPLETED_PROJECT_TEXT: CompletedProjectText[] = [
       projectManagement: "Estimated and project-managed in-house by the C&S office",
     },
     metaTitle: "Hangar 97 Punta Gorda Airport — Commercial Plumbing",
-    metaDescription: "Commercial plumbing for Hangar 97 at Punta Gorda Airport — underground, second rough-in and trim-out by C&S Plumbing of Lee, estimated and managed in-house.",
+    metaDescription: "Commercial plumbing for Hangar 97 at Punta Gorda Airport: underground, second rough-in and trim-out by C&S Plumbing, estimated and managed in-house.",
   },
   {
     slug: "usps-cape-coral-remodel",
@@ -3829,7 +3829,7 @@ export const COMPLETED_PROJECT_TEXT: CompletedProjectText[] = [
     ],
     scopeDetails: ["Underground rough-in","Second rough-in","Residential new construction"],
     metaTitle: "1026 Halby Ave Lehigh Acres New Construction Plumbing",
-    metaDescription: "C&S Plumbing of Lee handles new-construction plumbing at 1026 Halby Ave in Lehigh Acres — underground through second rough for builder Douglas Brookes.",
+    metaDescription: "C&S Plumbing handles new-construction plumbing at 1026 Halby Ave in Lehigh Acres — underground through second rough for builder Douglas Brookes.",
   },
   {
     slug: "fema-home-punta-gorda",
@@ -4004,7 +4004,7 @@ export const COMPLETED_PROJECT_TEXT: CompletedProjectText[] = [
     // Title leads with the search term ("sewer line replacement cape coral",
     // docs/seo/keyword-map.md §2e); no other page owns it yet.
     metaTitle: "Sewer Line Replacement in Cape Coral — 808 Miramar",
-    metaDescription: "Sewer line replacement at 808 Miramar in Cape Coral by C&S Plumbing of Lee: the old clay line exposed and camera-inspected, then new PVC sewer pipe laid.",
+    metaDescription: "Sewer line replacement at 808 Miramar in Cape Coral by C&S Plumbing: the old clay line exposed and camera-inspected, then new PVC sewer pipe laid.",
   },
   {
     slug: "residential-repipes",
@@ -4062,7 +4062,7 @@ export const COMPLETED_PROJECT_TEXT: CompletedProjectText[] = [
     // The repiping hub owns "repipe <city>"; this page takes the photo
     // searches and carries no city in its title (keyword-map.md §2e).
     metaTitle: "PEX Repipe Photos — Attic, Wall and Under-Floor Jobs",
-    metaDescription: "See what a repipe looks like behind the walls: PEX water lines through attics and block walls and new drains under an elevated home, by C&S Plumbing of Lee.",
+    metaDescription: "See what a repipe looks like behind the walls: PEX water lines through attics and block walls and new drains under an elevated home, by C&S Plumbing.",
   },
 ];
 

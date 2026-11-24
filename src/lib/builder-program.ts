@@ -462,7 +462,7 @@ export const NEW_CONSTRUCTION_CITIES: NewConstructionCity[] = [
     permitAuthority: "the City of Bonita Springs",
     metaTitle: "New Construction Plumbing Bonita Springs | Builders & GCs",
     metaDescription:
-      "Bonita Springs new construction plumbing for builders and GCs, from underground to final. Permitted through the City of Bonita Springs. Send plans for a bid.",
+      "Bonita Springs new construction plumbing for builders and GCs, underground to final. Permitted through the City of Bonita Springs. Send plans for a bid.",
     intro:
       "Bonita Springs runs from Gulf-front rebuilds to inland communities. Coastal lots bring flood-zone elevations into the plumbing plan; inland builds bring production schedules.",
     localConditions: [

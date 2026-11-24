@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/booking" },
   title: "Request Service",
   description:
-    "Request plumbing service online and ask for a preferred time. Our office calls to confirm. Residential, commercial and new construction plumbing across Cape Coral, Fort Myers & SWFL.",
+    "Request plumbing service online and ask for a preferred time. Our office calls to confirm. Homes and businesses in Cape Coral, Fort Myers & SWFL.",
   keywords: [
     "book plumber Cape Coral",
     "schedule plumbing Fort Myers",
